@@ -7,7 +7,7 @@ import java.util.Collection;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
-import static org.org.smallvaluesofcool.misc.collections.IterableUtils.toList;
+import static org.smallvaluesofcool.misc.collections.IterableUtils.toList;
 
 public class LazyTest {
 
