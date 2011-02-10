@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+
+<project name="Misc Functional and Test utilities for Java." basedir="." default="build">
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
+    <property environment="env"/>
+
+    <property name="build.home" value="${basedir}/build"/>
+
+    <property name="main.build" value="${build.home}/main/classes"/>
+    <property name="main.src" value="${basedir}/src/main/java"/>
+    <property name="main.resources" value="${basedir}/src/main/resources"/>
+    <property name="main.lib" value="${basedir}/lib/main"/>
+
+    <property name="test.build" value="${build.home}/test/classes"/>
+    <property name="test.src" value="${basedir}/src/test/java"/>
+    <property name="test.resources" value="${basedir}/src/test/resources"/>
+    <property name="test.lib" value="${basedir}/lib/test"/>
+
+    <property name="test.reports" value="${build.home}/reports"/>
+
+    <path id="build.classpath">
+        <fileset dir="${main.lib}" includes="**/*.jar"/>
+    </path>
+
+    <path id="test.classpath">
+        <pathelement location="${main.build}"/>
+        <path refid="build.classpath"/>
+        <fileset dir="${test.lib}" includes="**/*.jar"/>
+    </path>
+
+    <target name="clean" description="Delete old build directory.">
+        <delete dir="${build.home}"/>
+    </target>
+
+    <target name="build" depends="clean" description="Compile main Java sources.">
+        <mkdir dir="${main.build}"/>
+        <javac srcdir="${main.src}" destdir="${main.build}" classpathref="build.classpath"/>
+    </target>
+
+    <target name="build.test" depends="build" description="Compile test Java sources.">
+        <mkdir dir="${test.build}"/>
+        <javac srcdir="${test.src}" destdir="${test.build}" classpathref="test.classpath"/>
+    </target>
+
+    <target name="test" depends="build.test" description="Run unit tests.">
+        <mkdir dir="${test.reports}"/>
+        <junit printsummary="true" showoutput="true" failureproperty="test.failed">
+            <classpath>
+                <pathelement location="${test.build}"/>
+                <path refid="test.classpath"/>
+                <pathelement location="${main.resources}"/>
+                <pathelement location="${test.resources}"/>
+            </classpath>
+            <batchtest fork="yes" todir="${test.reports}">
+                <fileset dir="${test.build}" includes="**/*Test.class"/>
+            </batchtest>
+            <formatter type="xml"/>
+        </junit>
+
+        <junitreport todir="${test.reports}">
+            <fileset dir="${test.reports}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report todir="${test.reports}"/>
+        </junitreport>
+
+        <!-- failed on error  -->
+        <fail if="test.failed" message="tests failed"/>
+
+    </target>
+
+</project>
