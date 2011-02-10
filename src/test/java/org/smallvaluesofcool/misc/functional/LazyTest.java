@@ -5,8 +5,8 @@ import org.junit.Test;
 import java.util.Collection;
 
 import static java.util.Arrays.asList;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItems;
+import static org.junit.Assert.assertThat;
+import static org.junit.matchers.JUnitMatchers.hasItems;
 import static org.smallvaluesofcool.misc.collections.IterableUtils.toList;
 
 public class LazyTest {
