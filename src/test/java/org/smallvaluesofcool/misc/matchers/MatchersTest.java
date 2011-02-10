@@ -14,6 +14,7 @@ import static java.util.Arrays.asList;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.smallvaluesofcool.misc.matchers.MatchersTest.Bean.bean;
 
 public class MatchersTest {
 
@@ -167,6 +168,92 @@ public class MatchersTest {
         assertThat(matcher.toString(), is("Collection with size <4> containing exactly items <1>, <2>, <3>, <4> in any order."));
     }
 
+    @Test
+    public void shouldReportOnMismatchedItemsInHasOnlyItemsInOrder() {
+        // Given
+        Collection<Integer> actual = asList(1, 2, 5, 6);
+        Collection<Integer> expected = asList(1, 2, 3, 4);
+
+        // When
+        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInOrder(expected);
+
+        // Then
+        assertThat(matcher, mismatchesSampleWithMessage(actual, "got <1>, <2>, <5>, <6>\n" +
+                "expected but didn't get <3>, <4>\n" +
+                "got but didn't expect <5>, <6>"));
+    }
+
+    @Test
+    public void shouldReportOnTooManyItemsInHasOnlyItemsInOrder() {
+        // Given
+        Collection<Integer> actual = asList(1, 2, 5, 6);
+        Collection<Integer> expected = asList(1, 2);
+
+        // When
+        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInOrder(expected);
+
+        // Then
+        assertThat(matcher, mismatchesSampleWithMessage(actual, "got <1>, <2>, <5>, <6>\n" +
+                "got collection with size <4> rather than <2>\n" +
+                "got but didn't expect <5>, <6>"));
+    }
+
+    @Test
+    public void shouldReportOnTooFewItemsInHasOnlyItemsInOrder() {
+        // Given
+        Collection<Integer> actual = asList(1, 2);
+        Collection<Integer> expected = asList(1, 2, 4, 5);
+
+        // When
+        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInOrder(expected);
+
+        // Then
+        assertThat(matcher, mismatchesSampleWithMessage(actual, "got <1>, <2>\n" +
+                "got collection with size <2> rather than <4>\n" +
+                "expected but didn't get <4>, <5>"));
+    }
+
+    @Test
+    public void shouldReportOnIncorrectOrderInHasOnlyItemsInOrder() {
+        // Given
+        Collection<Integer> actual = asList(1, 2, 4, 3);
+        Collection<Integer> expected = asList(1, 2, 3, 4);
+
+        // When
+        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInOrder(expected);
+
+        // Then
+        assertThat(matcher, mismatchesSampleWithMessage(actual, "got <1>, <2>, <4>, <3>\n" +
+                "first item out of order <4> at index 2"));
+    }
+
+    @Test
+    public void shouldMatchBeanWithSameProperties() {
+        // Given
+        Bean actual = bean("A", "B", "C", "D");
+        Bean expected = bean("A", "B", "C", "D");
+
+        // When
+        Matcher<Bean> matcher = Matchers.isBeanWithSameAttributesAs(expected);
+
+        // Then
+        assertThat(matcher, matches(actual));
+    }
+
+    @Test
+    public void shouldMismatchBeanWithDifferentProperties() {
+        // Given
+        Bean actual = bean("A", "B", "C", "D");
+        Bean expected = bean("A", "B", "C", "E");
+
+        // When
+        Matcher<Bean> matcher = Matchers.isBeanWithSameAttributesAs(expected);
+
+        // Then
+        assertThat(matcher, mismatchesSampleWithMessage(actual, "got      Bean <Bean<attribute1=<A>, attribute2=<B>, attribute3=<C>, attribute4=<E>, >>\n" +
+                "Mismatch: expected property \"attribute4\" = \"E\"\n" +
+                "            actual property \"attribute4\" = \"D\""));
+    }
 
     private static <T> Matcher<Matcher<T>> mismatchesSampleWithMessage(final T sample, final String descriptionContains) {
         return new TypeSafeDiagnosingMatcher<Matcher<T>>() {

@@ -1,16 +1,26 @@
 package org.smallvaluesofcool.misc.matchers;
 
+import org.apache.commons.beanutils.BeanMap;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.smallvaluesofcool.misc.collections.Bag;
 import org.smallvaluesofcool.misc.collections.BagUtils;
+import org.smallvaluesofcool.misc.collections.TwoTuple;
 
-import java.util.Collection;
+import java.util.*;
 
+import static java.lang.String.format;
+import static java.util.Arrays.asList;
+import static org.apache.commons.lang.StringUtils.join;
 import static org.smallvaluesofcool.misc.collections.IteratorUtils.toBag;
+import static org.smallvaluesofcool.misc.functional.Lazy.enumerate;
 
 public class Matchers {
+
+    public static <T> Matcher<Collection<T>> hasOnlyItemsInAnyOrder(T... items) {
+        return hasOnlyItemsInAnyOrder(asList(items));
+    }
 
     public static <T> Matcher<Collection<T>> hasOnlyItemsInAnyOrder(final Collection<T> expectedItems) {
         return new TypeSafeDiagnosingMatcher<Collection<T>>() {
@@ -75,5 +85,96 @@ public class Matchers {
                 }
             }
         };
+    }
+
+    public static <T> Matcher<Collection<T>> hasOnlyItemsInOrder(T... items) {
+        return hasOnlyItemsInOrder(asList(items));
+    }
+
+    public static <T> Matcher<Collection<T>> hasOnlyItemsInOrder(final Collection<T> expectedItems) {
+        return new TypeSafeDiagnosingMatcher<Collection<T>>() {
+            @Override
+            protected boolean matchesSafely(Collection<T> actualItems, Description description) {
+//                List<T> actualItemList = toList(actualItems);
+                Matcher<Collection<T>> orderAgnosticMatcher = hasOnlyItemsInAnyOrder(expectedItems);
+                if (!orderAgnosticMatcher.matches(actualItems)) {
+                    orderAgnosticMatcher.describeMismatch(actualItems, description);
+                    return false;
+                }
+
+                Iterator<T> actualItemIterator = actualItems.iterator();
+                for (TwoTuple<Integer, T> indexAndExpectedItem : enumerate(expectedItems)) {
+                    T actualItem = actualItemIterator.next();
+                    if (!indexAndExpectedItem.second().equals(actualItem)) {
+                        description
+                                .appendText("got ")
+                                .appendValueList("", ", ", "", actualItems)
+                                .appendText("\n")
+                                .appendText("first item out of order ")
+                                .appendValue(actualItem)
+                                .appendText(" at index ")
+                                .appendText(String.valueOf(indexAndExpectedItem.first()));
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("Collection containing exactly ")
+                        .appendValueList("", ", ", "", expectedItems)
+                        .appendText(" in order.");
+            }
+        };
+    }
+
+    public static <T> Matcher<T> isBeanWithSameAttributesAs(final T expectedObject) {
+        return isBeanWithSameAttributesAs(expectedObject, Collections.<String>emptySet());
+    }
+
+    public static <T> Matcher<T> isBeanWithSameAttributesAs(final T expectedObject, final Set<String> ignoreProperties) {
+        return new TypeSafeDiagnosingMatcher<T>() {
+            @Override
+            protected boolean matchesSafely(T actualObject, Description description) {
+                @SuppressWarnings("unchecked")
+                Map<String, Object> actualProperties = new BeanMap(actualObject);
+                @SuppressWarnings("unchecked")
+                Map<String, Object> expectedProperties = new BeanMap(expectedObject);
+                for (String propertyName : actualProperties.keySet()) {
+                    if (ignoreProperties.contains(propertyName)) {
+                        continue;
+                    }
+                    Object actualValue = actualProperties.get(propertyName);
+                    Object expectedValue = expectedProperties.get(propertyName);
+                    if ((actualValue == null && expectedValue != null) || (actualValue != null && !actualValue.equals(expectedValue))) {
+                        description.appendText(format("got      %s ", actualObject.getClass().getSimpleName()))
+                                .appendValue(expectedObject)
+                                .appendText(format("\nMismatch: expected property \"%s\" = ", propertyName))
+                                .appendValue(expectedValue)
+                                .appendText(format("\n            actual property \"%s\" = ", propertyName))
+                                .appendValue(actualValue);
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description
+                        .appendText(format("%s matching ", expectedObject.getClass().getSimpleName()))
+                        .appendValue(expectedObject);
+                if (ignoreProperties.size() > 0) {
+                    description
+                            .appendText(" ignoring properties ")
+                            .appendText(join(ignoreProperties, ", "));
+                }
+            }
+        };
+    }
+
+    public static Set<String> ignoring(String... ignoreProperties) {
+        return new HashSet<String>(asList(ignoreProperties));
     }
 }
