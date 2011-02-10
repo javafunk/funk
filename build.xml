@@ -4,7 +4,7 @@
 
     <property environment="env"/>
 
-    <property name="build.home" value="${basedir}/build"/>
+    <property name="build.home" value="${basedir}/build-ant"/>
 
     <property name="main.build" value="${build.home}/main/classes"/>
     <property name="main.src" value="${basedir}/src/main/java"/>
