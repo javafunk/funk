@@ -1,4 +1,4 @@
-package org.smallvalues.misc.collections;
+package org.org.smallvaluesofcool.misc.collections;
 
 import org.apache.commons.lang.NotImplementedException;
 

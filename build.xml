@@ -2,8 +2,6 @@
 
 <project name="Misc Functional and Test utilities for Java." basedir="." default="build">
 
-    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
-
     <property environment="env"/>
 
     <property name="build.home" value="${basedir}/build"/>

@@ -5,3 +5,4 @@ out/
 syntax: glob
 *.DS_Store
 *~
+*.iml
