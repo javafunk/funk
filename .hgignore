@@ -1,10 +1,4 @@
-.idea/
-.classpath 
-.project 
-.settings/
-
 syntax: glob
 build-*/
 *.DS_Store
 *~
-*.iml
