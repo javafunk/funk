@@ -4,16 +4,22 @@ import org.apache.commons.beanutils.BeanMap;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.smallvaluesofcool.misc.collections.Bag;
 import org.smallvaluesofcool.misc.collections.BagUtils;
 import org.smallvaluesofcool.misc.collections.TwoTuple;
+import org.smallvaluesofcool.misc.functional.SelfDescribingPredicate;
 
 import java.util.*;
 
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static org.apache.commons.lang.StringUtils.join;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.smallvaluesofcool.misc.collections.IteratorUtils.toBag;
+import static org.smallvaluesofcool.misc.functional.Eager.all;
+import static org.smallvaluesofcool.misc.functional.Eager.any;
 import static org.smallvaluesofcool.misc.functional.Lazy.enumerate;
 
 public class Matchers {
@@ -176,5 +182,49 @@ public class Matchers {
 
     public static Set<String> ignoring(String... ignoreProperties) {
         return new HashSet<String>(asList(ignoreProperties));
+    }
+
+    public static <T> Matcher<Iterable<T>> trueForAll(final SelfDescribingPredicate<T> predicate) {
+        return new TypeSafeMatcher<Iterable<T>>() {
+
+            @Override
+            protected boolean matchesSafely(Iterable<T> items) {
+                return all(items, predicate);
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("Collection with all items matching predicate ").appendValue(predicate.describe());
+            }
+        };
+    }
+
+    public static <T> Matcher<Iterable<T>> trueForAny(final SelfDescribingPredicate<T> predicate) {
+        return new TypeSafeMatcher<Iterable<T>>() {
+
+            @Override
+            protected boolean matchesSafely(Iterable<T> items) {
+                return any(items, predicate);
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("Collection with any items matching predicate ").appendValue(predicate.describe());
+            }
+        };
+    }
+
+    public static <T extends Comparable<T>> Matcher<? super T> between(final T low, final T high) {
+        return new TypeSafeMatcher<T>() {
+            @Override
+            protected boolean matchesSafely(T number) {
+                return greaterThanOrEqualTo(low).matches(number) && lessThanOrEqualTo(high).matches(number);
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("Value between ").appendValue(low).appendText(" and ").appendValue(high).appendText(" inclusive.");
+            }
+        };
     }
 }

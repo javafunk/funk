@@ -1,7 +1,5 @@
 package org.smallvaluesofcool.misc.collections;
 
-import org.apache.commons.lang.NotImplementedException;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,6 +1,5 @@
 package org.smallvaluesofcool.misc.functional;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.smallvaluesofcool.misc.collections.TwoTuple;
 
 import java.util.Iterator;
@@ -62,6 +61,7 @@ public class Lazy {
             public Iterator<TwoTuple<Integer, T>> iterator() {
                 return new Iterator<TwoTuple<Integer, T>>() {
                     private Integer index = 0;
+
                     @Override
                     public boolean hasNext() {
                         return iterator.hasNext();
