@@ -8,7 +8,6 @@ import org.hamcrest.TypeSafeMatcher;
 import org.smallvaluesofcool.misc.collections.Bag;
 import org.smallvaluesofcool.misc.collections.BagUtils;
 import org.smallvaluesofcool.misc.collections.TwoTuple;
-import org.smallvaluesofcool.misc.functional.SelfDescribingPredicate;
 
 import java.util.*;
 
@@ -184,7 +183,7 @@ public class Matchers {
         return new HashSet<String>(asList(ignoreProperties));
     }
 
-    public static <T> Matcher<Iterable<T>> trueForAll(final SelfDescribingPredicate<T> predicate) {
+    public static <T> Matcher<Iterable<T>> trueForAll(final SelfDescribingPredicateFunction<T> predicate) {
         return new TypeSafeMatcher<Iterable<T>>() {
 
             @Override
@@ -199,7 +198,7 @@ public class Matchers {
         };
     }
 
-    public static <T> Matcher<Iterable<T>> trueForAny(final SelfDescribingPredicate<T> predicate) {
+    public static <T> Matcher<Iterable<T>> trueForAny(final SelfDescribingPredicateFunction<T> predicate) {
         return new TypeSafeMatcher<Iterable<T>>() {
 
             @Override

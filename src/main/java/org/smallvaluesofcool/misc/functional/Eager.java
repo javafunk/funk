@@ -44,7 +44,7 @@ public class Eager {
         };
     }
 
-    public static <T> Boolean any(Iterable<? extends T> iterable, Predicate<T> predicate) {
+    public static <T> Boolean any(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
         for (T item : iterable) {
             if (predicate.matches(item)) {
                 return true;
@@ -53,7 +53,7 @@ public class Eager {
         return false;
     }
 
-    public static <T> Boolean all(Iterable<? extends T> iterable, Predicate<T> predicate) {
+    public static <T> Boolean all(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
         for (T item : iterable) {
             if (!predicate.matches(item)) {
                 return false;
@@ -62,7 +62,7 @@ public class Eager {
         return true;
     }
 
-    public static <T> Boolean none(Iterable<? extends T> items, Predicate<T> predicate) {
+    public static <T> Boolean none(Iterable<? extends T> items, PredicateFunction<T> predicate) {
         return !any(items, predicate);
     }
 

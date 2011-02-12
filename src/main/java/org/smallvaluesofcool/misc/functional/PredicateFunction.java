@@ -1,6 +1,6 @@
 package org.smallvaluesofcool.misc.functional;
 
-public interface Predicate<T> {
+public interface PredicateFunction<T> {
     boolean matches(T item);
 }
 

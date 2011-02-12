@@ -12,7 +12,6 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.smallvaluesofcool.misc.Literals.listWith;
-import static org.smallvaluesofcool.misc.Literals.mapWith;
 import static org.smallvaluesofcool.misc.collections.TwoTuple.twoTuple;
 
 public class EagerTest {
@@ -55,7 +54,7 @@ public class EagerTest {
         List<Integer> inputNumbers = listWith(5, 10, 15, 20);
 
         // When
-        Boolean result = Eager.any(inputNumbers, new Predicate<Integer>() {
+        Boolean result = Eager.any(inputNumbers, new PredicateFunction<Integer>() {
             @Override
             public boolean matches(Integer item) {
                 return item > 15;
@@ -72,7 +71,7 @@ public class EagerTest {
         List<Integer> items = listWith(5, 10, 15, 20);
 
         // When
-        Boolean result = Eager.any(items, new Predicate<Integer>() {
+        Boolean result = Eager.any(items, new PredicateFunction<Integer>() {
             @Override
             public boolean matches(Integer item) {
                 return item > 25;
@@ -89,7 +88,7 @@ public class EagerTest {
         List<String> items = listWith("dog", "cat", "fish", "budgie");
 
         // When
-        Boolean result = Eager.all(items, new Predicate<String>() {
+        Boolean result = Eager.all(items, new PredicateFunction<String>() {
             @Override
             public boolean matches(String item) {
                 return item.length() > 2;
@@ -106,7 +105,7 @@ public class EagerTest {
         List<String> items = listWith("dog", "cat", "fish", "budgie");
 
         // When
-        Boolean result = Eager.all(items, new Predicate<String>() {
+        Boolean result = Eager.all(items, new PredicateFunction<String>() {
             @Override
             public boolean matches(String item) {
                 return item.length() > 3;
@@ -123,7 +122,7 @@ public class EagerTest {
         List<Integer> items = listWith(1, 3, 5, 7);
 
         // When
-        Boolean result = Eager.none(items, new Predicate<Integer>() {
+        Boolean result = Eager.none(items, new PredicateFunction<Integer>() {
             @Override
             public boolean matches(Integer item) {
                 return isEven(item);
@@ -144,7 +143,7 @@ public class EagerTest {
         List<Integer> items = listWith(1, 3, 6, 7);
 
         // When
-        Boolean result = Eager.none(items, new Predicate<Integer>() {
+        Boolean result = Eager.none(items, new PredicateFunction<Integer>() {
             @Override
             public boolean matches(Integer item) {
                 return isEven(item);
