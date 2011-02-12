@@ -3,10 +3,7 @@ package org.smallvaluesofcool.misc.functional;
 import org.junit.Assert;
 import org.junit.Test;
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
-import org.smallvaluesofcool.misc.functional.functors.DoFunction;
-import org.smallvaluesofcool.misc.functional.functors.MapFunction;
-import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
-import org.smallvaluesofcool.misc.functional.functors.ReduceFunction;
+import org.smallvaluesofcool.misc.functional.functors.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -28,11 +25,11 @@ public class EagerTest {
         Long actual = Eager.reduce(input, Eager.longAdditionAccumulator());
 
         // Then
-        Assert.assertThat(actual, equalTo(9L));
+        assertThat(actual, equalTo(9L));
     }
 
     @Test
-    public void shouldReduceOtherTypesUsingCustomFunction() throws Exception {
+    public void shouldReduceToTheSameTypeUsingCustomReduceFunction() throws Exception {
         // Given
         List<List<Integer>> inputLists = listWith(
                 listWith(1, 2, 3).build(),
@@ -40,7 +37,7 @@ public class EagerTest {
                 listWith(7, 8, 9).build());
 
         // When
-        List<Integer> actual = Eager.reduce(inputLists, new ReduceFunction<List<Integer>>() {
+        List<Integer> actual = Eager.reduce(inputLists, new SymmetricReduceFunction<List<Integer>>() {
             // Example flattening accumulator.
             public List<Integer> accumulate(List<Integer> accumulator, List<Integer> element) {
                 accumulator.addAll(element);
@@ -49,7 +46,24 @@ public class EagerTest {
         });
 
         // Then
-        Assert.assertThat(actual, hasItems(1, 2, 3, 4, 5, 6, 7, 8, 9));
+        assertThat(actual, hasItems(1, 2, 3, 4, 5, 6, 7, 8, 9));
+    }
+
+    @Test
+    public void shouldBeAbleToReduceToATypeOtherThanThatOfTheInputElements() {
+        // Given
+        List<Integer> inputs = listWith(1, 2, 3);
+
+        // When
+        String output = Eager.reduce(inputs, "", new ReduceFunction<Integer, String>() {
+            public String accumulate(String accumulator, Integer element) {
+                accumulator += element.toString();
+                return accumulator;
+            }
+        });
+
+        // Then
+        assertThat(output, is("123"));
     }
 
     @Test
@@ -193,7 +207,7 @@ public class EagerTest {
         Collection<Integer> expectedOutputs = listWith(2, 4, 6);
 
         // When
-        Collection<Integer> actualOutputs = Eager.map(inputs, new MapFunction<Integer, Integer>(){
+        Collection<Integer> actualOutputs = Eager.map(inputs, new MapFunction<Integer, Integer>() {
             @Override
             public Integer map(Integer input) {
                 return input * 2;

@@ -1,10 +1,7 @@
 package org.smallvaluesofcool.misc.functional;
 
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
-import org.smallvaluesofcool.misc.functional.functors.DoFunction;
-import org.smallvaluesofcool.misc.functional.functors.MapFunction;
-import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
-import org.smallvaluesofcool.misc.functional.functors.ReduceFunction;
+import org.smallvaluesofcool.misc.functional.functors.*;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -13,35 +10,35 @@ import static org.smallvaluesofcool.misc.IterableUtils.materialize;
 import static org.smallvaluesofcool.misc.IteratorUtils.toIterable;
 
 public class Eager {
-    public static <T> T reduce(Iterable<? extends T> iterable, ReduceFunction<T> function, T initialValue) {
+    public static <S, T> T reduce(Iterable<? extends S> iterable, T initialValue, ReduceFunction<S, T> function) {
         T accumulator = initialValue;
-        for (T element : iterable) {
+        for (S element : iterable) {
             accumulator = function.accumulate(accumulator, element);
         }
         return accumulator;
     }
 
-    public static <T> T reduce(Iterable<? extends T> iterable, ReduceFunction<T> function) {
+    public static <T> T reduce(Iterable<? extends T> iterable, SymmetricReduceFunction<T> function) {
         final Iterator<? extends T> iterator = iterable.iterator();
         final T firstElement = iterator.next();
         final Iterable<? extends T> restOfElements = toIterable(iterator);
-        return reduce(restOfElements, function, firstElement);
+        return reduce(restOfElements, firstElement, function);
     }
 
     public static Integer sum(Iterable<Integer> iterable) {
         return reduce(iterable, integerAdditionAccumulator());
     }
 
-    public static ReduceFunction<Integer> integerAdditionAccumulator() {
-        return new ReduceFunction<Integer>() {
+    public static SymmetricReduceFunction<Integer> integerAdditionAccumulator() {
+        return new SymmetricReduceFunction<Integer>() {
             public Integer accumulate(Integer accumulator, Integer element) {
                 return accumulator + element;
             }
         };
     }
 
-    public static ReduceFunction<Long> longAdditionAccumulator() {
-        return new ReduceFunction<Long>() {
+    public static SymmetricReduceFunction<Long> longAdditionAccumulator() {
+        return new SymmetricReduceFunction<Long>() {
             public Long accumulate(Long accumulator, Long element) {
                 return accumulator + element;
             }
