@@ -2,9 +2,18 @@ package org.smallvaluesofcool.misc;
 
 import java.util.Collection;
 
-public class StringUtils {
+import static java.util.Arrays.asList;
 
-    public static <T> String join(Collection<T> collection, String seperator) {
-        return org.apache.commons.lang.StringUtils.join(collection, seperator);
+public class StringUtils {
+    public static <T> String join(Collection<T> collection, String separator) {
+        return org.apache.commons.lang.StringUtils.join(collection, separator);
+    }
+
+    public static <T> String join(Collection<T> collection) {
+        return join(collection, "");
+    }
+
+    public static <T> String join(T... objects) {
+        return join(asList(objects));
     }
 }
