@@ -1,12 +1,10 @@
 package org.smallvaluesofcool.misc.functional;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.smallvaluesofcool.misc.collections.TwoTuple;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.Assert.assertThat;

@@ -5,7 +5,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,7 +20,7 @@ public class EagerTest {
         Collection<Long> input = listWith(2L, 3L, 4L);
 
         // When
-        Long actual = Eager.reduce(input, Eager.longAccumulator());
+        Long actual = Eager.reduce(input, Eager.longAdditionAccumulator());
 
         // Then
         Assert.assertThat(actual, equalTo(9L));

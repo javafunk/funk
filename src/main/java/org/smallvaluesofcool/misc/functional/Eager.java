@@ -22,10 +22,10 @@ public class Eager {
     }
 
     public static Integer sum(Iterable<Integer> iterable) {
-        return reduce(iterable, integerAccumulator());
+        return reduce(iterable, integerAdditionAccumulator());
     }
 
-    public static ReduceFunction<Integer> integerAccumulator() {
+    public static ReduceFunction<Integer> integerAdditionAccumulator() {
         return new ReduceFunction<Integer>() {
             public Integer accumulate(Integer accumulator, Integer element) {
                 return accumulator + element;
@@ -33,7 +33,7 @@ public class Eager {
         };
     }
 
-    public static ReduceFunction<Long> longAccumulator() {
+    public static ReduceFunction<Long> longAdditionAccumulator() {
         return new ReduceFunction<Long>() {
             public Long accumulate(Long accumulator, Long element) {
                 return accumulator + element;
