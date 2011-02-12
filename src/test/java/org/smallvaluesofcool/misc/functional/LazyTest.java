@@ -91,7 +91,7 @@ public class LazyTest {
     }
 
     @Test
-    public void shouldLazilyExecuteSuppliedFunctionOnEachElementInTheIterable() {
+    public void shouldLazilyExecuteSuppliedFunctionOnEachElement() {
         // Given
         Iterable<Target> targets = listWith(mock(Target.class), mock(Target.class), mock(Target.class));
 

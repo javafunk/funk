@@ -5,15 +5,16 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.*;
 import static org.smallvaluesofcool.misc.Literals.listWith;
 
 public class EagerTest {
-
     @Test
     public void shouldSumSuppliedInputUsingLongAccumulator() throws Exception {
         // Given
@@ -69,5 +70,28 @@ public class EagerTest {
 
         // Then
         assertThat(actual, is(6));
+    }
+
+    @Test
+    public void shouldExecuteSuppliedFunctionOnEachElement() {
+        // Given
+        Iterable<Target> targets = listWith(mock(Target.class), mock(Target.class), mock(Target.class));
+
+        // When
+        Eager.each(targets, new DoFunction<Target>() {
+            @Override
+            public void actOn(Target input) {
+                input.doSomething();
+            }
+        });
+
+        // Then
+        for(Target target : targets) {
+            verify(target).doSomething();
+        }
+    }
+
+    private interface Target {
+        void doSomething();
     }
 }

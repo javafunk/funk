@@ -2,6 +2,7 @@ package org.smallvaluesofcool.misc.functional;
 
 import java.util.Iterator;
 
+import static org.smallvaluesofcool.misc.collections.IterableUtils.materialize;
 import static org.smallvaluesofcool.misc.collections.IteratorUtils.toIterable;
 
 public class Eager {
@@ -81,5 +82,9 @@ public class Eager {
             }
         }
         return min;
+    }
+
+    public static <T> void each(Iterable<T> targets, DoFunction<T> doFunction) {
+        materialize(Lazy.each(targets, doFunction));
     }
 }
