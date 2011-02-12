@@ -1,10 +1,14 @@
 package org.smallvaluesofcool.misc.functional;
 
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
-import org.smallvaluesofcool.misc.functional.functors.*;
+import org.smallvaluesofcool.misc.functional.functors.DoFunction;
+import org.smallvaluesofcool.misc.functional.functors.MapFunction;
+import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
+import org.smallvaluesofcool.misc.functional.functors.ReduceFunction;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import static org.smallvaluesofcool.misc.IterableUtils.materialize;
 import static org.smallvaluesofcool.misc.IteratorUtils.toIterable;
@@ -29,6 +33,18 @@ public class Eager {
         return reduce(iterable, integerAdditionAccumulator());
     }
 
+    public static Long sum(Iterable<Long> iterable) {
+        return reduce(iterable, longAdditionAccumulator());
+    }
+
+    public static Double sum(Iterable<Double> iterable) {
+        return reduce(iterable, doubleAdditionAccumulator());
+    }
+
+    public static Float sum(Iterable<Float> iterable) {
+        return reduce(iterable, floatAdditionAccumulator());
+    }
+
     public static ReduceFunction<Integer, Integer> integerAdditionAccumulator() {
         return new ReduceFunction<Integer, Integer>() {
             public Integer accumulate(Integer accumulator, Integer element) {
@@ -40,6 +56,22 @@ public class Eager {
     public static ReduceFunction<Long, Long> longAdditionAccumulator() {
         return new ReduceFunction<Long, Long>() {
             public Long accumulate(Long accumulator, Long element) {
+                return accumulator + element;
+            }
+        };
+    }
+
+    private static ReduceFunction<Double, Double> doubleAdditionAccumulator() {
+        return new ReduceFunction<Double, Double>() {
+            public Double accumulate(Double accumulator, Double element) {
+                return accumulator + element;
+            }
+        };
+    }
+
+    private static ReduceFunction<Float, Float> floatAdditionAccumulator() {
+        return new ReduceFunction<Float, Float>() {
+            public Float accumulate(Float accumulator, Float element) {
                 return accumulator + element;
             }
         };
