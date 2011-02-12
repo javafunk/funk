@@ -1,7 +1,17 @@
 * Write tests for sum
-* Write tests for IterableUtils, IteratorUtils, BagUtils, MapUtils, TwoTuple
-* Add ThreeTuple and FourTuple and ... classes
+* Write tests for IterableUtils, IteratorUtils, BagUtils, MapUtils
 * Add SetUtils, setWith Literal and Builder
 * Add bagWith Literal
-* Move Utils classes to project root ? (the Utils classes probably don't belong in the collections package)
-* Add eager and lazy filter methods
+* Add eager and lazy filter and reject methods
+* Add eager and lazy select methods which delegate to filter
+* Add detect method with a find alias
+* Add eager and lazy partition methods
+* Add eager and lazy group methods
+* Add eager and lazy window methods
+* Add eager and lazy collect methods which delegate to map
+* Add eager and lazy take and takeWhile methods
+* Add eager and lazy drop and dropWhile methods
+* Add first,first(n) and last,last(n) methods
+* Add eager and lazy zip methods across 3 and 4 iterables
+* Add eager and lazy cycle methods
+* Add combination and permutation methods (ListUtils ?)

@@ -29,7 +29,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
 
     @Override
     public synchronized boolean add(E e) {
-        Integer currentItemCount = MapUtils.getOrAddDefault(contents, e, new DefaultFactory<Integer>() {
+        Integer currentItemCount = MapUtils.getOrAddDefault(contents, e, new MapUtils.DefaultValueFactory<Integer>() {
             @Override
             public Integer create() {
                 return 0;

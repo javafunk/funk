@@ -1,6 +1,10 @@
 package org.smallvaluesofcool.misc.functional;
 
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
+import org.smallvaluesofcool.misc.functional.functors.DoFunction;
+import org.smallvaluesofcool.misc.functional.functors.MapFunction;
+import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
+import org.smallvaluesofcool.misc.functional.functors.ReduceFunction;
 
 import java.util.Collection;
 import java.util.Iterator;
