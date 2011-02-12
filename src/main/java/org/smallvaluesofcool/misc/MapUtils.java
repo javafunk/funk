@@ -1,4 +1,6 @@
-package org.smallvaluesofcool.misc.collections;
+package org.smallvaluesofcool.misc;
+
+import org.smallvaluesofcool.misc.collections.DefaultFactory;
 
 import java.util.Map;
 

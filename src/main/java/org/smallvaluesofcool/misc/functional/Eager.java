@@ -5,8 +5,8 @@ import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 import java.util.Collection;
 import java.util.Iterator;
 
-import static org.smallvaluesofcool.misc.collections.IterableUtils.materialize;
-import static org.smallvaluesofcool.misc.collections.IteratorUtils.toIterable;
+import static org.smallvaluesofcool.misc.IterableUtils.materialize;
+import static org.smallvaluesofcool.misc.IteratorUtils.toIterable;
 
 public class Eager {
     public static <T> T reduce(Iterable<? extends T> iterable, ReduceFunction<T> function, T initialValue) {

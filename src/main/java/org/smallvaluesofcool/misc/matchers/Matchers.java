@@ -5,8 +5,8 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.smallvaluesofcool.misc.BagUtils;
 import org.smallvaluesofcool.misc.collections.Bag;
-import org.smallvaluesofcool.misc.collections.BagUtils;
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 
 import java.util.*;
@@ -16,7 +16,7 @@ import static java.util.Arrays.asList;
 import static org.apache.commons.lang.StringUtils.join;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
-import static org.smallvaluesofcool.misc.collections.IteratorUtils.toBag;
+import static org.smallvaluesofcool.misc.IteratorUtils.toBag;
 import static org.smallvaluesofcool.misc.functional.Eager.all;
 import static org.smallvaluesofcool.misc.functional.Eager.any;
 import static org.smallvaluesofcool.misc.functional.Lazy.enumerate;

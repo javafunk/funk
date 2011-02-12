@@ -2,6 +2,8 @@ package org.smallvaluesofcool.misc.collections;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.smallvaluesofcool.misc.IteratorUtils;
+
 import static org.junit.Assert.assertThat;
 
 import java.util.List;

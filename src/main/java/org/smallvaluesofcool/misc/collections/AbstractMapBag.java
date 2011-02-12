@@ -1,5 +1,7 @@
 package org.smallvaluesofcool.misc.collections;
 
+import org.smallvaluesofcool.misc.MapUtils;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;

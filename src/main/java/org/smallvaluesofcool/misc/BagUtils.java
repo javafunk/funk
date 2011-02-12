@@ -1,4 +1,7 @@
-package org.smallvaluesofcool.misc.collections;
+package org.smallvaluesofcool.misc;
+
+import org.smallvaluesofcool.misc.collections.Bag;
+import org.smallvaluesofcool.misc.collections.HashBag;
 
 public class BagUtils {
     public static <T> Bag<T> difference(Bag<T> bag1, Bag<T> bag2) {

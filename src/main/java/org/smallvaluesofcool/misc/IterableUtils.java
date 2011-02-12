@@ -1,4 +1,4 @@
-package org.smallvaluesofcool.misc.collections;
+package org.smallvaluesofcool.misc;
 
 import java.util.ArrayList;
 import java.util.Collection;

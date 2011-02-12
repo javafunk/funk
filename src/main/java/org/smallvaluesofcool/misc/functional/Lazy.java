@@ -4,7 +4,7 @@ import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 
 import java.util.Iterator;
 
-import static org.smallvaluesofcool.misc.collections.IteratorUtils.toIterable;
+import static org.smallvaluesofcool.misc.IteratorUtils.toIterable;
 import static org.smallvaluesofcool.misc.datastructures.TwoTuple.twoTuple;
 
 public class Lazy {
