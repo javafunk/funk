@@ -8,8 +8,8 @@ import static org.smallvaluesofcool.misc.collections.IteratorUtils.toIterable;
 import static org.smallvaluesofcool.misc.collections.TwoTuple.twoTuple;
 
 public class Lazy {
-    public static <S, T> Iterable<T> map(Iterable<S> iterable, final MapFunction<S, T> function) {
-        final Iterator<S> iterator = iterable.iterator();
+    public static <S, T> Iterable<T> map(Iterable<? extends S> iterable, final MapFunction<S, T> function) {
+        final Iterator<? extends S> iterator = iterable.iterator();
         return toIterable(
                 new Iterator<T>() {
                     public boolean hasNext() {
@@ -26,9 +26,9 @@ public class Lazy {
                 });
     }
 
-    public static <S, T> Iterable<TwoTuple<S, T>> zip(Iterable<S> iterable1, Iterable<T> iterable2) {
-        final Iterator<S> iterator1 = iterable1.iterator();
-        final Iterator<T> iterator2 = iterable2.iterator();
+    public static <S, T> Iterable<TwoTuple<S, T>> zip(Iterable<? extends S> iterable1, Iterable<? extends T> iterable2) {
+        final Iterator<? extends S> iterator1 = iterable1.iterator();
+        final Iterator<? extends T> iterator2 = iterable2.iterator();
         return toIterable(
                 new Iterator<TwoTuple<S, T>>() {
                     @Override
@@ -48,8 +48,8 @@ public class Lazy {
                 });
     }
 
-    public static <T> Iterable<TwoTuple<Integer, T>> enumerate(Iterable<T> iterable) {
-        final Iterator<T> iterator = iterable.iterator();
+    public static <T> Iterable<TwoTuple<Integer, T>> enumerate(Iterable<? extends T> iterable) {
+        final Iterator<? extends T> iterator = iterable.iterator();
         return toIterable(
                 new Iterator<TwoTuple<Integer, T>>() {
                     private Integer index = 0;
@@ -71,8 +71,8 @@ public class Lazy {
                 });
     }
 
-    public static <T> Iterable<T> each(Iterable<T> iterable, final DoFunction<T> doFunction) {
-        final Iterator<T> iterator = iterable.iterator();
+    public static <T> Iterable<T> each(Iterable<? extends T> iterable, final DoFunction<T> doFunction) {
+        final Iterator<? extends T> iterator = iterable.iterator();
         return toIterable(
                 new Iterator<T>() {
                     @Override

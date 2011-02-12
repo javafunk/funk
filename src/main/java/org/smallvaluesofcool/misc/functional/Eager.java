@@ -6,8 +6,7 @@ import static org.smallvaluesofcool.misc.collections.IterableUtils.materialize;
 import static org.smallvaluesofcool.misc.collections.IteratorUtils.toIterable;
 
 public class Eager {
-
-    public static <T> T reduce(Iterable<T> iterable, ReduceFunction<T> function, T initialValue) {
+    public static <T> T reduce(Iterable<? extends T> iterable, ReduceFunction<T> function, T initialValue) {
         T accumulator = initialValue;
         for (T element : iterable) {
             accumulator = function.accumulate(accumulator, element);
@@ -15,10 +14,10 @@ public class Eager {
         return accumulator;
     }
 
-    public static <T> T reduce(Iterable<T> iterable, ReduceFunction<T> function) {
-        final Iterator<T> iterator = iterable.iterator();
+    public static <T> T reduce(Iterable<? extends T> iterable, ReduceFunction<T> function) {
+        final Iterator<? extends T> iterator = iterable.iterator();
         final T firstElement = iterator.next();
-        final Iterable<T> restOfElements = toIterable(iterator);
+        final Iterable<? extends T> restOfElements = toIterable(iterator);
         return reduce(restOfElements, function, firstElement);
     }
 
@@ -60,31 +59,31 @@ public class Eager {
         return true;
     }
 
-    public static <T> Boolean none(Iterable<T> items, Predicate<T> predicate) {
+    public static <T> Boolean none(Iterable<? extends T> items, Predicate<T> predicate) {
         return !any(items, predicate);
     }
 
-    public static <T> T max(Iterable<? extends Comparable<T>> iterable) {
+    public static <T extends Comparable<T>> T max(Iterable<? extends T> iterable) {
         T max = null;
-        for (Comparable<T> item : iterable) {
+        for (T item : iterable) {
             if (max == null || (item != null && item.compareTo(max) > 0)) {
-                max = (T) item;
+                max = item;
             }
         }
         return max;
     }
 
-    public static <T> T min(Iterable<? extends Comparable<? super T>> iterable) {
+    public static <T extends Comparable<T>> T min(Iterable<? extends T> iterable) {
         T min = null;
-        for (Comparable<? super T> item : iterable) {
+        for (T item : iterable) {
             if (min == null || (item != null && item.compareTo(min) < 0)) {
-                min = (T) item;
+                min = item;
             }
         }
         return min;
     }
 
-    public static <T> void each(Iterable<T> targets, DoFunction<T> doFunction) {
+    public static <T> void each(Iterable<? extends T> targets, DoFunction<T> doFunction) {
         materialize(Lazy.each(targets, doFunction));
     }
 }
