@@ -17,9 +17,9 @@ import static org.smallvaluesofcool.misc.matchers.Matchers.hasOnlyItemsInOrder;
 public class LazyTest {
 
     @Test
-    public void shouldMapCollectionUsingCustomFunction() throws Exception {
+    public void shouldMapIterableUsingCustomMapFunction() throws Exception {
         // Given
-        Collection<Integer> input = listWith(1, 2, 3);
+        Iterable<Integer> input = listWith(1, 2, 3);
 
         // When
         Iterable<String> actual = Lazy.map(input, new MapFunction<Integer, String>() {

@@ -1,5 +1,8 @@
 package org.smallvaluesofcool.misc.functional;
 
+import org.smallvaluesofcool.misc.collections.TwoTuple;
+
+import java.util.Collection;
 import java.util.Iterator;
 
 import static org.smallvaluesofcool.misc.collections.IterableUtils.materialize;
@@ -83,7 +86,19 @@ public class Eager {
         return min;
     }
 
-    public static <T> void each(Iterable<? extends T> targets, DoFunction<T> doFunction) {
-        materialize(Lazy.each(targets, doFunction));
+    public static <S, T> Collection<T> map(Iterable<? extends S> iterable, MapFunction<S, T> function) {
+        return materialize(Lazy.map(iterable, function));
+    }
+
+    public static <S, T> Collection<TwoTuple<S, T>> zip(Iterable<? extends S> iterable1, Iterable<? extends T> iterable2) {
+        return materialize(Lazy.zip(iterable1, iterable2));
+    }
+
+    public static <T> Collection<TwoTuple<Integer, T>> enumerate(Iterable<? extends T> iterable) {
+        return materialize(Lazy.enumerate(iterable));
+    }
+
+    public static <T> void each(Iterable<? extends T> targets, DoFunction<T> function) {
+        materialize(Lazy.each(targets, function));
     }
 }

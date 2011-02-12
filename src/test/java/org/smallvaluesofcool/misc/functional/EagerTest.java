@@ -2,6 +2,7 @@ package org.smallvaluesofcool.misc.functional;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.smallvaluesofcool.misc.collections.TwoTuple;
 
 import java.util.Collection;
 import java.util.List;
@@ -11,6 +12,8 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.smallvaluesofcool.misc.Literals.listWith;
+import static org.smallvaluesofcool.misc.Literals.mapWith;
+import static org.smallvaluesofcool.misc.collections.TwoTuple.twoTuple;
 
 public class EagerTest {
     @Test
@@ -178,6 +181,57 @@ public class EagerTest {
 
         // Then
         assertThat(actual, is(6));
+    }
+
+    @Test
+    public void shouldMapIterableUsingCustomMapFunction() {
+        // Given
+        Iterable<Integer> inputs = listWith(1, 2, 3);
+        Collection<Integer> expectedOutputs = listWith(2, 4, 6);
+
+        // When
+        Collection<Integer> actualOutputs = Eager.map(inputs, new MapFunction<Integer, Integer>(){
+            @Override
+            public Integer map(Integer input) {
+                return input * 2;
+            }
+        });
+
+        // Then
+        assertThat(actualOutputs, is(expectedOutputs));
+    }
+
+    @Test
+    public void shouldZipIterables() {
+        // Given
+        Iterable<Integer> iterable1 = listWith(1, 2, 3);
+        Iterable<String> iterable2 = listWith("First", "Second", "Third");
+        Collection<TwoTuple<Integer, String>> expectedOutput = listWith(
+                twoTuple(1, "First"),
+                twoTuple(2, "Second"),
+                twoTuple(3, "Third"));
+
+        // When
+        Collection<TwoTuple<Integer, String>> actualOutput = Eager.zip(iterable1, iterable2);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldEnumerateIterable() {
+        // Given
+        Iterable<String> iterable = listWith("a", "b", "c");
+        Collection<TwoTuple<Integer, String>> expectedOutput = listWith(
+                twoTuple(0, "a"),
+                twoTuple(1, "b"),
+                twoTuple(2, "c"));
+
+        // When
+        Collection<TwoTuple<Integer, String>> actualOutput = Eager.enumerate(iterable);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
     }
 
     @Test

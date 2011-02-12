@@ -1,5 +1,4 @@
-* Write tests for all and any in Eager
-* Writer Eager versions of map, zip and enumerate
+* Write tests for sum
 * Write tests for IterableUtils, IteratorUtils, BagUtils, MapUtils, TwoTuple
 * Add ThreeTuple and FourTuple and ... classes
 * Add SetUtils, setWith Literal and Builder
