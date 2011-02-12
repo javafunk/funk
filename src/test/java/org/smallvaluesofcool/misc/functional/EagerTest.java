@@ -1,6 +1,5 @@
 package org.smallvaluesofcool.misc.functional;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 import org.smallvaluesofcool.misc.functional.functors.*;
@@ -37,7 +36,7 @@ public class EagerTest {
                 listWith(7, 8, 9).build());
 
         // When
-        List<Integer> actual = Eager.reduce(inputLists, new SymmetricReduceFunction<List<Integer>>() {
+        List<Integer> actual = Eager.reduce(inputLists, new ReduceFunction<List<Integer>, List<Integer>>() {
             // Example flattening accumulator.
             public List<Integer> accumulate(List<Integer> accumulator, List<Integer> element) {
                 accumulator.addAll(element);

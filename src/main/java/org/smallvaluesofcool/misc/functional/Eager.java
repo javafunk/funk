@@ -18,7 +18,7 @@ public class Eager {
         return accumulator;
     }
 
-    public static <T> T reduce(Iterable<? extends T> iterable, SymmetricReduceFunction<T> function) {
+    public static <T> T reduce(Iterable<? extends T> iterable, ReduceFunction<T, T> function) {
         final Iterator<? extends T> iterator = iterable.iterator();
         final T firstElement = iterator.next();
         final Iterable<? extends T> restOfElements = toIterable(iterator);
@@ -29,16 +29,16 @@ public class Eager {
         return reduce(iterable, integerAdditionAccumulator());
     }
 
-    public static SymmetricReduceFunction<Integer> integerAdditionAccumulator() {
-        return new SymmetricReduceFunction<Integer>() {
+    public static ReduceFunction<Integer, Integer> integerAdditionAccumulator() {
+        return new ReduceFunction<Integer, Integer>() {
             public Integer accumulate(Integer accumulator, Integer element) {
                 return accumulator + element;
             }
         };
     }
 
-    public static SymmetricReduceFunction<Long> longAdditionAccumulator() {
-        return new SymmetricReduceFunction<Long>() {
+    public static ReduceFunction<Long, Long> longAdditionAccumulator() {
+        return new ReduceFunction<Long, Long>() {
             public Long accumulate(Long accumulator, Long element) {
                 return accumulator + element;
             }
