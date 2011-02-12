@@ -11,7 +11,7 @@ public class FourTuple<S, T, U, V> {
     private U third;
     private V fourth;
 
-    private FourTuple(S first, T second, U third, V fourth) {
+    public FourTuple(S first, T second, U third, V fourth) {
         this.first = first;
         this.second = second;
         this.third = third;
@@ -44,9 +44,5 @@ public class FourTuple<S, T, U, V> {
 
     public String toString() {
         return format("(%s, %s, %s, %s)", first, second, third, fourth);
-    }
-
-    public static <S, T, U, V> FourTuple<S, T, U, V> fourTuple(S first, T second, U third, V fourth) {
-        return new FourTuple<S, T, U, V>(first, second, third, fourth);
     }
 }

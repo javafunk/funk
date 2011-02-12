@@ -9,7 +9,7 @@ public class TwoTuple<S, T> {
     private S first;
     private T second;
 
-    private TwoTuple(S first, T second) {
+    public TwoTuple(S first, T second) {
         this.first = first;
         this.second = second;
     }
@@ -34,7 +34,4 @@ public class TwoTuple<S, T> {
         return format("(%s, %s)", first, second);
     }
 
-    public static <S, T> TwoTuple<S, T> twoTuple(S first, T second) {
-        return new TwoTuple<S, T>(first, second);
-    }
 }

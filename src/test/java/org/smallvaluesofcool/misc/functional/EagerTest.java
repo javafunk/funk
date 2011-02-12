@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.smallvaluesofcool.misc.Literals.listWith;
-import static org.smallvaluesofcool.misc.datastructures.TwoTuple.twoTuple;
+import static org.smallvaluesofcool.misc.Literals.twoTuple;
 
 public class EagerTest {
     @Test

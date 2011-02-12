@@ -1,5 +1,9 @@
 package org.smallvaluesofcool.misc;
 
+import org.smallvaluesofcool.misc.datastructures.FourTuple;
+import org.smallvaluesofcool.misc.datastructures.ThreeTuple;
+import org.smallvaluesofcool.misc.datastructures.TwoTuple;
+
 import java.util.*;
 
 import static java.util.Arrays.asList;
@@ -11,6 +15,18 @@ public class Literals {
 
     public static <S, T> MapBuilder<S, T> mapWith(S key, T value) {
         return new MapBuilder<S, T>().and(key, value);
+    }
+
+    public static <S, T> TwoTuple<S, T> twoTuple(S first, T second) {
+        return new TwoTuple<S, T>(first, second);
+    }
+
+    public static <S, T, U> ThreeTuple<S, T, U> threeTuple(S first, T second, U third) {
+        return new ThreeTuple<S, T, U>(first, second, third);
+    }
+
+    public static <S, T, U, V> FourTuple<S, T, U, V> fourTuple(S first, T second, U third, V fourth) {
+        return new FourTuple<S, T, U, V>(first, second, third, fourth);
     }
 
     public static class ListBuilder<T> extends ArrayList<T> {

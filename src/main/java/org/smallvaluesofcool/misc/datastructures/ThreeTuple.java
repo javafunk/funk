@@ -10,7 +10,7 @@ public class ThreeTuple<S, T, U> {
     private T second;
     private U third;
 
-    private ThreeTuple(S first, T second, U third) {
+    public ThreeTuple(S first, T second, U third) {
         this.first = first;
         this.second = second;
         this.third = third;
@@ -40,7 +40,4 @@ public class ThreeTuple<S, T, U> {
         return format("(%s, %s, %s)", first, second, third);
     }
 
-    public static <S, T, U> ThreeTuple<S, T, U> threeTuple(S first, T second, U third) {
-        return new ThreeTuple<S, T, U>(first, second, third);
-    }
 }

@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 import static org.smallvaluesofcool.misc.Literals.listWith;
 import static org.smallvaluesofcool.misc.IterableUtils.toList;
-import static org.smallvaluesofcool.misc.datastructures.TwoTuple.twoTuple;
+import static org.smallvaluesofcool.misc.Literals.twoTuple;
 import static org.smallvaluesofcool.misc.matchers.Matchers.hasOnlyItemsInOrder;
 
 public class LazyTest {

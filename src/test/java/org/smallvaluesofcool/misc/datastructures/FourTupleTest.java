@@ -4,8 +4,7 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.smallvaluesofcool.misc.datastructures.FourTuple.fourTuple;
-import static org.smallvaluesofcool.misc.datastructures.ThreeTuple.threeTuple;
+import static org.smallvaluesofcool.misc.Literals.fourTuple;
 
 public class FourTupleTest {
     @Test

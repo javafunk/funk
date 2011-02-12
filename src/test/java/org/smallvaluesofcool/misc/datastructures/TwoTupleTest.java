@@ -1,11 +1,10 @@
 package org.smallvaluesofcool.misc.datastructures;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.smallvaluesofcool.misc.datastructures.TwoTuple.twoTuple;
+import static org.smallvaluesofcool.misc.Literals.twoTuple;
 
 public class TwoTupleTest {
     @Test

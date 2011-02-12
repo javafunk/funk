@@ -5,7 +5,7 @@ import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 import java.util.Iterator;
 
 import static org.smallvaluesofcool.misc.IteratorUtils.toIterable;
-import static org.smallvaluesofcool.misc.datastructures.TwoTuple.twoTuple;
+import static org.smallvaluesofcool.misc.Literals.twoTuple;
 
 public class Lazy {
     public static <S, T> Iterable<T> map(Iterable<? extends S> iterable, final MapFunction<S, T> function) {
