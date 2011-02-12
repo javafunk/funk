@@ -5,8 +5,12 @@ import org.junit.Test;
 import org.smallvaluesofcool.misc.collections.TwoTuple;
 
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
+import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.*;
 import static org.smallvaluesofcool.misc.Literals.listWith;
 import static org.smallvaluesofcool.misc.collections.IterableUtils.toList;
 import static org.smallvaluesofcool.misc.collections.TwoTuple.twoTuple;
@@ -27,7 +31,7 @@ public class LazyTest {
         });
 
         // Then
-        assertThat(toList(actual), Matchers.hasItems("1", "2", "3"));
+        assertThat(toList(actual), hasItems("1", "2", "3"));
     }
 
     @Test
@@ -84,5 +88,31 @@ public class LazyTest {
 
         // Then
         assertThat(toList(actual), hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldLazilyExecuteSuppliedFunctionOnEachElementInTheIterable() {
+        // Given
+        Iterable<Target> targets = listWith(mock(Target.class), mock(Target.class), mock(Target.class));
+
+        // When
+        Iterable<Target> preparedTargets = Lazy.each(targets, new DoFunction<Target>() {
+            @Override
+            public void actOn(Target input) {
+                input.doSomething();
+            }
+        });
+
+        // Then
+        Iterator<Target> preparedTargetsIterator = preparedTargets.iterator();
+        for (Target target : targets) {
+            verify(target, never()).doSomething();
+            preparedTargetsIterator.next();
+            verify(target, times(1)).doSomething();
+        }
+    }
+
+    private interface Target {
+        void doSomething();
     }
 }

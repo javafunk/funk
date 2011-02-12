@@ -2,6 +2,8 @@
   <library name="test">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/test/junit-dep-4.8.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/test/mockito-core-1.8.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/test/com.springsource.org.objenesis-1.0.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
