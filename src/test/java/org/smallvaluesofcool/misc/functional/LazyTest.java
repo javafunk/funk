@@ -1,7 +1,7 @@
 package org.smallvaluesofcool.misc.functional;
 
 import org.junit.Test;
-import org.smallvaluesofcool.misc.collections.TwoTuple;
+import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 import static org.smallvaluesofcool.misc.Literals.listWith;
 import static org.smallvaluesofcool.misc.collections.IterableUtils.toList;
-import static org.smallvaluesofcool.misc.collections.TwoTuple.twoTuple;
+import static org.smallvaluesofcool.misc.datastructures.TwoTuple.twoTuple;
 import static org.smallvaluesofcool.misc.matchers.Matchers.hasOnlyItemsInOrder;
 
 public class LazyTest {

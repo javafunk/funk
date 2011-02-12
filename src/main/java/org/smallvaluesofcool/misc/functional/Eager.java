@@ -1,6 +1,6 @@
 package org.smallvaluesofcool.misc.functional;
 
-import org.smallvaluesofcool.misc.collections.TwoTuple;
+import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 
 import java.util.Collection;
 import java.util.Iterator;

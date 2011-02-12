@@ -1,4 +1,4 @@
-package org.smallvaluesofcool.misc.collections;
+package org.smallvaluesofcool.misc.datastructures;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;

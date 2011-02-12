@@ -3,7 +3,5 @@
 * Add ThreeTuple and FourTuple and ... classes
 * Add SetUtils, setWith Literal and Builder
 * Add bagWith Literal
-* Rename Predicate to PredicateFunction ? (for consistency with MapFunction, ReduceFunction and DoFunction)
-* Move tuples into a datastructure package
 * Move Utils classes to project root ? (the Utils classes probably don't belong in the collections package)
 * Add eager and lazy filter methods

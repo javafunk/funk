@@ -1,11 +1,11 @@
 package org.smallvaluesofcool.misc.functional;
 
-import org.smallvaluesofcool.misc.collections.TwoTuple;
+import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 
 import java.util.Iterator;
 
 import static org.smallvaluesofcool.misc.collections.IteratorUtils.toIterable;
-import static org.smallvaluesofcool.misc.collections.TwoTuple.twoTuple;
+import static org.smallvaluesofcool.misc.datastructures.TwoTuple.twoTuple;
 
 public class Lazy {
     public static <S, T> Iterable<T> map(Iterable<? extends S> iterable, final MapFunction<S, T> function) {

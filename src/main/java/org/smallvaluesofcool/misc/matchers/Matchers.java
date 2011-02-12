@@ -7,7 +7,7 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.smallvaluesofcool.misc.collections.Bag;
 import org.smallvaluesofcool.misc.collections.BagUtils;
-import org.smallvaluesofcool.misc.collections.TwoTuple;
+import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 
 import java.util.*;
 
@@ -22,7 +22,6 @@ import static org.smallvaluesofcool.misc.functional.Eager.any;
 import static org.smallvaluesofcool.misc.functional.Lazy.enumerate;
 
 public class Matchers {
-
     public static <T> Matcher<Collection<T>> hasOnlyItemsInAnyOrder(T... items) {
         return hasOnlyItemsInAnyOrder(asList(items));
     }
@@ -100,7 +99,6 @@ public class Matchers {
         return new TypeSafeDiagnosingMatcher<Collection<T>>() {
             @Override
             protected boolean matchesSafely(Collection<T> actualItems, Description description) {
-//                List<T> actualItemList = toList(actualItems);
                 Matcher<Collection<T>> orderAgnosticMatcher = hasOnlyItemsInAnyOrder(expectedItems);
                 if (!orderAgnosticMatcher.matches(actualItems)) {
                     orderAgnosticMatcher.describeMismatch(actualItems, description);

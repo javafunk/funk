@@ -2,7 +2,7 @@ package org.smallvaluesofcool.misc.functional;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.smallvaluesofcool.misc.collections.TwoTuple;
+import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 
 import java.util.Collection;
 import java.util.List;
@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.smallvaluesofcool.misc.Literals.listWith;
-import static org.smallvaluesofcool.misc.collections.TwoTuple.twoTuple;
+import static org.smallvaluesofcool.misc.datastructures.TwoTuple.twoTuple;
 
 public class EagerTest {
     @Test
