@@ -9,7 +9,7 @@ public class HashBag<E> extends AbstractMapBag<E> implements Bag<E> {
         super(new HashMap<E, Integer>());
     }
 
-    public HashBag(Collection items) {
+    public HashBag(Collection<E> items) {
         super(new HashMap<E, Integer>(), items);
     }
 

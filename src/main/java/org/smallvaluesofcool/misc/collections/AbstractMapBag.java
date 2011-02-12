@@ -15,7 +15,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         this.contents = map;
     }
 
-    public AbstractMapBag(HashMap<E, Integer> map, Collection items) {
+    public AbstractMapBag(HashMap<E, Integer> map, Collection<E> items) {
         this(map);
         addAll(items);
     }
