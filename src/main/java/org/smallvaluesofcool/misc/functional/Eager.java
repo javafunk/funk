@@ -8,7 +8,6 @@ import org.smallvaluesofcool.misc.functional.functors.ReduceFunction;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import static org.smallvaluesofcool.misc.IterableUtils.materialize;
 import static org.smallvaluesofcool.misc.IteratorUtils.toIterable;
@@ -133,5 +132,13 @@ public class Eager {
 
     public static <T> void each(Iterable<? extends T> targets, DoFunction<T> function) {
         materialize(Lazy.each(targets, function));
+    }
+
+    public static <T> Collection<T> filter(Iterable<T> iterable, PredicateFunction<T> predicate) {
+        return materialize(Lazy.filter(iterable, predicate));
+    }
+
+    public static <T> Collection<T> reject(Iterable<T> iterable, PredicateFunction<T> predicate) {
+        return materialize(Lazy.reject(iterable, predicate));
     }
 }

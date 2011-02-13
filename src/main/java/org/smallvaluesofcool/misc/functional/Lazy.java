@@ -1,9 +1,9 @@
 package org.smallvaluesofcool.misc.functional;
 
-import org.apache.commons.lang.mutable.MutableInt;
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 import org.smallvaluesofcool.misc.functional.functors.DoFunction;
 import org.smallvaluesofcool.misc.functional.functors.MapFunction;
+import org.smallvaluesofcool.misc.functional.functors.NotPredicateFunction;
 import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
 import org.smallvaluesofcool.misc.functional.iterators.MappedIterator;
 import org.smallvaluesofcool.misc.functional.iterators.PredicatedIterator;
@@ -20,6 +20,10 @@ public class Lazy {
 
     public static <T> Iterable<T> filter(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
         return toIterable(new PredicatedIterator<T>(iterable.iterator(), predicate));
+    }
+
+    public static <T> Iterable<T> reject(Iterable<T> iterable, PredicateFunction<T> predicate) {
+        return toIterable(new PredicatedIterator<T>(iterable.iterator(), new NotPredicateFunction<T>(predicate)));
     }
 
     public static <T> Iterable<TwoTuple<Integer, T>> enumerate(Iterable<? extends T> iterable) {

@@ -132,6 +132,23 @@ public class LazyTest {
         assertThat(actualOutputs, is(expectedOutputs));
     }
 
+    @Test
+    public void shouldOnlyReturnThoseElementsThatDontMatchTheSuppliedPredicate() {
+        // Given
+        List<String> inputs = listWith("ac", "ab", "bc", "abc", "bcd", "bad");
+        Collection<String> expectedOutputs = listWith("ab", "bad");
+
+        // When
+        Collection<String> actualOutputs = materialize(Lazy.reject(inputs, new PredicateFunction<String>() {
+            public boolean matches(String item) {
+                return item.contains("c");
+            }
+        }));
+
+        // Then
+        assertThat(actualOutputs, is(expectedOutputs));
+    }
+
     private interface Target {
         void doSomething();
     }

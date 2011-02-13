@@ -320,4 +320,48 @@ public class EagerTest {
     private interface Target {
         void doSomething();
     }
+
+    @Test
+    public void shouldOnlyReturnThoseElementsMatchingTheSuppliedPredicate() {
+        // Given
+        Iterable<Integer> inputs = listWith(1, 2, 3, 4, 5, 6);
+        Collection<Integer> expectedOutput = listWith(2, 4, 6);
+
+        // When
+        Collection<Integer> actualOutput = Eager.filter(inputs, new PredicateFunction<Integer>(){
+            @Override
+            public boolean matches(Integer item) {
+                return isEven(item);
+            }
+
+            private boolean isEven(Integer item) {
+                return item % 2 == 0;
+            }
+        });
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldOnlyReturnThoseElementsThatDontMatchTheSuppliedPredicate() {
+        // Given
+        Iterable<Integer> inputs = listWith(1, 2, 3, 4, 5, 6);
+        Collection<Integer> expectedOutput = listWith(1, 3, 5);
+
+        // When
+        Collection<Integer> actualOutput = Eager.reject(inputs, new PredicateFunction<Integer>(){
+            @Override
+            public boolean matches(Integer item) {
+                return isEven(item);
+            }
+
+            private boolean isEven(Integer item) {
+                return item % 2 == 0;
+            }
+        });
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
 }

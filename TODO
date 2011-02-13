@@ -1,6 +1,5 @@
 * Finish AbstractMapBag implementation.
 * Add SetUtils
-* Add eager and lazy filter and reject methods
 * Add eager and lazy select methods which delegate to filter
 * Add detect method with a find alias
 * Add eager and lazy partition methods

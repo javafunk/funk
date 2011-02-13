@@ -20,7 +20,7 @@ public class IterableUtilsTest {
             private Integer cursor = 0;
             @Override
             public boolean hasNext() {
-                return cursor < (expectedList.size() - 1);
+                return cursor < (expectedList.size());
             }
 
             @Override
