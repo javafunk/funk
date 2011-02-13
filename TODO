@@ -1,5 +1,5 @@
-* Write tests for sum
-* Write tests for IterableUtils, IteratorUtils, BagUtils, MapUtils
+* Write tests for IteratorUtils, BagUtils, MapUtils
+* Finish AbstractMapBag implementation.
 * Add SetUtils, setWith Literal and Builder
 * Add bagWith Literal
 * Add eager and lazy filter and reject methods
