@@ -4,11 +4,13 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.smallvaluesofcool.misc.IteratorUtils;
 
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
+import static org.smallvaluesofcool.misc.Literals.bagWith;
 import static org.smallvaluesofcool.misc.Literals.listWith;
 
 public class HashBagTest {
@@ -150,5 +152,110 @@ public class HashBagTest {
 
         // Then
         assertThat(bag.size(), is(0));
+    }
+
+    @Test
+    public void shouldBeEqualIfHasSameElements() {
+        // Given
+        Bag<Integer> bag1 = bagWith(1, 1, 4);
+        Bag<Integer> bag2 = bagWith(1, 4, 1);
+
+        // When
+        Boolean isEqual = bag1.equals(bag2);
+
+        // Then
+        assertThat(isEqual, is(true));
+    }
+
+    @Test
+    public void shouldNotBeEqualIfHasDifferentElements() {
+        // Given
+        Bag<Integer> bag1 = bagWith(1, 1, 2);
+        Bag<Integer> bag2 = bagWith(1, 4, 1);
+
+        // When
+        Boolean isEqual = bag1.equals(bag2);
+
+        // Then
+        assertThat(isEqual, is(false));
+    }
+
+    @Test
+    public void shouldBeReflexivelyEqual() {
+        // Given
+        Bag<Integer> bag = bagWith(1, 2, 2);
+
+        // When
+
+        // Then
+        assertThat(bag.equals(bag), is(true));
+    }
+
+    @Test
+    public void shouldBeSymmetricallyEqual() {
+        // Given
+        Bag<Integer> bag1 = bagWith(1, 2, 2);
+        Bag<Integer> bag2 = bagWith(1, 2, 2);
+        Bag<Integer> bag3 = bagWith(1, 1, 2);
+
+        // When
+
+        // Then
+        assertThat(bag1.equals(bag2), is(bag2.equals(bag1)));
+        assertThat(bag2.equals(bag3), is(bag3.equals(bag2)));
+    }
+
+    @Test
+    public void shouldBeTransitivelyEqual() {
+        // Given
+        Bag<Integer> bag1 = bagWith(1, 2, 2);
+        Bag<Integer> bag2 = bagWith(1, 2, 2);
+        Bag<Integer> bag3 = bagWith(1, 2, 2);
+
+        // When
+
+        // Then
+        assertThat(bag1.equals(bag2), is(true));
+        assertThat(bag2.equals(bag3), is(true));
+        assertThat(bag1.equals(bag3), is(true));
+    }
+
+    @Test
+    public void shouldReturnFalseIfTestingEqualityWithNull() {
+        // Given
+        Bag<Integer> bag = bagWith(1, 2, 3);
+
+        // When
+
+        // Then
+        assertThat(bag.equals(null), is(false));
+    }
+
+    @Test
+    public void shouldHaveSameHashCodeIfEqual() {
+        // Given
+        Bag<Integer> bag1 = bagWith(1, 2, 2);
+        Bag<Integer> bag2 = bagWith(1, 2, 2);
+
+        // When
+        Integer hashCode1 = bag1.hashCode();
+        Integer hashCode2 = bag2.hashCode();
+
+        // Then
+        assertThat(hashCode1, is(hashCode2));
+    }
+
+    @Test
+    public void shouldHaveDifferentHashCodesIfNotEqual() {
+        // Given
+        Bag<Integer> bag1 = bagWith(1, 2, 2);
+        Bag<Integer> bag2 = bagWith(3, 2, 1);
+
+        // When
+        Integer hashCode1 = bag1.hashCode();
+        Integer hashCode2 = bag2.hashCode();
+
+        // Then
+        assertThat(hashCode1, is(not(hashCode2)));
     }
 }
