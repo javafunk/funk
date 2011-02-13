@@ -1,5 +1,6 @@
-* Write tests for IteratorUtils, BagUtils, MapUtils
+* Write tests for MapUtils
 * Write tests for tuple literals
+* Write test for equals and hashcode on AbstractMapBag
 * Finish AbstractMapBag implementation.
 * Add SetUtils, setWith Literal and Builder
 * Add bagWith Literal
@@ -16,3 +17,5 @@
 * Add eager and lazy zip methods across 3 and 4 iterables
 * Add eager and lazy cycle methods
 * Add combination and permutation methods (ListUtils ?)
+* Add union, intersection and symmetric difference methods to BagUtils
+* Add union, intersection, difference and symmetric difference methods to SetUtils
