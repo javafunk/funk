@@ -7,7 +7,6 @@ import java.util.*;
 
 
 public class IteratorUtils {
-
     public static <T> Iterable<T> toIterable(Iterator<T> iterator) {
         return new IteratorAsIterable<T>(iterator);
     }

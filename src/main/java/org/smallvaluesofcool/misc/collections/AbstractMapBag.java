@@ -1,5 +1,7 @@
 package org.smallvaluesofcool.misc.collections;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.smallvaluesofcool.misc.MapUtils;
 
 import java.util.Collection;
@@ -10,7 +12,6 @@ import java.util.Map;
 import static org.smallvaluesofcool.misc.functional.Eager.sum;
 
 public abstract class AbstractMapBag<E> implements Bag<E> {
-
     private Map<E, Integer> contents;
 
     public AbstractMapBag(Map<E, Integer> map) {
@@ -138,5 +139,15 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     @Override
     public void clear() {
         contents.clear();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return EqualsBuilder.reflectionEquals(this, other);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 }

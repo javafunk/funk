@@ -1,4 +1,5 @@
 * Write tests for IteratorUtils, BagUtils, MapUtils
+* Write tests for tuple literals
 * Finish AbstractMapBag implementation.
 * Add SetUtils, setWith Literal and Builder
 * Add bagWith Literal
