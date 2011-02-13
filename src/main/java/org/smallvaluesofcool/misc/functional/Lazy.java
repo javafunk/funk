@@ -9,6 +9,8 @@ import org.smallvaluesofcool.misc.functional.iterators.MappedIterator;
 import org.smallvaluesofcool.misc.functional.iterators.PredicatedIterator;
 
 import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.smallvaluesofcool.misc.IteratorUtils.toIterable;
 import static org.smallvaluesofcool.misc.Literals.twoTuple;
@@ -25,6 +27,8 @@ public class Lazy {
     public static <T> Iterable<T> reject(Iterable<T> iterable, PredicateFunction<T> predicate) {
         return toIterable(new PredicatedIterator<T>(iterable.iterator(), new NotPredicateFunction<T>(predicate)));
     }
+
+    
 
     public static <T> Iterable<TwoTuple<Integer, T>> enumerate(Iterable<? extends T> iterable) {
         return toIterable(new MappedIterator<T, TwoTuple<Integer, T>>(iterable.iterator(),
@@ -80,5 +84,45 @@ public class Lazy {
                         throw new UnsupportedOperationException();
                     }
                 });
+    }
+
+    public static <T> Iterable<T> take(Iterable<? extends T> iterable, final int numberToTake) {
+        final Iterator<? extends T> iterator = iterable.iterator();
+        return toIterable(
+                new Iterator<T>() {
+                    private int index = 0;
+
+                    @Override
+                    public boolean hasNext() {
+                        return (index < numberToTake) && iterator.hasNext();
+                    }
+
+                    @Override
+                    public T next() {
+                        if (hasNext()) {
+                            T next = iterator.next();
+                            index++;
+                            return next;
+                        } else {
+                            throw new NoSuchElementException();
+                        }
+
+                    }
+
+                    @Override
+                    public void remove() {
+                        throw new UnsupportedOperationException();
+                    }
+                });
+    }
+
+    public static <T> Iterable<T> drop(Iterable<? extends T> iterable, int numberToTake) {
+        final Iterator<? extends T> iterator = iterable.iterator();
+        for (int i = 0; i < numberToTake; i++) {
+            if (iterator.hasNext()) {
+                iterator.next();
+            }
+        }
+        return toIterable((Iterator<T>) iterator);
     }
 }

@@ -115,6 +115,10 @@ public class LazyTest {
         }
     }
 
+    private interface Target {
+        void doSomething();
+    }
+
     @Test
     public void shouldOnlyReturnThoseElementsMatchingTheSuppliedPredicate() {
         // Given
@@ -149,7 +153,29 @@ public class LazyTest {
         assertThat(actualOutputs, is(expectedOutputs));
     }
 
-    private interface Target {
-        void doSomething();
+    @Test
+    public void shouldReturnAnIterableContainingTheSpecifiedNumberOfElements() {
+        // Given
+        List<Integer> tenFibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
+        Collection<Integer> expectedOutputs = listWith(1, 1, 2, 3, 5);
+
+        // When
+        Collection<Integer> actualOutputs = materialize(Lazy.take(tenFibonaccis, 5));
+
+        // Then
+        assertThat(actualOutputs, is(expectedOutputs));
+    }
+
+    @Test
+    public void shouldReturnAnIterableWithTheFirstNElementsDropped() {
+        // Given
+        List<Integer> tenFibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
+        Collection<Integer> expectedOutputs = listWith(8, 13, 21, 34, 55);
+
+        // When
+        Collection<Integer> actualOutputs = materialize(Lazy.drop(tenFibonaccis, 5));
+
+        // Then
+        assertThat(actualOutputs, is(expectedOutputs));
     }
 }

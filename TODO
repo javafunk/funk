@@ -1,13 +1,15 @@
 * Finish AbstractMapBag implementation.
 * Add SetUtils
+* Add eager and lazy collect methods which delegate to map
 * Add eager and lazy select methods which delegate to filter
 * Add detect method with a find alias
 * Add eager and lazy partition methods
 * Add eager and lazy group methods
-* Add eager and lazy window methods
-* Add eager and lazy collect methods which delegate to map
-* Add eager and lazy take and takeWhile methods
-* Add eager and lazy drop and dropWhile methods
+* Add eager and lazy window (?) methods
+* Add eager take methods
+* Add eager and lazy takeWhile methods
+* Add eager drop methods
+* Add eager and lazy dropWhile methods
 * Add first,first(n) and last,last(n) methods
 * Add eager and lazy zip methods across 3 and 4 iterables
 * Add eager and lazy cycle methods
