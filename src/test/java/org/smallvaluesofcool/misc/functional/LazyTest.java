@@ -4,20 +4,23 @@ import org.junit.Test;
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 import org.smallvaluesofcool.misc.functional.functors.DoFunction;
 import org.smallvaluesofcool.misc.functional.functors.MapFunction;
+import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
+import static org.smallvaluesofcool.misc.IterableUtils.materialize;
 import static org.smallvaluesofcool.misc.Literals.listWith;
 import static org.smallvaluesofcool.misc.IterableUtils.toList;
 import static org.smallvaluesofcool.misc.Literals.twoTuple;
 import static org.smallvaluesofcool.misc.matchers.Matchers.hasOnlyItemsInOrder;
 
 public class LazyTest {
-
     @Test
     public void shouldMapIterableUsingCustomMapFunction() throws Exception {
         // Given
@@ -110,6 +113,23 @@ public class LazyTest {
             preparedTargetsIterator.next();
             verify(target, times(1)).doSomething();
         }
+    }
+
+    @Test
+    public void shouldOnlyReturnThoseElementsMatchingTheSuppliedPredicate() {
+        // Given
+        List<String> inputs = listWith("ac", "ab", "bc", "abc", "bcd", "bad");
+        Collection<String> expectedOutputs = listWith("ac", "bc", "abc", "bcd");
+
+        // When
+        Collection<String> actualOutputs = materialize(Lazy.filter(inputs, new PredicateFunction<String>() {
+            public boolean matches(String item) {
+                return item.contains("c");
+            }
+        }));
+
+        // Then
+        assertThat(actualOutputs, is(expectedOutputs));
     }
 
     private interface Target {
