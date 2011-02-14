@@ -125,4 +125,9 @@ public class Lazy {
         }
         return toIterable((Iterator<T>) iterator);
     }
+
+    public static <T> TwoTuple<Iterable<T>,Iterable<T>> partition(
+            Iterable<T> iterable, PredicateFunction<T> predicate) {
+        return twoTuple(filter(iterable, predicate), reject(iterable, predicate));
+    }
 }

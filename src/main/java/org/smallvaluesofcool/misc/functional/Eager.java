@@ -11,6 +11,7 @@ import java.util.Iterator;
 
 import static org.smallvaluesofcool.misc.IterableUtils.materialize;
 import static org.smallvaluesofcool.misc.IteratorUtils.toIterable;
+import static org.smallvaluesofcool.misc.Literals.twoTuple;
 
 public class Eager {
     public static <S, T> T reduce(Iterable<? extends S> iterable, T initialValue, ReduceFunction<S, T> function) {
@@ -148,5 +149,11 @@ public class Eager {
 
     public static <T> Collection<T> drop(Iterable<? extends T> iterable, int numberToDrop) {
         return materialize(Lazy.drop(iterable, numberToDrop));
+    }
+
+    public static <T> TwoTuple<Collection<T>,Collection<T>> partition(
+            Iterable<T> iterable, PredicateFunction<T> predicate) {
+        TwoTuple<Iterable<T>, Iterable<T>> partition = Lazy.partition(iterable, predicate);
+        return twoTuple(materialize(partition.first()), materialize(partition.second()));
     }
 }

@@ -178,4 +178,31 @@ public class LazyTest {
         // Then
         assertThat(actualOutputs, is(expectedOutputs));
     }
+
+    @Test
+    public void shouldReturnMatchingElementsFirstAndNonMatchingElementsSecond() {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8);
+        Collection<Integer> expectedMatchingItems = listWith(2, 4, 6, 8);
+        Collection<Integer> expectedNonMatchingItems = listWith(1, 3, 5, 7);
+
+        // When
+        TwoTuple<Iterable<Integer>, Iterable<Integer>> partitionResults = Lazy.partition(input,
+                new PredicateFunction<Integer>(){
+                    public boolean matches(Integer item) {
+                        return isEven(item);
+                    }
+
+                    private boolean isEven(Integer item) {
+                        return item % 2 == 0;
+                    }
+                });
+
+        // Then
+        Collection<Integer> actualMatchingItems = materialize(partitionResults.first());
+        Collection<Integer> actualNonMatchingItems = materialize(partitionResults.second());
+        
+        assertThat(actualMatchingItems, is(expectedMatchingItems));
+        assertThat(actualNonMatchingItems, is(expectedNonMatchingItems));
+    }
 }
