@@ -24,7 +24,7 @@ public class Lazy {
         return toIterable(new PredicatedIterator<T>(iterable.iterator(), predicate));
     }
 
-    public static <T> Iterable<T> reject(Iterable<T> iterable, PredicateFunction<T> predicate) {
+    public static <T> Iterable<T> reject(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
         return toIterable(new PredicatedIterator<T>(iterable.iterator(), new NotPredicateFunction<T>(predicate)));
     }
 

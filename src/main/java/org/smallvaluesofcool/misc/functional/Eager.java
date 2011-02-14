@@ -134,11 +134,19 @@ public class Eager {
         materialize(Lazy.each(targets, function));
     }
 
-    public static <T> Collection<T> filter(Iterable<T> iterable, PredicateFunction<T> predicate) {
+    public static <T> Collection<T> filter(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
         return materialize(Lazy.filter(iterable, predicate));
     }
 
-    public static <T> Collection<T> reject(Iterable<T> iterable, PredicateFunction<T> predicate) {
+    public static <T> Collection<T> reject(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
         return materialize(Lazy.reject(iterable, predicate));
+    }
+
+    public static <T> Collection<T> take(Iterable<? extends T> iterable, int numberToTake) {
+        return materialize(Lazy.take(iterable, numberToTake));
+    }
+
+    public static <T> Collection<T> drop(Iterable<? extends T> iterable, int numberToDrop) {
+        return materialize(Lazy.drop(iterable, numberToDrop));
     }
 }

@@ -6,13 +6,12 @@
 * Add eager and lazy partition methods
 * Add eager and lazy group methods
 * Add eager and lazy window (?) methods
-* Add eager take methods
 * Add eager and lazy takeWhile methods
-* Add eager drop methods
 * Add eager and lazy dropWhile methods
-* Add first,first(n) and last,last(n) methods
+* Add first,first(n) and last,last(n) methods (note: first(n) is the same as take)
 * Add eager and lazy zip methods across 3 and 4 iterables
 * Add eager and lazy cycle methods
+* Add eager times(n, DoFunction<Integer>)
 * Add combination and permutation methods (ListUtils ?)
 * Add union, intersection and symmetric difference methods to BagUtils
 * Add union, intersection, difference and symmetric difference methods to SetUtils

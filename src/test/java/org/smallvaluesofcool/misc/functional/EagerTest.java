@@ -350,7 +350,7 @@ public class EagerTest {
         Collection<Integer> expectedOutput = listWith(1, 3, 5);
 
         // When
-        Collection<Integer> actualOutput = Eager.reject(inputs, new PredicateFunction<Integer>(){
+        Collection<Integer> actualOutput = Eager.reject(inputs, new PredicateFunction<Integer>() {
             @Override
             public boolean matches(Integer item) {
                 return isEven(item);
@@ -360,6 +360,32 @@ public class EagerTest {
                 return item % 2 == 0;
             }
         });
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldTakeTheSpecifiedNumberOfElements() {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+        Collection<String> expectedOutput = listWith("a", "b", "c", "d", "e");
+
+        // When
+        Collection<String> actualOutput = Eager.take(input, 5);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldDropTheSpecifiedNumberOfElements() {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+        Collection<String> expectedOutput = listWith("f", "g", "h", "i", "j");
+
+        // When
+        Collection<String> actualOutput = Eager.drop(input, 5);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
