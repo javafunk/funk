@@ -5,12 +5,11 @@ import org.smallvaluesofcool.misc.functional.functors.DoFunction;
 import org.smallvaluesofcool.misc.functional.functors.MapFunction;
 import org.smallvaluesofcool.misc.functional.functors.NotPredicateFunction;
 import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
+import org.smallvaluesofcool.misc.functional.iterators.BatchedIterator;
 import org.smallvaluesofcool.misc.functional.iterators.MappedIterator;
 import org.smallvaluesofcool.misc.functional.iterators.PredicatedIterator;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import static org.smallvaluesofcool.misc.IteratorUtils.toIterable;
 import static org.smallvaluesofcool.misc.Literals.twoTuple;
@@ -28,7 +27,10 @@ public class Lazy {
         return toIterable(new PredicatedIterator<T>(iterable.iterator(), new NotPredicateFunction<T>(predicate)));
     }
 
-    
+    public static <T> TwoTuple<Iterable<T>,Iterable<T>> partition(
+            Iterable<T> iterable, PredicateFunction<T> predicate) {
+        return twoTuple(filter(iterable, predicate), reject(iterable, predicate));
+    }
 
     public static <T> Iterable<TwoTuple<Integer, T>> enumerate(Iterable<? extends T> iterable) {
         return toIterable(new MappedIterator<T, TwoTuple<Integer, T>>(iterable.iterator(),
@@ -126,8 +128,8 @@ public class Lazy {
         return toIterable((Iterator<T>) iterator);
     }
 
-    public static <T> TwoTuple<Iterable<T>,Iterable<T>> partition(
-            Iterable<T> iterable, PredicateFunction<T> predicate) {
-        return twoTuple(filter(iterable, predicate), reject(iterable, predicate));
+    public static <T> Iterable<Iterable<T>> batch(Iterable<? extends T> iterable, int batchSize) {
+        return toIterable(new BatchedIterator<T>(iterable.iterator(), batchSize));
     }
+
 }

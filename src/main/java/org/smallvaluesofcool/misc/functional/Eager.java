@@ -6,8 +6,10 @@ import org.smallvaluesofcool.misc.functional.functors.MapFunction;
 import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
 import org.smallvaluesofcool.misc.functional.functors.ReduceFunction;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import static org.smallvaluesofcool.misc.IterableUtils.materialize;
 import static org.smallvaluesofcool.misc.IteratorUtils.toIterable;
@@ -155,5 +157,14 @@ public class Eager {
             Iterable<T> iterable, PredicateFunction<T> predicate) {
         TwoTuple<Iterable<T>, Iterable<T>> partition = Lazy.partition(iterable, predicate);
         return twoTuple(materialize(partition.first()), materialize(partition.second()));
+    }
+
+    public static <T> Collection<Collection<T>> batch(Iterable<T> iterable, int batchSize) {
+        Collection<Collection<T>> result = new ArrayList<Collection<T>>();
+        Iterable<Iterable<T>> batches = Lazy.batch(iterable, batchSize);
+        for (Iterable<T> batch : batches) {
+            result.add(materialize(batch));
+        }
+        return result;
     }
 }

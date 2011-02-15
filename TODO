@@ -1,15 +1,17 @@
-* Finish AbstractMapBag implementation.
+* Finish AbstractMapBag implementation
+* Test that nulls are allowed in PredicatedIterator
 * Add SetUtils
-* Add eager and lazy collect methods which delegate to map
-* Add eager and lazy select methods which delegate to filter
-* Add detect method with a find alias
-* Add eager and lazy group/chunk methods
-* Add eager and lazy window (?) methods
-* Add eager and lazy takeWhile methods
-* Add eager and lazy dropWhile methods
-* Add first,first(n) and last,last(n) methods (note: first(n) is the same as take)
-* Add eager and lazy zip methods across 3 and 4 iterables
 * Add eager and lazy cycle methods
+* Add eager and lazy batch methods
+* Add eager and lazy context methods (returns Iterable<ThreeTuple<Iterable<T>, T, Iterable<T>>>)
+* Add eager and lazy takeWhile methods
+* Add eager and lazy takeUntil methods
+* Add eager and lazy dropWhile methods
+* Add eager and lazy dropUntil methods
+* Add eager and lazy slice methods
+* Add first,first(n) and last,last(n) methods (note: first(n) is the same as take)
+* Add first(predicate), first(n, predicate) and last(predicate), last(n, predicate)
+* Add eager and lazy zip methods across 3 and 4 iterables
 * Add eager times(n, DoFunction<Integer>)
 * Add combination and permutation methods (ListUtils ?)
 * Add union, intersection and symmetric difference methods to BagUtils
