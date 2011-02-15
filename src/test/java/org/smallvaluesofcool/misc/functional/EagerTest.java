@@ -320,10 +320,6 @@ public class EagerTest {
         }
     }
 
-    private interface Target {
-        void doSomething();
-    }
-
     @Test
     public void shouldOnlyReturnThoseElementsMatchingTheSuppliedPredicate() {
         // Given
@@ -331,7 +327,7 @@ public class EagerTest {
         Collection<Integer> expectedOutput = listWith(2, 4, 6);
 
         // When
-        Collection<Integer> actualOutput = Eager.filter(inputs, new PredicateFunction<Integer>(){
+        Collection<Integer> actualOutput = Eager.filter(inputs, new PredicateFunction<Integer>() {
             @Override
             public boolean matches(Integer item) {
                 return isEven(item);
@@ -430,5 +426,28 @@ public class EagerTest {
 
         // Then
         assertThat(actualBatches, is(expectedBatches));
+    }
+
+    @Test
+    public void shouldExecuteTheDoFunctionPassingInEachNaturalNumberUpToTheSpecifiedNumber() {
+        // Given
+        final Target<Integer> target = mock(Target.class);
+
+        // When
+        Eager.times(5, new DoFunction<Integer>(){
+            public void actOn(Integer input) {
+                target.doSomethingWith(input);
+            }
+        });
+
+        // Then
+        for (int i = 0; i < 5; i++) {
+            verify(target).doSomethingWith(i);
+        }
+    }
+
+    private interface Target<T> {
+        void doSomething();
+        void doSomethingWith(T input);
     }
 }

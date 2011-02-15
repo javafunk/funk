@@ -13,6 +13,7 @@ import java.util.*;
 
 import static org.smallvaluesofcool.misc.IteratorUtils.toIterable;
 import static org.smallvaluesofcool.misc.Literals.twoTuple;
+import static org.smallvaluesofcool.misc.functional.Eager.times;
 
 public class Lazy {
     public static <S, T> Iterable<T> map(Iterable<? extends S> iterable, final MapFunction<S, T> function) {
@@ -120,11 +121,13 @@ public class Lazy {
 
     public static <T> Iterable<T> drop(Iterable<? extends T> iterable, int numberToTake) {
         final Iterator<? extends T> iterator = iterable.iterator();
-        for (int i = 0; i < numberToTake; i++) {
-            if (iterator.hasNext()) {
-                iterator.next();
+        times(numberToTake, new DoFunction<Integer>() {
+            public void actOn(Integer input) {
+                if (iterator.hasNext()) {
+                    iterator.next();
+                }
             }
-        }
+        });
         return toIterable((Iterator<T>) iterator);
     }
 

@@ -9,7 +9,6 @@ import org.smallvaluesofcool.misc.functional.functors.ReduceFunction;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import static org.smallvaluesofcool.misc.IterableUtils.materialize;
 import static org.smallvaluesofcool.misc.IteratorUtils.toIterable;
@@ -166,5 +165,11 @@ public class Eager {
             result.add(materialize(batch));
         }
         return result;
+    }
+
+    public static void times(int numberOfTimes, DoFunction<Integer> function) {
+        for (int i = 0; i < numberOfTimes; i++) {
+            function.actOn(i);
+        }
     }
 }
