@@ -132,4 +132,38 @@ public class Lazy {
         return toIterable(new BatchedIterator<T>(iterable.iterator(), batchSize));
     }
 
+    public static <T> Iterable<T> cycle(Iterable<T> iterable) {
+        final Iterator<T> iterator = iterable.iterator();
+        return toIterable(new Iterator<T>(){
+            private List<T> elements = new ArrayList<T>();
+            private int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return true;
+            }
+
+            @Override
+            public T next() {
+                if (iterator.hasNext()) {
+                    T next = iterator.next();
+                    elements.add(next);
+                    return next;
+                } else {
+                    T next = elements.get(index);
+                    if (index == (elements.size() - 1)) {
+                        index = 0;
+                    } else {
+                        index++;
+                    }
+                    return next;
+                }
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        });
+    }
 }

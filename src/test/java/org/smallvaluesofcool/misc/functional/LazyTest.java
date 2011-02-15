@@ -223,4 +223,21 @@ public class LazyTest {
         assertThat(materialize(returnedIterator.next()), is(secondBatch));
         assertThat(materialize(returnedIterator.next()), is(thirdBatch));
     }
+
+    @Test
+    public void shouldCycleTheSuppliedIterableInfinitely() {
+        // Given
+        Iterable<String> input = listWith("Red", "Green", "Blue");
+
+        // When
+        Iterable<String> output = Lazy.cycle(input);
+        Iterator<String> cyclicIterator = output.iterator();
+
+        // Then
+        for(int i = 0; i < 20; i++) {
+            assertThat(cyclicIterator.next(), is("Red"));
+            assertThat(cyclicIterator.next(), is("Green"));
+            assertThat(cyclicIterator.next(), is("Blue"));
+        }
+    }
 }

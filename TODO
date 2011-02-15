@@ -1,8 +1,8 @@
 * Finish AbstractMapBag implementation
 * Test that nulls are allowed in PredicatedIterator
+* Extend materialize to be recursive for Iterables of Iterables of ... etc.
 * Add SetUtils
 * Add eager and lazy cycle methods
-* Add eager and lazy batch methods
 * Add eager and lazy context methods (returns Iterable<ThreeTuple<Iterable<T>, T, Iterable<T>>>)
 * Add eager and lazy takeWhile methods
 * Add eager and lazy takeUntil methods
