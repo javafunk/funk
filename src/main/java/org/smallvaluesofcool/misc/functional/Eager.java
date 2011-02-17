@@ -6,6 +6,7 @@ import org.smallvaluesofcool.misc.functional.functors.MapFunction;
 import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
 import org.smallvaluesofcool.misc.functional.functors.ReduceFunction;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -153,7 +154,7 @@ public class Eager {
     }
 
     public static <T> TwoTuple<Collection<T>,Collection<T>> partition(
-            Iterable<T> iterable, PredicateFunction<T> predicate) {
+            Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
         TwoTuple<Iterable<T>, Iterable<T>> partition = Lazy.partition(iterable, predicate);
         return twoTuple(materialize(partition.first()), materialize(partition.second()));
     }
@@ -171,5 +172,13 @@ public class Eager {
         for (int i = 0; i < numberOfTimes; i++) {
             function.actOn(i);
         }
+    }
+
+    public static <T> Collection<T> takeWhile(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
+        return materialize(Lazy.takeWhile(iterable, predicate));
+    }
+
+    public static <T> Collection<T> takeUntil(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
+        return materialize(Lazy.takeUntil(iterable, predicate));
     }
 }

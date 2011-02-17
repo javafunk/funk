@@ -446,6 +446,40 @@ public class EagerTest {
         }
     }
 
+    @Test
+    public void shouldTakeElementsWhileTheSuppliedPredicateIsTrue() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 1, 2, 3);
+        Collection<Integer> expectedOutput = listWith(1, 2, 1, 2);
+
+        // When
+        Collection<Integer> actualOutput = Eager.takeWhile(input, new PredicateFunction<Integer>(){
+            public boolean matches(Integer item) {
+                return item < 3;
+            }
+        });
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldTakeElementsUntilTheSuppliedPredicateBecomesTrue() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5);
+        Collection<Integer> expectedOutput = listWith(1, 2, 3);
+
+        // When
+        Collection<Integer> actualOutput = Eager.takeUntil(input, new PredicateFunction<Integer>(){
+            public boolean matches(Integer item) {
+                return item > 3;
+            }
+        });
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
     private interface Target<T> {
         void doSomething();
         void doSomethingWith(T input);

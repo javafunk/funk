@@ -1,8 +1,6 @@
 * Finish AbstractMapBag implementation
 * Test that nulls are allowed in PredicatedIterator
-* Extend materialize to be recursive for Iterables of Iterables of ... etc.
 * Add SetUtils
-* Add eager and lazy cycle methods
 * Add eager and lazy context methods (returns Iterable<ThreeTuple<Iterable<T>, T, Iterable<T>>>)
 * Add eager and lazy takeWhile methods
 * Add eager and lazy takeUntil methods
@@ -12,7 +10,6 @@
 * Add first,first(n) and last,last(n) methods (note: first(n) is the same as take)
 * Add first(predicate), first(n, predicate) and last(predicate), last(n, predicate)
 * Add eager and lazy zip methods across 3 and 4 iterables
-* Add eager times(n, DoFunction<Integer>)
 * Add combination and permutation methods (ListUtils ?)
 * Add union, intersection and symmetric difference methods to BagUtils
 * Add union, intersection, difference and symmetric difference methods to SetUtils

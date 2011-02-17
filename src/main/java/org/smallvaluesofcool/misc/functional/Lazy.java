@@ -6,10 +6,14 @@ import org.smallvaluesofcool.misc.functional.functors.MapFunction;
 import org.smallvaluesofcool.misc.functional.functors.NotPredicateFunction;
 import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
 import org.smallvaluesofcool.misc.functional.iterators.BatchedIterator;
+import org.smallvaluesofcool.misc.functional.iterators.FilteredIterator;
 import org.smallvaluesofcool.misc.functional.iterators.MappedIterator;
 import org.smallvaluesofcool.misc.functional.iterators.PredicatedIterator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.smallvaluesofcool.misc.IteratorUtils.toIterable;
 import static org.smallvaluesofcool.misc.Literals.twoTuple;
@@ -21,15 +25,16 @@ public class Lazy {
     }
 
     public static <T> Iterable<T> filter(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
-        return toIterable(new PredicatedIterator<T>(iterable.iterator(), predicate));
+        return toIterable(new FilteredIterator<T>(iterable.iterator(), predicate));
     }
 
     public static <T> Iterable<T> reject(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
-        return toIterable(new PredicatedIterator<T>(iterable.iterator(), new NotPredicateFunction<T>(predicate)));
+        return toIterable(new FilteredIterator<T>(iterable.iterator(), new NotPredicateFunction<T>(predicate)));
     }
 
     public static <T> TwoTuple<Iterable<T>,Iterable<T>> partition(
-            Iterable<T> iterable, PredicateFunction<T> predicate) {
+            Iterable<? extends T> iterable,
+            PredicateFunction<T> predicate) {
         return twoTuple(filter(iterable, predicate), reject(iterable, predicate));
     }
 
@@ -131,12 +136,22 @@ public class Lazy {
         return toIterable((Iterator<T>) iterator);
     }
 
+    public static <T> Iterable<T> takeWhile(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
+        Iterator<? extends T> iterator = iterable.iterator();
+        return toIterable(new PredicatedIterator<T>(iterator, predicate));
+    }
+
+    public static <T> Iterable<T> takeUntil(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
+        Iterator<? extends T> iterator = iterable.iterator();
+        return toIterable(new PredicatedIterator<T>(iterator, new NotPredicateFunction<T>(predicate)));
+    }
+
     public static <T> Iterable<Iterable<T>> batch(Iterable<? extends T> iterable, int batchSize) {
         return toIterable(new BatchedIterator<T>(iterable.iterator(), batchSize));
     }
 
-    public static <T> Iterable<T> cycle(Iterable<T> iterable) {
-        final Iterator<T> iterator = iterable.iterator();
+    public static <T> Iterable<T> cycle(Iterable<? extends T> iterable) {
+        final Iterator<? extends T> iterator = iterable.iterator();
         return toIterable(new Iterator<T>(){
             private List<T> elements = new ArrayList<T>();
             private int index = 0;

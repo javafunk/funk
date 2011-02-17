@@ -240,4 +240,40 @@ public class LazyTest {
             assertThat(cyclicIterator.next(), is("Blue"));
         }
     }
+
+    @Test
+    public void shouldTakeElementsFromTheIterableWhileTheSuppliedPredicateIsTrue() {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8);
+        Collection<Integer> expectedOutput = listWith(1, 2, 3, 4);
+
+        // When
+        Collection<Integer> actualOutput = materialize(Lazy.takeWhile(input, new PredicateFunction<Integer>(){
+            @Override
+            public boolean matches(Integer input) {
+                return input < 5;
+            }
+        }));
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldTakeElementsFromTheIterableUntilTheSuppliedPredicateIsTrue() {
+        // Given
+        Iterable<Integer> input = listWith(8, 7, 6, 5, 4, 3, 2, 1);
+        Collection<Integer> expectedOutput = listWith(8, 7, 6, 5);
+
+        // When
+        Collection<Integer> actualOutput = materialize(Lazy.takeUntil(input, new PredicateFunction<Integer>(){
+            @Override
+            public boolean matches(Integer input) {
+                return input < 5;
+            }
+        }));
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
 }

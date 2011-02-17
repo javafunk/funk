@@ -6,9 +6,10 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class PredicatedIterator<T> implements Iterator<T> {
-    private T match;
     private Iterator<? extends T> iterator;
     private PredicateFunction<T> predicate;
+    private T cachedNext;
+    private boolean hasCachedNext = false;
 
     public PredicatedIterator(Iterator<? extends T> iterator, PredicateFunction<T> predicate) {
         this.iterator = iterator;
@@ -17,55 +18,40 @@ public class PredicatedIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        if (hasMatch()) {
+        if (hasCachedNext) {
             return true;
         } else {
-            while (iterator.hasNext()) {
-                T next = iterator.next();
-                if (predicate.matches(next)) {
-                    pushMatch(next);
-                    return true;
-                }
+            if (iterator.hasNext()) {
+                cachedNext = iterator.next();
+            } else {
+                return false;
             }
-            return false;
+            if (predicate.matches(cachedNext)) {
+                hasCachedNext = true;
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
     @Override
     public T next() {
-        if (hasMatch()) {
-            return popMatch();
+        if (hasCachedNext) {
+            hasCachedNext = false;
+            return cachedNext;
         } else {
-            while (iterator.hasNext()) {
-                T next = iterator.next();
-                if (predicate.matches(next)) {
-                    return next;
-                }
+            T next = iterator.next();
+            if (predicate.matches(next)) {
+                return next;
+            } else {
+                throw new NoSuchElementException();
             }
-            throw new NoSuchElementException();
         }
     }
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException();
-    }
-
-    private void pushMatch(T match) {
-        this.match = match;
-    }
-
-    private T popMatch() {
-        T match = this.match;
-        this.match = null;
-        return match;
-    }
-
-    private T readMatch() {
-        return this.match;
-    }
-
-    private boolean hasMatch() {
-        return readMatch() != null;
+        iterator.remove();
     }
 }
