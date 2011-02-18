@@ -5,10 +5,7 @@ import org.smallvaluesofcool.misc.functional.functors.DoFunction;
 import org.smallvaluesofcool.misc.functional.functors.MapFunction;
 import org.smallvaluesofcool.misc.functional.functors.NotPredicateFunction;
 import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
-import org.smallvaluesofcool.misc.functional.iterators.BatchedIterator;
-import org.smallvaluesofcool.misc.functional.iterators.FilteredIterator;
-import org.smallvaluesofcool.misc.functional.iterators.MappedIterator;
-import org.smallvaluesofcool.misc.functional.iterators.PredicatedIterator;
+import org.smallvaluesofcool.misc.functional.iterators.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,6 +13,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.smallvaluesofcool.misc.IteratorUtils.toIterable;
+import static org.smallvaluesofcool.misc.Literals.listWith;
 import static org.smallvaluesofcool.misc.Literals.twoTuple;
 import static org.smallvaluesofcool.misc.functional.Eager.times;
 
@@ -144,6 +142,30 @@ public class Lazy {
     public static <T> Iterable<T> takeUntil(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
         Iterator<? extends T> iterator = iterable.iterator();
         return toIterable(new PredicatedIterator<T>(iterator, new NotPredicateFunction<T>(predicate)));
+    }
+
+    public static <T> Iterable<T> dropWhile(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
+        Iterator<? extends T> iterator = iterable.iterator();
+        T next = null;
+        while (iterator.hasNext()) {
+            next = iterator.next();
+            if (!predicate.matches(next)) {
+                break;
+            }
+        }
+        return toIterable(new ChainedIterator<T>(listWith(next).iterator(), (Iterator<T>) iterator));
+    }
+
+    public static <T> Iterable<T> dropUntil(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
+        Iterator<? extends T> iterator = iterable.iterator();
+        T next = null;
+        while (iterator.hasNext()) {
+            next = iterator.next();
+            if (predicate.matches(next)) {
+                break;
+            }
+        }
+        return toIterable(new ChainedIterator<T>(listWith(next).iterator(), (Iterator<T>) iterator));
     }
 
     public static <T> Iterable<Iterable<T>> batch(Iterable<? extends T> iterable, int batchSize) {

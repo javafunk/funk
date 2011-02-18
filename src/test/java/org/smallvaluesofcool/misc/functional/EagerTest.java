@@ -480,6 +480,42 @@ public class EagerTest {
         assertThat(actualOutput, is(expectedOutput));
     }
 
+    @Test
+    public void shouldDropElementsWhileTheSuppliedPredicateIsTrue() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
+        Collection<String> expectedOutput = listWith("aaa", "aaaa");
+
+        // When
+        Collection<String> actualOutput = Eager.dropWhile(input, new PredicateFunction<String>(){
+            @Override
+            public boolean matches(String item) {
+                return item.length() < 3;
+            }
+        });
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldDropElementsUntilTheSuppliedPredicateBecomesTrue() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "aa", "aab", "aba", "aba");
+        Collection<String> expectedOutput = listWith("aab", "aba", "aba");
+
+        // When
+        Collection<String> actualOutput = Eager.dropUntil(input, new PredicateFunction<String>(){
+            @Override
+            public boolean matches(String item) {
+                return item.contains("b");
+            }
+        });
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
     private interface Target<T> {
         void doSomething();
         void doSomethingWith(T input);

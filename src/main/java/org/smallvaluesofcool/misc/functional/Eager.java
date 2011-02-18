@@ -181,4 +181,12 @@ public class Eager {
     public static <T> Collection<T> takeUntil(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
         return materialize(Lazy.takeUntil(iterable, predicate));
     }
+
+    public static <T> Collection<T> dropWhile(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
+        return materialize(Lazy.dropWhile(iterable, predicate));
+    }
+
+    public static <T> Collection<T> dropUntil(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
+        return materialize(Lazy.dropUntil(iterable, predicate));
+    }
 }
