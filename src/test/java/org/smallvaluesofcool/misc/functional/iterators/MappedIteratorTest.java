@@ -98,6 +98,22 @@ public class MappedIteratorTest {
         // Then an IllegalStateException should be thrown
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledMoreThanOnceInARow() throws Exception {
+        // Given
+        Iterator<Integer> delegateIterator = listWith(1, 2, 3).iterator();
+
+        // When
+        MappedIterator<Integer, String> iterator = new MappedIterator<Integer, String>(
+                delegateIterator, stringValueMapFunction());
+
+        iterator.next();
+        iterator.remove();
+        iterator.remove();
+
+        // Then an IllegalStateException should be thrown
+    }
+
     @Test
     public void shouldAllowNullValuesInTheIterator() throws Exception {
         // Given

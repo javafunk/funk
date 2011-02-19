@@ -119,6 +119,37 @@ public class ChainedIteratorTest {
         assertThat(secondList, is(expectedSecondList));
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledBeforeNext() throws Exception {
+        // Given
+        Iterator<Integer> firstIterator = listWith(1).iterator();
+        Iterator<Integer> secondIterator = listWith(2).iterator();
+
+        // When
+        Iterator<Integer> chainedIterator = new ChainedIterator<Integer>(firstIterator, secondIterator);
+
+        chainedIterator.hasNext();
+        chainedIterator.remove();
+
+        // Then an IllegalStateException is thrown
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledMoreThanOnceInARow() throws Exception {
+        // Given
+        Iterator<Integer> firstIterator = listWith(1).iterator();
+        Iterator<Integer> secondIterator = listWith(2).iterator();
+
+        // When
+        Iterator<Integer> chainedIterator = new ChainedIterator<Integer>(firstIterator, secondIterator);
+
+        chainedIterator.next();
+        chainedIterator.remove();
+        chainedIterator.remove();
+
+        // Then an IllegalStateException is thrown
+    }
+
     @Test
     public void shouldAllowNullValuesInTheIterator() throws Exception {
         // Given

@@ -122,6 +122,25 @@ public class FilteredIteratorTest {
         // Then an IllegalStateException should be thrown
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledMoreThanOnceInARow() throws Exception {
+        // Given
+        Iterator<String> iterator = listWith("one", "two", "three").iterator();
+
+        // When
+        FilteredIterator<String> filteredIterator = new FilteredIterator<String>(iterator, new PredicateFunction<String>() {
+            public boolean matches(String item) {
+                return item.contains("o");
+            }
+        });
+
+        filteredIterator.next();
+        filteredIterator.remove();
+        filteredIterator.remove();
+
+        // Then an IllegalStateException should be thrown
+    }
+
     @Test
     public void shouldNotRemoveAnElementThatDoesNotMatchTheSuppliedPredicate() throws Exception {
         // Given

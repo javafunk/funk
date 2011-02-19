@@ -1,5 +1,5 @@
 * Finish AbstractMapBag implementation
-* Fix and test remove behaviour in ChainedIterator and BatchedIterator
+* Fix and test remove behaviour in BatchedIterator
 * Add SetUtils
 * Add eager and lazy context methods (returns Iterable<ThreeTuple<Iterable<T>, T, Iterable<T>>>)
 * Add eager and lazy slice methods

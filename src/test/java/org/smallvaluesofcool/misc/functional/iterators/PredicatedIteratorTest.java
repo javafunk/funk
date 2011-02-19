@@ -173,6 +173,27 @@ public class PredicatedIteratorTest {
             }
         });
 
+        predicatedIterator.hasNext();
+        predicatedIterator.remove();
+
+        // Then an IllegalStateException should be thrown
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void shouldThrowAnIllegaStateExceptionIfRemoveIsCalledMoreThanOnceInARow() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
+
+        // When
+        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new PredicateFunction<String>(){
+            @Override
+            public boolean matches(String item) {
+                return item.length() < 4;
+            }
+        });
+
+        predicatedIterator.next();
+        predicatedIterator.remove();
         predicatedIterator.remove();
 
         // Then an IllegalStateException should be thrown
