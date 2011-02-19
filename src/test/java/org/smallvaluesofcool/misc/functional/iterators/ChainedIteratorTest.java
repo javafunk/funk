@@ -1,5 +1,6 @@
 package org.smallvaluesofcool.misc.functional.iterators;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -8,6 +9,7 @@ import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.smallvaluesofcool.misc.IteratorUtils.emptyIterator;
 import static org.smallvaluesofcool.misc.Literals.listWith;
 
@@ -115,5 +117,20 @@ public class ChainedIteratorTest {
         
         assertThat(firstList, is(expectedFirstList));
         assertThat(secondList, is(expectedSecondList));
+    }
+
+    @Test
+    public void shouldAllowNullValuesInTheIterator() throws Exception {
+        // Given
+        Iterator<Integer> firstIterator = listWith(1, null).iterator();
+        Iterator<Integer> secondIterator = listWith(2).iterator();
+
+        // When
+        Iterator<Integer> chainedIterator = new ChainedIterator<Integer>(firstIterator, secondIterator);
+
+        // Then
+        assertThat(chainedIterator.next(), is(1));
+        assertThat(chainedIterator.next(), is(nullValue()));
+        assertThat(chainedIterator.next(), is(2));
     }
 }

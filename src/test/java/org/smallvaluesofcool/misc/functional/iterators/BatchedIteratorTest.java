@@ -1,7 +1,6 @@
 package org.smallvaluesofcool.misc.functional.iterators;
 
 import org.junit.Test;
-import org.smallvaluesofcool.misc.Literals;
 import org.smallvaluesofcool.misc.functional.Lazy;
 
 import java.util.Collection;
@@ -154,5 +153,24 @@ public class BatchedIteratorTest {
             secondBatchIterator.remove();
             fail("Expected second child iterator to throw an UnsupportedOperationException for remove.");
         } catch (UnsupportedOperationException exception) {}
+    }
+
+    @Test
+    public void shouldAllowNullValuesInTheInputIterator() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", null, null, "d");
+        Iterator<String> expectedFirstBatch = listWith("a", null).iterator();
+        Iterator<String> expectedSecondBatch = listWith(null, "d").iterator();
+
+        // When
+        Iterator<Iterable<String>> returnedIterator = Lazy.batch(input, 2).iterator();
+        Iterator<String> actualFirstBatch = returnedIterator.next().iterator();
+        Iterator<String> actualSecondBatch = returnedIterator.next().iterator();
+
+        // Then
+        assertThat(actualFirstBatch.next(), is(expectedFirstBatch.next()));
+        assertThat(actualFirstBatch.next(), is(expectedFirstBatch.next()));
+        assertThat(actualSecondBatch.next(), is(expectedSecondBatch.next()));
+        assertThat(actualSecondBatch.next(), is(expectedSecondBatch.next()));
     }
 }

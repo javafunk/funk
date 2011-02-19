@@ -10,6 +10,7 @@ public class PredicatedIterator<T> implements Iterator<T> {
     private PredicateFunction<T> predicate;
     private T cachedNext;
     private boolean hasCachedNext = false;
+    private boolean canRemove = false;
 
     public PredicatedIterator(Iterator<? extends T> iterator, PredicateFunction<T> predicate) {
         this.iterator = iterator;
@@ -30,6 +31,7 @@ public class PredicatedIterator<T> implements Iterator<T> {
                 hasCachedNext = true;
                 return true;
             } else {
+                canRemove = false;
                 return false;
             }
         }
@@ -39,12 +41,15 @@ public class PredicatedIterator<T> implements Iterator<T> {
     public T next() {
         if (hasCachedNext) {
             hasCachedNext = false;
+            canRemove = true;
             return cachedNext;
         } else {
             T next = iterator.next();
             if (predicate.matches(next)) {
+                canRemove = true;
                 return next;
             } else {
+                canRemove = false;
                 throw new NoSuchElementException();
             }
         }
@@ -52,6 +57,11 @@ public class PredicatedIterator<T> implements Iterator<T> {
 
     @Override
     public void remove() {
-        iterator.remove();
+        if (canRemove) {
+            iterator.remove();
+            canRemove = false;
+        } else {
+            throw new IllegalStateException();
+        }
     }
 }

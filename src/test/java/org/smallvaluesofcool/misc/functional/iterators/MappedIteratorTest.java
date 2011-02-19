@@ -3,11 +3,13 @@ package org.smallvaluesofcool.misc.functional.iterators;
 import org.junit.Test;
 import org.smallvaluesofcool.misc.functional.functors.MapFunction;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.smallvaluesofcool.misc.Literals.listWith;
 
 public class MappedIteratorTest {
@@ -61,17 +63,63 @@ public class MappedIteratorTest {
         // Then a NoSuchElementException is thrown
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void shouldNotSupportRemovingElementsFromTheIterator() {
+    @Test
+    public void shouldRemoveTheElementFromTheUnderlyingIterator() {
+        // Given
+        Collection<Integer> initialElements = listWith(1, 2, 3);
+        Collection<Integer> expectedElements = listWith(3);
+        Iterator<Integer> delegateIterator = initialElements.iterator();
+
+        // When
+        MappedIterator<Integer, String> iterator = new MappedIterator<Integer, String>(
+                delegateIterator, stringValueMapFunction());
+
+        iterator.next();
+        iterator.remove();
+        iterator.next();
+        iterator.remove();
+
+        // Then
+        assertThat(initialElements, is(expectedElements));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledBeforeNext() throws Exception {
         // Given
         Iterator<Integer> delegateIterator = listWith(1, 2, 3).iterator();
 
         // When
         MappedIterator<Integer, String> iterator = new MappedIterator<Integer, String>(
                 delegateIterator, stringValueMapFunction());
+
+        iterator.hasNext();
         iterator.remove();
 
-        // Then an UnsupportedOperationException is thrown
+        // Then an IllegalStateException should be thrown
+    }
+
+    @Test
+    public void shouldAllowNullValuesInTheIterator() throws Exception {
+        // Given
+        Iterator<Integer> delegateIterator = listWith(1, null, 2).iterator();
+
+        // When
+        MappedIterator<Integer, Integer> iterator = new MappedIterator<Integer, Integer>(delegateIterator,
+                new MapFunction<Integer, Integer>() {
+                    @Override
+                    public Integer map(Integer input) {
+                        return input == null ? null : input * 2;
+                    }
+                });
+
+        // Then
+        assertThat(iterator.hasNext(), is(true));
+        assertThat(iterator.next(), is(2));
+        assertThat(iterator.hasNext(), is(true));
+        assertThat(iterator.next(), is(nullValue()));
+        assertThat(iterator.hasNext(), is(true));
+        assertThat(iterator.next(), is(4));
+        assertThat(iterator.hasNext(), is(false));
     }
 
     private MapFunction<Integer, String> stringValueMapFunction() {

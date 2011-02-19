@@ -1,11 +1,7 @@
 * Finish AbstractMapBag implementation
-* Test that nulls are allowed in PredicatedIterator
+* Fix and test remove behaviour in ChainedIterator and BatchedIterator
 * Add SetUtils
 * Add eager and lazy context methods (returns Iterable<ThreeTuple<Iterable<T>, T, Iterable<T>>>)
-* Add eager and lazy takeWhile methods
-* Add eager and lazy takeUntil methods
-* Add eager and lazy dropWhile methods
-* Add eager and lazy dropUntil methods
 * Add eager and lazy slice methods
 * Add first,first(n) and last,last(n) methods (note: first(n) is the same as take)
 * Add first(predicate), first(n, predicate) and last(predicate), last(n, predicate)

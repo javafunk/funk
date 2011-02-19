@@ -1,13 +1,18 @@
 package org.smallvaluesofcool.misc.functional.iterators;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
 
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.fail;
 import static org.smallvaluesofcool.misc.Literals.listWith;
 
 public class PredicatedIteratorTest {
@@ -112,6 +117,29 @@ public class PredicatedIteratorTest {
     }
 
     @Test
+    public void shouldAllowNullValuesInTheIterator() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, null, 1, 2);
+
+        // When
+        Iterator<Integer> predicatedIterator = new PredicatedIterator<Integer>(input.iterator(), new PredicateFunction<Integer>(){
+            @Override
+            public boolean matches(Integer item) {
+                return item == null || item != 2;
+            }
+        });
+
+        // Then
+        assertThat(predicatedIterator.hasNext(), is(true));
+        assertThat(predicatedIterator.next(), is(1));
+        assertThat(predicatedIterator.hasNext(), is(true));
+        assertThat(predicatedIterator.next(), is(nullValue()));
+        assertThat(predicatedIterator.hasNext(), is(true));
+        assertThat(predicatedIterator.next(), is(1));
+        assertThat(predicatedIterator.hasNext(), is(false));
+    }
+
+    @Test
     public void shouldRemoveTheElementFromTheUnderlyingIterator() throws Exception {
         // Given
         Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
@@ -130,5 +158,87 @@ public class PredicatedIteratorTest {
 
         // Then
         assertThat(input, is(expectedOutput));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledBeforeNext() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
+
+        // When
+        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new PredicateFunction<String>(){
+            @Override
+            public boolean matches(String item) {
+                return item.length() < 3;
+            }
+        });
+
+        predicatedIterator.remove();
+
+        // Then an IllegalStateException should be thrown
+    }
+
+    @Test
+    public void shouldNotRemoveAnElementThatDoesNotMatchTheSuppliedPredicate() throws Exception {
+        // Given
+        Collection<String> input = listWith("a", "aa", "aaa", "aaaa");
+        Collection<String> expectedResult = listWith("aa", "aaa", "aaaa");
+
+        // When
+        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new PredicateFunction<String>(){
+            @Override
+            public boolean matches(String item) {
+                return item.length() < 2;
+            }
+        });
+
+        // Then
+        assertThat(predicatedIterator.next(), is("a"));
+        predicatedIterator.remove();
+        assertThat(predicatedIterator.hasNext(), is(false));
+
+        try {
+            predicatedIterator.remove();
+            fail("Expected an IllegalStateException");
+        } catch (IllegalStateException exception) {
+            // continue
+        }
+
+        assertThat(input, is(expectedResult));
+    }
+
+    @Test
+    public void shouldNotRemoveAnElementThatDoesNotMatchTheSuppliedPredicateEvenIfNextCalled() throws Exception {
+        // Given
+        Collection<String> input = listWith("a", "aa", "aaa", "aaaa");
+        Collection<String> expectedResult = listWith("aa", "aaa", "aaaa");
+
+        // When
+        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new PredicateFunction<String>(){
+            @Override
+            public boolean matches(String item) {
+                return item.length() < 2;
+            }
+        });
+
+        // Then
+        assertThat(predicatedIterator.next(), is("a"));
+        predicatedIterator.remove();
+
+        try {
+            predicatedIterator.next();
+            fail("Expected a NoSuchElementException");
+        } catch (NoSuchElementException exception) {
+            // continue
+        }
+
+        try {
+            predicatedIterator.remove();
+            fail("Expected an IllegalStateException");
+        } catch (IllegalStateException exception) {
+            // continue
+        }
+
+        assertThat(input, is(expectedResult));
     }
 }

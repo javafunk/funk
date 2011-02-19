@@ -22,6 +22,6 @@ public class MappedIterator<S, T> implements Iterator<T> {
     }
 
     public void remove() {
-        throw new UnsupportedOperationException();
+        iterator.remove();
     }
 }

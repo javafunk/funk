@@ -6,9 +6,11 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class FilteredIterator<T> implements Iterator<T> {
-    private T match;
     private Iterator<? extends T> iterator;
     private PredicateFunction<T> predicate;
+    private T match;
+    private boolean hasMatch = false;
+    private boolean canRemove = false;
 
     public FilteredIterator(Iterator<? extends T> iterator, PredicateFunction<T> predicate) {
         this.iterator = iterator;
@@ -24,6 +26,8 @@ public class FilteredIterator<T> implements Iterator<T> {
                 T next = iterator.next();
                 if (predicate.matches(next)) {
                     pushMatch(next);
+                    matchStored(true);
+                    removeAllowed(false);
                     return true;
                 }
             }
@@ -33,12 +37,17 @@ public class FilteredIterator<T> implements Iterator<T> {
 
     @Override
     public T next() {
+        removeAllowed(false);
+
         if (hasMatch()) {
+            matchStored(false);
+            removeAllowed(true);
             return popMatch();
         } else {
             while (iterator.hasNext()) {
                 T next = iterator.next();
                 if (predicate.matches(next)) {
+                    removeAllowed(true);
                     return next;
                 }
             }
@@ -48,7 +57,12 @@ public class FilteredIterator<T> implements Iterator<T> {
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException();
+        if(canRemove()) {
+            iterator.remove();
+            removeAllowed(false);
+        } else {
+            throw new IllegalStateException();
+        }
     }
 
     private void pushMatch(T match) {
@@ -61,11 +75,19 @@ public class FilteredIterator<T> implements Iterator<T> {
         return match;
     }
 
-    private T readMatch() {
-        return this.match;
+    private boolean hasMatch() {
+        return this.hasMatch;
     }
 
-    private boolean hasMatch() {
-        return readMatch() != null;
+    private void matchStored(boolean hasMatch) {
+        this.hasMatch = hasMatch;
+    }
+
+    private boolean canRemove() {
+        return canRemove;
+    }
+
+    private void removeAllowed(boolean canRemove) {
+        this.canRemove = canRemove;
     }
 }
