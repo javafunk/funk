@@ -1,7 +1,6 @@
 package org.smallvaluesofcool.misc.functional;
 
 import org.junit.Test;
-import org.smallvaluesofcool.misc.Literals;
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 import org.smallvaluesofcool.misc.functional.functors.DoFunction;
 import org.smallvaluesofcool.misc.functional.functors.MapFunction;
@@ -9,6 +8,7 @@ import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
 import org.smallvaluesofcool.misc.functional.functors.ReduceFunction;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -588,6 +588,60 @@ public class EagerTest {
 
         // When
         Collection<String> actualOutput = Eager.slice(input, 1, 4);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    // Different behaviour to python
+    @Test
+    public void shouldWorkForwardFromTheEndOfTheIterableIfANegativeStartIsSupplied() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Collection<Integer> expectedOutput = listWith(8, 9, 10, 1, 2, 3);
+
+        // When
+        Collection<Integer> actualOutput = Eager.slice(input, -3, 3);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    // Different behaviour to python
+    @Test
+    public void shouldReturnAnEmptyListIfStartIsLessThanStopAndStepIsNegative() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Collection<Integer> expectedOutput = listWith(3, 2, 1, 10, 9, 8);
+
+        // When
+        Collection<Integer> actualOutput = Eager.slice(input, 2, 6, -1);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldCountBackFromTheEndOfTheIterableIfANegativeStopIsSupplied() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Collection<Integer> expectedOutput = listWith(3, 4, 5, 6, 7, 8);
+
+        // When
+        Collection<Integer> actualOutput = Eager.slice(input, 2, -2);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldWorkBackwardsIfStartIsGreaterThanStopAndStepIsNegative() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Collection<Integer> expectedOutput = listWith(8, 6, 4, 2);
+
+        // When
+        Collection<Integer> actualOutput = Eager.slice(input, 7, 0, -2);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));

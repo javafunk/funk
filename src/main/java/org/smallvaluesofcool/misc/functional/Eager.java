@@ -6,6 +6,9 @@ import org.smallvaluesofcool.misc.functional.functors.MapFunction;
 import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
 import org.smallvaluesofcool.misc.functional.functors.ReduceFunction;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -196,7 +199,13 @@ public class Eager {
         List<T> outputCollection = new ArrayList<T>();
 
         int startIndex = (start == null) ? 0 : start;
+
         int stopIndex = (stop == null) ? inputCollection.size() : stop;
+
+        while (stopIndex < 0) {
+            stopIndex += inputCollection.size();
+        }
+
         int stepSize;
 
         if (step == null) {
@@ -207,8 +216,20 @@ public class Eager {
             stepSize = step;
         }
 
-        for (int i = startIndex; i < stopIndex; i += stepSize) {
-            outputCollection.add(inputCollection.get(i));
+        BigDecimal elementsInRange = new BigDecimal(stopIndex - startIndex);
+        BigDecimal stepSizeAsBigDecimal = new BigDecimal(stepSize);
+        int numberOfElementsRequired = elementsInRange.divide(stepSizeAsBigDecimal, RoundingMode.HALF_UP).intValue();
+
+        if (numberOfElementsRequired < 0) {
+            numberOfElementsRequired += inputCollection.size();
+        }
+
+        for (int i = 0; i < numberOfElementsRequired; i++) {
+            int requiredIndex = startIndex + (i * stepSize);
+            while (requiredIndex < 0) {
+                requiredIndex += inputCollection.size();
+            }
+            outputCollection.add(inputCollection.get(requiredIndex));
         }
 
         return outputCollection;
