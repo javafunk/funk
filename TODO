@@ -20,3 +20,6 @@
 * Add union, intersection, difference and symmetric difference methods to SetUtils
 * Extract accumulators into their own package and add some more (product, division, subtraction)
 * Return *proper* iterables from Lazy - should be able to call iterator more than once and get new iterators.
+* Add better argument error checking
+* Extract superclass from caching iterators
+* Allow null as step size on SubSequenceIterator

@@ -1,6 +1,7 @@
 package org.smallvaluesofcool.misc.functional;
 
 import org.junit.Test;
+import org.smallvaluesofcool.misc.Literals;
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 import org.smallvaluesofcool.misc.functional.functors.DoFunction;
 import org.smallvaluesofcool.misc.functional.functors.MapFunction;
@@ -505,12 +506,88 @@ public class EagerTest {
         Collection<String> expectedOutput = listWith("aab", "aba", "aba");
 
         // When
-        Collection<String> actualOutput = Eager.dropUntil(input, new PredicateFunction<String>(){
+        Collection<String> actualOutput = Eager.dropUntil(input, new PredicateFunction<String>() {
             @Override
             public boolean matches(String item) {
                 return item.contains("b");
             }
         });
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldSliceTheSuppliedIterableAsSpecifiedByStartStopAndStep() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+        Collection<Integer> expectedOutput = listWith(8, 6, 4, 2);
+
+        // When
+        Collection<Integer> actualOutput = Eager.slice(input, 2, 9, 2);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldDefaultToZeroForStartIfNullSupplied() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+        Collection<Integer> expectedOutput = listWith(10, 8, 6);
+
+        // When
+        Collection<Integer> actualOutput = Eager.slice(input, null, 6, 2);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldDefaultToTheEndOfTheIterableForStopIfNullSupplied() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+        Collection<Integer> expectedOutput = listWith(6, 4, 2);
+
+        // When
+        Collection<Integer> actualOutput = Eager.slice(input, 4, null, 2);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldDefaultToAStepSizeOfOneIfNullSupplied() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e");
+        Collection<String> expectedOutput = listWith("b", "c", "d");
+
+        // When
+        Collection<String> actualOutput = Eager.slice(input, 1, 4, null);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionIfZeroSuppliedForStep() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e");
+
+        // When
+        Eager.slice(input, 1, 4, 0);
+
+        // Then an IllegalArgumentException should be thrown
+    }
+
+    @Test
+    public void shouldHaveADefaultStepSizeOfOne() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e");
+        Collection<String> expectedOutput = listWith("b", "c", "d");
+
+        // When
+        Collection<String> actualOutput = Eager.slice(input, 1, 4);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));

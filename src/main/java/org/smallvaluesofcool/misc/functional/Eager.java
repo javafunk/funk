@@ -9,8 +9,10 @@ import org.smallvaluesofcool.misc.functional.functors.ReduceFunction;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import static org.smallvaluesofcool.misc.IterableUtils.materialize;
+import static org.smallvaluesofcool.misc.IterableUtils.toList;
 import static org.smallvaluesofcool.misc.IteratorUtils.toIterable;
 import static org.smallvaluesofcool.misc.Literals.twoTuple;
 
@@ -187,5 +189,32 @@ public class Eager {
 
     public static <T> Collection<T> dropUntil(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
         return materialize(Lazy.dropUntil(iterable, predicate));
+    }
+
+    public static <T> Collection<T> slice(Iterable<? extends T> iterable, Integer start, Integer stop, Integer step) {
+        List<? extends T> inputCollection = toList(iterable);
+        List<T> outputCollection = new ArrayList<T>();
+
+        int startIndex = (start == null) ? 0 : start;
+        int stopIndex = (stop == null) ? inputCollection.size() : stop;
+        int stepSize;
+
+        if (step == null) {
+            stepSize = 1;
+        } else if (step == 0) {
+            throw new IllegalArgumentException("Step size cannot be zero");
+        } else {
+            stepSize = step;
+        }
+
+        for (int i = startIndex; i < stopIndex; i += stepSize) {
+            outputCollection.add(inputCollection.get(i));
+        }
+
+        return outputCollection;
+    }
+
+    public static <T> Collection<T> slice(Iterable<? extends T> iterable, Integer start, Integer stop) {
+        return slice(iterable, start, stop, 1);
     }
 }

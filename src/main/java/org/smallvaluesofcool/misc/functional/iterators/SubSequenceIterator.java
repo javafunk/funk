@@ -131,8 +131,7 @@ public class SubSequenceIterator<T> implements Iterator<T> {
     private T popMatch() {
         matchStored(false);
         removeAllowed(true);
-        T match = this.match;
-        return match;
+        return this.match;
     }
 
     private boolean hasMatch() {

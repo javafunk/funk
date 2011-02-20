@@ -33,8 +33,6 @@ public class ChainedIterator<T> implements Iterator<T> {
                 currentIterator = iteratorsIterator.next();
                 if (currentIterator.hasNext()) {
                     return true;
-                } else {
-                    continue;
                 }
             }
         }
