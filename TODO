@@ -8,7 +8,7 @@
 * Add eager and lazy context methods (returns Iterable<ThreeTuple<Iterable<T>, T, Iterable<T>>>)
 * Add eager and lazy group methods
 * Add eager and lazy repeat methods
-* Add eager and lazy slice methods
+* Add eager slice methods
 * Add first,first(n) and last,last(n) methods (note: first(n) is the same as take)
 * Add first(predicate), first(n, predicate) and last(predicate), last(n, predicate)
 * Add eager and lazy zip methods across 3 and 4 iterables

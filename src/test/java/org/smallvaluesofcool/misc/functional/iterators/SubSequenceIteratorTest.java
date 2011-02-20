@@ -66,21 +66,21 @@ public class SubSequenceIteratorTest {
     @Test
     public void shouldAllowHasNextToBeCalledMultipleTimesWithoutProgressingTheIterator() throws Exception {
         // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Iterator<Integer> input = listWith(0, 1, 2, 3, 4, 5, 6).iterator();
 
         // When
-        Iterator<Integer> subSequenceIterator = new SubSequenceIterator<Integer>(input, 1, 4);
+        Iterator<Integer> subSequenceIterator = new SubSequenceIterator<Integer>(input, 1, 6, 2);
 
         // Then
         assertThat(subSequenceIterator.hasNext(), is(true));
         assertThat(subSequenceIterator.hasNext(), is(true));
         assertThat(subSequenceIterator.next(), is(1));
         assertThat(subSequenceIterator.hasNext(), is(true));
-        assertThat(subSequenceIterator.next(), is(2));
-        assertThat(subSequenceIterator.hasNext(), is(true));
-        assertThat(subSequenceIterator.hasNext(), is(true));
-        assertThat(subSequenceIterator.hasNext(), is(true));
         assertThat(subSequenceIterator.next(), is(3));
+        assertThat(subSequenceIterator.hasNext(), is(true));
+        assertThat(subSequenceIterator.hasNext(), is(true));
+        assertThat(subSequenceIterator.hasNext(), is(true));
+        assertThat(subSequenceIterator.next(), is(5));
         assertThat(subSequenceIterator.hasNext(), is(false));
         assertThat(subSequenceIterator.hasNext(), is(false));
     }

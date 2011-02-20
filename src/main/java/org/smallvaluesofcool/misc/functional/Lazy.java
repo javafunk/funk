@@ -110,13 +110,11 @@ public class Lazy {
     }
 
     public static <T> Iterable<T> takeUntil(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
-        Iterator<? extends T> iterator = iterable.iterator();
-        return toIterable(new PredicatedIterator<T>(iterator, new NotPredicateFunction<T>(predicate)));
+        return toIterable(new PredicatedIterator<T>(iterable.iterator(), new NotPredicateFunction<T>(predicate)));
     }
 
     public static <T> Iterable<T> takeWhile(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
-        Iterator<? extends T> iterator = iterable.iterator();
-        return toIterable(new PredicatedIterator<T>(iterator, predicate));
+        return toIterable(new PredicatedIterator<T>(iterable.iterator(), predicate));
     }
 
     public static <S, T> Iterable<TwoTuple<S, T>> zip(Iterable<? extends S> firstIterable, Iterable<? extends T> secondIterable) {
