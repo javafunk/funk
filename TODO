@@ -1,11 +1,22 @@
 * Finish AbstractMapBag implementation
-* Fix and test remove behaviour in BatchedIterator
+* What is the remove behaviour for BatchedIterator?
+* Do you think it matters if one iterator throws UnsupportedOperation and the other doesn't?
+* Should drop be lazy in dropping the elements too?
 * Add SetUtils
+* Add Generator<T>, Yieldable<T>, GeneratorUtils, toGenerator on IteratorUtils and IterableUtils, toIterable and toIterator on GeneratorUtils
+* Add whileTrue, untilTrue, doWhileTrue, doUntilTrue, ifTrue, unlessTrue with associated Condition and Block interfaces
 * Add eager and lazy context methods (returns Iterable<ThreeTuple<Iterable<T>, T, Iterable<T>>>)
+* Add eager and lazy group methods
+* Add eager and lazy repeat methods
 * Add eager and lazy slice methods
 * Add first,first(n) and last,last(n) methods (note: first(n) is the same as take)
 * Add first(predicate), first(n, predicate) and last(predicate), last(n, predicate)
 * Add eager and lazy zip methods across 3 and 4 iterables
+* Add increment(start, step), increment(start), decrement(start, step), decrement(start) infinite iterators
+* Add even, odd iterators over an underlying iterator (?) (not worth it)
 * Add combination and permutation methods (ListUtils ?)
+* Add product methods
 * Add union, intersection and symmetric difference methods to BagUtils
 * Add union, intersection, difference and symmetric difference methods to SetUtils
+* Extract accumulators into their own package and add some more (product, division, subtraction)
+* Return *proper* iterables from Lazy - should be able to call iterator more than once and get new iterators.

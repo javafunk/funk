@@ -4,12 +4,11 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.smallvaluesofcool.misc.IteratorUtils;
 
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertThat;
-
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertThat;
 import static org.smallvaluesofcool.misc.Literals.bagWith;
 import static org.smallvaluesofcool.misc.Literals.listWith;
 

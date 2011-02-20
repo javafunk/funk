@@ -1,7 +1,6 @@
 package org.smallvaluesofcool.misc.functional.iterators;
 
 import org.junit.Test;
-import org.smallvaluesofcool.misc.Literals;
 import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
 
 import java.util.Collection;

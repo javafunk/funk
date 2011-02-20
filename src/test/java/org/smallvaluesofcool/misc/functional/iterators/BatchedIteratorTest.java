@@ -82,7 +82,7 @@ public class BatchedIteratorTest {
     }
 
     @Test
-    public void shouldLeaveLastIterableShortIfBatchSizeDoesNotNumberOfItems() {
+    public void shouldLeaveLastIterableShortIfBatchSizeDoesNotDivideNumberOfItems() {
         // Given
         Iterable<Integer> input = listWith(1, 2, 3, 4);
         Collection<Integer> expectedFirstBatch = listWith(1, 2, 3);

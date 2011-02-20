@@ -1,6 +1,5 @@
 package org.smallvaluesofcool.misc.functional.iterators;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.Iterator;

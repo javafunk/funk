@@ -1,12 +1,10 @@
 package org.smallvaluesofcool.misc.functional.iterators;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -180,7 +178,7 @@ public class PredicatedIteratorTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void shouldThrowAnIllegaStateExceptionIfRemoveIsCalledMoreThanOnceInARow() throws Exception {
+    public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledMoreThanOnceInARow() throws Exception {
         // Given
         Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
 

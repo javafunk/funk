@@ -2,7 +2,6 @@ package org.smallvaluesofcool.misc;
 
 import org.junit.Test;
 import org.smallvaluesofcool.misc.collections.Bag;
-import org.smallvaluesofcool.misc.collections.HashBag;
 
 import java.util.Iterator;
 import java.util.List;
@@ -11,9 +10,7 @@ import java.util.Set;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.smallvaluesofcool.misc.IteratorUtils.*;
-import static org.smallvaluesofcool.misc.Literals.bagWith;
-import static org.smallvaluesofcool.misc.Literals.listWith;
-import static org.smallvaluesofcool.misc.Literals.setWith;
+import static org.smallvaluesofcool.misc.Literals.*;
 
 public class IteratorUtilsTest {
     @Test

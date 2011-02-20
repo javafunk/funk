@@ -35,6 +35,11 @@ public class BatchedIterator<T> implements Iterator<Iterable<T>> {
         }
     }
 
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
+
     private Iterable<T> nextBatchIterable() {
         return toIterable(new CacheBackedBatchIterator<T>(cache, batchOffset, batchSize));
     }
@@ -49,11 +54,6 @@ public class BatchedIterator<T> implements Iterator<Iterable<T>> {
                 cache.put(iteratorIndex++, iterator.next());
             }
         }
-    }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException();
     }
 
     private class CacheBackedBatchIterator<S> implements Iterator<S> {

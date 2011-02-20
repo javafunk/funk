@@ -26,8 +26,6 @@ public class FilteredIterator<T> implements Iterator<T> {
                 T next = iterator.next();
                 if (predicate.matches(next)) {
                     pushMatch(next);
-                    matchStored(true);
-                    removeAllowed(false);
                     return true;
                 }
             }
@@ -37,11 +35,7 @@ public class FilteredIterator<T> implements Iterator<T> {
 
     @Override
     public T next() {
-        removeAllowed(false);
-
         if (hasMatch()) {
-            matchStored(false);
-            removeAllowed(true);
             return popMatch();
         } else {
             while (iterator.hasNext()) {
@@ -58,20 +52,23 @@ public class FilteredIterator<T> implements Iterator<T> {
     @Override
     public void remove() {
         if(canRemove()) {
-            iterator.remove();
             removeAllowed(false);
+            iterator.remove();
         } else {
             throw new IllegalStateException();
         }
     }
 
     private void pushMatch(T match) {
+        matchStored(true);
+        removeAllowed(false);
         this.match = match;
     }
 
     private T popMatch() {
+        matchStored(false);
+        removeAllowed(true);
         T match = this.match;
-        this.match = null;
         return match;
     }
 

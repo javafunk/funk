@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.Collections;
 
 import static java.lang.String.format;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.smallvaluesofcool.misc.Literals.listWith;

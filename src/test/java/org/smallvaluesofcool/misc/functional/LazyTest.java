@@ -1,7 +1,6 @@
 package org.smallvaluesofcool.misc.functional;
 
 import org.junit.Test;
-import org.smallvaluesofcool.misc.Literals;
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 import org.smallvaluesofcool.misc.functional.functors.DoFunction;
 import org.smallvaluesofcool.misc.functional.functors.MapFunction;
@@ -16,8 +15,8 @@ import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 import static org.smallvaluesofcool.misc.IterableUtils.materialize;
-import static org.smallvaluesofcool.misc.Literals.listWith;
 import static org.smallvaluesofcool.misc.IterableUtils.toList;
+import static org.smallvaluesofcool.misc.Literals.listWith;
 import static org.smallvaluesofcool.misc.Literals.twoTuple;
 import static org.smallvaluesofcool.misc.matchers.Matchers.hasOnlyItemsInOrder;
 
@@ -308,6 +307,19 @@ public class LazyTest {
                 return input < 5;
             }
         }));
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldTakeElementsFromTheIterableBetweenTheSpecifiedStartAndStopInStepsOfTheSpecifiedSize() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Collection<Integer> expectedOutput = listWith(3, 5, 7);
+
+        // When
+        Collection<Integer> actualOutput = materialize(Lazy.slice(input, 2, 7, 2));
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
