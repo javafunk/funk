@@ -1,7 +1,6 @@
 package org.smallvaluesofcool.misc.functional.iterators;
 
 import org.junit.Test;
-import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -149,6 +148,45 @@ public class SubSequenceIteratorTest {
         new SubSequenceIterator<Integer>(input, start, stop, step);
 
         // Then an IllegalArgumentException should be thrown
+    }
+
+    @Test
+    public void shouldDefaultToZeroForStartIfNullSupplied() throws Exception {
+        // Given
+        Iterator<Integer> input = listWith(0, 1, 2, 3, 4, 5, 6, 7, 8).iterator();
+        Integer start = null, stop = 7, step = 2;
+
+        // When
+        SubSequenceIterator<Integer> iterator = new SubSequenceIterator<Integer>(input, start, stop, step);
+
+        // Then
+        assertThat(iterator.next(), is(0));
+        assertThat(iterator.next(), is(2));
+        assertThat(iterator.next(), is(4));
+        assertThat(iterator.next(), is(6));
+    }
+
+    @Test
+    public void shouldDefaultToTheEndOfTheIteratorForStopIfNullSupplied() throws Exception {
+        // Given
+        Iterator<Integer> input = listWith(0, 1, 2, 3, 4, 5, 6, 7, 8).iterator();
+        Integer start = 1, stop = null, step = 2;
+
+        // When
+        SubSequenceIterator<Integer> iterator = new SubSequenceIterator<Integer>(input, start, stop, step);
+
+        // Then
+        assertThat(iterator.next(), is(1));
+        assertThat(iterator.next(), is(3));
+        assertThat(iterator.next(), is(5));
+        assertThat(iterator.next(), is(7));
+
+        try {
+            iterator.next();
+            fail("Expected a NoSuchElementException to be thrown");
+        } catch (NoSuchElementException exception) {
+            // continue
+        }
     }
 
     @Test

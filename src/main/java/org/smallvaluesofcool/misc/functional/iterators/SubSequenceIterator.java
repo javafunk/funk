@@ -13,6 +13,7 @@ public class SubSequenceIterator<T> implements Iterator<T> {
     private int cursor = 0;
     private boolean hasMatch = false;
     private boolean canRemove = false;
+    private boolean firstTime = true;
     private Integer start;
     private Integer stop;
     private Integer step;
@@ -21,8 +22,8 @@ public class SubSequenceIterator<T> implements Iterator<T> {
         validateBounds(start, stop, step);
 
         this.iterator = iterator;
-        this.start = start;
-        this.stop = stop;
+        this.start = start == null ? 0 : start;
+        this.stop = stop == null ? Integer.MAX_VALUE : stop;
         this.step = step;
         
         progressToStart();
@@ -79,10 +80,10 @@ public class SubSequenceIterator<T> implements Iterator<T> {
     }
 
     private void validateBounds(Integer start, Integer stop, Integer step) {
-        if (start < 0) {
+        if (start != null && start < 0) {
             throw new IllegalArgumentException("Start must not be negative.");
         }
-        if (stop < 1) {
+        if (stop != null && stop < 1) {
             throw new IllegalArgumentException("Stop must be a positive integer.");
         }
         if (step < 1) {
@@ -91,14 +92,21 @@ public class SubSequenceIterator<T> implements Iterator<T> {
     }
 
     private void progressToStart() {
-        progressBy(start - step + 1);
+        progressBy(start);
     }
 
     private void progressToNext() {
-        progressBy(step - 1);
+        if (firstTime) {
+            firstTime = false;
+        } else {
+            progressBy(step - 1);
+        }
     }
 
     private void progressBy(int numberOfElements) {
+        if (numberOfElements <= 0) {
+            return;
+        }
         times(numberOfElements, new DoFunction<Integer>() {
             public void actOn(Integer input) {
                 incrementCursor();
