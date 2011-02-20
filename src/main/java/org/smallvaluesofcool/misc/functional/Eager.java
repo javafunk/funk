@@ -202,7 +202,7 @@ public class Eager {
 
         int stopIndex = (stop == null) ? inputCollection.size() : stop;
 
-        while (stopIndex < 0) {
+        if (stopIndex < 0) {
             stopIndex += inputCollection.size();
         }
 
@@ -226,7 +226,7 @@ public class Eager {
 
         for (int i = 0; i < numberOfElementsRequired; i++) {
             int requiredIndex = startIndex + (i * stepSize);
-            while (requiredIndex < 0) {
+            if (requiredIndex < 0) {
                 requiredIndex += inputCollection.size();
             }
             outputCollection.add(inputCollection.get(requiredIndex));

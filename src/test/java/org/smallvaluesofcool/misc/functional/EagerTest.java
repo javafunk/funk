@@ -569,6 +569,19 @@ public class EagerTest {
         assertThat(actualOutput, is(expectedOutput));
     }
 
+    @Test
+    public void shouldReturnACollectionEqualToTheInputIterableIfAllIndicesAreNull() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+        Collection<Integer> expectedOutput = listWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+
+        // When
+        Collection<Integer> actualOutput = Eager.slice(input, null, null, null);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentExceptionIfZeroSuppliedForStep() throws Exception {
         // Given
@@ -609,7 +622,7 @@ public class EagerTest {
 
     // Different behaviour to python
     @Test
-    public void shouldReturnAnEmptyListIfStartIsLessThanStopAndStepIsNegative() throws Exception {
+    public void shouldWorkBackwardsIfStartIsLessThanStopAndStepIsNegative() throws Exception {
         // Given
         Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         Collection<Integer> expectedOutput = listWith(3, 2, 1, 10, 9, 8);
@@ -642,6 +655,32 @@ public class EagerTest {
 
         // When
         Collection<Integer> actualOutput = Eager.slice(input, 7, 0, -2);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldAllowNegativeStartWhenWorkingBackwardsWithANegativeStep() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Collection<Integer> expectedOutput = listWith(9, 8, 7, 6, 5, 4);
+
+        // When
+        Collection<Integer> actualOutput = Eager.slice(input, -2, 2, -1);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyListIfStartIsOutOfRange() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Collection<Integer> expectedOutput = Collections.emptyList();
+
+        // When
+        Collection<Integer> actualOutput = Eager.slice(input, -15, 2, -1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
