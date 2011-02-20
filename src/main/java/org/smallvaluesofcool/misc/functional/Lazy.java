@@ -24,15 +24,7 @@ public class Lazy {
     }
 
     public static <T> Iterable<T> drop(Iterable<? extends T> iterable, int numberToTake) {
-        final Iterator<? extends T> iterator = iterable.iterator();
-        times(numberToTake, new DoFunction<Integer>() {
-            public void actOn(Integer input) {
-                if (iterator.hasNext()) {
-                    iterator.next();
-                }
-            }
-        });
-        return toIterable((Iterator<T>) iterator);
+        return toIterable(new SubSequenceIterator<T>(iterable.iterator(), numberToTake, null));
     }
 
     public static <T> Iterable<T> dropUntil(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
@@ -114,7 +106,7 @@ public class Lazy {
     }
 
     public static <T> Iterable<T> take(Iterable<? extends T> iterable, int numberToTake) {
-        return toIterable(new LimitedIterator<T>(iterable.iterator(), numberToTake));
+        return toIterable(new SubSequenceIterator<T>(iterable.iterator(), null, numberToTake));
     }
 
     public static <T> Iterable<T> takeUntil(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {

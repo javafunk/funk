@@ -13,7 +13,6 @@ public class SubSequenceIterator<T> implements Iterator<T> {
     private int cursor = 0;
     private boolean hasMatch = false;
     private boolean canRemove = false;
-    private boolean firstTime = true;
     private Integer start;
     private Integer stop;
     private Integer step;
@@ -96,9 +95,7 @@ public class SubSequenceIterator<T> implements Iterator<T> {
     }
 
     private void progressToNext() {
-        if (firstTime) {
-            firstTime = false;
-        } else {
+        if (cursor > start) {
             progressBy(step - 1);
         }
     }
