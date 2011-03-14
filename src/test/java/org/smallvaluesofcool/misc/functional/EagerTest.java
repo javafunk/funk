@@ -1,5 +1,6 @@
 package org.smallvaluesofcool.misc.functional;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 import org.smallvaluesofcool.misc.functional.functors.DoFunction;
@@ -674,13 +675,27 @@ public class EagerTest {
     }
 
     @Test
-    public void shouldReturnAnEmptyListIfStartIsOutOfRange() throws Exception {
+    public void shouldReturnAnEmptyListIfStartIsNegativelyOutOfRange() throws Exception {
         // Given
         Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
         Collection<Integer> actualOutput = Eager.slice(input, -15, 2, -1);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    @Ignore
+    public void shouldReturnAnEmptyListIfStopIsNegativelyOutOfRange() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Collection<Integer> expectedOutput = Collections.emptyList();
+
+        // When
+        Collection<Integer> actualOutput = Eager.slice(input, 2, 20, 1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
