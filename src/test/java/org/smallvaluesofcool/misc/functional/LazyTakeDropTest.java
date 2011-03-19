@@ -1,5 +1,6 @@
 package org.smallvaluesofcool.misc.functional;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 import org.smallvaluesofcool.misc.functional.functors.DoFunction;
@@ -24,27 +25,78 @@ public class LazyTakeDropTest {
     @Test
     public void shouldReturnAnIterableContainingTheSpecifiedNumberOfElements() {
         // Given
-        List<Integer> tenFibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
-        Collection<Integer> expectedOutputs = listWith(1, 1, 2, 3, 5);
+        List<Integer> fibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
+        Collection<Integer> expectedOutput = listWith(1, 1, 2, 3, 5);
 
         // When
-        Collection<Integer> actualOutputs = materialize(Lazy.take(tenFibonaccis, 5));
+        Collection<Integer> actualOutput = materialize(Lazy.take(fibonaccis, 5));
 
         // Then
-        assertThat(actualOutputs, is(expectedOutputs));
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyIterableIfTheNumberOfElementsToTakeIsZero() throws Exception {
+        // Given
+        List<Integer> fibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
+        Integer numberToTake = 0;
+
+        // When
+        Collection<Integer> actualOutput = materialize(Lazy.take(fibonaccis, numberToTake));
+
+        // Then
+        assertThat(actualOutput, is(Matchers.<Integer>empty()));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowAnIllegalArgumentExceptionIfTheNumberOfElementsToTakeIsLessThanZero() throws Exception {
+        // Given
+        List<Integer> fibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
+        Integer numberToTake = -5;
+
+        // When
+        Lazy.take(fibonaccis, numberToTake);
+
+        // Then an IllegalArgumentException is thrown.
     }
 
     @Test
     public void shouldReturnAnIterableWithTheFirstNElementsDropped() {
         // Given
         List<Integer> tenFibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
-        Collection<Integer> expectedOutputs = listWith(8, 13, 21, 34, 55);
+        Collection<Integer> expectedOutput = listWith(8, 13, 21, 34, 55);
 
         // When
-        Collection<Integer> actualOutputs = materialize(Lazy.drop(tenFibonaccis, 5));
+        Collection<Integer> actualOutput = materialize(Lazy.drop(tenFibonaccis, 5));
 
         // Then
-        assertThat(actualOutputs, is(expectedOutputs));
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnTheSuppliedIterableIfTheNumberOfElementsToDropIsZero() throws Exception {
+        // Given
+        List<Integer> fibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
+        Collection<Integer> expectedOutput = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
+        Integer numberToTake = 0;
+
+        // When
+        Collection<Integer> actualOutput = materialize(Lazy.drop(fibonaccis, numberToTake));
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowAnIllegalArgumentExceptionIfTheNumberOfElementsToDropIsLessThanZero() throws Exception {
+        // Given
+        List<Integer> fibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
+        Integer numberToDrop = -5;
+
+        // When
+        Lazy.drop(fibonaccis, numberToDrop);
+
+        // Then an IllegalArgumentException is thrown.
     }
 
     @Test

@@ -33,4 +33,16 @@ public class LazyBatchTest {
         assertThat(materialize(returnedIterator.next()), is(secondBatch));
         assertThat(materialize(returnedIterator.next()), is(thirdBatch));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowAnIllegalArgumentExceptionIfTheSuppliedBatchSizeIsZero() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Integer batchSize = 0;
+
+        // When
+        Lazy.batch(input, batchSize);
+
+        // Then an IllegalArgumentException is thrown.
+    }
 }

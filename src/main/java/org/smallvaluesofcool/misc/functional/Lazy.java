@@ -1,5 +1,6 @@
 package org.smallvaluesofcool.misc.functional;
 
+import org.smallvaluesofcool.misc.IterableUtils;
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 import org.smallvaluesofcool.misc.functional.functors.DoFunction;
 import org.smallvaluesofcool.misc.functional.functors.MapFunction;
@@ -7,6 +8,7 @@ import org.smallvaluesofcool.misc.functional.functors.NotPredicateFunction;
 import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
 import org.smallvaluesofcool.misc.functional.iterators.*;
 
+import java.util.Collections;
 import java.util.Iterator;
 
 import static org.smallvaluesofcool.misc.IteratorUtils.toIterable;
@@ -27,6 +29,7 @@ public class Lazy {
         return toIterable(new SubSequenceIterator<T>(iterable.iterator(), numberToTake, null));
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> Iterable<T> dropUntil(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
         Iterator<? extends T> iterator = iterable.iterator();
         T next = null;
@@ -39,6 +42,7 @@ public class Lazy {
         return toIterable(new ChainedIterator<T>(listWith(next).iterator(), (Iterator<T>) iterator));
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> Iterable<T> dropWhile(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
         Iterator<? extends T> iterator = iterable.iterator();
         T next = null;
@@ -106,7 +110,11 @@ public class Lazy {
     }
 
     public static <T> Iterable<T> take(Iterable<? extends T> iterable, int numberToTake) {
-        return toIterable(new SubSequenceIterator<T>(iterable.iterator(), null, numberToTake));
+        if(numberToTake == 0) {
+            return Collections.emptyList();
+        } else {
+            return toIterable(new SubSequenceIterator<T>(iterable.iterator(), null, numberToTake));
+        }
     }
 
     public static <T> Iterable<T> takeUntil(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
