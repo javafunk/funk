@@ -1,6 +1,8 @@
 package org.smallvaluesofcool.misc.functional;
 
+import org.junit.Ignore;
 import org.junit.Test;
+import org.smallvaluesofcool.misc.IterableUtils;
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 import org.smallvaluesofcool.misc.functional.functors.DoFunction;
 
@@ -16,26 +18,13 @@ import static org.smallvaluesofcool.misc.Literals.twoTuple;
 
 public class EagerSliceTest {
     @Test
-    public void shouldSliceTheSuppliedIterableAsSpecifiedByStartStopAndStep() throws Exception {
-        // Given
-        Iterable<Integer> input = listWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
-        Collection<Integer> expectedOutput = listWith(8, 6, 4, 2);
-
-        // When
-        Collection<Integer> actualOutput = Eager.slice(input, 2, 9, 2);
-
-        // Then
-        assertThat(actualOutput, is(expectedOutput));
-    }
-
-    @Test
     public void shouldDefaultToZeroForStartIfNullSupplied() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
-        Collection<Integer> expectedOutput = listWith(10, 8, 6);
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = listWith("a", "c", "e");
 
         // When
-        Collection<Integer> actualOutput = Eager.slice(input, null, 6, 2);
+        Collection<String> actualOutput = Eager.slice(input, null, 6, 2);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -44,11 +33,11 @@ public class EagerSliceTest {
     @Test
     public void shouldDefaultToTheEndOfTheIterableForStopIfNullSupplied() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
-        Collection<Integer> expectedOutput = listWith(6, 4, 2);
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = listWith("e", "g", "i", "k");
 
         // When
-        Collection<Integer> actualOutput = Eager.slice(input, 4, null, 2);
+        Collection<String> actualOutput = Eager.slice(input, 4, null, 2);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -70,11 +59,11 @@ public class EagerSliceTest {
     @Test
     public void shouldReturnACollectionEqualToTheInputIterableIfAllIndicesAreNull() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
-        Collection<Integer> expectedOutput = listWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
 
         // When
-        Collection<Integer> actualOutput = Eager.slice(input, null, null, null);
+        Collection<String> actualOutput = Eager.slice(input, null, null, null);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -92,7 +81,7 @@ public class EagerSliceTest {
     }
 
     @Test
-    public void shouldHaveADefaultStepSizeOfOne() throws Exception {
+    public void shouldDefaultToAStepSizeOfOne() throws Exception {
         // Given
         Iterable<String> input = listWith("a", "b", "c", "d", "e");
         Collection<String> expectedOutput = listWith("b", "c", "d");
@@ -104,94 +93,235 @@ public class EagerSliceTest {
         assertThat(actualOutput, is(expectedOutput));
     }
 
-    // Different behaviour to python
     @Test
-    public void shouldWorkForwardFromTheEndOfTheIterableIfANegativeStartIsSupplied() throws Exception {
+    public void shouldReturnACollectionIncludingTheElementAtStartExcludingTheElementAtEndWithAllElementsAtStepsOfTheSpecifiedSize() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        Collection<Integer> expectedOutput = listWith(8, 9, 10, 1, 2, 3);
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = listWith("c", "e", "g", "i");
 
         // When
-        Collection<Integer> actualOutput = Eager.slice(input, -3, 3);
-
-        // Then
-        assertThat(actualOutput, is(expectedOutput));
-    }
-
-    // Different behaviour to python
-    @Test
-    public void shouldWorkBackwardsIfStartIsLessThanStopAndStepIsNegative() throws Exception {
-        // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        Collection<Integer> expectedOutput = listWith(3, 2, 1, 10, 9, 8);
-
-        // When
-        Collection<Integer> actualOutput = Eager.slice(input, 2, 6, -1);
+        Collection<String> actualOutput = Eager.slice(input, 2, 9, 2);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
     }
 
     @Test
-    public void shouldCountBackFromTheEndOfTheIterableIfANegativeStopIsSupplied() throws Exception {
+    public void shouldResolveFromTheEndOfTheIterableIfANegativeStopIsSupplied() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        Collection<Integer> expectedOutput = listWith(3, 4, 5, 6, 7, 8);
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = listWith("c", "d", "e", "f", "g", "h", "i");
 
         // When
-        Collection<Integer> actualOutput = Eager.slice(input, 2, -2);
+        Collection<String> actualOutput = Eager.slice(input, 2, -2, 1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
     }
 
     @Test
-    public void shouldWorkBackwardsIfStartIsGreaterThanStopAndStepIsNegative() throws Exception {
+    public void shouldResolveFromTheEndOfTheIterableIfANegativeStartIsSupplied() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        Collection<Integer> expectedOutput = listWith(8, 6, 4, 2);
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = listWith("e", "f", "g", "h", "i");
 
         // When
-        Collection<Integer> actualOutput = Eager.slice(input, 7, 0, -2);
+        Collection<String> actualOutput = Eager.slice(input, -7, 9, 1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
     }
 
     @Test
-    public void shouldAllowNegativeStartWhenWorkingBackwardsWithANegativeStep() throws Exception {
+    public void shouldIterateForwardsThroughTheIterableIfResolvedStartIsLessThanResolvedStopAndAPositiveStepIsSupplied() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        Collection<Integer> expectedOutput = listWith(9, 8, 7, 6, 5, 4);
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = listWith("e", "f", "g", "h", "i");
 
         // When
-        Collection<Integer> actualOutput = Eager.slice(input, -2, 2, -1);
+        Collection<String> actualOutput = Eager.slice(input, -7, -2, 1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
     }
 
     @Test
-    public void shouldReturnAnEmptyListIfStartIsNegativelyOutOfRange() throws Exception {
+    public void shouldIterateInReverseThroughTheIterableIfStartIsGreaterThanStopAndANegativeStepIsSupplied() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        Collection<Integer> expectedOutput = Collections.emptyList();
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = listWith("h", "f", "d");
 
         // When
-        Collection<Integer> actualOutput = Eager.slice(input, -15, 2, -1);
+        Collection<String> actualOutput = Eager.slice(input, 7, 1, -2);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
     }
 
     @Test
-    public void shouldReturnAnEmptyListIfStopIsNegativelyOutOfRange() throws Exception {
+    public void shouldIterateInReverseThroughTheIterableIfResolvedStartIsGreaterThanStopAndANegativeStepIsSupplied() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        Collection<Integer> expectedOutput = Collections.emptyList();
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = listWith("j", "i", "h", "g", "f", "e", "d");
 
         // When
-        Collection<Integer> actualOutput = Eager.slice(input, 2, 20, 1);
+        Collection<String> actualOutput = Eager.slice(input, -2, 2, -1);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldIterateInReverseThroughTheIterableIfStartIsGreaterThanResolvedStopAndANegativeStepIsSupplied() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = listWith("j", "i", "h", "g", "f", "e");
+
+        // When
+        Collection<String> actualOutput = Eager.slice(input, 9, -8, -1);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldIterateInReverseThroughTheIterableIfResolvedStartIsGreaterThanResolvedStopAndANegativeStepIsSupplied() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = listWith("i", "h", "g", "f", "e");
+
+        // When
+        Collection<String> actualOutput = Eager.slice(input, -3, -8, -1);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyIterableIfResolvedStartIsGreaterThanResolvedStopAndStepSizeIsPositive() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = Collections.emptyList();
+
+        // When
+        Collection<String> actualOutput = Eager.slice(input, -3, 3, 1);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyIterableIfResolvedStartIsLessThanResolvedStopAndStepSizeIsNegative() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = Collections.emptyList();
+
+        // When
+        Collection<String> actualOutput = Eager.slice(input, 2, -2, -1);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldDefaultToTheStartOfTheIterableIfSuppliedStartIsNegativelyOutOfRange() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = listWith("a", "b");
+
+        // When
+        Collection<String> actualOutput = Eager.slice(input, -15, 2, 1);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldDefaultToTheStartOfTheIterableIfSuppliedEndIsNegativelyOutOfRange() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = listWith("c", "b", "a");
+
+        // When
+        Collection<String> actualOutput = Eager.slice(input, 2, -15, -1);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldDefaultToTheEndOfTheIterableIfSuppliedEndIsPositivelyOutOfRange() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = listWith("g", "h", "i", "j", "k");
+
+        // When
+        Collection<String> actualOutput = Eager.slice(input, 6, 20, 1);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldDefaultToTheEndOfTheIterableIfSuppliedStartIsPositivelyOutOfRange() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = listWith("k", "j", "i", "h");
+
+        // When
+        Collection<String> actualOutput = Eager.slice(input, 20, 6, -1);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyIterableIfSuppliedStartIsPostivelyOutOfRangeAndStepSizeIsPositive() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = Collections.emptyList();
+
+        // When
+        Collection<String> actualOutput = Eager.slice(input, 20, 6, 1);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyIterableIfSuppliedEndIsNegativelyOutOfRangeAndStepSizeIsPositive() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = Collections.emptyList();
+
+        // When
+        Collection<String> actualOutput = Eager.slice(input, 6, -15, 1);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyIterableIfSuppliedStartIsNegativelyOutOfRangeAndStepSizeIsNegative() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = Collections.emptyList();
+
+        // When
+        Collection<String> actualOutput = Eager.slice(input, -15, 6, -1);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyIterableIfSuppliedEndIsPositivelyOutOfRangeAndStepSizeIsNegative() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
+        Collection<String> expectedOutput = Collections.emptyList();
+
+        // When
+        Collection<String> actualOutput = Eager.slice(input, 6, 20, -1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));

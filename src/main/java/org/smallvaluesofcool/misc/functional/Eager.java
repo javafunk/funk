@@ -1,5 +1,6 @@
 package org.smallvaluesofcool.misc.functional;
 
+import org.smallvaluesofcool.misc.datastructures.IntegerRange;
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 import org.smallvaluesofcool.misc.functional.functors.DoFunction;
 import org.smallvaluesofcool.misc.functional.functors.MapFunction;
@@ -195,40 +196,16 @@ public class Eager {
 
     public static <T> Collection<T> slice(Iterable<? extends T> iterable, Integer start, Integer stop, Integer step) {
         List<? extends T> inputCollection = toList(iterable);
+
+        int startIndex = resolveStartIndex(start, inputCollection.size());
+        int stopIndex = resolveStopIndex(stop, inputCollection.size());
+        int stepSize = resolveStepSize(step);
+
+        IntegerRange requiredElementIndices = new IntegerRange(startIndex, stopIndex, stepSize);
         List<T> outputCollection = new ArrayList<T>();
 
-        int startIndex = (start == null) ? 0 : start;
-
-        int stopIndex = (stop == null) ? inputCollection.size() : stop;
-
-        if (stopIndex < 0) {
-            stopIndex += inputCollection.size();
-        }
-
-        int stepSize;
-
-        if (step == null) {
-            stepSize = 1;
-        } else if (step == 0) {
-            throw new IllegalArgumentException("Step size cannot be zero");
-        } else {
-            stepSize = step;
-        }
-
-        BigDecimal elementsInRange = new BigDecimal(stopIndex - startIndex);
-        BigDecimal stepSizeAsBigDecimal = new BigDecimal(stepSize);
-        int numberOfElementsRequired = elementsInRange.divide(stepSizeAsBigDecimal, RoundingMode.HALF_UP).intValue();
-
-        if (numberOfElementsRequired < 0) {
-            numberOfElementsRequired += inputCollection.size();
-        }
-
-        for (int i = 0; i < numberOfElementsRequired; i++) {
-            int requiredIndex = startIndex + (i * stepSize);
-            if (requiredIndex < 0) {
-                requiredIndex += inputCollection.size();
-            }
-            outputCollection.add(inputCollection.get(requiredIndex));
+        for (Integer elementIndex : requiredElementIndices) {
+            outputCollection.add(inputCollection.get(elementIndex));
         }
 
         return outputCollection;
@@ -236,5 +213,27 @@ public class Eager {
 
     public static <T> Collection<T> slice(Iterable<? extends T> iterable, Integer start, Integer stop) {
         return slice(iterable, start, stop, 1);
+    }
+
+    private static int resolveStartIndex(Integer start, Integer numberOfElements) {
+        return resolveIndex(start, numberOfElements, 0, 0);
+    }
+
+    private static int resolveStopIndex(Integer stop, Integer numberOfElements) {
+        return resolveIndex(stop, numberOfElements, numberOfElements, 1);
+    }
+
+    private static int resolveStepSize(Integer step) {
+        if (step == null)   { return 1; }
+        else if (step == 0) { throw new IllegalArgumentException("Step size cannot be zero"); }
+        else                { return step; }
+    }
+
+    private static int resolveIndex(Integer index, Integer numberOfElements, Integer defaultIndex, Integer spread) {
+        if      (index == null)                { return defaultIndex; }
+        else if (index + numberOfElements < 0) { return 0 - spread; }
+        else if (index < 0)                    { return index + numberOfElements; }
+        else if (index >= numberOfElements)    { return numberOfElements - 1 + spread; }
+        else                                   { return index; }
     }
 }

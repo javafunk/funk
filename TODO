@@ -22,4 +22,3 @@
 * Add better argument error checking
 * Extract superclass from caching iterators
 * Allow null as step size on SubSequenceIterator
-* Extract class from Eager.slice
