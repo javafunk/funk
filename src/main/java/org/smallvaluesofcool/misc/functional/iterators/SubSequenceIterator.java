@@ -82,10 +82,10 @@ public class SubSequenceIterator<T> implements Iterator<T> {
         if (start != null && start < 0) {
             throw new IllegalArgumentException("Start must not be less than zero.");
         }
-        if (stop != null && stop < 1) {
-            throw new IllegalArgumentException("Stop must be greater than zero.");
+        if (stop != null && stop < 0) {
+            throw new IllegalArgumentException("Stop must not be less than zero.");
         }
-        if (start != null && stop!= null && stop <= start) {
+        if (start != null && stop!= null && stop < start) {
             throw new IllegalArgumentException("Stop must be greater than start.");
         }
         if (step != null && step < 1) {

@@ -30,6 +30,32 @@ public class EagerTakeDropTest {
     }
 
     @Test
+    public void shouldReturnAnEmptyCollectionIfTheNumberToTakeIsZero() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+        Collection<String> expectedOutput = Collections.emptyList();
+        Integer numberToTake = 0;
+
+        // When
+        Collection<String> actualOutput = Eager.take(input, numberToTake);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowAnIllegalArgumentExceptionIfTheNumberToTakeIsLessThanZero() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+        Integer numberToTake = -5;
+
+        // When
+        Eager.take(input, numberToTake);
+
+        // Then an IllegalArgumentException is thrown
+    }
+
+    @Test
     public void shouldDropTheSpecifiedNumberOfElements() {
         // Given
         Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
@@ -40,6 +66,32 @@ public class EagerTakeDropTest {
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnTheSuppliedIterableIfTheNumberToDropIsZero() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+        Collection<String> expectedOutput = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+        Integer numberToDrop = 0;
+
+        // When
+        Collection<String> actualOutput = Eager.drop(input, numberToDrop);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowAnIllegalArgumentExceptionIfTheNumberToDropIsLessThanZero() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+        Integer numberToDrop = -4;
+
+        // When
+        Eager.drop(input, numberToDrop);
+
+        // Then an IllegalArgumentException is thrown
     }
 
     @Test

@@ -110,11 +110,7 @@ public class Lazy {
     }
 
     public static <T> Iterable<T> take(Iterable<? extends T> iterable, int numberToTake) {
-        if(numberToTake == 0) {
-            return Collections.emptyList();
-        } else {
-            return toIterable(new SubSequenceIterator<T>(iterable.iterator(), null, numberToTake));
-        }
+        return toIterable(new SubSequenceIterator<T>(iterable.iterator(), null, numberToTake));
     }
 
     public static <T> Iterable<T> takeUntil(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {

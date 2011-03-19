@@ -173,6 +173,9 @@ public class Eager {
     }
 
     public static void times(int numberOfTimes, DoFunction<Integer> function) {
+        if (numberOfTimes < 0) {
+            throw new IllegalArgumentException("The number of times to execute the function cannot be less than zero.");
+        }
         for (int i = 0; i < numberOfTimes; i++) {
             function.actOn(i);
         }

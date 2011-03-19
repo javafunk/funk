@@ -28,7 +28,33 @@ public class SubSequenceIteratorTest {
         assertThat(subSequenceIterator.next(), is("f"));
         assertThat(subSequenceIterator.hasNext(), is(true));
         assertThat(subSequenceIterator.next(), is("i"));
-        assertThat(subSequenceIterator.hasNext(), is(false));        
+        assertThat(subSequenceIterator.hasNext(), is(false));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyIteratorIfSuppliedStartIsEqualToSuppliedStop() throws Exception {
+        // Given
+        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Integer start = 2, stop = 2, step = 1;
+
+        // When
+        Iterator<Integer> iterator = new SubSequenceIterator<Integer>(input, start, stop, step);
+
+        // Then
+        assertThat(iterator.hasNext(), is(false));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyIteratorIfSuppliedStartAndStopAreBothZero() throws Exception {
+        // Given
+        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Integer start = 0, stop = 0, step = 2;
+
+        // When
+        Iterator<Integer> iterator = new SubSequenceIterator<Integer>(input, start, stop, step);
+
+        // Then
+        assertThat(iterator.hasNext(), is(false));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -36,18 +62,6 @@ public class SubSequenceIteratorTest {
         // Given
         Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
         Integer start = -5, stop = 2, step = 2;
-
-        // When
-        new SubSequenceIterator<Integer>(input, start, stop, step);
-
-        // Then an IllegalArgumentException should be thrown
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowAnIllegalArgumentExceptionIfSuppliedStopIsZero() throws Exception {
-        // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
-        Integer start = 0, stop = 0, step = 2;
 
         // When
         new SubSequenceIterator<Integer>(input, start, stop, step);
@@ -84,18 +98,6 @@ public class SubSequenceIteratorTest {
         // Given
         Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
         Integer start = 1, stop = 2, step = -3;
-
-        // When
-        new SubSequenceIterator<Integer>(input, start, stop, step);
-
-        // Then an IllegalArgumentException should be thrown
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowAnIllegalArgumentExceptionIfSuppliedStartIsEqualToSuppliedStop() throws Exception {
-        // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
-        Integer start = 4, stop = 4, step = 1;
 
         // When
         new SubSequenceIterator<Integer>(input, start, stop, step);

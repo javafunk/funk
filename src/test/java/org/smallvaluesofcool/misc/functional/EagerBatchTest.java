@@ -34,4 +34,28 @@ public class EagerBatchTest {
         // Then
         assertThat(actualBatches, is(expectedBatches));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowAnIllegalArgumentExceptionIfTheBatchSizeIsZero() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5);
+        Integer batchSize = 0;
+
+        // When
+        Eager.batch(input, batchSize);
+
+        // Then an IllegalArgumentException is thrown.
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowAnIllegalArgumentExceptionIfTheBatchSizeIsLessThanZero() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5);
+        Integer batchSize = -5;
+
+        // When
+        Eager.batch(input, batchSize);
+
+        // Then an IllegalArgumentException is thrown.
+    }
 }
