@@ -31,13 +31,154 @@ public class SubSequenceIteratorTest {
         assertThat(subSequenceIterator.hasNext(), is(false));        
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowAnIllegalArgumentExceptionIfSuppliedStartIsLessThanZero() throws Exception {
+        // Given
+        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Integer start = -5, stop = 2, step = 2;
+
+        // When
+        new SubSequenceIterator<Integer>(input, start, stop, step);
+
+        // Then an IllegalArgumentException should be thrown
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowAnIllegalArgumentExceptionIfSuppliedStopIsZero() throws Exception {
+        // Given
+        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Integer start = 0, stop = 0, step = 2;
+
+        // When
+        new SubSequenceIterator<Integer>(input, start, stop, step);
+
+        // Then an IllegalArgumentException should be thrown
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowAnIllegalArgumentExceptionIfSuppliedStopIsLessThanZero() throws Exception {
+        // Given
+        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Integer start = 0, stop = -5, step = 2;
+
+        // When
+        new SubSequenceIterator<Integer>(input, start, stop, step);
+
+        // Then an IllegalArgumentException should be thrown
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowAnIllegalArgumentExceptionIfSuppliedStepIsZero() throws Exception {
+        // Given
+        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Integer start = 1, stop = 2, step = 0;
+
+        // When
+        new SubSequenceIterator<Integer>(input, start, stop, step);
+
+        // Then an IllegalArgumentException should be thrown
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowAnIllegalArgumentExceptionIfSuppliedStepIsLessThanZero() throws Exception {
+        // Given
+        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Integer start = 1, stop = 2, step = -3;
+
+        // When
+        new SubSequenceIterator<Integer>(input, start, stop, step);
+
+        // Then an IllegalArgumentException should be thrown
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowAnIllegalArgumentExceptionIfSuppliedStartIsEqualToSuppliedStop() throws Exception {
+        // Given
+        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Integer start = 4, stop = 4, step = 1;
+
+        // When
+        new SubSequenceIterator<Integer>(input, start, stop, step);
+
+        // Then an IllegalArgumentException should be thrown
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowAnIllegalArgumentExceptionIfSuppliedStartIsGreaterThanSuppliedStop() throws Exception {
+        // Given
+        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Integer start = 6, stop = 4, step = 1;
+
+        // When
+        new SubSequenceIterator<Integer>(input, start, stop, step);
+
+        // Then an IllegalArgumentException should be thrown
+    }
+
     @Test
-    public void shouldDefaultToAStepOfOneIfNoneSupplied() throws Exception {
+    public void shouldDefaultToZeroForStartIfNullSupplied() throws Exception {
+        // Given
+        Iterator<Integer> input = listWith(0, 1, 2, 3, 4, 5, 6, 7, 8).iterator();
+        Integer start = null, stop = 7, step = 2;
+
+        // When
+        SubSequenceIterator<Integer> iterator = new SubSequenceIterator<Integer>(input, start, stop, step);
+
+        // Then
+        assertThat(iterator.next(), is(0));
+        assertThat(iterator.next(), is(2));
+        assertThat(iterator.next(), is(4));
+        assertThat(iterator.next(), is(6));
+    }
+
+    @Test
+    public void shouldDefaultToTheEndOfTheIteratorForStopIfNullSupplied() throws Exception {
+        // Given
+        Iterator<Integer> input = listWith(0, 1, 2, 3, 4, 5, 6, 7, 8).iterator();
+        Integer start = 1, stop = null, step = 2;
+
+        // When
+        SubSequenceIterator<Integer> iterator = new SubSequenceIterator<Integer>(input, start, stop, step);
+
+        // Then
+        assertThat(iterator.next(), is(1));
+        assertThat(iterator.next(), is(3));
+        assertThat(iterator.next(), is(5));
+        assertThat(iterator.next(), is(7));
+
+        try {
+            iterator.next();
+            fail("Expected a NoSuchElementException to be thrown");
+        } catch (NoSuchElementException exception) {
+            // continue
+        }
+    }
+
+    @Test
+    public void shouldDefaultToAStepOfOne() throws Exception {
         // Given
         Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
 
         // When
         Iterator<Integer> subSequenceIterator = new SubSequenceIterator<Integer>(input, 1, 4);
+
+        // Then
+        assertThat(subSequenceIterator.hasNext(), is(true));
+        assertThat(subSequenceIterator.next(), is(1));
+        assertThat(subSequenceIterator.hasNext(), is(true));
+        assertThat(subSequenceIterator.next(), is(2));
+        assertThat(subSequenceIterator.hasNext(), is(true));
+        assertThat(subSequenceIterator.next(), is(3));
+        assertThat(subSequenceIterator.hasNext(), is(false));
+    }
+
+    @Test
+    public void shouldDefaultToAStepOfOneIfNullSupplied() throws Exception {
+        // Given
+        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+
+        // When
+        Iterator<Integer> subSequenceIterator = new SubSequenceIterator<Integer>(input, 1, 4, null);
 
         // Then
         assertThat(subSequenceIterator.hasNext(), is(true));
@@ -112,81 +253,6 @@ public class SubSequenceIteratorTest {
         subSequenceIterator.next();
 
         // Then a NoSuchElementException is thrown
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowAnIllegalArgumentExceptionIfANegativeStartIsSupplied() throws Exception {
-        // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
-        Integer start = -5, stop = 2, step = 2;
-
-        // When
-        new SubSequenceIterator<Integer>(input, start, stop, step);
-
-        // Then an IllegalArgumentException should be thrown
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowAnIllegalArgumentExceptionIfANonPositiveStopIsSupplied() throws Exception {
-        // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
-        Integer start = 0, stop = 0, step = 2;
-
-        // When
-        new SubSequenceIterator<Integer>(input, start, stop, step);
-
-        // Then an IllegalArgumentException should be thrown
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowAnIllegalArgumentExceptionIfANonPositiveStepIsSupplied() throws Exception {
-        // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
-        Integer start = 1, stop = 2, step = 0;
-
-        // When
-        new SubSequenceIterator<Integer>(input, start, stop, step);
-
-        // Then an IllegalArgumentException should be thrown
-    }
-
-    @Test
-    public void shouldDefaultToZeroForStartIfNullSupplied() throws Exception {
-        // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4, 5, 6, 7, 8).iterator();
-        Integer start = null, stop = 7, step = 2;
-
-        // When
-        SubSequenceIterator<Integer> iterator = new SubSequenceIterator<Integer>(input, start, stop, step);
-
-        // Then
-        assertThat(iterator.next(), is(0));
-        assertThat(iterator.next(), is(2));
-        assertThat(iterator.next(), is(4));
-        assertThat(iterator.next(), is(6));
-    }
-
-    @Test
-    public void shouldDefaultToTheEndOfTheIteratorForStopIfNullSupplied() throws Exception {
-        // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4, 5, 6, 7, 8).iterator();
-        Integer start = 1, stop = null, step = 2;
-
-        // When
-        SubSequenceIterator<Integer> iterator = new SubSequenceIterator<Integer>(input, start, stop, step);
-
-        // Then
-        assertThat(iterator.next(), is(1));
-        assertThat(iterator.next(), is(3));
-        assertThat(iterator.next(), is(5));
-        assertThat(iterator.next(), is(7));
-
-        try {
-            iterator.next();
-            fail("Expected a NoSuchElementException to be thrown");
-        } catch (NoSuchElementException exception) {
-            // continue
-        }
     }
 
     @Test

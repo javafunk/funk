@@ -23,7 +23,7 @@ public class SubSequenceIterator<T> implements Iterator<T> {
         this.iterator = iterator;
         this.start = start == null ? 0 : start;
         this.stop = stop == null ? Integer.MAX_VALUE : stop;
-        this.step = step;
+        this.step = step == null ? 1 : step;
         
         progressToStart();
     }
@@ -80,13 +80,16 @@ public class SubSequenceIterator<T> implements Iterator<T> {
 
     private void validateBounds(Integer start, Integer stop, Integer step) {
         if (start != null && start < 0) {
-            throw new IllegalArgumentException("Start must not be negative.");
+            throw new IllegalArgumentException("Start must not be less than zero.");
         }
         if (stop != null && stop < 1) {
-            throw new IllegalArgumentException("Stop must be a positive integer.");
+            throw new IllegalArgumentException("Stop must be greater than zero.");
         }
-        if (step < 1) {
-            throw new IllegalArgumentException("Step must be a positive integer.");
+        if (start != null && stop!= null && stop <= start) {
+            throw new IllegalArgumentException("Stop must be greater than start.");
+        }
+        if (step != null && step < 1) {
+            throw new IllegalArgumentException("Step must be greater than zero.");
         }
     }
 
