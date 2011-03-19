@@ -16,6 +16,9 @@ public class BatchedIterator<T> implements Iterator<Iterable<T>> {
 
     public BatchedIterator(Iterator<? extends T> iterator, int batchSize) {
         this.iterator = iterator;
+        if (batchSize <= 0) {
+            throw new IllegalArgumentException("Batch size must be greater than zero.");
+        }
         this.batchSize = batchSize;
     }
 

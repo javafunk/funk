@@ -33,6 +33,30 @@ public class BatchedIteratorTest {
         assertThat(actualSecondBatch.next(), is(expectedSecondBatch.next()));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowAnIllegalArgumentExceptionIfTheSuppliedBatchSizeIsZero() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d");
+        int batchSize = 0;
+
+        // When
+        Lazy.batch(input, batchSize);
+
+        // Then an IllegalArgumentException is thrown
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowAnIllegalArgumentExceptionIfTheSuppliedBatchSizeIsLessThanZero() throws Exception {
+        // Given
+        Iterable<String> input = listWith("a", "b", "c", "d");
+        int batchSize = -3;
+
+        // When
+        Lazy.batch(input, batchSize);
+
+        // Then an IllegalArgumentException is thrown
+    }
+
     @Test
     public void shouldAllowLaterIterablesToBeTraversedBeforeEarlierOnes() {
         // Given

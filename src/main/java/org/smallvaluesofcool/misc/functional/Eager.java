@@ -157,7 +157,7 @@ public class Eager {
         return materialize(Lazy.drop(iterable, numberToDrop));
     }
 
-    public static <T> TwoTuple<Collection<T>,Collection<T>> partition(
+    public static <T> TwoTuple<Collection<T>, Collection<T>> partition(
             Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
         TwoTuple<Iterable<T>, Iterable<T>> partition = Lazy.partition(iterable, predicate);
         return twoTuple(materialize(partition.first()), materialize(partition.second()));
