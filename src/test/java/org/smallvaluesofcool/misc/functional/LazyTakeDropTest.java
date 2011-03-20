@@ -2,9 +2,6 @@ package org.smallvaluesofcool.misc.functional;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.smallvaluesofcool.misc.datastructures.TwoTuple;
-import org.smallvaluesofcool.misc.functional.functors.DoFunction;
-import org.smallvaluesofcool.misc.functional.functors.MapFunction;
 import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
 
 import java.util.Collection;
@@ -12,14 +9,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
 import static org.smallvaluesofcool.misc.IterableUtils.materialize;
-import static org.smallvaluesofcool.misc.IterableUtils.toList;
 import static org.smallvaluesofcool.misc.Literals.listWith;
-import static org.smallvaluesofcool.misc.Literals.twoTuple;
-import static org.smallvaluesofcool.misc.matchers.Matchers.hasOnlyItemsInOrder;
 
 public class LazyTakeDropTest {
     @Test
@@ -58,6 +50,26 @@ public class LazyTakeDropTest {
         Lazy.take(fibonaccis, numberToTake);
 
         // Then an IllegalArgumentException is thrown.
+    }
+
+    @Test
+    public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedTakeIterable() throws Exception {
+        // Given
+        List<Integer> fibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
+
+        // When
+        Iterable<Integer> iterable = Lazy.take(fibonaccis, 5);
+        Iterator<Integer> iterator1 = iterable.iterator();
+        Iterator<Integer> iterator2 = iterable.iterator();
+
+        // Then
+        assertThat(iterator1.next(), is(1));
+        assertThat(iterator1.next(), is(1));
+        assertThat(iterator1.next(), is(2));
+        assertThat(iterator2.next(), is(1));
+        assertThat(iterator2.next(), is(1));
+        assertThat(iterator1.next(), is(3));
+        assertThat(iterator2.next(), is(2));
     }
 
     @Test
@@ -100,6 +112,26 @@ public class LazyTakeDropTest {
     }
 
     @Test
+    public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedDropIterable() throws Exception {
+        // Given
+        List<Integer> fibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
+
+        // When
+        Iterable<Integer> iterable = Lazy.drop(fibonaccis, 5);
+        Iterator<Integer> iterator1 = iterable.iterator();
+        Iterator<Integer> iterator2 = iterable.iterator();
+
+        // Then
+        assertThat(iterator1.next(), is(8));
+        assertThat(iterator1.next(), is(13));
+        assertThat(iterator1.next(), is(21));
+        assertThat(iterator2.next(), is(8));
+        assertThat(iterator2.next(), is(13));
+        assertThat(iterator1.next(), is(34));
+        assertThat(iterator2.next(), is(21));
+    }
+
+    @Test
     public void shouldTakeElementsFromTheIterableWhileTheSuppliedPredicateIsTrue() {
         // Given
         Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8);
@@ -107,7 +139,6 @@ public class LazyTakeDropTest {
 
         // When
         Collection<Integer> actualOutput = materialize(Lazy.takeWhile(input, new PredicateFunction<Integer>() {
-            @Override
             public boolean matches(Integer input) {
                 return input < 5;
             }
@@ -115,6 +146,29 @@ public class LazyTakeDropTest {
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedTakeWhileIterable() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8);
+
+        // When
+        Iterable<Integer> iterable = Lazy.takeWhile(input, new PredicateFunction<Integer>() {
+            public boolean matches(Integer input) {
+                return input < 5;
+            }
+        });
+        Iterator<Integer> iterator1 = iterable.iterator();
+        Iterator<Integer> iterator2 = iterable.iterator();
+
+        // Then
+        assertThat(iterator1.next(), is(1));
+        assertThat(iterator1.next(), is(2));
+        assertThat(iterator2.next(), is(1));
+        assertThat(iterator1.next(), is(3));
+        assertThat(iterator2.next(), is(2));
+        assertThat(iterator1.next(), is(4));
     }
 
     @Test
@@ -125,7 +179,6 @@ public class LazyTakeDropTest {
 
         // When
         Collection<Integer> actualOutput = materialize(Lazy.takeUntil(input, new PredicateFunction<Integer>() {
-            @Override
             public boolean matches(Integer input) {
                 return input < 5;
             }
@@ -133,6 +186,29 @@ public class LazyTakeDropTest {
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedTakeUntilIterable() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(8, 7, 6, 5, 4, 3, 2, 1);
+
+        // When
+        Iterable<Integer> iterable = Lazy.takeUntil(input, new PredicateFunction<Integer>() {
+            public boolean matches(Integer input) {
+                return input < 5;
+            }
+        });
+        Iterator<Integer> iterator1 = iterable.iterator();
+        Iterator<Integer> iterator2 = iterable.iterator();
+
+        // Then
+        assertThat(iterator1.next(), is(8));
+        assertThat(iterator1.next(), is(7));
+        assertThat(iterator2.next(), is(8));
+        assertThat(iterator1.next(), is(6));
+        assertThat(iterator2.next(), is(7));
+        assertThat(iterator1.next(), is(5));
     }
 
     @Test
@@ -143,7 +219,6 @@ public class LazyTakeDropTest {
 
         // When
         Collection<Integer> actualOutput = materialize(Lazy.dropWhile(input, new PredicateFunction<Integer>() {
-            @Override
             public boolean matches(Integer input) {
                 return input > 4;
             }
@@ -154,6 +229,29 @@ public class LazyTakeDropTest {
     }
 
     @Test
+    public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedDropWhileIterable() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(8, 7, 6, 5, 4, 3, 2, 1);
+
+        // When
+        Iterable<Integer> iterable = Lazy.dropWhile(input, new PredicateFunction<Integer>() {
+            public boolean matches(Integer input) {
+                return input > 4;
+            }
+        });
+        Iterator<Integer> iterator1 = iterable.iterator();
+        Iterator<Integer> iterator2 = iterable.iterator();
+
+        // Then
+        assertThat(iterator1.next(), is(4));
+        assertThat(iterator1.next(), is(3));
+        assertThat(iterator2.next(), is(4));
+        assertThat(iterator1.next(), is(2));
+        assertThat(iterator2.next(), is(3));
+        assertThat(iterator1.next(), is(1));
+    }
+
+    @Test
     public void shouldDropElementsFromTheIterableUntilTheSuppliedPredicateIsTrue() throws Exception {
         // Given
         Iterable<Integer> input = listWith(8, 7, 6, 5, 4, 3, 2, 1);
@@ -161,7 +259,6 @@ public class LazyTakeDropTest {
 
         // When
         Collection<Integer> actualOutput = materialize(Lazy.dropUntil(input, new PredicateFunction<Integer>() {
-            @Override
             public boolean matches(Integer input) {
                 return input < 5;
             }
@@ -169,5 +266,28 @@ public class LazyTakeDropTest {
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedDropUntilIterable() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(8, 7, 6, 5, 4, 3, 2, 1);
+
+        // When
+        Iterable<Integer> iterable = Lazy.dropUntil(input, new PredicateFunction<Integer>() {
+            public boolean matches(Integer input) {
+                return input < 5;
+            }
+        });
+        Iterator<Integer> iterator1 = iterable.iterator();
+        Iterator<Integer> iterator2 = iterable.iterator();
+
+        // Then
+        assertThat(iterator1.next(), is(4));
+        assertThat(iterator1.next(), is(3));
+        assertThat(iterator2.next(), is(4));
+        assertThat(iterator1.next(), is(2));
+        assertThat(iterator2.next(), is(3));
+        assertThat(iterator1.next(), is(1));
     }
 }

@@ -1,24 +1,12 @@
 package org.smallvaluesofcool.misc.functional;
 
 import org.junit.Test;
-import org.smallvaluesofcool.misc.datastructures.TwoTuple;
-import org.smallvaluesofcool.misc.functional.functors.DoFunction;
-import org.smallvaluesofcool.misc.functional.functors.MapFunction;
-import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
 
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
-import static org.smallvaluesofcool.misc.IterableUtils.materialize;
-import static org.smallvaluesofcool.misc.IterableUtils.toList;
 import static org.smallvaluesofcool.misc.Literals.listWith;
-import static org.smallvaluesofcool.misc.Literals.twoTuple;
-import static org.smallvaluesofcool.misc.matchers.Matchers.hasOnlyItemsInOrder;
 
 public class LazyCycleTest {
     @Test
@@ -36,5 +24,23 @@ public class LazyCycleTest {
             assertThat(cyclicIterator.next(), is("Green"));
             assertThat(cyclicIterator.next(), is("Blue"));
         }
+    }
+
+    @Test
+    public void shouldAllowIteratorToBeCalledMultipleTimesReturningDifferentIterators() throws Exception {
+        // Given
+        Iterable<String> input = listWith("Red", "Green", "Blue");
+
+        // When
+        Iterable<String> iterable = Lazy.cycle(input);
+        Iterator<String> iterator1 = iterable.iterator();
+        Iterator<String> iterator2 = iterable.iterator();
+
+        // Then
+        assertThat(iterator1.next(), is("Red"));
+        assertThat(iterator1.next(), is("Green"));
+        assertThat(iterator2.next(), is("Red"));
+        assertThat(iterator1.next(), is("Blue"));
+        assertThat(iterator2.next(), is("Green"));
     }
 }

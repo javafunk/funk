@@ -2,19 +2,12 @@ package org.smallvaluesofcool.misc.functional;
 
 import org.junit.Test;
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
-import org.smallvaluesofcool.misc.functional.functors.DoFunction;
-import org.smallvaluesofcool.misc.functional.functors.MapFunction;
-import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
-import static org.smallvaluesofcool.misc.IterableUtils.materialize;
 import static org.smallvaluesofcool.misc.IterableUtils.toList;
 import static org.smallvaluesofcool.misc.Literals.listWith;
 import static org.smallvaluesofcool.misc.Literals.twoTuple;
@@ -32,6 +25,25 @@ public class LazyZipEnumerateTest {
 
         // Then
         assertThat(toList(actual), hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedEnumeratedIterable() throws Exception {
+        // Given
+        Iterable<String> input = listWith("A", "B", "C");
+
+        // When
+        Iterable<TwoTuple<Integer, String>> iterable = Lazy.enumerate(input);
+        Iterator<TwoTuple<Integer, String>> iterator1 = iterable.iterator();
+        Iterator<TwoTuple<Integer, String>> iterator2 = iterable.iterator();
+
+        // Then
+        assertThat(iterator2.next(), is(twoTuple(0, "A")));
+        assertThat(iterator2.next(), is(twoTuple(1, "B")));
+        assertThat(iterator1.next(), is(twoTuple(0, "A")));
+        assertThat(iterator2.next(), is(twoTuple(2, "C")));
+        assertThat(iterator1.next(), is(twoTuple(1, "B")));
+        assertThat(iterator1.next(), is(twoTuple(2, "C")));
     }
 
     @Test
@@ -75,5 +87,24 @@ public class LazyZipEnumerateTest {
 
         // Then
         assertThat(toList(actual), hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedZippedIterable() throws Exception {
+        // Given
+        Iterable<String> inputIterable1 = listWith("A", "B", "C");
+        Iterable<Integer> inputIterable2 = listWith(1, 2, 3);
+
+        // When
+        Iterable<TwoTuple<String, Integer>> outputIterable = Lazy.zip(inputIterable1, inputIterable2);
+        Iterator<TwoTuple<String, Integer>> firstIterator = outputIterable.iterator();
+        Iterator<TwoTuple<String, Integer>> secondIterator = outputIterable.iterator();
+
+        // Then
+        assertThat(secondIterator.next(), is(twoTuple("A", 1)));
+        assertThat(secondIterator.next(), is(twoTuple("B", 2)));
+        assertThat(firstIterator.next(), is(twoTuple("A", 1)));
+        assertThat(secondIterator.next(), is(twoTuple("C", 3)));
+        assertThat(firstIterator.next(), is(twoTuple("B", 2)));
     }
 }

@@ -23,4 +23,23 @@ public class LazySliceTest {
         // Then
         assertThat(actualOutput, is(expectedOutput));
     }
+
+    @Test
+    public void shouldAllowIteratorToBeCalledMultipleTimesReturningDifferentIterators() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+        // When
+        Iterable<Integer> iterable = Lazy.slice(input, 2, 7, 2);
+        Iterator<Integer> iterator1 = iterable.iterator();
+        Iterator<Integer> iterator2 = iterable.iterator();
+
+        // Then
+        assertThat(iterator1.next(), is(3));
+        assertThat(iterator1.next(), is(5));
+        assertThat(iterator2.next(), is(3));
+        assertThat(iterator1.next(), is(7));
+        assertThat(iterator2.next(), is(5));
+        assertThat(iterator2.next(), is(7));
+    }
 }

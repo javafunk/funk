@@ -2,17 +2,13 @@ package org.smallvaluesofcool.misc.functional.iterators;
 
 import org.junit.Test;
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
-import org.smallvaluesofcool.misc.functional.Lazy;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.smallvaluesofcool.misc.IterableUtils.toList;
 import static org.smallvaluesofcool.misc.Literals.listWith;
 import static org.smallvaluesofcool.misc.Literals.twoTuple;
-import static org.smallvaluesofcool.misc.matchers.Matchers.hasOnlyItemsInOrder;
 
 public class ZippedIteratorTest {
     @Test

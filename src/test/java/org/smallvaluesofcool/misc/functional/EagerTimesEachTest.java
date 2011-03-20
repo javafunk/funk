@@ -1,19 +1,11 @@
 package org.smallvaluesofcool.misc.functional;
 
 import org.junit.Test;
-import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 import org.smallvaluesofcool.misc.functional.functors.DoFunction;
 
-import java.util.Collection;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import static org.smallvaluesofcool.misc.Literals.listWith;
-import static org.smallvaluesofcool.misc.Literals.twoTuple;
 
 public class EagerTimesEachTest {
     @Test

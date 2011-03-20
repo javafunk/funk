@@ -1,22 +1,13 @@
 package org.smallvaluesofcool.misc.functional;
 
 import org.junit.Test;
-import org.smallvaluesofcool.misc.datastructures.TwoTuple;
 import org.smallvaluesofcool.misc.functional.functors.DoFunction;
-import org.smallvaluesofcool.misc.functional.functors.MapFunction;
 
-import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsCollectionContaining.hasItems;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
-import static org.smallvaluesofcool.misc.IterableUtils.materialize;
-import static org.smallvaluesofcool.misc.IterableUtils.toList;
 import static org.smallvaluesofcool.misc.Literals.listWith;
-import static org.smallvaluesofcool.misc.Literals.twoTuple;
-import static org.smallvaluesofcool.misc.matchers.Matchers.hasOnlyItemsInOrder;
 
 public class LazyEachTest {
     @Test
@@ -39,6 +30,39 @@ public class LazyEachTest {
             preparedTargetsIterator.next();
             verify(target, times(1)).doSomething();
         }
+    }
+
+    @Test
+    public void shouldAllowIteratorToBeCalledMultipleTimesReturningDifferentIterators() throws Exception {
+        // Given
+        List<Target> targets = listWith(mock(Target.class), mock(Target.class), mock(Target.class));
+
+        // When
+        Iterable<Target> iterable = Lazy.each(targets, new DoFunction<Target>() {
+            @Override
+            public void actOn(Target input) {
+                input.doSomething();
+            }
+        });
+        Iterator<Target> iterator1 = iterable.iterator();
+        Iterator<Target> iterator2 = iterable.iterator();
+
+        // Then
+        verify(targets.get(0), never()).doSomething();
+        iterator1.next();
+        verify(targets.get(0), times(1)).doSomething();
+        verify(targets.get(1), never()).doSomething();
+        iterator1.next();
+        verify(targets.get(1), times(1)).doSomething();
+        iterator2.next();
+        verify(targets.get(0), times(2)).doSomething();
+        verify(targets.get(2), never()).doSomething();
+        iterator1.next();
+        verify(targets.get(2), times(1)).doSomething();
+        iterator2.next();
+        verify(targets.get(1), times(2)).doSomething();
+        iterator2.next();
+        verify(targets.get(2), times(2)).doSomething();
     }
 
     private interface Target {

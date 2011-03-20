@@ -27,7 +27,7 @@ public class IteratorUtils {
         return new HashBag<T>(toList(iterator));
     }
 
-    private static class IteratorAsIterable<T> implements Iterable<T> {
+    public static class IteratorAsIterable<T> implements Iterable<T> {
 
         private Iterator<T> iterator;
 
