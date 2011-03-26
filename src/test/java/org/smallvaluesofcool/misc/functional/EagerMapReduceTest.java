@@ -10,6 +10,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.smallvaluesofcool.misc.Literals.listWith;
+import static org.smallvaluesofcool.misc.functional.accumulators.Addition.longAdditionAccumulator;
 
 public class EagerMapReduceTest {
     @Test
@@ -36,7 +37,7 @@ public class EagerMapReduceTest {
         Collection<Long> input = listWith(2L, 3L, 4L);
 
         // When
-        Long actual = Eager.reduce(input, Eager.longAdditionAccumulator());
+        Long actual = Eager.reduce(input, longAdditionAccumulator());
 
         // Then
         assertThat(actual, equalTo(9L));
