@@ -11,6 +11,7 @@ import java.util.Iterator;
 
 import static org.smallvaluesofcool.misc.Literals.listWith;
 import static org.smallvaluesofcool.misc.Literals.twoTuple;
+import static org.smallvaluesofcool.misc.functional.Sequences.increasingIntegers;
 
 public class Lazy {
     public static <T> Iterable<Iterable<T>> batch(final Iterable<? extends T> iterable, final int batchSize) {
@@ -88,18 +89,7 @@ public class Lazy {
     }
 
     public static <T> Iterable<TwoTuple<Integer, T>> enumerate(final Iterable<? extends T> iterable) {
-        return new Iterable<TwoTuple<Integer, T>>(){
-            public Iterator<TwoTuple<Integer, T>> iterator() {
-                return new MappedIterator<T, TwoTuple<Integer, T>>(iterable.iterator(),
-                new MapFunction<T, TwoTuple<Integer, T>>() {
-                    private int index = 0;
-
-                    public TwoTuple<Integer, T> map(T input) {
-                        return twoTuple(index++, input);
-                    }
-                });
-            }
-        };
+        return zip(increasingIntegers(), iterable);
     }
 
     public static <T> Iterable<T> filter(final Iterable<? extends T> iterable, final PredicateFunction<T> predicate) {

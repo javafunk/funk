@@ -1,16 +1,15 @@
 * Finish AbstractMapBag implementation
 * Add SetUtils
-* Add Generator<T>, Yieldable<T>, GeneratorUtils, toGenerator on IteratorUtils and IterableUtils, toIterable and toIterator on GeneratorUtils
-* Add whileTrue, untilTrue, doWhileTrue, doUntilTrue, ifTrue, unlessTrue with associated Condition and Block interfaces
+* Extract superclass from caching iterators
+* Make BatchedIterator return proper iterables
 * Add eager and lazy context methods (returns Iterable<ThreeTuple<Iterable<T>, T, Iterable<T>>>)
 * Add eager and lazy group methods
 * Add eager and lazy repeat methods
 * Add eager and lazy zip methods across 3 and 4 iterables
-* Add increment(start, step), increment(start), decrement(start, step), decrement(start) infinite iterators
-* Add even, odd iterators over an underlying iterator (?) (not worth it)
-* Add combination and permutation methods (ListUtils ?)
 * Add cartesian product methods
+* Add combination and permutation methods
+* Add even, odd iterators over an underlying iterator (?) (not worth it)
 * Add union, intersection and symmetric difference methods to BagUtils
 * Add union, intersection, difference and symmetric difference methods to SetUtils
-* Extract superclass from caching iterators
-* Make BatchedIterator return proper iterables
+* Add Generator<T>, Yieldable<T>, GeneratorUtils, toGenerator on IteratorUtils and IterableUtils, toIterable and toIterator on GeneratorUtils
+* Add whileTrue, untilTrue, doWhileTrue, doUntilTrue, ifTrue, unlessTrue with associated Condition and Block interfaces
