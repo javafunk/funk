@@ -92,23 +92,19 @@ public class Eager {
     }
 
     public static <T extends Comparable<T>> T max(Iterable<? extends T> iterable) {
-        T max = null;
-        for (T item : iterable) {
-            if (max == null || (item != null && item.compareTo(max) > 0)) {
-                max = item;
+        return reduce(iterable, new ReduceFunction<T, T>() {
+            public T accumulate(T currentMax, T element) {
+                return (element != null && element.compareTo(currentMax) > 0) ? element : currentMax;
             }
-        }
-        return max;
+        });
     }
 
     public static <T extends Comparable<T>> T min(Iterable<? extends T> iterable) {
-        T min = null;
-        for (T item : iterable) {
-            if (min == null || (item != null && item.compareTo(min) < 0)) {
-                min = item;
+        return reduce(iterable, new ReduceFunction<T, T>() {
+            public T accumulate(T currentMin, T element) {
+                return (element != null && element.compareTo(currentMin) < 0) ? element : currentMin;
             }
-        }
-        return min;
+        });
     }
 
     public static <S, T> Collection<T> map(Iterable<? extends S> iterable, MapFunction<S, T> function) {

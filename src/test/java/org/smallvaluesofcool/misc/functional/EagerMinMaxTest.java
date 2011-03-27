@@ -12,7 +12,7 @@ public class EagerMinMaxTest {
     @Test
     public void shouldReturnMinValue() throws Exception {
         // Given
-        List<String> list = listWith("a", "b", "c");
+        List<String> list = listWith("b", "a", "c");
 
         // When
         String actual = Eager.min(list);
@@ -24,7 +24,7 @@ public class EagerMinMaxTest {
     @Test
     public void shouldReturnMaxValue() throws Exception {
         // Given
-        List<Integer> list = listWith(2, 6, 3);
+        List<Integer> list = listWith(3, 2, 6);
 
         // When
         Integer actual = Eager.max(list);
