@@ -5,8 +5,6 @@
 * Add eager and lazy context methods (returns Iterable<ThreeTuple<Iterable<T>, T, Iterable<T>>>)
 * Add eager and lazy group methods
 * Add eager and lazy repeat methods
-* Add first,first(n) and last,last(n) methods (note: first(n) is the same as take)
-* Add first(predicate), first(n, predicate) and last(predicate), last(n, predicate)
 * Add eager and lazy zip methods across 3 and 4 iterables
 * Add increment(start, step), increment(start), decrement(start, step), decrement(start) infinite iterators
 * Add even, odd iterators over an underlying iterator (?) (not worth it)
@@ -14,6 +12,5 @@
 * Add cartesian product methods
 * Add union, intersection and symmetric difference methods to BagUtils
 * Add union, intersection, difference and symmetric difference methods to SetUtils
-* Extract accumulators into their own package and add some more (product, division, subtraction)
 * Extract superclass from caching iterators
 * Make BatchedIterator return proper iterables

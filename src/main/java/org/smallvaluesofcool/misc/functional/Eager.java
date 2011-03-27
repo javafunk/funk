@@ -9,10 +9,7 @@ import org.smallvaluesofcool.misc.functional.functors.MapFunction;
 import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
 import org.smallvaluesofcool.misc.functional.functors.ReduceFunction;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import static org.smallvaluesofcool.misc.IterableUtils.materialize;
 import static org.smallvaluesofcool.misc.IterableUtils.toList;
@@ -129,6 +126,44 @@ public class Eager {
 
     public static <T> Collection<T> reject(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
         return materialize(Lazy.reject(iterable, predicate));
+    }
+
+    public static <T> T first(Iterable<? extends T> iterable) {
+        return iterable.iterator().next();
+    }
+
+    public static <T> T first(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
+        return first(filter(iterable, predicate));
+    }
+
+    public static <T> Collection<T> first(Iterable<? extends T> iterable, int numberOfElementsRequired) {
+        return take(iterable, numberOfElementsRequired);
+    }
+
+    public static <T> Collection<T> first(Iterable<? extends T> iterable, int numberOfElementsRequired, PredicateFunction<T> predicate) {
+        return first(filter(iterable, predicate), numberOfElementsRequired);
+    }
+
+    public static <T> T last(Iterable<? extends T> iterable) {
+        return slice(iterable, -1, null).iterator().next();
+    }
+
+    public static <T> T last(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
+        return last(filter(iterable, predicate));
+    }
+
+    public static <T> Collection<T> last(Iterable<? extends T> iterable, int numberOfElementsRequired) {
+        if (numberOfElementsRequired < 0) {
+            throw new IllegalArgumentException("Number of elements required cannot be negative");
+        }
+        if (numberOfElementsRequired == 0) {
+            return Collections.emptyList();
+        }
+        return slice(iterable, -numberOfElementsRequired, null);
+    }
+
+    public static <T> Collection<T> last(Iterable<? extends T> iterable, int numberOfElementsRequired, PredicateFunction<T> predicate) {
+        return last(filter(iterable, predicate), numberOfElementsRequired);
     }
 
     public static <T> Collection<T> take(Iterable<? extends T> iterable, int numberToTake) {
