@@ -10,7 +10,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.smallvaluesofcool.misc.Literals.listWith;
-import static org.smallvaluesofcool.misc.functional.accumulators.Addition.longAdditionAccumulator;
+import static org.smallvaluesofcool.misc.functional.Accumulators.longAdditionAccumulator;
 
 public class EagerMapReduceTest {
     @Test

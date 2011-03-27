@@ -2,8 +2,6 @@ package org.smallvaluesofcool.misc.functional;
 
 import org.smallvaluesofcool.misc.datastructures.IntegerRange;
 import org.smallvaluesofcool.misc.datastructures.TwoTuple;
-import org.smallvaluesofcool.misc.functional.accumulators.Addition;
-import org.smallvaluesofcool.misc.functional.accumulators.Multiplication;
 import org.smallvaluesofcool.misc.functional.functors.DoFunction;
 import org.smallvaluesofcool.misc.functional.functors.MapFunction;
 import org.smallvaluesofcool.misc.functional.functors.PredicateFunction;
@@ -15,8 +13,6 @@ import static org.smallvaluesofcool.misc.IterableUtils.materialize;
 import static org.smallvaluesofcool.misc.IterableUtils.toList;
 import static org.smallvaluesofcool.misc.IteratorUtils.toIterable;
 import static org.smallvaluesofcool.misc.Literals.twoTuple;
-import static org.smallvaluesofcool.misc.functional.accumulators.Addition.*;
-import static org.smallvaluesofcool.misc.functional.accumulators.Multiplication.*;
 
 public class Eager {
     public static <S, T> T reduce(Iterable<? extends S> iterable, T initialValue, ReduceFunction<S, T> function) {
@@ -35,35 +31,35 @@ public class Eager {
     }
 
     public static Integer sum(Iterable<Integer> iterable) {
-        return reduce(iterable, integerAdditionAccumulator());
+        return reduce(iterable, Accumulators.integerAdditionAccumulator());
     }
 
     public static Long sum(Iterable<Long> iterable) {
-        return reduce(iterable, longAdditionAccumulator());
+        return reduce(iterable, Accumulators.longAdditionAccumulator());
     }
 
     public static Double sum(Iterable<Double> iterable) {
-        return reduce(iterable, doubleAdditionAccumulator());
+        return reduce(iterable, Accumulators.doubleAdditionAccumulator());
     }
 
     public static Float sum(Iterable<Float> iterable) {
-        return reduce(iterable, floatAdditionAccumulator());
+        return reduce(iterable, Accumulators.floatAdditionAccumulator());
     }
 
     public static Integer product(Iterable<Integer> iterable) {
-        return reduce(iterable, integerMultiplicationAccumulator());
+        return reduce(iterable, Accumulators.integerMultiplicationAccumulator());
     }
 
     public static Long product(Iterable<Long> iterable) {
-        return reduce(iterable, longMultiplicationAccumulator());
+        return reduce(iterable, Accumulators.longMultiplicationAccumulator());
     }
 
     public static Float product(Iterable<Float> iterable) {
-        return reduce(iterable, floatMultiplicationAccumulator());
+        return reduce(iterable, Accumulators.floatMultiplicationAccumulator());
     }
 
     public static Double product(Iterable<Double> iterable) {
-        return reduce(iterable, doubleMultiplicationAccumulator());
+        return reduce(iterable, Accumulators.doubleMultiplicationAccumulator());
     }
 
     public static <T> Boolean any(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
