@@ -169,13 +169,11 @@ public class BatchedIteratorTest {
         } catch (UnsupportedOperationException exception) {}
 
         try {
-            firstBatchIterator.next();
             firstBatchIterator.remove();
             fail("Expected first child iterator to throw an UnsupportedOperationException for remove.");
         } catch (UnsupportedOperationException exception) {}
 
         try {
-            secondBatchIterator.next();
             secondBatchIterator.remove();
             fail("Expected second child iterator to throw an UnsupportedOperationException for remove.");
         } catch (UnsupportedOperationException exception) {}

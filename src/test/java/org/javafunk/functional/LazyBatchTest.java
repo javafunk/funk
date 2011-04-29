@@ -6,9 +6,9 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 import static org.javafunk.IterableUtils.materialize;
 import static org.javafunk.Literals.listWith;
+import static org.junit.Assert.assertThat;
 
 public class LazyBatchTest {
     @Test
@@ -60,5 +60,27 @@ public class LazyBatchTest {
         assertThat(materialize(iterator1.next()), is(thirdBatch));
         assertThat(materialize(iterator2.next()), is(secondBatch));
         assertThat(materialize(iterator2.next()), is(thirdBatch));
+    }
+
+    @Test
+    public void shouldAllowIteratorToBeCalledMultipleTimesOnABatchIterableReturningDifferentIterators() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6);
+
+        // When
+        Iterable<Iterable<Integer>> batchIterator = Lazy.batch(input, 3);
+        Iterable<Integer> firstBatchIterable = batchIterator.iterator().next();
+        Iterator<Integer> firstBatchIterator1 = firstBatchIterable.iterator();
+        Iterator<Integer> firstBatchIterator2 = firstBatchIterable.iterator();
+
+        // Then
+        assertThat(firstBatchIterator1.next(), is(1));
+        assertThat(firstBatchIterator1.next(), is(2));
+        assertThat(firstBatchIterator2.next(), is(1));
+        assertThat(firstBatchIterator1.next(), is(3));
+        assertThat(firstBatchIterator1.hasNext(), is(false));
+        assertThat(firstBatchIterator2.next(), is(2));
+        assertThat(firstBatchIterator2.next(), is(3));
+        assertThat(firstBatchIterator2.hasNext(), is(false));
     }
 }

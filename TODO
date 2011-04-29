@@ -2,7 +2,6 @@
 * Add SetUtils
 * Add full JavaDoc documentation to public API
 * Extract superclass from caching iterators
-* Make all Iterator classes throw IllegalStateException if next() has not yet been called
 * Add eager and lazy context methods (returns Iterable<ThreeTuple<Iterable<T>, T, Iterable<T>>>)
 * Add eager and lazy group methods
 * Add eager and lazy repeat methods
