@@ -13,3 +13,12 @@
 * Add union, intersection, difference and symmetric difference methods to SetUtils
 * Add Generator<T>, Yieldable<T>, GeneratorUtils, toGenerator on IteratorUtils and IterableUtils, toIterable and toIterator on GeneratorUtils
 * Add whileTrue, untilTrue, doWhileTrue, doUntilTrue, ifTrue, unlessTrue with associated Condition and Block interfaces
+* Sort out naming of functors:
+    DoFunction          Block       Closure         => void actOn(T input)                      void execute(T input)
+    MapFunction         Mapping     Transformer     => T map(S input)                           T transform(S input)
+    FactoryFunction     Factory                     => T create()               
+    PredicateFunction   Predicate                   => boolean matches(T input)                 boolean evaluate(T input)
+    ReduceFunction      Accumulator                 => T accumulate(T accumulator, S element)
+
+  Also have the potential for:
+    Condition                                       => boolean evaluate()
