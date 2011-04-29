@@ -1,24 +1,12 @@
 <component name="libraryTable">
   <library name="main">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/main/commons-logging-1.1.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/main/commons-io-1.4.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/main/hamcrest-all-1.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/main/joda-time-1.6.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/main/commons-lang-2.5.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/main/commons-collections-3.2.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/main/log4j-1.2.15.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/main/commons-beanutils-1.8.3.jar!/" />
+      <root url="file://$PROJECT_DIR$/lib/main" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/lib/src/commons-collections-3.2.1-sources.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/src/commons-io-1.4-sources.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/src/commons-lang-2.5-sources.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/src/commons-logging-1.1.1-sources.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/main/hamcrest-all-1.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/src/joda-time-1.6-src.zip!/joda-time-1.6-src/src/java" />
-      <root url="jar://$PROJECT_DIR$/lib/src/commons-beanutils-1.8.3-sources.jar!/" />
+      <root url="file://$PROJECT_DIR$/lib/src" />
     </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/lib/main" recursive="false" />
   </library>
 </component>
