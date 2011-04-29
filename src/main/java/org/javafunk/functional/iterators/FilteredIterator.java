@@ -8,9 +8,8 @@ import java.util.NoSuchElementException;
 public class FilteredIterator<T> implements Iterator<T> {
     private Iterator<? extends T> iterator;
     private PredicateFunction<T> predicate;
-    private T match;
-    private boolean hasMatch = false;
-    private boolean canRemove = false;
+    private IteratorCache<T> matchCache = new IteratorCache<T>();
+    private IteratorRemovalFlag removalFlag = new IteratorRemovalFlag();
 
     public FilteredIterator(Iterator<? extends T> iterator, PredicateFunction<T> predicate) {
         this.iterator = iterator;
@@ -19,13 +18,14 @@ public class FilteredIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        if (hasMatch()) {
+        if (matchCache.isPopulated()) {
             return true;
         } else {
             while (iterator.hasNext()) {
                 T next = iterator.next();
                 if (predicate.matches(next)) {
-                    pushMatch(next);
+                    matchCache.store(next);
+                    removalFlag.disable();
                     return true;
                 }
             }
@@ -35,13 +35,14 @@ public class FilteredIterator<T> implements Iterator<T> {
 
     @Override
     public T next() {
-        if (hasMatch()) {
-            return popMatch();
+        if (matchCache.isPopulated()) {
+            removalFlag.enable();
+            return matchCache.fetch();
         } else {
             while (iterator.hasNext()) {
                 T next = iterator.next();
                 if (predicate.matches(next)) {
-                    removeAllowed(true);
+                    removalFlag.enable();
                     return next;
                 }
             }
@@ -51,39 +52,11 @@ public class FilteredIterator<T> implements Iterator<T> {
 
     @Override
     public void remove() {
-        if(canRemove()) {
-            removeAllowed(false);
+        if(removalFlag.isEnabled()) {
+            removalFlag.disable();
             iterator.remove();
         } else {
             throw new IllegalStateException();
         }
-    }
-
-    private void pushMatch(T match) {
-        matchStored(true);
-        removeAllowed(false);
-        this.match = match;
-    }
-
-    private T popMatch() {
-        matchStored(false);
-        removeAllowed(true);
-        return this.match;
-    }
-
-    private boolean hasMatch() {
-        return this.hasMatch;
-    }
-
-    private void matchStored(boolean hasMatch) {
-        this.hasMatch = hasMatch;
-    }
-
-    private boolean canRemove() {
-        return canRemove;
-    }
-
-    private void removeAllowed(boolean canRemove) {
-        this.canRemove = canRemove;
     }
 }

@@ -8,9 +8,8 @@ import java.util.NoSuchElementException;
 public class PredicatedIterator<T> implements Iterator<T> {
     private Iterator<? extends T> iterator;
     private PredicateFunction<T> predicate;
-    private T cachedNext;
-    private boolean hasCachedNext = false;
-    private boolean canRemove = false;
+    private IteratorCache<T> matchCache = new IteratorCache<T>();
+    private IteratorRemovalFlag removalFlag = new IteratorRemovalFlag();
 
     public PredicatedIterator(Iterator<? extends T> iterator, PredicateFunction<T> predicate) {
         this.iterator = iterator;
@@ -19,37 +18,32 @@ public class PredicatedIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        if (hasCachedNext) {
+        if (matchCache.isPopulated()) {
             return true;
         } else {
             if (iterator.hasNext()) {
-                cachedNext = iterator.next();
-            } else {
-                return false;
+                T next = iterator.next();
+                if (predicate.matches(next)) {
+                    matchCache.store(next);
+                    removalFlag.disable();
+                    return true;
+                }
             }
-            if (predicate.matches(cachedNext)) {
-                hasCachedNext = true;
-                return true;
-            } else {
-                canRemove = false;
-                return false;
-            }
+            return false;
         }
     }
 
     @Override
     public T next() {
-        if (hasCachedNext) {
-            hasCachedNext = false;
-            canRemove = true;
-            return cachedNext;
+        if (matchCache.isPopulated()) {
+            removalFlag.enable();
+            return matchCache.fetch();
         } else {
             T next = iterator.next();
             if (predicate.matches(next)) {
-                canRemove = true;
+                removalFlag.enable();
                 return next;
             } else {
-                canRemove = false;
                 throw new NoSuchElementException();
             }
         }
@@ -57,9 +51,9 @@ public class PredicatedIterator<T> implements Iterator<T> {
 
     @Override
     public void remove() {
-        if (canRemove) {
+        if (removalFlag.isEnabled()) {
+            removalFlag.disable();
             iterator.remove();
-            canRemove = false;
         } else {
             throw new IllegalStateException();
         }

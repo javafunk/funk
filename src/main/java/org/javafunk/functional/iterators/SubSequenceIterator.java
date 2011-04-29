@@ -9,13 +9,12 @@ import static org.javafunk.functional.Eager.times;
 
 public class SubSequenceIterator<T> implements Iterator<T> {
     private Iterator<? extends T> iterator;
-    private T match;
     private int cursor = 0;
-    private boolean hasMatch = false;
-    private boolean canRemove = false;
     private Integer start;
     private Integer stop;
     private Integer step;
+    private IteratorCache<T> matchCache = new IteratorCache<T>();
+    private IteratorRemovalFlag removalFlag = new IteratorRemovalFlag();
 
     public SubSequenceIterator(Iterator<? extends T> iterator, Integer start, Integer stop, Integer step) {
         validateBounds(start, stop, step);
@@ -34,7 +33,7 @@ public class SubSequenceIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        if (hasMatch()) {
+        if (matchCache.isPopulated()) {
             return true;
         } else if (shouldStop()) {
             return false;
@@ -42,7 +41,8 @@ public class SubSequenceIterator<T> implements Iterator<T> {
             progressToNext();
             incrementCursor();
             if (iterator.hasNext()) {
-                pushMatch(iterator.next());
+                matchCache.store(iterator.next());
+                removalFlag.disable();
                 return true;
             } else {
                 return false;
@@ -52,15 +52,16 @@ public class SubSequenceIterator<T> implements Iterator<T> {
 
     @Override
     public T next() {
-        if (hasMatch()) {
-            return popMatch();
+        if (matchCache.isPopulated()) {
+            removalFlag.enable();
+            return matchCache.fetch();
         } else if (shouldStop()) {
             throw new NoSuchElementException();
         } else {
             progressToNext();
             incrementCursor();
             if (iterator.hasNext()) {
-                removeAllowed(true);
+                removalFlag.enable();
                 return iterator.next();
             } else {
                 throw new NoSuchElementException();
@@ -70,8 +71,8 @@ public class SubSequenceIterator<T> implements Iterator<T> {
 
     @Override
     public void remove() {
-        if (canRemove()) {
-            removeAllowed(false);
+        if (removalFlag.isEnabled()) {
+            removalFlag.disable();
             iterator.remove();
         } else {
             throw new IllegalStateException();
@@ -123,33 +124,5 @@ public class SubSequenceIterator<T> implements Iterator<T> {
 
     private boolean shouldStop() {
         return cursor + step > stop;
-    }
-
-    private void pushMatch(T match) {
-        matchStored(true);
-        removeAllowed(false);
-        this.match = match;
-    }
-
-    private T popMatch() {
-        matchStored(false);
-        removeAllowed(true);
-        return this.match;
-    }
-
-    private boolean hasMatch() {
-        return this.hasMatch;
-    }
-
-    private void matchStored(boolean hasMatch) {
-        this.hasMatch = hasMatch;
-    }
-
-    private boolean canRemove() {
-        return canRemove;
-    }
-
-    private void removeAllowed(boolean canRemove) {
-        this.canRemove = canRemove;
     }
 }
