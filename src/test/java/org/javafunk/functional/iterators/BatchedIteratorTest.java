@@ -123,7 +123,7 @@ public class BatchedIteratorTest {
     }
 
     @Test
-    public void shouldThrowNoSuchElementExceptionOneEachIterableHasBeenDepleted() {
+    public void shouldThrowNoSuchElementExceptionOnceEachIterableHasBeenDepleted() {
         // Given
         Iterable<String> input = listWith("a", "b");
 
@@ -169,11 +169,13 @@ public class BatchedIteratorTest {
         } catch (UnsupportedOperationException exception) {}
 
         try {
+            firstBatchIterator.next();
             firstBatchIterator.remove();
             fail("Expected first child iterator to throw an UnsupportedOperationException for remove.");
         } catch (UnsupportedOperationException exception) {}
 
         try {
+            secondBatchIterator.next();
             secondBatchIterator.remove();
             fail("Expected second child iterator to throw an UnsupportedOperationException for remove.");
         } catch (UnsupportedOperationException exception) {}
@@ -196,5 +198,27 @@ public class BatchedIteratorTest {
         assertThat(actualFirstBatch.next(), is(expectedFirstBatch.next()));
         assertThat(actualSecondBatch.next(), is(expectedSecondBatch.next()));
         assertThat(actualSecondBatch.next(), is(expectedSecondBatch.next()));
+    }
+
+    @Test
+    public void shouldAllowIteratorToBeCalledMultipleTimesOnTheReturnedIterablesReturningDifferentIterators() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6);
+        Iterator<Iterable<Integer>> batchIterator = new BatchedIterator<Integer>(input.iterator(), 3);
+
+        // When
+        Iterable<Integer> firstBatchIterable = batchIterator.next();
+        Iterator<Integer> firstBatchIterator1 = firstBatchIterable.iterator();
+        Iterator<Integer> firstBatchIterator2 = firstBatchIterable.iterator();
+
+        // Then
+        assertThat(firstBatchIterator1.next(), is(1));
+        assertThat(firstBatchIterator1.next(), is(2));
+        assertThat(firstBatchIterator2.next(), is(1));
+        assertThat(firstBatchIterator1.next(), is(3));
+        assertThat(firstBatchIterator1.hasNext(), is(false));
+        assertThat(firstBatchIterator2.next(), is(2));
+        assertThat(firstBatchIterator2.next(), is(3));
+        assertThat(firstBatchIterator2.hasNext(), is(false));
     }
 }
