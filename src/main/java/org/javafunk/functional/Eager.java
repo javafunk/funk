@@ -213,9 +213,9 @@ public class Eager {
     public static <T> Collection<T> slice(Iterable<? extends T> iterable, Integer start, Integer stop, Integer step) {
         List<? extends T> inputCollection = toList(iterable);
 
-        int startIndex = resolveStartIndex(start, inputCollection.size());
-        int stopIndex = resolveStopIndex(stop, inputCollection.size());
-        int stepSize = resolveStepSize(step);
+        int startIndex = SliceHelper.resolveStartIndex(start, inputCollection.size());
+        int stopIndex = SliceHelper.resolveStopIndex(stop, inputCollection.size());
+        int stepSize = SliceHelper.resolveStepSize(step);
 
         IntegerRange requiredElementIndices = new IntegerRange(startIndex, stopIndex, stepSize);
         List<T> outputCollection = new ArrayList<T>();
@@ -231,25 +231,27 @@ public class Eager {
         return slice(iterable, start, stop, 1);
     }
 
-    private static int resolveStartIndex(Integer start, Integer numberOfElements) {
-        return resolveIndex(start, numberOfElements, 0, 0);
-    }
+    private static class SliceHelper {
+        private static int resolveStartIndex(Integer start, Integer numberOfElements) {
+            return resolveIndex(start, numberOfElements, 0, 0);
+        }
 
-    private static int resolveStopIndex(Integer stop, Integer numberOfElements) {
-        return resolveIndex(stop, numberOfElements, numberOfElements, 1);
-    }
+        private static int resolveStopIndex(Integer stop, Integer numberOfElements) {
+            return resolveIndex(stop, numberOfElements, numberOfElements, 1);
+        }
 
-    private static int resolveStepSize(Integer step) {
-        if (step == null)   { return 1; }
-        else if (step == 0) { throw new IllegalArgumentException("Step size cannot be zero"); }
-        else                { return step; }
-    }
+        private static int resolveStepSize(Integer step) {
+            if (step == null)   { return 1; }
+            else if (step == 0) { throw new IllegalArgumentException("Step size cannot be zero"); }
+            else                { return step; }
+        }
 
-    private static int resolveIndex(Integer index, Integer numberOfElements, Integer defaultIndex, Integer spread) {
-        if      (index == null)                { return defaultIndex; }
-        else if (index + numberOfElements < 0) { return 0 - spread; }
-        else if (index < 0)                    { return index + numberOfElements; }
-        else if (index >= numberOfElements)    { return numberOfElements - 1 + spread; }
-        else                                   { return index; }
+        private static int resolveIndex(Integer index, Integer numberOfElements, Integer defaultIndex, Integer spread) {
+            if      (index == null)                { return defaultIndex; }
+            else if (index + numberOfElements < 0) { return 0 - spread; }
+            else if (index < 0)                    { return index + numberOfElements; }
+            else if (index >= numberOfElements)    { return numberOfElements - 1 + spread; }
+            else                                   { return index; }
+        }
     }
 }
