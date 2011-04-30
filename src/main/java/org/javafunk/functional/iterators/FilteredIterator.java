@@ -8,8 +8,6 @@ import java.util.NoSuchElementException;
 public class FilteredIterator<T> extends CachingIterator<T> {
     private Iterator<? extends T> iterator;
     private PredicateFunction<T> predicate;
-    private IteratorCache<T> matchCache = new IteratorCache<T>();
-    private IteratorRemovalFlag removalFlag = new IteratorRemovalFlag();
 
     public FilteredIterator(Iterator<? extends T> iterator, PredicateFunction<T> predicate) {
         this.iterator = iterator;
