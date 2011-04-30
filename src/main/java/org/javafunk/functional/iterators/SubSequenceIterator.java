@@ -7,14 +7,12 @@ import java.util.NoSuchElementException;
 
 import static org.javafunk.functional.Eager.times;
 
-public class SubSequenceIterator<T> implements Iterator<T> {
+public class SubSequenceIterator<T> extends CachingIterator<T> {
     private Iterator<? extends T> iterator;
-    private int cursor = 0;
+    private Integer cursor = 0;
     private Integer start;
     private Integer stop;
     private Integer step;
-    private IteratorCache<T> matchCache = new IteratorCache<T>();
-    private IteratorRemovalFlag removalFlag = new IteratorRemovalFlag();
 
     public SubSequenceIterator(Iterator<? extends T> iterator, Integer start, Integer stop, Integer step) {
         validateBounds(start, stop, step);
@@ -32,36 +30,13 @@ public class SubSequenceIterator<T> implements Iterator<T> {
     }
 
     @Override
-    public boolean hasNext() {
-        if (matchCache.isPopulated()) {
-            return true;
-        } else if (shouldStop()) {
-            return false;
-        } else {
-            progressToNext();
-            incrementCursor();
-            if (iterator.hasNext()) {
-                matchCache.store(iterator.next());
-                removalFlag.disable();
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
-
-    @Override
-    public T next() {
-        if (matchCache.isPopulated()) {
-            removalFlag.enable();
-            return matchCache.fetch();
-        } else if (shouldStop()) {
+    protected T findNext() {
+        if (shouldStop()) {
             throw new NoSuchElementException();
         } else {
             progressToNext();
             incrementCursor();
             if (iterator.hasNext()) {
-                removalFlag.enable();
                 return iterator.next();
             } else {
                 throw new NoSuchElementException();
@@ -70,13 +45,8 @@ public class SubSequenceIterator<T> implements Iterator<T> {
     }
 
     @Override
-    public void remove() {
-        if (removalFlag.isEnabled()) {
-            removalFlag.disable();
-            iterator.remove();
-        } else {
-            throw new IllegalStateException();
-        }
+    protected void removeLast() {
+        iterator.remove();
     }
 
     private void validateBounds(Integer start, Integer stop, Integer step) {
