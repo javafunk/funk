@@ -1,6 +1,6 @@
 package org.javafunk.functional.iterators;
 
-import org.javafunk.functional.functors.Procedure;
+import org.javafunk.functional.functors.Action;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -78,8 +78,8 @@ public class SubSequenceIterator<T> extends CachingIterator<T> {
         if (numberOfElements <= 0) {
             return;
         }
-        times(numberOfElements, new Procedure<Integer>() {
-            public void execute(Integer input) {
+        times(numberOfElements, new Action<Integer>() {
+            public void on(Integer input) {
                 incrementCursor();
                 if (iterator.hasNext()) {
                     iterator.next();

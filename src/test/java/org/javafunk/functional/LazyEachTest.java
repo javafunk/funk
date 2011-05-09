@@ -1,6 +1,6 @@
 package org.javafunk.functional;
 
-import org.javafunk.functional.functors.Procedure;
+import org.javafunk.functional.functors.Action;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -16,9 +16,9 @@ public class LazyEachTest {
         Iterable<Target> targets = listWith(mock(Target.class), mock(Target.class), mock(Target.class));
 
         // When
-        Iterable<Target> preparedTargets = Lazy.each(targets, new Procedure<Target>() {
+        Iterable<Target> preparedTargets = Lazy.each(targets, new Action<Target>() {
             @Override
-            public void execute(Target input) {
+            public void on(Target input) {
                 input.doSomething();
             }
         });
@@ -38,9 +38,9 @@ public class LazyEachTest {
         List<Target> targets = listWith(mock(Target.class), mock(Target.class), mock(Target.class));
 
         // When
-        Iterable<Target> iterable = Lazy.each(targets, new Procedure<Target>() {
+        Iterable<Target> iterable = Lazy.each(targets, new Action<Target>() {
             @Override
-            public void execute(Target input) {
+            public void on(Target input) {
                 input.doSomething();
             }
         });

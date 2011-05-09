@@ -1,6 +1,6 @@
 package org.javafunk.functional;
 
-import org.javafunk.functional.functors.Procedure;
+import org.javafunk.functional.functors.Action;
 import org.junit.Test;
 
 import static org.mockito.Matchers.anyInt;
@@ -14,9 +14,9 @@ public class EagerTimesEachTest {
         Iterable<Target> targets = listWith(mock(Target.class), mock(Target.class), mock(Target.class));
 
         // When
-        Eager.each(targets, new Procedure<Target>() {
+        Eager.each(targets, new Action<Target>() {
             @Override
-            public void execute(Target input) {
+            public void on(Target input) {
                 input.doSomething();
             }
         });
@@ -33,8 +33,8 @@ public class EagerTimesEachTest {
         final Target<Integer> target = mock(Target.class);
 
         // When
-        Eager.times(5, new Procedure<Integer>(){
-            public void execute(Integer input) {
+        Eager.times(5, new Action<Integer>(){
+            public void on(Integer input) {
                 target.doSomethingWith(input);
             }
         });
@@ -51,8 +51,8 @@ public class EagerTimesEachTest {
         final Target<Integer> target = mock(Target.class);
 
         // When
-        Eager.times(0, new Procedure<Integer>(){
-            public void execute(Integer input) {
+        Eager.times(0, new Action<Integer>(){
+            public void on(Integer input) {
                 target.doSomethingWith(input);
             }
         });
@@ -67,8 +67,8 @@ public class EagerTimesEachTest {
         Integer numberOfTimes = -3;
 
         // When
-        Eager.times(numberOfTimes, new Procedure<Integer>(){
-            public void execute(Integer input) {
+        Eager.times(numberOfTimes, new Action<Integer>(){
+            public void on(Integer input) {
                 target.doSomethingWith(input);
             }
         });

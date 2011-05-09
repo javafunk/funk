@@ -75,10 +75,10 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<T> each(final Iterable<? extends T> iterable, final Procedure<? super T> procedure) {
+    public static <T> Iterable<T> each(final Iterable<? extends T> iterable, final Action<? super T> action) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
-                return new EachIterator<T>(iterable.iterator(), procedure);
+                return new EachIterator<T>(iterable.iterator(), action);
             }
         };
 
@@ -161,11 +161,11 @@ public class Lazy {
 
     private static class EachIterator<T> implements Iterator<T> {
         private Iterator<? extends T> iterator;
-        private Procedure<? super T> procedure;
+        private Action<? super T> action;
 
-        private EachIterator(Iterator<? extends T> iterator, Procedure<? super T> procedure) {
+        private EachIterator(Iterator<? extends T> iterator, Action<? super T> action) {
             this.iterator = iterator;
-            this.procedure = procedure;
+            this.action = action;
         }
 
         @Override
@@ -176,7 +176,7 @@ public class Lazy {
         @Override
         public T next() {
             T next = iterator.next();
-            procedure.execute(next);
+            action.on(next);
             return next;
         }
 

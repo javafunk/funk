@@ -2,7 +2,7 @@ package org.javafunk.functional;
 
 import org.javafunk.datastructures.IntegerRange;
 import org.javafunk.datastructures.TwoTuple;
-import org.javafunk.functional.functors.Procedure;
+import org.javafunk.functional.functors.Action;
 import org.javafunk.functional.functors.Mapper;
 import org.javafunk.functional.functors.Predicate;
 import org.javafunk.functional.functors.Reducer;
@@ -112,7 +112,7 @@ public class Eager {
         return materialize(Lazy.enumerate(iterable));
     }
 
-    public static <T> void each(Iterable<? extends T> targets, Procedure<? super T> function) {
+    public static <T> void each(Iterable<? extends T> targets, Action<? super T> function) {
         materialize(Lazy.each(targets, function));
     }
 
@@ -185,12 +185,12 @@ public class Eager {
         return result;
     }
 
-    public static void times(int numberOfTimes, Procedure<? super Integer> function) {
+    public static void times(int numberOfTimes, Action<? super Integer> function) {
         if (numberOfTimes < 0) {
             throw new IllegalArgumentException("The number of times to execute the function cannot be less than zero.");
         }
         for (int i = 0; i < numberOfTimes; i++) {
-            function.execute(i);
+            function.on(i);
         }
     }
 
