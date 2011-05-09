@@ -1,7 +1,7 @@
 package org.javafunk.functional.iterators;
 
+import org.javafunk.functional.functors.Mapper;
 import org.junit.Test;
-import org.javafunk.functional.functors.MapFunction;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -121,7 +121,7 @@ public class MappedIteratorTest {
 
         // When
         MappedIterator<Integer, Integer> iterator = new MappedIterator<Integer, Integer>(delegateIterator,
-                new MapFunction<Integer, Integer>() {
+                new Mapper<Integer, Integer>() {
                     @Override
                     public Integer map(Integer input) {
                         return input == null ? null : input * 2;
@@ -138,8 +138,8 @@ public class MappedIteratorTest {
         assertThat(iterator.hasNext(), is(false));
     }
 
-    private MapFunction<Integer, String> stringValueMapFunction() {
-        return new MapFunction<Integer, String>() {
+    private Mapper<Integer, String> stringValueMapFunction() {
+        return new Mapper<Integer, String>() {
             public String map(Integer input) {
                 return String.valueOf(input);
             }

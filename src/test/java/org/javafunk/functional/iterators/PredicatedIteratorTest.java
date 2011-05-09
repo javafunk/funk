@@ -1,7 +1,7 @@
 package org.javafunk.functional.iterators;
 
+import org.javafunk.functional.functors.Predicate;
 import org.junit.Test;
-import org.javafunk.functional.functors.PredicateFunction;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -20,9 +20,9 @@ public class PredicatedIteratorTest {
         Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
 
         // When
-        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new PredicateFunction<String>(){
+        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean matches(String item) {
+            public boolean evaluate(String item) {
                 return item.length() < 3;
             }
         });
@@ -41,9 +41,9 @@ public class PredicatedIteratorTest {
         Iterable<String> input = listWith("a", "aa");
 
         // When
-        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new PredicateFunction<String>(){
+        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean matches(String item) {
+            public boolean evaluate(String item) {
                 return item.length() < 2;
             }
         });
@@ -62,9 +62,9 @@ public class PredicatedIteratorTest {
         Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
 
         // When
-        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new PredicateFunction<String>(){
+        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean matches(String item) {
+            public boolean evaluate(String item) {
                 return item.length() < 3;
             }
         });
@@ -80,9 +80,9 @@ public class PredicatedIteratorTest {
         Iterable<String> input = listWith("a", "aa");
 
         // When
-        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new PredicateFunction<String>(){
+        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean matches(String item) {
+            public boolean evaluate(String item) {
                 return item.length() < 10;
             }
         });
@@ -100,9 +100,9 @@ public class PredicatedIteratorTest {
         Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
 
         // When
-        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new PredicateFunction<String>(){
+        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean matches(String item) {
+            public boolean evaluate(String item) {
                 return item.length() < 3;
             }
         });
@@ -120,9 +120,9 @@ public class PredicatedIteratorTest {
         Iterable<Integer> input = listWith(1, null, 1, 2);
 
         // When
-        Iterator<Integer> predicatedIterator = new PredicatedIterator<Integer>(input.iterator(), new PredicateFunction<Integer>(){
+        Iterator<Integer> predicatedIterator = new PredicatedIterator<Integer>(input.iterator(), new Predicate<Integer>(){
             @Override
-            public boolean matches(Integer item) {
+            public boolean evaluate(Integer item) {
                 return item == null || item != 2;
             }
         });
@@ -144,9 +144,9 @@ public class PredicatedIteratorTest {
         Iterable<String> expectedOutput = listWith("aa", "aaa", "aaaa");
 
         // When
-        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new PredicateFunction<String>(){
+        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean matches(String item) {
+            public boolean evaluate(String item) {
                 return item.length() < 3;
             }
         });
@@ -164,9 +164,9 @@ public class PredicatedIteratorTest {
         Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
 
         // When
-        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new PredicateFunction<String>(){
+        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean matches(String item) {
+            public boolean evaluate(String item) {
                 return item.length() < 3;
             }
         });
@@ -183,9 +183,9 @@ public class PredicatedIteratorTest {
         Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
 
         // When
-        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new PredicateFunction<String>(){
+        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean matches(String item) {
+            public boolean evaluate(String item) {
                 return item.length() < 4;
             }
         });
@@ -204,9 +204,9 @@ public class PredicatedIteratorTest {
         Collection<String> expectedResult = listWith("aa", "aaa", "aaaa");
 
         // When
-        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new PredicateFunction<String>(){
+        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean matches(String item) {
+            public boolean evaluate(String item) {
                 return item.length() < 2;
             }
         });
@@ -233,9 +233,9 @@ public class PredicatedIteratorTest {
         Collection<String> expectedResult = listWith("aa", "aaa", "aaaa");
 
         // When
-        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new PredicateFunction<String>(){
+        Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean matches(String item) {
+            public boolean evaluate(String item) {
                 return item.length() < 2;
             }
         });

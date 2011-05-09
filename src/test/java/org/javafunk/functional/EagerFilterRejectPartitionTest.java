@@ -2,7 +2,7 @@ package org.javafunk.functional;
 
 import org.junit.Test;
 import org.javafunk.datastructures.TwoTuple;
-import org.javafunk.functional.functors.PredicateFunction;
+import org.javafunk.functional.functors.Predicate;
 
 import java.util.Collection;
 
@@ -18,9 +18,9 @@ public class EagerFilterRejectPartitionTest {
         Collection<Integer> expectedOutput = listWith(2, 4, 6);
 
         // When
-        Collection<Integer> actualOutput = Eager.filter(inputs, new PredicateFunction<Integer>() {
+        Collection<Integer> actualOutput = Eager.filter(inputs, new Predicate<Integer>() {
             @Override
-            public boolean matches(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -40,9 +40,9 @@ public class EagerFilterRejectPartitionTest {
         Collection<Integer> expectedOutput = listWith(1, 3, 5);
 
         // When
-        Collection<Integer> actualOutput = Eager.reject(inputs, new PredicateFunction<Integer>() {
+        Collection<Integer> actualOutput = Eager.reject(inputs, new Predicate<Integer>() {
             @Override
-            public boolean matches(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -64,8 +64,8 @@ public class EagerFilterRejectPartitionTest {
 
         // When
         TwoTuple<Collection<String>, Collection<String>> partitionResults = Eager.partition(input,
-                new PredicateFunction<String>() {
-                    public boolean matches(String item) {
+                new Predicate<String>() {
+                    public boolean evaluate(String item) {
                         return item.compareTo("e") < 0;
                     }
                 });

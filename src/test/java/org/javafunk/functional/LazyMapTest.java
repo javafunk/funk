@@ -1,7 +1,7 @@
 package org.javafunk.functional;
 
 import org.junit.Test;
-import org.javafunk.functional.functors.MapFunction;
+import org.javafunk.functional.functors.Mapper;
 
 import java.util.Iterator;
 
@@ -18,7 +18,7 @@ public class LazyMapTest {
         Iterable<Integer> input = listWith(1, 2, 3);
 
         // When
-        Iterable<String> actual = Lazy.map(input, new MapFunction<Integer, String>() {
+        Iterable<String> actual = Lazy.map(input, new Mapper<Integer, String>() {
             public String map(Integer input) {
                 return String.valueOf(input);
             }
@@ -34,7 +34,7 @@ public class LazyMapTest {
         Iterable<Integer> input = listWith(1, 2, 3);
 
         // When
-        Iterable<String> iterable = Lazy.map(input, new MapFunction<Integer, String>() {
+        Iterable<String> iterable = Lazy.map(input, new Mapper<Integer, String>() {
             public String map(Integer input) {
                 return String.valueOf(input);
             }

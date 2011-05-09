@@ -1,7 +1,7 @@
 package org.javafunk.functional;
 
+import org.javafunk.functional.functors.Reducer;
 import org.junit.Test;
-import org.javafunk.functional.functors.ReduceFunction;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
@@ -11,7 +11,7 @@ public class AccumulatorsTest {
     @Test
     public void shouldReturnAnAccumulatorThatAddsTheSuppliedIntegerInputToTheSuppliedAccumulatorValue() throws Exception {
         // Given
-        ReduceFunction<Integer, Integer> integerAdditionAccumulator = Accumulators.integerAdditionAccumulator();
+        Reducer<Integer, Integer> integerAdditionAccumulator = Accumulators.integerAdditionAccumulator();
 
         // When
         Integer result = integerAdditionAccumulator.accumulate(10, 5);
@@ -23,7 +23,7 @@ public class AccumulatorsTest {
     @Test
     public void shouldReturnAnAccumulatorThatAddsTheSuppliedLongInputToTheSuppliedAccumulatorValue() throws Exception {
         // Given
-        ReduceFunction<Long, Long> longAdditionAccumulator = Accumulators.longAdditionAccumulator();
+        Reducer<Long, Long> longAdditionAccumulator = Accumulators.longAdditionAccumulator();
 
         // When
         Long result = longAdditionAccumulator.accumulate(10L, 5L);
@@ -35,7 +35,7 @@ public class AccumulatorsTest {
     @Test
     public void shouldReturnAnAccumulatorThatAddsTheSuppliedFloatInputToTheSuppliedAccumulatorValue() throws Exception {
         // Given
-        ReduceFunction<Float, Float> floatAdditionAccumulator = Accumulators.floatAdditionAccumulator();
+        Reducer<Float, Float> floatAdditionAccumulator = Accumulators.floatAdditionAccumulator();
 
         // When
         Float result = floatAdditionAccumulator.accumulate(10.7F, 4.6F);
@@ -47,7 +47,7 @@ public class AccumulatorsTest {
     @Test
     public void shouldReturnAnAccumulatorThatAddsTheSuppliedDoubleInputToTheSuppliedAccumulatorValue() throws Exception {
         // Given
-        ReduceFunction<Double, Double> doubleAdditionAccumulator = Accumulators.doubleAdditionAccumulator();
+        Reducer<Double, Double> doubleAdditionAccumulator = Accumulators.doubleAdditionAccumulator();
 
         // When
         Double result = doubleAdditionAccumulator.accumulate(21.4D, 6.7D);
@@ -59,7 +59,7 @@ public class AccumulatorsTest {
     @Test
     public void shouldReturnAnAccumulatorThatMultipliesTheSuppliedAccumulatorValueByTheSuppliedIntegerInput() throws Exception {
         // Given
-        ReduceFunction<Integer, Integer> integerMultiplicationAccumulator = Accumulators.integerMultiplicationAccumulator();
+        Reducer<Integer, Integer> integerMultiplicationAccumulator = Accumulators.integerMultiplicationAccumulator();
 
         // When
         Integer result = integerMultiplicationAccumulator.accumulate(10, 5);
@@ -71,7 +71,7 @@ public class AccumulatorsTest {
     @Test
     public void shouldReturnAnAccumulatorThatMultipliesTheSuppliedAccumulatorValueByTheSuppliedLongInput() throws Exception {
         // Given
-        ReduceFunction<Long, Long> longMultiplicationAccumulator = Accumulators.longMultiplicationAccumulator();
+        Reducer<Long, Long> longMultiplicationAccumulator = Accumulators.longMultiplicationAccumulator();
 
         // When
         Long result = longMultiplicationAccumulator.accumulate(10L, 5L);
@@ -83,7 +83,7 @@ public class AccumulatorsTest {
     @Test
     public void shouldReturnAnAccumulatorThatMultipliesTheSuppliedAccumulatorValueByTheSuppliedFloatInput() throws Exception {
         // Given
-        ReduceFunction<Float, Float> floatMultiplicationAccumulator = Accumulators.floatMultiplicationAccumulator();
+        Reducer<Float, Float> floatMultiplicationAccumulator = Accumulators.floatMultiplicationAccumulator();
 
         // When
         Float result = floatMultiplicationAccumulator.accumulate(2.5F, 3.2F);
@@ -95,7 +95,7 @@ public class AccumulatorsTest {
     @Test
     public void shouldReturnAnAccumulatorThatMultipliesTheSuppliedAccumulatorValueByTheSuppliedDoubleInput() throws Exception {
         // Given
-        ReduceFunction<Double, Double> doubleMultiplicationAccumulator = Accumulators.doubleMultiplicationAccumulator();
+        Reducer<Double, Double> doubleMultiplicationAccumulator = Accumulators.doubleMultiplicationAccumulator();
 
         // When
         Double result = doubleMultiplicationAccumulator.accumulate(2.5D, 3.7D);

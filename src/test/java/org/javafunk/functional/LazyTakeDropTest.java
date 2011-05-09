@@ -1,8 +1,8 @@
 package org.javafunk.functional;
 
 import org.hamcrest.Matchers;
+import org.javafunk.functional.functors.Predicate;
 import org.junit.Test;
-import org.javafunk.functional.functors.PredicateFunction;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -138,8 +138,8 @@ public class LazyTakeDropTest {
         Collection<Integer> expectedOutput = listWith(1, 2, 3, 4);
 
         // When
-        Collection<Integer> actualOutput = materialize(Lazy.takeWhile(input, new PredicateFunction<Integer>() {
-            public boolean matches(Integer input) {
+        Collection<Integer> actualOutput = materialize(Lazy.takeWhile(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer input) {
                 return input < 5;
             }
         }));
@@ -154,8 +154,8 @@ public class LazyTakeDropTest {
         Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8);
 
         // When
-        Iterable<Integer> iterable = Lazy.takeWhile(input, new PredicateFunction<Integer>() {
-            public boolean matches(Integer input) {
+        Iterable<Integer> iterable = Lazy.takeWhile(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer input) {
                 return input < 5;
             }
         });
@@ -178,8 +178,8 @@ public class LazyTakeDropTest {
         Collection<Integer> expectedOutput = listWith(8, 7, 6, 5);
 
         // When
-        Collection<Integer> actualOutput = materialize(Lazy.takeUntil(input, new PredicateFunction<Integer>() {
-            public boolean matches(Integer input) {
+        Collection<Integer> actualOutput = materialize(Lazy.takeUntil(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer input) {
                 return input < 5;
             }
         }));
@@ -194,8 +194,8 @@ public class LazyTakeDropTest {
         Iterable<Integer> input = listWith(8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Iterable<Integer> iterable = Lazy.takeUntil(input, new PredicateFunction<Integer>() {
-            public boolean matches(Integer input) {
+        Iterable<Integer> iterable = Lazy.takeUntil(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer input) {
                 return input < 5;
             }
         });
@@ -218,8 +218,8 @@ public class LazyTakeDropTest {
         Collection<Integer> expectedOutput = listWith(4, 3, 2, 1);
 
         // When
-        Collection<Integer> actualOutput = materialize(Lazy.dropWhile(input, new PredicateFunction<Integer>() {
-            public boolean matches(Integer input) {
+        Collection<Integer> actualOutput = materialize(Lazy.dropWhile(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer input) {
                 return input > 4;
             }
         }));
@@ -234,8 +234,8 @@ public class LazyTakeDropTest {
         Iterable<Integer> input = listWith(8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Iterable<Integer> iterable = Lazy.dropWhile(input, new PredicateFunction<Integer>() {
-            public boolean matches(Integer input) {
+        Iterable<Integer> iterable = Lazy.dropWhile(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer input) {
                 return input > 4;
             }
         });
@@ -258,8 +258,8 @@ public class LazyTakeDropTest {
         Collection<Integer> expectedOutput = listWith(4, 3, 2, 1);
 
         // When
-        Collection<Integer> actualOutput = materialize(Lazy.dropUntil(input, new PredicateFunction<Integer>() {
-            public boolean matches(Integer input) {
+        Collection<Integer> actualOutput = materialize(Lazy.dropUntil(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer input) {
                 return input < 5;
             }
         }));
@@ -274,8 +274,8 @@ public class LazyTakeDropTest {
         Iterable<Integer> input = listWith(8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Iterable<Integer> iterable = Lazy.dropUntil(input, new PredicateFunction<Integer>() {
-            public boolean matches(Integer input) {
+        Iterable<Integer> iterable = Lazy.dropUntil(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer input) {
                 return input < 5;
             }
         });

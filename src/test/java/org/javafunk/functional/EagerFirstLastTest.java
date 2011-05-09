@@ -1,7 +1,7 @@
 package org.javafunk.functional;
 
+import org.javafunk.functional.functors.Predicate;
 import org.junit.Test;
-import org.javafunk.functional.functors.PredicateFunction;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,8 +42,8 @@ public class EagerFirstLastTest {
         Iterable<Integer> input = listWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Integer output = Eager.first(input, new PredicateFunction<Integer>(){
-            public boolean matches(Integer item) {
+        Integer output = Eager.first(input, new Predicate<Integer>(){
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -62,8 +62,8 @@ public class EagerFirstLastTest {
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Eager.first(input, new PredicateFunction<Integer>(){
-            public boolean matches(Integer item) {
+        Eager.first(input, new Predicate<Integer>(){
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -81,8 +81,8 @@ public class EagerFirstLastTest {
         Iterable<Integer> input = listWith(1, 3, 5, 7);
 
         // When
-        Eager.first(input, new PredicateFunction<Integer>(){
-            public boolean matches(Integer item) {
+        Eager.first(input, new Predicate<Integer>(){
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -164,8 +164,8 @@ public class EagerFirstLastTest {
         Collection<Integer> expectedOutput = listWith(8, 6);
 
         // When
-        Collection<Integer> actualOutput = Eager.first(input, 2, new PredicateFunction<Integer>(){
-            public boolean matches(Integer item) {
+        Collection<Integer> actualOutput = Eager.first(input, 2, new Predicate<Integer>(){
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -185,8 +185,8 @@ public class EagerFirstLastTest {
         Collection<Integer> expectedOutput = listWith(4, 2);
 
         // When
-        Collection<Integer> actualOutput = Eager.first(input, 4, new PredicateFunction<Integer>(){
-            public boolean matches(Integer item) {
+        Collection<Integer> actualOutput = Eager.first(input, 4, new Predicate<Integer>(){
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -206,8 +206,8 @@ public class EagerFirstLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.first(input, 3, new PredicateFunction<Integer>(){
-            public boolean matches(Integer item) {
+        Collection<Integer> actualOutput = Eager.first(input, 3, new Predicate<Integer>(){
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -227,8 +227,8 @@ public class EagerFirstLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.first(input, 0, new PredicateFunction<Integer>(){
-            public boolean matches(Integer item) {
+        Collection<Integer> actualOutput = Eager.first(input, 0, new Predicate<Integer>(){
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -248,8 +248,8 @@ public class EagerFirstLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.first(input, 2, new PredicateFunction<Integer>(){
-            public boolean matches(Integer item) {
+        Collection<Integer> actualOutput = Eager.first(input, 2, new Predicate<Integer>(){
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -291,8 +291,8 @@ public class EagerFirstLastTest {
         Iterable<Integer> input = listWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Integer output = Eager.last(input, new PredicateFunction<Integer>() {
-            public boolean matches(Integer item) {
+        Integer output = Eager.last(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -311,8 +311,8 @@ public class EagerFirstLastTest {
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Eager.last(input, new PredicateFunction<Integer>() {
-            public boolean matches(Integer item) {
+        Eager.last(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -330,8 +330,8 @@ public class EagerFirstLastTest {
         Iterable<Integer> input = listWith(1, 3, 5, 7);
 
         // When
-        Eager.last(input, new PredicateFunction<Integer>() {
-            public boolean matches(Integer item) {
+        Eager.last(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -413,8 +413,8 @@ public class EagerFirstLastTest {
         Collection<Integer> expectedOutput = listWith(6, 4, 2);
 
         // When
-        Collection<Integer> actualOutput = Eager.last(input, 3, new PredicateFunction<Integer>() {
-            public boolean matches(Integer item) {
+        Collection<Integer> actualOutput = Eager.last(input, 3, new Predicate<Integer>() {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -434,8 +434,8 @@ public class EagerFirstLastTest {
         Collection<Integer> expectedOutput = listWith(4, 2);
 
         // When
-        Collection<Integer> actualOutput = Eager.last(input, 4, new PredicateFunction<Integer>(){
-            public boolean matches(Integer item) {
+        Collection<Integer> actualOutput = Eager.last(input, 4, new Predicate<Integer>(){
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -455,8 +455,8 @@ public class EagerFirstLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.last(input, 3, new PredicateFunction<Integer>(){
-            public boolean matches(Integer item) {
+        Collection<Integer> actualOutput = Eager.last(input, 3, new Predicate<Integer>(){
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -476,8 +476,8 @@ public class EagerFirstLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.last(input, 0, new PredicateFunction<Integer>(){
-            public boolean matches(Integer item) {
+        Collection<Integer> actualOutput = Eager.last(input, 0, new Predicate<Integer>(){
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -497,8 +497,8 @@ public class EagerFirstLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.last(input, 2, new PredicateFunction<Integer>(){
-            public boolean matches(Integer item) {
+        Collection<Integer> actualOutput = Eager.last(input, 2, new Predicate<Integer>(){
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 

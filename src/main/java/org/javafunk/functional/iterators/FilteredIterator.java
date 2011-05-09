@@ -1,15 +1,15 @@
 package org.javafunk.functional.iterators;
 
-import org.javafunk.functional.functors.PredicateFunction;
+import org.javafunk.functional.functors.Predicate;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class FilteredIterator<T> extends CachingIterator<T> {
     private Iterator<? extends T> iterator;
-    private PredicateFunction<? super T> predicate;
+    private Predicate<? super T> predicate;
 
-    public FilteredIterator(Iterator<? extends T> iterator, PredicateFunction<? super T> predicate) {
+    public FilteredIterator(Iterator<? extends T> iterator, Predicate<? super T> predicate) {
         this.iterator = iterator;
         this.predicate = predicate;
     }
@@ -18,7 +18,7 @@ public class FilteredIterator<T> extends CachingIterator<T> {
     protected T findNext() {
         while (iterator.hasNext()) {
             T next = iterator.next();
-            if (predicate.matches(next)) {
+            if (predicate.evaluate(next)) {
                 return next;
             }
         }

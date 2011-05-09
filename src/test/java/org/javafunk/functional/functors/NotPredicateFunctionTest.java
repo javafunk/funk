@@ -12,13 +12,13 @@ public class NotPredicateFunctionTest {
     @Test
     public void shouldReturnTrueIfTheSuppliedPredicateReturnsFalse() {
         // Given
-        PredicateFunction<String> delegatePredicate = mock(PredicateFunction.class);
-        when(delegatePredicate.matches(any(String.class))).thenReturn(false);
+        Predicate<String> delegatePredicate = mock(Predicate.class);
+        when(delegatePredicate.evaluate(any(String.class))).thenReturn(false);
 
-        NotPredicateFunction<String> notPredicate = new NotPredicateFunction<String>(delegatePredicate);
+        NotPredicate<String> notPredicate = new NotPredicate<String>(delegatePredicate);
 
         // When
-        Boolean result = notPredicate.matches("some string");
+        Boolean result = notPredicate.evaluate("some string");
 
         // Then
         assertThat(result, is(true));
@@ -27,13 +27,13 @@ public class NotPredicateFunctionTest {
     @Test
     public void shouldReturnFalseIfTheSuppliedPredicateReturnsTrue() {
         // Given
-        PredicateFunction<String> delegatePredicate = mock(PredicateFunction.class);
-        when(delegatePredicate.matches(any(String.class))).thenReturn(true);
+        Predicate<String> delegatePredicate = mock(Predicate.class);
+        when(delegatePredicate.evaluate(any(String.class))).thenReturn(true);
 
-        NotPredicateFunction<String> notPredicate = new NotPredicateFunction<String>(delegatePredicate);
+        NotPredicate<String> notPredicate = new NotPredicate<String>(delegatePredicate);
 
         // When
-        Boolean result = notPredicate.matches("some string");
+        Boolean result = notPredicate.evaluate("some string");
 
         // Then
         assertThat(result, is(false));

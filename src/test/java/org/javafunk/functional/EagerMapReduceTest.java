@@ -1,8 +1,8 @@
 package org.javafunk.functional;
 
+import org.javafunk.functional.functors.Mapper;
 import org.junit.Test;
-import org.javafunk.functional.functors.MapFunction;
-import org.javafunk.functional.functors.ReduceFunction;
+import org.javafunk.functional.functors.Reducer;
 
 import java.util.Collection;
 import java.util.List;
@@ -20,7 +20,7 @@ public class EagerMapReduceTest {
         Collection<Integer> expectedOutputs = listWith(2, 4, 6);
 
         // When
-        Collection<Integer> actualOutputs = Eager.map(inputs, new MapFunction<Integer, Integer>() {
+        Collection<Integer> actualOutputs = Eager.map(inputs, new Mapper<Integer, Integer>() {
             @Override
             public Integer map(Integer input) {
                 return input * 2;
@@ -52,7 +52,7 @@ public class EagerMapReduceTest {
                 listWith(7, 8, 9).build());
 
         // When
-        List<Integer> actual = Eager.reduce(inputLists, new ReduceFunction<List<Integer>, List<Integer>>() {
+        List<Integer> actual = Eager.reduce(inputLists, new Reducer<List<Integer>, List<Integer>>() {
             // Example flattening accumulator.
             public List<Integer> accumulate(List<Integer> accumulator, List<Integer> element) {
                 accumulator.addAll(element);
@@ -70,7 +70,7 @@ public class EagerMapReduceTest {
         List<Integer> inputs = listWith(1, 2, 3);
 
         // When
-        String output = Eager.reduce(inputs, "", new ReduceFunction<Integer, String>() {
+        String output = Eager.reduce(inputs, "", new Reducer<Integer, String>() {
             public String accumulate(String accumulator, Integer element) {
                 accumulator += element.toString();
                 return accumulator;

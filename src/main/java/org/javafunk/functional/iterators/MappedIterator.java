@@ -1,14 +1,14 @@
 package org.javafunk.functional.iterators;
 
-import org.javafunk.functional.functors.MapFunction;
+import org.javafunk.functional.functors.Mapper;
 
 import java.util.Iterator;
 
 public class MappedIterator<S, T> implements Iterator<T> {
     private Iterator<? extends S> iterator;
-    private MapFunction<? super S, ? extends T> function;
+    private Mapper<? super S, ? extends T> function;
 
-    public MappedIterator(Iterator<? extends S> iterator, MapFunction<? super S, ? extends T> function) {
+    public MappedIterator(Iterator<? extends S> iterator, Mapper<? super S, ? extends T> function) {
         this.iterator = iterator;
         this.function = function;
     }

@@ -1,5 +1,5 @@
 package org.javafunk.functional.functors;
 
-public interface MapFunction<S, T> {
+public interface Mapper<S, T> {
     T map(S input);
 }

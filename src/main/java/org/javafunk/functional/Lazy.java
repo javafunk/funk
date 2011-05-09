@@ -1,10 +1,9 @@
 package org.javafunk.functional;
 
 import org.javafunk.datastructures.TwoTuple;
-import org.javafunk.functional.functors.DoFunction;
-import org.javafunk.functional.functors.MapFunction;
-import org.javafunk.functional.functors.NotPredicateFunction;
-import org.javafunk.functional.functors.PredicateFunction;
+import org.javafunk.functional.functors.*;
+import org.javafunk.functional.functors.NotPredicate;
+import org.javafunk.functional.functors.Predicate;
 import org.javafunk.functional.iterators.*;
 
 import java.util.Iterator;
@@ -44,14 +43,14 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<T> dropUntil(final Iterable<? extends T> iterable, final PredicateFunction<? super T> predicate) {
+    public static <T> Iterable<T> dropUntil(final Iterable<? extends T> iterable, final Predicate<? super T> predicate) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 Iterator<? extends T> iterator = iterable.iterator();
                 T next = null;
                 while (iterator.hasNext()) {
                     next = iterator.next();
-                    if (predicate.matches(next)) {
+                    if (predicate.evaluate(next)) {
                         break;
                     }
                 }
@@ -60,14 +59,14 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<T> dropWhile(final Iterable<? extends T> iterable, final PredicateFunction<? super T> predicate) {
+    public static <T> Iterable<T> dropWhile(final Iterable<? extends T> iterable, final Predicate<? super T> predicate) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 Iterator<? extends T> iterator = iterable.iterator();
                 T next = null;
                 while (iterator.hasNext()) {
                     next = iterator.next();
-                    if (!predicate.matches(next)) {
+                    if (!predicate.evaluate(next)) {
                         break;
                     }
                 }
@@ -76,10 +75,10 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<T> each(final Iterable<? extends T> iterable, final DoFunction<? super T> doFunction) {
+    public static <T> Iterable<T> each(final Iterable<? extends T> iterable, final Procedure<? super T> procedure) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
-                return new EachIterator<T>(iterable.iterator(), doFunction);
+                return new EachIterator<T>(iterable.iterator(), procedure);
             }
         };
 
@@ -89,7 +88,7 @@ public class Lazy {
         return zip(increasingIntegers(), iterable);
     }
 
-    public static <T> Iterable<T> filter(final Iterable<? extends T> iterable, final PredicateFunction<? super T> predicate) {
+    public static <T> Iterable<T> filter(final Iterable<? extends T> iterable, final Predicate<? super T> predicate) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
                 return new FilteredIterator<T>(iterable.iterator(), predicate);
@@ -97,7 +96,7 @@ public class Lazy {
         };
     }
 
-    public static <S, T> Iterable<T> map(final Iterable<? extends S> iterable, final MapFunction<? super S, ? extends T> function) {
+    public static <S, T> Iterable<T> map(final Iterable<? extends S> iterable, final Mapper<? super S, ? extends T> function) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
                 return new MappedIterator<S, T>(iterable.iterator(), function);
@@ -105,14 +104,14 @@ public class Lazy {
         };
     }
 
-    public static <T> TwoTuple<Iterable<T>,Iterable<T>> partition(Iterable<? extends T> iterable, PredicateFunction<? super T> predicate) {
+    public static <T> TwoTuple<Iterable<T>,Iterable<T>> partition(Iterable<? extends T> iterable, Predicate<? super T> predicate) {
         return twoTuple(filter(iterable, predicate), reject(iterable, predicate));
     }
 
-    public static <T> Iterable<T> reject(final Iterable<? extends T> iterable, final PredicateFunction<? super T> predicate) {
+    public static <T> Iterable<T> reject(final Iterable<? extends T> iterable, final Predicate<? super T> predicate) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
-                return new FilteredIterator<T>(iterable.iterator(), new NotPredicateFunction<T>(predicate));
+                return new FilteredIterator<T>(iterable.iterator(), new NotPredicate<T>(predicate));
             }
         };
     }
@@ -136,15 +135,15 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<T> takeUntil(final Iterable<? extends T> iterable, final PredicateFunction<? super T> predicate) {
+    public static <T> Iterable<T> takeUntil(final Iterable<? extends T> iterable, final Predicate<? super T> predicate) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
-                return new PredicatedIterator<T>(iterable.iterator(), new NotPredicateFunction<T>(predicate));
+                return new PredicatedIterator<T>(iterable.iterator(), new NotPredicate<T>(predicate));
             }
         };
     }
 
-    public static <T> Iterable<T> takeWhile(final Iterable<? extends T> iterable, final PredicateFunction<? super T> predicate) {
+    public static <T> Iterable<T> takeWhile(final Iterable<? extends T> iterable, final Predicate<? super T> predicate) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
                 return new PredicatedIterator<T>(iterable.iterator(), predicate);
@@ -162,11 +161,11 @@ public class Lazy {
 
     private static class EachIterator<T> implements Iterator<T> {
         private Iterator<? extends T> iterator;
-        private DoFunction<? super T> doFunction;
+        private Procedure<? super T> procedure;
 
-        private EachIterator(Iterator<? extends T> iterator, DoFunction<? super T> doFunction) {
+        private EachIterator(Iterator<? extends T> iterator, Procedure<? super T> procedure) {
             this.iterator = iterator;
-            this.doFunction = doFunction;
+            this.procedure = procedure;
         }
 
         @Override
@@ -177,7 +176,7 @@ public class Lazy {
         @Override
         public T next() {
             T next = iterator.next();
-            doFunction.actOn(next);
+            procedure.execute(next);
             return next;
         }
 

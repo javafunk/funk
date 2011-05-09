@@ -1,8 +1,8 @@
 package org.javafunk.functional;
 
+import org.javafunk.functional.functors.Predicate;
 import org.junit.Test;
 import org.javafunk.datastructures.TwoTuple;
-import org.javafunk.functional.functors.PredicateFunction;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -21,8 +21,8 @@ public class LazyFilterRejectPartitionTest {
         Collection<String> expectedOutputs = listWith("ac", "bc", "abc", "bcd");
 
         // When
-        Collection<String> actualOutputs = materialize(Lazy.filter(inputs, new PredicateFunction<String>() {
-            public boolean matches(String item) {
+        Collection<String> actualOutputs = materialize(Lazy.filter(inputs, new Predicate<String>() {
+            public boolean evaluate(String item) {
                 return item.contains("c");
             }
         }));
@@ -37,8 +37,8 @@ public class LazyFilterRejectPartitionTest {
         List<String> inputs = listWith("ac", "ab", "bc", "abc", "bcd", "bad");
 
         // When
-        Iterable<String> iterable = Lazy.filter(inputs, new PredicateFunction<String>() {
-            public boolean matches(String item) {
+        Iterable<String> iterable = Lazy.filter(inputs, new Predicate<String>() {
+            public boolean evaluate(String item) {
                 return item.contains("c");
             }
         });
@@ -61,8 +61,8 @@ public class LazyFilterRejectPartitionTest {
         Collection<String> expectedOutputs = listWith("ab", "bad");
 
         // When
-        Collection<String> actualOutputs = materialize(Lazy.reject(inputs, new PredicateFunction<String>() {
-            public boolean matches(String item) {
+        Collection<String> actualOutputs = materialize(Lazy.reject(inputs, new Predicate<String>() {
+            public boolean evaluate(String item) {
                 return item.contains("c");
             }
         }));
@@ -77,8 +77,8 @@ public class LazyFilterRejectPartitionTest {
         List<String> inputs = listWith("ac", "ab", "bc", "abc", "bcd", "bad", "gae");
 
         // When
-        Iterable<String> iterable = Lazy.reject(inputs, new PredicateFunction<String>() {
-            public boolean matches(String item) {
+        Iterable<String> iterable = Lazy.reject(inputs, new Predicate<String>() {
+            public boolean evaluate(String item) {
                 return item.contains("c");
             }
         });
@@ -103,8 +103,8 @@ public class LazyFilterRejectPartitionTest {
 
         // When
         TwoTuple<Iterable<Integer>, Iterable<Integer>> partitionResults = Lazy.partition(input,
-                new PredicateFunction<Integer>(){
-                    public boolean matches(Integer item) {
+                new Predicate<Integer>(){
+                    public boolean evaluate(Integer item) {
                         return isEven(item);
                     }
 
@@ -128,8 +128,8 @@ public class LazyFilterRejectPartitionTest {
 
         // When
         TwoTuple<Iterable<Integer>, Iterable<Integer>> partitionResult = Lazy.partition(input,
-                new PredicateFunction<Integer>(){
-                    public boolean matches(Integer item) {
+                new Predicate<Integer>(){
+                    public boolean evaluate(Integer item) {
                         return isEven(item);
                     }
 

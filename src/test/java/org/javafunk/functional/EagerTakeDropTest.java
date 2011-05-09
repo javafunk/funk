@@ -1,7 +1,7 @@
 package org.javafunk.functional;
 
+import org.javafunk.functional.functors.Predicate;
 import org.junit.Test;
-import org.javafunk.functional.functors.PredicateFunction;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -96,8 +96,8 @@ public class EagerTakeDropTest {
         Collection<Integer> expectedOutput = listWith(1, 2, 1, 2);
 
         // When
-        Collection<Integer> actualOutput = Eager.takeWhile(input, new PredicateFunction<Integer>(){
-            public boolean matches(Integer item) {
+        Collection<Integer> actualOutput = Eager.takeWhile(input, new Predicate<Integer>(){
+            public boolean evaluate(Integer item) {
                 return item < 3;
             }
         });
@@ -113,8 +113,8 @@ public class EagerTakeDropTest {
         Collection<Integer> expectedOutput = listWith(1, 2, 3);
 
         // When
-        Collection<Integer> actualOutput = Eager.takeUntil(input, new PredicateFunction<Integer>(){
-            public boolean matches(Integer item) {
+        Collection<Integer> actualOutput = Eager.takeUntil(input, new Predicate<Integer>(){
+            public boolean evaluate(Integer item) {
                 return item > 3;
             }
         });
@@ -130,9 +130,9 @@ public class EagerTakeDropTest {
         Collection<String> expectedOutput = listWith("aaa", "aaaa");
 
         // When
-        Collection<String> actualOutput = Eager.dropWhile(input, new PredicateFunction<String>(){
+        Collection<String> actualOutput = Eager.dropWhile(input, new Predicate<String>(){
             @Override
-            public boolean matches(String item) {
+            public boolean evaluate(String item) {
                 return item.length() < 3;
             }
         });
@@ -148,9 +148,9 @@ public class EagerTakeDropTest {
         Collection<String> expectedOutput = listWith("aab", "aba", "aba");
 
         // When
-        Collection<String> actualOutput = Eager.dropUntil(input, new PredicateFunction<String>() {
+        Collection<String> actualOutput = Eager.dropUntil(input, new Predicate<String>() {
             @Override
-            public boolean matches(String item) {
+            public boolean evaluate(String item) {
                 return item.contains("b");
             }
         });
