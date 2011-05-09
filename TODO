@@ -1,10 +1,10 @@
 * Finish AbstractMapBag implementation
 * Add SetUtils
 * Add full JavaDoc documentation to public API
-* Add eager and lazy context methods (returns Iterable<ThreeTuple<Iterable<T>, T, Iterable<T>>>)
+* Add eager and lazy context methods (returns Iterable<ThreeTuple<Iterable<T>, T, Iterable<T>>>) (unwieldy)
 * Add eager and lazy group methods
 * Add eager and lazy repeat methods
-* Add eager and lazy zip methods across 3 and 4 iterables
+* Add eager and lazy zip methods across 3 and 4 iterables (not sure about this)
 * Add cartesian product methods
 * Add combination and permutation methods
 * Add even, odd iterators over an underlying iterator (?) (not worth it)
@@ -15,9 +15,36 @@
 * Sort out naming of functors:
     DoFunction          Block       Closure         => void actOn(T input)                      void execute(T input)
     MapFunction         Mapping     Transformer     => T map(S input)                           T transform(S input)
-    FactoryFunction     Factory                     => T create()               
+    FactoryFunction     Factory                     => T create()
     PredicateFunction   Predicate                   => boolean matches(T input)                 boolean evaluate(T input)
     ReduceFunction      Accumulator                 => T accumulate(T accumulator, S element)
 
   Also have the potential for:
     Condition                                       => boolean evaluate()
+
+  Maybe
+    Mapper => map
+    Reducer => accumulate
+    Predicate => evaluate
+    Equator => equate
+    Factory => create
+
+    Procedure => execute
+    Condition => evaluate
+
+    Functor
+    Procedure -> A functor with void return type
+    Function -> A functor that returns an object of a specified type
+    Predicate -> A functor that returns a boolean
+
+    <NullaryX>
+    <UnaryX>
+    <BinaryX>
+    <TernaryX>
+    <QuaternaryX>
+    <QuinaryX>
+    <SenaryX>
+    <SeptenaryX>
+    <OctaryX>
+    <NonaryX>
+

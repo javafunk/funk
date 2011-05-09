@@ -7,14 +7,14 @@ import java.util.NoSuchElementException;
 import static java.util.Arrays.asList;
 
 public class ChainedIterator<T> implements Iterator<T> {
-    private Iterator<Iterator<T>> iteratorsIterator;
-    private Iterator<T> currentIterator;
+    private Iterator<Iterator<? extends T>> iteratorsIterator;
+    private Iterator<? extends T> currentIterator;
 
-    public ChainedIterator(Iterator<T>... iteratorsIterator) {
+    public ChainedIterator(Iterator<? extends T>... iteratorsIterator) {
         this(asList(iteratorsIterator));
     }
 
-    public ChainedIterator(List<Iterator<T>> iteratorCollection) {
+    public ChainedIterator(List<Iterator<? extends T>> iteratorCollection) {
         iteratorsIterator = iteratorCollection.iterator();
         if (iteratorsIterator.hasNext()) {
             currentIterator = iteratorsIterator.next();

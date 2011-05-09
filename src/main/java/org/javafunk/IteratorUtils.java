@@ -14,15 +14,15 @@ public class IteratorUtils {
         return Collections.<T>emptyList().iterator();
     }
 
-    public static <T> List<T> toList(Iterator<T> iterator) {
+    public static <T> List<T> toList(Iterator<? extends T> iterator) {
         return org.apache.commons.collections.IteratorUtils.toList(iterator);
     }
 
-    public static <T> Set<T> toSet(Iterator<T> iterator) {
+    public static <T> Set<T> toSet(Iterator<? extends T> iterator) {
         return new LinkedHashSet<T>(toList(iterator));
     }
 
-    public static <T> Bag<T> toBag(Iterator<T> iterator) {
+    public static <T> Bag<T> toBag(Iterator<? extends T> iterator) {
         return new HashBag<T>(toList(iterator));
     }
 

@@ -5,7 +5,7 @@ import org.javafunk.functional.functors.Factory;
 import java.util.Map;
 
 public class MapUtils {
-    public static <U, V> V getOrAddDefault(Map<U, V> map, U key, DefaultValueFactory<V> factory) {
+    public static <U, V> V getOrAddDefault(Map<U, V> map, U key, DefaultValueFactory<? extends V> factory) {
         if (map.containsKey(key)) {
             return map.get(key);
         } else {

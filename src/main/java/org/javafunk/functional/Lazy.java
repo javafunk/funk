@@ -44,8 +44,7 @@ public class Lazy {
         };
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T> Iterable<T> dropUntil(final Iterable<? extends T> iterable, final PredicateFunction<T> predicate) {
+    public static <T> Iterable<T> dropUntil(final Iterable<? extends T> iterable, final PredicateFunction<? super T> predicate) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 Iterator<? extends T> iterator = iterable.iterator();
@@ -56,13 +55,12 @@ public class Lazy {
                         break;
                     }
                 }
-                return new ChainedIterator<T>(listWith(next).iterator(), (Iterator<T>) iterator);
+                return new ChainedIterator<T>(listWith(next).iterator(), iterator);
             }
         };
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T> Iterable<T> dropWhile(final Iterable<? extends T> iterable, final PredicateFunction<T> predicate) {
+    public static <T> Iterable<T> dropWhile(final Iterable<? extends T> iterable, final PredicateFunction<? super T> predicate) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 Iterator<? extends T> iterator = iterable.iterator();
@@ -73,16 +71,15 @@ public class Lazy {
                         break;
                     }
                 }
-                return new ChainedIterator<T>(listWith(next).iterator(), (Iterator<T>) iterator);
+                return new ChainedIterator<T>(listWith(next).iterator(), iterator);
             }
         };
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T> Iterable<T> each(final Iterable<? extends T> iterable, final DoFunction<T> doFunction) {
+    public static <T> Iterable<T> each(final Iterable<? extends T> iterable, final DoFunction<? super T> doFunction) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
-                return new EachIterator<T>((Iterator<T>) iterable.iterator(), doFunction);
+                return new EachIterator<T>(iterable.iterator(), doFunction);
             }
         };
 
@@ -92,7 +89,7 @@ public class Lazy {
         return zip(increasingIntegers(), iterable);
     }
 
-    public static <T> Iterable<T> filter(final Iterable<? extends T> iterable, final PredicateFunction<T> predicate) {
+    public static <T> Iterable<T> filter(final Iterable<? extends T> iterable, final PredicateFunction<? super T> predicate) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
                 return new FilteredIterator<T>(iterable.iterator(), predicate);
@@ -100,7 +97,7 @@ public class Lazy {
         };
     }
 
-    public static <S, T> Iterable<T> map(final Iterable<? extends S> iterable, final MapFunction<S, T> function) {
+    public static <S, T> Iterable<T> map(final Iterable<? extends S> iterable, final MapFunction<? super S, ? extends T> function) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
                 return new MappedIterator<S, T>(iterable.iterator(), function);
@@ -108,11 +105,11 @@ public class Lazy {
         };
     }
 
-    public static <T> TwoTuple<Iterable<T>,Iterable<T>> partition(Iterable<? extends T> iterable, PredicateFunction<T> predicate) {
+    public static <T> TwoTuple<Iterable<T>,Iterable<T>> partition(Iterable<? extends T> iterable, PredicateFunction<? super T> predicate) {
         return twoTuple(filter(iterable, predicate), reject(iterable, predicate));
     }
 
-    public static <T> Iterable<T> reject(final Iterable<? extends T> iterable, final PredicateFunction<T> predicate) {
+    public static <T> Iterable<T> reject(final Iterable<? extends T> iterable, final PredicateFunction<? super T> predicate) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
                 return new FilteredIterator<T>(iterable.iterator(), new NotPredicateFunction<T>(predicate));
@@ -139,7 +136,7 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<T> takeUntil(final Iterable<? extends T> iterable, final PredicateFunction<T> predicate) {
+    public static <T> Iterable<T> takeUntil(final Iterable<? extends T> iterable, final PredicateFunction<? super T> predicate) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
                 return new PredicatedIterator<T>(iterable.iterator(), new NotPredicateFunction<T>(predicate));
@@ -147,7 +144,7 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<T> takeWhile(final Iterable<? extends T> iterable, final PredicateFunction<T> predicate) {
+    public static <T> Iterable<T> takeWhile(final Iterable<? extends T> iterable, final PredicateFunction<? super T> predicate) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
                 return new PredicatedIterator<T>(iterable.iterator(), predicate);
@@ -164,10 +161,10 @@ public class Lazy {
     }
 
     private static class EachIterator<T> implements Iterator<T> {
-        private Iterator<T> iterator;
-        private DoFunction<T> doFunction;
+        private Iterator<? extends T> iterator;
+        private DoFunction<? super T> doFunction;
 
-        private EachIterator(Iterator<T> iterator, DoFunction<T> doFunction) {
+        private EachIterator(Iterator<? extends T> iterator, DoFunction<? super T> doFunction) {
             this.iterator = iterator;
             this.doFunction = doFunction;
         }
