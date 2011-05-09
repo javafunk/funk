@@ -15,7 +15,7 @@ import static org.javafunk.IteratorUtils.toIterable;
 import static org.javafunk.Literals.twoTuple;
 
 public class Eager {
-    public static <S, T> T reduce(Iterable<? extends S> iterable, T initialValue, ReduceFunction<S, T> function) {
+    public static <S, T> T reduce(Iterable<? extends S> iterable, T initialValue, ReduceFunction<? super S, T> function) {
         T accumulator = initialValue;
         for (S element : iterable) {
             accumulator = function.accumulate(accumulator, element);
@@ -23,7 +23,7 @@ public class Eager {
         return accumulator;
     }
 
-    public static <T> T reduce(Iterable<? extends T> iterable, ReduceFunction<T, T> function) {
+    public static <T> T reduce(Iterable<? extends T> iterable, ReduceFunction<? super T, T> function) {
         final Iterator<? extends T> iterator = iterable.iterator();
         final T firstElement = iterator.next();
         final Iterable<? extends T> restOfElements = toIterable(iterator);
