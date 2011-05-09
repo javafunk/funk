@@ -2,7 +2,7 @@ package org.javafunk.functional;
 
 import org.javafunk.datastructures.TwoTuple;
 import org.javafunk.functional.functors.*;
-import org.javafunk.functional.functors.NotPredicate;
+import org.javafunk.functional.predicates.NotPredicate;
 import org.javafunk.functional.functors.Predicate;
 import org.javafunk.functional.iterators.*;
 

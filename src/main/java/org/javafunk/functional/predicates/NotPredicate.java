@@ -1,4 +1,6 @@
-package org.javafunk.functional.functors;
+package org.javafunk.functional.predicates;
+
+import org.javafunk.functional.functors.Predicate;
 
 public class NotPredicate<T> implements Predicate<T> {
     private Predicate<? super T> predicate;

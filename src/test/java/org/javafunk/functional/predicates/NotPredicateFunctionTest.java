@@ -1,5 +1,7 @@
-package org.javafunk.functional.functors;
+package org.javafunk.functional.predicates;
 
+import org.javafunk.functional.functors.Predicate;
+import org.javafunk.functional.predicates.NotPredicate;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
