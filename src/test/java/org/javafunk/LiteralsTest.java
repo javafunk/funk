@@ -1,18 +1,18 @@
 package org.javafunk;
 
-import org.junit.Test;
 import org.javafunk.collections.Bag;
 import org.javafunk.collections.HashBag;
 import org.javafunk.datastructures.FourTuple;
 import org.javafunk.datastructures.ThreeTuple;
 import org.javafunk.datastructures.TwoTuple;
+import org.junit.Test;
 
 import java.util.*;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 import static org.javafunk.Literals.*;
+import static org.junit.Assert.assertThat;
 
 public class LiteralsTest {
     @Test
@@ -34,6 +34,38 @@ public class LiteralsTest {
 
         // When
         List<Integer> actualList = listWith(5, 10, 15).and(20, 25, 30);
+
+        // Then
+        assertThat(actualList, is(expectedList));
+    }
+
+    @Test
+    public void shouldAllowElementsToBeAddedWithWith() throws Exception {
+        // Given
+        List<Integer> expectedList = asList(1, 2, 3, 4, 5, 6);
+
+        // When
+        List<Integer> actualList = list(Integer.class)
+                .with(1, 2, 3)
+                .with(4, 5, 6)
+                .build();
+
+        // Then
+        assertThat(actualList, is(expectedList));
+    }
+
+    @Test
+    public void shouldAllowCollectionsOfElementsToBeAddedWithWith() throws Exception {
+        // Given
+        List<Integer> expectedList = asList(1, 2, 3, 4, 5, 6);
+        List<Integer> firstInputList = asList(1, 2, 3);
+        List<Integer> secondInputList = asList(4, 5, 6);
+
+        // When
+        List<Integer> actualList = list(Integer.class)
+                .with(firstInputList)
+                .with(secondInputList)
+                .build();
 
         // Then
         assertThat(actualList, is(expectedList));

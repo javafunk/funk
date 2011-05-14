@@ -2,10 +2,7 @@ package org.javafunk.functional;
 
 import org.javafunk.datastructures.IntegerRange;
 import org.javafunk.datastructures.TwoTuple;
-import org.javafunk.functional.functors.Action;
-import org.javafunk.functional.functors.Mapper;
-import org.javafunk.functional.functors.Predicate;
-import org.javafunk.functional.functors.Reducer;
+import org.javafunk.functional.functors.*;
 
 import java.util.*;
 
@@ -110,6 +107,18 @@ public class Eager {
 
     public static <T> Collection<TwoTuple<Integer, T>> enumerate(Iterable<? extends T> iterable) {
         return materialize(Lazy.enumerate(iterable));
+    }
+
+    public static <S, T> Map<T, Collection<S>> group(Iterable<? extends S> iterable, Indexer<? super S, ? extends T> indexer) {
+        Map<T, Collection<S>> groupedElements = new HashMap<T, Collection<S>>();
+        for(S element : iterable) {
+            T index = indexer.index(element);
+            if(!groupedElements.containsKey(index)) {
+                groupedElements.put(index, new ArrayList<S>());
+            }
+            groupedElements.get(index).add(element);
+        }
+        return groupedElements;
     }
 
     public static <T> void each(Iterable<? extends T> targets, Action<? super T> function) {

@@ -15,6 +15,10 @@ public class Literals {
         return new ListBuilder<T>().and(elements);
     }
 
+    public static <T> ListBuilder<T> list(Class<T> elementClass) {
+        return new ListBuilder<T>();
+    }
+
     public static <T> SetBuilder<T> setWith(T... elements) {
         return new SetBuilder<T>().and(elements);
     }
@@ -40,11 +44,19 @@ public class Literals {
     }
 
     public static class ListBuilder<T> extends ArrayList<T> {
+        public ListBuilder<T> with(T... elements) {
+            return and(asList(elements));
+        }
+
+        public ListBuilder<T> with(Collection<? extends T> elements) {
+            return and(elements);
+        }
+
         public ListBuilder<T> and(T... elements) {
             return and(asList(elements));
         }
 
-        public ListBuilder<T> and(Collection<T> elements) {
+        public ListBuilder<T> and(Collection<? extends T> elements) {
             addAll(elements);
             return this;
         }
