@@ -34,7 +34,7 @@ public class EagerFilterRejectPartitionTest {
     }
 
     @Test
-    public void shouldOnlyReturnThoseElementsThatDontMatchTheSuppliedPredicate() {
+    public void shouldOnlyReturnThoseElementsThatDoNotMatchTheSuppliedPredicate() {
         // Given
         Iterable<Integer> inputs = listWith(1, 2, 3, 4, 5, 6);
         Collection<Integer> expectedOutput = listWith(1, 3, 5);

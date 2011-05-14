@@ -159,6 +159,14 @@ public class Lazy {
         };
     }
 
+    public static <S, T> Iterable<TwoTuple<T, S>> index(Iterable<? extends S> iterable, final Indexer<? super S, T> indexer) {
+        return zip(map(iterable, new Mapper<S, T>() {
+            public T map(S input) {
+                return indexer.index(input);
+            }
+        }), iterable);
+    }
+
     private static class EachIterator<T> implements Iterator<T> {
         private Iterator<? extends T> iterator;
         private Action<? super T> action;

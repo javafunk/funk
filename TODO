@@ -2,7 +2,6 @@
 * Add SetUtils
 * Add full JavaDoc documentation to public API
 * Add eager and lazy context methods (returns Iterable<ThreeTuple<Iterable<T>, T, Iterable<T>>>) (unwieldy)
-* Add eager and lazy group methods
 * Add eager equal method
 * Add min and max methods that take comparators
 * Add eager and lazy repeat methods

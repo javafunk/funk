@@ -109,6 +109,10 @@ public class Eager {
         return materialize(Lazy.enumerate(iterable));
     }
 
+    public static <S, T> Collection<TwoTuple<T, S>> index(Iterable<? extends S> iterable, final Indexer<? super S, T> indexer) {
+        return materialize(Lazy.index(iterable, indexer));
+    }
+
     public static <S, T> Map<T, Collection<S>> group(Iterable<? extends S> iterable, Indexer<? super S, ? extends T> indexer) {
         Map<T, Collection<S>> groupedElements = new HashMap<T, Collection<S>>();
         for(S element : iterable) {
