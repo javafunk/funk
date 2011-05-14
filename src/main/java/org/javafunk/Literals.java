@@ -23,12 +23,24 @@ public class Literals {
         return new SetBuilder<T>().and(elements);
     }
 
+    public static <T> SetBuilder<T> set(Class<T> elementClass) {
+        return new SetBuilder<T>();
+    }
+
     public static <T> BagBuilder<T> bagWith(T... elements) {
         return new BagBuilder<T>().and(elements);
     }
 
+    public static <T> BagBuilder<T> bag(Class<T> elementClass) {
+        return new BagBuilder<T>();
+    }
+
     public static <S, T> MapBuilder<S, T> mapWith(S key, T value) {
         return new MapBuilder<S, T>().and(key, value);
+    }
+
+    public static <S, T> MapBuilder<S, T> map(Class<S> keyClass, Class<T> valueClass) {
+        return new MapBuilder<S, T>();
     }
 
     public static <S, T> TwoTuple<S, T> twoTuple(S first, T second) {
@@ -67,6 +79,14 @@ public class Literals {
     }
 
     public static class SetBuilder<T> extends HashSet<T> {
+        public SetBuilder<T> with(T... elements) {
+            return and(asList(elements));
+        }
+
+        public SetBuilder<T> with(Collection<T> elements) {
+            return and(elements);
+        }
+
         public SetBuilder<T> and(T... elements) {
             return and(asList(elements));
         }
@@ -82,6 +102,14 @@ public class Literals {
     }
 
     public static class BagBuilder<T> extends HashBag<T> {
+        public BagBuilder<T> with(T... elements) {
+            return and(asList(elements));
+        }
+
+        public BagBuilder<T> with(Collection<T> elements) {
+            return and(elements);
+        }
+
         public BagBuilder<T> and(T... elements) {
             return and(asList(elements));
         }
@@ -96,14 +124,16 @@ public class Literals {
         }
     }
     public static class MapBuilder<S, T> extends LinkedHashMap<S, T> {
-
+        public MapBuilder<S, T> with(S key, T value) {
+            return and(key, value);
+        }
         public MapBuilder<S, T> and(S key, T value) {
             put(key, value);
             return this;
         }
+
         public Map<S, T> build() {
             return this;
         }
-
     }
 }

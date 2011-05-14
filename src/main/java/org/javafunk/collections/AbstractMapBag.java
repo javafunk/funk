@@ -1,7 +1,5 @@
 package org.javafunk.collections;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.javafunk.MapUtils;
 
 import java.util.Collection;
@@ -143,11 +141,11 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
 
     @Override
     public boolean equals(Object other) {
-        return EqualsBuilder.reflectionEquals(this, other);
+        return other instanceof AbstractMapBag && this.contents.equals(((AbstractMapBag) other).contents);
     }
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return contents.hashCode();
     }
 }

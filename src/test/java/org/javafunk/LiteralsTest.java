@@ -40,7 +40,20 @@ public class LiteralsTest {
     }
 
     @Test
-    public void shouldAllowElementsToBeAddedWithWith() throws Exception {
+    public void shouldAllowCollectionsOfElementsToBeAddedToTheListWithAnd() throws Exception {
+        // Given
+        List<Integer> expectedList = asList(1, 2, 3, 4, 5, 6);
+        List<Integer> someOtherElements = asList(4, 5, 6);
+
+        // When
+        List<Integer> actualList = listWith(1, 2, 3).and(someOtherElements);
+
+        // Then
+        assertThat(actualList, is(expectedList));
+    }
+
+    @Test
+    public void shouldAllowElementsToBeAddedToAListWithWith() throws Exception {
         // Given
         List<Integer> expectedList = asList(1, 2, 3, 4, 5, 6);
 
@@ -55,7 +68,7 @@ public class LiteralsTest {
     }
 
     @Test
-    public void shouldAllowCollectionsOfElementsToBeAddedWithWith() throws Exception {
+    public void shouldAllowCollectionsOfElementsToBeAddedToAListWithWith() throws Exception {
         // Given
         List<Integer> expectedList = asList(1, 2, 3, 4, 5, 6);
         List<Integer> firstInputList = asList(1, 2, 3);
@@ -96,6 +109,51 @@ public class LiteralsTest {
     }
 
     @Test
+    public void shouldAllowCollectionsOfElementsToBeAddedToTheBagWithAnd() throws Exception {
+        // Given
+        Bag<String> expectedBag = new HashBag<String>(listWith("a", "a", "b", "c"));
+        Collection<String> someOtherElements = listWith("b", "c");
+
+        // When
+        Bag<String> actualBag = bagWith("a", "a").and(someOtherElements);
+
+        // Then
+        assertThat(actualBag, is(expectedBag));
+    }
+
+    @Test
+    public void shouldAllowElementsToBeAddedToABagWithWith() throws Exception {
+        // Given
+        Bag<Integer> expectedBag = new HashBag<Integer>(asList(1, 1, 2, 2, 3, 3));
+
+        // When
+        Bag<Integer> actualBag = bag(Integer.class)
+                .with(1, 1, 2)
+                .with(2, 3, 3)
+                .build();
+
+        // Then
+        assertThat(actualBag, is(expectedBag));
+    }
+
+    @Test
+    public void shouldAllowCollectionsOfElementsToBeAddedToABagWithWith() throws Exception {
+        // Given
+        Bag<Integer> expectedbag = new HashBag<Integer>(asList(1, 2, 3, 4, 5, 6));
+        Collection<Integer> firstInputCollection = asList(1, 2, 3);
+        Collection<Integer> secondInputCollection = asList(4, 5, 6);
+
+        // When
+        Bag<Integer> actualBag = bag(Integer.class)
+                .with(firstInputCollection)
+                .with(secondInputCollection)
+                .build();
+
+        // Then
+        assertThat(actualBag, is(expectedbag));
+    }
+
+    @Test
     public void shouldReturnASetContainingTheSuppliedElements() {
         // Given
         Set<String> expectedSet = new HashSet<String>(listWith("a", "b"));
@@ -114,6 +172,51 @@ public class LiteralsTest {
 
         // When
         Set<String> actualSet = setWith("a", "a", "b").and("b", "c", "c");
+
+        // Then
+        assertThat(actualSet, is(expectedSet));
+    }
+
+    @Test
+    public void shouldAllowCollectionsOfElementsToBeAddedToTheSetWithAnd() throws Exception {
+        // Given
+        Set<String> expectedSet = new HashSet<String>(listWith("a", "b", "c"));
+        Collection<String> someOtherElements = listWith("b", "c", "c");
+
+        // When
+        Set<String> actualSet = setWith("a", "b").and(someOtherElements);
+
+        // Then
+        assertThat(actualSet, is(expectedSet));
+    }
+
+    @Test
+    public void shouldAllowElementsToBeAddedToASetWithWith() throws Exception {
+        // Given
+        Set<String> expectedSet = new HashSet<String>(listWith("a", "b", "c"));
+
+        // When
+        Set<String> actualSet = set(String.class)
+                .with("a", "a")
+                .with("b", "c")
+                .build();
+
+        // Then
+        assertThat(actualSet, is(expectedSet));
+    }
+
+    @Test
+    public void shouldAllowCollectionsOfElementsToBeAddedToASetWithWith() throws Exception {
+        // Given
+        Set<String> expectedSet = new HashSet<String>(listWith("a", "b", "c"));
+        Collection<String> firstInputCollection = listWith("a", "a");
+        Collection<String> secondInputCollection = listWith("b", "c", "c");
+
+        // When
+        Set<String> actualSet = set(String.class)
+                .with(firstInputCollection)
+                .with(secondInputCollection)
+                .build();
 
         // Then
         assertThat(actualSet, is(expectedSet));
@@ -142,6 +245,25 @@ public class LiteralsTest {
 
         // When
         Map<Integer, String> actualMap = mapWith(5, "a").and(10, "b").and(15, "c");
+
+        // Then
+        assertThat(actualMap, is(expectedMap));
+    }
+
+    @Test
+    public void shouldAllowKeysAndValuesToBeAddedToAMapWithWith() throws Exception {
+        // Given
+        Map<Integer, String> expectedMap = new HashMap<Integer, String>();
+        expectedMap.put(5, "a");
+        expectedMap.put(10, "b");
+        expectedMap.put(15, "c");
+
+        // When
+        Map<Integer, String> actualMap = map(Integer.class, String.class)
+                .with(5, "a")
+                .with(10, "b")
+                .with(15, "c")
+                .build();
 
         // Then
         assertThat(actualMap, is(expectedMap));
