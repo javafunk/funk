@@ -244,6 +244,14 @@ public class Eager {
         return slice(iterable, start, stop, 1);
     }
 
+    public static <T> Collection<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equator<T> equator) {
+        return map(zip(first, second), new Mapper<TwoTuple<T, T>, Boolean>() {
+            public Boolean map(TwoTuple<T, T> input) {
+                return equator.equate(input.first(), input.second());
+            }
+        });
+    }
+
     private static class SliceHelper {
         private static int resolveStartIndex(Integer start, Integer numberOfElements) {
             return resolveIndex(start, numberOfElements, 0, 0);

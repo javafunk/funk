@@ -88,12 +88,12 @@ public class Lazy {
         return zip(increasingIntegers(), iterable);
     }
 
-    public static <T> Iterable<T> filter(final Iterable<? extends T> iterable, final Predicate<? super T> predicate) {
-        return new Iterable<T>(){
-            public Iterator<T> iterator() {
-                return new FilteredIterator<T>(iterable.iterator(), predicate);
+    public static <S, T> Iterable<TwoTuple<T, S>> index(Iterable<? extends S> iterable, final Indexer<? super S, T> indexer) {
+        return zip(map(iterable, new Mapper<S, T>() {
+            public T map(S input) {
+                return indexer.index(input);
             }
-        };
+        }), iterable);
     }
 
     public static <S, T> Iterable<T> map(final Iterable<? extends S> iterable, final Mapper<? super S, ? extends T> function) {
@@ -104,8 +104,20 @@ public class Lazy {
         };
     }
 
-    public static <T> TwoTuple<Iterable<T>,Iterable<T>> partition(Iterable<? extends T> iterable, Predicate<? super T> predicate) {
-        return twoTuple(filter(iterable, predicate), reject(iterable, predicate));
+    public static <T> Iterable<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equator<T> equator) {
+        return map(zip(first, second), new Mapper<TwoTuple<T, T>, Boolean>() {
+            public Boolean map(TwoTuple<T, T> input) {
+                return equator.equate(input.first(), input.second());
+            }
+        });
+    }
+
+    public static <T> Iterable<T> filter(final Iterable<? extends T> iterable, final Predicate<? super T> predicate) {
+        return new Iterable<T>(){
+            public Iterator<T> iterator() {
+                return new FilteredIterator<T>(iterable.iterator(), predicate);
+            }
+        };
     }
 
     public static <T> Iterable<T> reject(final Iterable<? extends T> iterable, final Predicate<? super T> predicate) {
@@ -114,6 +126,10 @@ public class Lazy {
                 return new FilteredIterator<T>(iterable.iterator(), new NotPredicate<T>(predicate));
             }
         };
+    }
+
+    public static <T> TwoTuple<Iterable<T>,Iterable<T>> partition(Iterable<? extends T> iterable, Predicate<? super T> predicate) {
+        return twoTuple(filter(iterable, predicate), reject(iterable, predicate));
     }
 
     public static <T> Iterable<T> slice(final Iterable<? extends T> iterable, final Integer start, final Integer stop, final Integer step) {
@@ -157,14 +173,6 @@ public class Lazy {
                 return new ZippedIterator<S, T>(firstIterable.iterator(), secondIterable.iterator());
             }
         };
-    }
-
-    public static <S, T> Iterable<TwoTuple<T, S>> index(Iterable<? extends S> iterable, final Indexer<? super S, T> indexer) {
-        return zip(map(iterable, new Mapper<S, T>() {
-            public T map(S input) {
-                return indexer.index(input);
-            }
-        }), iterable);
     }
 
     private static class EachIterator<T> implements Iterator<T> {
