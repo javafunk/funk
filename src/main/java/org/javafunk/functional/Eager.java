@@ -12,7 +12,7 @@ import static org.javafunk.IteratorUtils.toIterable;
 import static org.javafunk.Literals.tuple;
 
 public class Eager {
-    public static <S, T> T reduce(Iterable<? extends S> iterable, T initialValue, Reducer<? super S, T> function) {
+    public static <S, T> T reduce(Iterable<S> iterable, T initialValue, Reducer<? super S, T> function) {
         T accumulator = initialValue;
         for (S element : iterable) {
             accumulator = function.accumulate(accumulator, element);
@@ -20,46 +20,46 @@ public class Eager {
         return accumulator;
     }
 
-    public static <T> T reduce(Iterable<? extends T> iterable, Reducer<? super T, T> function) {
-        final Iterator<? extends T> iterator = iterable.iterator();
+    public static <T> T reduce(Iterable<T> iterable, Reducer<? super T, T> function) {
+        final Iterator<T> iterator = iterable.iterator();
         final T firstElement = iterator.next();
-        final Iterable<? extends T> restOfElements = toIterable(iterator);
+        final Iterable<T> restOfElements = toIterable(iterator);
         return reduce(restOfElements, firstElement, function);
     }
 
-    public static Integer sum(Iterable<? extends Integer> iterable) {
+    public static Integer sum(Iterable<Integer> iterable) {
         return reduce(iterable, Accumulators.integerAdditionAccumulator());
     }
 
-    public static Long sum(Iterable<? extends Long> iterable) {
+    public static Long sum(Iterable<Long> iterable) {
         return reduce(iterable, Accumulators.longAdditionAccumulator());
     }
 
-    public static Double sum(Iterable<? extends Double> iterable) {
+    public static Double sum(Iterable<Double> iterable) {
         return reduce(iterable, Accumulators.doubleAdditionAccumulator());
     }
 
-    public static Float sum(Iterable<? extends Float> iterable) {
+    public static Float sum(Iterable<Float> iterable) {
         return reduce(iterable, Accumulators.floatAdditionAccumulator());
     }
 
-    public static Integer product(Iterable<? extends Integer> iterable) {
+    public static Integer product(Iterable<Integer> iterable) {
         return reduce(iterable, Accumulators.integerMultiplicationAccumulator());
     }
 
-    public static Long product(Iterable<? extends Long> iterable) {
+    public static Long product(Iterable<Long> iterable) {
         return reduce(iterable, Accumulators.longMultiplicationAccumulator());
     }
 
-    public static Float product(Iterable<? extends Float> iterable) {
+    public static Float product(Iterable<Float> iterable) {
         return reduce(iterable, Accumulators.floatMultiplicationAccumulator());
     }
 
-    public static Double product(Iterable<? extends Double> iterable) {
+    public static Double product(Iterable<Double> iterable) {
         return reduce(iterable, Accumulators.doubleMultiplicationAccumulator());
     }
 
-    public static <T> Boolean any(Iterable<? extends T> iterable, Predicate<? super T> predicate) {
+    public static <T> Boolean any(Iterable<T> iterable, Predicate<? super T> predicate) {
         for (T item : iterable) {
             if (predicate.evaluate(item)) {
                 return true;
@@ -68,7 +68,7 @@ public class Eager {
         return false;
     }
 
-    public static <T> Boolean all(Iterable<? extends T> iterable, Predicate<? super T> predicate) {
+    public static <T> Boolean all(Iterable<T> iterable, Predicate<? super T> predicate) {
         for (T item : iterable) {
             if (!predicate.evaluate(item)) {
                 return false;
@@ -77,11 +77,11 @@ public class Eager {
         return true;
     }
 
-    public static <T> Boolean none(Iterable<? extends T> items, Predicate<? super T> predicate) {
+    public static <T> Boolean none(Iterable<T> items, Predicate<? super T> predicate) {
         return !any(items, predicate);
     }
 
-    public static <T> T max(Iterable<? extends T> iterable, final Comparator<? super T> comparator) {
+    public static <T> T max(Iterable<T> iterable, final Comparator<? super T> comparator) {
         return reduce(iterable, new Reducer<T, T>(){
             public T accumulate(T currentMax, T element) {
                 return (element != null && comparator.compare(element, currentMax) > 0) ? element : currentMax;
@@ -97,7 +97,7 @@ public class Eager {
         });
     }
 
-    public static <T> T min(Iterable<? extends T> iterable, final Comparator<? super T> comparator) {
+    public static <T> T min(Iterable<T> iterable, final Comparator<? super T> comparator) {
         return reduce(iterable, new Reducer<T, T>(){
             public T accumulate(T currentMin, T element) {
                 return (element != null && comparator.compare(element, currentMin) < 0) ? element : currentMin;
@@ -113,7 +113,7 @@ public class Eager {
         });
     }
 
-    public static <S, T> Collection<T> map(Iterable<? extends S> iterable, Mapper<? super S, T> function) {
+    public static <S, T> Collection<T> map(Iterable<S> iterable, Mapper<? super S, T> function) {
         return materialize(Lazy.map(iterable, function));
     }
 
@@ -125,15 +125,15 @@ public class Eager {
         return materialize(Lazy.enumerate(iterable));
     }
 
-    public static <T> Collection<Boolean> equate(Iterable<? extends T> first, Iterable<? extends T> second, final Equator<? super T> equator) {
+    public static <T> Collection<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equator<? super T> equator) {
         return materialize(Lazy.equate(first, second, equator));
     }
 
-    public static <S, T> Collection<TwoTuple<T, S>> index(Iterable<? extends S> iterable, final Indexer<? super S, T> indexer) {
+    public static <S, T> Collection<TwoTuple<T, S>> index(Iterable<S> iterable, final Indexer<? super S, T> indexer) {
         return materialize(Lazy.index(iterable, indexer));
     }
 
-    public static <S, T> Map<T, Collection<S>> group(Iterable<? extends S> iterable, Indexer<? super S, T> indexer) {
+    public static <S, T> Map<T, Collection<S>> group(Iterable<S> iterable, Indexer<? super S, T> indexer) {
         Map<T, Collection<S>> groupedElements = new HashMap<T, Collection<S>>();
         for(S element : iterable) {
             T index = indexer.index(element);
@@ -145,15 +145,15 @@ public class Eager {
         return groupedElements;
     }
 
-    public static <T> void each(Iterable<? extends T> targets, Action<? super T> function) {
+    public static <T> void each(Iterable<T> targets, Action<? super T> function) {
         materialize(Lazy.each(targets, function));
     }
 
-    public static <T> Collection<T> filter(Iterable<? extends T> iterable, Predicate<? super T> predicate) {
+    public static <T> Collection<T> filter(Iterable<T> iterable, Predicate<? super T> predicate) {
         return materialize(Lazy.filter(iterable, predicate));
     }
 
-    public static <T> Collection<T> reject(Iterable<? extends T> iterable, Predicate<? super T> predicate) {
+    public static <T> Collection<T> reject(Iterable<T> iterable, Predicate<? super T> predicate) {
         return materialize(Lazy.reject(iterable, predicate));
     }
 
@@ -161,7 +161,7 @@ public class Eager {
         return iterable.iterator().next();
     }
 
-    public static <T> T first(Iterable<? extends T> iterable, Predicate<? super T> predicate) {
+    public static <T> T first(Iterable<T> iterable, Predicate<? super T> predicate) {
         return first(filter(iterable, predicate));
     }
 
@@ -169,7 +169,7 @@ public class Eager {
         return take(iterable, numberOfElementsRequired);
     }
 
-    public static <T> Collection<T> first(Iterable<? extends T> iterable, int numberOfElementsRequired, Predicate<? super T> predicate) {
+    public static <T> Collection<T> first(Iterable<T> iterable, int numberOfElementsRequired, Predicate<? super T> predicate) {
         return first(filter(iterable, predicate), numberOfElementsRequired);
     }
 
@@ -177,7 +177,7 @@ public class Eager {
         return slice(iterable, -1, null).iterator().next();
     }
 
-    public static <T> T last(Iterable<? extends T> iterable, Predicate<? super T> predicate) {
+    public static <T> T last(Iterable<T> iterable, Predicate<? super T> predicate) {
         return last(filter(iterable, predicate));
     }
 
@@ -191,7 +191,7 @@ public class Eager {
         return slice(iterable, -numberOfElementsRequired, null);
     }
 
-    public static <T> Collection<T> last(Iterable<? extends T> iterable, int numberOfElementsRequired, Predicate<? super T> predicate) {
+    public static <T> Collection<T> last(Iterable<T> iterable, int numberOfElementsRequired, Predicate<? super T> predicate) {
         return last(filter(iterable, predicate), numberOfElementsRequired);
     }
 
@@ -204,7 +204,7 @@ public class Eager {
     }
 
     public static <T> TwoTuple<Collection<T>, Collection<T>> partition(
-            Iterable<? extends T> iterable, Predicate<? super T> predicate) {
+            Iterable<T> iterable, Predicate<? super T> predicate) {
         TwoTuple<Iterable<T>, Iterable<T>> partition = Lazy.partition(iterable, predicate);
         return tuple(materialize(partition.first()), materialize(partition.second()));
     }
@@ -227,19 +227,19 @@ public class Eager {
         }
     }
 
-    public static <T> Collection<T> takeWhile(Iterable<? extends T> iterable, Predicate<? super T> predicate) {
+    public static <T> Collection<T> takeWhile(Iterable<T> iterable, Predicate<? super T> predicate) {
         return materialize(Lazy.takeWhile(iterable, predicate));
     }
 
-    public static <T> Collection<T> takeUntil(Iterable<? extends T> iterable, Predicate<? super T> predicate) {
+    public static <T> Collection<T> takeUntil(Iterable<T> iterable, Predicate<? super T> predicate) {
         return materialize(Lazy.takeUntil(iterable, predicate));
     }
 
-    public static <T> Collection<T> dropWhile(Iterable<? extends T> iterable, Predicate<? super T> predicate) {
+    public static <T> Collection<T> dropWhile(Iterable<T> iterable, Predicate<? super T> predicate) {
         return materialize(Lazy.dropWhile(iterable, predicate));
     }
 
-    public static <T> Collection<T> dropUntil(Iterable<? extends T> iterable, Predicate<? super T> predicate) {
+    public static <T> Collection<T> dropUntil(Iterable<T> iterable, Predicate<? super T> predicate) {
         return materialize(Lazy.dropUntil(iterable, predicate));
     }
 

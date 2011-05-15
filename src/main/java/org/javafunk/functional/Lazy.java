@@ -13,7 +13,7 @@ import static org.javafunk.Literals.tuple;
 import static org.javafunk.functional.Sequences.increasingIntegers;
 
 public class Lazy {
-    public static <T> Iterable<Iterable<T>> batch(final Iterable<? extends T> iterable, final int batchSize) {
+    public static <T> Iterable<Iterable<T>> batch(final Iterable<T> iterable, final int batchSize) {
         if (batchSize <= 0) {
             throw new IllegalArgumentException("Batch size must be greater than zero.");
         }
@@ -40,7 +40,7 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<T> drop(final Iterable<? extends T> iterable, final int numberToTake) {
+    public static <T> Iterable<T> drop(final Iterable<T> iterable, final int numberToTake) {
         if (numberToTake < 0) {
             throw new IllegalArgumentException("Cannot drop a negative number of elements.");
         }
@@ -51,7 +51,7 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<T> dropUntil(final Iterable<? extends T> iterable, final Predicate<? super T> predicate) {
+    public static <T> Iterable<T> dropUntil(final Iterable<T> iterable, final Predicate<? super T> predicate) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 Iterator<? extends T> iterator = iterable.iterator();
@@ -67,10 +67,10 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<T> dropWhile(final Iterable<? extends T> iterable, final Predicate<? super T> predicate) {
+    public static <T> Iterable<T> dropWhile(final Iterable<T> iterable, final Predicate<? super T> predicate) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
-                Iterator<? extends T> iterator = iterable.iterator();
+                Iterator<T> iterator = iterable.iterator();
                 T next = null;
                 while (iterator.hasNext()) {
                     next = iterator.next();
@@ -83,7 +83,7 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<T> each(final Iterable<? extends T> iterable, final Action<? super T> action) {
+    public static <T> Iterable<T> each(final Iterable<T> iterable, final Action<? super T> action) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
                 return new EachIterator<T>(iterable.iterator(), action);
@@ -92,11 +92,11 @@ public class Lazy {
 
     }
 
-    public static <T> Iterable<TwoTuple<Integer, T>> enumerate(final Iterable<? extends T> iterable) {
+    public static <T> Iterable<TwoTuple<Integer, T>> enumerate(final Iterable<T> iterable) {
         return zip(increasingIntegers(), iterable);
     }
 
-    public static <S, T> Iterable<TwoTuple<T, S>> index(Iterable<? extends S> iterable, final Indexer<? super S, T> indexer) {
+    public static <S, T> Iterable<TwoTuple<T, S>> index(Iterable<S> iterable, final Indexer<? super S, T> indexer) {
         return zip(map(iterable, new Mapper<S, T>() {
             public T map(S input) {
                 return indexer.index(input);
@@ -104,7 +104,7 @@ public class Lazy {
         }), iterable);
     }
 
-    public static <S, T> Iterable<T> map(final Iterable<? extends S> iterable, final Mapper<? super S, ? extends T> function) {
+    public static <S, T> Iterable<T> map(final Iterable<S> iterable, final Mapper<? super S, T> function) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
                 return new MappedIterator<S, T>(iterable.iterator(), function);
@@ -112,7 +112,7 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<Boolean> equate(Iterable<? extends T> first, Iterable<? extends T> second, final Equator<? super T> equator) {
+    public static <T> Iterable<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equator<? super T> equator) {
         return map(zip(first, second), new Mapper<TwoTuple<T, T>, Boolean>() {
             public Boolean map(TwoTuple<T, T> input) {
                 return equator.equate(input.first(), input.second());
@@ -120,7 +120,7 @@ public class Lazy {
         });
     }
 
-    public static <T> Iterable<T> filter(final Iterable<? extends T> iterable, final Predicate<? super T> predicate) {
+    public static <T> Iterable<T> filter(final Iterable<T> iterable, final Predicate<? super T> predicate) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
                 return new FilteredIterator<T>(iterable.iterator(), predicate);
@@ -128,7 +128,7 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<T> reject(final Iterable<? extends T> iterable, final Predicate<? super T> predicate) {
+    public static <T> Iterable<T> reject(final Iterable<T> iterable, final Predicate<? super T> predicate) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
                 return new FilteredIterator<T>(iterable.iterator(), new NotPredicate<T>(predicate));
@@ -136,11 +136,11 @@ public class Lazy {
         };
     }
 
-    public static <T> TwoTuple<Iterable<T>,Iterable<T>> partition(Iterable<? extends T> iterable, Predicate<? super T> predicate) {
+    public static <T> TwoTuple<Iterable<T>,Iterable<T>> partition(Iterable<T> iterable, Predicate<? super T> predicate) {
         return tuple(filter(iterable, predicate), reject(iterable, predicate));
     }
 
-    public static <T> Iterable<T> slice(final Iterable<? extends T> iterable, final Integer start, final Integer stop, final Integer step) {
+    public static <T> Iterable<T> slice(final Iterable<T> iterable, final Integer start, final Integer stop, final Integer step) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
                 return new SubSequenceIterator<T>(iterable.iterator(), start, stop, step);
@@ -148,7 +148,7 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<T> take(final Iterable<? extends T> iterable, final int numberToTake) {
+    public static <T> Iterable<T> take(final Iterable<T> iterable, final int numberToTake) {
         if (numberToTake < 0) {
             throw new IllegalArgumentException("Cannot take a negative number of elements.");
         }
@@ -159,7 +159,7 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<T> takeUntil(final Iterable<? extends T> iterable, final Predicate<? super T> predicate) {
+    public static <T> Iterable<T> takeUntil(final Iterable<T> iterable, final Predicate<? super T> predicate) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
                 return new PredicatedIterator<T>(iterable.iterator(), new NotPredicate<T>(predicate));
@@ -167,7 +167,7 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<T> takeWhile(final Iterable<? extends T> iterable, final Predicate<? super T> predicate) {
+    public static <T> Iterable<T> takeWhile(final Iterable<T> iterable, final Predicate<? super T> predicate) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
                 return new PredicatedIterator<T>(iterable.iterator(), predicate);
@@ -175,7 +175,7 @@ public class Lazy {
         };
     }
 
-    public static <S, T> Iterable<TwoTuple<S, T>> zip(final Iterable<? extends S> firstIterable, final Iterable<? extends T> secondIterable) {
+    public static <S, T> Iterable<TwoTuple<S, T>> zip(final Iterable<S> firstIterable, final Iterable<T> secondIterable) {
         return new Iterable<TwoTuple<S, T>>(){
             public Iterator<TwoTuple<S, T>> iterator() {
                 return new ZippedIterator<S, T>(firstIterable.iterator(), secondIterable.iterator());
@@ -184,10 +184,10 @@ public class Lazy {
     }
 
     private static class EachIterator<T> implements Iterator<T> {
-        private Iterator<? extends T> iterator;
+        private Iterator<T> iterator;
         private Action<? super T> action;
 
-        private EachIterator(Iterator<? extends T> iterator, Action<? super T> action) {
+        private EachIterator(Iterator<T> iterator, Action<? super T> action) {
             this.iterator = iterator;
             this.action = action;
         }
