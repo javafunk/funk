@@ -81,10 +81,26 @@ public class Eager {
         return !any(items, predicate);
     }
 
+    public static <T> T max(Iterable<? extends T> iterable, final Comparator<? super T> comparator) {
+        return reduce(iterable, new Reducer<T, T>(){
+            public T accumulate(T currentMax, T element) {
+                return (element != null && comparator.compare(element, currentMax) > 0) ? element : currentMax;
+            }
+        });
+    }
+
     public static <T extends Comparable<T>> T max(Iterable<? extends T> iterable) {
         return reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMax, T element) {
                 return (element != null && element.compareTo(currentMax) > 0) ? element : currentMax;
+            }
+        });
+    }
+
+    public static <T> T min(Iterable<? extends T> iterable, final Comparator<? super T> comparator) {
+        return reduce(iterable, new Reducer<T, T>(){
+            public T accumulate(T currentMin, T element) {
+                return (element != null && comparator.compare(element, currentMin) < 0) ? element : currentMin;
             }
         });
     }
