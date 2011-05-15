@@ -2,7 +2,6 @@ package org.javafunk.functional;
 
 import org.javafunk.datastructures.TwoTuple;
 import org.javafunk.functional.functors.Indexer;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -10,7 +9,7 @@ import java.util.Iterator;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.javafunk.Literals.listWith;
-import static org.javafunk.Literals.twoTuple;
+import static org.javafunk.Literals.tuple;
 
 public class LazyIndexTest {
     @Test
@@ -28,11 +27,11 @@ public class LazyIndexTest {
 
         // Then
         assertThat(outputIterator.hasNext(), is(true));
-        assertThat(outputIterator.next(), is(twoTuple(5, "apple")));
+        assertThat(outputIterator.next(), is(tuple(5, "apple")));
         assertThat(outputIterator.hasNext(), is(true));
-        assertThat(outputIterator.next(), is(twoTuple(4, "pear")));
+        assertThat(outputIterator.next(), is(tuple(4, "pear")));
         assertThat(outputIterator.hasNext(), is(true));
-        assertThat(outputIterator.next(), is(twoTuple(5, "lemon")));
+        assertThat(outputIterator.next(), is(tuple(5, "lemon")));
         assertThat(outputIterator.hasNext(), is(false));
     }
 
@@ -52,11 +51,11 @@ public class LazyIndexTest {
         Iterator<TwoTuple<Integer, String>> iterator2 = iterable.iterator();
 
         // Then
-        assertThat(iterator1.next(), is(twoTuple(5, "apple")));
-        assertThat(iterator1.next(), is(twoTuple(4, "pear")));
-        assertThat(iterator2.next(), is(twoTuple(5, "apple")));
-        assertThat(iterator1.next(), is(twoTuple(5, "lemon")));
-        assertThat(iterator2.next(), is(twoTuple(4, "pear")));
-        assertThat(iterator2.next(), is(twoTuple(5, "lemon")));
+        assertThat(iterator1.next(), is(tuple(5, "apple")));
+        assertThat(iterator1.next(), is(tuple(4, "pear")));
+        assertThat(iterator2.next(), is(tuple(5, "apple")));
+        assertThat(iterator1.next(), is(tuple(5, "lemon")));
+        assertThat(iterator2.next(), is(tuple(4, "pear")));
+        assertThat(iterator2.next(), is(tuple(5, "lemon")));
     }
 }

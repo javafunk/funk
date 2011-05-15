@@ -9,7 +9,7 @@ import org.javafunk.functional.iterators.*;
 import java.util.Iterator;
 
 import static org.javafunk.Literals.listWith;
-import static org.javafunk.Literals.twoTuple;
+import static org.javafunk.Literals.tuple;
 import static org.javafunk.functional.Sequences.increasingIntegers;
 
 public class Lazy {
@@ -104,7 +104,7 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equator<T> equator) {
+    public static <T> Iterable<Boolean> equate(Iterable<? extends T> first, Iterable<? extends T> second, final Equator<? super T> equator) {
         return map(zip(first, second), new Mapper<TwoTuple<T, T>, Boolean>() {
             public Boolean map(TwoTuple<T, T> input) {
                 return equator.equate(input.first(), input.second());
@@ -129,7 +129,7 @@ public class Lazy {
     }
 
     public static <T> TwoTuple<Iterable<T>,Iterable<T>> partition(Iterable<? extends T> iterable, Predicate<? super T> predicate) {
-        return twoTuple(filter(iterable, predicate), reject(iterable, predicate));
+        return tuple(filter(iterable, predicate), reject(iterable, predicate));
     }
 
     public static <T> Iterable<T> slice(final Iterable<? extends T> iterable, final Integer start, final Integer stop, final Integer step) {

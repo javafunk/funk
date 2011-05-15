@@ -44,13 +44,13 @@ public class EagerGroupIndexTest {
         // Given
         Iterable<String> input = listWith("apple", "pear", "lemon", "apricot", "orange", "papaya", "banana");
         Collection<TwoTuple<Integer, String>> expectedOutput = listWith(
-                twoTuple(5, "apple"),
-                twoTuple(4, "pear"),
-                twoTuple(5, "lemon"),
-                twoTuple(7, "apricot"),
-                twoTuple(6, "orange"),
-                twoTuple(6, "papaya"),
-                twoTuple(6, "banana"));
+                tuple(5, "apple"),
+                tuple(4, "pear"),
+                tuple(5, "lemon"),
+                tuple(7, "apricot"),
+                tuple(6, "orange"),
+                tuple(6, "papaya"),
+                tuple(6, "banana"));
 
         // When
         Collection<TwoTuple<Integer, String>> actualOutput = Eager.index(input, new Indexer<String, Integer>() {

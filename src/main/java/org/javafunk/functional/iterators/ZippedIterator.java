@@ -4,7 +4,7 @@ import org.javafunk.datastructures.TwoTuple;
 
 import java.util.Iterator;
 
-import static org.javafunk.Literals.twoTuple;
+import static org.javafunk.Literals.tuple;
 
 public class ZippedIterator<S, T> implements Iterator<TwoTuple<S, T>> {
     private Iterator<? extends S> firstIterator;
@@ -22,7 +22,7 @@ public class ZippedIterator<S, T> implements Iterator<TwoTuple<S, T>> {
 
     @Override
     public TwoTuple<S, T> next() {
-        return twoTuple(firstIterator.next(), secondIterator.next());
+        return tuple(firstIterator.next(), secondIterator.next());
     }
 
     @Override

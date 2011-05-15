@@ -4,13 +4,13 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.Literals.fourTuple;
+import static org.javafunk.Literals.tuple;
 
 public class FourTupleTest {
     @Test
     public void shouldReturnTheFirstObject() {
         // Given
-        FourTuple<Integer, String, Boolean, Double> tuple = fourTuple(5, "Five", true, 3.6);
+        FourTuple<Integer, String, Boolean, Double> tuple = tuple(5, "Five", true, 3.6);
 
         // When
         Integer first = tuple.first();
@@ -22,7 +22,7 @@ public class FourTupleTest {
     @Test
     public void shouldReturnTheSecondObject() {
         // Given
-        FourTuple<Integer, String, Boolean, Double> tuple = fourTuple(5, "Five", true, 3.6);
+        FourTuple<Integer, String, Boolean, Double> tuple = tuple(5, "Five", true, 3.6);
 
         // When
         String second = tuple.second();
@@ -34,7 +34,7 @@ public class FourTupleTest {
     @Test
     public void shouldReturnTheThirdObject() {
         // Given
-        FourTuple<Integer, String, Boolean, Double> tuple = fourTuple(5, "Five", true, 3.6);
+        FourTuple<Integer, String, Boolean, Double> tuple = tuple(5, "Five", true, 3.6);
 
         // When
         Boolean third = tuple.third();
@@ -46,7 +46,7 @@ public class FourTupleTest {
     @Test
     public void shouldReturnTheFourthObject() {
         // Given
-        FourTuple<Integer, String, Boolean, Double> tuple = fourTuple(5, "Five", true, 3.6);
+        FourTuple<Integer, String, Boolean, Double> tuple = tuple(5, "Five", true, 3.6);
 
         // When
         Double fourth = tuple.fourth();
@@ -58,7 +58,7 @@ public class FourTupleTest {
     @Test
     public void shouldUseTheStringValueOfTheFirstSecondThirdAndFourthInToString() {
         // Given
-        FourTuple<Integer, String, Boolean, Double> tuple = fourTuple(5, "Five", true, 3.6);
+        FourTuple<Integer, String, Boolean, Double> tuple = tuple(5, "Five", true, 3.6);
 
         // When
         String stringRepresentation = tuple.toString();
@@ -70,8 +70,8 @@ public class FourTupleTest {
     @Test
     public void shouldBeEqualIfHasSameFirstSecondThirdAndFourth() {
         // Given
-        FourTuple<Integer, String, Boolean, Double> tuple1 = fourTuple(5, "Five", true, 3.6);
-        FourTuple<Integer, String, Boolean, Double> tuple2 = fourTuple(5, "Five", true, 3.6);
+        FourTuple<Integer, String, Boolean, Double> tuple1 = tuple(5, "Five", true, 3.6);
+        FourTuple<Integer, String, Boolean, Double> tuple2 = tuple(5, "Five", true, 3.6);
 
         // When
         Boolean isEqual = tuple1.equals(tuple2);
@@ -83,8 +83,8 @@ public class FourTupleTest {
     @Test
     public void shouldNotBeEqualIfHasDifferentFirst() {
         // Given
-        FourTuple<Integer, String, Boolean, Double> tuple1 = fourTuple(5, "Five", true, 3.6);
-        FourTuple<Integer, String, Boolean, Double> tuple2 = fourTuple(10, "Five", true, 3.6);
+        FourTuple<Integer, String, Boolean, Double> tuple1 = tuple(5, "Five", true, 3.6);
+        FourTuple<Integer, String, Boolean, Double> tuple2 = tuple(10, "Five", true, 3.6);
 
         // When
         Boolean isEqual = tuple1.equals(tuple2);
@@ -96,8 +96,8 @@ public class FourTupleTest {
     @Test
     public void shouldNotBeEqualIfHasDifferentSecond() {
         // Given
-        FourTuple<Integer, String, Boolean, Double> tuple1 = fourTuple(5, "Five", true, 3.6);
-        FourTuple<Integer, String, Boolean, Double> tuple2 = fourTuple(5, "Ten", true, 3.6);
+        FourTuple<Integer, String, Boolean, Double> tuple1 = tuple(5, "Five", true, 3.6);
+        FourTuple<Integer, String, Boolean, Double> tuple2 = tuple(5, "Ten", true, 3.6);
 
         // When
         Boolean isEqual = tuple1.equals(tuple2);
@@ -109,8 +109,8 @@ public class FourTupleTest {
     @Test
     public void shouldNotBeEqualIfHasDifferentThird() {
         // Given
-        FourTuple<Integer, String, Boolean, Double> tuple1 = fourTuple(5, "Five", true, 3.6);
-        FourTuple<Integer, String, Boolean, Double> tuple2 = fourTuple(5, "Five", false, 3.6);
+        FourTuple<Integer, String, Boolean, Double> tuple1 = tuple(5, "Five", true, 3.6);
+        FourTuple<Integer, String, Boolean, Double> tuple2 = tuple(5, "Five", false, 3.6);
 
         // When
         Boolean isEqual = tuple1.equals(tuple2);
@@ -122,8 +122,8 @@ public class FourTupleTest {
     @Test
     public void shouldNotBeEqualIfHasDifferentFourth() {
         // Given
-        FourTuple<Integer, String, Boolean, Double> tuple1 = fourTuple(5, "Five", true, 3.6);
-        FourTuple<Integer, String, Boolean, Double> tuple2 = fourTuple(5, "Five", true, 4.2);
+        FourTuple<Integer, String, Boolean, Double> tuple1 = tuple(5, "Five", true, 3.6);
+        FourTuple<Integer, String, Boolean, Double> tuple2 = tuple(5, "Five", true, 4.2);
 
         // When
         Boolean isEqual = tuple1.equals(tuple2);

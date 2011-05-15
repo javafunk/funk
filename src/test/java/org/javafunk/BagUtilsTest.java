@@ -1,8 +1,7 @@
 package org.javafunk;
 
-import org.javafunk.BagUtils;
-import org.junit.Test;
 import org.javafunk.collections.Bag;
+import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;

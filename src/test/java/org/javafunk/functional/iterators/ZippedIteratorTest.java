@@ -8,7 +8,7 @@ import java.util.Iterator;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.javafunk.Literals.listWith;
-import static org.javafunk.Literals.twoTuple;
+import static org.javafunk.Literals.tuple;
 
 public class ZippedIteratorTest {
     @Test
@@ -22,9 +22,9 @@ public class ZippedIteratorTest {
 
         // Then
         assertThat(zippedIterator.hasNext(), is(true));
-        assertThat(zippedIterator.next(), is(twoTuple("A", 1)));
+        assertThat(zippedIterator.next(), is(tuple("A", 1)));
         assertThat(zippedIterator.hasNext(), is(true));
-        assertThat(zippedIterator.next(), is(twoTuple("B", 2)));
+        assertThat(zippedIterator.next(), is(tuple("B", 2)));
         assertThat(zippedIterator.hasNext(), is(false));
     }
 
@@ -39,9 +39,9 @@ public class ZippedIteratorTest {
 
         // Then
         assertThat(zippedIterator.hasNext(), is(true));
-        assertThat(zippedIterator.next(), is(twoTuple("A", 1)));
+        assertThat(zippedIterator.next(), is(tuple("A", 1)));
         assertThat(zippedIterator.hasNext(), is(true));
-        assertThat(zippedIterator.next(), is(twoTuple("B", 2)));
+        assertThat(zippedIterator.next(), is(tuple("B", 2)));
         assertThat(zippedIterator.hasNext(), is(false));
     }
 
@@ -56,11 +56,11 @@ public class ZippedIteratorTest {
 
         // Then
         assertThat(zippedIterator.hasNext(), is(true));
-        assertThat(zippedIterator.next(), is(twoTuple("A", 1)));
+        assertThat(zippedIterator.next(), is(tuple("A", 1)));
         assertThat(zippedIterator.hasNext(), is(true));
-        assertThat(zippedIterator.next(), is(twoTuple("B", 2)));
+        assertThat(zippedIterator.next(), is(tuple("B", 2)));
         assertThat(zippedIterator.hasNext(), is(true));
-        assertThat(zippedIterator.next(), is(twoTuple("C", 3)));
+        assertThat(zippedIterator.next(), is(tuple("C", 3)));
         assertThat(zippedIterator.hasNext(), is(false));
     }
 
@@ -74,8 +74,8 @@ public class ZippedIteratorTest {
         Iterator<TwoTuple<String, Integer>> zippedIterator = new ZippedIterator<String, Integer>(firstIterator, secondIterator);
 
         // Then
-        assertThat(zippedIterator.next(), is(twoTuple("A", 1)));
-        assertThat(zippedIterator.next(), is(twoTuple("B", 2)));
+        assertThat(zippedIterator.next(), is(tuple("A", 1)));
+        assertThat(zippedIterator.next(), is(tuple("B", 2)));
     }
 
     @Test
@@ -90,11 +90,11 @@ public class ZippedIteratorTest {
         // Then
         assertThat(zippedIterator.hasNext(), is(true));
         assertThat(zippedIterator.hasNext(), is(true));
-        assertThat(zippedIterator.next(), is(twoTuple("A", 1)));
+        assertThat(zippedIterator.next(), is(tuple("A", 1)));
         assertThat(zippedIterator.hasNext(), is(true));
         assertThat(zippedIterator.hasNext(), is(true));
         assertThat(zippedIterator.hasNext(), is(true));
-        assertThat(zippedIterator.next(), is(twoTuple("B", 2)));
+        assertThat(zippedIterator.next(), is(tuple("B", 2)));
         assertThat(zippedIterator.hasNext(), is(false));
     }
 

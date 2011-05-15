@@ -9,7 +9,7 @@ import java.util.*;
 import static org.javafunk.IterableUtils.materialize;
 import static org.javafunk.IterableUtils.toList;
 import static org.javafunk.IteratorUtils.toIterable;
-import static org.javafunk.Literals.twoTuple;
+import static org.javafunk.Literals.tuple;
 
 public class Eager {
     public static <S, T> T reduce(Iterable<? extends S> iterable, T initialValue, Reducer<? super S, T> function) {
@@ -109,6 +109,10 @@ public class Eager {
         return materialize(Lazy.enumerate(iterable));
     }
 
+    public static <T> Collection<Boolean> equate(Iterable<? extends T> first, Iterable<? extends T> second, final Equator<? super T> equator) {
+        return materialize(Lazy.equate(first, second, equator));
+    }
+
     public static <S, T> Collection<TwoTuple<T, S>> index(Iterable<? extends S> iterable, final Indexer<? super S, T> indexer) {
         return materialize(Lazy.index(iterable, indexer));
     }
@@ -186,7 +190,7 @@ public class Eager {
     public static <T> TwoTuple<Collection<T>, Collection<T>> partition(
             Iterable<? extends T> iterable, Predicate<? super T> predicate) {
         TwoTuple<Iterable<T>, Iterable<T>> partition = Lazy.partition(iterable, predicate);
-        return twoTuple(materialize(partition.first()), materialize(partition.second()));
+        return tuple(materialize(partition.first()), materialize(partition.second()));
     }
 
     public static <T> Collection<Collection<T>> batch(Iterable<? extends T> iterable, int batchSize) {
@@ -242,14 +246,6 @@ public class Eager {
 
     public static <T> Collection<T> slice(Iterable<? extends T> iterable, Integer start, Integer stop) {
         return slice(iterable, start, stop, 1);
-    }
-
-    public static <T> Collection<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equator<T> equator) {
-        return map(zip(first, second), new Mapper<TwoTuple<T, T>, Boolean>() {
-            public Boolean map(TwoTuple<T, T> input) {
-                return equator.equate(input.first(), input.second());
-            }
-        });
     }
 
     private static class SliceHelper {

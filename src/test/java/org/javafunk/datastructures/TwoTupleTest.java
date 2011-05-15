@@ -4,13 +4,13 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.Literals.twoTuple;
+import static org.javafunk.Literals.tuple;
 
 public class TwoTupleTest {
     @Test
     public void shouldReturnTheFirstObject() {
         // Given
-        TwoTuple<Integer, String> tuple = twoTuple(5, "Five");
+        TwoTuple<Integer, String> tuple = tuple(5, "Five");
 
         // When
         Integer first = tuple.first();
@@ -22,7 +22,7 @@ public class TwoTupleTest {
     @Test
     public void shouldReturnTheSecondObject() {
         // Given
-        TwoTuple<Integer, String> tuple = twoTuple(5, "Five");
+        TwoTuple<Integer, String> tuple = tuple(5, "Five");
 
         // When
         String second = tuple.second();
@@ -34,7 +34,7 @@ public class TwoTupleTest {
     @Test
     public void shouldUseTheStringValueOfTheFirstAndSecondInToString() {
         // Given
-        TwoTuple<Integer, String> tuple = twoTuple(5, "Five");
+        TwoTuple<Integer, String> tuple = tuple(5, "Five");
 
         // When
         String stringRepresentation = tuple.toString();
@@ -46,8 +46,8 @@ public class TwoTupleTest {
     @Test
     public void shouldBeEqualIfHasSameFirstAndSecond() {
         // Given
-        TwoTuple<Integer, String> tuple1 = twoTuple(5, "Five");
-        TwoTuple<Integer, String> tuple2 = twoTuple(5, "Five");
+        TwoTuple<Integer, String> tuple1 = tuple(5, "Five");
+        TwoTuple<Integer, String> tuple2 = tuple(5, "Five");
 
         // When
         Boolean isEqual = tuple1.equals(tuple2);
@@ -59,8 +59,8 @@ public class TwoTupleTest {
     @Test
     public void shouldNotBeEqualIfHasDifferentFirst() {
         // Given
-        TwoTuple<Integer, String> tuple1 = twoTuple(5, "Five");
-        TwoTuple<Integer, String> tuple2 = twoTuple(10, "Five");
+        TwoTuple<Integer, String> tuple1 = tuple(5, "Five");
+        TwoTuple<Integer, String> tuple2 = tuple(10, "Five");
 
         // When
         Boolean isEqual = tuple1.equals(tuple2);
@@ -72,8 +72,8 @@ public class TwoTupleTest {
     @Test
     public void shouldNotBeEqualIfHasDifferentSecond() {
         // Given
-        TwoTuple<Integer, String> tuple1 = twoTuple(5, "Five");
-        TwoTuple<Integer, String> tuple2 = twoTuple(5, "Ten");
+        TwoTuple<Integer, String> tuple1 = tuple(5, "Five");
+        TwoTuple<Integer, String> tuple2 = tuple(5, "Ten");
 
         // When
         Boolean isEqual = tuple1.equals(tuple2);
@@ -85,8 +85,8 @@ public class TwoTupleTest {
     @Test
     public void shouldNotBeEqualIfHasDifferentFirstAndSecond() {
         // Given
-        TwoTuple<Integer, String> tuple1 = twoTuple(5, "Five");
-        TwoTuple<Integer, String> tuple2 = twoTuple(10, "Ten");
+        TwoTuple<Integer, String> tuple1 = tuple(5, "Five");
+        TwoTuple<Integer, String> tuple2 = tuple(10, "Ten");
 
         // When
         Boolean isEqual = tuple1.equals(tuple2);

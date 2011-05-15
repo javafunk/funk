@@ -4,13 +4,13 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.Literals.threeTuple;
+import static org.javafunk.Literals.tuple;
 
 public class ThreeTupleTest {
     @Test
     public void shouldReturnTheFirstObject() {
         // Given
-        ThreeTuple<Integer, String, Boolean> tuple = threeTuple(5, "Five", true);
+        ThreeTuple<Integer, String, Boolean> tuple = tuple(5, "Five", true);
 
         // When
         Integer first = tuple.first();
@@ -22,7 +22,7 @@ public class ThreeTupleTest {
     @Test
     public void shouldReturnTheSecondObject() {
         // Given
-        ThreeTuple<Integer, String, Boolean> tuple = threeTuple(5, "Five", true);
+        ThreeTuple<Integer, String, Boolean> tuple = tuple(5, "Five", true);
 
         // When
         String second = tuple.second();
@@ -34,7 +34,7 @@ public class ThreeTupleTest {
     @Test
     public void shouldReturnTheThirdObject() {
         // Given
-        ThreeTuple<Integer, String, Boolean> tuple = threeTuple(5, "Five", true);
+        ThreeTuple<Integer, String, Boolean> tuple = tuple(5, "Five", true);
 
         // When
         Boolean third = tuple.third();
@@ -46,7 +46,7 @@ public class ThreeTupleTest {
     @Test
     public void shouldUseTheStringValueOfTheFirstSecondAndThirdInToString() {
         // Given
-        ThreeTuple<Integer, String, Boolean> tuple = threeTuple(5, "Five", true);
+        ThreeTuple<Integer, String, Boolean> tuple = tuple(5, "Five", true);
 
         // When
         String stringRepresentation = tuple.toString();
@@ -58,8 +58,8 @@ public class ThreeTupleTest {
     @Test
     public void shouldBeEqualIfHasSameFirstSecondAndThird() {
         // Given
-        ThreeTuple<Integer, String, Boolean> tuple1 = threeTuple(5, "Five", true);
-        ThreeTuple<Integer, String, Boolean> tuple2 = threeTuple(5, "Five", true);
+        ThreeTuple<Integer, String, Boolean> tuple1 = tuple(5, "Five", true);
+        ThreeTuple<Integer, String, Boolean> tuple2 = tuple(5, "Five", true);
 
         // When
         Boolean isEqual = tuple1.equals(tuple2);
@@ -71,8 +71,8 @@ public class ThreeTupleTest {
     @Test
     public void shouldNotBeEqualIfHasDifferentFirst() {
         // Given
-        ThreeTuple<Integer, String, Boolean> tuple1 = threeTuple(5, "Five", true);
-        ThreeTuple<Integer, String, Boolean> tuple2 = threeTuple(10, "Five", true);
+        ThreeTuple<Integer, String, Boolean> tuple1 = tuple(5, "Five", true);
+        ThreeTuple<Integer, String, Boolean> tuple2 = tuple(10, "Five", true);
 
         // When
         Boolean isEqual = tuple1.equals(tuple2);
@@ -84,8 +84,8 @@ public class ThreeTupleTest {
     @Test
     public void shouldNotBeEqualIfHasDifferentSecond() {
         // Given
-        ThreeTuple<Integer, String, Boolean> tuple1 = threeTuple(5, "Five", true);
-        ThreeTuple<Integer, String, Boolean> tuple2 = threeTuple(5, "Ten", true);
+        ThreeTuple<Integer, String, Boolean> tuple1 = tuple(5, "Five", true);
+        ThreeTuple<Integer, String, Boolean> tuple2 = tuple(5, "Ten", true);
 
         // When
         Boolean isEqual = tuple1.equals(tuple2);
@@ -97,8 +97,8 @@ public class ThreeTupleTest {
     @Test
     public void shouldNotBeEqualIfHasDifferentThird() {
         // Given
-        ThreeTuple<Integer, String, Boolean> tuple1 = threeTuple(5, "Five", true);
-        ThreeTuple<Integer, String, Boolean> tuple2 = threeTuple(5, "Five", false);
+        ThreeTuple<Integer, String, Boolean> tuple1 = tuple(5, "Five", true);
+        ThreeTuple<Integer, String, Boolean> tuple2 = tuple(5, "Five", false);
 
         // When
         Boolean isEqual = tuple1.equals(tuple2);

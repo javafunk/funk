@@ -275,7 +275,7 @@ public class LiteralsTest {
         TwoTuple<Integer, String> expectedTwoTuple = new TwoTuple<Integer, String>(5, "Five");
 
         // When
-        TwoTuple<Integer, String> actualTwoTuple = twoTuple(5, "Five");
+        TwoTuple<Integer, String> actualTwoTuple = tuple(5, "Five");
 
         // Then
         assertThat(actualTwoTuple, is(expectedTwoTuple));
@@ -288,7 +288,7 @@ public class LiteralsTest {
                 new ThreeTuple<Integer, String, Boolean>(5, "Five", true);
 
         // When
-        ThreeTuple<Integer, String, Boolean> actualThreeTuple = threeTuple(5, "Five", true);
+        ThreeTuple<Integer, String, Boolean> actualThreeTuple = tuple(5, "Five", true);
 
         // Then
         assertThat(actualThreeTuple, is(expectedThreeTuple));
@@ -301,7 +301,7 @@ public class LiteralsTest {
                 new FourTuple<Integer, String, Boolean, Double>(5, "Five", true, 1.6);
 
         // When
-        FourTuple<Integer, String, Boolean, Double> actualFourTuple = fourTuple(5, "Five", true, 1.6);
+        FourTuple<Integer, String, Boolean, Double> actualFourTuple = tuple(5, "Five", true, 1.6);
 
         // Then
         assertThat(actualFourTuple, is(expectedFourTuple));

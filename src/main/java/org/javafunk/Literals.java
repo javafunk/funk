@@ -43,15 +43,15 @@ public class Literals {
         return new MapBuilder<S, T>();
     }
 
-    public static <S, T> TwoTuple<S, T> twoTuple(S first, T second) {
+    public static <S, T> TwoTuple<S, T> tuple(S first, T second) {
         return new TwoTuple<S, T>(first, second);
     }
 
-    public static <S, T, U> ThreeTuple<S, T, U> threeTuple(S first, T second, U third) {
+    public static <S, T, U> ThreeTuple<S, T, U> tuple(S first, T second, U third) {
         return new ThreeTuple<S, T, U>(first, second, third);
     }
 
-    public static <S, T, U, V> FourTuple<S, T, U, V> fourTuple(S first, T second, U third, V fourth) {
+    public static <S, T, U, V> FourTuple<S, T, U, V> tuple(S first, T second, U third, V fourth) {
         return new FourTuple<S, T, U, V>(first, second, third, fourth);
     }
 
