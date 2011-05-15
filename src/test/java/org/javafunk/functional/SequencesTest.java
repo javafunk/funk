@@ -8,12 +8,14 @@ import java.util.Iterator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.javafunk.functional.Sequences.increasing;
+import static org.javafunk.functional.Sequences.decreasing;
 
 public class SequencesTest {
     @Test
     public void shouldReturnASequenceOfIncreasingIntegersStartingAtZero() throws Exception {
         // Given
-        Iterable<Integer> sequence = Sequences.increasingIntegers();
+        Iterable<Integer> sequence = Sequences.integers(increasing());
         Collection<Integer> expectedOutput = new ArrayList<Integer>();
         Collection<Integer> actualOutput = new ArrayList<Integer>();
 
@@ -31,7 +33,7 @@ public class SequencesTest {
     @Test
     public void shouldAllowIteratorToBeCalledMultipleTimesOnIncreasingIntegersIterableReturningDifferentIterators() throws Exception {
         // Given
-        Iterable<Integer> sequence = Sequences.increasingIntegers();
+        Iterable<Integer> sequence = Sequences.integers(increasing());
 
         // When
         Iterator<Integer> firstIterator = sequence.iterator();
@@ -50,7 +52,7 @@ public class SequencesTest {
     @Test
     public void shouldReturnASequenceOfIncreasingIntegersStartingAtTheSpecifiedValue() throws Exception {
         // Given
-        Iterable<Integer> sequence = Sequences.increasingIntegersFrom(-10);
+        Iterable<Integer> sequence = Sequences.integersFrom(-10, increasing());
         Collection<Integer> expectedOutput = new ArrayList<Integer>();
         Collection<Integer> actualOutput = new ArrayList<Integer>();
 
@@ -68,7 +70,7 @@ public class SequencesTest {
     @Test
     public void shouldAllowIteratorToBeCalledMultipleTimesOnIncreasingIntegersFromIterableReturningDifferentIterators() throws Exception {
         // Given
-        Iterable<Integer> sequence = Sequences.increasingIntegersFrom(15);
+        Iterable<Integer> sequence = Sequences.integersFrom(15, increasing());
 
         // When
         Iterator<Integer> firstIterator = sequence.iterator();
@@ -87,7 +89,7 @@ public class SequencesTest {
     @Test
     public void shouldReturnASequenceOfDecreasingIntegersStartingAtZero() throws Exception {
         // Given
-        Iterable<Integer> sequence = Sequences.decreasingIntegers();
+        Iterable<Integer> sequence = Sequences.integers(decreasing());
         Collection<Integer> expectedOutput = new ArrayList<Integer>();
         Collection<Integer> actualOutput = new ArrayList<Integer>();
 
@@ -105,7 +107,7 @@ public class SequencesTest {
     @Test
     public void shouldAllowIteratorToBeCalledMultipleTimesOnDecreasingIntegersIterableReturningDifferentIterators() throws Exception {
         // Given
-        Iterable<Integer> sequence = Sequences.decreasingIntegers();
+        Iterable<Integer> sequence = Sequences.integers(decreasing());
 
         // When
         Iterator<Integer> firstIterator = sequence.iterator();
@@ -124,7 +126,7 @@ public class SequencesTest {
     @Test
     public void shouldReturnASequenceOfDecreasingIntegersStartingAtTheSpecifiedValue() throws Exception {
         // Given
-        Iterable<Integer> sequence = Sequences.decreasingIntegersFrom(-10);
+        Iterable<Integer> sequence = Sequences.integersFrom(-10, decreasing());
         Collection<Integer> expectedOutput = new ArrayList<Integer>();
         Collection<Integer> actualOutput = new ArrayList<Integer>();
 
@@ -142,7 +144,7 @@ public class SequencesTest {
     @Test
     public void shouldAllowIteratorToBeCalledMultipleTimesOnDecreasingIntegersFromIterableReturningDifferentIterators() throws Exception {
         // Given
-        Iterable<Integer> sequence = Sequences.decreasingIntegersFrom(15);
+        Iterable<Integer> sequence = Sequences.integersFrom(15, decreasing());
 
         // When
         Iterator<Integer> firstIterator = sequence.iterator();

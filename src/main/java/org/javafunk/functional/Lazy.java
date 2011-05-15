@@ -10,7 +10,8 @@ import java.util.Iterator;
 
 import static org.javafunk.Literals.listWith;
 import static org.javafunk.Literals.tuple;
-import static org.javafunk.functional.Sequences.increasingIntegers;
+import static org.javafunk.functional.Sequences.increasing;
+import static org.javafunk.functional.Sequences.integers;
 
 public class Lazy {
     public static <T> Iterable<Iterable<T>> batch(final Iterable<T> iterable, final int batchSize) {
@@ -93,7 +94,7 @@ public class Lazy {
     }
 
     public static <T> Iterable<TwoTuple<Integer, T>> enumerate(final Iterable<T> iterable) {
-        return zip(increasingIntegers(), iterable);
+        return zip(integers(increasing()), iterable);
     }
 
     public static <S, T> Iterable<TwoTuple<T, S>> index(Iterable<S> iterable, final Indexer<? super S, T> indexer) {
