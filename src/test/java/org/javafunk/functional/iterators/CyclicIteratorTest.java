@@ -3,10 +3,12 @@ package org.javafunk.functional.iterators;
 import org.junit.Test;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+import static org.javafunk.Literals.list;
 import static org.javafunk.Literals.listWith;
 
 public class CyclicIteratorTest {
@@ -31,6 +33,85 @@ public class CyclicIteratorTest {
         assertThat(iterator.next(), is(1));
         assertThat(iterator.hasNext(), is(true));
         assertThat(iterator.next(), is(2));
+    }
+
+    @Test
+    public void shouldCycleThroughTheSuppliedIteratorTheSpecifiedNumberOfTimes() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2);
+
+        // When
+        CyclicIterator<Integer> iterator = new CyclicIterator<Integer>(input.iterator(), 2);
+
+        // Then
+        assertThat(iterator.hasNext(), is(true));
+        assertThat(iterator.next(), is(1));
+        assertThat(iterator.hasNext(), is(true));
+        assertThat(iterator.next(), is(2));
+        assertThat(iterator.hasNext(), is(true));
+        assertThat(iterator.next(), is(1));
+        assertThat(iterator.hasNext(), is(true));
+        assertThat(iterator.next(), is(2));
+        assertThat(iterator.hasNext(), is(false));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedNumberOfTimesToRepeatIsNegative() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2);
+
+        // When
+        new CyclicIterator<Integer>(input.iterator(), -5);
+
+        // Then an IllegalArgumentException is be thrown
+    }
+
+    @Test
+    public void shouldReturnFalseForHasNextIfANumberOfRepeatsOfZeroIsSpecified() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2);
+
+        // When
+        CyclicIterator<Integer> iterator = new CyclicIterator<Integer>(input.iterator(), 0);
+
+        // Then
+        assertThat(iterator.hasNext(), is(false));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void shouldThrowNoSuchElementExceptionIfNextIsCalledAndANumberOfRepeatsOfZeroIsSpecified() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2);
+        CyclicIterator<Integer> iterator = new CyclicIterator<Integer>(input.iterator(), 0);
+
+        // When
+        iterator.next();
+
+        // Then a NoSuchElementException is thrown
+    }
+
+    @Test
+    public void shouldReturnFalseForHasNextIfAnEmptyIteratorIsSupplied() throws Exception {
+        // Given
+        Iterable<Integer> input = list(Integer.class);
+
+        // When
+        CyclicIterator<Integer> iterator = new CyclicIterator<Integer>(input.iterator());
+
+        // Then
+        assertThat(iterator.hasNext(), is(false));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void shouldThrowNoSuchElementExceptionIfNextIsCalledAndAnEmptyIteratorIsSupplied() throws Exception {
+        // Given
+        Iterable<Integer> input = list(Integer.class);
+        CyclicIterator<Integer> iterator = new CyclicIterator<Integer>(input.iterator());
+
+        // When
+        iterator.next();
+
+        // Then a NoSuchElementException is thrown
     }
 
     @Test

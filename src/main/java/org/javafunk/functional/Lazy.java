@@ -24,10 +24,18 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<T> cycle(final Iterable<? extends T> iterable) {
+    public static <T> Iterable<T> cycle(final Iterable<T> iterable) {
         return new Iterable<T>(){
             public Iterator<T> iterator() {
                 return new CyclicIterator<T>(iterable.iterator());
+            }
+        };
+    }
+
+    public static <T> Iterable<T> repeat(final Iterable<T> iterable, final int numberOfTimesToRepeat) {
+        return new Iterable<T>() {
+            public Iterator<T> iterator() {
+                return new CyclicIterator<T>(iterable.iterator(), numberOfTimesToRepeat);
             }
         };
     }

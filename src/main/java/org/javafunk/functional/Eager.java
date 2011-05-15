@@ -89,7 +89,7 @@ public class Eager {
         });
     }
 
-    public static <T extends Comparable<T>> T max(Iterable<? extends T> iterable) {
+    public static <T extends Comparable<T>> T max(Iterable<T> iterable) {
         return reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMax, T element) {
                 return (element != null && element.compareTo(currentMax) > 0) ? element : currentMax;
@@ -105,7 +105,7 @@ public class Eager {
         });
     }
 
-    public static <T extends Comparable<T>> T min(Iterable<? extends T> iterable) {
+    public static <T extends Comparable<T>> T min(Iterable<T> iterable) {
         return reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMin, T element) {
                 return (element != null && element.compareTo(currentMin) < 0) ? element : currentMin;
@@ -113,15 +113,15 @@ public class Eager {
         });
     }
 
-    public static <S, T> Collection<T> map(Iterable<? extends S> iterable, Mapper<? super S, ? extends T> function) {
+    public static <S, T> Collection<T> map(Iterable<? extends S> iterable, Mapper<? super S, T> function) {
         return materialize(Lazy.map(iterable, function));
     }
 
-    public static <S, T> Collection<TwoTuple<S, T>> zip(Iterable<? extends S> iterable1, Iterable<? extends T> iterable2) {
+    public static <S, T> Collection<TwoTuple<S, T>> zip(Iterable<S> iterable1, Iterable<T> iterable2) {
         return materialize(Lazy.zip(iterable1, iterable2));
     }
 
-    public static <T> Collection<TwoTuple<Integer, T>> enumerate(Iterable<? extends T> iterable) {
+    public static <T> Collection<TwoTuple<Integer, T>> enumerate(Iterable<T> iterable) {
         return materialize(Lazy.enumerate(iterable));
     }
 
@@ -133,7 +133,7 @@ public class Eager {
         return materialize(Lazy.index(iterable, indexer));
     }
 
-    public static <S, T> Map<T, Collection<S>> group(Iterable<? extends S> iterable, Indexer<? super S, ? extends T> indexer) {
+    public static <S, T> Map<T, Collection<S>> group(Iterable<? extends S> iterable, Indexer<? super S, T> indexer) {
         Map<T, Collection<S>> groupedElements = new HashMap<T, Collection<S>>();
         for(S element : iterable) {
             T index = indexer.index(element);
@@ -157,7 +157,7 @@ public class Eager {
         return materialize(Lazy.reject(iterable, predicate));
     }
 
-    public static <T> T first(Iterable<? extends T> iterable) {
+    public static <T> T first(Iterable<T> iterable) {
         return iterable.iterator().next();
     }
 
@@ -165,7 +165,7 @@ public class Eager {
         return first(filter(iterable, predicate));
     }
 
-    public static <T> Collection<T> first(Iterable<? extends T> iterable, int numberOfElementsRequired) {
+    public static <T> Collection<T> first(Iterable<T> iterable, int numberOfElementsRequired) {
         return take(iterable, numberOfElementsRequired);
     }
 
@@ -173,7 +173,7 @@ public class Eager {
         return first(filter(iterable, predicate), numberOfElementsRequired);
     }
 
-    public static <T> T last(Iterable<? extends T> iterable) {
+    public static <T> T last(Iterable<T> iterable) {
         return slice(iterable, -1, null).iterator().next();
     }
 
@@ -181,7 +181,7 @@ public class Eager {
         return last(filter(iterable, predicate));
     }
 
-    public static <T> Collection<T> last(Iterable<? extends T> iterable, int numberOfElementsRequired) {
+    public static <T> Collection<T> last(Iterable<T> iterable, int numberOfElementsRequired) {
         if (numberOfElementsRequired < 0) {
             throw new IllegalArgumentException("Number of elements required cannot be negative");
         }
@@ -195,11 +195,11 @@ public class Eager {
         return last(filter(iterable, predicate), numberOfElementsRequired);
     }
 
-    public static <T> Collection<T> take(Iterable<? extends T> iterable, int numberToTake) {
+    public static <T> Collection<T> take(Iterable<T> iterable, int numberToTake) {
         return materialize(Lazy.take(iterable, numberToTake));
     }
 
-    public static <T> Collection<T> drop(Iterable<? extends T> iterable, int numberToDrop) {
+    public static <T> Collection<T> drop(Iterable<T> iterable, int numberToDrop) {
         return materialize(Lazy.drop(iterable, numberToDrop));
     }
 
@@ -209,7 +209,7 @@ public class Eager {
         return tuple(materialize(partition.first()), materialize(partition.second()));
     }
 
-    public static <T> Collection<Collection<T>> batch(Iterable<? extends T> iterable, int batchSize) {
+    public static <T> Collection<Collection<T>> batch(Iterable<T> iterable, int batchSize) {
         Collection<Collection<T>> result = new ArrayList<Collection<T>>();
         Iterable<Iterable<T>> batches = Lazy.batch(iterable, batchSize);
         for (Iterable<T> batch : batches) {
@@ -243,7 +243,7 @@ public class Eager {
         return materialize(Lazy.dropUntil(iterable, predicate));
     }
 
-    public static <T> Collection<T> slice(Iterable<? extends T> iterable, Integer start, Integer stop, Integer step) {
+    public static <T> Collection<T> slice(Iterable<T> iterable, Integer start, Integer stop, Integer step) {
         List<? extends T> inputCollection = toList(iterable);
 
         int startIndex = SliceHelper.resolveStartIndex(start, inputCollection.size());
@@ -260,8 +260,12 @@ public class Eager {
         return outputCollection;
     }
 
-    public static <T> Collection<T> slice(Iterable<? extends T> iterable, Integer start, Integer stop) {
+    public static <T> Collection<T> slice(Iterable<T> iterable, Integer start, Integer stop) {
         return slice(iterable, start, stop, 1);
+    }
+
+    public static <T> Collection<T> repeat(Iterable<T> iterable, int numberOfTimesToRepeat) {
+        return materialize(Lazy.repeat(iterable, numberOfTimesToRepeat));
     }
 
     private static class SliceHelper {
