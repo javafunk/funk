@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.IterableUtils.materialize;
+import static org.javafunk.Iterables.materialize;
 import static org.javafunk.Literals.listWith;
 
 public class IntegerRangeTest {

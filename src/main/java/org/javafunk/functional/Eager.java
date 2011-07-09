@@ -6,9 +6,9 @@ import org.javafunk.functional.functors.*;
 
 import java.util.*;
 
-import static org.javafunk.IterableUtils.materialize;
-import static org.javafunk.IterableUtils.toList;
-import static org.javafunk.IteratorUtils.toIterable;
+import static org.javafunk.Iterables.materialize;
+import static org.javafunk.Iterables.toList;
+import static org.javafunk.Iterators.toIterable;
 import static org.javafunk.Literals.tuple;
 
 public class Eager {
@@ -82,7 +82,7 @@ public class Eager {
     }
 
     public static <T> T max(Iterable<T> iterable, final Comparator<? super T> comparator) {
-        return reduce(iterable, new Reducer<T, T>(){
+        return reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMax, T element) {
                 return (element != null && comparator.compare(element, currentMax) > 0) ? element : currentMax;
             }
@@ -98,7 +98,7 @@ public class Eager {
     }
 
     public static <T> T min(Iterable<T> iterable, final Comparator<? super T> comparator) {
-        return reduce(iterable, new Reducer<T, T>(){
+        return reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMin, T element) {
                 return (element != null && comparator.compare(element, currentMin) < 0) ? element : currentMin;
             }
@@ -135,9 +135,9 @@ public class Eager {
 
     public static <S, T> Map<T, Collection<S>> group(Iterable<S> iterable, Indexer<? super S, T> indexer) {
         Map<T, Collection<S>> groupedElements = new HashMap<T, Collection<S>>();
-        for(S element : iterable) {
+        for (S element : iterable) {
             T index = indexer.index(element);
-            if(!groupedElements.containsKey(index)) {
+            if (!groupedElements.containsKey(index)) {
                 groupedElements.put(index, new ArrayList<S>());
             }
             groupedElements.get(index).add(element);
@@ -282,17 +282,27 @@ public class Eager {
         }
 
         private static int resolveStepSize(Integer step) {
-            if (step == null)   { return 1; }
-            else if (step == 0) { throw new IllegalArgumentException("Step size cannot be zero"); }
-            else                { return step; }
+            if (step == null) {
+                return 1;
+            } else if (step == 0) {
+                throw new IllegalArgumentException("Step size cannot be zero");
+            } else {
+                return step;
+            }
         }
 
         private static int resolveIndex(Integer index, Integer numberOfElements, Integer defaultIndex, Integer spread) {
-            if      (index == null)                { return defaultIndex; }
-            else if (index + numberOfElements < 0) { return 0 - spread; }
-            else if (index < 0)                    { return index + numberOfElements; }
-            else if (index >= numberOfElements)    { return numberOfElements - 1 + spread; }
-            else                                   { return index; }
+            if (index == null) {
+                return defaultIndex;
+            } else if (index + numberOfElements < 0) {
+                return 0 - spread;
+            } else if (index < 0) {
+                return index + numberOfElements;
+            } else if (index >= numberOfElements) {
+                return numberOfElements - 1 + spread;
+            } else {
+                return index;
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 package org.javafunk.collections;
 
-import org.javafunk.MapUtils;
+import org.javafunk.Maps;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -28,7 +28,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
 
     @Override
     public synchronized boolean add(E e) {
-        Integer currentItemCount = MapUtils.getOrAddDefault(contents, e, new MapUtils.DefaultValueFactory<Integer>() {
+        Integer currentItemCount = Maps.getOrAddDefault(contents, e, new Maps.DefaultValueFactory<Integer>() {
             @Override
             public Integer create() {
                 return 0;

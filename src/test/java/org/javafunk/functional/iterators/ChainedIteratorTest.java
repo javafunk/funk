@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.javafunk.IteratorUtils.emptyIterator;
+import static org.javafunk.Iterators.emptyIterator;
 import static org.javafunk.Literals.listWith;
 
 public class ChainedIteratorTest {
@@ -113,7 +113,7 @@ public class ChainedIteratorTest {
         // Then
         List<Integer> expectedFirstList = listWith(1);
         List<Integer> expectedSecondList = listWith(4);
-        
+
         assertThat(firstList, is(expectedFirstList));
         assertThat(secondList, is(expectedSecondList));
     }

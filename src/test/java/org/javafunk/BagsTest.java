@@ -7,7 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.Literals.bagWith;
 
-public class BagUtilsTest {
+public class BagsTest {
     @Test
     public void shouldReturnABagContainingThoseElementsInTheFirstSetThatAreNotInTheSecond() {
         // Given
@@ -16,8 +16,8 @@ public class BagUtilsTest {
         Bag<String> expectedDifference = bagWith("c", "c");
 
         // When
-        Bag<String> actualDifference = BagUtils.difference(bag1, bag2);
-        
+        Bag<String> actualDifference = Bags.difference(bag1, bag2);
+
         // Then
         assertThat(actualDifference, is(expectedDifference));
     }

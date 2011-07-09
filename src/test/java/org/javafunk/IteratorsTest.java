@@ -1,7 +1,7 @@
 package org.javafunk;
 
-import org.junit.Test;
 import org.javafunk.collections.Bag;
+import org.junit.Test;
 
 import java.util.Iterator;
 import java.util.List;
@@ -9,10 +9,10 @@ import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.IteratorUtils.*;
+import static org.javafunk.Iterators.*;
 import static org.javafunk.Literals.*;
 
-public class IteratorUtilsTest {
+public class IteratorsTest {
     @Test
     public void shouldWrapTheSuppliedIteratorInAnIterable() {
         // Given

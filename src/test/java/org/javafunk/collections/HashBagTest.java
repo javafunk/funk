@@ -1,16 +1,16 @@
 package org.javafunk.collections;
 
 import org.hamcrest.Matchers;
+import org.javafunk.Iterators;
 import org.junit.Test;
-import org.javafunk.IteratorUtils;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertThat;
 import static org.javafunk.Literals.bagWith;
 import static org.javafunk.Literals.listWith;
+import static org.junit.Assert.assertThat;
 
 public class HashBagTest {
     @Test
@@ -108,7 +108,7 @@ public class HashBagTest {
         bag.addAll(listWith(1, 2, 2, 3));
 
         // When
-        List<Integer> actual = IteratorUtils.toList(bag.iterator());
+        List<Integer> actual = Iterators.toList(bag.iterator());
 
         // Then
         assertThat(actual, Matchers.containsInAnyOrder(1, 2, 2, 3));

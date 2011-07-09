@@ -15,7 +15,7 @@ import static org.javafunk.testclasses.Colour.colour;
 import static org.javafunk.testclasses.Dog.dog;
 import static org.javafunk.testclasses.Name.name;
 
-public class SetUtilsTest {
+public class SetsTest {
     @Test
     public void shouldReturnTheUnionOfTheSuppliedSets() throws Exception {
         // Given
@@ -25,7 +25,7 @@ public class SetUtilsTest {
         Set<String> expectedUnionSet = setWith("a", "b", "c", "d", "e", "f");
 
         // When
-        Set<String> actualUnionSet = SetUtils.union(firstSet, secondSet, thirdSet);
+        Set<String> actualUnionSet = Sets.union(firstSet, secondSet, thirdSet);
 
         // Then
         assertThat(actualUnionSet, is(expectedUnionSet));
@@ -41,7 +41,7 @@ public class SetUtilsTest {
         Set<String> expectedUnionSet = setWith("a", "b", "c", "d", "e", "f");
 
         // When
-        Set<String> actualUnionSet = SetUtils.union(sets);
+        Set<String> actualUnionSet = Sets.union(sets);
 
         // Then
         assertThat(actualUnionSet, is(expectedUnionSet));
@@ -59,7 +59,7 @@ public class SetUtilsTest {
         Set<Animal> expectedMenagerie = setOf(Animal.class).with(fido, smudge, spud, snowy);
 
         // When
-        Set<Animal> actualMenagerie = SetUtils.union(dogs, cats);
+        Set<Animal> actualMenagerie = Sets.union(dogs, cats);
 
         // Then
         assertThat(actualMenagerie, is(expectedMenagerie));
@@ -74,7 +74,7 @@ public class SetUtilsTest {
         Set<String> expectedIntersectionSet = setWith("c", "q");
 
         // When
-        Set<String> actualIntersectionSet = SetUtils.intersection(firstSet, secondSet, thirdSet);
+        Set<String> actualIntersectionSet = Sets.intersection(firstSet, secondSet, thirdSet);
 
         // Then
         assertThat(actualIntersectionSet, is(expectedIntersectionSet));
@@ -90,7 +90,7 @@ public class SetUtilsTest {
         Set<String> expectedIntersectionSet = setWith("c", "q");
 
         // When
-        Set<String> actualIntersectionSet = SetUtils.intersection(sets);
+        Set<String> actualIntersectionSet = Sets.intersection(sets);
 
         // Then
         assertThat(actualIntersectionSet, is(expectedIntersectionSet));
@@ -105,7 +105,7 @@ public class SetUtilsTest {
         Set<String> expectedDifferenceSet = setWith("d", "e", "f");
 
         // When
-        Set<String> actualDifferenceSet = SetUtils.difference(firstSet, secondSet, thirdSet);
+        Set<String> actualDifferenceSet = Sets.difference(firstSet, secondSet, thirdSet);
 
         // Then
         assertThat(actualDifferenceSet, is(expectedDifferenceSet));
@@ -121,7 +121,7 @@ public class SetUtilsTest {
         Set<String> expectedDifferenceSet = setWith("d", "e", "f");
 
         // When
-        Set<String> actualDifferenceSet = SetUtils.difference(sets);
+        Set<String> actualDifferenceSet = Sets.difference(sets);
 
         // Then
         assertThat(actualDifferenceSet, is(expectedDifferenceSet));

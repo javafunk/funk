@@ -7,9 +7,9 @@ import java.util.Collection;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.Literals.listWith;
-import static org.javafunk.StringUtils.join;
+import static org.javafunk.Strings.join;
 
-public class StringUtilsTest {
+public class StringsTest {
     @Test
     public void shouldJoinAllStringsInTheCollectionUsingTheSeparator() {
         // Given

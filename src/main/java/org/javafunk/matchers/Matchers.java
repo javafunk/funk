@@ -5,7 +5,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.javafunk.BagUtils;
+import org.javafunk.Bags;
 import org.javafunk.collections.Bag;
 import org.javafunk.datastructures.TwoTuple;
 
@@ -16,7 +16,7 @@ import static java.util.Arrays.asList;
 import static org.apache.commons.lang.StringUtils.join;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
-import static org.javafunk.IteratorUtils.toBag;
+import static org.javafunk.Iterators.toBag;
 import static org.javafunk.functional.Eager.all;
 import static org.javafunk.functional.Eager.any;
 import static org.javafunk.functional.Lazy.enumerate;
@@ -66,7 +66,7 @@ public class Matchers {
             }
 
             private boolean checkForDifferences(Bag<T> expectedSet, Bag<T> actualSet, Description description, String message) {
-                Bag<T> differences = BagUtils.difference(expectedSet, actualSet);
+                Bag<T> differences = Bags.difference(expectedSet, actualSet);
                 if (differences.size() > 0) {
                     description.appendText("\n")
                             .appendText(message)

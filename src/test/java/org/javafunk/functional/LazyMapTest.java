@@ -1,15 +1,15 @@
 package org.javafunk.functional;
 
-import org.junit.Test;
 import org.javafunk.functional.functors.Mapper;
+import org.junit.Test;
 
 import java.util.Iterator;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
-import static org.junit.Assert.assertThat;
-import static org.javafunk.IterableUtils.toList;
+import static org.javafunk.Iterables.toList;
 import static org.javafunk.Literals.listWith;
+import static org.junit.Assert.assertThat;
 
 public class LazyMapTest {
     @Test

@@ -9,7 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.Literals.listWith;
 
-public class ArrayUtilsTest {
+public class ArraysTest {
     @Test
     public void shouldConvertTheSuppliedArrayToAList() throws Exception {
         // Given
@@ -17,7 +17,7 @@ public class ArrayUtilsTest {
         List<String> expectedList = listWith("a", "b", "c");
 
         // When
-        List<String> actualList = ArrayUtils.toList(array);
+        List<String> actualList = Arrays.toList(array);
 
         // Then
         assertThat(actualList, is(expectedList));
@@ -29,7 +29,7 @@ public class ArrayUtilsTest {
         String[] array = new String[]{"a", "b", "c"};
 
         // When
-        Iterable<String> iterable = ArrayUtils.toIterable(array);
+        Iterable<String> iterable = Arrays.toIterable(array);
         Iterator<String> iterator = iterable.iterator();
 
         // Then

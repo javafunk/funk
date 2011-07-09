@@ -1,6 +1,6 @@
 package org.javafunk.datastructures;
 
-import org.javafunk.IteratorUtils;
+import org.javafunk.Iterators;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -54,7 +54,7 @@ public class IntegerRange implements Range<Integer> {
     @Override
     public Iterator<Integer> iterator() {
         if (start < end && step < 0 || start > end && step > 0) {
-            return IteratorUtils.emptyIterator();
+            return Iterators.emptyIterator();
         }
 
         return new IntegerRangeIterator();

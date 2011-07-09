@@ -1,6 +1,5 @@
 package org.javafunk;
 
-import org.javafunk.MapUtils;
 import org.junit.Test;
 
 import java.util.Map;
@@ -8,9 +7,9 @@ import java.util.Map;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.Literals.mapWith;
-import static org.javafunk.MapUtils.getOrAddDefault;
+import static org.javafunk.Maps.getOrAddDefault;
 
-public class MapUtilsTest {
+public class MapsTest {
     @Test
     public void shouldReturnTheValueFromTheMapIfTheKeyAlreadyExists() {
         // Given
@@ -53,8 +52,8 @@ public class MapUtilsTest {
         assertThat(inputMap.get(5), is("default value"));
     }
 
-    private MapUtils.DefaultValueFactory<String> defaultValueFactory() {
-        return new MapUtils.DefaultValueFactory<String>(){
+    private Maps.DefaultValueFactory<String> defaultValueFactory() {
+        return new Maps.DefaultValueFactory<String>() {
             public String create() {
                 return "default value";
             }

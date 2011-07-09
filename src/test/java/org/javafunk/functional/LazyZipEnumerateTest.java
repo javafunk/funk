@@ -1,17 +1,17 @@
 package org.javafunk.functional;
 
-import org.junit.Test;
 import org.javafunk.datastructures.TwoTuple;
+import org.junit.Test;
 
 import java.util.Collection;
 import java.util.Iterator;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.javafunk.IterableUtils.toList;
+import static org.javafunk.Iterables.toList;
 import static org.javafunk.Literals.listWith;
 import static org.javafunk.Literals.tuple;
 import static org.javafunk.matchers.Matchers.hasOnlyItemsInOrder;
+import static org.junit.Assert.assertThat;
 
 public class LazyZipEnumerateTest {
     @Test

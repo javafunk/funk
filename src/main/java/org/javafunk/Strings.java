@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import static java.util.Arrays.asList;
 
-public class StringUtils {
+public class Strings {
     public static <T> String join(Collection<? extends T> collection, String separator) {
         return org.apache.commons.lang.StringUtils.join(collection, separator);
     }

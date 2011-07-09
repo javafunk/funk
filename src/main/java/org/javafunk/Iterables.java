@@ -2,7 +2,7 @@ package org.javafunk;
 
 import java.util.*;
 
-public class IterableUtils {
+public class Iterables {
     public static <T> List<T> toList(Iterable<? extends T> iterable) {
         ArrayList<T> list = new ArrayList<T>();
         for (T item : iterable) {

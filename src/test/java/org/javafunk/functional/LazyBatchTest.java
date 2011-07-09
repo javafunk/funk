@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.IterableUtils.materialize;
+import static org.javafunk.Iterables.materialize;
 import static org.javafunk.Literals.listWith;
 import static org.junit.Assert.assertThat;
 

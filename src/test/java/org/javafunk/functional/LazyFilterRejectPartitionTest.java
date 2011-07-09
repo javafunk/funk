@@ -1,17 +1,17 @@
 package org.javafunk.functional;
 
+import org.javafunk.datastructures.TwoTuple;
 import org.javafunk.functional.functors.Predicate;
 import org.junit.Test;
-import org.javafunk.datastructures.TwoTuple;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.javafunk.IterableUtils.materialize;
+import static org.javafunk.Iterables.materialize;
 import static org.javafunk.Literals.listWith;
+import static org.junit.Assert.assertThat;
 
 public class LazyFilterRejectPartitionTest {
     @Test
@@ -103,7 +103,7 @@ public class LazyFilterRejectPartitionTest {
 
         // When
         TwoTuple<Iterable<Integer>, Iterable<Integer>> partitionResults = Lazy.partition(input,
-                new Predicate<Integer>(){
+                new Predicate<Integer>() {
                     public boolean evaluate(Integer item) {
                         return isEven(item);
                     }
@@ -116,7 +116,7 @@ public class LazyFilterRejectPartitionTest {
         // Then
         Collection<Integer> actualMatchingItems = materialize(partitionResults.first());
         Collection<Integer> actualNonMatchingItems = materialize(partitionResults.second());
-        
+
         assertThat(actualMatchingItems, is(expectedMatchingItems));
         assertThat(actualNonMatchingItems, is(expectedNonMatchingItems));
     }
@@ -128,7 +128,7 @@ public class LazyFilterRejectPartitionTest {
 
         // When
         TwoTuple<Iterable<Integer>, Iterable<Integer>> partitionResult = Lazy.partition(input,
-                new Predicate<Integer>(){
+                new Predicate<Integer>() {
                     public boolean evaluate(Integer item) {
                         return isEven(item);
                     }

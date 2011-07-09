@@ -1,17 +1,17 @@
 package org.javafunk.functional.iterators;
 
-import org.junit.Test;
 import org.javafunk.functional.Lazy;
+import org.junit.Test;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.Matchers.is;
+import static org.javafunk.Iterables.materialize;
+import static org.javafunk.Literals.listWith;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-import static org.javafunk.IterableUtils.materialize;
-import static org.javafunk.Literals.listWith;
 
 public class BatchedIteratorTest {
     @Test
@@ -139,17 +139,20 @@ public class BatchedIteratorTest {
         try {
             returnedIterator.next();
             fail("Expected parent iterator to throw a NoSuchElementException.");
-        } catch (NoSuchElementException exception) {}
+        } catch (NoSuchElementException exception) {
+        }
 
         try {
             firstBatchIterator.next();
             fail("Expected first child iterator to throw a NoSuchElementException.");
-        } catch (NoSuchElementException exception) {}
+        } catch (NoSuchElementException exception) {
+        }
 
         try {
             secondBatchIterator.next();
             fail("Expected second child iterator to throw a NoSuchElementException.");
-        } catch (NoSuchElementException exception) {}
+        } catch (NoSuchElementException exception) {
+        }
     }
 
     @Test
@@ -166,17 +169,20 @@ public class BatchedIteratorTest {
         try {
             returnedIterator.remove();
             fail("Expected parent iterator to throw an UnsupportedOperationException for remove.");
-        } catch (UnsupportedOperationException exception) {}
+        } catch (UnsupportedOperationException exception) {
+        }
 
         try {
             firstBatchIterator.remove();
             fail("Expected first child iterator to throw an UnsupportedOperationException for remove.");
-        } catch (UnsupportedOperationException exception) {}
+        } catch (UnsupportedOperationException exception) {
+        }
 
         try {
             secondBatchIterator.remove();
             fail("Expected second child iterator to throw an UnsupportedOperationException for remove.");
-        } catch (UnsupportedOperationException exception) {}
+        } catch (UnsupportedOperationException exception) {
+        }
     }
 
     @Test

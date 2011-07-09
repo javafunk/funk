@@ -4,7 +4,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 
-public class ArrayUtils {
+public class Arrays {
     public static <T> List<T> toList(T[] array) {
         return asList(array);
     }

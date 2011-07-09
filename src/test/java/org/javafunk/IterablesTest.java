@@ -7,11 +7,11 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.IterableUtils.toList;
-import static org.javafunk.IteratorUtils.toIterable;
+import static org.javafunk.Iterables.toList;
+import static org.javafunk.Iterators.toIterable;
 import static org.javafunk.Literals.listWith;
 
-public class IterableUtilsTest {
+public class IterablesTest {
     @Test
     public void shouldFetchAllValuesFromTheAssociatedIteratorAndReturnThemInAList() {
         // Given

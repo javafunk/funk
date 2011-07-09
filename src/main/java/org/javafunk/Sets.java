@@ -7,18 +7,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static java.util.Arrays.asList;
-import static org.javafunk.IterableUtils.toSet;
+import static org.javafunk.Iterables.toSet;
 import static org.javafunk.functional.Eager.*;
 import static org.javafunk.functional.Lazy.filter;
 
-public class SetUtils {
+public class Sets {
     public static <T> Set<T> union(Set<? extends T>... sets) {
         return union(asList(sets));
     }
 
     public static <T> Set<T> union(Iterable<? extends Set<? extends T>> sets) {
         Set<T> unionSet = new HashSet<T>();
-        for(Set<? extends T> set : sets) {
+        for (Set<? extends T> set : sets) {
             unionSet.addAll(set);
         }
         return unionSet;

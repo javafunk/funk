@@ -9,9 +9,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.javafunk.IterableUtils.materialize;
+import static org.javafunk.Iterables.materialize;
 import static org.javafunk.Literals.listWith;
+import static org.junit.Assert.assertThat;
 
 public class LazyTakeDropTest {
     @Test
