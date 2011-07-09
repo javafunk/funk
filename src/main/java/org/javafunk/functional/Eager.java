@@ -7,7 +7,7 @@ import org.javafunk.functional.functors.*;
 import java.util.*;
 
 import static org.javafunk.Iterables.materialize;
-import static org.javafunk.Iterables.toList;
+import static org.javafunk.Iterables.asList;
 import static org.javafunk.Iterators.toIterable;
 import static org.javafunk.Literals.tuple;
 
@@ -248,7 +248,7 @@ public class Eager {
     }
 
     public static <T> Collection<T> slice(Iterable<T> iterable, Integer start, Integer stop, Integer step) {
-        List<? extends T> inputCollection = toList(iterable);
+        List<? extends T> inputCollection = asList(iterable);
 
         int startIndex = SliceHelper.resolveStartIndex(start, inputCollection.size());
         int stopIndex = SliceHelper.resolveStopIndex(stop, inputCollection.size());

@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.Iterables.toList;
+import static org.javafunk.Iterables.asList;
 import static org.javafunk.Literals.listWith;
 import static org.javafunk.Literals.tuple;
 import static org.javafunk.matchers.Matchers.hasOnlyItemsInOrder;
@@ -24,7 +24,7 @@ public class LazyZipEnumerateTest {
         Iterable<TwoTuple<Integer, String>> actual = Lazy.enumerate(iterable);
 
         // Then
-        assertThat(toList(actual), hasOnlyItemsInOrder(expected));
+        assertThat(asList(actual), hasOnlyItemsInOrder(expected));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class LazyZipEnumerateTest {
         Collection<TwoTuple<String, Integer>> expected = listWith(tuple("A", 1), tuple("B", 2), tuple("C", 3));
 
         // When
-        Collection<TwoTuple<String, Integer>> actual = toList(Lazy.zip(iterable1, iterable2));
+        Collection<TwoTuple<String, Integer>> actual = asList(Lazy.zip(iterable1, iterable2));
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
@@ -69,7 +69,7 @@ public class LazyZipEnumerateTest {
         Collection<TwoTuple<String, Integer>> expected = listWith(tuple("A", 1), tuple("B", 2), tuple("C", 3));
 
         // When
-        Collection<TwoTuple<String, Integer>> actual = toList(Lazy.zip(iterable1, iterable2));
+        Collection<TwoTuple<String, Integer>> actual = asList(Lazy.zip(iterable1, iterable2));
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
@@ -86,7 +86,7 @@ public class LazyZipEnumerateTest {
         Iterable<TwoTuple<String, Integer>> actual = Lazy.zip(iterable1, iterable2);
 
         // Then
-        assertThat(toList(actual), hasOnlyItemsInOrder(expected));
+        assertThat(asList(actual), hasOnlyItemsInOrder(expected));
     }
 
     @Test

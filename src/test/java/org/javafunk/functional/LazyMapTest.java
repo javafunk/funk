@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
-import static org.javafunk.Iterables.toList;
+import static org.javafunk.Iterables.asList;
 import static org.javafunk.Literals.listWith;
 import static org.junit.Assert.assertThat;
 
@@ -25,7 +25,7 @@ public class LazyMapTest {
         });
 
         // Then
-        assertThat(toList(actual), hasItems("1", "2", "3"));
+        assertThat(asList(actual), hasItems("1", "2", "3"));
     }
 
     @Test

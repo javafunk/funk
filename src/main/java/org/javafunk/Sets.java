@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static java.util.Arrays.asList;
-import static org.javafunk.Iterables.toSet;
+import static org.javafunk.Iterables.asSet;
 import static org.javafunk.functional.Eager.*;
 import static org.javafunk.functional.Lazy.filter;
 
@@ -32,7 +32,7 @@ public class Sets {
         final Set<? extends T> firstSet = first(sets);
         final Iterable<? extends Set<? extends T>> otherSets = rest(sets);
 
-        return toSet(filter(firstSet, new Predicate<T>() {
+        return asSet(filter(firstSet, new Predicate<T>() {
             public boolean evaluate(T element) {
                 return all(otherSets, contain(element));
             }
@@ -46,7 +46,7 @@ public class Sets {
     public static <T> Set<T> difference(Iterable<? extends Set<? extends T>> sets) {
         final Set<? extends T> firstSet = first(sets);
 
-        return toSet(filter(union(sets), new Predicate<T>() {
+        return asSet(filter(union(sets), new Predicate<T>() {
             public boolean evaluate(T element) {
                 return !firstSet.contains(element);
             }
