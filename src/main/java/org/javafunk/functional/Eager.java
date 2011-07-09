@@ -157,7 +157,7 @@ public class Eager {
         return materialize(Lazy.reject(iterable, predicate));
     }
 
-    public static <T> T first(Iterable<T> iterable) {
+    public static <T> T first(Iterable<? extends T> iterable) {
         return iterable.iterator().next();
     }
 
@@ -193,6 +193,10 @@ public class Eager {
 
     public static <T> Collection<T> last(Iterable<T> iterable, int numberOfElementsRequired, Predicate<? super T> predicate) {
         return last(filter(iterable, predicate), numberOfElementsRequired);
+    }
+
+    public static <T> Collection<T> rest(Iterable<T> iterable) {
+        return slice(iterable, 1, null);
     }
 
     public static <T> Collection<T> take(Iterable<T> iterable, int numberToTake) {

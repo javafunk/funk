@@ -58,7 +58,7 @@ public class LiteralsTest {
         List<Integer> expectedList = asList(1, 2, 3, 4, 5, 6);
 
         // When
-        List<Integer> actualList = list(Integer.class)
+        List<Integer> actualList = listOf(Integer.class)
                 .with(1, 2, 3)
                 .with(4, 5, 6)
                 .build();
@@ -75,7 +75,7 @@ public class LiteralsTest {
         List<Integer> secondInputList = asList(4, 5, 6);
 
         // When
-        List<Integer> actualList = list(Integer.class)
+        List<Integer> actualList = listOf(Integer.class)
                 .with(firstInputList)
                 .with(secondInputList)
                 .build();
@@ -127,7 +127,7 @@ public class LiteralsTest {
         Bag<Integer> expectedBag = new HashBag<Integer>(asList(1, 1, 2, 2, 3, 3));
 
         // When
-        Bag<Integer> actualBag = bag(Integer.class)
+        Bag<Integer> actualBag = bagOf(Integer.class)
                 .with(1, 1, 2)
                 .with(2, 3, 3)
                 .build();
@@ -144,7 +144,7 @@ public class LiteralsTest {
         Collection<Integer> secondInputCollection = asList(4, 5, 6);
 
         // When
-        Bag<Integer> actualBag = bag(Integer.class)
+        Bag<Integer> actualBag = bagOf(Integer.class)
                 .with(firstInputCollection)
                 .with(secondInputCollection)
                 .build();
@@ -196,7 +196,7 @@ public class LiteralsTest {
         Set<String> expectedSet = new HashSet<String>(listWith("a", "b", "c"));
 
         // When
-        Set<String> actualSet = set(String.class)
+        Set<String> actualSet = setOf(String.class)
                 .with("a", "a")
                 .with("b", "c")
                 .build();
@@ -213,7 +213,7 @@ public class LiteralsTest {
         Collection<String> secondInputCollection = listWith("b", "c", "c");
 
         // When
-        Set<String> actualSet = set(String.class)
+        Set<String> actualSet = setOf(String.class)
                 .with(firstInputCollection)
                 .with(secondInputCollection)
                 .build();
@@ -259,7 +259,7 @@ public class LiteralsTest {
         expectedMap.put(15, "c");
 
         // When
-        Map<Integer, String> actualMap = map(Integer.class, String.class)
+        Map<Integer, String> actualMap = mapOf(Integer.class, String.class)
                 .with(5, "a")
                 .with(10, "b")
                 .with(15, "c")

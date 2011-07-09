@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.javafunk.Literals.list;
+import static org.javafunk.Literals.listOf;
 import static org.javafunk.Literals.listWith;
 
 public class CyclicIteratorTest {
@@ -93,7 +93,7 @@ public class CyclicIteratorTest {
     @Test
     public void shouldReturnFalseForHasNextIfAnEmptyIteratorIsSupplied() throws Exception {
         // Given
-        Iterable<Integer> input = list(Integer.class);
+        Iterable<Integer> input = listOf(Integer.class);
 
         // When
         CyclicIterator<Integer> iterator = new CyclicIterator<Integer>(input.iterator());
@@ -105,7 +105,7 @@ public class CyclicIteratorTest {
     @Test(expected = NoSuchElementException.class)
     public void shouldThrowNoSuchElementExceptionIfNextIsCalledAndAnEmptyIteratorIsSupplied() throws Exception {
         // Given
-        Iterable<Integer> input = list(Integer.class);
+        Iterable<Integer> input = listOf(Integer.class);
         CyclicIterator<Integer> iterator = new CyclicIterator<Integer>(input.iterator());
 
         // When

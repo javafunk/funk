@@ -12,34 +12,34 @@ import static java.util.Arrays.asList;
 
 public class Literals {
     public static <T> ListBuilder<T> listWith(T... elements) {
-        return new ListBuilder<T>().and(elements);
+        return new ListBuilder<T>().with(elements);
     }
 
-    public static <T> ListBuilder<T> list(Class<T> elementClass) {
+    public static <T> ListBuilder<T> listOf(Class<T> elementClass) {
         return new ListBuilder<T>();
     }
 
     public static <T> SetBuilder<T> setWith(T... elements) {
-        return new SetBuilder<T>().and(elements);
+        return new SetBuilder<T>().with(elements);
     }
 
-    public static <T> SetBuilder<T> set(Class<T> elementClass) {
+    public static <T> SetBuilder<T> setOf(Class<T> elementClass) {
         return new SetBuilder<T>();
     }
 
     public static <T> BagBuilder<T> bagWith(T... elements) {
-        return new BagBuilder<T>().and(elements);
+        return new BagBuilder<T>().with(elements);
     }
 
-    public static <T> BagBuilder<T> bag(Class<T> elementClass) {
+    public static <T> BagBuilder<T> bagOf(Class<T> elementClass) {
         return new BagBuilder<T>();
     }
 
     public static <S, T> MapBuilder<S, T> mapWith(S key, T value) {
-        return new MapBuilder<S, T>().and(key, value);
+        return new MapBuilder<S, T>().with(key, value);
     }
 
-    public static <S, T> MapBuilder<S, T> map(Class<S> keyClass, Class<T> valueClass) {
+    public static <S, T> MapBuilder<S, T> mapOf(Class<S> keyClass, Class<T> valueClass) {
         return new MapBuilder<S, T>();
     }
 
