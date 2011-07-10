@@ -197,6 +197,7 @@ public class Eager {
         return last(filter(iterable, predicate), numberOfElementsRequired);
     }
 
+    // TODO: Toby (10/07/11): Test this
     public static <T> Collection<T> rest(Iterable<T> iterable) {
         return slice(iterable, 1, null);
     }

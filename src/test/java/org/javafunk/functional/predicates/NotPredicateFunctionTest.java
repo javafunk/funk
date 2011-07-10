@@ -1,7 +1,6 @@
 package org.javafunk.functional.predicates;
 
 import org.javafunk.functional.functors.Predicate;
-import org.javafunk.functional.predicates.NotPredicate;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -12,9 +11,10 @@ import static org.mockito.Mockito.when;
 
 public class NotPredicateFunctionTest {
     @Test
+    @SuppressWarnings("unchecked")
     public void shouldReturnTrueIfTheSuppliedPredicateReturnsFalse() {
         // Given
-        Predicate<String> delegatePredicate = mock(Predicate.class);
+        Predicate<String> delegatePredicate = (Predicate<String>) mock(Predicate.class);
         when(delegatePredicate.evaluate(any(String.class))).thenReturn(false);
 
         NotPredicate<String> notPredicate = new NotPredicate<String>(delegatePredicate);
@@ -27,9 +27,10 @@ public class NotPredicateFunctionTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void shouldReturnFalseIfTheSuppliedPredicateReturnsTrue() {
         // Given
-        Predicate<String> delegatePredicate = mock(Predicate.class);
+        Predicate<String> delegatePredicate = (Predicate<String>) mock(Predicate.class);
         when(delegatePredicate.evaluate(any(String.class))).thenReturn(true);
 
         NotPredicate<String> notPredicate = new NotPredicate<String>(delegatePredicate);

@@ -40,10 +40,10 @@ public class LiteralsTest {
     }
 
     @Test
-    public void shouldAllowCollectionsOfElementsToBeAddedToTheListWithAnd() throws Exception {
+    public void shouldAllowIterablesOfElementsToBeAddedToTheListWithAnd() throws Exception {
         // Given
         List<Integer> expectedList = asList(1, 2, 3, 4, 5, 6);
-        List<Integer> someOtherElements = asList(4, 5, 6);
+        Iterable<Integer> someOtherElements = asList(4, 5, 6);
 
         // When
         List<Integer> actualList = listWith(1, 2, 3).and(someOtherElements);
@@ -68,17 +68,31 @@ public class LiteralsTest {
     }
 
     @Test
-    public void shouldAllowCollectionsOfElementsToBeAddedToAListWithWith() throws Exception {
+    public void shouldAllowIterablesOfElementsToBeAddedToAListWithWith() throws Exception {
         // Given
         List<Integer> expectedList = asList(1, 2, 3, 4, 5, 6);
-        List<Integer> firstInputList = asList(1, 2, 3);
-        List<Integer> secondInputList = asList(4, 5, 6);
+        Iterable<Integer> firstInputIterable = asList(1, 2, 3);
+        Iterable<Integer> secondInputIterable = asList(4, 5, 6);
 
         // When
         List<Integer> actualList = listOf(Integer.class)
-                .with(firstInputList)
-                .with(secondInputList)
+                .with(firstInputIterable)
+                .with(secondInputIterable)
                 .build();
+
+        // Then
+        assertThat(actualList, is(expectedList));
+    }
+
+    @Test
+    public void shouldReturnAListContainingAllElementsInTheSuppliedIterable() throws Exception {
+        // Given
+        List<Integer> expectedList = asList(1, 2, 3, 4, 5, 6);
+        Iterable<Integer> firstInputIterable = asList(1, 2, 3);
+        Iterable<Integer> secondInputIterable = asList(4, 5, 6);
+
+        // When
+        List<Integer> actualList = listFrom(firstInputIterable).with(secondInputIterable);
 
         // Then
         assertThat(actualList, is(expectedList));
@@ -109,10 +123,10 @@ public class LiteralsTest {
     }
 
     @Test
-    public void shouldAllowCollectionsOfElementsToBeAddedToTheBagWithAnd() throws Exception {
+    public void shouldAllowIterablesOfElementsToBeAddedToTheBagWithAnd() throws Exception {
         // Given
         Bag<String> expectedBag = new HashBag<String>(listWith("a", "a", "b", "c"));
-        Collection<String> someOtherElements = listWith("b", "c");
+        Iterable<String> someOtherElements = listWith("b", "c");
 
         // When
         Bag<String> actualBag = bagWith("a", "a").and(someOtherElements);
@@ -137,20 +151,34 @@ public class LiteralsTest {
     }
 
     @Test
-    public void shouldAllowCollectionsOfElementsToBeAddedToABagWithWith() throws Exception {
+    public void shouldAllowIterablesOfElementsToBeAddedToABagWithWith() throws Exception {
         // Given
         Bag<Integer> expectedbag = new HashBag<Integer>(asList(1, 2, 3, 4, 5, 6));
-        Collection<Integer> firstInputCollection = asList(1, 2, 3);
-        Collection<Integer> secondInputCollection = asList(4, 5, 6);
+        Iterable<Integer> firstInputIterable = asList(1, 2, 3);
+        Iterable<Integer> secondInputIterable = asList(4, 5, 6);
 
         // When
         Bag<Integer> actualBag = bagOf(Integer.class)
-                .with(firstInputCollection)
-                .with(secondInputCollection)
+                .with(firstInputIterable)
+                .with(secondInputIterable)
                 .build();
 
         // Then
         assertThat(actualBag, is(expectedbag));
+    }
+
+    @Test
+    public void shouldReturnABagContainingAllElementsInTheSuppliedIterable() throws Exception {
+        // Given
+        Bag<Integer> expectedBag = new HashBag<Integer>(asList(1, 2, 3, 4, 5, 6));
+        Iterable<Integer> firstInputIterable = asList(1, 2, 3);
+        Iterable<Integer> secondInputIterable = asList(4, 5, 6);
+
+        // When
+        Bag<Integer> actualBag = bagFrom(firstInputIterable).with(secondInputIterable);
+
+        // Then
+        assertThat(actualBag, is(expectedBag));
     }
 
     @Test
@@ -178,10 +206,10 @@ public class LiteralsTest {
     }
 
     @Test
-    public void shouldAllowCollectionsOfElementsToBeAddedToTheSetWithAnd() throws Exception {
+    public void shouldAllowIterablesOfElementsToBeAddedToTheSetWithAnd() throws Exception {
         // Given
         Set<String> expectedSet = new HashSet<String>(listWith("a", "b", "c"));
-        Collection<String> someOtherElements = listWith("b", "c", "c");
+        Iterable<String> someOtherElements = listWith("b", "c", "c");
 
         // When
         Set<String> actualSet = setWith("a", "b").and(someOtherElements);
@@ -206,17 +234,32 @@ public class LiteralsTest {
     }
 
     @Test
-    public void shouldAllowCollectionsOfElementsToBeAddedToASetWithWith() throws Exception {
+    public void shouldAllowIterablesOfElementsToBeAddedToASetWithWith() throws Exception {
         // Given
         Set<String> expectedSet = new HashSet<String>(listWith("a", "b", "c"));
-        Collection<String> firstInputCollection = listWith("a", "a");
-        Collection<String> secondInputCollection = listWith("b", "c", "c");
+        Iterable<String> firstInputIterable = listWith("a", "a");
+        Iterable<String> secondInputIterable = listWith("b", "c", "c");
 
         // When
         Set<String> actualSet = setOf(String.class)
-                .with(firstInputCollection)
-                .with(secondInputCollection)
+                .with(firstInputIterable)
+                .with(secondInputIterable)
                 .build();
+
+        // Then
+        assertThat(actualSet, is(expectedSet));
+    }
+
+
+    @Test
+    public void shouldReturnASetContainingAllElementsInTheSuppliedIterable() throws Exception {
+        // Given
+        Set<String> expectedSet = new HashSet<String>(listWith("a", "b", "c"));
+        Iterable<String> firstInputIterable = listWith("a", "a");
+        Iterable<String> secondInputIterable = listWith("b", "c", "c");
+
+        // When
+        Set<String> actualSet = setFrom(firstInputIterable).with(secondInputIterable);
 
         // Then
         assertThat(actualSet, is(expectedSet));

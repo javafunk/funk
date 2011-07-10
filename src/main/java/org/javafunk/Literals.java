@@ -13,8 +13,7 @@ import static java.util.Arrays.asList;
 public class Literals {
     private Literals() {}
 
-    // TODO: Toby (10/07/11): Test this
-    private static <E> ListBuilder<E> listFrom(Iterable<? extends E> elements) {
+    public static <E> ListBuilder<E> listFrom(Iterable<? extends E> elements) {
         return new ListBuilder<E>().with(elements);
     }
 
@@ -22,8 +21,7 @@ public class Literals {
         return new ListBuilder<E>();
     }
 
-    // TODO: Toby (10/07/11): Test this
-    private static <E> SetBuilder<E> setFrom(Iterable<? extends E> elements) {
+    public static <E> SetBuilder<E> setFrom(Iterable<? extends E> elements) {
         return new SetBuilder<E>().with(elements);
     }
 
@@ -31,7 +29,6 @@ public class Literals {
         return new SetBuilder<E>();
     }
 
-    // TODO: Toby (10/07/11): Test this
     public static <E> BagBuilder<E> bagFrom(Iterable<? extends E> elements) {
         return new BagBuilder<E>().with(elements);
     }
