@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import static org.javafunk.functional.Eager.sum;
+import static org.javafunk.Eager.sum;
 
 public abstract class AbstractMapBag<E> implements Bag<E> {
     private Map<E, Integer> contents;

@@ -1,6 +1,6 @@
 package org.javafunk;
 
-import org.javafunk.functional.functors.Factory;
+import org.javafunk.functors.Factory;
 
 import java.util.Map;
 

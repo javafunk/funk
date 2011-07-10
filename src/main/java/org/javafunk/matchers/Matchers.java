@@ -17,9 +17,9 @@ import static org.apache.commons.lang.StringUtils.join;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.javafunk.Iterators.toBag;
-import static org.javafunk.functional.Eager.all;
-import static org.javafunk.functional.Eager.any;
-import static org.javafunk.functional.Lazy.enumerate;
+import static org.javafunk.Eager.all;
+import static org.javafunk.Eager.any;
+import static org.javafunk.Lazy.enumerate;
 
 public class Matchers {
     private Matchers() {}

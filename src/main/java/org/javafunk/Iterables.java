@@ -2,11 +2,11 @@ package org.javafunk;
 
 import org.javafunk.collections.Bag;
 import org.javafunk.collections.HashBag;
-import org.javafunk.functional.functors.Reducer;
+import org.javafunk.functors.Reducer;
 
 import java.util.*;
 
-import static org.javafunk.functional.Eager.reduce;
+import static org.javafunk.Eager.reduce;
 
 public class Iterables {
     private Iterables() {}

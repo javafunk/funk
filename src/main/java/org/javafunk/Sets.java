@@ -1,7 +1,7 @@
 package org.javafunk;
 
-import org.javafunk.functional.functors.Predicate;
-import org.javafunk.functional.functors.Reducer;
+import org.javafunk.functors.Predicate;
+import org.javafunk.functors.Reducer;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,8 +10,8 @@ import java.util.Set;
 import static java.util.Arrays.asList;
 import static org.javafunk.Iterables.asSet;
 import static org.javafunk.Literals.listWith;
-import static org.javafunk.functional.Eager.*;
-import static org.javafunk.functional.Lazy.filter;
+import static org.javafunk.Eager.*;
+import static org.javafunk.Lazy.filter;
 
 public class Sets {
     private Sets() {}
