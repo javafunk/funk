@@ -100,9 +100,9 @@ public class SetsTest {
     public void shouldReturnTheDifferenceBetweenTheFirstSetAndAllOtherSets() throws Exception {
         // Given
         Set<String> firstSet = setWith("a", "b", "c", "q");
-        Set<String> secondSet = setWith("c", "d", "q", "e");
-        Set<String> thirdSet = setWith("a", "c", "f", "q");
-        Set<String> expectedDifferenceSet = setWith("d", "e", "f");
+        Set<String> secondSet = setWith("d", "q", "e");
+        Set<String> thirdSet = setWith("a", "f", "q");
+        Set<String> expectedDifferenceSet = setWith("b", "c");
 
         // When
         Set<String> actualDifferenceSet = Sets.difference(firstSet, secondSet, thirdSet);
@@ -115,15 +115,46 @@ public class SetsTest {
     public void shouldReturnTheDifferenceBetweenTheFirstSetInTheIterableAndAllOtherSets() throws Exception {
         // Given
         Set<String> firstSet = setWith("a", "b", "c", "q");
-        Set<String> secondSet = setWith("c", "d", "q", "e");
-        Set<String> thirdSet = setWith("a", "c", "f", "q");
-        Iterable<Set<String>> sets = setWith(firstSet, secondSet, thirdSet);
-        Set<String> expectedDifferenceSet = setWith("d", "e", "f");
+        Set<String> secondSet = setWith("d", "q", "e");
+        Set<String> thirdSet = setWith("a", "f", "q");
+        Iterable<Set<String>> sets = listWith(firstSet, secondSet, thirdSet);
+        Set<String> expectedDifferenceSet = setWith("b", "c");
 
         // When
         Set<String> actualDifferenceSet = Sets.difference(sets);
 
         // Then
         assertThat(actualDifferenceSet, is(expectedDifferenceSet));
+    }
+
+    @Test
+    public void shouldReturnTheSymmetricDifferenceOfAllSuppliedSets() throws Exception {
+        // Given
+        Set<String> firstSet = setWith("a", "b", "c", "q");
+        Set<String> secondSet = setWith("c", "d", "q", "e");
+        Set<String> thirdSet = setWith("a", "c", "d", "q");
+        Set<String> expectedSymmetricDifferenceSet = setWith("b", "c", "e", "q");
+
+        // When
+        Set<String> actualSymmetricDifferenceSet = Sets.symmetricDifference(firstSet, secondSet, thirdSet);
+
+        // Then
+        assertThat(actualSymmetricDifferenceSet, is(expectedSymmetricDifferenceSet));
+    }
+
+    @Test
+    public void shouldReturnTheSymmetricDifferenceOfAllSetsInTheSuppliedIterable() throws Exception {
+        // Given
+        Set<String> firstSet = setWith("a", "b", "c", "q");
+        Set<String> secondSet = setWith("c", "d", "q", "e");
+        Set<String> thirdSet = setWith("a", "c", "d", "q");
+        Iterable<Set<String>> sets = listWith(firstSet, secondSet, thirdSet);
+        Set<String> expectedSymmetricDifferenceSet = setWith("b", "c", "e", "q");
+
+        // When
+        Set<String> actualSymmetricDifferenceSet = Sets.symmetricDifference(sets);
+
+        // Then
+        assertThat(actualSymmetricDifferenceSet, is(expectedSymmetricDifferenceSet));
     }
 }

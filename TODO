@@ -1,33 +1,22 @@
 * Finish AbstractMapBag implementation
-* Add SetUtils
 * Add full JavaDoc documentation to public API
 * Add eager and lazy context methods (returns Iterable<ThreeTuple<Iterable<T>, T, Iterable<T>>>) (unwieldy)
 * Add eager and lazy zip methods across 3 and 4 iterables (not sure about this)
 * Add cartesian product methods
 * Add combination and permutation methods
 * Add even, odd iterators over an underlying iterator (?) (not worth it)
-* Add union, intersection and symmetric difference methods to BagUtils
-* Add union, intersection, difference and symmetric difference methods to SetUtils
+* Add union, intersection and symmetric difference methods to Bags.
+* Add union, intersection, difference and symmetric difference methods to Lists.
+* Make Sets union, intersection, difference and symmetric difference methods work with any iterables but use Set semantics.
+* Add concrete argument versions of all generic varargs functions
+* Push all Eager methods into Lazy and rename Lazy to something more appropriate. The existing Eager methods are
+  really just Collections methods
+* Add array methods to Literals
 * Add Generator<T>, Yieldable<T>, GeneratorUtils, toGenerator on IteratorUtils and IterableUtils, toIterable and toIterator on GeneratorUtils
 * Add whileTrue, untilTrue, doWhileTrue, doUntilTrue, ifTrue, unlessTrue with associated Condition and Block interfaces
-* Sort out naming of functors:
-    DoFunction          Block       Closure         => void actOn(T input)                      void execute(T input)
-    MapFunction         Mapping     Transformer     => T map(S input)                           T transform(S input)
-    FactoryFunction     Factory                     => T create()
-    PredicateFunction   Predicate                   => boolean matches(T input)                 boolean evaluate(T input)
-    ReduceFunction      Accumulator                 => T accumulate(T accumulator, S element)
-
-  Also have the potential for:
-    Condition                                       => boolean evaluate()
 
   Maybe
-    Mapper => map
-    Reducer => accumulate
-    Predicate => evaluate
-    Equator => equate
-    Factory => create
-
-    Procedure => execute
+    Procedure/Block => execute
     Condition => evaluate
 
     Functor
