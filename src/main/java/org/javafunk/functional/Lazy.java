@@ -13,6 +13,8 @@ import static org.javafunk.functional.Sequences.increasing;
 import static org.javafunk.functional.Sequences.integers;
 
 public class Lazy {
+    private Lazy() {}
+
     public static <T> Iterable<Iterable<T>> batch(final Iterable<T> iterable, final int batchSize) {
         if (batchSize <= 0) {
             throw new IllegalArgumentException("Batch size must be greater than zero.");

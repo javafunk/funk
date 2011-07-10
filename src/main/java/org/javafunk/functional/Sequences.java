@@ -3,6 +3,8 @@ package org.javafunk.functional;
 import org.javafunk.datastructures.IntegerRange;
 
 public class Sequences {
+    private Sequences() {}
+
     private enum Direction {
         ASCENDING(+1), DESCENDING(-1);
 

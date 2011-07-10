@@ -6,6 +6,8 @@ import org.javafunk.collections.HashBag;
 import java.util.*;
 
 public class Iterators {
+    private Iterators() {}
+
     public static <T> Iterable<T> toIterable(Iterator<T> iterator) {
         return new IteratorAsIterable<T>(iterator);
     }

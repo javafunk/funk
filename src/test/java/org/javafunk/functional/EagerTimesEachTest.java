@@ -9,28 +9,33 @@ import static org.javafunk.Literals.listWith;
 
 public class EagerTimesEachTest {
     @Test
+    @SuppressWarnings("unchecked")
     public void shouldExecuteSuppliedFunctionOnEachElement() {
         // Given
-        Iterable<Target> targets = listWith(mock(Target.class), mock(Target.class), mock(Target.class));
+        Iterable<Target<Object>> targets = listWith(
+                (Target<Object>) mock(Target.class),
+                (Target<Object>) mock(Target.class),
+                (Target<Object>) mock(Target.class));
 
         // When
-        Eager.each(targets, new Action<Target>() {
+        Eager.each(targets, new Action<Target<Object>>() {
             @Override
-            public void on(Target input) {
+            public void on(Target<Object> input) {
                 input.doSomething();
             }
         });
 
         // Then
-        for(Target target : targets) {
+        for(Target<Object> target : targets) {
             verify(target).doSomething();
         }
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void shouldExecuteTheDoFunctionPassingInEachNaturalNumberUpToTheSpecifiedNumber() {
         // Given
-        final Target<Integer> target = mock(Target.class);
+        final Target<Integer> target = (Target<Integer>) mock(Target.class);
 
         // When
         Eager.times(5, new Action<Integer>(){
@@ -46,9 +51,10 @@ public class EagerTimesEachTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void shouldNotExecuteTheDoFunctionAtAllIfANumberOfTimesToExecuteOfZeroIsSupplied() throws Exception {
         // Given
-        final Target<Integer> target = mock(Target.class);
+        final Target<Integer> target = (Target<Integer>) mock(Target.class);
 
         // When
         Eager.times(0, new Action<Integer>(){
@@ -61,9 +67,10 @@ public class EagerTimesEachTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    @SuppressWarnings("unchecked")
     public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedNumberOfTimesIsLessThanZero() throws Exception {
         // Given
-        final Target<Integer> target = mock(Target.class);
+        final Target<Integer> target = (Target<Integer>) mock(Target.class);
         Integer numberOfTimes = -3;
 
         // When

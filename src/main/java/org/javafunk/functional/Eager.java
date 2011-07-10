@@ -12,6 +12,8 @@ import static org.javafunk.Iterators.toIterable;
 import static org.javafunk.Literals.tuple;
 
 public class Eager {
+    private Eager() {}
+
     public static <S, T> T reduce(Iterable<? extends S> iterable, T initialValue, Reducer<? super S, T> function) {
         T accumulator = initialValue;
         for (S element : iterable) {

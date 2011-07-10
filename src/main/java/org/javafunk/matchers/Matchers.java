@@ -22,6 +22,8 @@ import static org.javafunk.functional.Eager.any;
 import static org.javafunk.functional.Lazy.enumerate;
 
 public class Matchers {
+    private Matchers() {}
+
     public static <T> Matcher<Collection<T>> hasOnlyItemsInAnyOrder(T... items) {
         return hasOnlyItemsInAnyOrder(asList(items));
     }

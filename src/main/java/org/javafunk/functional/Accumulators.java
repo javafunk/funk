@@ -3,6 +3,8 @@ package org.javafunk.functional;
 import org.javafunk.functional.functors.Reducer;
 
 public class Accumulators {
+    private Accumulators() {}
+
     public static Reducer<Integer, Integer> integerAdditionAccumulator() {
         return new Reducer<Integer, Integer>() {
             public Integer accumulate(Integer accumulator, Integer element) {

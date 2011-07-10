@@ -9,6 +9,8 @@ import java.util.*;
 import static org.javafunk.functional.Eager.reduce;
 
 public class Iterables {
+    private Iterables() {}
+
     public static <T> List<T> asList(Iterable<? extends T> iterable) {
         return reduce(iterable, new ArrayList<T>(), new Reducer<T, List<T>>() {
             public List<T> accumulate(List<T> accumulator, T element) {

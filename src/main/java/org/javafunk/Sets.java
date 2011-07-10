@@ -14,6 +14,8 @@ import static org.javafunk.functional.Eager.*;
 import static org.javafunk.functional.Lazy.filter;
 
 public class Sets {
+    private Sets() {}
+
     public static <T> Set<T> union(Iterable<? extends Set<? extends T>> sets) {
         Set<T> unionSet = new HashSet<T>();
         for (Set<? extends T> set : sets) {
