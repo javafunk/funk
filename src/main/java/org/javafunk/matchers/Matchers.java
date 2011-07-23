@@ -16,7 +16,7 @@ import static java.util.Arrays.asList;
 import static org.apache.commons.lang.StringUtils.join;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
-import static org.javafunk.Iterators.toBag;
+import static org.javafunk.Iterators.asBag;
 import static org.javafunk.Eager.all;
 import static org.javafunk.Eager.any;
 import static org.javafunk.Lazy.enumerate;
@@ -34,8 +34,8 @@ public class Matchers {
             protected boolean matchesSafely(final Collection<T> actualItems, Description description) {
                 boolean matches = true;
 
-                final Bag<T> expectedSet = toBag(expectedItems.iterator());
-                final Bag<T> actualSet = toBag(actualItems.iterator());
+                final Bag<T> expectedSet = asBag(expectedItems.iterator());
+                final Bag<T> actualSet = asBag(actualItems.iterator());
 
                 description.appendText("got ");
 

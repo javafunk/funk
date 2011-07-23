@@ -17,7 +17,7 @@ public class ArraysTest {
         List<String> expectedList = listWith("a", "b", "c");
 
         // When
-        List<String> actualList = Arrays.toList(array);
+        List<String> actualList = Arrays.asList(array);
 
         // Then
         assertThat(actualList, is(expectedList));
@@ -29,7 +29,7 @@ public class ArraysTest {
         String[] array = new String[]{"a", "b", "c"};
 
         // When
-        Iterable<String> iterable = Arrays.toIterable(array);
+        Iterable<String> iterable = Arrays.asIterable(array);
         Iterator<String> iterator = iterable.iterator();
 
         // Then

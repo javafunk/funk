@@ -24,7 +24,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     @Override
     public boolean isEmpty() {
         return contents.isEmpty();
-    }
+    }   
 
     @Override
     public synchronized boolean add(E e) {

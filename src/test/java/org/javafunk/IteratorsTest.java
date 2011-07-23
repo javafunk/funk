@@ -19,7 +19,7 @@ public class IteratorsTest {
         Iterator<String> iterator = listWith("a", "b", "c").iterator();
 
         // When
-        Iterable<String> iterable = toIterable(iterator);
+        Iterable<String> iterable = asIterable(iterator);
 
         // Then
         assertThat(iterable.iterator(), is(iterator));
@@ -41,7 +41,7 @@ public class IteratorsTest {
         Iterator<String> iterator = expectedList.iterator();
 
         // When
-        List<String> actualList = toList(iterator);
+        List<String> actualList = asList(iterator);
 
         // Then
         assertThat(actualList, is(expectedList));
@@ -54,7 +54,7 @@ public class IteratorsTest {
         Set<String> expectedSet = setWith("a", "c", "d");
 
         // When
-        Set<String> actualSet = toSet(iterator);
+        Set<String> actualSet = asSet(iterator);
 
         // Then
         assertThat(actualSet, is(expectedSet));
@@ -67,7 +67,7 @@ public class IteratorsTest {
         Bag<String> expectedBag = bagWith("a", "a", "c", "d");
 
         // When
-        Bag<String> actualBag = toBag(elements.iterator());
+        Bag<String> actualBag = asBag(elements.iterator());
 
         // Then
         assertThat(actualBag, is(expectedBag));

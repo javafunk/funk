@@ -108,7 +108,7 @@ public class HashBagTest {
         bag.addAll(listWith(1, 2, 2, 3));
 
         // When
-        List<Integer> actual = Iterators.toList(bag.iterator());
+        List<Integer> actual = Iterators.asList(bag.iterator());
 
         // Then
         assertThat(actual, Matchers.containsInAnyOrder(1, 2, 2, 3));

@@ -17,12 +17,20 @@ public class Literals {
         return new ListBuilder<E>().with(elements);
     }
 
+    public static <E> ListBuilder<E> listFrom(E[] elementArray) {
+        return new ListBuilder<E>().with(elementArray);
+    }
+
     public static <E> ListBuilder<E> listOf(Class<E> elementClass) {
         return new ListBuilder<E>();
     }
 
     public static <E> SetBuilder<E> setFrom(Iterable<? extends E> elements) {
         return new SetBuilder<E>().with(elements);
+    }
+
+    public static <E> SetBuilder<E> setFrom(E[] elementArray) {
+        return new SetBuilder<E>().with(elementArray);
     }
 
     public static <E> SetBuilder<E> setOf(Class<E> elementClass) {
@@ -33,16 +41,20 @@ public class Literals {
         return new BagBuilder<E>().with(elements);
     }
 
-    public static <T> BagBuilder<T> bagOf(Class<T> elementClass) {
-        return new BagBuilder<T>();
+    public static <E> BagBuilder<E> bagFrom(E[] elementArray) {
+        return new BagBuilder<E>().with(elementArray);
     }
 
-    public static <S, T> MapBuilder<S, T> mapWith(S key, T value) {
-        return new MapBuilder<S, T>().with(key, value);
+    public static <E> BagBuilder<E> bagOf(Class<E> elementClass) {
+        return new BagBuilder<E>();
     }
 
-    public static <S, T> MapBuilder<S, T> mapOf(Class<S> keyClass, Class<T> valueClass) {
-        return new MapBuilder<S, T>();
+    public static <K, V> MapBuilder<K, V> mapWith(K key, V value) {
+        return new MapBuilder<K, V>().with(key, value);
+    }
+
+    public static <K, V> MapBuilder<K, V> mapOf(Class<K> keyClass, Class<V> valueClass) {
+        return new MapBuilder<K, V>();
     }
 
     public static <S, T> TwoTuple<S, T> tuple(S first, T second) {
@@ -132,16 +144,16 @@ public class Literals {
         }
     }
     
-    public static class MapBuilder<S, T> extends LinkedHashMap<S, T> {
-        public MapBuilder<S, T> with(S key, T value) {
+    public static class MapBuilder<K, V> extends LinkedHashMap<K, V> {
+        public MapBuilder<K, V> with(K key, V value) {
             return and(key, value);
         }
-        public MapBuilder<S, T> and(S key, T value) {
+        public MapBuilder<K, V> and(K key, V value) {
             put(key, value);
             return this;
         }
 
-        public Map<S, T> build() {
+        public Map<K, V> build() {
             return this;
         }
     }

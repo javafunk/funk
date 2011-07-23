@@ -8,7 +8,7 @@ import java.util.*;
 
 import static org.javafunk.Iterables.materialize;
 import static org.javafunk.Iterables.asList;
-import static org.javafunk.Iterators.toIterable;
+import static org.javafunk.Iterators.asIterable;
 import static org.javafunk.Literals.tuple;
 
 public class Eager {
@@ -25,7 +25,7 @@ public class Eager {
     public static <T> T reduce(Iterable<T> iterable, Reducer<? super T, T> function) {
         final Iterator<T> iterator = iterable.iterator();
         final T firstElement = iterator.next();
-        final Iterable<T> restOfElements = toIterable(iterator);
+        final Iterable<T> restOfElements = asIterable(iterator);
         return reduce(restOfElements, firstElement, function);
     }
 
