@@ -17,7 +17,11 @@ public class Iterators {
     }
 
     public static <T> List<T> asList(Iterator<? extends T> iterator) {
-        return org.apache.commons.collections.IteratorUtils.toList(iterator);
+        List<T> list = new ArrayList<T>();
+        while (iterator.hasNext()) {
+            list.add(iterator.next());
+        }
+        return list;
     }
 
     public static <T> Set<T> asSet(Iterator<? extends T> iterator) {
