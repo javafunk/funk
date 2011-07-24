@@ -17,27 +17,27 @@ import static org.javafunk.funk.testclasses.Name.name;
 
 public class SetsTest {
     @Test
-    public void shouldReturnTheUnionOfTheSuppliedSets() throws Exception {
+    public void shouldReturnTheSetUnionOfTheSuppliedIterables() throws Exception {
         // Given
-        Set<String> firstSet = setWith("a", "b", "c");
-        Set<String> secondSet = setWith("c", "d", "e");
-        Set<String> thirdSet = setWith("a", "c", "f");
+        Iterable<String> firstIterable = setWith("a", "b", "c");
+        Iterable<String> secondIterable = listWith("c", "d", "c", "e");
+        Iterable<String> thirdIterable = multisetWith("a", "c", "f", "f");
         Set<String> expectedUnionSet = setWith("a", "b", "c", "d", "e", "f");
 
         // When
-        Set<String> actualUnionSet = Sets.union(firstSet, secondSet, thirdSet);
+        Set<String> actualUnionSet = Sets.union(firstIterable, secondIterable, thirdIterable);
 
         // Then
         assertThat(actualUnionSet, is(expectedUnionSet));
     }
 
     @Test
-    public void shouldReturnTheUnionOfAllSetsInTheSuppliedIterable() throws Exception {
+    public void shouldReturnTheSetUnionOfAllIterablesInTheSuppliedIterable() throws Exception {
         // Given
-        Set<String> firstSet = setWith("a", "b", "c");
-        Set<String> secondSet = setWith("c", "d", "e");
-        Set<String> thirdSet = setWith("a", "c", "f");
-        Iterable<Set<String>> sets = listWith(firstSet, secondSet, thirdSet);
+        Iterable<String> firstIterable = setWith("a", "b", "c");
+        Iterable<String> secondIterable = listWith("c", "d", "c", "e");
+        Iterable<String> thirdIterable = multisetWith("a", "c", "f", "f");
+        Iterable<Iterable<String>> sets = listWith(firstIterable, secondIterable, thirdIterable);
         Set<String> expectedUnionSet = setWith("a", "b", "c", "d", "e", "f");
 
         // When
@@ -48,14 +48,14 @@ public class SetsTest {
     }
 
     @Test
-    public void shouldAllowUnionOfSetsWithDifferentConcreteTypes() throws Exception {
+    public void shouldAllowSetUnionOfIterablesWithDifferentConcreteTypes() throws Exception {
         // Given
         Dog fido = dog(colour("black"), name("fido"));
         Dog spud = dog(colour("brown"), name("spud"));
         Cat snowy = cat(colour("white"), name("snowy"));
         Cat smudge = cat(colour("grey"), name("smudge"));
-        Set<Dog> dogs = setWith(fido, spud);
-        Set<Cat> cats = setWith(snowy, smudge);
+        Iterable<Dog> dogs = setWith(fido, spud);
+        Iterable<Cat> cats = listWith(snowy, smudge, snowy);
         Set<Animal> expectedMenagerie = setOf(Animal.class).with(fido, smudge, spud, snowy);
 
         // When

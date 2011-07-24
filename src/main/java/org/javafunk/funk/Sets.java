@@ -12,15 +12,16 @@ import static org.javafunk.funk.Eager.first;
 import static org.javafunk.funk.Eager.rest;
 import static org.javafunk.funk.Iterables.asSet;
 import static org.javafunk.funk.Lazy.filter;
+import static org.javafunk.funk.Literals.listFrom;
 import static org.javafunk.funk.Literals.listWith;
 
 public class Sets {
     private Sets() {}
 
-    public static <T> Set<T> union(Iterable<? extends Set<? extends T>> sets) {
+    public static <T> Set<T> union(Iterable<? extends Iterable<? extends T>> iterables) {
         Set<T> unionSet = new HashSet<T>();
-        for (Set<? extends T> set : sets) {
-            unionSet.addAll(set);
+        for (Iterable<? extends T> iterable : iterables) {
+            unionSet.addAll(listFrom(iterable));
         }
         return unionSet;
     }
@@ -59,40 +60,41 @@ public class Sets {
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> union(
-            Set<? extends T> s1, Set<? extends T> s2) {
-        return union(asList(s1, s2));
+            Iterable<? extends T> i1, Iterable<? extends T> i2) {
+        return union(asList(i1, i2));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> union(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3) {
-        return union(asList(s1, s2, s3));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3) {
+        return union(asList(i1, i2, i3));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> union(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3, Set<? extends T> s4) {
-        return union(asList(s1, s2, s3, s4));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4) {
+        return union(asList(i1, i2, i3, i4));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> union(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3, Set<? extends T> s4, Set<? extends T> s5) {
-        return union(asList(s1, s2, s3, s4, s5));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5) {
+        return union(asList(i1, i2, i3, i4, i5));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> union(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3, Set<? extends T> s4, Set<? extends T> s5,
-            Set<? extends T> s6) {
-        return union(asList(s1, s2, s3, s4, s5, s6));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6) {
+        return union(asList(i1, i2, i3, i4, i5, i6));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> union(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3, Set<? extends T> s4, Set<? extends T> s5,
-            Set<? extends T> s6, Set<? extends T>... s7on) {
-        return union(listWith(s1, s2, s3, s4, s5, s6).and(asList(s7on)));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
+        return union(listWith(i1, i2, i3, i4, i5, i6).and(asList(i7on)));
     }
 
     @SuppressWarnings("unchecked")
