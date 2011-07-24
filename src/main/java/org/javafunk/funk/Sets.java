@@ -1,6 +1,5 @@
 package org.javafunk.funk;
 
-import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import org.javafunk.funk.functors.Predicate;
 
@@ -26,27 +25,24 @@ public class Sets {
         return unionSet;
     }
 
-    public static <T> Set<T> intersection(Iterable<? extends Set<? extends T>> sets) {
-        Set<T> intersectionSet = new HashSet<T>(first(sets));
-        for (Set<? extends T> set : rest(sets)) {
-            intersectionSet.retainAll(set);
+    public static <T> Set<T> intersection(Iterable<? extends Iterable<? extends T>> iterables) {
+        Set<T> intersectionSet = new HashSet<T>(listFrom(first(iterables)));
+        for (Iterable<? extends T> iterable : rest(iterables)) {
+            intersectionSet.retainAll(listFrom(iterable));
         }
         return intersectionSet;
     }
 
-    public static <T> Set<T> difference(Iterable<? extends Set<? extends T>> sets) {
-        Set<T> differenceSet = new HashSet<T>(first(sets));
-        for (Set<? extends T> set : rest(sets)) {
-            differenceSet.removeAll(set);
+    public static <T> Set<T> difference(Iterable<? extends Iterable<? extends T>> iterables) {
+        Set<T> differenceSet = new HashSet<T>(listFrom(first(iterables)));
+        for (Iterable<? extends T> iterable : rest(iterables)) {
+            differenceSet.removeAll(listFrom(iterable));
         }
         return differenceSet;
     }
 
-    public static <T> Set<T> symmetricDifference(Iterable<? extends Set<? extends T>> sets) {
-        final Multiset<T> unionMultiset = HashMultiset.create();
-        for (Set<? extends T> set : sets) {
-            unionMultiset.addAll(set);
-        }
+    public static <T> Set<T> symmetricDifference(Iterable<? extends Iterable<? extends T>> iterables) {
+        final Multiset<T> unionMultiset = Multisets.union(iterables);
         return asSet(filter(unionMultiset, new Predicate<T>() {
             public boolean evaluate(T element) {
                 return isOdd(unionMultiset.count(element));
@@ -99,115 +95,118 @@ public class Sets {
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> intersection(
-            Set<? extends T> s1, Set<? extends T> s2) {
-        return intersection(asList(s1, s2));
+            Iterable<? extends T> i1, Iterable<? extends T> i2) {
+        return intersection(asList(i1, i2));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> intersection(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3) {
-        return intersection(asList(s1, s2, s3));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3) {
+        return intersection(asList(i1, i2, i3));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> intersection(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3, Set<? extends T> s4) {
-        return intersection(asList(s1, s2, s3, s4));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4) {
+        return intersection(asList(i1, i2, i3, i4));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> intersection(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3, Set<? extends T> s4, Set<? extends T> s5) {
-        return intersection(asList(s1, s2, s3, s4, s5));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5) {
+        return intersection(asList(i1, i2, i3, i4, i5));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> intersection(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3, Set<? extends T> s4, Set<? extends T> s5,
-            Set<? extends T> s6) {
-        return intersection(asList(s1, s2, s3, s4, s5, s6));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6) {
+        return intersection(asList(i1, i2, i3, i4, i5, i6));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> intersection(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3, Set<? extends T> s4, Set<? extends T> s5,
-            Set<? extends T> s6, Set<? extends T>... s7on) {
-        return intersection(listWith(s1, s2, s3, s4, s5, s6).and(asList(s7on)));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
+        return intersection(listWith(i1, i2, i3, i4, i5, i6).and(asList(i7on)));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> difference(
-            Set<? extends T> s1, Set<? extends T> s2) {
-        return difference(asList(s1, s2));
+            Iterable<? extends T> i1, Iterable<? extends T> i2) {
+        return difference(asList(i1, i2));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> difference(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3) {
-        return difference(asList(s1, s2, s3));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3) {
+        return difference(asList(i1, i2, i3));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> difference(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3, Set<? extends T> s4) {
-        return difference(asList(s1, s2, s3, s4));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4) {
+        return difference(asList(i1, i2, i3, i4));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> difference(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3, Set<? extends T> s4, Set<? extends T> s5) {
-        return difference(asList(s1, s2, s3, s4, s5));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4, 
+            Iterable<? extends T> i5) {
+        return difference(asList(i1, i2, i3, i4, i5));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> difference(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3, Set<? extends T> s4, Set<? extends T> s5,
-            Set<? extends T> s6) {
-        return difference(asList(s1, s2, s3, s4, s5, s6));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4, 
+            Iterable<? extends T> i5, Iterable<? extends T> i6) {
+        return difference(asList(i1, i2, i3, i4, i5, i6));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> difference(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3, Set<? extends T> s4, Set<? extends T> s5,
-            Set<? extends T> s6, Set<? extends T>... s7on) {
-        return difference(listWith(s1, s2, s3, s4, s5, s6).and(asList(s7on)));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4, 
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
+        return difference(listWith(i1, i2, i3, i4, i5, i6).and(asList(i7on)));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> symmetricDifference(
-            Set<? extends T> s1, Set<? extends T> s2) {
-        return symmetricDifference(asList(s1, s2));
+            Iterable<? extends T> i1, Iterable<? extends T> i2) {
+        return symmetricDifference(asList(i1, i2));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> symmetricDifference(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3) {
-        return symmetricDifference(asList(s1, s2, s3));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3) {
+        return symmetricDifference(asList(i1, i2, i3));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> symmetricDifference(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3, Set<? extends T> s4) {
-        return symmetricDifference(asList(s1, s2, s3, s4));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4) {
+        return symmetricDifference(asList(i1, i2, i3, i4));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> symmetricDifference(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3, Set<? extends T> s4, Set<? extends T> s5) {
-        return symmetricDifference(asList(s1, s2, s3, s4, s5));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5) {
+        return symmetricDifference(asList(i1, i2, i3, i4, i5));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> symmetricDifference(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3, Set<? extends T> s4, Set<? extends T> s5,
-            Set<? extends T> s6) {
-        return symmetricDifference(asList(s1, s2, s3, s4, s5, s6));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6) {
+        return symmetricDifference(asList(i1, i2, i3, i4, i5, i6));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> symmetricDifference(
-            Set<? extends T> s1, Set<? extends T> s2, Set<? extends T> s3, Set<? extends T> s4, Set<? extends T> s5,
-            Set<? extends T> s6, Set<? extends T>... s7on) {
-        return symmetricDifference(listWith(s1, s2, s3, s4, s5, s6).and(asList(s7on)));
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
+        return symmetricDifference(listWith(i1, i2, i3, i4, i5, i6).and(asList(i7on)));
     }
 }

@@ -66,89 +66,89 @@ public class SetsTest {
     }
 
     @Test
-    public void shouldReturnTheIntersectionOfTheSuppliedSets() throws Exception {
+    public void shouldReturnTheSetIntersectionOfTheSuppliedIterables() throws Exception {
         // Given
-        Set<String> firstSet = setWith("a", "b", "c", "q");
-        Set<String> secondSet = setWith("c", "d", "q", "e");
-        Set<String> thirdSet = setWith("a", "c", "f", "q");
+        Iterable<String> firstIterable = setWith("a", "b", "c", "q");
+        Iterable<String> secondIterable = listWith("c", "c", "d", "q", "e");
+        Iterable<String> thirdIterable = multisetWith("a", "c", "f", "f", "q");
         Set<String> expectedIntersectionSet = setWith("c", "q");
 
         // When
-        Set<String> actualIntersectionSet = Sets.intersection(firstSet, secondSet, thirdSet);
+        Set<String> actualIntersectionSet = Sets.intersection(firstIterable, secondIterable, thirdIterable);
 
         // Then
         assertThat(actualIntersectionSet, is(expectedIntersectionSet));
     }
 
     @Test
-    public void shouldReturnTheIntersectionOfAllSetsInTheSuppliedIterable() throws Exception {
+    public void shouldReturnTheSetIntersectionOfAllIterablesInTheSuppliedIterable() throws Exception {
         // Given
-        Set<String> firstSet = setWith("a", "b", "c", "q");
-        Set<String> secondSet = setWith("c", "d", "q", "e");
-        Set<String> thirdSet = setWith("a", "c", "f", "q");
-        Iterable<Set<String>> sets = setWith(firstSet, secondSet, thirdSet);
+        Iterable<String> firstIterable = setWith("a", "b", "c", "q");
+        Iterable<String> secondIterable = listWith("c", "c", "d", "q", "e");
+        Iterable<String> thirdIterable = multisetWith("a", "c", "f", "f", "q");
+        Iterable<Iterable<String>> iterables = listWith(firstIterable, secondIterable, thirdIterable);
         Set<String> expectedIntersectionSet = setWith("c", "q");
 
         // When
-        Set<String> actualIntersectionSet = Sets.intersection(sets);
+        Set<String> actualIntersectionSet = Sets.intersection(iterables);
 
         // Then
         assertThat(actualIntersectionSet, is(expectedIntersectionSet));
     }
 
     @Test
-    public void shouldReturnTheDifferenceBetweenTheFirstSetAndAllOtherSets() throws Exception {
+    public void shouldReturnTheSetDifferenceOfTheSuppliedIterables() throws Exception {
         // Given
-        Set<String> firstSet = setWith("a", "b", "c", "q");
-        Set<String> secondSet = setWith("d", "q", "e");
-        Set<String> thirdSet = setWith("a", "f", "q");
+        Iterable<String> firstIterable = setWith("a", "b", "c", "q");
+        Iterable<String> secondIterable = listWith("d", "d", "q", "e");
+        Iterable<String> thirdIterable = multisetWith("a", "f", "q", "q", "q");
         Set<String> expectedDifferenceSet = setWith("b", "c");
 
         // When
-        Set<String> actualDifferenceSet = Sets.difference(firstSet, secondSet, thirdSet);
+        Set<String> actualDifferenceSet = Sets.difference(firstIterable, secondIterable, thirdIterable);
 
         // Then
         assertThat(actualDifferenceSet, is(expectedDifferenceSet));
     }
 
     @Test
-    public void shouldReturnTheDifferenceBetweenTheFirstSetInTheIterableAndAllOtherSets() throws Exception {
+    public void shouldReturnTheSetDifferenceOfAllIterablesInTheSuppliedIterable() throws Exception {
         // Given
-        Set<String> firstSet = setWith("a", "b", "c", "q");
-        Set<String> secondSet = setWith("d", "q", "e");
-        Set<String> thirdSet = setWith("a", "f", "q");
-        Iterable<Set<String>> sets = listWith(firstSet, secondSet, thirdSet);
+        Iterable<String> firstIterable = setWith("a", "b", "c", "q");
+        Iterable<String> secondIterable = listWith("d", "d", "q", "e");
+        Iterable<String> thirdIterable = multisetWith("a", "f", "q", "q", "q");
+        Iterable<Iterable<String>> iterables = listWith(firstIterable, secondIterable, thirdIterable);
         Set<String> expectedDifferenceSet = setWith("b", "c");
 
         // When
-        Set<String> actualDifferenceSet = Sets.difference(sets);
+        Set<String> actualDifferenceSet = Sets.difference(iterables);
 
         // Then
         assertThat(actualDifferenceSet, is(expectedDifferenceSet));
     }
 
     @Test
-    public void shouldReturnTheSymmetricDifferenceOfAllSuppliedSets() throws Exception {
+    public void shouldReturnTheSetSymmetricDifferenceOfAllSuppliedIterables() throws Exception {
         // Given
-        Set<String> firstSet = setWith("a", "b", "c", "q");
-        Set<String> secondSet = setWith("c", "d", "q", "e");
-        Set<String> thirdSet = setWith("a", "c", "d", "q");
+        Iterable<String> firstIterable = setWith("a", "b", "c", "q");
+        Iterable<String> secondIterable = listWith("c", "d", "d", "q", "d", "e");
+        Iterable<String> thirdIterable = multisetWith("a", "c", "d", "q");
         Set<String> expectedSymmetricDifferenceSet = setWith("b", "c", "e", "q");
 
         // When
-        Set<String> actualSymmetricDifferenceSet = Sets.symmetricDifference(firstSet, secondSet, thirdSet);
+        Set<String> actualSymmetricDifferenceSet = Sets.symmetricDifference(firstIterable, secondIterable, thirdIterable);
 
         // Then
         assertThat(actualSymmetricDifferenceSet, is(expectedSymmetricDifferenceSet));
     }
 
     @Test
-    public void shouldReturnTheSymmetricDifferenceOfAllSetsInTheSuppliedIterable() throws Exception {
+    public void shouldReturnTheSetSymmetricDifferenceOfAllIterablesInTheSuppliedIterable() throws Exception {
         // Given
-        Set<String> firstSet = setWith("a", "b", "c", "q");
-        Set<String> secondSet = setWith("c", "d", "q", "e");
-        Set<String> thirdSet = setWith("a", "c", "d", "q");
-        Iterable<Set<String>> sets = listWith(firstSet, secondSet, thirdSet);
+        Iterable<String> firstIterable = setWith("a", "b", "c", "q");
+        Iterable<String> secondIterable = listWith("c", "d", "d", "q", "d", "e");
+        Iterable<String> thirdIterable = multisetWith("a", "c", "d", "q");
+        Iterable<Iterable<String>> sets = listWith(firstIterable, secondIterable, thirdIterable);
         Set<String> expectedSymmetricDifferenceSet = setWith("b", "c", "e", "q");
 
         // When
