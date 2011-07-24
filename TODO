@@ -1,11 +1,10 @@
-* Finish AbstractMapBag implementation
 * Add full JavaDoc documentation to public API
 * Add eager and lazy context methods (returns Iterable<ThreeTuple<Iterable<T>, T, Iterable<T>>>) (unwieldy)
 * Add eager and lazy zip methods across 3 and 4 iterables (not sure about this)
 * Add cartesian product methods
 * Add combination and permutation methods
 * Add even, odd iterators over an underlying iterator (?) (not worth it)
-* Add union, intersection and symmetric difference methods to Bags.
+* Add union, intersection and symmetric difference methods to Multisets.
 * Add union, intersection, difference and symmetric difference methods to Lists.
 * Make Sets union, intersection, difference and symmetric difference methods work with any iterables but use Set semantics.
 * Add concrete argument versions of all generic varargs functions

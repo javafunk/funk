@@ -1,17 +1,18 @@
 package org.javafunk.funk;
 
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multiset;
 import org.javafunk.funk.functors.Predicate;
-import org.javafunk.funk.functors.Reducer;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 import static java.util.Arrays.asList;
+import static org.javafunk.funk.Eager.first;
+import static org.javafunk.funk.Eager.rest;
 import static org.javafunk.funk.Iterables.asSet;
-import static org.javafunk.funk.Literals.listWith;
-import static org.javafunk.funk.Eager.*;
 import static org.javafunk.funk.Lazy.filter;
+import static org.javafunk.funk.Literals.listWith;
 
 public class Sets {
     private Sets() {}
@@ -40,22 +41,14 @@ public class Sets {
         return differenceSet;
     }
 
-    // TODO: Toby (10/07/11): replace this horrendous implementation with something that uses bags.
     public static <T> Set<T> symmetricDifference(Iterable<? extends Set<? extends T>> sets) {
-        Set<T> unionSet = union(sets);
-        final HashMap<T, Integer> occurrences = reduce(sets, new HashMap<T, Integer>(),
-                new Reducer<Set<? extends T>, HashMap<T, Integer>>() {
-                    public HashMap<T, Integer> accumulate(HashMap<T, Integer> accumulator, Set<? extends T> set) {
-                        for (T element : set) {
-                            Integer currentCount = accumulator.containsKey(element) ? accumulator.get(element) : 0;
-                            accumulator.put(element, currentCount + 1);
-                        }
-                        return accumulator;
-                    }
-                });
-        return asSet(filter(unionSet, new Predicate<T>() {
+        final Multiset<T> unionMultiset = HashMultiset.create();
+        for (Set<? extends T> set : sets) {
+            unionMultiset.addAll(set);
+        }
+        return asSet(filter(unionMultiset, new Predicate<T>() {
             public boolean evaluate(T element) {
-                return isOdd(occurrences.get(element));
+                return isOdd(unionMultiset.count(element));
             }
 
             private boolean isOdd(Integer value) {
