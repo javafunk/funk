@@ -6,8 +6,6 @@ import org.javafunk.funk.functors.*;
 
 import java.util.*;
 
-import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Iterables.asList;
 import static org.javafunk.funk.Iterators.asIterable;
 import static org.javafunk.funk.Literals.tuple;
 
@@ -127,8 +125,8 @@ public class Eager {
         return Iterables.materialize(Lazy.enumerate(iterable));
     }
 
-    public static <T> Collection<Boolean> equate(Iterable<T> first, Iterable<T> second, final org.javafunk.funk.functors.Equator<? super T> equator) {
-        return Iterables.materialize(Lazy.equate(first, second, equator));
+    public static <T> Collection<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equivalence<? super T> equivalence) {
+        return Iterables.materialize(Lazy.equate(first, second, equivalence));
     }
 
     public static <S, T> Collection<TwoTuple<T, S>> index(Iterable<S> iterable, final org.javafunk.funk.functors.Indexer<? super S, T> indexer) {

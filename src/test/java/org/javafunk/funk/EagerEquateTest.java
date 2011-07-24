@@ -1,8 +1,6 @@
 package org.javafunk.funk;
 
-import org.javafunk.funk.Eager;
-import org.javafunk.funk.Eager;
-import org.javafunk.funk.functors.Equator;
+import org.javafunk.funk.functors.Equivalence;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -20,8 +18,8 @@ public class EagerEquateTest {
         Collection<Boolean> expectedEqualityResult = listWith(true, false, true);
 
         // When
-        Collection<Boolean> actualEqualityResult = Eager.equate(first, second, new Equator<String>() {
-            public boolean equate(String first, String second) {
+        Collection<Boolean> actualEqualityResult = Eager.equate(first, second, new Equivalence<String>() {
+            public boolean equal(String first, String second) {
                 return first.compareToIgnoreCase(second) == 0;
             }
         });
@@ -38,8 +36,8 @@ public class EagerEquateTest {
         Collection<Boolean> expectedEqualityResult = listWith(true, false, true);
 
         // When
-        Collection<Boolean> actualEqualityResult = Eager.equate(first, second, new Equator<String>() {
-            public boolean equate(String first, String second) {
+        Collection<Boolean> actualEqualityResult = Eager.equate(first, second, new Equivalence<String>() {
+            public boolean equal(String first, String second) {
                 return first.compareToIgnoreCase(second) == 0;
             }
         });
@@ -56,8 +54,8 @@ public class EagerEquateTest {
         Collection<Boolean> expectedEqualityResult = listWith(true, false, true);
 
         // When
-        Collection<Boolean> actualEqualityResult = Eager.equate(first, second, new Equator<String>() {
-            public boolean equate(String first, String second) {
+        Collection<Boolean> actualEqualityResult = Eager.equate(first, second, new Equivalence<String>() {
+            public boolean equal(String first, String second) {
                 return first.compareToIgnoreCase(second) == 0;
             }
         });

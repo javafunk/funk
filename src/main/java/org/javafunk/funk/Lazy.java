@@ -2,7 +2,6 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.TwoTuple;
 import org.javafunk.funk.functors.*;
-import org.javafunk.funk.iterators.*;
 import org.javafunk.funk.predicates.NotPredicate;
 
 import java.util.Iterator;
@@ -112,10 +111,10 @@ public class Lazy {
         };
     }
 
-    public static <T> Iterable<Boolean> equate(Iterable<T> first, Iterable<T> second, final org.javafunk.funk.functors.Equator<? super T> equator) {
+    public static <T> Iterable<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equivalence<? super T> equivalence) {
         return map(zip(first, second), new org.javafunk.funk.functors.Mapper<TwoTuple<T, T>, Boolean>() {
             public Boolean map(TwoTuple<T, T> input) {
-                return equator.equate(input.first(), input.second());
+                return equivalence.equal(input.first(), input.second());
             }
         });
     }

@@ -120,7 +120,6 @@ public class Literals {
     }
 
     public static class MultisetBuilder<E> implements Multiset<E> {
-
         private HashMultiset<E> delegateMultiset;
 
         private MultisetBuilder() {

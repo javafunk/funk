@@ -1,8 +1,6 @@
 package org.javafunk.funk;
 
-import org.javafunk.funk.Lazy;
-import org.javafunk.funk.Lazy;
-import org.javafunk.funk.functors.Equator;
+import org.javafunk.funk.functors.Equivalence;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -19,8 +17,8 @@ public class LazyEquateTest {
         Iterable<String> second = listWith("DOG", "BAT", "GOLDFISH");
         
         // When
-        Iterable<Boolean> equateResultIterable = Lazy.equate(first, second, new Equator<String>() {
-            public boolean equate(String first, String second) {
+        Iterable<Boolean> equateResultIterable = Lazy.equate(first, second, new Equivalence<String>() {
+            public boolean equal(String first, String second) {
                 return first.compareToIgnoreCase(second) == 0;
             }
         });
@@ -43,8 +41,8 @@ public class LazyEquateTest {
         Iterable<String> second = listWith("DOG", "BAT", "GOLDFISH", "HORSE", "PIG");
 
         // When
-        Iterable<Boolean> equateResultIterable = Lazy.equate(first, second, new Equator<String>() {
-            public boolean equate(String first, String second) {
+        Iterable<Boolean> equateResultIterable = Lazy.equate(first, second, new Equivalence<String>() {
+            public boolean equal(String first, String second) {
                 return first.compareToIgnoreCase(second) == 0;
             }
         });
@@ -67,8 +65,8 @@ public class LazyEquateTest {
         Iterable<String> second = listWith("DOG", "BAT", "GOLDFISH");
 
         // When
-        Iterable<Boolean> equateResultIterable = Lazy.equate(first, second, new Equator<String>() {
-            public boolean equate(String first, String second) {
+        Iterable<Boolean> equateResultIterable = Lazy.equate(first, second, new Equivalence<String>() {
+            public boolean equal(String first, String second) {
                 return first.compareToIgnoreCase(second) == 0;
             }
         });
@@ -91,8 +89,8 @@ public class LazyEquateTest {
         Iterable<String> second = listWith("DOG", "BAT", "GOLDFISH");
 
         // When
-        Iterable<Boolean> iterable = Lazy.equate(first, second, new Equator<String>() {
-            public boolean equate(String first, String second) {
+        Iterable<Boolean> iterable = Lazy.equate(first, second, new Equivalence<String>() {
+            public boolean equal(String first, String second) {
                 return first.compareToIgnoreCase(second) == 0;
             }
         });

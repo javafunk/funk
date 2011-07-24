@@ -18,15 +18,11 @@
 * Add an Either<S, T> class
 * Rename *Tuple classes to Single, Double, Triple, Quadruple, Quintuple, Sextuple, Septuple, Octuple, Nonuple
 * Add interfaces for first, second, third etc.
-* Rename Equator to Equivalence
 * Add equivalentTo matcher and By.* equivalences
 * Add Matcher versions of all methods taking Predicate arguments
 * Add eventually matcher, resultOfPolling,  Sampler<T>, and CompletableSample<T>
 * Add SamplingIterator
 * Add RepeatedlyIterator
-* Use google Guava instead of commons collections
-* Switch to using maven for the build
-
 
   Maybe
     Procedure/Block => execute
