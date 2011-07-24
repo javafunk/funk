@@ -46,7 +46,7 @@ public class MultisetsTest {
         assertThat(actualUnionMultiset, is(expectedUnionMultiset));
     }
 
-@Test
+    @Test
     public void shouldAllowMultisetUnionOfIterablesWithDifferentConcreteTypes() throws Exception {
         // Given
         Dog fido = dog(colour("black"), name("fido"));
@@ -62,6 +62,38 @@ public class MultisetsTest {
 
         // Then
         assertThat(actualMenagerie, is(expectedMenagerie));
+    }
+
+    @Test
+    public void shouldReturnTheMultisetIntersectionOfTheSuppliedIterables() throws Exception {
+        // Given
+        Iterable<String> firstIterable = multisetWith("a", "b", "c", "c", "q", "q");
+        Iterable<String> secondIterable = listWith("c", "c", "c", "d", "q", "e");
+        Iterable<String> thirdIterable = multisetWith("a", "c", "c", "f", "f", "q", "q");
+        Multiset<String> expectedIntersectionMultiset = multisetWith("c", "c", "q");
+
+        // When
+        Multiset<String> actualIntersectionMultiset = Multisets.intersection(
+                firstIterable, secondIterable, thirdIterable);
+
+        // Then
+        assertThat(actualIntersectionMultiset, is(expectedIntersectionMultiset));
+    }
+
+    @Test
+    public void shouldReturnTheMultisetIntersectionOfAllIterablesInTheSuppliedIterable() throws Exception {
+        // Given
+        Iterable<String> firstIterable = multisetWith("a", "b", "c", "c", "q", "q");
+        Iterable<String> secondIterable = listWith("c", "c", "c", "d", "q", "e");
+        Iterable<String> thirdIterable = multisetWith("a", "c", "f", "c", "f", "q", "q");
+        Iterable<Iterable<String>> iterables = listWith(firstIterable, secondIterable, thirdIterable);
+        Multiset<String> expectedIntersectionMultiset = multisetWith("c", "q", "c");
+
+        // When
+        Multiset<String> actualIntersectionMultiset = Multisets.intersection(iterables);
+
+        // Then
+        assertThat(actualIntersectionMultiset, is(expectedIntersectionMultiset));
     }
     
     @Test

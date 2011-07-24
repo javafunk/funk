@@ -4,14 +4,14 @@
 * Add cartesian product methods
 * Add combination and permutation methods
 * Add even, odd iterators over an underlying iterator (?) (not worth it)
-* Add union, intersection and symmetric difference methods to Multisets.
+* Add symmetric difference methods to Multisets.
 * Add union, intersection, difference and symmetric difference methods to Lists.
-* Make Sets union, intersection, difference and symmetric difference methods work with any iterables but use Set semantics.
 * Add concrete argument versions of all generic varargs functions
 * Push all Eager methods into Lazy and rename Lazy to something more appropriate. The existing Eager methods are
   really just Collections methods
 * Fix generics signatures (and potentially add tests) in Eager and Lazy
-* Add Generator<T>, Yieldable<T>, GeneratorUtils, toGenerator on IteratorUtils and IterableUtils, toIterable and toIterator on GeneratorUtils
+* Add Generator<T>, Yieldable<T>, GeneratorUtils, toGenerator on IteratorUtils and IterableUtils, toIterable and
+  toIterator on GeneratorUtils
 * Add whileTrue, untilTrue, doWhileTrue, doUntilTrue, ifTrue, unlessTrue with associated Condition and Block interfaces
 * Add an Option<T> class
 * Add an Either<S, T> class
@@ -22,6 +22,7 @@
 * Add eventually matcher, resultOfPolling,  Sampler<T>, and CompletableSample<T>
 * Add SamplingIterator
 * Add RepeatedlyIterator
+* Add a validIterableContaining matcher and use it in all tests.
 
   Maybe
     Procedure/Block => execute
