@@ -1,7 +1,7 @@
 package org.javafunk.funk;
 
-import org.javafunk.funk.collections.Bag;
-import org.javafunk.funk.collections.HashBag;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multiset;
 import org.javafunk.funk.datastructures.FourTuple;
 import org.javafunk.funk.datastructures.ThreeTuple;
 import org.javafunk.funk.datastructures.TwoTuple;
@@ -37,16 +37,16 @@ public class Literals {
         return new SetBuilder<E>();
     }
 
-    public static <E> BagBuilder<E> bagFrom(Iterable<? extends E> elements) {
-        return new BagBuilder<E>().with(elements);
+    public static <E> MultisetBuilder<E> multisetFrom(Iterable<? extends E> elements) {
+        return new MultisetBuilder<E>().with(elements);
     }
 
-    public static <E> BagBuilder<E> bagFrom(E[] elementArray) {
-        return new BagBuilder<E>().with(elementArray);
+    public static <E> MultisetBuilder<E> multisetFrom(E[] elementArray) {
+        return new MultisetBuilder<E>().with(elementArray);
     }
 
-    public static <E> BagBuilder<E> bagOf(Class<E> elementClass) {
-        return new BagBuilder<E>();
+    public static <E> MultisetBuilder<E> multisetOf(Class<E> elementClass) {
+        return new MultisetBuilder<E>();
     }
 
     public static <K, V> MapBuilder<K, V> mapWith(K key, V value) {
@@ -119,28 +119,150 @@ public class Literals {
         }
     }
 
-    public static class BagBuilder<E> extends HashBag<E> {
-        public BagBuilder<E> with(E... elements) {
+    public static class MultisetBuilder<E> implements Multiset<E> {
+
+        private HashMultiset<E> delegateMultiset;
+
+        private MultisetBuilder() {
+            delegateMultiset = HashMultiset.create();
+        }
+
+        public MultisetBuilder<E> with(E... elements) {
             return and(asList(elements));
         }
 
-        public BagBuilder<E> with(Iterable<? extends E> elements) {
+        public MultisetBuilder<E> with(Iterable<? extends E> elements) {
             return and(elements);
         }
 
-        public BagBuilder<E> and(E... elements) {
+        public MultisetBuilder<E> and(E... elements) {
             return and(asList(elements));
         }
 
-        public BagBuilder<E> and(Iterable<? extends E> elements) {
+        public MultisetBuilder<E> and(Iterable<? extends E> elements) {
             for (E element : elements) {
                 add(element);
             }
             return this;
         }
 
-        public Bag<E> build() {
-            return this;
+        public Multiset<E> build() {
+            return HashMultiset.create(this);
+        }
+
+        @Override
+        public int count(Object element) {
+            return delegateMultiset.count(element);
+        }
+
+        @Override
+        public int add(E element, int occurrences) {
+            return delegateMultiset.add(element, occurrences);
+        }
+
+        @Override
+        public int remove(Object element, int occurrences) {
+            return delegateMultiset.remove(element, occurrences);
+        }
+
+        @Override
+        public int setCount(E element, int count) {
+            return delegateMultiset.setCount(element, count);
+        }
+
+        @Override
+        public boolean setCount(E element, int oldCount, int newCount) {
+            return delegateMultiset.setCount(element, oldCount, newCount);
+        }
+
+        @Override
+        public Set<E> elementSet() {
+            return delegateMultiset.elementSet();
+        }
+
+        @Override
+        public Set<Entry<E>> entrySet() {
+            return delegateMultiset.entrySet();
+        }
+
+        @Override
+        public Iterator<E> iterator() {
+            return delegateMultiset.iterator();
+        }
+
+        @Override
+        public Object[] toArray() {
+            return delegateMultiset.toArray();
+        }
+
+        @Override
+        public <T> T[] toArray(T[] ts) {
+            return delegateMultiset.toArray(ts);
+        }
+
+        @Override
+        public int size() {
+            return delegateMultiset.size();
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return delegateMultiset.isEmpty();
+        }
+
+        @Override
+        public boolean contains(Object element) {
+            return delegateMultiset.contains(element);
+        }
+
+        @Override
+        public boolean containsAll(Collection<?> elements) {
+            return delegateMultiset.containsAll(elements);
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends E> es) {
+            return delegateMultiset.addAll(es);
+        }
+
+        @Override
+        public boolean add(E element) {
+            return delegateMultiset.add(element);
+        }
+
+        @Override
+        public boolean remove(Object element) {
+            return delegateMultiset.remove(element);
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> c) {
+            return delegateMultiset.removeAll(c);
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> c) {
+            return delegateMultiset.retainAll(c);
+        }
+
+        @Override
+        public void clear() {
+            delegateMultiset.clear();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return delegateMultiset.equals(o);
+        }
+
+        @Override
+        public int hashCode() {
+            return delegateMultiset.hashCode();
+        }
+
+        @Override
+        public String toString() {
+            return delegateMultiset.toString();
         }
     }
     
@@ -269,57 +391,57 @@ public class Literals {
     }
 
     @SuppressWarnings("unchecked")
-    public static <E> BagBuilder<E> bagWith(E e) {
-        return bagFrom(asList(e));
+    public static <E> MultisetBuilder<E> multisetWith(E e) {
+        return multisetFrom(asList(e));
     }
 
     @SuppressWarnings("unchecked")
-    public static <E> BagBuilder<E> bagWith(E e1, E e2) {
-        return bagFrom(asList(e1, e2));
+    public static <E> MultisetBuilder<E> multisetWith(E e1, E e2) {
+        return multisetFrom(asList(e1, e2));
     }
 
     @SuppressWarnings("unchecked")
-    public static <E> BagBuilder<E> bagWith(E e1, E e2, E e3) {
-        return bagFrom(asList(e1, e2, e3));
+    public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3) {
+        return multisetFrom(asList(e1, e2, e3));
     }
 
     @SuppressWarnings("unchecked")
-    public static <E> BagBuilder<E> bagWith(E e1, E e2, E e3, E e4) {
-        return bagFrom(asList(e1, e2, e3, e4));
+    public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4) {
+        return multisetFrom(asList(e1, e2, e3, e4));
     }
 
     @SuppressWarnings("unchecked")
-    public static <E> BagBuilder<E> bagWith(E e1, E e2, E e3, E e4, E e5) {
-        return bagFrom(asList(e1, e2, e3, e4, e5));
+    public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4, E e5) {
+        return multisetFrom(asList(e1, e2, e3, e4, e5));
     }
 
     @SuppressWarnings("unchecked")
-    public static <E> BagBuilder<E> bagWith(E e1, E e2, E e3, E e4, E e5, E e6) {
-        return bagFrom(asList(e1, e2, e3, e4, e5, e6));
+    public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return multisetFrom(asList(e1, e2, e3, e4, e5, e6));
     }
 
     @SuppressWarnings("unchecked")
-    public static <E> BagBuilder<E> bagWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
-        return bagFrom(asList(e1, e2, e3, e4, e5, e6, e7));
+    public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7));
     }
 
     @SuppressWarnings("unchecked")
-    public static <E> BagBuilder<E> bagWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
-        return bagFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8));
+    public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8));
     }
 
     @SuppressWarnings("unchecked")
-    public static <E> BagBuilder<E> bagWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
-        return bagFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9));
     }
 
     @SuppressWarnings("unchecked")
-    public static <E> BagBuilder<E> bagWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
-        return bagFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
     }
 
     @SuppressWarnings("unchecked")
-    public static <E> BagBuilder<E> bagWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
-        return bagFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on));
+    public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on));
     }
 }

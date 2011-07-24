@@ -1,7 +1,7 @@
 package org.javafunk.funk;
 
-import org.javafunk.funk.collections.Bag;
-import org.javafunk.funk.collections.HashBag;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multiset;
 
 import java.util.*;
 
@@ -28,8 +28,8 @@ public class Iterators {
         return new LinkedHashSet<T>(asList(iterator));
     }
 
-    public static <T> Bag<T> asBag(Iterator<? extends T> iterator) {
-        return new HashBag<T>(asList(iterator));
+    public static <T> Multiset<T> asMultiset(Iterator<? extends T> iterator) {
+        return HashMultiset.create(asList(iterator));
     }
 
     public static class IteratorAsIterable<T> implements Iterable<T> {

@@ -1,7 +1,7 @@
 package org.javafunk.funk;
 
-import org.javafunk.funk.collections.Bag;
-import org.javafunk.funk.collections.HashBag;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multiset;
 import org.javafunk.funk.functors.Reducer;
 
 import java.util.*;
@@ -29,9 +29,9 @@ public class Iterables {
         });
     }
 
-    public static <T> Bag<T> asBag(Iterable<? extends T> iterable) {
-        return reduce(iterable, new HashBag<T>(), new Reducer<T, HashBag<T>>() {
-            public HashBag<T> accumulate(HashBag<T> accumulator, T element) {
+    public static <T> Multiset<T> asMultiset(Iterable<? extends T> iterable) {
+        return reduce(iterable, HashMultiset.<T>create(), new Reducer<T, HashMultiset<T>>() {
+            public HashMultiset<T> accumulate(HashMultiset<T> accumulator, T element) {
                 accumulator.add(element);
                 return accumulator;
             }

@@ -1,7 +1,7 @@
 package org.javafunk.funk;
 
-import org.javafunk.funk.collections.Bag;
-import org.javafunk.funk.collections.HashBag;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multiset;
 import org.javafunk.funk.datastructures.FourTuple;
 import org.javafunk.funk.datastructures.ThreeTuple;
 import org.javafunk.funk.datastructures.TwoTuple;
@@ -12,8 +12,6 @@ import java.util.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
-import static org.javafunk.funk.Literals.bagFrom;
-import static org.javafunk.funk.Literals.setFrom;
 import static org.junit.Assert.assertThat;
 
 public class LiteralsTest {
@@ -140,121 +138,121 @@ public class LiteralsTest {
     }
 
     @Test
-    public void shouldReturnABagContainingTheSuppliedElements() {
+    public void shouldReturnAMultisetContainingTheSuppliedElements() {
         // Given
-        Bag<String> expectedBag = new HashBag<String>(listWith("a", "a", "b", "c"));
+        Multiset<String> expectedMultiset = HashMultiset.create(listWith("a", "a", "b", "c"));
 
         // When
-        Bag<String> actualBag = bagWith("a", "a", "b", "c");
+        Multiset<String> actualMultiset = multisetWith("a", "a", "b", "c");
 
         // Then
-        assertThat(actualBag, is(expectedBag));
+        assertThat(actualMultiset, is(expectedMultiset));
     }
 
     @Test
-    public void shouldAllowMoreElementsToBeAddedToTheBagWithAnd() {
+    public void shouldAllowMoreElementsToBeAddedToTheMultisetWithAnd() {
         // Given
-        Bag<String> expectedBag = new HashBag<String>(listWith("a", "a", "b", "c", "c", "d"));
+        Multiset<String> expectedMultiset = HashMultiset.create(listWith("a", "a", "b", "c", "c", "d"));
 
         // When
-        Bag<String> actualBag = bagWith("a", "a", "b").and("c", "c", "d");
+        Multiset<String> actualMultiset = multisetWith("a", "a", "b").and("c", "c", "d");
 
         // Then
-        assertThat(actualBag, is(expectedBag));
+        assertThat(actualMultiset, is(expectedMultiset));
     }
 
     @Test
-    public void shouldAllowArraysOfElementsToBeAddedToTheBagWithAnd() throws Exception {
+    public void shouldAllowArraysOfElementsToBeAddedToTheMultisetWithAnd() throws Exception {
         // Given
-        Bag<Integer> expectedBag = new HashBag<Integer>(asList(1, 1, 2, 3, 3, 4));
+        Multiset<Integer> expectedMultiset = HashMultiset.create(asList(1, 1, 2, 3, 3, 4));
         Integer[] elementArray = new Integer[]{1, 3, 4};
 
         // When
-        Bag<Integer> actualBag = bagWith(1, 2, 3).and(elementArray);
+        Multiset<Integer> actualMultiset = multisetWith(1, 2, 3).and(elementArray);
 
         // Then
-        assertThat(actualBag, is(expectedBag));
+        assertThat(actualMultiset, is(expectedMultiset));
     }
 
     @Test
-    public void shouldAllowIterablesOfElementsToBeAddedToTheBagWithAnd() throws Exception {
+    public void shouldAllowIterablesOfElementsToBeAddedToTheMultisetWithAnd() throws Exception {
         // Given
-        Bag<String> expectedBag = new HashBag<String>(listWith("a", "a", "b", "c"));
+        Multiset<String> expectedMultiset = HashMultiset.create(listWith("a", "a", "b", "c"));
         Iterable<String> someOtherElements = listWith("b", "c");
 
         // When
-        Bag<String> actualBag = bagWith("a", "a").and(someOtherElements);
+        Multiset<String> actualMultiset = multisetWith("a", "a").and(someOtherElements);
 
         // Then
-        assertThat(actualBag, is(expectedBag));
+        assertThat(actualMultiset, is(expectedMultiset));
     }
 
     @Test
-    public void shouldAllowElementsToBeAddedToABagWithWith() throws Exception {
+    public void shouldAllowElementsToBeAddedToAMultisetWithWith() throws Exception {
         // Given
-        Bag<Integer> expectedBag = new HashBag<Integer>(asList(1, 1, 2, 2, 3, 3));
+        Multiset<Integer> expectedMultiset = HashMultiset.create(asList(1, 1, 2, 2, 3, 3));
 
         // When
-        Bag<Integer> actualBag = bagOf(Integer.class)
+        Multiset<Integer> actualMultiset = multisetOf(Integer.class)
                 .with(1, 1, 2)
                 .with(2, 3, 3)
                 .build();
 
         // Then
-        assertThat(actualBag, is(expectedBag));
+        assertThat(actualMultiset, is(expectedMultiset));
     }
 
     @Test
-    public void shouldAllowArraysOfElementsToBeAddedToABagWithWith() throws Exception {
-        Bag<Integer> expectedbag = new HashBag<Integer>(asList(1, 1, 2, 4, 5, 6));
+    public void shouldAllowArraysOfElementsToBeAddedToAMultisetWithWith() throws Exception {
+        Multiset<Integer> expectedMultiset = HashMultiset.create(asList(1, 1, 2, 4, 5, 6));
         Integer[] elementArray = new Integer[]{1, 4, 5};
 
         // When
-        Bag<Integer> actualBag = bagWith(1, 2, 6).with(elementArray);
+        Multiset<Integer> actualMultiset = multisetWith(1, 2, 6).with(elementArray);
 
         // Then
-        assertThat(actualBag, is(expectedbag));
+        assertThat(actualMultiset, is(expectedMultiset));
     }
 
     @Test
-    public void shouldAllowIterablesOfElementsToBeAddedToABagWithWith() throws Exception {
+    public void shouldAllowIterablesOfElementsToBeAddedToAMultisetWithWith() throws Exception {
         // Given
-        Bag<Integer> expectedbag = new HashBag<Integer>(asList(1, 1, 2, 4, 5, 6));
+        Multiset<Integer> expectedMultiset = HashMultiset.create(asList(1, 1, 2, 4, 5, 6));
         Iterable<Integer> firstInputIterable = asList(1, 2, 4);
         Iterable<Integer> secondInputIterable = asList(1, 5, 6);
 
         // When
-        Bag<Integer> actualBag = bagOf(Integer.class)
+        Multiset<Integer> actualMultiset = multisetOf(Integer.class)
                 .with(firstInputIterable)
                 .with(secondInputIterable)
                 .build();
 
         // Then
-        assertThat(actualBag, is(expectedbag));
+        assertThat(actualMultiset, is(expectedMultiset));
     }
 
     @Test
-    public void shouldReturnABagContainingAllElementsInTheSuppliedIterable() throws Exception {
+    public void shouldReturnAMultisetContainingAllElementsInTheSuppliedIterable() throws Exception {
         // Given
-        Bag<Integer> expectedBag = new HashBag<Integer>(asList(1, 1, 2, 4, 5, 6));
+        Multiset<Integer> expectedMultiset = HashMultiset.create(asList(1, 1, 2, 4, 5, 6));
         Iterable<Integer> firstInputIterable = asList(1, 2, 4);
         Iterable<Integer> secondInputIterable = asList(1, 5, 6);
 
         // When
-        Bag<Integer> actualBag = bagFrom(firstInputIterable).with(secondInputIterable);
+        Multiset<Integer> actualMultiset = multisetFrom(firstInputIterable).with(secondInputIterable);
 
         // Then
-        assertThat(actualBag, is(expectedBag));
+        assertThat(actualMultiset, is(expectedMultiset));
     }
 
     @Test
-    public void shouldReturnABagContainingAllElementsInTheSuppliedArray() throws Exception {
+    public void shouldReturnAMultisetContainingAllElementsInTheSuppliedArray() throws Exception {
         // Given
-        Bag<Integer> expectedBag = new HashBag<Integer>(asList(1, 1, 2));
+        Multiset<Integer> expectedBag = HashMultiset.create(asList(1, 1, 2));
         Integer[] elementArray = new Integer[]{1, 1, 2};
 
         // When
-        Bag<Integer> actualBag = bagFrom(elementArray);
+        Multiset<Integer> actualBag = multisetFrom(elementArray);
 
         // Then
         assertThat(actualBag, is(expectedBag));

@@ -1,12 +1,13 @@
 package org.javafunk.funk.matchers;
 
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multiset;
 import org.apache.commons.beanutils.BeanMap;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.javafunk.funk.Bags;
-import org.javafunk.funk.collections.Bag;
+import org.javafunk.funk.Multisets;
 import org.javafunk.funk.datastructures.TwoTuple;
 
 import java.util.*;
@@ -16,7 +17,6 @@ import static java.util.Arrays.asList;
 import static org.apache.commons.lang.StringUtils.join;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
-import static org.javafunk.funk.Iterators.asBag;
 import static org.javafunk.funk.Eager.all;
 import static org.javafunk.funk.Eager.any;
 import static org.javafunk.funk.Lazy.enumerate;
@@ -34,8 +34,8 @@ public class Matchers {
             protected boolean matchesSafely(final Collection<T> actualItems, Description description) {
                 boolean matches = true;
 
-                final Bag<T> expectedSet = asBag(expectedItems.iterator());
-                final Bag<T> actualSet = asBag(actualItems.iterator());
+                final Multiset<T> expectedSet = HashMultiset.create(expectedItems);
+                final Multiset<T> actualSet = HashMultiset.create(actualItems);
 
                 description.appendText("got ");
 
@@ -67,8 +67,8 @@ public class Matchers {
                 return matches;
             }
 
-            private boolean checkForDifferences(Bag<T> expectedSet, Bag<T> actualSet, Description description, String message) {
-                Bag<T> differences = Bags.difference(expectedSet, actualSet);
+            private boolean checkForDifferences(Multiset<T> expectedSet, Multiset<T> actualSet, Description description, String message) {
+                Multiset<T> differences = Multisets.difference(expectedSet, actualSet);
                 if (differences.size() > 0) {
                     description.appendText("\n")
                             .appendText(message)

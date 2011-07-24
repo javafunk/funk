@@ -1,6 +1,6 @@
 package org.javafunk.funk;
 
-import org.javafunk.funk.collections.Bag;
+import com.google.common.collect.Multiset;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -54,16 +54,16 @@ public class IterablesTest {
     }
 
     @Test
-    public void shouldConvertTheSuppliedIterableToABag() throws Exception {
+    public void shouldConvertTheSuppliedIterableToAMultiset() throws Exception {
         // Given
         Iterable<Integer> iterable = basicIterableOver(1, 2, 2, 3, 3, 3);
-        Bag<Integer> expectedBag = bagWith(1, 2, 2, 3, 3, 3);
+        Multiset<Integer> expectedMultiset = multisetWith(1, 2, 2, 3, 3, 3);
 
         // When
-        Bag<Integer> actualBag = asBag(iterable);
+        Multiset<Integer> actualMultiset = asMultiset(iterable);
 
         // Then
-        assertThat(actualBag, is(expectedBag));
+        assertThat(actualMultiset, is(expectedMultiset));
     }
 
     private static <T> Iterable<T> basicIterableOver(final T... elements) {

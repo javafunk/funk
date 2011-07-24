@@ -1,6 +1,6 @@
 package org.javafunk.funk;
 
-import org.javafunk.funk.collections.Bag;
+import com.google.common.collect.Multiset;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -61,15 +61,15 @@ public class IteratorsTest {
     }
 
     @Test
-    public void shouldConvertTheSuppliedIteratorToABag() {
+    public void shouldConvertTheSuppliedIteratorToAMultiset() {
         // Given
         List<String> elements = listWith("a", "a", "c", "d");
-        Bag<String> expectedBag = bagWith("a", "a", "c", "d");
+        Multiset<String> expectedMultiset = multisetWith("a", "a", "c", "d");
 
         // When
-        Bag<String> actualBag = asBag(elements.iterator());
+        Multiset<String> actualMultiset = asMultiset(elements.iterator());
 
         // Then
-        assertThat(actualBag, is(expectedBag));
+        assertThat(actualMultiset, is(expectedMultiset));
     }
 }
