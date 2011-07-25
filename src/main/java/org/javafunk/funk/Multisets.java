@@ -2,17 +2,17 @@ package org.javafunk.funk;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
-import org.javafunk.funk.functors.Mapper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static java.util.Arrays.asList;
-import static org.javafunk.funk.Eager.*;
-import static org.javafunk.funk.Literals.*;
+import static org.javafunk.funk.Eager.first;
+import static org.javafunk.funk.Eager.rest;
+import static org.javafunk.funk.Literals.listFrom;
+import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.multisetFrom;
 
 public class Multisets {
-    private Multisets() {}
+    private Multisets() {
+    }
 
     public static <T> Multiset<T> union(Iterable<? extends Iterable<? extends T>> iterables) {
         Multiset<T> unionMultiset = HashMultiset.create();
@@ -23,21 +23,11 @@ public class Multisets {
     }
 
     public static <T> Multiset<T> intersection(Iterable<? extends Iterable<? extends T>> iterables) {
-        List<Multiset<? extends T>> multisets = new ArrayList<Multiset<? extends T>>();
-        for (Iterable<? extends T> iterable : iterables) {
-            multisets.add(multisetFrom(iterable));
+        Multiset<T> intersectionMultiset = HashMultiset.create(first(iterables));
+        for (Iterable<? extends T> iterable : rest(iterables)) {
+            intersectionMultiset = com.google.common.collect.Multisets.intersection(
+                    intersectionMultiset, multisetFrom(iterable));
         }
-
-        Multiset<T> intersectionMultiset = HashMultiset.create();
-        for (final T item : multisetFrom(first(iterables)).elementSet()) {
-            int count = Eager.min(map(multisets, new Mapper<Multiset<? extends T>, Integer>() {
-                @Override public Integer map(Multiset<? extends T> multiset) {
-                    return multiset.count(item);
-                }
-            }));
-            intersectionMultiset.add(item, count);
-        }
-
         return intersectionMultiset;
     }
 

@@ -4,7 +4,7 @@
 * Add cartesian product methods
 * Add combination and permutation methods
 * Add even, odd iterators over an underlying iterator (?) (not worth it)
-* Add symmetric difference methods to Multisets.
+* Add symmetric difference method to Multisets.
 * Add union, intersection, difference and symmetric difference methods to Lists.
 * Add concrete argument versions of all generic varargs functions
 * Push all Eager methods into Lazy and rename Lazy to something more appropriate. The existing Eager methods are
