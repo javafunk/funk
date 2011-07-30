@@ -13,6 +13,10 @@ import static java.util.Arrays.asList;
 public class Literals {
     private Literals() {}
 
+    public static <E> ListBuilder<E> list() {
+        return new ListBuilder<E>();
+    }
+
     public static <E> ListBuilder<E> listFrom(Iterable<? extends E> elements) {
         return new ListBuilder<E>().with(elements);
     }
@@ -23,6 +27,10 @@ public class Literals {
 
     public static <E> ListBuilder<E> listOf(Class<E> elementClass) {
         return new ListBuilder<E>();
+    }
+
+    public static <E> SetBuilder<E> set() {
+        return new SetBuilder<E>();
     }
 
     public static <E> SetBuilder<E> setFrom(Iterable<? extends E> elements) {
@@ -37,6 +45,10 @@ public class Literals {
         return new SetBuilder<E>();
     }
 
+    public static <E> MultisetBuilder<E> multiset() {
+        return new MultisetBuilder<E>();
+    }
+
     public static <E> MultisetBuilder<E> multisetFrom(Iterable<? extends E> elements) {
         return new MultisetBuilder<E>().with(elements);
     }
@@ -47,6 +59,10 @@ public class Literals {
 
     public static <E> MultisetBuilder<E> multisetOf(Class<E> elementClass) {
         return new MultisetBuilder<E>();
+    }
+
+    public static <K, V> MapBuilder<K, V> map() {
+        return new MapBuilder<K, V>();
     }
 
     public static <K, V> MapBuilder<K, V> mapWith(K key, V value) {

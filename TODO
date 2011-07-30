@@ -1,6 +1,7 @@
 * Add full JavaDoc documentation to public API
 * Add eager and lazy context methods (returns Iterable<ThreeTuple<Iterable<T>, T, Iterable<T>>>) (unwieldy)
 * Add eager and lazy zip methods across 3 and 4 iterables (not sure about this)
+* Add count methods
 * Add cartesian product methods
 * Add combination and permutation methods
 * Add even, odd iterators over an underlying iterator (?) (not worth it)
@@ -19,9 +20,10 @@
 * Add interfaces for first, second, third etc.
 * Add equivalentTo matcher and By.* equivalences
 * Add Matcher versions of all methods taking Predicate arguments
-* Add eventually matcher, resultOfPolling,  Sampler<T>, and CompletableSample<T>
+* Add eventually matcher, resultOfPolling,  Sampler<T>, and CompletableSampler<T>
 * Add SamplingIterator
 * Add RepeatedlyIterator
+* Consider Completable, Describable interfaces
 * Add a validIterableContaining matcher and use it in all tests.
 
   Maybe

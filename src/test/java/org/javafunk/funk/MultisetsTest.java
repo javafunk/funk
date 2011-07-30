@@ -16,13 +16,65 @@ import static org.javafunk.funk.testclasses.Name.name;
 
 public class MultisetsTest {
     @Test
-    public void shouldReturnTheMultisetUnionOfAllIterablesInTheSuppliedIterable() throws Exception {
+    public void shouldReturnTheMultisetConcatenationOfAllIterablesInTheSuppliedIterable() throws Exception {
         // Given
         Iterable<String> firstIterable = listWith("a", "b", "a", "c");
         Iterable<String> secondIterable = setWith("c", "d", "e");
         Iterable<String> thirdIterable = multisetWith("a", "a", "c", "b");
         Iterable<Iterable<String>> iterables = listWith(firstIterable, secondIterable, thirdIterable);
-        Multiset<String> expectedUnionMultiset = multisetWith("a", "a", "a", "a", "b", "b", "c", "c", "c", "d", "e");
+        Multiset<String> expectedConcatenatedMultiset = multisetWith(
+                "a", "a", "a", "a", "b", "b", "c", "c", "c", "d", "e");
+
+        // When
+        Multiset<String> actualConcatenatedMultiset = Multisets.concatenate(iterables);
+
+        // Then
+        assertThat(actualConcatenatedMultiset, is(expectedConcatenatedMultiset));
+    }
+
+    @Test
+    public void shouldReturnTheMultisetConcatenationOfTheSuppliedIterables() throws Exception {
+        // Given
+        Iterable<String> firstIterable = listWith("a", "b", "a", "c");
+        Iterable<String> secondIterable = setWith("c", "d", "e");
+        Iterable<String> thirdIterable = multisetWith("a", "a", "c", "b");
+        Multiset<String> expectedConcatenationMultiset = multisetWith(
+                "a", "a", "a", "a", "b", "b", "c", "c", "c", "d", "e");
+
+        // When
+        Multiset<String> actualConcatenationMultiset = Multisets.concatenate(
+                firstIterable, secondIterable, thirdIterable);
+
+        // Then
+        assertThat(actualConcatenationMultiset, is(expectedConcatenationMultiset));
+    }
+
+    @Test
+    public void shouldAllowMultisetConcatenationOfIterablesWithDifferentConcreteTypes() throws Exception {
+        // Given
+        Dog fido = dog(colour("black"), name("fido"));
+        Dog spud = dog(colour("brown"), name("spud"));
+        Cat snowy = cat(colour("white"), name("snowy"));
+        Cat smudge = cat(colour("grey"), name("smudge"));
+        Iterable<Dog> dogs = multisetWith(fido, spud, fido);
+        Iterable<Cat> cats = listWith(snowy, snowy, smudge);
+        Multiset<Animal> expectedMenagerie = multisetOf(Animal.class).with(fido, fido, smudge, snowy, spud, snowy);
+
+        // When
+        Multiset<Animal> actualMenagerie = Multisets.concatenate(dogs, cats);
+
+        // Then
+        assertThat(actualMenagerie, is(expectedMenagerie));
+    }
+
+    @Test
+    public void shouldReturnTheMultisetUnionOfAllIterablesInTheSuppliedIterable() throws Exception {
+        // Given
+        Iterable<String> firstIterable = listWith("a", "b", "a", "a", "c");
+        Iterable<String> secondIterable = setWith("c", "d", "e");
+        Iterable<String> thirdIterable = multisetWith("a", "a", "c", "c", "b");
+        Iterable<Iterable<String>> iterables = listWith(firstIterable, secondIterable, thirdIterable);
+        Multiset<String> expectedUnionMultiset = multisetWith("a", "a", "a", "b", "c", "c", "d", "e");
 
         // When
         Multiset<String> actualUnionMultiset = Multisets.union(iterables);
@@ -34,10 +86,10 @@ public class MultisetsTest {
     @Test
     public void shouldReturnTheMultisetUnionOfTheSuppliedIterables() throws Exception {
         // Given
-        Iterable<String> firstIterable = listWith("a", "b", "a", "c");
+        Iterable<String> firstIterable = listWith("a", "b", "a", "a", "c");
         Iterable<String> secondIterable = setWith("c", "d", "e");
-        Iterable<String> thirdIterable = multisetWith("a", "a", "c", "b");
-        Multiset<String> expectedUnionMultiset = multisetWith("a", "a", "a", "a", "b", "b", "c", "c", "c", "d", "e");
+        Iterable<String> thirdIterable = multisetWith("a", "a", "c", "c", "b");
+        Multiset<String> expectedUnionMultiset = multisetWith("a", "a", "a", "b", "c", "c", "d", "e");
 
         // When
         Multiset<String> actualUnionMultiset = Multisets.union(firstIterable, secondIterable, thirdIterable);
@@ -51,14 +103,17 @@ public class MultisetsTest {
         // Given
         Dog fido = dog(colour("black"), name("fido"));
         Dog spud = dog(colour("brown"), name("spud"));
+        Dog rex = dog(colour("white"), name("rex"));
         Cat snowy = cat(colour("white"), name("snowy"));
         Cat smudge = cat(colour("grey"), name("smudge"));
-        Iterable<Dog> dogs = multisetWith(fido, spud, fido);
+        Iterable<Dog> firstDogs = multisetWith(fido, spud, fido);
+        Iterable<Dog> secondDogs = multisetWith(rex, spud, spud);
         Iterable<Cat> cats = listWith(snowy, snowy, smudge);
-        Multiset<Animal> expectedMenagerie = multisetOf(Animal.class).with(fido, fido, smudge, snowy, spud, snowy);
+        Multiset<Animal> expectedMenagerie = multisetOf(Animal.class)
+                .with(fido, spud, fido, smudge, snowy, spud, snowy, rex);
 
         // When
-        Multiset<Animal> actualMenagerie = Multisets.union(dogs, cats);
+        Multiset<Animal> actualMenagerie = Multisets.union(firstDogs, secondDogs, cats);
 
         // Then
         assertThat(actualMenagerie, is(expectedMenagerie));
