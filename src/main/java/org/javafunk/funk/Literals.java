@@ -17,6 +17,10 @@ public class Literals {
         return new ListBuilder<E>();
     }
 
+    public static <E> ListBuilder<E> listOf(Class<E> elementClass) {
+        return new ListBuilder<E>();
+    }
+
     public static <E> ListBuilder<E> listFrom(Iterable<? extends E> elements) {
         return new ListBuilder<E>().with(elements);
     }
@@ -25,11 +29,11 @@ public class Literals {
         return new ListBuilder<E>().with(elementArray);
     }
 
-    public static <E> ListBuilder<E> listOf(Class<E> elementClass) {
-        return new ListBuilder<E>();
+    public static <E> SetBuilder<E> set() {
+        return new SetBuilder<E>();
     }
 
-    public static <E> SetBuilder<E> set() {
+    public static <E> SetBuilder<E> setOf(Class<E> elementClass) {
         return new SetBuilder<E>();
     }
 
@@ -41,11 +45,11 @@ public class Literals {
         return new SetBuilder<E>().with(elementArray);
     }
 
-    public static <E> SetBuilder<E> setOf(Class<E> elementClass) {
-        return new SetBuilder<E>();
+    public static <E> MultisetBuilder<E> multiset() {
+        return new MultisetBuilder<E>();
     }
 
-    public static <E> MultisetBuilder<E> multiset() {
+    public static <E> MultisetBuilder<E> multisetOf(Class<E> elementClass) {
         return new MultisetBuilder<E>();
     }
 
@@ -57,20 +61,16 @@ public class Literals {
         return new MultisetBuilder<E>().with(elementArray);
     }
 
-    public static <E> MultisetBuilder<E> multisetOf(Class<E> elementClass) {
-        return new MultisetBuilder<E>();
+    public static <K, V> MapBuilder<K, V> map() {
+        return new MapBuilder<K, V>();
     }
 
-    public static <K, V> MapBuilder<K, V> map() {
+    public static <K, V> MapBuilder<K, V> mapOf(Class<K> keyClass, Class<V> valueClass) {
         return new MapBuilder<K, V>();
     }
 
     public static <K, V> MapBuilder<K, V> mapWith(K key, V value) {
         return new MapBuilder<K, V>().with(key, value);
-    }
-
-    public static <K, V> MapBuilder<K, V> mapOf(Class<K> keyClass, Class<V> valueClass) {
-        return new MapBuilder<K, V>();
     }
 
     public static <S, T> TwoTuple<S, T> tuple(S first, T second) {

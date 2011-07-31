@@ -1,10 +1,16 @@
+/*
+ * Copyright (C) 2011 Funk committers.
+ * All rights reserved.
+ *
+ * The software in this package is published under the terms of the BSD
+ * style license a copy of which has been included with this distribution in
+ * the LICENSE.txt file.
+ */
 package org.javafunk.funk;
 
-import org.javafunk.funk.Eager;
-import org.javafunk.funk.Eager;
-import org.junit.Test;
 import org.javafunk.funk.datastructures.TwoTuple;
 import org.javafunk.funk.functors.Predicate;
+import org.junit.Test;
 
 import java.util.Collection;
 

@@ -1,12 +1,19 @@
+/*
+ * Copyright (C) 2011 Funk committers.
+ * All rights reserved.
+ *
+ * The software in this package is published under the terms of the BSD
+ * style license a copy of which has been included with this distribution in
+ * the LICENSE.txt file.
+ */
 package org.javafunk.funk;
 
-import org.javafunk.funk.Eager;
 import org.javafunk.funk.functors.Action;
 import org.junit.Test;
 
+import static org.javafunk.funk.Literals.listWith;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
-import static org.javafunk.funk.Literals.listWith;
 
 public class EagerTimesEachTest {
     @Test

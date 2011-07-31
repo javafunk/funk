@@ -1,18 +1,24 @@
+/*
+ * Copyright (C) 2011 Funk committers.
+ * All rights reserved.
+ *
+ * The software in this package is published under the terms of the BSD
+ * style license a copy of which has been included with this distribution in
+ * the LICENSE.txt file.
+ */
 package org.javafunk.funk;
 
-import org.javafunk.funk.Eager;
-import org.javafunk.funk.Eager;
 import org.javafunk.funk.functors.Mapper;
-import org.junit.Test;
 import org.javafunk.funk.functors.Reducer;
+import org.junit.Test;
 
 import java.util.Collection;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.javafunk.funk.Literals.listWith;
 import static org.javafunk.funk.Accumulators.longAdditionAccumulator;
+import static org.javafunk.funk.Literals.listWith;
 
 public class EagerMapReduceTest {
     @Test
