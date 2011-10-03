@@ -1,5 +1,6 @@
 .idea/workspace.xml
 .idea/tasks.xml
+.idea/vcs.xml
 target/
 
 syntax: glob
