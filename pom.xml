@@ -6,14 +6,47 @@
     <groupId>org.javafunk.funk</groupId>
     <artifactId>funk</artifactId>
     <packaging>jar</packaging>
-    <version>0.5-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
 
     <name>Funk</name>
+    <description>Functional utilities for Java</description>
     <url>http://www.javafunk.org</url>
+
+    <licenses>
+        <license>
+            <name>BSD License</name>
+            <url>http://www.opensource.org/licenses/bsd-license.php</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git://github.com/javafunk/funk</connection>
+        <developerConnection>scm:git:git@github.com:javafunk/funk.git</developerConnection>
+        <url>http://github.com/javafunk/funk</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>simon</id>
+            <name>Simon</name>
+            <email>simon@brunningonline.net</email>
+        </developer>
+        <developer>
+            <id>toby</id>
+            <name>Toby</name>
+            <email>tobyclemson@gmail.com</email>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
 
     <build>
         <plugins>
@@ -28,6 +61,36 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.4</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <dependencies>
         <!-- build dependencies -->
