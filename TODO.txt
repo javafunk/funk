@@ -26,6 +26,7 @@
 * Consider Completable, Describable interfaces
 * Add a validIterableContaining matcher and use it in all tests.
 * Add a DirectoryIterator which iterates over File objects
+* Split matchers out into their own project
 
   Maybe
     Procedure/Block => execute
