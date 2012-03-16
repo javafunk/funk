@@ -28,6 +28,7 @@
 * Add a DirectoryIterator which iterates over File objects
 * Split matchers out into their own project
 * Sets.difference fails if passed an empty iterable
+* Make Literals return immutable collections
 
   Maybe
     Procedure/Block => execute
