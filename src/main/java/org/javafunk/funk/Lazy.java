@@ -194,12 +194,7 @@ public class Lazy {
     }
 
     public static <T> Iterable<T> rest(final Iterable<T> iterable) {
-        return new Iterable<T>() {
-            @Override
-            public Iterator<T> iterator() {
-                return new RestIterator<T>(iterable);
-            }
-        };
+        return slice(iterable, 1, null, 1);
     }
 
     private static class EachIterator<T> implements Iterator<T> {
