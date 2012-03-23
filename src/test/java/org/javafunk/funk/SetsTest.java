@@ -13,6 +13,7 @@ import org.javafunk.funk.testclasses.Cat;
 import org.javafunk.funk.testclasses.Dog;
 import org.junit.Test;
 
+import java.util.Collections;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -114,19 +115,20 @@ public class SetsTest {
         Set<String> difference = Sets.difference(singleIterable);
 
         // Then
-        assertThat(difference, is(Literals.<String>set().build()));
+        assertThat(difference, is(firstIterable));
     }
 
     @Test
     public void shouldReturnAnEmptySetForTheSetDifferenceOfNoSets() throws Exception {
         //Given
-        SetBuilder<Iterable<String>> emptySet = Literals.set();
+        Iterable<Iterable<String>> emptySet = Iterables.empty();
+        Iterable<String> expectedDifferenceSet = Collections.emptySet();
 
         //When
         Set<String> difference = Sets.difference(emptySet);
 
         // Then
-        assertThat(difference, is(Literals.<String>set().build()));
+        assertThat(difference, is(expectedDifferenceSet));
     }
 
     @Test

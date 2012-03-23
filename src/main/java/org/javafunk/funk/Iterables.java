@@ -49,4 +49,8 @@ public class Iterables {
     public static <T> Collection<T> materialize(Iterable<? extends T> iterable) {
         return asList(iterable);
     }
+
+    public static <T> Iterable<T> empty() {
+        return new ArrayList<T>();
+    }
 }
