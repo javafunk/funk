@@ -12,6 +12,7 @@ import com.google.common.collect.Multiset;
 import org.javafunk.funk.functors.Predicate;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static java.util.Arrays.asList;
@@ -42,11 +43,14 @@ public class Sets {
     }
 
     public static <T> Set<T> difference(Iterable<? extends Iterable<? extends T>> iterables) {
-        Set<T> differenceSet = new HashSet<T>(listFrom(first(iterables)));
-        for (Iterable<? extends T> iterable : rest(iterables)) {
-            differenceSet.removeAll(listFrom(iterable));
+        List<Iterable<? extends T>> arguments = listFrom(iterables);
+        if(arguments.isEmpty()){
+            return new HashSet<T>();
+        }else{
+            Set<T> differenceSet = asSet(first(arguments));
+            differenceSet.removeAll(union(rest(arguments)));
+            return differenceSet;
         }
-        return differenceSet;
     }
 
     public static <T> Set<T> symmetricDifference(Iterable<? extends Iterable<? extends T>> iterables) {
