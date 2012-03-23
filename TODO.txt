@@ -27,7 +27,6 @@
 * Add a validIterableContaining matcher and use it in all tests.
 * Add a DirectoryIterator which iterates over File objects
 * Split matchers out into their own project (?)
-* Sets.difference fails if passed an empty iterable
 * Make Literals return immutable collections
 * Add LambdaJ extension that allows LambdaJ style syntax when passing simple anonymous inner classes
 * Add Enumerable.java extension that allows the use of lambdas and closures instead of passing anonymous inner classes

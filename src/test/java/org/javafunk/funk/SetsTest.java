@@ -105,6 +105,18 @@ public class SetsTest {
     }
 
     @Test
+    public void shouldReturnAnEmptySetForTheSetDifferenceOfNoSets() throws Exception {
+        //Given
+        SetBuilder<Iterable<String>> emptySet = Literals.set();
+
+        //When
+        Set<String> difference = Sets.difference(emptySet);
+
+        // Then
+        assertThat(difference, is(Literals.<String>set().build()));
+    }
+
+    @Test
     public void shouldReturnTheSetDifferenceOfTheSuppliedIterables() throws Exception {
         // Given
         Iterable<String> firstIterable = setWith("a", "b", "c", "q");
