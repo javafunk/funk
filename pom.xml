@@ -33,6 +33,11 @@
             <name>Toby</name>
             <email>tobyclemson@gmail.com</email>
         </developer>
+        <developer>
+            <id>andrew</id>
+            <name>Andrew</name>
+            <email>akiellor@gmail.com</email>
+        </developer>
     </developers>
 
     <properties>

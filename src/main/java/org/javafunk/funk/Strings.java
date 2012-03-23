@@ -8,6 +8,8 @@
  */
 package org.javafunk.funk;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.Collection;
 
 import static java.util.Arrays.asList;
@@ -16,7 +18,7 @@ public class Strings {
     private Strings() {}
 
     public static <T> String join(Collection<? extends T> collection, String separator) {
-        return org.apache.commons.lang.StringUtils.join(collection, separator);
+        return StringUtils.join(collection, separator);
     }
 
     public static <T> String join(Collection<? extends T> collection) {

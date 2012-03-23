@@ -10,10 +10,12 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.IntegerRange;
 import org.javafunk.funk.datastructures.TwoTuple;
-import org.javafunk.funk.functors.Equivalence;
+import org.javafunk.funk.functors.*;
 
 import java.util.*;
 
+import static java.util.Collections.emptyList;
+import static org.javafunk.funk.Accumulators.*;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Iterators.asIterable;
 import static org.javafunk.funk.Literals.tuple;
@@ -21,7 +23,7 @@ import static org.javafunk.funk.Literals.tuple;
 public class Eager {
     private Eager() {}
 
-    public static <S, T> T reduce(Iterable<? extends S> iterable, T initialValue, org.javafunk.funk.functors.Reducer<? super S, T> function) {
+    public static <S, T> T reduce(Iterable<? extends S> iterable, T initialValue, Reducer<? super S, T> function) {
         T accumulator = initialValue;
         for (S element : iterable) {
             accumulator = function.accumulate(accumulator, element);
@@ -29,7 +31,7 @@ public class Eager {
         return accumulator;
     }
 
-    public static <T> T reduce(Iterable<T> iterable, org.javafunk.funk.functors.Reducer<? super T, T> function) {
+    public static <T> T reduce(Iterable<T> iterable, Reducer<? super T, T> function) {
         final Iterator<T> iterator = iterable.iterator();
         final T firstElement = iterator.next();
         final Iterable<T> restOfElements = asIterable(iterator);
@@ -37,38 +39,38 @@ public class Eager {
     }
 
     public static Integer sum(Iterable<Integer> iterable) {
-        return reduce(iterable, Accumulators.integerAdditionAccumulator());
+        return reduce(iterable, integerAdditionAccumulator());
     }
 
     public static Long sum(Iterable<Long> iterable) {
-        return reduce(iterable, Accumulators.longAdditionAccumulator());
+        return reduce(iterable, longAdditionAccumulator());
     }
 
     public static Double sum(Iterable<Double> iterable) {
-        return reduce(iterable, Accumulators.doubleAdditionAccumulator());
+        return reduce(iterable, doubleAdditionAccumulator());
     }
 
     public static Float sum(Iterable<Float> iterable) {
-        return reduce(iterable, Accumulators.floatAdditionAccumulator());
+        return reduce(iterable, floatAdditionAccumulator());
     }
 
     public static Integer product(Iterable<Integer> iterable) {
-        return reduce(iterable, Accumulators.integerMultiplicationAccumulator());
+        return reduce(iterable, integerMultiplicationAccumulator());
     }
 
     public static Long product(Iterable<Long> iterable) {
-        return reduce(iterable, Accumulators.longMultiplicationAccumulator());
+        return reduce(iterable, longMultiplicationAccumulator());
     }
 
     public static Float product(Iterable<Float> iterable) {
-        return reduce(iterable, Accumulators.floatMultiplicationAccumulator());
+        return reduce(iterable, floatMultiplicationAccumulator());
     }
 
     public static Double product(Iterable<Double> iterable) {
-        return reduce(iterable, Accumulators.doubleMultiplicationAccumulator());
+        return reduce(iterable, doubleMultiplicationAccumulator());
     }
 
-    public static <T> Boolean any(Iterable<T> iterable, org.javafunk.funk.functors.Predicate<? super T> predicate) {
+    public static <T> Boolean any(Iterable<T> iterable, Predicate<? super T> predicate) {
         for (T item : iterable) {
             if (predicate.evaluate(item)) {
                 return true;
@@ -77,7 +79,7 @@ public class Eager {
         return false;
     }
 
-    public static <T> Boolean all(Iterable<T> iterable, org.javafunk.funk.functors.Predicate<? super T> predicate) {
+    public static <T> Boolean all(Iterable<T> iterable, Predicate<? super T> predicate) {
         for (T item : iterable) {
             if (!predicate.evaluate(item)) {
                 return false;
@@ -86,12 +88,12 @@ public class Eager {
         return true;
     }
 
-    public static <T> Boolean none(Iterable<T> items, org.javafunk.funk.functors.Predicate<? super T> predicate) {
+    public static <T> Boolean none(Iterable<T> items, Predicate<? super T> predicate) {
         return !any(items, predicate);
     }
 
     public static <T> T max(Iterable<T> iterable, final Comparator<? super T> comparator) {
-        return reduce(iterable, new org.javafunk.funk.functors.Reducer<T, T>() {
+        return reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMax, T element) {
                 return (element != null && comparator.compare(element, currentMax) > 0) ? element : currentMax;
             }
@@ -99,7 +101,7 @@ public class Eager {
     }
 
     public static <T extends Comparable<T>> T max(Iterable<T> iterable) {
-        return reduce(iterable, new org.javafunk.funk.functors.Reducer<T, T>() {
+        return reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMax, T element) {
                 return (element != null && element.compareTo(currentMax) > 0) ? element : currentMax;
             }
@@ -107,7 +109,7 @@ public class Eager {
     }
 
     public static <T> T min(Iterable<T> iterable, final Comparator<? super T> comparator) {
-        return reduce(iterable, new org.javafunk.funk.functors.Reducer<T, T>() {
+        return reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMin, T element) {
                 return (element != null && comparator.compare(element, currentMin) < 0) ? element : currentMin;
             }
@@ -115,34 +117,34 @@ public class Eager {
     }
 
     public static <T extends Comparable<T>> T min(Iterable<T> iterable) {
-        return reduce(iterable, new org.javafunk.funk.functors.Reducer<T, T>() {
+        return reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMin, T element) {
                 return (element != null && element.compareTo(currentMin) < 0) ? element : currentMin;
             }
         });
     }
 
-    public static <S, T> Collection<T> map(Iterable<S> iterable, org.javafunk.funk.functors.Mapper<? super S, T> function) {
-        return Iterables.materialize(Lazy.map(iterable, function));
+    public static <S, T> Collection<T> map(Iterable<S> iterable, Mapper<? super S, T> function) {
+        return materialize(Lazy.map(iterable, function));
     }
 
     public static <S, T> Collection<TwoTuple<S, T>> zip(Iterable<S> iterable1, Iterable<T> iterable2) {
-        return Iterables.materialize(Lazy.zip(iterable1, iterable2));
+        return materialize(Lazy.zip(iterable1, iterable2));
     }
 
     public static <T> Collection<TwoTuple<Integer, T>> enumerate(Iterable<T> iterable) {
-        return Iterables.materialize(Lazy.enumerate(iterable));
+        return materialize(Lazy.enumerate(iterable));
     }
 
     public static <T> Collection<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equivalence<? super T> equivalence) {
-        return Iterables.materialize(Lazy.equate(first, second, equivalence));
+        return materialize(Lazy.equate(first, second, equivalence));
     }
 
-    public static <S, T> Collection<TwoTuple<T, S>> index(Iterable<S> iterable, final org.javafunk.funk.functors.Indexer<? super S, T> indexer) {
-        return Iterables.materialize(Lazy.index(iterable, indexer));
+    public static <S, T> Collection<TwoTuple<T, S>> index(Iterable<S> iterable, final Indexer<? super S, T> indexer) {
+        return materialize(Lazy.index(iterable, indexer));
     }
 
-    public static <S, T> Map<T, Collection<S>> group(Iterable<S> iterable, org.javafunk.funk.functors.Indexer<? super S, T> indexer) {
+    public static <S, T> Map<T, Collection<S>> group(Iterable<S> iterable, Indexer<? super S, T> indexer) {
         Map<T, Collection<S>> groupedElements = new HashMap<T, Collection<S>>();
         for (S element : iterable) {
             T index = indexer.index(element);
@@ -154,23 +156,23 @@ public class Eager {
         return groupedElements;
     }
 
-    public static <T> void each(Iterable<T> targets, org.javafunk.funk.functors.Action<? super T> function) {
-        Iterables.materialize(Lazy.each(targets, function));
+    public static <T> void each(Iterable<T> targets, Action<? super T> function) {
+        materialize(Lazy.each(targets, function));
     }
 
-    public static <T> Collection<T> filter(Iterable<T> iterable, org.javafunk.funk.functors.Predicate<? super T> predicate) {
-        return Iterables.materialize(Lazy.filter(iterable, predicate));
+    public static <T> Collection<T> filter(Iterable<T> iterable, Predicate<? super T> predicate) {
+        return materialize(Lazy.filter(iterable, predicate));
     }
 
-    public static <T> Collection<T> reject(Iterable<T> iterable, org.javafunk.funk.functors.Predicate<? super T> predicate) {
-        return Iterables.materialize(Lazy.reject(iterable, predicate));
+    public static <T> Collection<T> reject(Iterable<T> iterable, Predicate<? super T> predicate) {
+        return materialize(Lazy.reject(iterable, predicate));
     }
 
     public static <T> T first(Iterable<? extends T> iterable) {
         return iterable.iterator().next();
     }
 
-    public static <T> T first(Iterable<T> iterable, org.javafunk.funk.functors.Predicate<? super T> predicate) {
+    public static <T> T first(Iterable<T> iterable, Predicate<? super T> predicate) {
         return first(filter(iterable, predicate));
     }
 
@@ -178,7 +180,7 @@ public class Eager {
         return take(iterable, numberOfElementsRequired);
     }
 
-    public static <T> Collection<T> first(Iterable<T> iterable, int numberOfElementsRequired, org.javafunk.funk.functors.Predicate<? super T> predicate) {
+    public static <T> Collection<T> first(Iterable<T> iterable, int numberOfElementsRequired, Predicate<? super T> predicate) {
         return first(filter(iterable, predicate), numberOfElementsRequired);
     }
 
@@ -186,7 +188,7 @@ public class Eager {
         return slice(iterable, -1, null).iterator().next();
     }
 
-    public static <T> T last(Iterable<T> iterable, org.javafunk.funk.functors.Predicate<? super T> predicate) {
+    public static <T> T last(Iterable<T> iterable, Predicate<? super T> predicate) {
         return last(filter(iterable, predicate));
     }
 
@@ -195,12 +197,12 @@ public class Eager {
             throw new IllegalArgumentException("Number of elements required cannot be negative");
         }
         if (numberOfElementsRequired == 0) {
-            return Collections.emptyList();
+            return emptyList();
         }
         return slice(iterable, -numberOfElementsRequired, null);
     }
 
-    public static <T> Collection<T> last(Iterable<T> iterable, int numberOfElementsRequired, org.javafunk.funk.functors.Predicate<? super T> predicate) {
+    public static <T> Collection<T> last(Iterable<T> iterable, int numberOfElementsRequired, Predicate<? super T> predicate) {
         return last(filter(iterable, predicate), numberOfElementsRequired);
     }
 
@@ -209,29 +211,28 @@ public class Eager {
     }
 
     public static <T> Collection<T> take(Iterable<T> iterable, int numberToTake) {
-        return Iterables.materialize(Lazy.take(iterable, numberToTake));
+        return materialize(Lazy.take(iterable, numberToTake));
     }
 
     public static <T> Collection<T> drop(Iterable<T> iterable, int numberToDrop) {
-        return Iterables.materialize(Lazy.drop(iterable, numberToDrop));
+        return materialize(Lazy.drop(iterable, numberToDrop));
     }
 
-    public static <T> TwoTuple<Collection<T>, Collection<T>> partition(
-            Iterable<T> iterable, org.javafunk.funk.functors.Predicate<? super T> predicate) {
+    public static <T> TwoTuple<Collection<T>, Collection<T>> partition(Iterable<T> iterable, Predicate<? super T> predicate) {
         TwoTuple<Iterable<T>, Iterable<T>> partition = Lazy.partition(iterable, predicate);
-        return tuple(Iterables.materialize(partition.first()), Iterables.materialize(partition.second()));
+        return tuple(materialize(partition.first()), materialize(partition.second()));
     }
 
     public static <T> Collection<Collection<T>> batch(Iterable<T> iterable, int batchSize) {
         Collection<Collection<T>> result = new ArrayList<Collection<T>>();
         Iterable<Iterable<T>> batches = Lazy.batch(iterable, batchSize);
         for (Iterable<T> batch : batches) {
-            result.add(Iterables.materialize(batch));
+            result.add(materialize(batch));
         }
         return result;
     }
 
-    public static void times(int numberOfTimes, org.javafunk.funk.functors.Action<? super Integer> function) {
+    public static void times(int numberOfTimes, Action<? super Integer> function) {
         if (numberOfTimes < 0) {
             throw new IllegalArgumentException("The number of times to execute the function cannot be less than zero.");
         }
@@ -240,20 +241,20 @@ public class Eager {
         }
     }
 
-    public static <T> Collection<T> takeWhile(Iterable<T> iterable, org.javafunk.funk.functors.Predicate<? super T> predicate) {
-        return Iterables.materialize(Lazy.takeWhile(iterable, predicate));
+    public static <T> Collection<T> takeWhile(Iterable<T> iterable, Predicate<? super T> predicate) {
+        return materialize(Lazy.takeWhile(iterable, predicate));
     }
 
-    public static <T> Collection<T> takeUntil(Iterable<T> iterable, org.javafunk.funk.functors.Predicate<? super T> predicate) {
-        return Iterables.materialize(Lazy.takeUntil(iterable, predicate));
+    public static <T> Collection<T> takeUntil(Iterable<T> iterable, Predicate<? super T> predicate) {
+        return materialize(Lazy.takeUntil(iterable, predicate));
     }
 
-    public static <T> Collection<T> dropWhile(Iterable<T> iterable, org.javafunk.funk.functors.Predicate<? super T> predicate) {
-        return Iterables.materialize(Lazy.dropWhile(iterable, predicate));
+    public static <T> Collection<T> dropWhile(Iterable<T> iterable, Predicate<? super T> predicate) {
+        return materialize(Lazy.dropWhile(iterable, predicate));
     }
 
-    public static <T> Collection<T> dropUntil(Iterable<T> iterable, org.javafunk.funk.functors.Predicate<? super T> predicate) {
-        return Iterables.materialize(Lazy.dropUntil(iterable, predicate));
+    public static <T> Collection<T> dropUntil(Iterable<T> iterable, Predicate<? super T> predicate) {
+        return materialize(Lazy.dropUntil(iterable, predicate));
     }
 
     public static <T> Collection<T> slice(Iterable<T> iterable, Integer start, Integer stop, Integer step) {
@@ -278,7 +279,7 @@ public class Eager {
     }
 
     public static <T> Collection<T> repeat(Iterable<T> iterable, int numberOfTimesToRepeat) {
-        return Iterables.materialize(Lazy.repeat(iterable, numberOfTimesToRepeat));
+        return materialize(Lazy.repeat(iterable, numberOfTimesToRepeat));
     }
 
     private static class SliceHelper {
