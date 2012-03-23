@@ -207,7 +207,7 @@ public class Eager {
     }
 
     public static <T> Collection<T> rest(final Iterable<T> iterable) {
-        return materialize(Lazy.rest(iterable));
+        return slice(iterable, 1, null);
     }
 
     public static <T> Collection<T> take(Iterable<T> iterable, int numberToTake) {
@@ -260,6 +260,10 @@ public class Eager {
     public static <T> Collection<T> slice(Iterable<T> iterable, Integer start, Integer stop, Integer step) {
         List<? extends T> inputCollection = Iterables.asList(iterable);
 
+        if (inputCollection.size() == 0) {
+            return Collections.emptyList();
+        }
+
         int startIndex = SliceHelper.resolveStartIndex(start, inputCollection.size());
         int stopIndex = SliceHelper.resolveStopIndex(stop, inputCollection.size());
         int stepSize = SliceHelper.resolveStepSize(step);
@@ -284,11 +288,27 @@ public class Eager {
 
     private static class SliceHelper {
         private static int resolveStartIndex(Integer start, Integer numberOfElements) {
-            return resolveIndex(start, numberOfElements, 0, 0);
+            if (start == null || start + numberOfElements < 0) {
+                return 0;
+            } else if (start < 0) {
+                return start + numberOfElements;
+            } else if (start > numberOfElements) {
+                return numberOfElements - 1;
+            } else {
+                return start;
+            }
         }
 
         private static int resolveStopIndex(Integer stop, Integer numberOfElements) {
-            return resolveIndex(stop, numberOfElements, numberOfElements, 1);
+            if (stop == null || stop > numberOfElements) {
+                return numberOfElements;
+            } else if (stop + numberOfElements < 0) {
+                return -1;
+            } else if (stop < 0) {
+                return stop + numberOfElements;
+            } else {
+                return stop;
+            }
         }
 
         private static int resolveStepSize(Integer step) {
@@ -301,18 +321,5 @@ public class Eager {
             }
         }
 
-        private static int resolveIndex(Integer index, Integer numberOfElements, Integer defaultIndex, Integer spread) {
-            if (index == null) {
-                return defaultIndex;
-            } else if (index + numberOfElements < 0) {
-                return 0 - spread;
-            } else if (index < 0) {
-                return index + numberOfElements;
-            } else if (index >= numberOfElements) {
-                return numberOfElements - 1 + spread;
-            } else {
-                return index;
-            }
-        }
     }
 }

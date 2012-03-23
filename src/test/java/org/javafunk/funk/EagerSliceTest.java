@@ -327,4 +327,82 @@ public class EagerSliceTest {
         // Then
         assertThat(actualOutput, is(expectedOutput));
     }
+
+    @Test
+    public void shouldReturnAllElementsWhenIterableHasASingleElementAndCompleteSliceSpecified() throws Exception {
+        // Given
+        Iterable<String> input = listWith("one item");
+        Collection<String> expectedCompleteSlice = listWith("one item");
+
+        // When
+        Collection<String> actualCompleteSlice = Eager.slice(input, 0, null);
+
+        // Then
+        assertThat(actualCompleteSlice, is(expectedCompleteSlice));
+    }
+
+    @Test
+    public void shouldReturnNoElementsWhenIterableHasASingleElementAndForwardSubSliceSpecified() throws Exception {
+        // Given
+        Iterable<String> input = listWith("one item");
+        Collection<String> expectedFirstToEndSlice = Collections.emptyList();
+
+        // When
+        Collection<String> actualFirstToEndSlice = Eager.slice(input, 1, null);
+
+        // Then
+        assertThat(actualFirstToEndSlice, is(expectedFirstToEndSlice));
+    }
+
+    @Test
+    public void shouldReturnAllElementsWhenIterableHasASingleElementAndReverseSubSliceSpecified() throws Exception {
+        // Given
+        Iterable<String> input = listWith("one item");
+        Collection<String> expectedFirstToEndSlice = Collections.emptyList();
+
+        // When
+        Collection<String> actualFirstToEndSlice = Eager.slice(input, -1, 0, -1);
+
+        // Then
+        assertThat(actualFirstToEndSlice, is(expectedFirstToEndSlice));
+    }
+
+    @Test
+    public void shouldReturnEmptyCollectionWhenIterableHasNoElementsAndCompleteSliceIsSpecified() throws Exception {
+        // Given
+        Iterable<String> input = Collections.emptyList();
+        Collection<String> expectedCompleteSlice = Collections.emptyList();
+
+        // When
+        Collection<String> actualCompleteSlice = Eager.slice(input, 0, null);
+
+        // Then
+        assertThat(actualCompleteSlice, is(expectedCompleteSlice));
+    }
+
+    @Test
+    public void shouldReturnEmptyCollectionWhenIterableHasNoElementsAndForwardSubSliceIsSpecified() throws Exception {
+        // Given
+        Iterable<String> input = Collections.emptyList();
+        Collection<String> expectedCompleteSlice = Collections.emptyList();
+
+        // When
+        Collection<String> actualCompleteSlice = Eager.slice(input, 5, null);
+
+        // Then
+        assertThat(actualCompleteSlice, is(expectedCompleteSlice));
+    }
+
+    @Test
+    public void shouldReturnEmptyCollectionWhenIterableHasNoElementsAndReverseSubSliceIsSpecified() throws Exception {
+        // Given
+        Iterable<String> input = Collections.emptyList();
+        Collection<String> expectedCompleteSlice = Collections.emptyList();
+
+        // When
+        Collection<String> actualCompleteSlice = Eager.slice(input, 5, 0, -1);
+
+        // Then
+        assertThat(actualCompleteSlice, is(expectedCompleteSlice));
+    }
 }

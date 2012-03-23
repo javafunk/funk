@@ -33,7 +33,6 @@
 * Add collection wrappers extension such as FunctionalList, FunctionalSet that have methods on them that delegate
   to Iterables functions
   * e.g., list.reduce(Reducer<S, T> reduceFn); => reducedList
-* Investigate why Eager.rest was broken (problem with slice?)
 
   Maybe
     Procedure/Block => execute

@@ -8,7 +8,6 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.Eager;
 import org.javafunk.funk.functors.Predicate;
 import org.junit.Test;
 
@@ -21,7 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.listWith;
 
-public class EagerFirstLastTest {
+public class EagerFirstRestLastTest {
     @Test
     public void shouldReturnTheFirstElementFromTheSuppliedIterable() throws Exception {
         // Given
@@ -515,6 +514,45 @@ public class EagerFirstLastTest {
                 return item % 2 == 0;
             }
         });
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnAllButFirstElementForRestIfIterableHasMoreThanOneElement() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2, 3, 4);
+        Collection<Integer> expectedOutput = listWith(2, 3, 4);
+
+        // When
+        Collection<Integer> actualOutput = Eager.rest(input);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyCollectionForRestIfIterableHasOnlyOneElement() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1);
+        Collection<Integer> expectedOutput = Collections.emptyList();
+
+        // When
+        Collection<Integer> actualOutput = Eager.rest(input);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyCollectionForRestIfIterableHasNoElements() throws Exception {
+        // Given
+        Iterable<Integer> input = Iterables.empty();
+        Collection<Integer> expectedOutput = Collections.emptyList();
+
+        // When
+        Collection<Integer> actualOutput = Eager.rest(input);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
