@@ -10,6 +10,7 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.TwoTuple;
 import org.javafunk.funk.functors.*;
+import org.javafunk.funk.iterators.RestIterator;
 import org.javafunk.funk.predicates.NotPredicate;
 
 import java.util.Iterator;
@@ -186,6 +187,15 @@ public class Lazy {
         return new Iterable<TwoTuple<S, T>>(){
             public Iterator<TwoTuple<S, T>> iterator() {
                 return new org.javafunk.funk.iterators.ZippedIterator<S, T>(firstIterable.iterator(), secondIterable.iterator());
+            }
+        };
+    }
+
+    public static <T> Iterable<T> rest(final Iterable<T> iterable) {
+        return new Iterable<T>() {
+            @Override
+            public Iterator<T> iterator() {
+                return new RestIterator<T>(iterable);
             }
         };
     }

@@ -10,10 +10,11 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.IntegerRange;
 import org.javafunk.funk.datastructures.TwoTuple;
-import org.javafunk.funk.functors.*;
+import org.javafunk.funk.functors.Equivalence;
 
 import java.util.*;
 
+import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Iterators.asIterable;
 import static org.javafunk.funk.Literals.tuple;
 
@@ -203,9 +204,8 @@ public class Eager {
         return last(filter(iterable, predicate), numberOfElementsRequired);
     }
 
-    // TODO: Toby (10/07/11): Test this
-    public static <T> Collection<T> rest(Iterable<T> iterable) {
-        return slice(iterable, 1, null);
+    public static <T> Collection<T> rest(final Iterable<T> iterable) {
+        return materialize(Lazy.rest(iterable));
     }
 
     public static <T> Collection<T> take(Iterable<T> iterable, int numberToTake) {

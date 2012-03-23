@@ -13,6 +13,7 @@ import org.javafunk.funk.testclasses.Cat;
 import org.javafunk.funk.testclasses.Dog;
 import org.junit.Test;
 
+import java.util.Collections;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -102,6 +103,32 @@ public class SetsTest {
 
         // Then
         assertThat(actualIntersectionSet, is(expectedIntersectionSet));
+    }
+
+    @Test
+    public void shouldReturnTheInputSetForTheSetDifferenceOfASingleSet() throws Exception {
+        //Given
+        Iterable<String> firstIterable = setWith("a", "b");
+        Iterable<Iterable<String>> singleIterable = listWith(firstIterable);
+
+        //When
+        Set<String> difference = Sets.difference(singleIterable);
+
+        // Then
+        assertThat(difference, is(firstIterable));
+    }
+
+    @Test
+    public void shouldReturnAnEmptySetForTheSetDifferenceOfNoSets() throws Exception {
+        //Given
+        Iterable<Iterable<String>> emptySet = Iterables.empty();
+        Iterable<String> expectedDifferenceSet = Collections.emptySet();
+
+        //When
+        Set<String> difference = Sets.difference(emptySet);
+
+        // Then
+        assertThat(difference, is(expectedDifferenceSet));
     }
 
     @Test
