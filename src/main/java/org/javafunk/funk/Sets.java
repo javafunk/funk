@@ -48,7 +48,7 @@ public class Sets {
             return new HashSet<T>();
         }else{
             Set<T> differenceSet = asSet(first(arguments));
-            differenceSet.removeAll(union(rest(iterables)));
+            differenceSet.removeAll(union(rest(arguments)));
             return differenceSet;
         }
     }
