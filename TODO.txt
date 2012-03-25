@@ -25,14 +25,17 @@
 * Add RepeatedlyIterator
 * Consider Completable, Describable interfaces
 * Add a validIterableContaining matcher and use it in all tests.
-* Add a DirectoryIterator which iterates over File objects
-* Split matchers out into their own project (?)
-* Make Literals return immutable collections
-* Add LambdaJ extension that allows LambdaJ style syntax when passing simple anonymous inner classes
-* Add Enumerable.java extension that allows the use of lambdas and closures instead of passing anonymous inner classes
-* Add collection wrappers extension such as FunctionalList, FunctionalSet that have methods on them that delegate
+* Add a DirectoryIterator which iterates over File objects.
+* Split matchers out into their own project/module (?).
+* Make Literals return immutable collections and add explicit constructors for mutable collections.
+* Add LambdaJ extension that allows LambdaJ style syntax when passing simple anonymous inner classes.
+* Add Enumerable.java extension that allows the use of lambdas and closures instead of passing anonymous inner classes.
+* Add collection wrappers extension such as FunctionalList, FunctionalSet that have methods on them that delegate.
   to Iterables functions
   * e.g., list.reduce(Reducer<S, T> reduceFn); => reducedList
+* Add toString method to all iterators
+* Add matchesAll and matchesAny matchers that take another matcher and apply it to all elements in a collection
+* Add trueForAll and trueForAny that takes only a Predicate, not a SelfDescribingPredicate.
 
   Maybe
     Procedure/Block => execute
