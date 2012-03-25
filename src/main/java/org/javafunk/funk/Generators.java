@@ -3,12 +3,17 @@ package org.javafunk.funk;
 import org.javafunk.funk.functors.Generatable;
 import org.javafunk.funk.functors.Generator;
 import org.javafunk.funk.generators.ConstantGenerator;
+import org.javafunk.funk.generators.FiniteGenerator;
 
 import java.util.Iterator;
 
 public class Generators {
     public static <T> Generator<T> constantGenerator(T value) {
         return new ConstantGenerator<T>(value);
+    }
+
+    public static <T> Generator<T> finiteGenerator(Iterable<T> iterable) {
+        return new FiniteGenerator<T>(iterable);
     }
 
     // TODO: Toby (2012-03-25) This needs to tee rather than using the
