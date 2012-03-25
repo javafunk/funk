@@ -8,6 +8,7 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Generators.constantGenerator;
+import static org.javafunk.funk.Generators.finiteGenerator;
 import static org.javafunk.funk.Literals.listWith;
 
 public class GeneratorsTest {
@@ -29,7 +30,7 @@ public class GeneratorsTest {
         Generator<Integer> expectedGenerator = new FiniteGenerator<Integer>(listWith(1, 2, 3, 4));
 
         // When
-        Generator<Integer> actualGenerator = Generators.finiteGenerator(listWith(1, 2, 3, 4));
+        Generator<Integer> actualGenerator = finiteGenerator(listWith(1, 2, 3, 4));
 
         // Then
         assertThat(actualGenerator, is(expectedGenerator));

@@ -27,6 +27,8 @@ public class FiniteGenerator<T> extends AbstractGenerator<T> {
         return iterator.next();
     }
 
+    // TODO: Toby (2012-03-25) should equality include current position
+    // in iterator?
     @Override public boolean equals(Object other) {
         return EqualsBuilder.reflectionEquals(this, other, excludedFields);
     }
