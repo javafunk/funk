@@ -13,7 +13,7 @@ public class FiniteGenerator<T> extends AbstractGenerator<T> {
 
     private final Iterator<? extends T> iterator;
 
-    // These fields are required for equality
+    // These fields are required for equality.
     private final Iterable<? extends T> iterable;
     private T mostRecentElement;
 
