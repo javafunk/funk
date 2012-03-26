@@ -54,11 +54,15 @@ public class FiniteGeneratorTest {
     }
 
     @Test
-    public void shouldBeEqualIfSuppliedIterableIsEqual() throws Exception {
+    public void shouldBeEqualIfSuppliedIterableIsEqualAndSameNumberOfItemsGeneratedFromEach() throws Exception {
         // Given
-        Iterable<Integer> backingValues = listWith(1, 2, 3);
+        Iterable<Integer> backingValues = listWith(1, 2, 3, 4);
         Generator<Integer> firstGenerator = new FiniteGenerator<Integer>(backingValues);
+        firstGenerator.next();
+        firstGenerator.next();
         Generator<Integer> secondGenerator = new FiniteGenerator<Integer>(backingValues);
+        secondGenerator.next();
+        secondGenerator.next();
 
         // When
         boolean equal = firstGenerator.equals(secondGenerator);
@@ -72,6 +76,22 @@ public class FiniteGeneratorTest {
         // Given
         Generator<Integer> firstGenerator = new FiniteGenerator<Integer>(listWith(1, 2, 3));
         Generator<Integer> secondGenerator = new FiniteGenerator<Integer>(listWith(4, 5, 6));
+
+        // When
+        boolean equal = firstGenerator.equals(secondGenerator);
+
+        // Then
+        assertThat(equal, is(false));
+    }
+
+    @Test
+    public void shouldNotBeEqualIfDifferentNumbersOfItemsGeneratedFromEach() throws Exception {
+        // Given
+        Generator<Integer> firstGenerator = new FiniteGenerator<Integer>(listWith(1, 2, 3, 4));
+        firstGenerator.next();
+        Generator<Integer> secondGenerator = new FiniteGenerator<Integer>(listWith(1, 2, 3, 4));
+        secondGenerator.next();
+        secondGenerator.next();
 
         // When
         boolean equal = firstGenerator.equals(secondGenerator);

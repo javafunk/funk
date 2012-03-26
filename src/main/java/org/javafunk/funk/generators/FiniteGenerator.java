@@ -12,7 +12,10 @@ public class FiniteGenerator<T> extends AbstractGenerator<T> {
     private static final String[] excludedFields = new String[]{"iterator"};
 
     private final Iterator<? extends T> iterator;
+
+    // These fields are required for equality
     private final Iterable<? extends T> iterable;
+    private T mostRecentElement;
 
     public FiniteGenerator(Iterable<? extends T> iterable) {
         this.iterable = iterable;
@@ -24,11 +27,10 @@ public class FiniteGenerator<T> extends AbstractGenerator<T> {
     }
 
     @Override public T next() {
-        return iterator.next();
+        mostRecentElement = iterator.next();
+        return mostRecentElement;
     }
-
-    // TODO: Toby (2012-03-25) should equality include current position
-    // in iterator?
+    
     @Override public boolean equals(Object other) {
         return EqualsBuilder.reflectionEquals(this, other, excludedFields);
     }
