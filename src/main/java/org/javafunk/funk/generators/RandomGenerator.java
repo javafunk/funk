@@ -17,7 +17,11 @@ public class RandomGenerator<T> extends AbstractGenerator<T> {
     private final Random random;
 
     public RandomGenerator(Iterable<? extends T> iterable) {
-        this.random = new Random();
+        this(iterable, new Random());
+    }
+
+    public RandomGenerator(Iterable<? extends T> iterable, Random random) {
+        this.random = random;
         this.elements = asList(iterable);
     }
 

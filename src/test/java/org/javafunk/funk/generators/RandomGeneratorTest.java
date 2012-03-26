@@ -1,54 +1,35 @@
 package org.javafunk.funk.generators;
 
-import org.javafunk.funk.Literals;
-import org.javafunk.funk.functors.Indexer;
-import org.javafunk.funk.functors.Mapper;
-import org.javafunk.funk.matchers.SelfDescribingPredicate;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
-import java.util.Collection;
-import java.util.Map;
+import java.util.Random;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Eager.*;
-import static org.javafunk.funk.Generators.toGeneratable;
 import static org.javafunk.funk.Literals.listWith;
-import static org.javafunk.funk.matchers.Matchers.between;
-import static org.javafunk.funk.matchers.Matchers.trueForAll;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class RandomGeneratorTest {
     @Test
-    public void shouldPickObjectsAtRandomFromTheSuppliedIterable() throws Exception {
+    public void shouldGenerateAnIndexAtRandomAndReturnTheElementAtThatIndex() throws Exception {
         // Given
-        Literals.ListBuilder<Integer> elements = listWith(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-        RandomGenerator<Integer> generator = new RandomGenerator<Integer>(elements);
+        Random random = mock(Random.class);
+        RandomGenerator<String> generator = new RandomGenerator<String>(
+                listWith("zeroth", "first", "second"),
+                random);
+
+        ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
+
+        when(random.nextInt(argumentCaptor.capture())).thenReturn(1);
 
         // When
-        Map<Integer, Collection<Integer>> elementGroups = group(take(toGeneratable(generator), 100000), new Indexer<Integer, Integer>() {
-            @Override public Integer index(Integer element) {
-                return element;
-            }
-        });
-
-        Collection<Integer> groupSizes = map(elementGroups.entrySet(), new Mapper<Map.Entry<Integer, Collection<Integer>>, Integer>() {
-            @Override public Integer map(Map.Entry<Integer, Collection<Integer>> group) {
-                return group.getValue().size();
-            }
-        });
+        String value = generator.next();
 
         // Then
-        assertThat(groupSizes, hasSize(10));
-        assertThat(groupSizes, trueForAll(new SelfDescribingPredicate<Integer>() {
-            @Override public boolean evaluate(Integer element) {
-                return between(9000, 11000).matches(element);
-            }
-
-            @Override public String describe() {
-                return "number of occurrences between 9000 and 11000";
-            }
-        }));
+        assertThat(argumentCaptor.getValue(), is(3));
+        assertThat(value, is("first"));
     }
 
     @Test
