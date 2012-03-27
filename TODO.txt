@@ -9,7 +9,7 @@
 * Add union, intersection, difference and symmetric difference methods to Lists.
 * Add concrete argument versions of all generic varargs functions
 * Push all Eager methods into Lazy and rename Lazy to something more appropriate. The existing Eager methods are
-  really just Collections methods
+  really just Collections methods. Or is it clearer to express intent using Eager and Lazy?
 * Fix generics signatures (and potentially add tests) in Eager and Lazy
 * Add Generator<T>, Yieldable<T>, GeneratorUtils, toGenerator on IteratorUtils and IterableUtils, toIterable and
   toIterator on GeneratorUtils
@@ -37,6 +37,8 @@
 * Add matchesAll and matchesAny matchers that take another matcher and apply it to all elements in a collection
 * Add trueForAll and trueForAny that takes only a Predicate, not a SelfDescribingPredicate.
 * Make Eager.min and Eager.max throw sensible exceptions when passed empty iterables.
+* AndPredicate?
+* What should be in Funk and what should we contribute back to Google Guava?
 
   Maybe
     Procedure/Block => execute
