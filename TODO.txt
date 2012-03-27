@@ -36,6 +36,7 @@
 * Add toString method to all iterators
 * Add matchesAll and matchesAny matchers that take another matcher and apply it to all elements in a collection
 * Add trueForAll and trueForAny that takes only a Predicate, not a SelfDescribingPredicate.
+* Make Eager.min and Eager.max throw sensible exceptions when passed empty iterables.
 
   Maybe
     Procedure/Block => execute
