@@ -8,9 +8,16 @@
  */
 package org.javafunk.funk.datastructures.tuples;
 
+import org.javafunk.funk.functors.ordinals.First;
+import org.javafunk.funk.functors.ordinals.Fourth;
+import org.javafunk.funk.functors.ordinals.Second;
+import org.javafunk.funk.functors.ordinals.Third;
+
 import static org.javafunk.funk.Literals.listWith;
 
-public class FourTuple<S, T, U, V> extends AbstractTuple {
+public class FourTuple<S, T, U, V>
+        extends AbstractTuple
+        implements First<S>, Second<T>, Third<U>, Fourth<V> {
     private S first;
     private T second;
     private U third;

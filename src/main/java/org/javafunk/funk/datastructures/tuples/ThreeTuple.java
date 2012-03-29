@@ -8,9 +8,15 @@
  */
 package org.javafunk.funk.datastructures.tuples;
 
+import org.javafunk.funk.functors.ordinals.First;
+import org.javafunk.funk.functors.ordinals.Second;
+import org.javafunk.funk.functors.ordinals.Third;
+
 import static org.javafunk.funk.Literals.listWith;
 
-public class ThreeTuple<S, T, U> extends AbstractTuple {
+public class ThreeTuple<S, T, U>
+        extends AbstractTuple
+        implements First<S>, Second<T>, Third<U> {
     private S first;
     private T second;
     private U third;

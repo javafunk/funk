@@ -8,9 +8,14 @@
  */
 package org.javafunk.funk.datastructures.tuples;
 
+import org.javafunk.funk.functors.ordinals.First;
+import org.javafunk.funk.functors.ordinals.Second;
+
 import static org.javafunk.funk.Literals.listWith;
 
-public class TwoTuple<S, T> extends AbstractTuple {
+public class TwoTuple<S, T>
+        extends AbstractTuple
+        implements First<S>, Second<T> {
     private S first;
     private T second;
 
