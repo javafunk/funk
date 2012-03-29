@@ -39,6 +39,7 @@
 * Make Eager.min and Eager.max throw sensible exceptions when passed empty iterables.
 * AndPredicate?
 * What should be in Funk and what should we contribute back to Google Guava?
+* Add iterableWith, iterableOf, iterableFrom methods to Literals.
 
   Maybe
     Procedure/Block => execute
