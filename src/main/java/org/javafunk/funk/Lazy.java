@@ -8,7 +8,7 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.TwoTuple;
 import org.javafunk.funk.functors.*;
 import org.javafunk.funk.iterators.*;
 import org.javafunk.funk.predicates.NotPredicate;

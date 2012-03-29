@@ -8,8 +8,8 @@
  */
 package org.javafunk.funk.iterators;
 
+import org.javafunk.funk.datastructures.tuples.TwoTuple;
 import org.junit.Test;
-import org.javafunk.funk.datastructures.TwoTuple;
 
 import java.util.Iterator;
 

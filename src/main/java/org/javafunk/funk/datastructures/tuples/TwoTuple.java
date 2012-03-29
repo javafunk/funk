@@ -6,22 +6,20 @@
  * style license a copy of which has been included with this distribution in
  * the LICENSE.txt file.
  */
-package org.javafunk.funk.datastructures;
+package org.javafunk.funk.datastructures.tuples;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import static java.lang.String.format;
 
-public class ThreeTuple<S, T, U> {
+public class TwoTuple<S, T> {
     private S first;
     private T second;
-    private U third;
 
-    public ThreeTuple(S first, T second, U third) {
+    public TwoTuple(S first, T second) {
         this.first = first;
         this.second = second;
-        this.third = third;
     }
 
     public S first() {
@@ -30,10 +28,6 @@ public class ThreeTuple<S, T, U> {
 
     public T second() {
         return second;
-    }
-
-    public U third() {
-        return third;
     }
 
     public boolean equals(Object other) {
@@ -45,7 +39,7 @@ public class ThreeTuple<S, T, U> {
     }
 
     public String toString() {
-        return format("(%s, %s, %s)", first, second, third);
+        return format("(%s, %s)", first, second);
     }
 
 }

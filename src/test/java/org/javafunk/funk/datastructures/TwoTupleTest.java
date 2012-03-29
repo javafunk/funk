@@ -8,6 +8,7 @@
  */
 package org.javafunk.funk.datastructures;
 
+import org.javafunk.funk.datastructures.tuples.TwoTuple;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;

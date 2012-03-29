@@ -8,7 +8,7 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.TwoTuple;
 import org.javafunk.funk.functors.Indexer;
 import org.junit.Test;
 

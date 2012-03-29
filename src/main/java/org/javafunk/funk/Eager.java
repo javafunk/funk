@@ -9,7 +9,7 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.IntegerRange;
-import org.javafunk.funk.datastructures.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.TwoTuple;
 import org.javafunk.funk.functors.*;
 
 import java.util.*;

@@ -16,7 +16,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.javafunk.funk.Multisets;
-import org.javafunk.funk.datastructures.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.TwoTuple;
 
 import java.util.*;
 

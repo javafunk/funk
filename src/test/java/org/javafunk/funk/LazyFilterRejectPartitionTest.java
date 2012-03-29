@@ -8,9 +8,7 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.Lazy;
-import org.javafunk.funk.Lazy;
-import org.javafunk.funk.datastructures.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.TwoTuple;
 import org.javafunk.funk.functors.Predicate;
 import org.junit.Test;
 

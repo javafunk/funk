@@ -10,9 +10,9 @@ package org.javafunk.funk;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
-import org.javafunk.funk.datastructures.FourTuple;
-import org.javafunk.funk.datastructures.ThreeTuple;
-import org.javafunk.funk.datastructures.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.FourTuple;
+import org.javafunk.funk.datastructures.tuples.ThreeTuple;
+import org.javafunk.funk.datastructures.tuples.TwoTuple;
 import org.junit.Test;
 
 import java.util.*;
