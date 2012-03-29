@@ -8,12 +8,9 @@
  */
 package org.javafunk.funk.datastructures.tuples;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import static org.javafunk.funk.Literals.listWith;
 
-import static java.lang.String.format;
-
-public class ThreeTuple<S, T, U> {
+public class ThreeTuple<S, T, U> extends AbstractTuple {
     private S first;
     private T second;
     private U third;
@@ -36,16 +33,7 @@ public class ThreeTuple<S, T, U> {
         return third;
     }
 
-    public boolean equals(Object other) {
-        return EqualsBuilder.reflectionEquals(this, other);
+    @Override public Iterable<Object> values() {
+        return listWith(first, second, third);
     }
-
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-
-    public String toString() {
-        return format("(%s, %s, %s)", first, second, third);
-    }
-
 }

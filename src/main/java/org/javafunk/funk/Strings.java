@@ -10,18 +10,17 @@ package org.javafunk.funk;
 
 import org.apache.commons.lang.StringUtils;
 
-import java.util.Collection;
-
 import static java.util.Arrays.asList;
+import static org.javafunk.funk.Iterables.materialize;
 
 public class Strings {
     private Strings() {}
 
-    public static <T> String join(Collection<? extends T> collection, String separator) {
-        return StringUtils.join(collection, separator);
+    public static <T> String join(Iterable<? extends T> iterable, String separator) {
+        return StringUtils.join(materialize(iterable), separator);
     }
 
-    public static <T> String join(Collection<? extends T> collection) {
+    public static <T> String join(Iterable<? extends T> collection) {
         return join(collection, "");
     }
 
