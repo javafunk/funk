@@ -8,7 +8,7 @@
  */
 package org.javafunk.funk.iterators;
 
-import org.javafunk.funk.datastructures.tuples.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.Pair;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -26,7 +26,7 @@ public class ZippedIteratorTest {
         Iterator<Integer> secondIterator = listWith(1, 2).iterator();
 
         // When
-        Iterator<TwoTuple<String, Integer>> zippedIterator = new ZippedIterator<String, Integer>(firstIterator, secondIterator);
+        Iterator<Pair<String, Integer>> zippedIterator = new ZippedIterator<String, Integer>(firstIterator, secondIterator);
 
         // Then
         assertThat(zippedIterator.hasNext(), is(true));
@@ -43,7 +43,7 @@ public class ZippedIteratorTest {
         Iterator<Integer> secondIterator = listWith(1, 2).iterator();
 
         // When
-        Iterator<TwoTuple<String, Integer>> zippedIterator = new ZippedIterator<String, Integer>(firstIterator, secondIterator);
+        Iterator<Pair<String, Integer>> zippedIterator = new ZippedIterator<String, Integer>(firstIterator, secondIterator);
 
         // Then
         assertThat(zippedIterator.hasNext(), is(true));
@@ -60,7 +60,7 @@ public class ZippedIteratorTest {
         Iterator<Integer> secondIterator = listWith(1, 2, 3, 4, 5).iterator();
 
         // When
-        Iterator<TwoTuple<String, Integer>> zippedIterator = new ZippedIterator<String, Integer>(firstIterator, secondIterator);
+        Iterator<Pair<String, Integer>> zippedIterator = new ZippedIterator<String, Integer>(firstIterator, secondIterator);
 
         // Then
         assertThat(zippedIterator.hasNext(), is(true));
@@ -79,7 +79,7 @@ public class ZippedIteratorTest {
         Iterator<Integer> secondIterator = listWith(1, 2).iterator();
 
         // When
-        Iterator<TwoTuple<String, Integer>> zippedIterator = new ZippedIterator<String, Integer>(firstIterator, secondIterator);
+        Iterator<Pair<String, Integer>> zippedIterator = new ZippedIterator<String, Integer>(firstIterator, secondIterator);
 
         // Then
         assertThat(zippedIterator.next(), is(tuple("A", 1)));
@@ -93,7 +93,7 @@ public class ZippedIteratorTest {
         Iterator<Integer> secondIterator = listWith(1, 2).iterator();
 
         // When
-        Iterator<TwoTuple<String, Integer>> zippedIterator = new ZippedIterator<String, Integer>(firstIterator, secondIterator);
+        Iterator<Pair<String, Integer>> zippedIterator = new ZippedIterator<String, Integer>(firstIterator, secondIterator);
 
         // Then
         assertThat(zippedIterator.hasNext(), is(true));
@@ -113,7 +113,7 @@ public class ZippedIteratorTest {
         Iterator<Integer> secondIterator = listWith(1, 2).iterator();
 
         // When
-        Iterator<TwoTuple<String, Integer>> zippedIterator = new ZippedIterator<String, Integer>(firstIterator, secondIterator);
+        Iterator<Pair<String, Integer>> zippedIterator = new ZippedIterator<String, Integer>(firstIterator, secondIterator);
 
         zippedIterator.next();
         zippedIterator.remove();

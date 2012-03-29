@@ -2,9 +2,10 @@ package org.javafunk.funk;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
-import org.javafunk.funk.datastructures.tuples.FourTuple;
-import org.javafunk.funk.datastructures.tuples.ThreeTuple;
-import org.javafunk.funk.datastructures.tuples.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.Quadruple;
+import org.javafunk.funk.datastructures.tuples.Quintuple;
+import org.javafunk.funk.datastructures.tuples.Triple;
+import org.javafunk.funk.datastructures.tuples.Pair;
 
 import java.util.*;
 
@@ -73,16 +74,20 @@ public class Literals {
         return new MapBuilder<K, V>().with(key, value);
     }
 
-    public static <S, T> TwoTuple<S, T> tuple(S first, T second) {
-        return new TwoTuple<S, T>(first, second);
+    public static <S, T> Pair<S, T> tuple(S first, T second) {
+        return new Pair<S, T>(first, second);
     }
 
-    public static <S, T, U> ThreeTuple<S, T, U> tuple(S first, T second, U third) {
-        return new ThreeTuple<S, T, U>(first, second, third);
+    public static <S, T, U> Triple<S, T, U> tuple(S first, T second, U third) {
+        return new Triple<S, T, U>(first, second, third);
     }
 
-    public static <S, T, U, V> FourTuple<S, T, U, V> tuple(S first, T second, U third, V fourth) {
-        return new FourTuple<S, T, U, V>(first, second, third, fourth);
+    public static <S, T, U, V> Quadruple<S, T, U, V> tuple(S first, T second, U third, V fourth) {
+        return new Quadruple<S, T, U, V>(first, second, third, fourth);
+    }
+
+    public static <S, T, U, V, W> Quintuple<S, T, U, V, W> tuple(S first, T second, U third, V fourth, W fifth) {
+        return new Quintuple<S, T, U, V, W>(first, second, third, fourth, fifth);
     }
 
     public static class ListBuilder<E> extends ArrayList<E> {
@@ -459,4 +464,5 @@ public class Literals {
     public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
         return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on));
     }
+
 }

@@ -8,7 +8,7 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.tuples.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.Pair;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -24,13 +24,13 @@ public class EagerZipEnumerateTest {
         // Given
         Iterable<Integer> iterable1 = listWith(1, 2, 3);
         Iterable<String> iterable2 = listWith("First", "Second", "Third");
-        Collection<TwoTuple<Integer, String>> expectedOutput = listWith(
+        Collection<Pair<Integer, String>> expectedOutput = listWith(
                 tuple(1, "First"),
                 tuple(2, "Second"),
                 tuple(3, "Third"));
 
         // When
-        Collection<TwoTuple<Integer, String>> actualOutput = Eager.zip(iterable1, iterable2);
+        Collection<Pair<Integer, String>> actualOutput = Eager.zip(iterable1, iterable2);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -40,13 +40,13 @@ public class EagerZipEnumerateTest {
     public void shouldEnumerateIterable() {
         // Given
         Iterable<String> iterable = listWith("a", "b", "c");
-        Collection<TwoTuple<Integer, String>> expectedOutput = listWith(
+        Collection<Pair<Integer, String>> expectedOutput = listWith(
                 tuple(0, "a"),
                 tuple(1, "b"),
                 tuple(2, "c"));
 
         // When
-        Collection<TwoTuple<Integer, String>> actualOutput = Eager.enumerate(iterable);
+        Collection<Pair<Integer, String>> actualOutput = Eager.enumerate(iterable);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));

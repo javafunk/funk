@@ -8,7 +8,7 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.tuples.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.Indexer;
 import org.junit.Test;
 
@@ -26,12 +26,12 @@ public class LazyIndexTest {
         Iterable<String> input = listWith("apple", "pear", "lemon");
 
         // When
-        Iterable<TwoTuple<Integer, String>> outputIterable = Lazy.index(input, new Indexer<String, Integer>(){
+        Iterable<Pair<Integer, String>> outputIterable = Lazy.index(input, new Indexer<String, Integer>(){
             public Integer index(String item) {
                 return item.length();
             }
         });
-        Iterator<TwoTuple<Integer,String>> outputIterator = outputIterable.iterator();
+        Iterator<Pair<Integer,String>> outputIterator = outputIterable.iterator();
 
         // Then
         assertThat(outputIterator.hasNext(), is(true));
@@ -49,14 +49,14 @@ public class LazyIndexTest {
         Iterable<String> input = listWith("apple", "pear", "lemon");
 
         // When
-        Iterable<TwoTuple<Integer, String>> iterable = Lazy.index(input, new Indexer<String, Integer>() {
+        Iterable<Pair<Integer, String>> iterable = Lazy.index(input, new Indexer<String, Integer>() {
             public Integer index(String item) {
                 return item.length();
             }
         });
 
-        Iterator<TwoTuple<Integer, String>> iterator1 = iterable.iterator();
-        Iterator<TwoTuple<Integer, String>> iterator2 = iterable.iterator();
+        Iterator<Pair<Integer, String>> iterator1 = iterable.iterator();
+        Iterator<Pair<Integer, String>> iterator2 = iterable.iterator();
 
         // Then
         assertThat(iterator1.next(), is(tuple(5, "apple")));

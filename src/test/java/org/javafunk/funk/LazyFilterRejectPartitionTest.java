@@ -8,7 +8,7 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.tuples.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.Predicate;
 import org.junit.Test;
 
@@ -110,7 +110,7 @@ public class LazyFilterRejectPartitionTest {
         Collection<Integer> expectedNonMatchingItems = listWith(1, 3, 5, 7);
 
         // When
-        TwoTuple<Iterable<Integer>, Iterable<Integer>> partitionResults = Lazy.partition(input,
+        Pair<Iterable<Integer>, Iterable<Integer>> partitionResults = Lazy.partition(input,
                 new Predicate<Integer>() {
                     public boolean evaluate(Integer item) {
                         return isEven(item);
@@ -135,7 +135,7 @@ public class LazyFilterRejectPartitionTest {
         Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8);
 
         // When
-        TwoTuple<Iterable<Integer>, Iterable<Integer>> partitionResult = Lazy.partition(input,
+        Pair<Iterable<Integer>, Iterable<Integer>> partitionResult = Lazy.partition(input,
                 new Predicate<Integer>() {
                     public boolean evaluate(Integer item) {
                         return isEven(item);

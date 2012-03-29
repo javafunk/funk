@@ -9,7 +9,7 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.IntegerRange;
-import org.javafunk.funk.datastructures.tuples.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.*;
 
 import java.util.*;
@@ -128,11 +128,11 @@ public class Eager {
         return materialize(Lazy.map(iterable, function));
     }
 
-    public static <S, T> Collection<TwoTuple<S, T>> zip(Iterable<S> iterable1, Iterable<T> iterable2) {
+    public static <S, T> Collection<Pair<S, T>> zip(Iterable<S> iterable1, Iterable<T> iterable2) {
         return materialize(Lazy.zip(iterable1, iterable2));
     }
 
-    public static <T> Collection<TwoTuple<Integer, T>> enumerate(Iterable<T> iterable) {
+    public static <T> Collection<Pair<Integer, T>> enumerate(Iterable<T> iterable) {
         return materialize(Lazy.enumerate(iterable));
     }
 
@@ -140,7 +140,7 @@ public class Eager {
         return materialize(Lazy.equate(first, second, equivalence));
     }
 
-    public static <S, T> Collection<TwoTuple<T, S>> index(Iterable<S> iterable, final Indexer<? super S, T> indexer) {
+    public static <S, T> Collection<Pair<T, S>> index(Iterable<S> iterable, final Indexer<? super S, T> indexer) {
         return materialize(Lazy.index(iterable, indexer));
     }
 
@@ -218,8 +218,8 @@ public class Eager {
         return materialize(Lazy.drop(iterable, numberToDrop));
     }
 
-    public static <T> TwoTuple<Collection<T>, Collection<T>> partition(Iterable<T> iterable, Predicate<? super T> predicate) {
-        TwoTuple<Iterable<T>, Iterable<T>> partition = Lazy.partition(iterable, predicate);
+    public static <T> Pair<Collection<T>, Collection<T>> partition(Iterable<T> iterable, Predicate<? super T> predicate) {
+        Pair<Iterable<T>, Iterable<T>> partition = Lazy.partition(iterable, predicate);
         return tuple(materialize(partition.first()), materialize(partition.second()));
     }
 

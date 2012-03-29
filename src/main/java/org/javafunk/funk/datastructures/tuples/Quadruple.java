@@ -15,7 +15,7 @@ import org.javafunk.funk.functors.ordinals.Third;
 
 import static org.javafunk.funk.Literals.listWith;
 
-public class FourTuple<S, T, U, V>
+public class Quadruple<S, T, U, V>
         extends AbstractTuple
         implements First<S>, Second<T>, Third<U>, Fourth<V> {
     private S first;
@@ -23,26 +23,26 @@ public class FourTuple<S, T, U, V>
     private U third;
     private V fourth;
 
-    public FourTuple(S first, T second, U third, V fourth) {
+    public Quadruple(S first, T second, U third, V fourth) {
         this.first = first;
         this.second = second;
         this.third = third;
         this.fourth = fourth;
     }
 
-    public S first() {
+    @Override public S first() {
         return first;
     }
 
-    public T second() {
+    @Override public T second() {
         return second;
     }
 
-    public U third() {
+    @Override public U third() {
         return third;
     }
 
-    public V fourth() {
+    @Override public V fourth() {
         return fourth;
     }
 

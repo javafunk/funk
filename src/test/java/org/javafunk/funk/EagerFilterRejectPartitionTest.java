@@ -8,7 +8,7 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.tuples.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.Predicate;
 import org.junit.Test;
 
@@ -71,7 +71,7 @@ public class EagerFilterRejectPartitionTest {
         Collection<String> expectedNonMatchingItems = listWith("e", "f", "g", "h");
 
         // When
-        TwoTuple<Collection<String>, Collection<String>> partitionResults = Eager.partition(input,
+        Pair<Collection<String>, Collection<String>> partitionResults = Eager.partition(input,
                 new Predicate<String>() {
                     public boolean evaluate(String item) {
                         return item.compareTo("e") < 0;

@@ -8,7 +8,7 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.tuples.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.Pair;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -26,10 +26,10 @@ public class LazyZipEnumerateTest {
     public void shouldEnumerateSequence() {
         // Given
         Iterable<String> iterable = listWith("A", "B", "C");
-        Collection<TwoTuple<Integer, String>> expected = listWith(tuple(0, "A"), tuple(1, "B"), tuple(2, "C"));
+        Collection<Pair<Integer, String>> expected = listWith(tuple(0, "A"), tuple(1, "B"), tuple(2, "C"));
 
         // When
-        Iterable<TwoTuple<Integer, String>> actual = Lazy.enumerate(iterable);
+        Iterable<Pair<Integer, String>> actual = Lazy.enumerate(iterable);
 
         // Then
         assertThat(asList(actual), hasOnlyItemsInOrder(expected));
@@ -41,9 +41,9 @@ public class LazyZipEnumerateTest {
         Iterable<String> input = listWith("A", "B", "C");
 
         // When
-        Iterable<TwoTuple<Integer, String>> iterable = Lazy.enumerate(input);
-        Iterator<TwoTuple<Integer, String>> iterator1 = iterable.iterator();
-        Iterator<TwoTuple<Integer, String>> iterator2 = iterable.iterator();
+        Iterable<Pair<Integer, String>> iterable = Lazy.enumerate(input);
+        Iterator<Pair<Integer, String>> iterator1 = iterable.iterator();
+        Iterator<Pair<Integer, String>> iterator2 = iterable.iterator();
 
         // Then
         assertThat(iterator2.next(), is(tuple(0, "A")));
@@ -60,10 +60,10 @@ public class LazyZipEnumerateTest {
         Iterable<String> iterable1 = listWith("A", "B", "C");
         Iterable<Integer> iterable2 = listWith(1, 2, 3);
 
-        Collection<TwoTuple<String, Integer>> expected = listWith(tuple("A", 1), tuple("B", 2), tuple("C", 3));
+        Collection<Pair<String, Integer>> expected = listWith(tuple("A", 1), tuple("B", 2), tuple("C", 3));
 
         // When
-        Collection<TwoTuple<String, Integer>> actual = asList(Lazy.zip(iterable1, iterable2));
+        Collection<Pair<String, Integer>> actual = asList(Lazy.zip(iterable1, iterable2));
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
@@ -74,10 +74,10 @@ public class LazyZipEnumerateTest {
         // Given
         Iterable<String> iterable1 = listWith("A", "B", "C", "D");
         Iterable<Integer> iterable2 = listWith(1, 2, 3);
-        Collection<TwoTuple<String, Integer>> expected = listWith(tuple("A", 1), tuple("B", 2), tuple("C", 3));
+        Collection<Pair<String, Integer>> expected = listWith(tuple("A", 1), tuple("B", 2), tuple("C", 3));
 
         // When
-        Collection<TwoTuple<String, Integer>> actual = asList(Lazy.zip(iterable1, iterable2));
+        Collection<Pair<String, Integer>> actual = asList(Lazy.zip(iterable1, iterable2));
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
@@ -88,10 +88,10 @@ public class LazyZipEnumerateTest {
         // Given
         Iterable<String> iterable1 = listWith("A", "B", "C");
         Iterable<Integer> iterable2 = listWith(1, 2, 3, 4);
-        Collection<TwoTuple<String, Integer>> expected = listWith(tuple("A", 1), tuple("B", 2), tuple("C", 3));
+        Collection<Pair<String, Integer>> expected = listWith(tuple("A", 1), tuple("B", 2), tuple("C", 3));
 
         // When
-        Iterable<TwoTuple<String, Integer>> actual = Lazy.zip(iterable1, iterable2);
+        Iterable<Pair<String, Integer>> actual = Lazy.zip(iterable1, iterable2);
 
         // Then
         assertThat(asList(actual), hasOnlyItemsInOrder(expected));
@@ -104,9 +104,9 @@ public class LazyZipEnumerateTest {
         Iterable<Integer> inputIterable2 = listWith(1, 2, 3);
 
         // When
-        Iterable<TwoTuple<String, Integer>> outputIterable = Lazy.zip(inputIterable1, inputIterable2);
-        Iterator<TwoTuple<String, Integer>> firstIterator = outputIterable.iterator();
-        Iterator<TwoTuple<String, Integer>> secondIterator = outputIterable.iterator();
+        Iterable<Pair<String, Integer>> outputIterable = Lazy.zip(inputIterable1, inputIterable2);
+        Iterator<Pair<String, Integer>> firstIterator = outputIterable.iterator();
+        Iterator<Pair<String, Integer>> secondIterator = outputIterable.iterator();
 
         // Then
         assertThat(secondIterator.next(), is(tuple("A", 1)));

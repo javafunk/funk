@@ -8,7 +8,7 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.tuples.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.Indexer;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class EagerGroupIndexTest {
     public void shouldReturnATwoTupleWithTheIndexFirstAndTheElementSecond() throws Exception {
         // Given
         Iterable<String> input = listWith("apple", "pear", "lemon", "apricot", "orange", "papaya", "banana");
-        Collection<TwoTuple<Integer, String>> expectedOutput = listWith(
+        Collection<Pair<Integer, String>> expectedOutput = listWith(
                 tuple(5, "apple"),
                 tuple(4, "pear"),
                 tuple(5, "lemon"),
@@ -61,7 +61,7 @@ public class EagerGroupIndexTest {
                 tuple(6, "banana"));
 
         // When
-        Collection<TwoTuple<Integer, String>> actualOutput = Eager.index(input, new Indexer<String, Integer>() {
+        Collection<Pair<Integer, String>> actualOutput = Eager.index(input, new Indexer<String, Integer>() {
             public Integer index(String item) {
                 return item.length();
             }

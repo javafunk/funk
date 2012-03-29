@@ -30,8 +30,8 @@ public abstract class AbstractTuple {
         }
 
         EqualsBuilder equalsBuilder = new EqualsBuilder();
-        Iterable<TwoTuple<Object, Object>> zippedValues = zip(this.values(), ((AbstractTuple) other).values());
-        for (TwoTuple<Object, Object> values : zippedValues) {
+        Iterable<Pair<Object, Object>> zippedValues = zip(this.values(), ((AbstractTuple) other).values());
+        for (Pair<Object, Object> values : zippedValues) {
             equalsBuilder.append(values.first(), values.second());
         }
 

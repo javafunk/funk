@@ -8,7 +8,7 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.tuples.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.*;
 import org.javafunk.funk.iterators.*;
 import org.javafunk.funk.predicates.NotPredicate;
@@ -102,11 +102,11 @@ public class Lazy {
 
     }
 
-    public static <T> Iterable<TwoTuple<Integer, T>> enumerate(final Iterable<T> iterable) {
+    public static <T> Iterable<Pair<Integer, T>> enumerate(final Iterable<T> iterable) {
         return zip(integers(increasing()), iterable);
     }
 
-    public static <S, T> Iterable<TwoTuple<T, S>> index(Iterable<S> iterable, final Indexer<? super S, T> indexer) {
+    public static <S, T> Iterable<Pair<T, S>> index(Iterable<S> iterable, final Indexer<? super S, T> indexer) {
         return zip(map(iterable, new Mapper<S, T>() {
             public T map(S input) {
                 return indexer.index(input);
@@ -123,8 +123,8 @@ public class Lazy {
     }
 
     public static <T> Iterable<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equivalence<? super T> equivalence) {
-        return map(zip(first, second), new Mapper<TwoTuple<T, T>, Boolean>() {
-            public Boolean map(TwoTuple<T, T> input) {
+        return map(zip(first, second), new Mapper<Pair<T, T>, Boolean>() {
+            public Boolean map(Pair<T, T> input) {
                 return equivalence.equal(input.first(), input.second());
             }
         });
@@ -146,7 +146,7 @@ public class Lazy {
         };
     }
 
-    public static <T> TwoTuple<Iterable<T>,Iterable<T>> partition(Iterable<T> iterable, Predicate<? super T> predicate) {
+    public static <T> Pair<Iterable<T>,Iterable<T>> partition(Iterable<T> iterable, Predicate<? super T> predicate) {
         return tuple(filter(iterable, predicate), reject(iterable, predicate));
     }
 
@@ -185,9 +185,9 @@ public class Lazy {
         };
     }
 
-    public static <S, T> Iterable<TwoTuple<S, T>> zip(final Iterable<S> firstIterable, final Iterable<T> secondIterable) {
-        return new Iterable<TwoTuple<S, T>>(){
-            public Iterator<TwoTuple<S, T>> iterator() {
+    public static <S, T> Iterable<Pair<S, T>> zip(final Iterable<S> firstIterable, final Iterable<T> secondIterable) {
+        return new Iterable<Pair<S, T>>(){
+            public Iterator<Pair<S, T>> iterator() {
                 return new ZippedIterator<S, T>(firstIterable.iterator(), secondIterable.iterator());
             }
         };

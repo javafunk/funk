@@ -10,9 +10,9 @@ package org.javafunk.funk;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
-import org.javafunk.funk.datastructures.tuples.FourTuple;
-import org.javafunk.funk.datastructures.tuples.ThreeTuple;
-import org.javafunk.funk.datastructures.tuples.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.Quadruple;
+import org.javafunk.funk.datastructures.tuples.Pair;
+import org.javafunk.funk.datastructures.tuples.Triple;
 import org.junit.Test;
 
 import java.util.*;
@@ -439,38 +439,38 @@ public class LiteralsTest {
     @Test
     public void shouldReturnATwoTupleContainingTheSuppliedElements() {
         // Given
-        TwoTuple<Integer, String> expectedTwoTuple = new TwoTuple<Integer, String>(5, "Five");
+        Pair<Integer, String> expectedPair = new Pair<Integer, String>(5, "Five");
 
         // When
-        TwoTuple<Integer, String> actualTwoTuple = tuple(5, "Five");
+        Pair<Integer, String> actualPair = tuple(5, "Five");
 
         // Then
-        assertThat(actualTwoTuple, is(expectedTwoTuple));
+        assertThat(actualPair, is(expectedPair));
     }
 
     @Test
     public void shouldReturnAThreeTupleContainingTheSuppliedElements() {
         // Given
-        ThreeTuple<Integer, String, Boolean> expectedThreeTuple =
-                new ThreeTuple<Integer, String, Boolean>(5, "Five", true);
+        Triple<Integer, String, Boolean> expectedTriple =
+                new Triple<Integer, String, Boolean>(5, "Five", true);
 
         // When
-        ThreeTuple<Integer, String, Boolean> actualThreeTuple = tuple(5, "Five", true);
+        Triple<Integer, String, Boolean> actualTriple = tuple(5, "Five", true);
 
         // Then
-        assertThat(actualThreeTuple, is(expectedThreeTuple));
+        assertThat(actualTriple, is(expectedTriple));
     }
 
     @Test
     public void shouldReturnAFourTupleContainingTheSuppliedElements() {
         // Given
-        FourTuple<Integer, String, Boolean, Double> expectedFourTuple =
-                new FourTuple<Integer, String, Boolean, Double>(5, "Five", true, 1.6);
+        Quadruple<Integer, String, Boolean, Double> expectedQuadruple =
+                new Quadruple<Integer, String, Boolean, Double>(5, "Five", true, 1.6);
 
         // When
-        FourTuple<Integer, String, Boolean, Double> actualFourTuple = tuple(5, "Five", true, 1.6);
+        Quadruple<Integer, String, Boolean, Double> actualQuadruple = tuple(5, "Five", true, 1.6);
 
         // Then
-        assertThat(actualFourTuple, is(expectedFourTuple));
+        assertThat(actualQuadruple, is(expectedQuadruple));
     }
 }

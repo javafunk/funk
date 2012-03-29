@@ -16,7 +16,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.javafunk.funk.Multisets;
-import org.javafunk.funk.datastructures.tuples.TwoTuple;
+import org.javafunk.funk.datastructures.tuples.Pair;
 
 import java.util.*;
 
@@ -116,7 +116,7 @@ public class Matchers {
                 }
 
                 Iterator<T> actualItemIterator = actualItems.iterator();
-                for (TwoTuple<Integer, T> indexAndExpectedItem : enumerate(expectedItems)) {
+                for (Pair<Integer, T> indexAndExpectedItem : enumerate(expectedItems)) {
                     T actualItem = actualItemIterator.next();
                     if (!indexAndExpectedItem.second().equals(actualItem)) {
                         description
