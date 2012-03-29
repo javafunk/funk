@@ -2,10 +2,7 @@ package org.javafunk.funk;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
-import org.javafunk.funk.datastructures.tuples.Quadruple;
-import org.javafunk.funk.datastructures.tuples.Quintuple;
-import org.javafunk.funk.datastructures.tuples.Triple;
-import org.javafunk.funk.datastructures.tuples.Pair;
+import org.javafunk.funk.datastructures.tuples.*;
 
 import java.util.*;
 
@@ -72,6 +69,10 @@ public class Literals {
 
     public static <K, V> MapBuilder<K, V> mapWith(K key, V value) {
         return new MapBuilder<K, V>().with(key, value);
+    }
+
+    public static <S> Single<S> tuple(S first) {
+        return new Single<S>(first);
     }
 
     public static <S, T> Pair<S, T> tuple(S first, T second) {
