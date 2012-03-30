@@ -91,6 +91,10 @@ public class Literals {
         return new Quintuple<S, T, U, V, W>(first, second, third, fourth, fifth);
     }
 
+    public static <S, T, U, V, W, X> Sextuple<S, T, U, V, W, X> tuple(S first, T second, U third, V fourth, W fifth, X sixth) {
+        return new Sextuple<S, T, U, V, W, X>(first, second, third, fourth, fifth, sixth);
+    }
+
     public static class ListBuilder<E> extends ArrayList<E> {
         public ListBuilder<E> with(E... elements) {
             return and(asList(elements));

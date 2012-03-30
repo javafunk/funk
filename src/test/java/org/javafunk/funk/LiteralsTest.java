@@ -10,9 +10,8 @@ package org.javafunk.funk;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
-import org.javafunk.funk.datastructures.tuples.Quadruple;
-import org.javafunk.funk.datastructures.tuples.Pair;
-import org.javafunk.funk.datastructures.tuples.Triple;
+import org.javafunk.funk.datastructures.tuples.*;
+import org.javafunk.funk.testclasses.Name;
 import org.junit.Test;
 
 import java.util.*;
@@ -20,6 +19,7 @@ import java.util.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
+import static org.javafunk.funk.testclasses.Name.name;
 import static org.junit.Assert.assertThat;
 
 public class LiteralsTest {
@@ -437,7 +437,19 @@ public class LiteralsTest {
     }
 
     @Test
-    public void shouldReturnATwoTupleContainingTheSuppliedElements() {
+    public void shouldReturnASingleContainingTheSuppliedElement() {
+        // Given
+        Single<Integer> expectedSingle = new Single<Integer>(5);
+
+        // When
+        Single<Integer> actualSingle = tuple(5);
+
+        // Then
+        assertThat(actualSingle, is(expectedSingle));
+    }
+
+    @Test
+    public void shouldReturnAPairContainingTheSuppliedElements() {
         // Given
         Pair<Integer, String> expectedPair = new Pair<Integer, String>(5, "Five");
 
@@ -449,7 +461,7 @@ public class LiteralsTest {
     }
 
     @Test
-    public void shouldReturnAThreeTupleContainingTheSuppliedElements() {
+    public void shouldReturnATripleContainingTheSuppliedElements() {
         // Given
         Triple<Integer, String, Boolean> expectedTriple =
                 new Triple<Integer, String, Boolean>(5, "Five", true);
@@ -462,7 +474,7 @@ public class LiteralsTest {
     }
 
     @Test
-    public void shouldReturnAFourTupleContainingTheSuppliedElements() {
+    public void shouldReturnAQuadrupleContainingTheSuppliedElements() {
         // Given
         Quadruple<Integer, String, Boolean, Double> expectedQuadruple =
                 new Quadruple<Integer, String, Boolean, Double>(5, "Five", true, 1.6);
@@ -472,5 +484,31 @@ public class LiteralsTest {
 
         // Then
         assertThat(actualQuadruple, is(expectedQuadruple));
+    }
+
+    @Test
+    public void shouldReturnAQuintupleContainingTheSuppliedElements() {
+        // Given
+        Quintuple<Integer, String, Boolean, Double, Long> expectedQuintuple =
+                new Quintuple<Integer, String, Boolean, Double, Long>(5, "Five", true, 1.6, 26L);
+
+        // When
+        Quintuple<Integer, String, Boolean, Double, Long> actualQuintuple = tuple(5, "Five", true, 1.6, 26L);
+
+        // Then
+        assertThat(actualQuintuple, is(expectedQuintuple));
+    }
+
+    @Test
+    public void shouldReturnASextupleContainingTheSuppliedElements() {
+        // Given
+        Sextuple<Integer, String, Boolean, Double, Long, Name> expectedSextuple =
+                new Sextuple<Integer, String, Boolean, Double, Long, Name>(5, "Five", true, 1.6, 26L, name("fred"));
+
+        // When
+        Sextuple<Integer, String, Boolean, Double, Long, Name> actualSextuple = tuple(5, "Five", true, 1.6, 26L, name("fred"));
+
+        // Then
+        assertThat(actualSextuple, is(expectedSextuple));
     }
 }
