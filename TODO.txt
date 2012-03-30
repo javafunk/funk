@@ -16,12 +16,13 @@
 * Add whileTrue, untilTrue, doWhileTrue, doUntilTrue, ifTrue, unlessTrue with associated Condition and Block interfaces
 * Add an Option<T> class
 * Add an Either<S, T> class
-* Rename *Tuple classes to Single, Pair, Triple, Quadruple, Quintuple, Sextuple, Septuple, Octuple, Nonuple
+* Add Septuple, Octuple, Nonuple
 * Add equivalentTo matcher and By.* equivalences
 * Add Matcher versions of all methods taking Predicate arguments
 * Add eventually matcher, resultOfPolling,  Sampler<T>, and CompletableSampler<T>
 * Add SamplingIterator
 * Add RepeatedlyIterator
+* Add MemoisingIterator/Iterable that memoises the results of expensive iterations.
 * Consider Completable, Describable interfaces
 * Add a validIterableContaining matcher and use it in all tests.
 * Add a DirectoryIterator which iterates over File objects.
@@ -32,7 +33,8 @@
 * Add collection wrappers extension such as FunctionalList, FunctionalSet that have methods on them that delegate.
   to Iterables functions
   * e.g., list.reduce(Reducer<S, T> reduceFn); => reducedList
-* Add toString method to all iterators
+* Add toString method to all iterators/iterables
+* Add equality methods to all iterators/iterables
 * Add matchesAll and matchesAny matchers that take another matcher and apply it to all elements in a collection
 * Add trueForAll and trueForAny that takes only a Predicate, not a SelfDescribingPredicate.
 * Make Eager.min and Eager.max throw sensible exceptions when passed empty iterables.

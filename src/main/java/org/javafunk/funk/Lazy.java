@@ -197,6 +197,14 @@ public class Lazy {
         return slice(iterable, 1, null, 1);
     }
 
+    public static <S, T> Iterable<Pair<S, T>> cartesianProduct(final Iterable<S> firstIterable, final Iterable<T> secondIterable) {
+        return new Iterable<Pair<S,T>>() {
+            public Iterator<Pair<S, T>> iterator() {
+                return new TwoCartesianProductIterator<S, T>(firstIterable, secondIterable);
+            }
+        };
+    }
+
     private static class EachIterator<T> implements Iterator<T> {
         private Iterator<T> iterator;
         private Action<? super T> action;
