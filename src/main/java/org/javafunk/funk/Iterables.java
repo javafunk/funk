@@ -19,6 +19,10 @@ import static org.javafunk.funk.Eager.reduce;
 public class Iterables {
     private Iterables() {}
 
+    public static <T> Iterable<T> concat(Iterable<? extends Iterable<? extends T>> iterables) {
+        return com.google.common.collect.Iterables.concat(iterables);
+    }
+
     public static <T> List<T> asList(Iterable<? extends T> iterable) {
         return reduce(iterable, new ArrayList<T>(), new Reducer<T, List<T>>() {
             public List<T> accumulate(List<T> accumulator, T element) {

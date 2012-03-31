@@ -15,6 +15,7 @@ import org.javafunk.funk.predicates.NotPredicate;
 
 import java.util.Iterator;
 
+import static org.javafunk.funk.Iterables.concat;
 import static org.javafunk.funk.Literals.listWith;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.Sequences.increasing;
@@ -185,6 +186,14 @@ public class Lazy {
         };
     }
 
+    public static <S, T> Iterable<Pair<S, T>> cartesianProduct(final Iterable<S> firstIterable, final Iterable<T> secondIterable) {
+        return concat(map(firstIterable, new Mapper<S, Iterable<Pair<S, T>>>() {
+            public Iterable<Pair<S, T>> map(S input) {
+                return zip(cycle(listWith(input)), secondIterable);
+            }
+        }));
+    }
+
     public static <S, T> Iterable<Pair<S, T>> zip(final Iterable<S> firstIterable, final Iterable<T> secondIterable) {
         return new Iterable<Pair<S, T>>(){
             public Iterator<Pair<S, T>> iterator() {
@@ -195,15 +204,6 @@ public class Lazy {
 
     public static <T> Iterable<T> rest(final Iterable<T> iterable) {
         return slice(iterable, 1, null, 1);
-    }
-
-    public static <S, T> Iterable<Pair<S, T>> cartesianProduct(final Iterable<S> firstIterable, final Iterable<T> secondIterable) {
-        return com.google.common.collect.Iterables.concat(Lazy.map(firstIterable, new Mapper<S, Iterable<Pair<S, T>>>() {
-            @Override
-            public Iterable<Pair<S, T>> map(S input) {
-                return Lazy.zip(Lazy.cycle(listWith(input)), secondIterable);
-            }
-        }));
     }
 
     private static class EachIterator<T> implements Iterator<T> {
