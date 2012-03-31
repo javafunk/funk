@@ -198,11 +198,12 @@ public class Lazy {
     }
 
     public static <S, T> Iterable<Pair<S, T>> cartesianProduct(final Iterable<S> firstIterable, final Iterable<T> secondIterable) {
-        return new Iterable<Pair<S,T>>() {
-            public Iterator<Pair<S, T>> iterator() {
-                return new TwoCartesianProductIterator<S, T>(firstIterable, secondIterable);
+        return com.google.common.collect.Iterables.concat(Lazy.map(firstIterable, new Mapper<S, Iterable<Pair<S, T>>>() {
+            @Override
+            public Iterable<Pair<S, T>> map(S input) {
+                return Lazy.zip(Lazy.cycle(listWith(input)), secondIterable);
             }
-        };
+        }));
     }
 
     private static class EachIterator<T> implements Iterator<T> {
