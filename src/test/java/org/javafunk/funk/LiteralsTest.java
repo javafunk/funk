@@ -11,6 +11,7 @@ package org.javafunk.funk;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import org.javafunk.funk.datastructures.tuples.*;
+import org.javafunk.funk.testclasses.Colour;
 import org.javafunk.funk.testclasses.Name;
 import org.junit.Test;
 
@@ -19,6 +20,7 @@ import java.util.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
+import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Name.name;
 import static org.junit.Assert.assertThat;
 
@@ -510,5 +512,18 @@ public class LiteralsTest {
 
         // Then
         assertThat(actualSextuple, is(expectedSextuple));
+    }
+
+    @Test
+    public void shouldReturnASeptupleContainingTheSuppliedElements() {
+        // Given
+        Septuple<Integer, String, Boolean, Double, Long, Name, Colour> expectedSeptuple =
+                new Septuple<Integer, String, Boolean, Double, Long, Name, Colour>(5, "Five", true, 1.6, 26L, name("fred"), colour("red"));
+
+        // When
+        Septuple<Integer, String, Boolean, Double, Long, Name, Colour> actualSeptuple = tuple(5, "Five", true, 1.6, 26L, name("fred"), colour("red"));
+
+        // Then
+        assertThat(actualSeptuple, is(expectedSeptuple));
     }
 }
