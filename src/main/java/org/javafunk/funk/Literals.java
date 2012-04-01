@@ -103,6 +103,10 @@ public class Literals {
         return new Octuple<R, S, T, U, V, W, X, Y>(first, second, third, fourth, fifth, sixth, seventh, eighth);
     }
 
+    public static <R, S, T, U, V, W, X, Y, Z> Nonuple<R, S, T, U, V, W, X, Y, Z> tuple(R first, S second, T third, U fourth, V fifth, W sixth, X seventh, Y eighth, Z ninth) {
+        return new Nonuple<R, S, T, U, V, W, X, Y, Z>(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);
+    }
+
     public static class ListBuilder<E> extends ArrayList<E> {
         public ListBuilder<E> with(E... elements) {
             return and(asList(elements));

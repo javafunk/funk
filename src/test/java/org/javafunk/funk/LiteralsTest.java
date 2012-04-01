@@ -13,6 +13,7 @@ import com.google.common.collect.Multiset;
 import org.javafunk.funk.datastructures.tuples.*;
 import org.javafunk.funk.testclasses.Age;
 import org.javafunk.funk.testclasses.Colour;
+import org.javafunk.funk.testclasses.Location;
 import org.javafunk.funk.testclasses.Name;
 import org.junit.Test;
 
@@ -23,6 +24,7 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.testclasses.Age.age;
 import static org.javafunk.funk.testclasses.Colour.colour;
+import static org.javafunk.funk.testclasses.Location.location;
 import static org.javafunk.funk.testclasses.Name.name;
 import static org.junit.Assert.assertThat;
 
@@ -543,5 +545,20 @@ public class LiteralsTest {
 
         // Then
         assertThat(actualOctuple, is(expectedOctuple));
+    }
+
+    @Test
+    public void shouldReturnANonupleContainingTheSuppliedElements() {
+        // Given
+        Nonuple<Integer, String, Boolean, Double, Long, Name, Colour, Age, Location> expectedNonuple =
+                new Nonuple<Integer, String, Boolean, Double, Long, Name, Colour, Age, Location>(
+                        5, "Five", true, 1.6, 26L, name("fred"), colour("red"), age(25), location("London"));
+
+        // When
+        Nonuple<Integer, String, Boolean, Double, Long, Name, Colour, Age, Location> actualNonuple =
+                tuple(5, "Five", true, 1.6, 26L, name("fred"), colour("red"), age(25), location("London"));
+
+        // Then
+        assertThat(actualNonuple, is(expectedNonuple));
     }
 }
