@@ -14,28 +14,28 @@ import org.javafunk.funk.functors.ordinals.Third;
 
 import static org.javafunk.funk.Literals.listWith;
 
-public class Triple<S, T, U>
+public class Triple<R, S, T>
         extends AbstractTuple
-        implements First<S>, Second<T>, Third<U> {
-    private S first;
-    private T second;
-    private U third;
+        implements First<R>, Second<S>, Third<T> {
+    private R first;
+    private S second;
+    private T third;
 
-    public Triple(S first, T second, U third) {
+    public Triple(R first, S second, T third) {
         this.first = first;
         this.second = second;
         this.third = third;
     }
 
-    @Override public S first() {
+    @Override public R first() {
         return first;
     }
 
-    @Override public T second() {
+    @Override public S second() {
         return second;
     }
 
-    @Override public U third() {
+    @Override public T third() {
         return third;
     }
 

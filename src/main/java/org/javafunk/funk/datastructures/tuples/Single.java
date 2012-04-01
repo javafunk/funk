@@ -6,16 +6,16 @@ import java.util.ArrayList;
 
 import static org.javafunk.funk.Literals.listWith;
 
-public class Single<T>
+public class Single<R>
         extends AbstractTuple
-        implements First<T> {
-    private T first;
+        implements First<R> {
+    private R first;
 
-    public Single(T first) {
+    public Single(R first) {
         this.first = first;
     }
 
-    @Override public T first() {
+    @Override public R first() {
         return first;
     }
 

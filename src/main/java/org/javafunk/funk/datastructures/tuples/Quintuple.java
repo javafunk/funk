@@ -4,16 +4,16 @@ import org.javafunk.funk.functors.ordinals.*;
 
 import static org.javafunk.funk.Literals.listWith;
 
-public class Quintuple<S, T, U, V, W>
+public class Quintuple<R, S, T, U, V>
         extends AbstractTuple
-        implements First<S>, Second<T>, Third<U>, Fourth<V>, Fifth<W> {
-    private final S first;
-    private final T second;
-    private final U third;
-    private final V fourth;
-    private final W fifth;
+        implements First<R>, Second<S>, Third<T>, Fourth<U>, Fifth<V> {
+    private final R first;
+    private final S second;
+    private final T third;
+    private final U fourth;
+    private final V fifth;
 
-    public Quintuple(S first, T second, U third, V fourth, W fifth) {
+    public Quintuple(R first, S second, T third, U fourth, V fifth) {
         this.first = first;
         this.second = second;
         this.third = third;
@@ -21,23 +21,23 @@ public class Quintuple<S, T, U, V, W>
         this.fifth = fifth;
     }
 
-    @Override public S first() {
+    @Override public R first() {
         return first;
     }
 
-    @Override public T second() {
+    @Override public S second() {
         return second;
     }
 
-    @Override public U third() {
+    @Override public T third() {
         return third;
     }
 
-    @Override public V fourth() {
+    @Override public U fourth() {
         return fourth;
     }
 
-    @Override public W fifth() {
+    @Override public V fifth() {
         return fifth;
     }
 

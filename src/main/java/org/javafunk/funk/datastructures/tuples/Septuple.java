@@ -4,18 +4,18 @@ import org.javafunk.funk.functors.ordinals.*;
 
 import static org.javafunk.funk.Literals.listWith;
 
-public class Septuple<S, T, U, V, W, X, Y>
+public class Septuple<R, S, T, U, V, W, X>
         extends AbstractTuple
-        implements First<S>, Second<T>, Third<U>, Fourth<V>, Fifth<W>, Sixth<X>, Seventh<Y> {
-    private final S first;
-    private final T second;
-    private final U third;
-    private final V fourth;
-    private final W fifth;
-    private final X sixth;
-    private final Y seventh;
+        implements First<R>, Second<S>, Third<T>, Fourth<U>, Fifth<V>, Sixth<W>, Seventh<X> {
+    private final R first;
+    private final S second;
+    private final T third;
+    private final U fourth;
+    private final V fifth;
+    private final W sixth;
+    private final X seventh;
 
-    public Septuple(S first, T second, U third, V fourth, W fifth, X sixth, Y seventh) {
+    public Septuple(R first, S second, T third, U fourth, V fifth, W sixth, X seventh) {
         this.first = first;
         this.second = second;
         this.third = third;
@@ -29,31 +29,31 @@ public class Septuple<S, T, U, V, W, X, Y>
         return listWith(first, second, third, fourth, fifth, sixth, seventh);
     }
 
-    @Override public S first() {
+    @Override public R first() {
         return first;
     }
 
-    @Override public T second() {
+    @Override public S second() {
         return second;
     }
 
-    @Override public U third() {
+    @Override public T third() {
         return third;
     }
 
-    @Override public V fourth() {
+    @Override public U fourth() {
         return fourth;
     }
 
-    @Override public W fifth() {
+    @Override public V fifth() {
         return fifth;
     }
 
-    @Override public X sixth() {
+    @Override public W sixth() {
         return sixth;
     }
 
-    @Override public Y seventh() {
+    @Override public X seventh() {
         return seventh;
     }
 }

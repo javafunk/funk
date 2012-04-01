@@ -13,22 +13,22 @@ import org.javafunk.funk.functors.ordinals.Second;
 
 import static org.javafunk.funk.Literals.listWith;
 
-public class Pair<S, T>
+public class Pair<R, S>
         extends AbstractTuple
-        implements First<S>, Second<T> {
-    private S first;
-    private T second;
+        implements First<R>, Second<S> {
+    private R first;
+    private S second;
 
-    public Pair(S first, T second) {
+    public Pair(R first, S second) {
         this.first = first;
         this.second = second;
     }
 
-    @Override public S first() {
+    @Override public R first() {
         return first;
     }
 
-    @Override public T second() {
+    @Override public S second() {
         return second;
     }
 

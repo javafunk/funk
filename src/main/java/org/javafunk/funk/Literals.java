@@ -71,36 +71,36 @@ public class Literals {
         return new MapBuilder<K, V>().with(key, value);
     }
 
-    public static <S> Single<S> tuple(S first) {
-        return new Single<S>(first);
+    public static <R> Single<R> tuple(R first) {
+        return new Single<R>(first);
     }
 
-    public static <S, T> Pair<S, T> tuple(S first, T second) {
-        return new Pair<S, T>(first, second);
+    public static <R, S> Pair<R, S> tuple(R first, S second) {
+        return new Pair<R, S>(first, second);
     }
 
-    public static <S, T, U> Triple<S, T, U> tuple(S first, T second, U third) {
-        return new Triple<S, T, U>(first, second, third);
+    public static <R, S, T> Triple<R, S, T> tuple(R first, S second, T third) {
+        return new Triple<R, S, T>(first, second, third);
     }
 
-    public static <S, T, U, V> Quadruple<S, T, U, V> tuple(S first, T second, U third, V fourth) {
-        return new Quadruple<S, T, U, V>(first, second, third, fourth);
+    public static <R, S, T, U> Quadruple<R, S, T, U> tuple(R first, S second, T third, U fourth) {
+        return new Quadruple<R, S, T, U>(first, second, third, fourth);
     }
 
-    public static <S, T, U, V, W> Quintuple<S, T, U, V, W> tuple(S first, T second, U third, V fourth, W fifth) {
-        return new Quintuple<S, T, U, V, W>(first, second, third, fourth, fifth);
+    public static <R, S, T, U, V> Quintuple<R, S, T, U, V> tuple(R first, S second, T third, U fourth, V fifth) {
+        return new Quintuple<R, S, T, U, V>(first, second, third, fourth, fifth);
     }
 
-    public static <S, T, U, V, W, X> Sextuple<S, T, U, V, W, X> tuple(S first, T second, U third, V fourth, W fifth, X sixth) {
-        return new Sextuple<S, T, U, V, W, X>(first, second, third, fourth, fifth, sixth);
+    public static <R, S, T, U, V, W> Sextuple<R, S, T, U, V, W> tuple(R first, S second, T third, U fourth, V fifth, W sixth) {
+        return new Sextuple<R, S, T, U, V, W>(first, second, third, fourth, fifth, sixth);
     }
 
-    public static <S, T, U, V, W, X, Y> Septuple<S, T, U, V, W, X, Y> tuple(S first, T second, U third, V fourth, W fifth, X sixth, Y seventh) {
-        return new Septuple<S, T, U, V, W, X, Y>(first, second, third, fourth, fifth, sixth, seventh);
+    public static <R, S, T, U, V, W, X> Septuple<R, S, T, U, V, W, X> tuple(R first, S second, T third, U fourth, V fifth, W sixth, X seventh) {
+        return new Septuple<R, S, T, U, V, W, X>(first, second, third, fourth, fifth, sixth, seventh);
     }
 
-    public static <S, T, U, V, W, X, Y, Z> Octuple<S, T, U, V, W, X, Y, Z> tuple(S first, T second, U third, V fourth, W fifth, X sixth, Y seventh, Z eighth) {
-        return new Octuple<S, T, U, V, W, X, Y, Z>(first, second, third, fourth, fifth, sixth, seventh, eighth);
+    public static <R, S, T, U, V, W, X, Y> Octuple<R, S, T, U, V, W, X, Y> tuple(R first, S second, T third, U fourth, V fifth, W sixth, X seventh, Y eighth) {
+        return new Octuple<R, S, T, U, V, W, X, Y>(first, second, third, fourth, fifth, sixth, seventh, eighth);
     }
 
     public static class ListBuilder<E> extends ArrayList<E> {
