@@ -16,7 +16,7 @@
 * Add whileTrue, untilTrue, doWhileTrue, doUntilTrue, ifTrue, unlessTrue with associated Condition and Block interfaces
 * Add an Option<T> class
 * Add an Either<S, T> class
-* Add Septuple, Octuple, Nonuple
+* Add Octuple, Nonuple
 * Add equivalentTo matcher and By.* equivalences
 * Add Matcher versions of all methods taking Predicate arguments
 * Add eventually matcher, resultOfPolling,  Sampler<T>, and CompletableSampler<T>

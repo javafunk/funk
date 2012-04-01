@@ -99,6 +99,10 @@ public class Literals {
         return new Septuple<S, T, U, V, W, X, Y>(first, second, third, fourth, fifth, sixth, seventh);
     }
 
+    public static <S, T, U, V, W, X, Y, Z> Octuple<S, T, U, V, W, X, Y, Z> tuple(S first, T second, U third, V fourth, W fifth, X sixth, Y seventh, Z eighth) {
+        return new Octuple<S, T, U, V, W, X, Y, Z>(first, second, third, fourth, fifth, sixth, seventh, eighth);
+    }
+
     public static class ListBuilder<E> extends ArrayList<E> {
         public ListBuilder<E> with(E... elements) {
             return and(asList(elements));

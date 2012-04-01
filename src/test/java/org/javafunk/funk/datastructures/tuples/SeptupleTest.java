@@ -150,7 +150,7 @@ public class SeptupleTest {
 
     @Test
     public void shouldNotBeEqualIfHasDifferentThird() {
-// Given
+        // Given
         Septuple<Integer, String, Boolean, Double, Long, Name, Colour> septuple1 = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"));
         Septuple<Integer, String, Boolean, Double, Long, Name, Colour> septuple2 = tuple(5, "Five", false, 3.6, 23L, name("fred"), colour("blue"));
 
@@ -203,7 +203,7 @@ public class SeptupleTest {
 
     @Test
     public void shouldNotBeEqualIfHasDifferentSeventh() {
-    // Given
+        // Given
         Septuple<Integer, String, Boolean, Double, Long, Name, Colour> septuple1 = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"));
         Septuple<Integer, String, Boolean, Double, Long, Name, Colour> septuple2 = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("red"));
 
