@@ -286,6 +286,10 @@ public class Eager {
         return materialize(Lazy.repeat(iterable, numberOfTimesToRepeat));
     }
 
+    static <T> T second(Iterable<? extends T> iterable) {
+        return first(Lazy.rest(iterable));
+    }
+
     private static class SliceHelper {
         private static int resolveStartIndex(Integer start, Integer numberOfElements) {
             if (start == null || start + numberOfElements < 0) {
