@@ -3,7 +3,10 @@
 .idea/vcs.xml
 .idea/scopes/scope_settings.xml
 .idea/dictionaries/*
+.idea/*
 *.iws
 target/
 *.DS_Store
 *~
+*.ipr
+*.iml
