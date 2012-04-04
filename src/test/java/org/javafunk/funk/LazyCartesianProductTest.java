@@ -1,6 +1,8 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.tuples.Pair;
+import org.javafunk.funk.datastructures.tuples.Quadruple;
+import org.javafunk.funk.datastructures.tuples.Triple;
 import org.javafunk.funk.functors.Action;
 import org.junit.Assert;
 import org.junit.Test;
@@ -31,6 +33,64 @@ public class LazyCartesianProductTest {
 
         // When
         Collection<Pair<Integer, String>> actualCartesianProduct = materialize(Lazy.cartesianProduct(input1, input2));
+
+        // Then
+        assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void shouldReturnTheCartesianProductOfThreeSuppliedIterablesAsAnIterableOfTriples() throws Exception {
+        // Given
+        Iterable<Integer> input1 = listWith(1, 2);
+        Iterable<String> input2 = listWith("a", "b", "c");
+        Iterable<Long> input3 = listWith(1L);
+
+        Collection<Triple<Integer, String, Long>> expectedCartesianProduct = Literals.listWith(
+                tuple(1, "a", 1L), tuple(2, "a", 1L),
+                tuple(1, "b", 1L), tuple(2, "b", 1L),
+                tuple(1, "c", 1L), tuple(2, "c", 1L)
+        );
+
+        // When
+        Collection<Triple<Integer, String, Long>> actualCartesianProduct = materialize(Lazy.cartesianProduct(input1, input2, input3));
+
+        // Then
+        assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void shouldReturnTheCartesianProductOfFourSuppliedIterablesAsAnIterableOfQuadruples() throws Exception {
+        // Given
+        Iterable<Integer> input1 = listWith(1, 2);
+        Iterable<String> input2 = listWith("a", "b", "c");
+        Iterable<Long> input3 = listWith(1L, 2L, 3L);
+        Iterable<String> input4 = listWith("hi", "bye");
+
+        Collection<Quadruple<Integer, String, Long, String>> expectedCartesianProduct = Literals.listWith(
+                tuple(1, "a", 1L, "hi"), tuple(1, "a", 1L, "bye"),
+                tuple(1, "b", 1L, "hi"), tuple(1, "b", 1L, "bye"),
+                tuple(1, "c", 1L, "hi"), tuple(1, "c", 1L, "bye"),
+                tuple(2, "a", 1L, "hi"), tuple(2, "a", 1L, "bye"),
+                tuple(2, "b", 1L, "hi"), tuple(2, "b", 1L, "bye"),
+                tuple(2, "c", 1L, "hi"), tuple(2, "c", 1L, "bye"),
+                tuple(1, "a", 2L, "hi"), tuple(1, "a", 2L, "bye"),
+                tuple(1, "b", 2L, "hi"), tuple(1, "b", 2L, "bye"),
+                tuple(1, "c", 2L, "hi"), tuple(1, "c", 2L, "bye"),
+                tuple(2, "a", 2L, "hi"), tuple(2, "a", 2L, "bye"),
+                tuple(2, "b", 2L, "hi"), tuple(2, "b", 2L, "bye"),
+                tuple(2, "c", 2L, "hi"), tuple(2, "c", 2L, "bye"),
+                tuple(1, "a", 3L, "hi"), tuple(1, "a", 3L, "bye"),
+                tuple(1, "b", 3L, "hi"), tuple(1, "b", 3L, "bye"),
+                tuple(1, "c", 3L, "hi"), tuple(1, "c", 3L, "bye"),
+                tuple(2, "a", 3L, "hi"), tuple(2, "a", 3L, "bye"),
+                tuple(2, "b", 3L, "hi"), tuple(2, "b", 3L, "bye"),
+                tuple(2, "c", 3L, "hi"), tuple(2, "c", 3L, "bye")
+        );
+
+        // When
+        Collection<Quadruple<Integer, String, Long, String>> actualCartesianProduct = materialize(Lazy.cartesianProduct(input1, input2, input3, input4));
 
         // Then
         assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));

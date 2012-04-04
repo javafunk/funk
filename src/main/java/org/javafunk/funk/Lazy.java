@@ -9,18 +9,20 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.tuples.Pair;
+import org.javafunk.funk.datastructures.tuples.Quadruple;
 import org.javafunk.funk.datastructures.tuples.Triple;
 import org.javafunk.funk.functors.*;
 import org.javafunk.funk.iterators.*;
 import org.javafunk.funk.predicates.NotPredicate;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.javafunk.funk.Eager.first;
+import static org.javafunk.funk.Eager.second;
 import static org.javafunk.funk.Iterables.concat;
-import static org.javafunk.funk.Literals.listWith;
-import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.Sequences.increasing;
 import static org.javafunk.funk.Sequences.integers;
 
@@ -213,7 +215,7 @@ public class Lazy {
     private static <R, S, T> Mapper<Iterable<?>, Triple<R, S, T>> toTriple() {
         return new Mapper<Iterable<?>, Triple<R, S, T>>() {
             @Override public Triple<R, S, T> map(Iterable<?> iterable) {
-                return tuple((R)first(iterable), (S)first(rest(iterable)), (T)first(rest(rest(iterable))));
+                return tuple((R) first(iterable), (S) first(rest(iterable)), (T) first(rest(rest(iterable))));
             }
         };
     }
@@ -259,6 +261,37 @@ public class Lazy {
                 return iterable.iterator();
             }
         };
+    }
+
+    public static <S, T, V> Iterable<? extends Triple<S, T, V>> cartesianProduct(
+            Iterable<S> first, Iterable<T> second, Iterable<V> third) {
+        return map(cartesianProduct(listWith(first, second, third)), Mappers.<S, T, V>toTriple());
+    }
+
+    public static <S, T, U, V> Iterable<? extends Quadruple<S, T, U, V>> cartesianProduct(
+            Iterable<S> first, Iterable<T> second, Iterable<U> third, Iterable<V> fourth) {
+        return map(cartesianProduct(listWith(first, second, third, fourth)), Mappers.<S, T, U, V>toQuadruple());
+    }
+
+    private static Iterable<? extends Iterable<?>> cartesianProduct(final Iterable<? extends Iterable<?>> iterables) {
+        return cartesianProduct(listFrom(iterables));
+    }
+
+    private static Iterable<? extends Iterable<?>> cartesianProduct(final List<Iterable<?>> iterables) {
+        if(iterables.size() == 2) {
+            return cartesianProduct(first(iterables), second(iterables));
+        }
+
+        @SuppressWarnings("unchecked")
+        Iterable<Pair<Object, Iterable<Object>>> pairs = cartesianProduct(
+                (Iterable<Object>) first(iterables), (Iterable<Iterable<Object>>) cartesianProduct(rest(iterables)));
+
+        return map(pairs, new Mapper<Pair<Object, Iterable<Object>>, Iterable<Object>>() {
+            @Override
+            public Iterable<Object> map(Pair<Object, Iterable<Object>> input) {
+                return listWith(input.first()).and(input.second());
+            }
+        });
     }
 
     public static <T> Iterable<T> rest(final Iterable<T> iterable) {
