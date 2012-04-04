@@ -20,7 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.listWith;
 
-public class EagerFirstRestLastTest {
+public class EagerFirstSecondRestLastTest {
     @Test
     public void shouldReturnTheFirstElementFromTheSuppliedIterable() throws Exception {
         // Given
@@ -40,6 +40,29 @@ public class EagerFirstRestLastTest {
 
         // When
         Eager.first(input);
+
+        // Then a NoSuchElementException should be thrown.
+    }
+
+    @Test
+    public void shouldReturnTheSecondElementFromTheSuppliedIterable() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(10, 9, 8, 7);
+
+        // When
+        Integer output = Eager.second(input);
+
+        // Then
+        assertThat(output, is(9));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void shouldThrowANoSuchElementExceptionForSecondIfTheSuppliedIterableIsEmpty() throws Exception {
+        // Given
+        Iterable<Integer> input = new ArrayList<Integer>();
+
+        // When
+        Eager.second(input);
 
         // Then a NoSuchElementException should be thrown.
     }
