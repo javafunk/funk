@@ -9,12 +9,15 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.tuples.Pair;
+import org.javafunk.funk.datastructures.tuples.Triple;
 import org.javafunk.funk.functors.*;
 import org.javafunk.funk.iterators.*;
 import org.javafunk.funk.predicates.NotPredicate;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
+import static org.javafunk.funk.Eager.first;
 import static org.javafunk.funk.Iterables.concat;
 import static org.javafunk.funk.Literals.listWith;
 import static org.javafunk.funk.Literals.tuple;
@@ -194,10 +197,66 @@ public class Lazy {
         }));
     }
 
-    public static <S, T> Iterable<Pair<S, T>> zip(final Iterable<S> firstIterable, final Iterable<T> secondIterable) {
-        return new Iterable<Pair<S, T>>(){
-            public Iterator<Pair<S, T>> iterator() {
-                return new ZippedIterator<S, T>(firstIterable.iterator(), secondIterable.iterator());
+    public static <R, S> Iterable<Pair<R, S>> zip(final Iterable<R> firstIterable, final Iterable<S> secondIterable) {
+        return new Iterable<Pair<R, S>>(){
+            public Iterator<Pair<R, S>> iterator() {
+                return new TwoZippedIterator<R, S>(firstIterable.iterator(), secondIterable.iterator());
+            }
+        };
+    }
+
+    public static <R, S, T> Iterable<Triple<R, S, T>> zip(Iterable<R> firstIterable, Iterable<S> secondIterable, Iterable<T> thirdIterable) {
+        return map(zip(listWith(firstIterable, secondIterable, thirdIterable)), Lazy.<R, S, T>toTriple());
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <R, S, T> Mapper<Iterable<?>, Triple<R, S, T>> toTriple() {
+        return new Mapper<Iterable<?>, Triple<R, S, T>>() {
+            @Override public Triple<R, S, T> map(Iterable<?> iterable) {
+                return tuple((R)first(iterable), (S)first(rest(iterable)), (T)first(rest(rest(iterable))));
+            }
+        };
+    }
+
+    public static Iterable<? extends Iterable<?>> zip(final Iterable<? extends Iterable<?>> iterables) {
+        return new Iterable<Iterable<?>>() {
+            public Iterator<Iterable<?>> iterator() {
+                final Iterable<Iterator<?>> iterators = Eager.map(iterables, toIterators());
+                return new Iterator<Iterable<?>>() {
+                    public boolean hasNext() {
+                        return Eager.all(iterators, new Predicate<Iterator<?>>(){
+                            public boolean evaluate(Iterator<?> iterator) {
+                                return iterator.hasNext();
+                            }
+                        });
+                    }
+
+                    public Iterable<?> next() {
+                        if (hasNext()) {
+                            return Eager.map(iterators, new Mapper<Iterator<?>, Object>() {
+                                public Object map(Iterator<?> iterator) {
+                                    return iterator.next();
+                                }
+                            });
+                        } else {
+                            throw new NoSuchElementException();
+                        }
+                    }
+
+                    public void remove() {
+                        throw new UnsupportedOperationException();
+                    }
+                };
+            }
+        };
+
+
+    }
+
+    private static <T> Mapper<Iterable<? extends T>, Iterator<? extends T>> toIterators() {
+        return new Mapper<Iterable<? extends T>, Iterator<? extends T>>() {
+            @Override public Iterator<? extends T> map(Iterable<? extends T> iterable) {
+                return iterable.iterator();
             }
         };
     }

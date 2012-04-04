@@ -9,6 +9,7 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.tuples.Pair;
+import org.javafunk.funk.datastructures.tuples.Triple;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -16,6 +17,7 @@ import java.util.Iterator;
 
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.asList;
+import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.listWith;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.matchers.Matchers.hasOnlyItemsInOrder;
@@ -55,7 +57,7 @@ public class LazyZipEnumerateTest {
     }
 
     @Test
-    public void shouldZipIterables() {
+    public void shouldZipTwoIterables() {
         // Given
         Iterable<String> iterable1 = listWith("A", "B", "C");
         Iterable<Integer> iterable2 = listWith(1, 2, 3);
@@ -70,7 +72,7 @@ public class LazyZipEnumerateTest {
     }
 
     @Test
-    public void shouldZipIterablesWithLongerFirstIterable() {
+    public void shouldZipTwoIterablesWithLongerFirstIterable() {
         // Given
         Iterable<String> iterable1 = listWith("A", "B", "C", "D");
         Iterable<Integer> iterable2 = listWith(1, 2, 3);
@@ -84,7 +86,7 @@ public class LazyZipEnumerateTest {
     }
 
     @Test
-    public void shouldZipIterablesWithShorterFirstIterable() {
+    public void shouldZipTwoIterablesWithShorterFirstIterable() {
         // Given
         Iterable<String> iterable1 = listWith("A", "B", "C");
         Iterable<Integer> iterable2 = listWith(1, 2, 3, 4);
@@ -98,7 +100,7 @@ public class LazyZipEnumerateTest {
     }
 
     @Test
-    public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedZippedIterable() throws Exception {
+    public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedTwoZippedIterable() throws Exception {
         // Given
         Iterable<String> inputIterable1 = listWith("A", "B", "C");
         Iterable<Integer> inputIterable2 = listWith(1, 2, 3);
@@ -114,5 +116,21 @@ public class LazyZipEnumerateTest {
         assertThat(firstIterator.next(), is(tuple("A", 1)));
         assertThat(secondIterator.next(), is(tuple("C", 3)));
         assertThat(firstIterator.next(), is(tuple("B", 2)));
+    }
+
+    @Test
+    public void shouldZipThreeIterables() throws Exception {
+        // Given
+        Iterable<String> iterable1 = listWith("A", "B", "C");
+        Iterable<Integer> iterable2 = listWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = listWith(true, false, true);
+
+        Collection<Triple<String, Integer, Boolean>> expected = listWith(tuple("A", 1, true), tuple("B", 2, false), tuple("C", 3, true));
+
+        // When
+        Collection<Triple<String, Integer, Boolean>> actual = materialize(Lazy.zip(iterable1, iterable2, iterable3));
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 }

@@ -14,11 +14,11 @@ import java.util.Iterator;
 
 import static org.javafunk.funk.Literals.tuple;
 
-public class ZippedIterator<S, T> implements Iterator<Pair<S, T>> {
+public class TwoZippedIterator<S, T> implements Iterator<Pair<S, T>> {
     private Iterator<? extends S> firstIterator;
     private Iterator<? extends T> secondIterator;
 
-    public ZippedIterator(Iterator<? extends S> firstIterator, Iterator<? extends T> secondIterator) {
+    public TwoZippedIterator(Iterator<? extends S> firstIterator, Iterator<? extends T> secondIterator) {
         this.firstIterator = firstIterator;
         this.secondIterator = secondIterator;
     }
