@@ -15,7 +15,7 @@ import static org.javafunk.funk.Literals.listWith;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
-public class EagerTimesEachTest {
+public class EagerlyTimesEachTest {
     @Test
     @SuppressWarnings("unchecked")
     public void shouldExecuteSuppliedFunctionOnEachElement() {
@@ -26,7 +26,7 @@ public class EagerTimesEachTest {
                 (Target<Object>) mock(Target.class));
 
         // When
-        Eager.each(targets, new Action<Target<Object>>() {
+        Eagerly.each(targets, new Action<Target<Object>>() {
             @Override
             public void on(Target<Object> input) {
                 input.doSomething();
@@ -46,7 +46,7 @@ public class EagerTimesEachTest {
         final Target<Integer> target = (Target<Integer>) mock(Target.class);
 
         // When
-        Eager.times(5, new Action<Integer>(){
+        Eagerly.times(5, new Action<Integer>() {
             public void on(Integer input) {
                 target.doSomethingWith(input);
             }
@@ -65,7 +65,7 @@ public class EagerTimesEachTest {
         final Target<Integer> target = (Target<Integer>) mock(Target.class);
 
         // When
-        Eager.times(0, new Action<Integer>(){
+        Eagerly.times(0, new Action<Integer>() {
             public void on(Integer input) {
                 target.doSomethingWith(input);
             }
@@ -82,7 +82,7 @@ public class EagerTimesEachTest {
         Integer numberOfTimes = -3;
 
         // When
-        Eager.times(numberOfTimes, new Action<Integer>() {
+        Eagerly.times(numberOfTimes, new Action<Integer>() {
             public void on(Integer input) {
                 target.doSomethingWith(input);
             }

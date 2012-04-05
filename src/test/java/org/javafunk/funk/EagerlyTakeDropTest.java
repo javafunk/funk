@@ -18,7 +18,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.listWith;
 
-public class EagerTakeDropTest {
+public class EagerlyTakeDropTest {
     @Test
     public void shouldTakeTheSpecifiedNumberOfElements() {
         // Given
@@ -26,7 +26,7 @@ public class EagerTakeDropTest {
         Collection<String> expectedOutput = listWith("a", "b", "c", "d", "e");
 
         // When
-        Collection<String> actualOutput = Eager.take(input, 5);
+        Collection<String> actualOutput = Eagerly.take(input, 5);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -40,7 +40,7 @@ public class EagerTakeDropTest {
         Integer numberToTake = 0;
 
         // When
-        Collection<String> actualOutput = Eager.take(input, numberToTake);
+        Collection<String> actualOutput = Eagerly.take(input, numberToTake);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -53,7 +53,7 @@ public class EagerTakeDropTest {
         Integer numberToTake = -5;
 
         // When
-        Eager.take(input, numberToTake);
+        Eagerly.take(input, numberToTake);
 
         // Then an IllegalArgumentException is thrown
     }
@@ -65,7 +65,7 @@ public class EagerTakeDropTest {
         Collection<String> expectedOutput = listWith("f", "g", "h", "i", "j");
 
         // When
-        Collection<String> actualOutput = Eager.drop(input, 5);
+        Collection<String> actualOutput = Eagerly.drop(input, 5);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -79,7 +79,7 @@ public class EagerTakeDropTest {
         Integer numberToDrop = 0;
 
         // When
-        Collection<String> actualOutput = Eager.drop(input, numberToDrop);
+        Collection<String> actualOutput = Eagerly.drop(input, numberToDrop);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -92,7 +92,7 @@ public class EagerTakeDropTest {
         Integer numberToDrop = -4;
 
         // When
-        Eager.drop(input, numberToDrop);
+        Eagerly.drop(input, numberToDrop);
 
         // Then an IllegalArgumentException is thrown
     }
@@ -104,7 +104,7 @@ public class EagerTakeDropTest {
         Collection<Integer> expectedOutput = listWith(1, 2, 1, 2);
 
         // When
-        Collection<Integer> actualOutput = Eager.takeWhile(input, new Predicate<Integer>(){
+        Collection<Integer> actualOutput = Eagerly.takeWhile(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return item < 3;
             }
@@ -121,7 +121,7 @@ public class EagerTakeDropTest {
         Collection<Integer> expectedOutput = listWith(1, 2, 3);
 
         // When
-        Collection<Integer> actualOutput = Eager.takeUntil(input, new Predicate<Integer>(){
+        Collection<Integer> actualOutput = Eagerly.takeUntil(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return item > 3;
             }
@@ -138,7 +138,7 @@ public class EagerTakeDropTest {
         Collection<String> expectedOutput = listWith("aaa", "aaaa");
 
         // When
-        Collection<String> actualOutput = Eager.dropWhile(input, new Predicate<String>(){
+        Collection<String> actualOutput = Eagerly.dropWhile(input, new Predicate<String>() {
             @Override
             public boolean evaluate(String item) {
                 return item.length() < 3;
@@ -156,7 +156,7 @@ public class EagerTakeDropTest {
         Collection<String> expectedOutput = listWith("aab", "aba", "aba");
 
         // When
-        Collection<String> actualOutput = Eager.dropUntil(input, new Predicate<String>() {
+        Collection<String> actualOutput = Eagerly.dropUntil(input, new Predicate<String>() {
             @Override
             public boolean evaluate(String item) {
                 return item.contains("b");

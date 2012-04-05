@@ -17,7 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.listWith;
 
-public class EagerEquateTest {
+public class EagerlyEquateTest {
     @Test
     public void shouldReturnACollectionContainingTheResultOfEquatingEachElementUsingTheSuppliedEquator() throws Exception {
         // Given
@@ -26,7 +26,7 @@ public class EagerEquateTest {
         Collection<Boolean> expectedEqualityResult = listWith(true, false, true);
 
         // When
-        Collection<Boolean> actualEqualityResult = Eager.equate(first, second, new Equivalence<String>() {
+        Collection<Boolean> actualEqualityResult = Eagerly.equate(first, second, new Equivalence<String>() {
             public boolean equal(String first, String second) {
                 return first.compareToIgnoreCase(second) == 0;
             }
@@ -44,7 +44,7 @@ public class EagerEquateTest {
         Collection<Boolean> expectedEqualityResult = listWith(true, false, true);
 
         // When
-        Collection<Boolean> actualEqualityResult = Eager.equate(first, second, new Equivalence<String>() {
+        Collection<Boolean> actualEqualityResult = Eagerly.equate(first, second, new Equivalence<String>() {
             public boolean equal(String first, String second) {
                 return first.compareToIgnoreCase(second) == 0;
             }
@@ -62,7 +62,7 @@ public class EagerEquateTest {
         Collection<Boolean> expectedEqualityResult = listWith(true, false, true);
 
         // When
-        Collection<Boolean> actualEqualityResult = Eager.equate(first, second, new Equivalence<String>() {
+        Collection<Boolean> actualEqualityResult = Eagerly.equate(first, second, new Equivalence<String>() {
             public boolean equal(String first, String second) {
                 return first.compareToIgnoreCase(second) == 0;
             }

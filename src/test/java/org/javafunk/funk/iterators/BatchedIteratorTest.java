@@ -8,7 +8,7 @@
  */
 package org.javafunk.funk.iterators;
 
-import org.javafunk.funk.Lazy;
+import org.javafunk.funk.Lazily;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -30,7 +30,7 @@ public class BatchedIteratorTest {
         Iterator<String> expectedSecondBatch = listWith("c", "d").iterator();
 
         // When
-        Iterator<Iterable<String>> returnedIterator = Lazy.batch(input, 2).iterator();
+        Iterator<Iterable<String>> returnedIterator = Lazily.batch(input, 2).iterator();
         Iterator<String> actualFirstBatch = returnedIterator.next().iterator();
         Iterator<String> actualSecondBatch = returnedIterator.next().iterator();
 
@@ -48,7 +48,7 @@ public class BatchedIteratorTest {
         int batchSize = 0;
 
         // When
-        Lazy.batch(input, batchSize);
+        Lazily.batch(input, batchSize);
 
         // Then an IllegalArgumentException is thrown
     }
@@ -60,7 +60,7 @@ public class BatchedIteratorTest {
         int batchSize = -3;
 
         // When
-        Lazy.batch(input, batchSize);
+        Lazily.batch(input, batchSize);
 
         // Then an IllegalArgumentException is thrown
     }
@@ -71,7 +71,7 @@ public class BatchedIteratorTest {
         Iterable<Integer> input = listWith(1, 2, 3, 4);
 
         // When
-        Iterator<Iterable<Integer>> returnedIterator = Lazy.batch(input, 2).iterator();
+        Iterator<Iterable<Integer>> returnedIterator = Lazily.batch(input, 2).iterator();
         Iterator<Integer> firstBatchIterator = returnedIterator.next().iterator();
         Iterator<Integer> secondBatchIterator = returnedIterator.next().iterator();
 
@@ -88,7 +88,7 @@ public class BatchedIteratorTest {
         Iterable<Integer> input = listWith(1, 2);
 
         // When
-        Iterator<Iterable<Integer>> returnedIterator = Lazy.batch(input, 1).iterator();
+        Iterator<Iterable<Integer>> returnedIterator = Lazily.batch(input, 1).iterator();
 
         // Then
         assertThat(returnedIterator.hasNext(), is(true));
@@ -121,7 +121,7 @@ public class BatchedIteratorTest {
         Collection<Integer> expectedSecondBatch = listWith(4);
 
         // When
-        Iterator<Iterable<Integer>> returnedIterator = Lazy.batch(input, 3).iterator();
+        Iterator<Iterable<Integer>> returnedIterator = Lazily.batch(input, 3).iterator();
         Collection<Integer> actualFirstBatch = materialize(returnedIterator.next());
         Collection<Integer> actualSecondBatch = materialize(returnedIterator.next());
 
@@ -136,7 +136,7 @@ public class BatchedIteratorTest {
         Iterable<String> input = listWith("a", "b");
 
         // When
-        Iterator<Iterable<String>> returnedIterator = Lazy.batch(input, 1).iterator();
+        Iterator<Iterable<String>> returnedIterator = Lazily.batch(input, 1).iterator();
         Iterator<String> firstBatchIterator = returnedIterator.next().iterator();
         Iterator<String> secondBatchIterator = returnedIterator.next().iterator();
 
@@ -169,7 +169,7 @@ public class BatchedIteratorTest {
         Iterable<String> input = listWith("a", "b");
 
         // When
-        Iterator<Iterable<String>> returnedIterator = Lazy.batch(input, 1).iterator();
+        Iterator<Iterable<String>> returnedIterator = Lazily.batch(input, 1).iterator();
         Iterator<String> firstBatchIterator = returnedIterator.next().iterator();
         Iterator<String> secondBatchIterator = returnedIterator.next().iterator();
 
@@ -201,7 +201,7 @@ public class BatchedIteratorTest {
         Iterator<String> expectedSecondBatch = listWith(null, "d").iterator();
 
         // When
-        Iterator<Iterable<String>> returnedIterator = Lazy.batch(input, 2).iterator();
+        Iterator<Iterable<String>> returnedIterator = Lazily.batch(input, 2).iterator();
         Iterator<String> actualFirstBatch = returnedIterator.next().iterator();
         Iterator<String> actualSecondBatch = returnedIterator.next().iterator();
 

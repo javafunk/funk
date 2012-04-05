@@ -16,7 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.listWith;
 
-public class EagerBatchTest {
+public class EagerlyBatchTest {
     @Test
     public void shouldReturnTheElementsOfTheSuppliedIterableInBatchesOfTheSpecifiedSize() {
         // Given
@@ -26,7 +26,7 @@ public class EagerBatchTest {
         Collection<Collection<Integer>> expectedBatches = listWith(expectedFirstBatch, expectedSecondBatch);
 
         // When
-        Collection<Collection<Integer>> actualBatches = Eager.batch(input, 3);
+        Collection<Collection<Integer>> actualBatches = Eagerly.batch(input, 3);
 
         // Then
         assertThat(actualBatches, is(expectedBatches));
@@ -39,7 +39,7 @@ public class EagerBatchTest {
         Integer batchSize = 0;
 
         // When
-        Eager.batch(input, batchSize);
+        Eagerly.batch(input, batchSize);
 
         // Then an IllegalArgumentException is thrown.
     }
@@ -51,7 +51,7 @@ public class EagerBatchTest {
         Integer batchSize = -5;
 
         // When
-        Eager.batch(input, batchSize);
+        Eagerly.batch(input, batchSize);
 
         // Then an IllegalArgumentException is thrown.
     }

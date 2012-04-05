@@ -19,16 +19,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static org.javafunk.funk.Eager.first;
-import static org.javafunk.funk.Eager.second;
+import static org.javafunk.funk.Eagerly.first;
+import static org.javafunk.funk.Eagerly.second;
 import static org.javafunk.funk.Iterables.concat;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.Mappers.toIterators;
 import static org.javafunk.funk.Sequences.increasing;
 import static org.javafunk.funk.Sequences.integers;
 
-public class Lazy {
-    private Lazy() {
+public class Lazily {
+    private Lazily() {
     }
 
     public static <T> Iterable<Iterable<T>> batch(final Iterable<T> iterable, final int batchSize) {
@@ -249,7 +249,7 @@ public class Lazy {
     private static Iterable<? extends Iterable<?>> zip(final Iterable<? extends Iterable<?>> iterables) {
         return new Iterable<Iterable<?>>() {
             public Iterator<Iterable<?>> iterator() {
-                final Iterable<? extends Iterator<?>> iterators = Eager.map(iterables, toIterators());
+                final Iterable<? extends Iterator<?>> iterators = Eagerly.map(iterables, toIterators());
                 return new ZippedIterator(iterators);
             }
         };
@@ -263,7 +263,7 @@ public class Lazy {
         }
 
         public boolean hasNext() {
-            return Eager.all(iterators, new Predicate<Iterator<?>>() {
+            return Eagerly.all(iterators, new Predicate<Iterator<?>>() {
                 public boolean evaluate(Iterator<?> iterator) {
                     return iterator.hasNext();
                 }
@@ -272,7 +272,7 @@ public class Lazy {
 
         public Iterable<?> next() {
             if (hasNext()) {
-                return Eager.map(iterators, new Mapper<Iterator<?>, Object>() {
+                return Eagerly.map(iterators, new Mapper<Iterator<?>, Object>() {
                     public Object map(Iterator<?> iterator) {
                         return iterator.next();
                     }

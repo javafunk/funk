@@ -7,7 +7,7 @@ import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.listWith;
 import static org.junit.Assert.assertThat;
 
-public class LazyRestTest {
+public class LazilyRestTest {
     @Test
     public void shouldReturnTheRestOfTheIterable(){
         //given
@@ -15,7 +15,7 @@ public class LazyRestTest {
         Iterable<String> expectedRest = listWith("b", "c", "d");
 
         //when
-        Iterable<String> rest = Lazy.rest(iterable);
+        Iterable<String> rest = Lazily.rest(iterable);
         
         //then
         assertThat(materialize(rest), equalTo(expectedRest));
@@ -28,7 +28,7 @@ public class LazyRestTest {
         Iterable<String> expectedRest = Iterables.empty();
 
         //when
-        Iterable<String> rest = Lazy.rest(iterable);
+        Iterable<String> rest = Lazily.rest(iterable);
 
         //then
         assertThat(materialize(rest), equalTo(expectedRest));
@@ -41,7 +41,7 @@ public class LazyRestTest {
         Iterable<String> expectedRest = Iterables.empty();
 
         //when
-        Iterable<String> rest = Lazy.rest(iterable);
+        Iterable<String> rest = Lazily.rest(iterable);
 
         //then
         assertThat(materialize(rest), equalTo(expectedRest));

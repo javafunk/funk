@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Eager.take;
+import static org.javafunk.funk.Eagerly.take;
 import static org.javafunk.funk.Generators.toGeneratable;
 import static org.javafunk.funk.Literals.listWith;
 

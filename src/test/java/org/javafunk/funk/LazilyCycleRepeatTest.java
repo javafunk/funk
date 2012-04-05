@@ -16,14 +16,14 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.listWith;
 import static org.junit.Assert.assertThat;
 
-public class LazyCycleRepeatTest {
+public class LazilyCycleRepeatTest {
     @Test
     public void shouldCycleTheSuppliedIterableInfinitely() {
         // Given
         Iterable<String> input = listWith("Red", "Green", "Blue");
 
         // When
-        Iterable<String> output = Lazy.cycle(input);
+        Iterable<String> output = Lazily.cycle(input);
         Iterator<String> cyclicIterator = output.iterator();
 
         // Then
@@ -40,7 +40,7 @@ public class LazyCycleRepeatTest {
         Iterable<String> input = listWith("Red", "Green", "Blue");
 
         // When
-        Iterable<String> iterable = Lazy.cycle(input);
+        Iterable<String> iterable = Lazily.cycle(input);
         Iterator<String> iterator1 = iterable.iterator();
         Iterator<String> iterator2 = iterable.iterator();
 
@@ -59,7 +59,7 @@ public class LazyCycleRepeatTest {
         Iterable<String> input = listWith("Black", "White");
 
         // When
-        Iterable<String> output = Lazy.repeat(input, 2);
+        Iterable<String> output = Lazily.repeat(input, 2);
         Iterator<String> repeatedIterator = output.iterator();
 
         // Then
@@ -80,7 +80,7 @@ public class LazyCycleRepeatTest {
         Iterable<String> input = listWith("Black", "White");
 
         // When
-        Iterable<String> iterable = Lazy.repeat(input, 2);
+        Iterable<String> iterable = Lazily.repeat(input, 2);
         Iterator<String> iterator1 = iterable.iterator();
         Iterator<String> iterator2 = iterable.iterator();
 

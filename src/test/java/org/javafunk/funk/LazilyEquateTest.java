@@ -17,7 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.listWith;
 
-public class LazyEquateTest {
+public class LazilyEquateTest {
     @Test
     public void shouldReturnAnIterableContainingTheResultOfEquatingEachElementInTheSuppliedIterables() throws Exception {
         // Given
@@ -25,7 +25,7 @@ public class LazyEquateTest {
         Iterable<String> second = listWith("DOG", "BAT", "GOLDFISH");
         
         // When
-        Iterable<Boolean> equateResultIterable = Lazy.equate(first, second, new Equivalence<String>() {
+        Iterable<Boolean> equateResultIterable = Lazily.equate(first, second, new Equivalence<String>() {
             public boolean equal(String first, String second) {
                 return first.compareToIgnoreCase(second) == 0;
             }
@@ -49,7 +49,7 @@ public class LazyEquateTest {
         Iterable<String> second = listWith("DOG", "BAT", "GOLDFISH", "HORSE", "PIG");
 
         // When
-        Iterable<Boolean> equateResultIterable = Lazy.equate(first, second, new Equivalence<String>() {
+        Iterable<Boolean> equateResultIterable = Lazily.equate(first, second, new Equivalence<String>() {
             public boolean equal(String first, String second) {
                 return first.compareToIgnoreCase(second) == 0;
             }
@@ -73,7 +73,7 @@ public class LazyEquateTest {
         Iterable<String> second = listWith("DOG", "BAT", "GOLDFISH");
 
         // When
-        Iterable<Boolean> equateResultIterable = Lazy.equate(first, second, new Equivalence<String>() {
+        Iterable<Boolean> equateResultIterable = Lazily.equate(first, second, new Equivalence<String>() {
             public boolean equal(String first, String second) {
                 return first.compareToIgnoreCase(second) == 0;
             }
@@ -97,7 +97,7 @@ public class LazyEquateTest {
         Iterable<String> second = listWith("DOG", "BAT", "GOLDFISH");
 
         // When
-        Iterable<Boolean> iterable = Lazy.equate(first, second, new Equivalence<String>() {
+        Iterable<Boolean> iterable = Lazily.equate(first, second, new Equivalence<String>() {
             public boolean equal(String first, String second) {
                 return first.compareToIgnoreCase(second) == 0;
             }

@@ -20,14 +20,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.listWith;
 
-public class EagerFirstSecondRestLastTest {
+public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnTheFirstElementFromTheSuppliedIterable() throws Exception {
         // Given
         Iterable<Integer> input = listWith(10, 9, 8, 7);
 
         // When
-        Integer output = Eager.first(input);
+        Integer output = Eagerly.first(input);
 
         // Then
         assertThat(output, is(10));
@@ -39,7 +39,7 @@ public class EagerFirstSecondRestLastTest {
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Eager.first(input);
+        Eagerly.first(input);
 
         // Then a NoSuchElementException should be thrown.
     }
@@ -50,7 +50,7 @@ public class EagerFirstSecondRestLastTest {
         Iterable<Integer> input = listWith(10, 9, 8, 7);
 
         // When
-        Integer output = Eager.second(input);
+        Integer output = Eagerly.second(input);
 
         // Then
         assertThat(output, is(9));
@@ -62,7 +62,7 @@ public class EagerFirstSecondRestLastTest {
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Eager.second(input);
+        Eagerly.second(input);
 
         // Then a NoSuchElementException should be thrown.
     }
@@ -73,7 +73,7 @@ public class EagerFirstSecondRestLastTest {
         Iterable<Integer> input = listWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Integer output = Eager.first(input, new Predicate<Integer>(){
+        Integer output = Eagerly.first(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -93,7 +93,7 @@ public class EagerFirstSecondRestLastTest {
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Eager.first(input, new Predicate<Integer>(){
+        Eagerly.first(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -112,7 +112,7 @@ public class EagerFirstSecondRestLastTest {
         Iterable<Integer> input = listWith(1, 3, 5, 7);
 
         // When
-        Eager.first(input, new Predicate<Integer>(){
+        Eagerly.first(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -132,7 +132,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = listWith(10, 9, 8, 7);
 
         // When
-        Collection<Integer> actualOutput = Eager.first(input, 4);
+        Collection<Integer> actualOutput = Eagerly.first(input, 4);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -145,7 +145,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = listWith(3, 2, 1);
 
         // When
-        Collection<Integer> actualOutput = Eager.first(input, 4);
+        Collection<Integer> actualOutput = Eagerly.first(input, 4);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -158,7 +158,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.first(input, 3);
+        Collection<Integer> actualOutput = Eagerly.first(input, 3);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -171,7 +171,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.first(input, 0);
+        Collection<Integer> actualOutput = Eagerly.first(input, 0);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -183,7 +183,7 @@ public class EagerFirstSecondRestLastTest {
         Iterable<Integer> input = listWith(3, 2, 1);
 
         // When
-        Eager.first(input, -3);
+        Eagerly.first(input, -3);
 
         // Then an IllegalArgumentException should be thrown.
     }
@@ -195,7 +195,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = listWith(8, 6);
 
         // When
-        Collection<Integer> actualOutput = Eager.first(input, 2, new Predicate<Integer>(){
+        Collection<Integer> actualOutput = Eagerly.first(input, 2, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -216,7 +216,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = listWith(4, 2);
 
         // When
-        Collection<Integer> actualOutput = Eager.first(input, 4, new Predicate<Integer>(){
+        Collection<Integer> actualOutput = Eagerly.first(input, 4, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -237,7 +237,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.first(input, 3, new Predicate<Integer>(){
+        Collection<Integer> actualOutput = Eagerly.first(input, 3, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -258,7 +258,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.first(input, 0, new Predicate<Integer>(){
+        Collection<Integer> actualOutput = Eagerly.first(input, 0, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -279,7 +279,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.first(input, 2, new Predicate<Integer>(){
+        Collection<Integer> actualOutput = Eagerly.first(input, 2, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -299,7 +299,7 @@ public class EagerFirstSecondRestLastTest {
         Iterable<Integer> input = listWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Integer output = Eager.last(input);
+        Integer output = Eagerly.last(input);
 
         // Then
         assertThat(output, is(1));
@@ -311,7 +311,7 @@ public class EagerFirstSecondRestLastTest {
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Eager.last(input);
+        Eagerly.last(input);
 
         // Then a NoSuchElementException should be thrown.
     }
@@ -322,7 +322,7 @@ public class EagerFirstSecondRestLastTest {
         Iterable<Integer> input = listWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Integer output = Eager.last(input, new Predicate<Integer>() {
+        Integer output = Eagerly.last(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -342,7 +342,7 @@ public class EagerFirstSecondRestLastTest {
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Eager.last(input, new Predicate<Integer>() {
+        Eagerly.last(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -361,7 +361,7 @@ public class EagerFirstSecondRestLastTest {
         Iterable<Integer> input = listWith(1, 3, 5, 7);
 
         // When
-        Eager.last(input, new Predicate<Integer>() {
+        Eagerly.last(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -381,7 +381,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = listWith(3, 2, 1);
 
         // When
-        Collection<Integer> actualOutput = Eager.last(input, 3);
+        Collection<Integer> actualOutput = Eagerly.last(input, 3);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -394,7 +394,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = listWith(3, 2, 1);
 
         // When
-        Collection<Integer> actualOutput = Eager.last(input, 4);
+        Collection<Integer> actualOutput = Eagerly.last(input, 4);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -407,7 +407,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.last(input, 3);
+        Collection<Integer> actualOutput = Eagerly.last(input, 3);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -420,7 +420,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.last(input, 0);
+        Collection<Integer> actualOutput = Eagerly.last(input, 0);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -432,7 +432,7 @@ public class EagerFirstSecondRestLastTest {
         Iterable<Integer> input = listWith(3, 2, 1);
 
         // When
-        Eager.last(input, -3);
+        Eagerly.last(input, -3);
 
         // Then an IllegalArgumentException should be thrown.
     }
@@ -444,7 +444,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = listWith(6, 4, 2);
 
         // When
-        Collection<Integer> actualOutput = Eager.last(input, 3, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = Eagerly.last(input, 3, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -465,7 +465,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = listWith(4, 2);
 
         // When
-        Collection<Integer> actualOutput = Eager.last(input, 4, new Predicate<Integer>(){
+        Collection<Integer> actualOutput = Eagerly.last(input, 4, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -486,7 +486,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.last(input, 3, new Predicate<Integer>(){
+        Collection<Integer> actualOutput = Eagerly.last(input, 3, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -507,7 +507,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.last(input, 0, new Predicate<Integer>(){
+        Collection<Integer> actualOutput = Eagerly.last(input, 0, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -528,7 +528,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.last(input, 2, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = Eagerly.last(input, 2, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -549,7 +549,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = listWith(2, 3, 4);
 
         // When
-        Collection<Integer> actualOutput = Eager.rest(input);
+        Collection<Integer> actualOutput = Eagerly.rest(input);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -562,7 +562,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.rest(input);
+        Collection<Integer> actualOutput = Eagerly.rest(input);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -575,7 +575,7 @@ public class EagerFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eager.rest(input);
+        Collection<Integer> actualOutput = Eagerly.rest(input);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));

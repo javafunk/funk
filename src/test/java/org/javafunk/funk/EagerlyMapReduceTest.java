@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.*;
 import static org.javafunk.funk.Accumulators.longAdditionAccumulator;
 import static org.javafunk.funk.Literals.listWith;
 
-public class EagerMapReduceTest {
+public class EagerlyMapReduceTest {
     @Test
     public void shouldMapIterableUsingCustomMapFunction() {
         // Given
@@ -28,7 +28,7 @@ public class EagerMapReduceTest {
         Collection<Integer> expectedOutputs = listWith(2, 4, 6);
 
         // When
-        Collection<Integer> actualOutputs = Eager.map(inputs, new Mapper<Integer, Integer>() {
+        Collection<Integer> actualOutputs = Eagerly.map(inputs, new Mapper<Integer, Integer>() {
             @Override
             public Integer map(Integer input) {
                 return input * 2;
@@ -45,7 +45,7 @@ public class EagerMapReduceTest {
         Collection<Long> input = listWith(2L, 3L, 4L);
 
         // When
-        Long actual = Eager.reduce(input, longAdditionAccumulator());
+        Long actual = Eagerly.reduce(input, longAdditionAccumulator());
 
         // Then
         assertThat(actual, equalTo(9L));
@@ -60,7 +60,7 @@ public class EagerMapReduceTest {
                 listWith(7, 8, 9).build());
 
         // When
-        List<Integer> actual = Eager.reduce(inputLists, new Reducer<List<Integer>, List<Integer>>() {
+        List<Integer> actual = Eagerly.reduce(inputLists, new Reducer<List<Integer>, List<Integer>>() {
             // Example flattening accumulator.
             public List<Integer> accumulate(List<Integer> accumulator, List<Integer> element) {
                 accumulator.addAll(element);
@@ -78,7 +78,7 @@ public class EagerMapReduceTest {
         List<Integer> inputs = listWith(1, 2, 3);
 
         // When
-        String output = Eager.reduce(inputs, "", new Reducer<Integer, String>() {
+        String output = Eagerly.reduce(inputs, "", new Reducer<Integer, String>() {
             public String accumulate(String accumulator, Integer element) {
                 accumulator += element.toString();
                 return accumulator;

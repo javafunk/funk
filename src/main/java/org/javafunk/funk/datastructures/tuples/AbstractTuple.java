@@ -6,7 +6,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import java.util.Iterator;
 
 import static java.lang.String.format;
-import static org.javafunk.funk.Lazy.zip;
+import static org.javafunk.funk.Lazily.zip;
 import static org.javafunk.funk.Strings.join;
 
 public abstract class AbstractTuple implements Iterable<Object> {

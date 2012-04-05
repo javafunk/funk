@@ -18,7 +18,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.listWith;
 
-public class EagerFilterRejectPartitionTest {
+public class EagerlyFilterRejectPartitionTest {
     @Test
     public void shouldOnlyReturnThoseElementsMatchingTheSuppliedPredicate() {
         // Given
@@ -26,7 +26,7 @@ public class EagerFilterRejectPartitionTest {
         Collection<Integer> expectedOutput = listWith(2, 4, 6);
 
         // When
-        Collection<Integer> actualOutput = Eager.filter(inputs, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = Eagerly.filter(inputs, new Predicate<Integer>() {
             @Override
             public boolean evaluate(Integer item) {
                 return isEven(item);
@@ -48,7 +48,7 @@ public class EagerFilterRejectPartitionTest {
         Collection<Integer> expectedOutput = listWith(1, 3, 5);
 
         // When
-        Collection<Integer> actualOutput = Eager.reject(inputs, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = Eagerly.reject(inputs, new Predicate<Integer>() {
             @Override
             public boolean evaluate(Integer item) {
                 return isEven(item);
@@ -71,7 +71,7 @@ public class EagerFilterRejectPartitionTest {
         Collection<String> expectedNonMatchingItems = listWith("e", "f", "g", "h");
 
         // When
-        Pair<Collection<String>, Collection<String>> partitionResults = Eager.partition(input,
+        Pair<Collection<String>, Collection<String>> partitionResults = Eagerly.partition(input,
                 new Predicate<String>() {
                     public boolean evaluate(String item) {
                         return item.compareTo("e") < 0;

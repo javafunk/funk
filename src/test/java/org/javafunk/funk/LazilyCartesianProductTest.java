@@ -12,15 +12,15 @@ import java.util.Iterator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Eager.times;
+import static org.javafunk.funk.Eagerly.times;
 import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Lazy.cartesianProduct;
-import static org.javafunk.funk.Lazy.cycle;
+import static org.javafunk.funk.Lazily.cartesianProduct;
+import static org.javafunk.funk.Lazily.cycle;
 import static org.javafunk.funk.Literals.listWith;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.matchers.Matchers.hasOnlyItemsInAnyOrder;
 
-public class LazyCartesianProductTest {
+public class LazilyCartesianProductTest {
     @Test
     public void shouldReturnTheCartesianProductOfTheSuppliedIterablesAsAnIterableOfTuples() throws Exception {
         // Given
@@ -32,7 +32,7 @@ public class LazyCartesianProductTest {
                 tuple(3, "a"), tuple(3, "b"), tuple(3, "c"));
 
         // When
-        Collection<Pair<Integer, String>> actualCartesianProduct = materialize(Lazy.cartesianProduct(input1, input2));
+        Collection<Pair<Integer, String>> actualCartesianProduct = materialize(Lazily.cartesianProduct(input1, input2));
 
         // Then
         assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
@@ -53,7 +53,7 @@ public class LazyCartesianProductTest {
         );
 
         // When
-        Collection<Triple<Integer, String, Long>> actualCartesianProduct = materialize(Lazy.cartesianProduct(input1, input2, input3));
+        Collection<Triple<Integer, String, Long>> actualCartesianProduct = materialize(Lazily.cartesianProduct(input1, input2, input3));
 
         // Then
         assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
@@ -90,7 +90,7 @@ public class LazyCartesianProductTest {
         );
 
         // When
-        Collection<Quadruple<Integer, String, Long, String>> actualCartesianProduct = materialize(Lazy.cartesianProduct(input1, input2, input3, input4));
+        Collection<Quadruple<Integer, String, Long, String>> actualCartesianProduct = materialize(Lazily.cartesianProduct(input1, input2, input3, input4));
 
         // Then
         assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
@@ -103,7 +103,7 @@ public class LazyCartesianProductTest {
         Iterable<String> input2 = listWith("a", "b", "c");
 
         // When
-        Iterable<Pair<Integer, String>> iterable = Lazy.cartesianProduct(input1, input2);
+        Iterable<Pair<Integer, String>> iterable = Lazily.cartesianProduct(input1, input2);
 
         Iterator<Pair<Integer, String>> iterator1 = iterable.iterator();
         Iterator<Pair<Integer, String>> iterator2 = iterable.iterator();

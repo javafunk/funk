@@ -17,14 +17,14 @@ import java.util.List;
 import static org.javafunk.funk.Literals.listWith;
 import static org.mockito.Mockito.*;
 
-public class LazyEachTest {
+public class LazilyEachTest {
     @Test
     public void shouldLazilyExecuteSuppliedFunctionOnEachElement() {
         // Given
         Iterable<Target> targets = listWith(mock(Target.class), mock(Target.class), mock(Target.class));
 
         // When
-        Iterable<Target> preparedTargets = Lazy.each(targets, new Action<Target>() {
+        Iterable<Target> preparedTargets = Lazily.each(targets, new Action<Target>() {
             @Override
             public void on(Target input) {
                 input.doSomething();
@@ -46,7 +46,7 @@ public class LazyEachTest {
         List<Target> targets = listWith(mock(Target.class), mock(Target.class), mock(Target.class));
 
         // When
-        Iterable<Target> iterable = Lazy.each(targets, new Action<Target>() {
+        Iterable<Target> iterable = Lazily.each(targets, new Action<Target>() {
             @Override
             public void on(Target input) {
                 input.doSomething();

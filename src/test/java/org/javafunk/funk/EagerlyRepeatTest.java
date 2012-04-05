@@ -16,7 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.listWith;
 
-public class EagerRepeatTest {
+public class EagerlyRepeatTest {
     @Test
     public void shouldRepeatTheElementsOfTheSpecifiedIterableInOrderTheSpecifiedNumberOfTimes() throws Exception {
         // Given
@@ -24,7 +24,7 @@ public class EagerRepeatTest {
         Collection<Integer> expectedOutput = listWith(1, 2, 1, 2, 1, 2);
 
         // When
-        Collection<Integer> actualOutput = Eager.repeat(input, 3);
+        Collection<Integer> actualOutput = Eagerly.repeat(input, 3);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));

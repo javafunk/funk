@@ -9,8 +9,6 @@
 package org.javafunk.funk;
 
 import org.hamcrest.Matchers;
-import org.javafunk.funk.Lazy;
-import org.javafunk.funk.Lazy;
 import org.javafunk.funk.functors.Predicate;
 import org.junit.Test;
 
@@ -23,7 +21,7 @@ import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.listWith;
 import static org.junit.Assert.assertThat;
 
-public class LazyTakeDropTest {
+public class LazilyTakeDropTest {
     @Test
     public void shouldReturnAnIterableContainingTheSpecifiedNumberOfElements() {
         // Given
@@ -31,7 +29,7 @@ public class LazyTakeDropTest {
         Collection<Integer> expectedOutput = listWith(1, 1, 2, 3, 5);
 
         // When
-        Collection<Integer> actualOutput = materialize(Lazy.take(fibonaccis, 5));
+        Collection<Integer> actualOutput = materialize(Lazily.take(fibonaccis, 5));
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -44,7 +42,7 @@ public class LazyTakeDropTest {
         Integer numberToTake = 0;
 
         // When
-        Collection<Integer> actualOutput = materialize(Lazy.take(fibonaccis, numberToTake));
+        Collection<Integer> actualOutput = materialize(Lazily.take(fibonaccis, numberToTake));
 
         // Then
         assertThat(actualOutput, is(Matchers.<Integer>empty()));
@@ -57,7 +55,7 @@ public class LazyTakeDropTest {
         Integer numberToTake = -5;
 
         // When
-        Lazy.take(fibonaccis, numberToTake);
+        Lazily.take(fibonaccis, numberToTake);
 
         // Then an IllegalArgumentException is thrown.
     }
@@ -68,7 +66,7 @@ public class LazyTakeDropTest {
         List<Integer> fibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
 
         // When
-        Iterable<Integer> iterable = Lazy.take(fibonaccis, 5);
+        Iterable<Integer> iterable = Lazily.take(fibonaccis, 5);
         Iterator<Integer> iterator1 = iterable.iterator();
         Iterator<Integer> iterator2 = iterable.iterator();
 
@@ -89,7 +87,7 @@ public class LazyTakeDropTest {
         Collection<Integer> expectedOutput = listWith(8, 13, 21, 34, 55);
 
         // When
-        Collection<Integer> actualOutput = materialize(Lazy.drop(tenFibonaccis, 5));
+        Collection<Integer> actualOutput = materialize(Lazily.drop(tenFibonaccis, 5));
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -103,7 +101,7 @@ public class LazyTakeDropTest {
         Integer numberToTake = 0;
 
         // When
-        Collection<Integer> actualOutput = materialize(Lazy.drop(fibonaccis, numberToTake));
+        Collection<Integer> actualOutput = materialize(Lazily.drop(fibonaccis, numberToTake));
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -116,7 +114,7 @@ public class LazyTakeDropTest {
         Integer numberToDrop = -5;
 
         // When
-        Lazy.drop(fibonaccis, numberToDrop);
+        Lazily.drop(fibonaccis, numberToDrop);
 
         // Then an IllegalArgumentException is thrown.
     }
@@ -127,7 +125,7 @@ public class LazyTakeDropTest {
         List<Integer> fibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
 
         // When
-        Iterable<Integer> iterable = Lazy.drop(fibonaccis, 5);
+        Iterable<Integer> iterable = Lazily.drop(fibonaccis, 5);
         Iterator<Integer> iterator1 = iterable.iterator();
         Iterator<Integer> iterator2 = iterable.iterator();
 
@@ -148,7 +146,7 @@ public class LazyTakeDropTest {
         Collection<Integer> expectedOutput = listWith(1, 2, 3, 4);
 
         // When
-        Collection<Integer> actualOutput = materialize(Lazy.takeWhile(input, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = materialize(Lazily.takeWhile(input, new Predicate<Integer>() {
             public boolean evaluate(Integer input) {
                 return input < 5;
             }
@@ -164,7 +162,7 @@ public class LazyTakeDropTest {
         Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8);
 
         // When
-        Iterable<Integer> iterable = Lazy.takeWhile(input, new Predicate<Integer>() {
+        Iterable<Integer> iterable = Lazily.takeWhile(input, new Predicate<Integer>() {
             public boolean evaluate(Integer input) {
                 return input < 5;
             }
@@ -188,7 +186,7 @@ public class LazyTakeDropTest {
         Collection<Integer> expectedOutput = listWith(8, 7, 6, 5);
 
         // When
-        Collection<Integer> actualOutput = materialize(Lazy.takeUntil(input, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = materialize(Lazily.takeUntil(input, new Predicate<Integer>() {
             public boolean evaluate(Integer input) {
                 return input < 5;
             }
@@ -204,7 +202,7 @@ public class LazyTakeDropTest {
         Iterable<Integer> input = listWith(8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Iterable<Integer> iterable = Lazy.takeUntil(input, new Predicate<Integer>() {
+        Iterable<Integer> iterable = Lazily.takeUntil(input, new Predicate<Integer>() {
             public boolean evaluate(Integer input) {
                 return input < 5;
             }
@@ -228,7 +226,7 @@ public class LazyTakeDropTest {
         Collection<Integer> expectedOutput = listWith(4, 3, 2, 1);
 
         // When
-        Collection<Integer> actualOutput = materialize(Lazy.dropWhile(input, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = materialize(Lazily.dropWhile(input, new Predicate<Integer>() {
             public boolean evaluate(Integer input) {
                 return input > 4;
             }
@@ -244,7 +242,7 @@ public class LazyTakeDropTest {
         Iterable<Integer> input = listWith(8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Iterable<Integer> iterable = Lazy.dropWhile(input, new Predicate<Integer>() {
+        Iterable<Integer> iterable = Lazily.dropWhile(input, new Predicate<Integer>() {
             public boolean evaluate(Integer input) {
                 return input > 4;
             }
@@ -268,7 +266,7 @@ public class LazyTakeDropTest {
         Collection<Integer> expectedOutput = listWith(4, 3, 2, 1);
 
         // When
-        Collection<Integer> actualOutput = materialize(Lazy.dropUntil(input, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = materialize(Lazily.dropUntil(input, new Predicate<Integer>() {
             public boolean evaluate(Integer input) {
                 return input < 5;
             }
@@ -284,7 +282,7 @@ public class LazyTakeDropTest {
         Iterable<Integer> input = listWith(8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Iterable<Integer> iterable = Lazy.dropUntil(input, new Predicate<Integer>() {
+        Iterable<Integer> iterable = Lazily.dropUntil(input, new Predicate<Integer>() {
             public boolean evaluate(Integer input) {
                 return input < 5;
             }

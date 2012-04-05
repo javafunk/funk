@@ -17,7 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.listWith;
 
-public class EagerSliceTest {
+public class EagerlySliceTest {
     @Test
     public void shouldDefaultToZeroForStartIfNullSupplied() throws Exception {
         // Given
@@ -25,7 +25,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = listWith("a", "c", "e");
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, null, 6, 2);
+        Collection<String> actualOutput = Eagerly.slice(input, null, 6, 2);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -38,7 +38,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = listWith("e", "g", "i", "k");
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, 4, null, 2);
+        Collection<String> actualOutput = Eagerly.slice(input, 4, null, 2);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -51,7 +51,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = listWith("b", "c", "d");
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, 1, 4, null);
+        Collection<String> actualOutput = Eagerly.slice(input, 1, 4, null);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -64,7 +64,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, null, null, null);
+        Collection<String> actualOutput = Eagerly.slice(input, null, null, null);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -76,7 +76,7 @@ public class EagerSliceTest {
         Iterable<String> input = listWith("a", "b", "c", "d", "e");
 
         // When
-        Eager.slice(input, 1, 4, 0);
+        Eagerly.slice(input, 1, 4, 0);
 
         // Then an IllegalArgumentException should be thrown
     }
@@ -88,7 +88,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = listWith("b", "c", "d");
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, 1, 4);
+        Collection<String> actualOutput = Eagerly.slice(input, 1, 4);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -101,7 +101,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = listWith("c", "e", "g", "i");
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, 2, 9, 2);
+        Collection<String> actualOutput = Eagerly.slice(input, 2, 9, 2);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -114,7 +114,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = listWith("c", "d", "e", "f", "g", "h", "i");
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, 2, -2, 1);
+        Collection<String> actualOutput = Eagerly.slice(input, 2, -2, 1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -127,7 +127,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = listWith("e", "f", "g", "h", "i");
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, -7, 9, 1);
+        Collection<String> actualOutput = Eagerly.slice(input, -7, 9, 1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -140,7 +140,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = listWith("e", "f", "g", "h", "i");
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, -7, -2, 1);
+        Collection<String> actualOutput = Eagerly.slice(input, -7, -2, 1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -153,7 +153,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = listWith("h", "f", "d");
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, 7, 1, -2);
+        Collection<String> actualOutput = Eagerly.slice(input, 7, 1, -2);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -166,7 +166,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = listWith("j", "i", "h", "g", "f", "e", "d");
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, -2, 2, -1);
+        Collection<String> actualOutput = Eagerly.slice(input, -2, 2, -1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -179,7 +179,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = listWith("j", "i", "h", "g", "f", "e");
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, 9, -8, -1);
+        Collection<String> actualOutput = Eagerly.slice(input, 9, -8, -1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -192,7 +192,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = listWith("i", "h", "g", "f", "e");
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, -3, -8, -1);
+        Collection<String> actualOutput = Eagerly.slice(input, -3, -8, -1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -205,7 +205,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, -3, 3, 1);
+        Collection<String> actualOutput = Eagerly.slice(input, -3, 3, 1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -218,7 +218,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, 2, -2, -1);
+        Collection<String> actualOutput = Eagerly.slice(input, 2, -2, -1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -231,7 +231,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = listWith("a", "b");
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, -15, 2, 1);
+        Collection<String> actualOutput = Eagerly.slice(input, -15, 2, 1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -244,7 +244,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = listWith("c", "b", "a");
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, 2, -15, -1);
+        Collection<String> actualOutput = Eagerly.slice(input, 2, -15, -1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -257,7 +257,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = listWith("g", "h", "i", "j", "k");
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, 6, 20, 1);
+        Collection<String> actualOutput = Eagerly.slice(input, 6, 20, 1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -270,7 +270,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = listWith("k", "j", "i", "h");
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, 20, 6, -1);
+        Collection<String> actualOutput = Eagerly.slice(input, 20, 6, -1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -283,7 +283,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, 20, 6, 1);
+        Collection<String> actualOutput = Eagerly.slice(input, 20, 6, 1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -296,7 +296,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, 6, -15, 1);
+        Collection<String> actualOutput = Eagerly.slice(input, 6, -15, 1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -309,7 +309,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, -15, 6, -1);
+        Collection<String> actualOutput = Eagerly.slice(input, -15, 6, -1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -322,7 +322,7 @@ public class EagerSliceTest {
         Collection<String> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<String> actualOutput = Eager.slice(input, 6, 20, -1);
+        Collection<String> actualOutput = Eagerly.slice(input, 6, 20, -1);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -335,7 +335,7 @@ public class EagerSliceTest {
         Collection<String> expectedCompleteSlice = listWith("one item");
 
         // When
-        Collection<String> actualCompleteSlice = Eager.slice(input, 0, null);
+        Collection<String> actualCompleteSlice = Eagerly.slice(input, 0, null);
 
         // Then
         assertThat(actualCompleteSlice, is(expectedCompleteSlice));
@@ -348,7 +348,7 @@ public class EagerSliceTest {
         Collection<String> expectedFirstToEndSlice = Collections.emptyList();
 
         // When
-        Collection<String> actualFirstToEndSlice = Eager.slice(input, 1, null);
+        Collection<String> actualFirstToEndSlice = Eagerly.slice(input, 1, null);
 
         // Then
         assertThat(actualFirstToEndSlice, is(expectedFirstToEndSlice));
@@ -361,7 +361,7 @@ public class EagerSliceTest {
         Collection<String> expectedFirstToEndSlice = Collections.emptyList();
 
         // When
-        Collection<String> actualFirstToEndSlice = Eager.slice(input, -1, 0, -1);
+        Collection<String> actualFirstToEndSlice = Eagerly.slice(input, -1, 0, -1);
 
         // Then
         assertThat(actualFirstToEndSlice, is(expectedFirstToEndSlice));
@@ -374,7 +374,7 @@ public class EagerSliceTest {
         Collection<String> expectedCompleteSlice = Collections.emptyList();
 
         // When
-        Collection<String> actualCompleteSlice = Eager.slice(input, 0, null);
+        Collection<String> actualCompleteSlice = Eagerly.slice(input, 0, null);
 
         // Then
         assertThat(actualCompleteSlice, is(expectedCompleteSlice));
@@ -387,7 +387,7 @@ public class EagerSliceTest {
         Collection<String> expectedCompleteSlice = Collections.emptyList();
 
         // When
-        Collection<String> actualCompleteSlice = Eager.slice(input, 5, null);
+        Collection<String> actualCompleteSlice = Eagerly.slice(input, 5, null);
 
         // Then
         assertThat(actualCompleteSlice, is(expectedCompleteSlice));
@@ -400,7 +400,7 @@ public class EagerSliceTest {
         Collection<String> expectedCompleteSlice = Collections.emptyList();
 
         // When
-        Collection<String> actualCompleteSlice = Eager.slice(input, 5, 0, -1);
+        Collection<String> actualCompleteSlice = Eagerly.slice(input, 5, 0, -1);
 
         // Then
         assertThat(actualCompleteSlice, is(expectedCompleteSlice));

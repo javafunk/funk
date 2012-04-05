@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.Set;
 
 import static java.util.Arrays.asList;
-import static org.javafunk.funk.Eager.first;
-import static org.javafunk.funk.Eager.rest;
+import static org.javafunk.funk.Eagerly.first;
+import static org.javafunk.funk.Eagerly.rest;
 import static org.javafunk.funk.Iterables.asSet;
-import static org.javafunk.funk.Lazy.filter;
+import static org.javafunk.funk.Lazily.filter;
 import static org.javafunk.funk.Literals.listFrom;
 import static org.javafunk.funk.Literals.listWith;
 

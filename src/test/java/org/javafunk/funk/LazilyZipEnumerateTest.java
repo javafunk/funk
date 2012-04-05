@@ -23,7 +23,7 @@ import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.matchers.Matchers.hasOnlyItemsInOrder;
 import static org.junit.Assert.assertThat;
 
-public class LazyZipEnumerateTest {
+public class LazilyZipEnumerateTest {
     @Test
     public void shouldEnumerateSequence() {
         // Given
@@ -31,7 +31,7 @@ public class LazyZipEnumerateTest {
         Collection<Pair<Integer, String>> expected = listWith(tuple(0, "A"), tuple(1, "B"), tuple(2, "C"));
 
         // When
-        Iterable<Pair<Integer, String>> actual = Lazy.enumerate(iterable);
+        Iterable<Pair<Integer, String>> actual = Lazily.enumerate(iterable);
 
         // Then
         assertThat(asList(actual), hasOnlyItemsInOrder(expected));
@@ -43,7 +43,7 @@ public class LazyZipEnumerateTest {
         Iterable<String> input = listWith("A", "B", "C");
 
         // When
-        Iterable<Pair<Integer, String>> iterable = Lazy.enumerate(input);
+        Iterable<Pair<Integer, String>> iterable = Lazily.enumerate(input);
         Iterator<Pair<Integer, String>> iterator1 = iterable.iterator();
         Iterator<Pair<Integer, String>> iterator2 = iterable.iterator();
 
@@ -65,7 +65,7 @@ public class LazyZipEnumerateTest {
         Collection<Pair<String, Integer>> expected = listWith(tuple("A", 1), tuple("B", 2), tuple("C", 3));
 
         // When
-        Collection<Pair<String, Integer>> actual = asList(Lazy.zip(iterable1, iterable2));
+        Collection<Pair<String, Integer>> actual = asList(Lazily.zip(iterable1, iterable2));
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
@@ -79,7 +79,7 @@ public class LazyZipEnumerateTest {
         Collection<Pair<String, Integer>> expected = listWith(tuple("A", 1), tuple("B", 2), tuple("C", 3));
 
         // When
-        Collection<Pair<String, Integer>> actual = asList(Lazy.zip(iterable1, iterable2));
+        Collection<Pair<String, Integer>> actual = asList(Lazily.zip(iterable1, iterable2));
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
@@ -93,7 +93,7 @@ public class LazyZipEnumerateTest {
         Collection<Pair<String, Integer>> expected = listWith(tuple("A", 1), tuple("B", 2), tuple("C", 3));
 
         // When
-        Iterable<Pair<String, Integer>> actual = Lazy.zip(iterable1, iterable2);
+        Iterable<Pair<String, Integer>> actual = Lazily.zip(iterable1, iterable2);
 
         // Then
         assertThat(asList(actual), hasOnlyItemsInOrder(expected));
@@ -106,7 +106,7 @@ public class LazyZipEnumerateTest {
         Iterable<Integer> inputIterable2 = listWith(1, 2, 3);
 
         // When
-        Iterable<Pair<String, Integer>> outputIterable = Lazy.zip(inputIterable1, inputIterable2);
+        Iterable<Pair<String, Integer>> outputIterable = Lazily.zip(inputIterable1, inputIterable2);
         Iterator<Pair<String, Integer>> firstIterator = outputIterable.iterator();
         Iterator<Pair<String, Integer>> secondIterator = outputIterable.iterator();
 
@@ -128,7 +128,7 @@ public class LazyZipEnumerateTest {
         Collection<Triple<String, Integer, Boolean>> expected = listWith(tuple("A", 1, true), tuple("B", 2, false), tuple("C", 3, true));
 
         // When
-        Collection<Triple<String, Integer, Boolean>> actual = materialize(Lazy.zip(iterable1, iterable2, iterable3));
+        Collection<Triple<String, Integer, Boolean>> actual = materialize(Lazily.zip(iterable1, iterable2, iterable3));
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));

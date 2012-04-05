@@ -17,14 +17,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.listWith;
 
-public class EagerAnyAllNoneTest {
+public class EagerlyAnyAllNoneTest {
     @Test
     public void shouldReturnTrueIfAnyElementsSatisfyThePredicateFunction() {
         // Given
         List<Integer> inputNumbers = listWith(5, 10, 15, 20);
 
         // When
-        Boolean result = Eager.any(inputNumbers, new Predicate<Integer>() {
+        Boolean result = Eagerly.any(inputNumbers, new Predicate<Integer>() {
             @Override
             public boolean evaluate(Integer item) {
                 return item > 15;
@@ -41,7 +41,7 @@ public class EagerAnyAllNoneTest {
         List<Integer> items = listWith(5, 10, 15, 20);
 
         // When
-        Boolean result = Eager.any(items, new Predicate<Integer>() {
+        Boolean result = Eagerly.any(items, new Predicate<Integer>() {
             @Override
             public boolean evaluate(Integer item) {
                 return item > 25;
@@ -58,7 +58,7 @@ public class EagerAnyAllNoneTest {
         List<String> items = listWith("dog", "cat", "fish", "budgie");
 
         // When
-        Boolean result = Eager.all(items, new Predicate<String>() {
+        Boolean result = Eagerly.all(items, new Predicate<String>() {
             @Override
             public boolean evaluate(String item) {
                 return item.length() > 2;
@@ -75,7 +75,7 @@ public class EagerAnyAllNoneTest {
         List<String> items = listWith("dog", "cat", "fish", "budgie");
 
         // When
-        Boolean result = Eager.all(items, new Predicate<String>() {
+        Boolean result = Eagerly.all(items, new Predicate<String>() {
             @Override
             public boolean evaluate(String item) {
                 return item.length() > 3;
@@ -92,7 +92,7 @@ public class EagerAnyAllNoneTest {
         List<Integer> items = listWith(1, 3, 5, 7);
 
         // When
-        Boolean result = Eager.none(items, new Predicate<Integer>() {
+        Boolean result = Eagerly.none(items, new Predicate<Integer>() {
             @Override
             public boolean evaluate(Integer item) {
                 return isEven(item);
@@ -113,7 +113,7 @@ public class EagerAnyAllNoneTest {
         List<Integer> items = listWith(1, 3, 6, 7);
 
         // When
-        Boolean result = Eager.none(items, new Predicate<Integer>() {
+        Boolean result = Eagerly.none(items, new Predicate<Integer>() {
             @Override
             public boolean evaluate(Integer item) {
                 return isEven(item);

@@ -11,8 +11,8 @@ package org.javafunk.funk;
 import com.google.common.collect.Multiset;
 
 import static java.util.Arrays.asList;
-import static org.javafunk.funk.Eager.first;
-import static org.javafunk.funk.Eager.rest;
+import static org.javafunk.funk.Eagerly.first;
+import static org.javafunk.funk.Eagerly.rest;
 import static org.javafunk.funk.Literals.*;
 
 public class Multisets {

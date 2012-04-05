@@ -18,7 +18,7 @@ import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.listWith;
 import static org.junit.Assert.assertThat;
 
-public class LazySliceTest {
+public class LazilySliceTest {
     @Test
     public void shouldTakeElementsFromTheIterableBetweenTheSpecifiedStartAndStopInStepsOfTheSpecifiedSize() throws Exception {
         // Given
@@ -26,7 +26,7 @@ public class LazySliceTest {
         Collection<Integer> expectedOutput = listWith(3, 5, 7);
 
         // When
-        Collection<Integer> actualOutput = materialize(Lazy.slice(input, 2, 7, 2));
+        Collection<Integer> actualOutput = materialize(Lazily.slice(input, 2, 7, 2));
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -38,7 +38,7 @@ public class LazySliceTest {
         Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
         // When
-        Iterable<Integer> iterable = Lazy.slice(input, 2, 7, 2);
+        Iterable<Integer> iterable = Lazily.slice(input, 2, 7, 2);
         Iterator<Integer> iterator1 = iterable.iterator();
         Iterator<Integer> iterator2 = iterable.iterator();
 

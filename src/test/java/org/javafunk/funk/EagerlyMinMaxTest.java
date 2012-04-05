@@ -21,16 +21,16 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.listWith;
-import static org.javafunk.funk.EagerMinMaxTest.NonComparableObject.nonComparableObject;
+import static org.javafunk.funk.EagerlyMinMaxTest.NonComparableObject.nonComparableObject;
 
-public class EagerMinMaxTest {
+public class EagerlyMinMaxTest {
     @Test
     public void shouldReturnTheMinimumValue() throws Exception {
         // Given
         List<String> list = listWith("b", "a", "c");
 
         // When
-        String actual = Eager.min(list);
+        String actual = Eagerly.min(list);
 
         // Then
         assertThat(actual, is("a"));
@@ -47,7 +47,7 @@ public class EagerMinMaxTest {
                 nonComparableObject("aaaaa"));
 
         // When
-        NonComparableObject actual = Eager.min(list, new Comparator<NonComparableObject>(){
+        NonComparableObject actual = Eagerly.min(list, new Comparator<NonComparableObject>() {
             public int compare(NonComparableObject first, NonComparableObject second) {
                 return first.length() - second.length();
             }
@@ -63,7 +63,7 @@ public class EagerMinMaxTest {
         List<Integer> list = listWith(3, 2, 6);
 
         // When
-        Integer actual = Eager.max(list);
+        Integer actual = Eagerly.max(list);
 
         // Then
         assertThat(actual, is(6));
@@ -79,7 +79,7 @@ public class EagerMinMaxTest {
                 nonComparableObject("aaaaa"));
 
         // When
-        NonComparableObject actual = Eager.max(list, new Comparator<NonComparableObject>() {
+        NonComparableObject actual = Eagerly.max(list, new Comparator<NonComparableObject>() {
             public int compare(NonComparableObject first, NonComparableObject second) {
                 return first.length() - second.length();
             }

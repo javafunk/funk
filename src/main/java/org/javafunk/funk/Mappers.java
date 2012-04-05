@@ -7,8 +7,8 @@ import org.javafunk.funk.functors.Mapper;
 
 import java.util.Iterator;
 
-import static org.javafunk.funk.Eager.first;
-import static org.javafunk.funk.Lazy.rest;
+import static org.javafunk.funk.Eagerly.first;
+import static org.javafunk.funk.Lazily.rest;
 import static org.javafunk.funk.Literals.tuple;
 
 class Mappers {

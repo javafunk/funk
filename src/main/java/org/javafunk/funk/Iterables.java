@@ -14,7 +14,7 @@ import org.javafunk.funk.functors.Reducer;
 
 import java.util.*;
 
-import static org.javafunk.funk.Eager.reduce;
+import static org.javafunk.funk.Eagerly.reduce;
 
 public class Iterables {
     private Iterables() {}

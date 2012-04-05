@@ -20,8 +20,8 @@ import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Iterators.asIterable;
 import static org.javafunk.funk.Literals.tuple;
 
-public class Eager {
-    private Eager() {}
+public class Eagerly {
+    private Eagerly() {}
 
     public static <S, T> T reduce(Iterable<? extends S> iterable, T initialValue, Reducer<? super S, T> function) {
         T accumulator = initialValue;
@@ -125,23 +125,23 @@ public class Eager {
     }
 
     public static <S, T> Collection<T> map(Iterable<S> iterable, Mapper<? super S, T> function) {
-        return materialize(Lazy.map(iterable, function));
+        return materialize(Lazily.map(iterable, function));
     }
 
     public static <S, T> Collection<Pair<S, T>> zip(Iterable<S> iterable1, Iterable<T> iterable2) {
-        return materialize(Lazy.zip(iterable1, iterable2));
+        return materialize(Lazily.zip(iterable1, iterable2));
     }
 
     public static <T> Collection<Pair<Integer, T>> enumerate(Iterable<T> iterable) {
-        return materialize(Lazy.enumerate(iterable));
+        return materialize(Lazily.enumerate(iterable));
     }
 
     public static <T> Collection<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equivalence<? super T> equivalence) {
-        return materialize(Lazy.equate(first, second, equivalence));
+        return materialize(Lazily.equate(first, second, equivalence));
     }
 
     public static <S, T> Collection<Pair<T, S>> index(Iterable<S> iterable, final Indexer<? super S, T> indexer) {
-        return materialize(Lazy.index(iterable, indexer));
+        return materialize(Lazily.index(iterable, indexer));
     }
 
     public static <S, T> Map<T, Collection<S>> group(Iterable<S> iterable, Indexer<? super S, T> indexer) {
@@ -157,15 +157,15 @@ public class Eager {
     }
 
     public static <T> void each(Iterable<T> targets, Action<? super T> function) {
-        materialize(Lazy.each(targets, function));
+        materialize(Lazily.each(targets, function));
     }
 
     public static <T> Collection<T> filter(Iterable<T> iterable, Predicate<? super T> predicate) {
-        return materialize(Lazy.filter(iterable, predicate));
+        return materialize(Lazily.filter(iterable, predicate));
     }
 
     public static <T> Collection<T> reject(Iterable<T> iterable, Predicate<? super T> predicate) {
-        return materialize(Lazy.reject(iterable, predicate));
+        return materialize(Lazily.reject(iterable, predicate));
     }
 
     public static <T> T first(Iterable<? extends T> iterable) {
@@ -211,21 +211,21 @@ public class Eager {
     }
 
     public static <T> Collection<T> take(Iterable<T> iterable, int numberToTake) {
-        return materialize(Lazy.take(iterable, numberToTake));
+        return materialize(Lazily.take(iterable, numberToTake));
     }
 
     public static <T> Collection<T> drop(Iterable<T> iterable, int numberToDrop) {
-        return materialize(Lazy.drop(iterable, numberToDrop));
+        return materialize(Lazily.drop(iterable, numberToDrop));
     }
 
     public static <T> Pair<Collection<T>, Collection<T>> partition(Iterable<T> iterable, Predicate<? super T> predicate) {
-        Pair<Iterable<T>, Iterable<T>> partition = Lazy.partition(iterable, predicate);
+        Pair<Iterable<T>, Iterable<T>> partition = Lazily.partition(iterable, predicate);
         return tuple(materialize(partition.first()), materialize(partition.second()));
     }
 
     public static <T> Collection<Collection<T>> batch(Iterable<T> iterable, int batchSize) {
         Collection<Collection<T>> result = new ArrayList<Collection<T>>();
-        Iterable<Iterable<T>> batches = Lazy.batch(iterable, batchSize);
+        Iterable<Iterable<T>> batches = Lazily.batch(iterable, batchSize);
         for (Iterable<T> batch : batches) {
             result.add(materialize(batch));
         }
@@ -242,19 +242,19 @@ public class Eager {
     }
 
     public static <T> Collection<T> takeWhile(Iterable<T> iterable, Predicate<? super T> predicate) {
-        return materialize(Lazy.takeWhile(iterable, predicate));
+        return materialize(Lazily.takeWhile(iterable, predicate));
     }
 
     public static <T> Collection<T> takeUntil(Iterable<T> iterable, Predicate<? super T> predicate) {
-        return materialize(Lazy.takeUntil(iterable, predicate));
+        return materialize(Lazily.takeUntil(iterable, predicate));
     }
 
     public static <T> Collection<T> dropWhile(Iterable<T> iterable, Predicate<? super T> predicate) {
-        return materialize(Lazy.dropWhile(iterable, predicate));
+        return materialize(Lazily.dropWhile(iterable, predicate));
     }
 
     public static <T> Collection<T> dropUntil(Iterable<T> iterable, Predicate<? super T> predicate) {
-        return materialize(Lazy.dropUntil(iterable, predicate));
+        return materialize(Lazily.dropUntil(iterable, predicate));
     }
 
     public static <T> Collection<T> slice(Iterable<T> iterable, Integer start, Integer stop, Integer step) {
@@ -283,11 +283,11 @@ public class Eager {
     }
 
     public static <T> Collection<T> repeat(Iterable<T> iterable, int numberOfTimesToRepeat) {
-        return materialize(Lazy.repeat(iterable, numberOfTimesToRepeat));
+        return materialize(Lazily.repeat(iterable, numberOfTimesToRepeat));
     }
 
     static <T> T second(Iterable<? extends T> iterable) {
-        return first(Lazy.rest(iterable));
+        return first(Lazily.rest(iterable));
     }
 
     private static class SliceHelper {

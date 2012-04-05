@@ -25,9 +25,9 @@ import static java.util.Arrays.asList;
 import static org.apache.commons.lang.StringUtils.join;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
-import static org.javafunk.funk.Eager.all;
-import static org.javafunk.funk.Eager.any;
-import static org.javafunk.funk.Lazy.enumerate;
+import static org.javafunk.funk.Eagerly.all;
+import static org.javafunk.funk.Eagerly.any;
+import static org.javafunk.funk.Lazily.enumerate;
 
 public class Matchers {
     private Matchers() {}

@@ -19,7 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
 
-public class EagerGroupIndexTest {
+public class EagerlyGroupIndexTest {
     @Test
     public void shouldGroupTheElementsOfTheIterableUsingTheSpecifiedIndexer() throws Exception {
         // Given
@@ -37,7 +37,7 @@ public class EagerGroupIndexTest {
                    .and(7, sevenLetterFruits);
 
         // When
-        Map<Integer, Collection<String>> actualOutput = Eager.group(input, new Indexer<String, Integer>() {
+        Map<Integer, Collection<String>> actualOutput = Eagerly.group(input, new Indexer<String, Integer>() {
             public Integer index(String string) {
                 return string.length();
             }
@@ -61,7 +61,7 @@ public class EagerGroupIndexTest {
                 tuple(6, "banana"));
 
         // When
-        Collection<Pair<Integer, String>> actualOutput = Eager.index(input, new Indexer<String, Integer>() {
+        Collection<Pair<Integer, String>> actualOutput = Eagerly.index(input, new Indexer<String, Integer>() {
             public Integer index(String item) {
                 return item.length();
             }

@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Generators.toGeneratable;
-import static org.javafunk.funk.Lazy.take;
+import static org.javafunk.funk.Lazily.take;
 import static org.javafunk.funk.matchers.Matchers.trueForAll;
 
 public class ConstantGeneratorTest {

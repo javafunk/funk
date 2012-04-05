@@ -7,10 +7,10 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Eager.times;
+import static org.javafunk.funk.Eagerly.times;
 import static org.javafunk.funk.Generators.toGeneratable;
-import static org.javafunk.funk.Lazy.batch;
-import static org.javafunk.funk.Lazy.take;
+import static org.javafunk.funk.Lazily.batch;
+import static org.javafunk.funk.Lazily.take;
 import static org.javafunk.funk.Literals.listWith;
 import static org.javafunk.funk.matchers.Matchers.trueForAll;
 

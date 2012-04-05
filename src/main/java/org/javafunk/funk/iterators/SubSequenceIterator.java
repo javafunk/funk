@@ -13,7 +13,7 @@ import org.javafunk.funk.functors.Action;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static org.javafunk.funk.Eager.times;
+import static org.javafunk.funk.Eagerly.times;
 
 public class SubSequenceIterator<T> extends CachingIterator<T> {
     private Iterator<? extends T> iterator;

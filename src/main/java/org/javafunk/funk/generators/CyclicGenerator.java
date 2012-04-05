@@ -7,7 +7,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import java.util.Iterator;
 
 import static org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE;
-import static org.javafunk.funk.Lazy.cycle;
+import static org.javafunk.funk.Lazily.cycle;
 
 public class CyclicGenerator<T> extends AbstractGenerator<T> {
     private static final String[] excludedFields = new String[]{"iterator"};

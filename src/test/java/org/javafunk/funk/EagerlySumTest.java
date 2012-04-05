@@ -17,14 +17,14 @@ import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.listWith;
 
-public class EagerSumTest {
+public class EagerlySumTest {
     @Test
     public void shouldSumTheSuppliedIntegers() {
         // Given
         List<Integer> inputs = listWith(1, 2, 3);
 
         // When
-        Integer sum = Eager.sum(inputs);
+        Integer sum = Eagerly.sum(inputs);
 
         // Then
         assertThat(sum, is(6));
@@ -36,7 +36,7 @@ public class EagerSumTest {
         List<Long> inputs = listWith(1L, 2L, 3L);
 
         // When
-        Long sum = Eager.sum(inputs);
+        Long sum = Eagerly.sum(inputs);
 
         // Then
         assertThat(sum, is(6L));
@@ -48,7 +48,7 @@ public class EagerSumTest {
         List<Double> inputs = listWith(1.6D, 2.2D, 3.5D);
 
         // When
-        Double sum = Eager.sum(inputs);
+        Double sum = Eagerly.sum(inputs);
 
         // Then
         assertThat(sum, is(closeTo(7.3D, 0.01D)));
@@ -60,7 +60,7 @@ public class EagerSumTest {
         List<Float> inputs = listWith(1.6F, 2.2F, 3.5F);
 
         // When
-        Float sum = Eager.sum(inputs);
+        Float sum = Eagerly.sum(inputs);
 
         // Then
         assertThat(sum.doubleValue(), is(closeTo(7.3D, 0.01)));

@@ -19,14 +19,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.javafunk.funk.Literals.listWith;
 import static org.javafunk.funk.Literals.tuple;
 
-public class LazyIndexTest {
+public class LazilyIndexTest {
     @Test
     public void shouldReturnTwoTuplesWithTheIndexFirstAndTheElementSecond() throws Exception {
         // Given
         Iterable<String> input = listWith("apple", "pear", "lemon");
 
         // When
-        Iterable<Pair<Integer, String>> outputIterable = Lazy.index(input, new Indexer<String, Integer>(){
+        Iterable<Pair<Integer, String>> outputIterable = Lazily.index(input, new Indexer<String, Integer>() {
             public Integer index(String item) {
                 return item.length();
             }
@@ -49,7 +49,7 @@ public class LazyIndexTest {
         Iterable<String> input = listWith("apple", "pear", "lemon");
 
         // When
-        Iterable<Pair<Integer, String>> iterable = Lazy.index(input, new Indexer<String, Integer>() {
+        Iterable<Pair<Integer, String>> iterable = Lazily.index(input, new Indexer<String, Integer>() {
             public Integer index(String item) {
                 return item.length();
             }

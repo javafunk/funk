@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.listWith;
 import static org.javafunk.funk.Literals.tuple;
 
-public class EagerZipEnumerateTest {
+public class EagerlyZipEnumerateTest {
     @Test
     public void shouldZipIterables() {
         // Given
@@ -30,7 +30,7 @@ public class EagerZipEnumerateTest {
                 tuple(3, "Third"));
 
         // When
-        Collection<Pair<Integer, String>> actualOutput = Eager.zip(iterable1, iterable2);
+        Collection<Pair<Integer, String>> actualOutput = Eagerly.zip(iterable1, iterable2);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -46,7 +46,7 @@ public class EagerZipEnumerateTest {
                 tuple(2, "c"));
 
         // When
-        Collection<Pair<Integer, String>> actualOutput = Eager.enumerate(iterable);
+        Collection<Pair<Integer, String>> actualOutput = Eagerly.enumerate(iterable);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));

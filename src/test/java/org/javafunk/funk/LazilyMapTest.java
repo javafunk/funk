@@ -19,14 +19,14 @@ import static org.javafunk.funk.Iterables.asList;
 import static org.javafunk.funk.Literals.listWith;
 import static org.junit.Assert.assertThat;
 
-public class LazyMapTest {
+public class LazilyMapTest {
     @Test
     public void shouldMapIterableUsingCustomMapFunction() throws Exception {
         // Given
         Iterable<Integer> input = listWith(1, 2, 3);
 
         // When
-        Iterable<String> actual = Lazy.map(input, new Mapper<Integer, String>() {
+        Iterable<String> actual = Lazily.map(input, new Mapper<Integer, String>() {
             public String map(Integer input) {
                 return String.valueOf(input);
             }
@@ -42,7 +42,7 @@ public class LazyMapTest {
         Iterable<Integer> input = listWith(1, 2, 3);
 
         // When
-        Iterable<String> iterable = Lazy.map(input, new Mapper<Integer, String>() {
+        Iterable<String> iterable = Lazily.map(input, new Mapper<Integer, String>() {
             public String map(Integer input) {
                 return String.valueOf(input);
             }

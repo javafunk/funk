@@ -18,7 +18,7 @@ import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.listWith;
 import static org.junit.Assert.assertThat;
 
-public class LazyBatchTest {
+public class LazilyBatchTest {
     @Test
     public void shouldReturnElementsOfTheIterableInBatchesOfTheSpecifiedSize() {
         // Given
@@ -28,7 +28,7 @@ public class LazyBatchTest {
         Collection<Integer> thirdBatch = listWith(7, 8, 9);
 
         // When
-        Iterator<Iterable<Integer>> returnedIterator = Lazy.batch(input, 3).iterator();
+        Iterator<Iterable<Integer>> returnedIterator = Lazily.batch(input, 3).iterator();
 
         // Then
         assertThat(materialize(returnedIterator.next()), is(firstBatch));
@@ -43,7 +43,7 @@ public class LazyBatchTest {
         Integer batchSize = 0;
 
         // When
-        Lazy.batch(input, batchSize);
+        Lazily.batch(input, batchSize);
 
         // Then an IllegalArgumentException is thrown.
     }
@@ -57,7 +57,7 @@ public class LazyBatchTest {
         Collection<Integer> thirdBatch = listWith(7, 8, 9);
 
         // When
-        Iterable<Iterable<Integer>> iterable = Lazy.batch(input, 3);
+        Iterable<Iterable<Integer>> iterable = Lazily.batch(input, 3);
         Iterator<Iterable<Integer>> iterator1 = iterable.iterator();
         Iterator<Iterable<Integer>> iterator2 = iterable.iterator();
 
@@ -76,7 +76,7 @@ public class LazyBatchTest {
         Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6);
 
         // When
-        Iterable<Iterable<Integer>> batchIterator = Lazy.batch(input, 3);
+        Iterable<Iterable<Integer>> batchIterator = Lazily.batch(input, 3);
         Iterable<Integer> firstBatchIterable = batchIterator.iterator().next();
         Iterator<Integer> firstBatchIterator1 = firstBatchIterable.iterator();
         Iterator<Integer> firstBatchIterator2 = firstBatchIterable.iterator();
