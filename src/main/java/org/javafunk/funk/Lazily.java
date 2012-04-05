@@ -216,7 +216,7 @@ public class Lazily {
         return map(cartesianProduct(listWith(first, second, third, fourth)), Mappers.<S, T, U, V>toQuadruple());
     }
 
-    private static Iterable<? extends Iterable<?>> cartesianProduct(final Iterable<? extends Iterable<?>> iterables) {
+    public static Iterable<? extends Iterable<?>> cartesianProduct(final Iterable<? extends Iterable<?>> iterables) {
         return cartesianProduct(listFrom(iterables));
     }
 
