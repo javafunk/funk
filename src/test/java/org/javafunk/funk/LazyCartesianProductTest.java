@@ -209,5 +209,4 @@ public class LazyCartesianProductTest {
 
         // Then an UnsupportedOperationException is thrown
     }
-
 }

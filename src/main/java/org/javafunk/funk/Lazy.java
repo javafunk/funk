@@ -23,17 +23,19 @@ import static org.javafunk.funk.Eager.first;
 import static org.javafunk.funk.Eager.second;
 import static org.javafunk.funk.Iterables.concat;
 import static org.javafunk.funk.Literals.*;
+import static org.javafunk.funk.Mappers.toIterators;
 import static org.javafunk.funk.Sequences.increasing;
 import static org.javafunk.funk.Sequences.integers;
 
 public class Lazy {
-    private Lazy() {}
+    private Lazy() {
+    }
 
     public static <T> Iterable<Iterable<T>> batch(final Iterable<T> iterable, final int batchSize) {
         if (batchSize <= 0) {
             throw new IllegalArgumentException("Batch size must be greater than zero.");
         }
-        return new Iterable<Iterable<T>>(){
+        return new Iterable<Iterable<T>>() {
             public Iterator<Iterable<T>> iterator() {
                 return new BatchedIterator<T>(iterable.iterator(), batchSize);
             }
@@ -41,7 +43,7 @@ public class Lazy {
     }
 
     public static <T> Iterable<T> cycle(final Iterable<T> iterable) {
-        return new Iterable<T>(){
+        return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new CyclicIterator<T>(iterable.iterator());
             }
@@ -60,7 +62,7 @@ public class Lazy {
         if (numberToTake < 0) {
             throw new IllegalArgumentException("Cannot drop a negative number of elements.");
         }
-        return new Iterable<T>(){
+        return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new SubSequenceIterator<T>(iterable.iterator(), numberToTake, null);
             }
@@ -100,7 +102,7 @@ public class Lazy {
     }
 
     public static <T> Iterable<T> each(final Iterable<T> iterable, final Action<? super T> action) {
-        return new Iterable<T>(){
+        return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new EachIterator<T>(iterable.iterator(), action);
             }
@@ -121,7 +123,7 @@ public class Lazy {
     }
 
     public static <S, T> Iterable<T> map(final Iterable<S> iterable, final Mapper<? super S, T> function) {
-        return new Iterable<T>(){
+        return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new MappedIterator<S, T>(iterable.iterator(), function);
             }
@@ -137,7 +139,7 @@ public class Lazy {
     }
 
     public static <T> Iterable<T> filter(final Iterable<T> iterable, final Predicate<? super T> predicate) {
-        return new Iterable<T>(){
+        return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new FilteredIterator<T>(iterable.iterator(), predicate);
             }
@@ -145,19 +147,23 @@ public class Lazy {
     }
 
     public static <T> Iterable<T> reject(final Iterable<T> iterable, final Predicate<? super T> predicate) {
-        return new Iterable<T>(){
+        return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new FilteredIterator<T>(iterable.iterator(), new NotPredicate<T>(predicate));
             }
         };
     }
 
-    public static <T> Pair<Iterable<T>,Iterable<T>> partition(Iterable<T> iterable, Predicate<? super T> predicate) {
+    public static <T> Pair<Iterable<T>, Iterable<T>> partition(Iterable<T> iterable, Predicate<? super T> predicate) {
         return tuple(filter(iterable, predicate), reject(iterable, predicate));
     }
 
+    public static <T> Iterable<T> rest(final Iterable<T> iterable) {
+        return slice(iterable, 1, null, 1);
+    }
+
     public static <T> Iterable<T> slice(final Iterable<T> iterable, final Integer start, final Integer stop, final Integer step) {
-        return new Iterable<T>(){
+        return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new SubSequenceIterator<T>(iterable.iterator(), start, stop, step);
             }
@@ -168,7 +174,7 @@ public class Lazy {
         if (numberToTake < 0) {
             throw new IllegalArgumentException("Cannot take a negative number of elements.");
         }
-        return new Iterable<T>(){
+        return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new SubSequenceIterator<T>(iterable.iterator(), null, numberToTake);
             }
@@ -176,7 +182,7 @@ public class Lazy {
     }
 
     public static <T> Iterable<T> takeUntil(final Iterable<T> iterable, final Predicate<? super T> predicate) {
-        return new Iterable<T>(){
+        return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new PredicatedIterator<T>(iterable.iterator(), new NotPredicate<T>(predicate));
             }
@@ -184,91 +190,28 @@ public class Lazy {
     }
 
     public static <T> Iterable<T> takeWhile(final Iterable<T> iterable, final Predicate<? super T> predicate) {
-        return new Iterable<T>(){
+        return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new PredicatedIterator<T>(iterable.iterator(), predicate);
             }
         };
     }
 
-    public static <S, T> Iterable<Pair<S, T>> cartesianProduct(final Iterable<S> firstIterable, final Iterable<T> secondIterable) {
-        return concat(map(firstIterable, new Mapper<S, Iterable<Pair<S, T>>>() {
+    public static <S, T> Iterable<Pair<S, T>> cartesianProduct(
+            final Iterable<S> first, final Iterable<T> second) {
+        return concat(map(first, new Mapper<S, Iterable<Pair<S, T>>>() {
             public Iterable<Pair<S, T>> map(S input) {
-                return zip(cycle(listWith(input)), secondIterable);
+                return zip(cycle(listWith(input)), second);
             }
         }));
     }
 
-    public static <R, S> Iterable<Pair<R, S>> zip(final Iterable<R> firstIterable, final Iterable<S> secondIterable) {
-        return new Iterable<Pair<R, S>>(){
-            public Iterator<Pair<R, S>> iterator() {
-                return new TwoZippedIterator<R, S>(firstIterable.iterator(), secondIterable.iterator());
-            }
-        };
-    }
-
-    public static <R, S, T> Iterable<Triple<R, S, T>> zip(Iterable<R> firstIterable, Iterable<S> secondIterable, Iterable<T> thirdIterable) {
-        return map(zip(listWith(firstIterable, secondIterable, thirdIterable)), Lazy.<R, S, T>toTriple());
-    }
-
-    @SuppressWarnings("unchecked")
-    private static <R, S, T> Mapper<Iterable<?>, Triple<R, S, T>> toTriple() {
-        return new Mapper<Iterable<?>, Triple<R, S, T>>() {
-            @Override public Triple<R, S, T> map(Iterable<?> iterable) {
-                return tuple((R) first(iterable), (S) first(rest(iterable)), (T) first(rest(rest(iterable))));
-            }
-        };
-    }
-
-    public static Iterable<? extends Iterable<?>> zip(final Iterable<? extends Iterable<?>> iterables) {
-        return new Iterable<Iterable<?>>() {
-            public Iterator<Iterable<?>> iterator() {
-                final Iterable<Iterator<?>> iterators = Eager.map(iterables, toIterators());
-                return new Iterator<Iterable<?>>() {
-                    public boolean hasNext() {
-                        return Eager.all(iterators, new Predicate<Iterator<?>>(){
-                            public boolean evaluate(Iterator<?> iterator) {
-                                return iterator.hasNext();
-                            }
-                        });
-                    }
-
-                    public Iterable<?> next() {
-                        if (hasNext()) {
-                            return Eager.map(iterators, new Mapper<Iterator<?>, Object>() {
-                                public Object map(Iterator<?> iterator) {
-                                    return iterator.next();
-                                }
-                            });
-                        } else {
-                            throw new NoSuchElementException();
-                        }
-                    }
-
-                    public void remove() {
-                        throw new UnsupportedOperationException();
-                    }
-                };
-            }
-        };
-
-
-    }
-
-    private static <T> Mapper<Iterable<? extends T>, Iterator<? extends T>> toIterators() {
-        return new Mapper<Iterable<? extends T>, Iterator<? extends T>>() {
-            @Override public Iterator<? extends T> map(Iterable<? extends T> iterable) {
-                return iterable.iterator();
-            }
-        };
-    }
-
-    public static <S, T, V> Iterable<? extends Triple<S, T, V>> cartesianProduct(
+    public static <S, T, V> Iterable<Triple<S, T, V>> cartesianProduct(
             Iterable<S> first, Iterable<T> second, Iterable<V> third) {
         return map(cartesianProduct(listWith(first, second, third)), Mappers.<S, T, V>toTriple());
     }
 
-    public static <S, T, U, V> Iterable<? extends Quadruple<S, T, U, V>> cartesianProduct(
+    public static <S, T, U, V> Iterable<Quadruple<S, T, U, V>> cartesianProduct(
             Iterable<S> first, Iterable<T> second, Iterable<U> third, Iterable<V> fourth) {
         return map(cartesianProduct(listWith(first, second, third, fourth)), Mappers.<S, T, U, V>toQuadruple());
     }
@@ -277,25 +220,71 @@ public class Lazy {
         return cartesianProduct(listFrom(iterables));
     }
 
-    private static Iterable<? extends Iterable<?>> cartesianProduct(final List<Iterable<?>> iterables) {
-        if(iterables.size() == 2) {
+    private static Iterable<? extends Iterable<?>> cartesianProduct(final List<? extends Iterable<?>> iterables) {
+        if (iterables.size() == 2) {
             return cartesianProduct(first(iterables), second(iterables));
         }
 
-        @SuppressWarnings("unchecked")
-        Iterable<Pair<Object, Iterable<Object>>> pairs = cartesianProduct(
-                (Iterable<Object>) first(iterables), (Iterable<Iterable<Object>>) cartesianProduct(rest(iterables)));
+        Iterable<? extends Pair<?, ? extends Iterable<?>>> pairs = cartesianProduct(
+                first(iterables),
+                cartesianProduct(rest(iterables)));
 
-        return map(pairs, new Mapper<Pair<Object, Iterable<Object>>, Iterable<Object>>() {
-            @Override
-            public Iterable<Object> map(Pair<Object, Iterable<Object>> input) {
+        return map(pairs, new Mapper<Pair<?, ? extends Iterable<?>>, Iterable<?>>() {
+            public Iterable<?> map(Pair<?, ? extends Iterable<?>> input) {
                 return listWith(input.first()).and(input.second());
             }
         });
     }
 
-    public static <T> Iterable<T> rest(final Iterable<T> iterable) {
-        return slice(iterable, 1, null, 1);
+    public static <R, S> Iterable<Pair<R, S>> zip(
+            Iterable<R> first, Iterable<S> second) {
+        return map(zip(listWith(first, second)), Mappers.<R, S>toPair());
+    }
+
+    public static <R, S, T> Iterable<Triple<R, S, T>> zip(
+            Iterable<R> first, Iterable<S> second, Iterable<T> third) {
+        return map(zip(listWith(first, second, third)), Mappers.<R, S, T>toTriple());
+    }
+
+    private static Iterable<? extends Iterable<?>> zip(final Iterable<? extends Iterable<?>> iterables) {
+        return new Iterable<Iterable<?>>() {
+            public Iterator<Iterable<?>> iterator() {
+                final Iterable<? extends Iterator<?>> iterators = Eager.map(iterables, toIterators());
+                return new ZippedIterator(iterators);
+            }
+        };
+    }
+
+    private static class ZippedIterator implements Iterator<Iterable<?>> {
+        private final Iterable<? extends Iterator<?>> iterators;
+
+        public ZippedIterator(Iterable<? extends Iterator<?>> iterators) {
+            this.iterators = iterators;
+        }
+
+        public boolean hasNext() {
+            return Eager.all(iterators, new Predicate<Iterator<?>>() {
+                public boolean evaluate(Iterator<?> iterator) {
+                    return iterator.hasNext();
+                }
+            });
+        }
+
+        public Iterable<?> next() {
+            if (hasNext()) {
+                return Eager.map(iterators, new Mapper<Iterator<?>, Object>() {
+                    public Object map(Iterator<?> iterator) {
+                        return iterator.next();
+                    }
+                });
+            } else {
+                throw new NoSuchElementException();
+            }
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     private static class EachIterator<T> implements Iterator<T> {
