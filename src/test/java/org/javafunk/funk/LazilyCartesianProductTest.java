@@ -97,6 +97,33 @@ public class LazilyCartesianProductTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
+    public void shouldReturnTheCartesianProductOfNSuppliedIterablesAsAnIterableOfIterables() throws Exception {
+        // Given
+        Iterable<Integer> input1 = listWith(1, 2);
+        Iterable<String> input2 = listWith("a", "b", "c");
+        Iterable<Long> input3 = listWith(1L, 2L, 3L);
+
+        Collection expectedCartesianProduct = Literals.listWith(
+                listWith(1, "a", 1L), listWith(2, "a", 1L),
+                listWith(1, "b", 1L), listWith(2, "b", 1L),
+                listWith(1, "c", 1L), listWith(2, "c", 1L),
+                listWith(1, "a", 2L), listWith(2, "a", 2L),
+                listWith(1, "b", 2L), listWith(2, "b", 2L),
+                listWith(1, "c", 2L), listWith(2, "c", 2L),
+                listWith(1, "a", 3L), listWith(2, "a", 3L),
+                listWith(1, "b", 3L), listWith(2, "b", 3L),
+                listWith(1, "c", 3L), listWith(2, "c", 3L)
+        );
+
+        // When
+        Collection actualCartesianProduct = materialize(Lazily.cartesianProduct(listWith(input1, input2, input3)));
+
+        // Then
+        assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
+    }
+
+    @Test
     public void shouldAllowIteratorToBeCalledMultipleTimesReturningDifferentIterators() throws Exception {
         // Given
         Iterable<Integer> input1 = listWith(1, 2, 3);
