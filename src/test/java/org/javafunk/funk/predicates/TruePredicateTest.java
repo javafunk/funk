@@ -5,14 +5,13 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.predicates.Predicates.TRUE;
 
 public class TruePredicateTest {
 
     @Test
     public void shouldReturnTrueForNull() {
         // Given
-        Predicate<Object> truePredicate = TRUE.predicate();
+        Predicate<Object> truePredicate = new TruePredicate<Object>();
 
         // When
         Boolean result = truePredicate.evaluate(null);
@@ -24,7 +23,7 @@ public class TruePredicateTest {
     @Test
     public void shouldReturnTrueForObject() {
         // Given
-        Predicate<Object> truePredicate = TRUE.predicate();
+        Predicate<Object> truePredicate = new TruePredicate<Object>();
 
         // When
         Boolean result = truePredicate.evaluate(new Object());
