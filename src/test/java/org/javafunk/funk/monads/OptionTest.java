@@ -5,6 +5,7 @@ import org.javafunk.funk.matchers.SelfDescribingPredicate;
 import org.junit.Test;
 
 import java.util.NoSuchElementException;
+import java.util.concurrent.Callable;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -201,7 +202,32 @@ public class OptionTest {
         assertThat(actual, is(expected));
     }
 
-    // none.getOrCall(Callable<T> callable) => return callable.call();
+    @Test
+    public void shouldReturnTheResultOfCallingTheSuppliedCallableIfGetOrCallCalledOnNone() throws Exception {
+        // Given
+        Option<String> option = none();
+        TrackingCallable callable = new TrackingCallable("call result");
+        String expected = "call result";
+
+        // When
+        String actual = option.getOrCall(callable);
+
+        // Then
+        assertThat(actual, is(expected));
+        assertThat(callable.wasCalled(), is(true));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfGetOrCallIsCalledOnNoneWithNull() throws Exception {
+        // Given
+        Option<String> option = none();
+        TrackingCallable callable = null;
+
+        // When
+        option.getOrCall(callable);
+
+        // Then a NullPointerException is thrown.
+    }
 
     @Test
     public void shouldHaveValueIfSome() throws Exception {
@@ -365,7 +391,32 @@ public class OptionTest {
         assertThat(actual, is(expected));
     }
 
-    // some.getOrCall(Callable<T> callable) => some's value;
+    @Test
+    public void shouldReturnTheResultOfCallingGetIfGetOrCallCalledOnSome() throws Exception {
+        // Given
+        Option<String> option = some("thing");
+        TrackingCallable callable = new TrackingCallable("call result");
+        String expected = "thing";
+
+        // When
+        String actual = option.getOrCall(callable);
+
+        // Then
+        assertThat(actual, is(expected));
+        assertThat(callable.wasCalled(), is(false));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfGetOrCallIsCalledOnSomeWithNull() throws Exception {
+        // Given
+        Option<String> option = some("thing");
+        TrackingCallable callable = null;
+
+        // When
+        option.getOrCall(callable);
+
+        // Then a NullPointerException is thrown.
+    }
 
     @Test
     public void shouldBeEqualIfBothNoneOverSameType() throws Exception {
@@ -464,6 +515,25 @@ public class OptionTest {
         // Then
         assertThat(listWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(false));
     }
+
+    private static class TrackingCallable implements Callable<String> {
+        private final String callResult;
+
+        private Boolean wasCalled = false;
+
+        public TrackingCallable(String callResult) {
+            this.callResult = callResult;
+        }
+
+        @Override public String call() throws Exception {
+            wasCalled = true;
+            return callResult;
+            }
+
+            public boolean wasCalled() {
+                return wasCalled;
+            }
+         }
 
     private Matcher<Iterable<Boolean>> hasAllElementsEqualTo(final Boolean booleanValue) {
         return trueForAll(new SelfDescribingPredicate<Boolean>(){

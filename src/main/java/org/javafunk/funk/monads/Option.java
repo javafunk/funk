@@ -4,6 +4,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import java.util.NoSuchElementException;
+import java.util.concurrent.Callable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -30,6 +31,8 @@ public abstract class Option<T> {
     public abstract T getOrElse(T value);
 
     public abstract T getOrNull();
+
+    public abstract T getOrCall(Callable<T> callable) throws Exception;
 
     public abstract <E extends Throwable> T getOrThrow(E throwable) throws E;
 
@@ -65,6 +68,11 @@ public abstract class Option<T> {
 
         @Override public T getOrNull() {
             return null;
+        }
+
+        @Override public T getOrCall(Callable<T> callable) throws Exception {
+            checkNotNull(callable);
+            return callable.call();
         }
 
         @Override public <E extends Throwable> T getOrThrow(E throwable) throws E {
@@ -110,6 +118,11 @@ public abstract class Option<T> {
         }
 
         @Override public T getOrNull() {
+            return get();
+        }
+
+        @Override public T getOrCall(Callable<T> callable) {
+            checkNotNull(callable);
             return get();
         }
 
