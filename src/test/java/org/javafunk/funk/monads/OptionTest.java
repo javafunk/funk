@@ -141,7 +141,29 @@ public class OptionTest {
         assertThat(actual, is(expected));
     }
 
-    // none.getOrThrow(Throwable throwable) => throw throwable;
+    @Test(expected = Throwable.class)
+    public void shouldThrowSuppliedExceptionIfGetOrThrowCalledOnNone() throws Throwable {
+        // Given
+        Throwable throwable = new Throwable();
+        Option<String> option = none();
+
+        // When
+        option.getOrThrow(throwable);
+
+        // Then the throwable is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfGetOrThrowCalledOnNoneWithNull() throws Throwable {
+        // Given
+        Option<String> option = none();
+
+        // When
+        option.getOrThrow(null);
+
+        // Then a NullPointerException is thrown
+    }
+
     // none.getOrCall(Callable<T> callable) => return callable.call();
     // none.getOrElse(T other) => none.or(T other).get()
     // none.getOrElse(null) => null
@@ -247,7 +269,31 @@ public class OptionTest {
         assertThat(actual, is(expected));
     }
 
-    // some.getOrThrow(Throwable throwable) => some's value;
+    @Test
+    public void shouldReturnValueIfGetOrThrowCalledOnSome() throws Throwable {
+        // Given
+        Throwable throwable = new Throwable();
+        String expected = "thing";
+        Option<String> option = some(expected);
+
+        // When
+        String actual = option.getOrThrow(throwable);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfGetOrThrowCalledOnSomeWithNull() throws Throwable {
+        // Given
+        Option<String> option = some("thing");
+
+        // When
+        option.getOrThrow(null);
+
+        // Then a NullPointerException is thrown
+    }
+
     // some.getOrCall(Callable<T> callable) => some's value;
     // some.getOrElse(T other) => some's value;
     // some.getOrElse(null) => some's value;

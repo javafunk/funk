@@ -27,6 +27,8 @@ public abstract class Option<T> {
 
     public abstract T get();
 
+    public abstract <E extends Throwable> T getOrThrow(E throwable) throws E;
+
     public abstract Option<T> or(Option<T> other);
 
     public abstract Option<T> orSome(T other);
@@ -50,6 +52,10 @@ public abstract class Option<T> {
 
         @Override public T get() {
             throw new NoSuchElementException();
+        }
+
+        @Override public <E extends Throwable> T getOrThrow(E throwable) throws E {
+            throw throwable;
         }
 
         @Override public Option<T> or(Option<T> other) {
@@ -96,6 +102,11 @@ public abstract class Option<T> {
 
         @Override public Option<T> orOption(T other) {
             return this;
+        }
+
+        @Override public <E extends Throwable> T getOrThrow(E throwable) throws E {
+            checkNotNull(throwable);
+            return get();
         }
 
         @Override
