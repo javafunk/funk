@@ -164,9 +164,31 @@ public class OptionTest {
         // Then a NullPointerException is thrown
     }
 
+    @Test
+    public void shouldReturnSuppliedValueIfGetOrElseCalledOnNone() throws Exception {
+        // Given
+        Option<String> option = none();
+        String expected = "else";
+
+        // When
+        String actual = option.getOrElse("else");
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfGetOrElseCalledOnNoneWithNull() throws Exception {
+        // Given
+        Option<String> option = none();
+
+        // When
+        option.getOrElse(null);
+
+        // Then a NullPointerException is thrown
+    }
+
     // none.getOrCall(Callable<T> callable) => return callable.call();
-    // none.getOrElse(T other) => none.or(T other).get()
-    // none.getOrElse(null) => null
     // none.getOrNull() => null;
 
     @Test
@@ -294,9 +316,31 @@ public class OptionTest {
         // Then a NullPointerException is thrown
     }
 
+    @Test
+    public void shouldReturnResultOfGetIfGetOrElseCalledOnSome() throws Exception {
+        // Given
+        Option<String> option = some("thing");
+        String expected = "thing";
+
+        // When
+        String actual = option.getOrElse("else");
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfGetOrElseCalledOnSomeWithNull() throws Exception {
+        // Given
+        Option<String> option = some("thing");
+
+        // When
+        option.getOrElse(null);
+
+        // Then a NullPointerException is thrown
+    }
+
     // some.getOrCall(Callable<T> callable) => some's value;
-    // some.getOrElse(T other) => some's value;
-    // some.getOrElse(null) => some's value;
     // some.getOrNull() => some's value;
 
     @Test
