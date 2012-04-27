@@ -188,8 +188,20 @@ public class OptionTest {
         // Then a NullPointerException is thrown
     }
 
+    @Test
+    public void shouldReturnNullIfGetOrNullCalledOnNone() throws Exception {
+        // Given
+        Option<String> option = none();
+        String expected = null;
+
+        // When
+        String actual = option.getOrNull();
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
     // none.getOrCall(Callable<T> callable) => return callable.call();
-    // none.getOrNull() => null;
 
     @Test
     public void shouldHaveValueIfSome() throws Exception {
@@ -340,8 +352,20 @@ public class OptionTest {
         // Then a NullPointerException is thrown
     }
 
+    @Test
+    public void shouldReturnResultOfCallingGetIfGetOrNullCalledOnSome() throws Exception {
+        // Given
+        Option<String> option = some("thing");
+        String expected = "thing";
+
+        // When
+        String actual = option.getOrNull();
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
     // some.getOrCall(Callable<T> callable) => some's value;
-    // some.getOrNull() => some's value;
 
     @Test
     public void shouldBeEqualIfBothNoneOverSameType() throws Exception {

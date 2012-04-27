@@ -29,6 +29,8 @@ public abstract class Option<T> {
 
     public abstract T getOrElse(T value);
 
+    public abstract T getOrNull();
+
     public abstract <E extends Throwable> T getOrThrow(E throwable) throws E;
 
     public abstract Option<T> or(Option<T> other);
@@ -59,6 +61,10 @@ public abstract class Option<T> {
         @Override public T getOrElse(T value) {
             checkNotNull(value);
             return value;
+        }
+
+        @Override public T getOrNull() {
+            return null;
         }
 
         @Override public <E extends Throwable> T getOrThrow(E throwable) throws E {
@@ -100,6 +106,10 @@ public abstract class Option<T> {
 
         @Override public T getOrElse(T value) {
             checkNotNull(value);
+            return get();
+        }
+
+        @Override public T getOrNull() {
             return get();
         }
 
