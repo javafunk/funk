@@ -55,6 +55,18 @@ public class OptionTest {
         assertThat(hasValue, is(false));
     }
 
+    @Test
+    public void shouldHaveNoValueIfNone() throws Exception {
+        // Given
+        Option<Integer> option = none();
+
+        // When
+        Boolean hasNoValue = option.hasNoValue();
+
+        // Then
+        assertThat(hasNoValue, is(true));
+    }
+
     @Test(expected = NoSuchElementException.class)
     public void shouldThrowNoSuchElementExceptionForGetOnNone() throws Exception {
         // Given
@@ -239,6 +251,18 @@ public class OptionTest {
 
         // Then
         assertThat(hasValue, is(true));
+    }
+
+    @Test
+    public void shouldNotHaveNoValueIfSome() throws Exception {
+        // Given
+        Option<Integer> option = some(15);
+
+        // When
+        Boolean hasNoValue = option.hasNoValue();
+
+        // Then
+        assertThat(hasNoValue, is(false));
     }
 
     @Test
