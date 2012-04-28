@@ -3,7 +3,7 @@
     <groupId>org.javafunk.funk</groupId>
     <artifactId>funk</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.4-SNAPSHOT</version>
+    <version>0.1.4</version>
 
     <name>Funk</name>
     <description>Functional utilities for Java</description>
@@ -17,8 +17,8 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git://github.com/javafunk/funk</connection>
-        <developerConnection>scm:git:git@github.com:javafunk/funk.git</developerConnection>
+        <connection>scm:git:https://tobyclemson@github.com/javafunk/funk.git</connection>
+        <developerConnection>scm:git:https://tobyclemson@github.com/javafunk/funk.git</developerConnection>
         <url>http://github.com/javafunk/funk</url>
     </scm>
 
