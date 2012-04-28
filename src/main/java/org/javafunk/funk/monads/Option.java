@@ -54,7 +54,7 @@ public abstract class Option<T> {
 
     private static class None<T> extends Option<T> {
         @Override public Boolean hasValue() {
-            return true;
+            return false;
         }
 
         @Override public T get() {
@@ -105,7 +105,7 @@ public abstract class Option<T> {
         }
 
         @Override public Boolean hasValue() {
-            return false;
+            return true;
         }
 
         @Override public T get() {

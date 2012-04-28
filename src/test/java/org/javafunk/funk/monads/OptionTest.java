@@ -52,7 +52,7 @@ public class OptionTest {
         Boolean hasValue = option.hasValue();
 
         // Then
-        assertThat(hasValue, is(true));
+        assertThat(hasValue, is(false));
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -238,7 +238,7 @@ public class OptionTest {
         Boolean hasValue = option.hasValue();
 
         // Then
-        assertThat(hasValue, is(false));
+        assertThat(hasValue, is(true));
     }
 
     @Test
