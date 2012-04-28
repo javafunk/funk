@@ -13,6 +13,10 @@ public abstract class Option<T> {
         return new None<T>();
     }
 
+    public static <T> Option<T> none(Class<T> typeClass) {
+        return new None<T>();
+    }
+
     public static <T> Option<T> some(T value) {
         return new Some<T>(value);
     }

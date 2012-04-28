@@ -42,6 +42,15 @@ public class OptionTest {
         // Then
         assertThat(actual, is(expected));
     }
+
+    @Test
+    public void shouldInferTypeFromSuppliedClassWhenClassPassedToNone() throws Exception {
+        // Given
+        Option<String> expected = none();
+
+        // Then
+        assertThat(none(String.class), is(expected));
+    }
     
     @Test
     public void shouldNotHaveValueIfNone() throws Exception {
