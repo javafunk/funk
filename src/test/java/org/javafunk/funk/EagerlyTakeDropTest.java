@@ -105,7 +105,7 @@ public class EagerlyTakeDropTest {
 
         // When
         Collection<Integer> actualOutput = Eagerly.takeWhile(input, new Predicate<Integer>() {
-            public boolean evaluate(Integer item) {
+            public Boolean evaluate(Integer item) {
                 return item < 3;
             }
         });
@@ -122,7 +122,7 @@ public class EagerlyTakeDropTest {
 
         // When
         Collection<Integer> actualOutput = Eagerly.takeUntil(input, new Predicate<Integer>() {
-            public boolean evaluate(Integer item) {
+            public Boolean evaluate(Integer item) {
                 return item > 3;
             }
         });
@@ -140,7 +140,7 @@ public class EagerlyTakeDropTest {
         // When
         Collection<String> actualOutput = Eagerly.dropWhile(input, new Predicate<String>() {
             @Override
-            public boolean evaluate(String item) {
+            public Boolean evaluate(String item) {
                 return item.length() < 3;
             }
         });
@@ -158,7 +158,7 @@ public class EagerlyTakeDropTest {
         // When
         Collection<String> actualOutput = Eagerly.dropUntil(input, new Predicate<String>() {
             @Override
-            public boolean evaluate(String item) {
+            public Boolean evaluate(String item) {
                 return item.contains("b");
             }
         });

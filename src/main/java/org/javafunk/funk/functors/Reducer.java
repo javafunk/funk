@@ -8,6 +8,12 @@
  */
 package org.javafunk.funk.functors;
 
-public interface Reducer<S, T> {
-    T accumulate(T accumulator, S element);
+import org.javafunk.funk.functors.functions.BinaryFunction;
+
+public abstract class Reducer<S, T> implements BinaryFunction<T, S, T> {
+    public abstract T accumulate(T accumulator, S element);
+
+    @Override public T call(T accumulator, S element) {
+        return accumulate(accumulator, element);
+    }
 }

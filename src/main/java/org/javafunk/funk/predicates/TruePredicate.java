@@ -4,9 +4,9 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.javafunk.funk.functors.Predicate;
 
-public class TruePredicate<T> implements Predicate<T> {
+public class TruePredicate<T> extends Predicate<T> {
     @Override
-    public boolean evaluate(T item) {
+    public Boolean evaluate(T item) {
         return true;
     }
 

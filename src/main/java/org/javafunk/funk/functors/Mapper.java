@@ -8,6 +8,12 @@
  */
 package org.javafunk.funk.functors;
 
-public interface Mapper<S, T> {
-    T map(S input);
+import org.javafunk.funk.functors.functions.UnaryFunction;
+
+public abstract class Mapper<S, T> implements UnaryFunction<S, T> {
+    public abstract T map(S input);
+
+    @Override public T call(S input) {
+        return map(input);
+    }
 }

@@ -147,7 +147,7 @@ public class LazilyTakeDropTest {
 
         // When
         Collection<Integer> actualOutput = materialize(Lazily.takeWhile(input, new Predicate<Integer>() {
-            public boolean evaluate(Integer input) {
+            public Boolean evaluate(Integer input) {
                 return input < 5;
             }
         }));
@@ -163,7 +163,7 @@ public class LazilyTakeDropTest {
 
         // When
         Iterable<Integer> iterable = Lazily.takeWhile(input, new Predicate<Integer>() {
-            public boolean evaluate(Integer input) {
+            public Boolean evaluate(Integer input) {
                 return input < 5;
             }
         });
@@ -187,7 +187,7 @@ public class LazilyTakeDropTest {
 
         // When
         Collection<Integer> actualOutput = materialize(Lazily.takeUntil(input, new Predicate<Integer>() {
-            public boolean evaluate(Integer input) {
+            public Boolean evaluate(Integer input) {
                 return input < 5;
             }
         }));
@@ -203,7 +203,7 @@ public class LazilyTakeDropTest {
 
         // When
         Iterable<Integer> iterable = Lazily.takeUntil(input, new Predicate<Integer>() {
-            public boolean evaluate(Integer input) {
+            public Boolean evaluate(Integer input) {
                 return input < 5;
             }
         });
@@ -227,7 +227,7 @@ public class LazilyTakeDropTest {
 
         // When
         Collection<Integer> actualOutput = materialize(Lazily.dropWhile(input, new Predicate<Integer>() {
-            public boolean evaluate(Integer input) {
+            public Boolean evaluate(Integer input) {
                 return input > 4;
             }
         }));
@@ -243,7 +243,7 @@ public class LazilyTakeDropTest {
 
         // When
         Iterable<Integer> iterable = Lazily.dropWhile(input, new Predicate<Integer>() {
-            public boolean evaluate(Integer input) {
+            public Boolean evaluate(Integer input) {
                 return input > 4;
             }
         });
@@ -267,7 +267,7 @@ public class LazilyTakeDropTest {
 
         // When
         Collection<Integer> actualOutput = materialize(Lazily.dropUntil(input, new Predicate<Integer>() {
-            public boolean evaluate(Integer input) {
+            public Boolean evaluate(Integer input) {
                 return input < 5;
             }
         }));
@@ -283,7 +283,7 @@ public class LazilyTakeDropTest {
 
         // When
         Iterable<Integer> iterable = Lazily.dropUntil(input, new Predicate<Integer>() {
-            public boolean evaluate(Integer input) {
+            public Boolean evaluate(Integer input) {
                 return input < 5;
             }
         });

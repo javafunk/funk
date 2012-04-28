@@ -30,7 +30,7 @@ public class PredicatedIteratorTest {
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean evaluate(String item) {
+            public Boolean evaluate(String item) {
                 return item.length() < 3;
             }
         });
@@ -51,7 +51,7 @@ public class PredicatedIteratorTest {
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean evaluate(String item) {
+            public Boolean evaluate(String item) {
                 return item.length() < 2;
             }
         });
@@ -72,7 +72,7 @@ public class PredicatedIteratorTest {
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean evaluate(String item) {
+            public Boolean evaluate(String item) {
                 return item.length() < 3;
             }
         });
@@ -90,7 +90,7 @@ public class PredicatedIteratorTest {
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean evaluate(String item) {
+            public Boolean evaluate(String item) {
                 return item.length() < 10;
             }
         });
@@ -110,7 +110,7 @@ public class PredicatedIteratorTest {
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean evaluate(String item) {
+            public Boolean evaluate(String item) {
                 return item.length() < 3;
             }
         });
@@ -130,7 +130,7 @@ public class PredicatedIteratorTest {
         // When
         Iterator<Integer> predicatedIterator = new PredicatedIterator<Integer>(input.iterator(), new Predicate<Integer>(){
             @Override
-            public boolean evaluate(Integer item) {
+            public Boolean evaluate(Integer item) {
                 return item == null || item != 2;
             }
         });
@@ -154,7 +154,7 @@ public class PredicatedIteratorTest {
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean evaluate(String item) {
+            public Boolean evaluate(String item) {
                 return item.length() < 3;
             }
         });
@@ -174,7 +174,7 @@ public class PredicatedIteratorTest {
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean evaluate(String item) {
+            public Boolean evaluate(String item) {
                 return item.length() < 3;
             }
         });
@@ -193,7 +193,7 @@ public class PredicatedIteratorTest {
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean evaluate(String item) {
+            public Boolean evaluate(String item) {
                 return item.length() < 4;
             }
         });
@@ -214,7 +214,7 @@ public class PredicatedIteratorTest {
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean evaluate(String item) {
+            public Boolean evaluate(String item) {
                 return item.length() < 2;
             }
         });
@@ -243,7 +243,7 @@ public class PredicatedIteratorTest {
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
             @Override
-            public boolean evaluate(String item) {
+            public Boolean evaluate(String item) {
                 return item.length() < 2;
             }
         });

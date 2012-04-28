@@ -25,7 +25,5 @@ public class Maps {
         }
     }
 
-    public interface DefaultValueFactory<T> extends Factory<T> {
-        T create();
-    }
+    public static abstract class DefaultValueFactory<T> extends Factory<T> {}
 }

@@ -12,7 +12,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.javafunk.funk.functors.Predicate;
 
-public class NotPredicate<T> implements Predicate<T> {
+public class NotPredicate<T> extends Predicate<T> {
     private Predicate<? super T> predicate;
 
     public NotPredicate(Predicate<? super T> predicate) {
@@ -20,7 +20,7 @@ public class NotPredicate<T> implements Predicate<T> {
     }
 
     @Override
-    public boolean evaluate(T item) {
+    public Boolean evaluate(T item) {
         return !predicate.evaluate(item);
     }
 

@@ -10,6 +10,6 @@ package org.javafunk.funk.matchers;
 
 import org.javafunk.funk.functors.Predicate;
 
-public interface SelfDescribingPredicate<T> extends Predicate<T> {
-    String describe();
+public abstract class SelfDescribingPredicate<T> extends Predicate<T> {
+    public abstract String describe();
 }
