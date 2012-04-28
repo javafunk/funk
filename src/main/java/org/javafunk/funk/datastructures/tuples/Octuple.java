@@ -1,6 +1,6 @@
 package org.javafunk.funk.datastructures.tuples;
 
-import org.javafunk.funk.functors.ordinals.*;
+import org.javafunk.funk.behaviours.ordinals.*;
 
 import static org.javafunk.funk.Literals.listWith;
 

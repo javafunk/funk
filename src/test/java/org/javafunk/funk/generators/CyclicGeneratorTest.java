@@ -1,7 +1,7 @@
 package org.javafunk.funk.generators;
 
 import org.javafunk.funk.functors.Action;
-import org.javafunk.funk.functors.Generator;
+import org.javafunk.funk.behaviours.Generator;
 import org.javafunk.funk.matchers.SelfDescribingPredicate;
 import org.junit.Test;
 

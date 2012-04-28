@@ -1,7 +1,7 @@
 package org.javafunk.funk;
 
-import org.javafunk.funk.functors.Generatable;
-import org.javafunk.funk.functors.Generator;
+import org.javafunk.funk.behaviours.Generatable;
+import org.javafunk.funk.behaviours.Generator;
 import org.javafunk.funk.generators.ConstantGenerator;
 import org.javafunk.funk.generators.FiniteGenerator;
 

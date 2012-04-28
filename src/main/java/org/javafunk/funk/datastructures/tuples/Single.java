@@ -1,6 +1,6 @@
 package org.javafunk.funk.datastructures.tuples;
 
-import org.javafunk.funk.functors.ordinals.First;
+import org.javafunk.funk.behaviours.ordinals.First;
 
 import java.util.ArrayList;
 

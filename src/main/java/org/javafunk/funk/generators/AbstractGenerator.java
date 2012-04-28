@@ -1,6 +1,6 @@
 package org.javafunk.funk.generators;
 
-import org.javafunk.funk.functors.Generator;
+import org.javafunk.funk.behaviours.Generator;
 
 public abstract class AbstractGenerator<T> implements Generator<T> {
     @Override public boolean hasNext() {

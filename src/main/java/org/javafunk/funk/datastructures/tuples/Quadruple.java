@@ -8,10 +8,10 @@
  */
 package org.javafunk.funk.datastructures.tuples;
 
-import org.javafunk.funk.functors.ordinals.First;
-import org.javafunk.funk.functors.ordinals.Fourth;
-import org.javafunk.funk.functors.ordinals.Second;
-import org.javafunk.funk.functors.ordinals.Third;
+import org.javafunk.funk.behaviours.ordinals.First;
+import org.javafunk.funk.behaviours.ordinals.Fourth;
+import org.javafunk.funk.behaviours.ordinals.Second;
+import org.javafunk.funk.behaviours.ordinals.Third;
 
 import static org.javafunk.funk.Literals.listWith;
 

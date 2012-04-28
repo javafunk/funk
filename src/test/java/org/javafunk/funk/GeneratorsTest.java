@@ -1,6 +1,6 @@
 package org.javafunk.funk;
 
-import org.javafunk.funk.functors.Generator;
+import org.javafunk.funk.behaviours.Generator;
 import org.javafunk.funk.generators.ConstantGenerator;
 import org.javafunk.funk.generators.FiniteGenerator;
 import org.junit.Test;

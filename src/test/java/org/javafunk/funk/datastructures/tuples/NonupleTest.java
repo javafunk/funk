@@ -1,7 +1,7 @@
 package org.javafunk.funk.datastructures.tuples;
 
 import org.javafunk.funk.Literals;
-import org.javafunk.funk.functors.ordinals.*;
+import org.javafunk.funk.behaviours.ordinals.*;
 import org.javafunk.funk.testclasses.Age;
 import org.javafunk.funk.testclasses.Colour;
 import org.javafunk.funk.testclasses.Location;

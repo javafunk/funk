@@ -9,7 +9,7 @@
 package org.javafunk.funk.datastructures.tuples;
 
 import org.javafunk.funk.Literals;
-import org.javafunk.funk.functors.ordinals.*;
+import org.javafunk.funk.behaviours.ordinals.*;
 import org.junit.Test;
 
 import java.util.List;
