@@ -2,13 +2,15 @@ package org.javafunk.funk.monads;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.javafunk.funk.behaviours.Mappable;
+import org.javafunk.funk.functors.Mapper;
 
 import java.util.NoSuchElementException;
 import java.util.concurrent.Callable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public abstract class Option<T> {
+public abstract class Option<T> implements Mappable<T, Option<?>> {
     public static <T> Option<T> none() {
         return new None<T>();
     }
@@ -47,6 +49,8 @@ public abstract class Option<T> {
     public abstract Option<T> orSome(T other);
 
     public abstract Option<T> orOption(T other);
+
+    public abstract <S> Option<S> map(Mapper<? super T, ? extends S> mapper);
 
     @Override
     public boolean equals(Object other) {
@@ -99,6 +103,11 @@ public abstract class Option<T> {
 
         @Override public Option<T> orOption(T other) {
             return option(other);
+        }
+
+        @Override public <S> Option<S> map(Mapper<? super T, ? extends S> mapper) {
+            checkNotNull(mapper);
+            return none();
         }
 
         @Override
@@ -156,6 +165,11 @@ public abstract class Option<T> {
 
         @Override public Option<T> orOption(T other) {
             return this;
+        }
+
+        @Override public <S> Option<S> map(Mapper<? super T, ? extends S> mapper) {
+            checkNotNull(mapper);
+            return some(mapper.map(get()));
         }
 
         @Override

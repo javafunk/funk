@@ -1,6 +1,7 @@
 package org.javafunk.funk.monads;
 
 import org.hamcrest.Matcher;
+import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.matchers.SelfDescribingPredicate;
 import org.junit.Test;
 
@@ -12,9 +13,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.listWith;
 import static org.javafunk.funk.matchers.Matchers.trueForAll;
-import static org.javafunk.funk.monads.Option.none;
-import static org.javafunk.funk.monads.Option.option;
-import static org.javafunk.funk.monads.Option.some;
+import static org.javafunk.funk.monads.Option.*;
 
 public class OptionTest {
     @Test
@@ -251,6 +250,36 @@ public class OptionTest {
     }
 
     @Test
+    public void shouldReturnNoneOverTheMappedTypeIfMapCalledOnNone() throws Exception {
+        // Given
+        Option<String> option = none();
+        Mapper<String, Integer> mapper = new Mapper<String, Integer>() {
+            @Override public Integer map(String input) {
+                return input.length();
+            }
+        };
+        Option<Integer> expected = none();
+
+        // When
+        Option<Integer> actual = option.map(mapper);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfMapCalledOnNoneWithNull() throws Exception {
+        // Given
+        Option<String> option = none();
+        Mapper<String, Integer> mapper = null;
+
+        // When
+        option.map(mapper);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test
     public void shouldHaveValueIfSome() throws Exception {
         // Given
         Option<Integer> option = some(15);
@@ -447,6 +476,54 @@ public class OptionTest {
 
         // When
         option.getOrCall(callable);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test
+    public void shouldReturnSomeOverTheReturnValueOfTheSuppliedMapperIfMapCalledOnSome() throws Exception {
+        // Given
+        Option<String> option = some("string");
+        Mapper<String, Integer> mapper = new Mapper<String, Integer>() {
+            @Override public Integer map(String input) {
+                return input.length();
+            }
+        };
+        Option<Integer> expected = some(6);
+
+        // When
+        Option<Integer> actual = option.map(mapper);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnSomeOverNullIfMapCalledOnSomeAndMapperReturnsNull() throws Exception {
+        // Given
+        Option<String> option = some("string");
+        Mapper<String, Integer> mapper = new Mapper<String, Integer>() {
+            @Override public Integer map(String input) {
+                return null;
+            }
+        };
+        Option<Integer> expected = some(null);
+
+        // When
+        Option<Integer> actual = option.map(mapper);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfMapCalledOnSomeWithNull() throws Exception {
+        // Given
+        Option<String> option = some("string");
+        Mapper<String, Integer> mapper = null;
+
+        // When
+        option.map(mapper);
 
         // Then a NullPointerException is thrown.
     }
