@@ -280,6 +280,36 @@ public class OptionTest {
     }
 
     @Test
+    public void shouldReturnNoneOverTheTypeOfTheMappedOptionIfFlatMapCalledOnNone() throws Exception {
+        // Given
+        Option<String> option = none();
+        Mapper<String, Option<Integer>> mapper = new Mapper<String, Option<Integer>>() {
+            @Override public Option<Integer> map(String input) {
+                return some(input.length());
+            }
+        };
+        Option<Integer> expected = none();
+
+        // When
+        Option<Integer> actual = option.flatMap(mapper);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfFlatMapCalledOnNoneWithNull() throws Exception {
+        // Given
+        Option<String> option = none();
+        Mapper<String, Option<Integer>> mapper = null;
+
+        // When
+        option.flatMap(mapper);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test
     public void shouldHaveValueIfSome() throws Exception {
         // Given
         Option<Integer> option = some(15);
@@ -524,6 +554,36 @@ public class OptionTest {
 
         // When
         option.map(mapper);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test
+    public void shouldReturnTheReturnValueOfTheSuppliedMapperIfFlatMapCalledOnSome() throws Exception {
+        // Given
+        Option<String> option = some("string");
+        Mapper<String, Option<Integer>> mapper = new Mapper<String, Option<Integer>>() {
+            @Override public Option<Integer> map(String input) {
+                return some(input.length());
+            }
+        };
+        Option<Integer> expected = some(6);
+
+        // When
+        Option<Integer> actual = option.flatMap(mapper);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfFlatMapCalledOnSomeWithNull() throws Exception {
+        // Given
+        Option<String> option = none();
+        Mapper<String, Option<Integer>> mapper = null;
+
+        // When
+        option.flatMap(mapper);
 
         // Then a NullPointerException is thrown.
     }

@@ -10,7 +10,8 @@ import java.util.concurrent.Callable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public abstract class Option<T> implements Mappable<T, Option<?>> {
+public abstract class Option<T>
+        implements Mappable<T, Option<?>> {
     public static <T> Option<T> none() {
         return new None<T>();
     }
@@ -51,6 +52,8 @@ public abstract class Option<T> implements Mappable<T, Option<?>> {
     public abstract Option<T> orOption(T other);
 
     public abstract <S> Option<S> map(Mapper<? super T, ? extends S> mapper);
+
+    public abstract <S> Option<S> flatMap(Mapper<? super T, ? extends Option<S>> mapper);
 
     @Override
     public boolean equals(Object other) {
@@ -106,6 +109,11 @@ public abstract class Option<T> implements Mappable<T, Option<?>> {
         }
 
         @Override public <S> Option<S> map(Mapper<? super T, ? extends S> mapper) {
+            checkNotNull(mapper);
+            return none();
+        }
+
+        @Override public <S> Option<S> flatMap(Mapper<? super T, ? extends Option<S>> mapper) {
             checkNotNull(mapper);
             return none();
         }
@@ -170,6 +178,11 @@ public abstract class Option<T> implements Mappable<T, Option<?>> {
         @Override public <S> Option<S> map(Mapper<? super T, ? extends S> mapper) {
             checkNotNull(mapper);
             return some(mapper.map(get()));
+        }
+
+        @Override public <S> Option<S> flatMap(Mapper<? super T, ? extends Option<S>> mapper) {
+            checkNotNull(mapper);
+            return mapper.map(get());
         }
 
         @Override
