@@ -22,6 +22,7 @@ import java.util.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
+import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.testclasses.Age.age;
 import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Location.location;
@@ -29,6 +30,128 @@ import static org.javafunk.funk.testclasses.Name.name;
 import static org.junit.Assert.assertThat;
 
 public class LiteralsTest {
+    @Test
+    public void shouldReturnACollectionContainingTheSuppliedElements() throws Exception {
+        // Given
+        Collection<Integer> expectedCollection = asList(5, 10, 15);
+
+        // When
+        Collection<Integer> actualList = collectionWith(5, 10, 15);
+
+        // Then
+        assertThat(actualList, is(expectedCollection));
+    }
+
+    @Test
+    public void shouldAllowMoreElementsToBeAddedToTheCollectionWithAnd() throws Exception {
+        // Given
+        Collection<Integer> expectedCollection = asList(5, 10, 15, 20, 25, 30);
+
+        // When
+        Collection<Integer> actualCollection = collectionWith(5, 10, 15).and(20, 25, 30);
+
+        // Then
+        assertThat(actualCollection, is(expectedCollection));
+    }
+
+    @Test
+    public void shouldAllowArraysOfElementsToBeAddedToTheCollectionWithAnd() throws Exception {
+        // Given
+        Collection<Integer> expectedCollection = asList(5, 10, 15, 20, 25, 30);
+        Integer[] elementArray = new Integer[]{20, 25, 30};
+
+        // When
+        Collection<Integer> actualList = collectionWith(5, 10, 15).and(elementArray);
+
+        // Then
+        assertThat(actualList, is(expectedCollection));
+    }
+    
+    @Test
+    public void shouldAllowIterablesOfElementsToBeAddedToTheCollectionWithAnd() throws Exception {
+        // Given
+        Collection<Integer> expectedCollection = asList(1, 2, 3, 4, 5, 6);
+        Iterable<Integer> someOtherElements = asList(4, 5, 6);
+
+        // When
+        Collection<Integer> actualCollection = collectionWith(1, 2, 3).and(someOtherElements);
+
+        // Then
+        assertThat(actualCollection, is(expectedCollection));
+    }
+
+    @Test
+    public void shouldAllowElementsToBeAddedToACollectionWithWith() throws Exception {
+        // Given
+        Collection<Integer> expectedCollection = asList(1, 2, 3, 4, 5, 6);
+
+        // When
+        Collection<Integer> actualCollection = collectionOf(Integer.class)
+                .with(1, 2, 3)
+                .with(4, 5, 6)
+                .build();
+
+        // Then
+        assertThat(actualCollection, is(expectedCollection));
+    }
+
+    @Test
+    public void shouldAllowArraysOfElementsToBeAddedToTheCollectionWithWith() throws Exception {
+        // Given
+        Collection<Integer> expectedCollection = asList(5, 10, 15, 20, 25, 30);
+        Integer[] elementArray = new Integer[]{20, 25, 30};
+
+        // When
+        Collection<Integer> actualCollection = collectionWith(5, 10, 15).with(elementArray);
+
+        // Then
+        assertThat(actualCollection, is(expectedCollection));
+    }
+
+    @Test
+    public void shouldAllowIterablesOfElementsToBeAddedToTheCollectionWithWith() throws Exception {
+        // Given
+        Collection<Integer> expectedCollection = asList(1, 2, 3, 4, 5, 6);
+        Iterable<Integer> firstInputIterable = asList(1, 2, 3);
+        Iterable<Integer> secondInputIterable = asList(4, 5, 6);
+
+        // When
+        Collection<Integer> actualCollection = collectionOf(Integer.class)
+                .with(firstInputIterable)
+                .with(secondInputIterable)
+                .build();
+
+        // Then
+        assertThat(actualCollection, is(expectedCollection));
+    }
+
+    @Test
+    public void shouldReturnACollectionContainingAllElementsInTheSuppliedIterable() throws Exception {
+        // Given
+        Collection<Integer> expectedCollection = asList(1, 2, 3, 4, 5, 6);
+        Iterable<Integer> firstInputIterable = asList(1, 2, 3);
+        Iterable<Integer> secondInputIterable = asList(4, 5, 6);
+
+        // When
+        Collection<Integer> actualCollection = collectionFrom(firstInputIterable).with(secondInputIterable);
+
+        // Then
+        assertThat(actualCollection, is(expectedCollection));
+    }
+
+    @Test
+    public void shouldReturnACollectionContainingAllElementsInTheSuppliedArray() throws Exception {
+        // Given
+        String[] elementArray = new String[]{"a", "b", "c"};
+        Collection<String> expectedCollection = asList("a", "b", "c");
+
+        // When
+        Collection<String> actualCollection = collectionFrom(elementArray);
+
+        // Then
+        assertThat(actualCollection, is(expectedCollection));
+    }
+
     @Test
     public void shouldReturnAListContainingTheSuppliedElements() {
         // Given

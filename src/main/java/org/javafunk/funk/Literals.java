@@ -1,15 +1,28 @@
 package org.javafunk.funk;
 
-import org.javafunk.funk.builders.ListBuilder;
-import org.javafunk.funk.builders.MapBuilder;
-import org.javafunk.funk.builders.MultisetBuilder;
-import org.javafunk.funk.builders.SetBuilder;
+import org.javafunk.funk.builders.*;
 import org.javafunk.funk.datastructures.tuples.*;
 
 import static java.util.Arrays.asList;
 
 public class Literals {
     private Literals() {}
+
+    public static <E> CollectionBuilder<E> collection() {
+        return new CollectionBuilder<E>();
+    }
+
+    public static <E> CollectionBuilder<E> collectionOf(Class<E> elementClass) {
+        return new CollectionBuilder<E>();
+    }
+
+    public static <E> CollectionBuilder<E> collectionFrom(Iterable<? extends E> elements) {
+        return new CollectionBuilder<E>().with(elements);
+    }
+
+    public static <E> CollectionBuilder<E> collectionFrom(E[] elementArray) {
+        return new CollectionBuilder<E>().with(elementArray);
+    }
 
     public static <E> ListBuilder<E> list() {
         return new ListBuilder<E>();
@@ -105,6 +118,61 @@ public class Literals {
 
     public static <R, S, T, U, V, W, X, Y, Z> Nonuple<R, S, T, U, V, W, X, Y, Z> tuple(R first, S second, T third, U fourth, V fifth, W sixth, X seventh, Y eighth, Z ninth) {
         return new Nonuple<R, S, T, U, V, W, X, Y, Z>(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <E> CollectionBuilder<E> collectionWith(E e) {
+        return collectionFrom(asList(e));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <E> CollectionBuilder<E> collectionWith(E e1, E e2) {
+        return collectionFrom(asList(e1, e2));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <E> CollectionBuilder<E> collectionWith(E e1, E e2, E e3) {
+        return collectionFrom(asList(e1, e2, e3));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <E> CollectionBuilder<E> collectionWith(E e1, E e2, E e3, E e4) {
+        return collectionFrom(asList(e1, e2, e3, e4));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <E> CollectionBuilder<E> collectionWith(E e1, E e2, E e3, E e4, E e5) {
+        return collectionFrom(asList(e1, e2, e3, e4, e5));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <E> CollectionBuilder<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return collectionFrom(asList(e1, e2, e3, e4, e5, e6));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <E> CollectionBuilder<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return collectionFrom(asList(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <E> CollectionBuilder<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return collectionFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <E> CollectionBuilder<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return collectionFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <E> CollectionBuilder<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return collectionFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <E> CollectionBuilder<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return collectionFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on));
     }
 
     @SuppressWarnings("unchecked")
@@ -271,5 +339,4 @@ public class Literals {
     public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
         return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on));
     }
-
 }
