@@ -1,5 +1,6 @@
 package org.javafunk.funk;
 
+import org.javafunk.funk.annotations.ToDo;
 import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.datastructures.tuples.Quadruple;
 import org.javafunk.funk.datastructures.tuples.Triple;
@@ -162,6 +163,7 @@ public class LazilyCartesianProductTest {
     }
 
     @Test
+    @ToDo("There must be a better way to test this...")
     public void shouldAllowInfiniteIterableInEitherSlot() throws Exception {
         // Given
         Iterable<Integer> firstIterable = cycle(listWith(1, 2, 3));
