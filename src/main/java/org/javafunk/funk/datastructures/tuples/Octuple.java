@@ -2,7 +2,7 @@ package org.javafunk.funk.datastructures.tuples;
 
 import org.javafunk.funk.behaviours.ordinals.*;
 
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class Octuple<R, S, T, U, V, W, X, Y>
         extends AbstractTuple
@@ -28,7 +28,7 @@ public class Octuple<R, S, T, U, V, W, X, Y>
     }
 
     @Override public Iterable<Object> values() {
-        return listWith(first, second, third, fourth, fifth, sixth, seventh, eighth);
+        return iterableWith(first, second, third, fourth, fifth, sixth, seventh, eighth);
     }
 
     @Override public R first() {

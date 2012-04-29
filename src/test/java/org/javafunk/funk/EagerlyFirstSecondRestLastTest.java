@@ -18,13 +18,15 @@ import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.Literals.listWith;
 
 public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnTheFirstElementFromTheSuppliedIterable() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(10, 9, 8, 7);
+        Iterable<Integer> input = iterableWith(10, 9, 8, 7);
 
         // When
         Integer output = Eagerly.first(input);
@@ -47,7 +49,7 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnTheSecondElementFromTheSuppliedIterable() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(10, 9, 8, 7);
+        Iterable<Integer> input = iterableWith(10, 9, 8, 7);
 
         // When
         Integer output = Eagerly.second(input);
@@ -70,7 +72,7 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnTheFirstElementInTheSuppliedIterableMatchingTheSuppliedPredicate() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
+        Iterable<Integer> input = iterableWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
         Integer output = Eagerly.first(input, new Predicate<Integer>() {
@@ -109,7 +111,7 @@ public class EagerlyFirstSecondRestLastTest {
     @Test(expected = NoSuchElementException.class)
     public void shouldThrowANoSuchElementExceptionForPredicatedFirstIfNoElementsInTheSuppliedIterableMatch() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 3, 5, 7);
+        Iterable<Integer> input = iterableWith(1, 3, 5, 7);
 
         // When
         Eagerly.first(input, new Predicate<Integer>() {
@@ -128,8 +130,8 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnTheFirstNElementsFromTheSuppliedIterable() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
-        Collection<Integer> expectedOutput = listWith(10, 9, 8, 7);
+        Iterable<Integer> input = iterableWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+        Collection<Integer> expectedOutput = collectionWith(10, 9, 8, 7);
 
         // When
         Collection<Integer> actualOutput = Eagerly.first(input, 4);
@@ -141,8 +143,8 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnAsManyElementsAsPossibleForFirstIfThereAreNotEnoughElementsInTheSuppliedIterable() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(3, 2, 1);
-        Collection<Integer> expectedOutput = listWith(3, 2, 1);
+        Iterable<Integer> input = iterableWith(3, 2, 1);
+        Collection<Integer> expectedOutput = collectionWith(3, 2, 1);
 
         // When
         Collection<Integer> actualOutput = Eagerly.first(input, 4);
@@ -167,7 +169,7 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnAnEmptyCollectionForFirstIfTheNumberOfElementsRequiredIsZero() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(3, 2, 1);
+        Iterable<Integer> input = iterableWith(3, 2, 1);
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
@@ -180,7 +182,7 @@ public class EagerlyFirstSecondRestLastTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowAnIllegalArgumentExceptionForFirstIfTheNumberOfElementsRequiredIsNegative() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(3, 2, 1);
+        Iterable<Integer> input = iterableWith(3, 2, 1);
 
         // When
         Eagerly.first(input, -3);
@@ -191,8 +193,8 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnTheFirstNElementsInTheSuppliedIterableMatchingTheSuppliedPredicate() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
-        Collection<Integer> expectedOutput = listWith(8, 6);
+        Iterable<Integer> input = iterableWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
+        Collection<Integer> expectedOutput = collectionWith(8, 6);
 
         // When
         Collection<Integer> actualOutput = Eagerly.first(input, 2, new Predicate<Integer>() {
@@ -212,8 +214,8 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnAsManyElementsAsPossibleForPredicatedNFirstIfThereAreNotEnoughMatchingElementsInTheSuppliedIterable() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(5, 4, 3, 2, 1);
-        Collection<Integer> expectedOutput = listWith(4, 2);
+        Iterable<Integer> input = iterableWith(5, 4, 3, 2, 1);
+        Collection<Integer> expectedOutput = collectionWith(4, 2);
 
         // When
         Collection<Integer> actualOutput = Eagerly.first(input, 4, new Predicate<Integer>() {
@@ -254,7 +256,7 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnAnEmptyCollectionForPredicatedNFirstIfTheNumberOfElementsRequiredIsZero() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(3, 2, 1);
+        Iterable<Integer> input = iterableWith(3, 2, 1);
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
@@ -275,7 +277,7 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnAnEmptyCollectionForPredicatedNFirstIfThereAreNoElementsMatchingTheSuppliedPredicate() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 3, 5, 7);
+        Iterable<Integer> input = iterableWith(1, 3, 5, 7);
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
@@ -319,7 +321,7 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnTheLastElementInTheSuppliedIterableMatchingTheSuppliedPredicate() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
+        Iterable<Integer> input = iterableWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
         Integer output = Eagerly.last(input, new Predicate<Integer>() {
@@ -358,7 +360,7 @@ public class EagerlyFirstSecondRestLastTest {
     @Test(expected = NoSuchElementException.class)
     public void shouldThrowANoSuchElementExceptionForPredicatedLastIfNoElementsInTheSuppliedIterableMatch() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 3, 5, 7);
+        Iterable<Integer> input = iterableWith(1, 3, 5, 7);
 
         // When
         Eagerly.last(input, new Predicate<Integer>() {
@@ -377,8 +379,8 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnTheLastNElementsFromTheSuppliedIterable() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
-        Collection<Integer> expectedOutput = listWith(3, 2, 1);
+        Iterable<Integer> input = iterableWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+        Collection<Integer> expectedOutput = collectionWith(3, 2, 1);
 
         // When
         Collection<Integer> actualOutput = Eagerly.last(input, 3);
@@ -390,8 +392,8 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnAsManyElementsAsPossibleForLastIfThereAreNotEnoughElementsInTheSuppliedIterable() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(3, 2, 1);
-        Collection<Integer> expectedOutput = listWith(3, 2, 1);
+        Iterable<Integer> input = iterableWith(3, 2, 1);
+        Collection<Integer> expectedOutput = collectionWith(3, 2, 1);
 
         // When
         Collection<Integer> actualOutput = Eagerly.last(input, 4);
@@ -416,7 +418,7 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnAnEmptyCollectionForLastIfTheNumberOfElementsRequiredIsZero() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(3, 2, 1);
+        Iterable<Integer> input = iterableWith(3, 2, 1);
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
@@ -429,7 +431,7 @@ public class EagerlyFirstSecondRestLastTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowAnIllegalArgumentExceptionForLastIfTheNumberOfElementsRequiredIsNegative() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(3, 2, 1);
+        Iterable<Integer> input = iterableWith(3, 2, 1);
 
         // When
         Eagerly.last(input, -3);
@@ -440,8 +442,8 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnTheLastNElementsInTheSuppliedIterableMatchingTheSuppliedPredicate() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
-        Collection<Integer> expectedOutput = listWith(6, 4, 2);
+        Iterable<Integer> input = iterableWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
+        Collection<Integer> expectedOutput = collectionWith(6, 4, 2);
 
         // When
         Collection<Integer> actualOutput = Eagerly.last(input, 3, new Predicate<Integer>() {
@@ -461,8 +463,8 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnAsManyElementsAsPossibleForPredicatedNLastIfThereAreNotEnoughMatchingElementsInTheSuppliedIterable() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(5, 4, 3, 2, 1);
-        Collection<Integer> expectedOutput = listWith(4, 2);
+        Iterable<Integer> input = iterableWith(5, 4, 3, 2, 1);
+        Collection<Integer> expectedOutput = collectionWith(4, 2);
 
         // When
         Collection<Integer> actualOutput = Eagerly.last(input, 4, new Predicate<Integer>() {
@@ -503,7 +505,7 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnAnEmptyCollectionForPredicatedNLastIfTheNumberOfElementsRequiredIsZero() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(3, 2, 1);
+        Iterable<Integer> input = iterableWith(3, 2, 1);
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
@@ -524,7 +526,7 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnAnEmptyCollectionForPredicatedNLastIfThereAreNoElementsMatchingTheSuppliedPredicate() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 3, 5, 7);
+        Iterable<Integer> input = iterableWith(1, 3, 5, 7);
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
@@ -545,8 +547,8 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnAllButFirstElementForRestIfIterableHasMoreThanOneElement() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4);
-        Collection<Integer> expectedOutput = listWith(2, 3, 4);
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4);
+        Collection<Integer> expectedOutput = collectionWith(2, 3, 4);
 
         // When
         Collection<Integer> actualOutput = Eagerly.rest(input);
@@ -558,7 +560,7 @@ public class EagerlyFirstSecondRestLastTest {
     @Test
     public void shouldReturnAnEmptyCollectionForRestIfIterableHasOnlyOneElement() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1);
+        Iterable<Integer> input = iterableWith(1);
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When

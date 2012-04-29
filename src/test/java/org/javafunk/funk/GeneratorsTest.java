@@ -9,7 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Generators.constantGenerator;
 import static org.javafunk.funk.Generators.finiteGenerator;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class GeneratorsTest {
     @Test
@@ -27,10 +27,10 @@ public class GeneratorsTest {
     @Test
     public void shouldConstructAFiniteGeneratorUsingTheSpecifiedIterable() throws Exception {
         // Given
-        Generator<Integer> expectedGenerator = new FiniteGenerator<Integer>(listWith(1, 2, 3, 4));
+        Generator<Integer> expectedGenerator = new FiniteGenerator<Integer>(iterableWith(1, 2, 3, 4));
 
         // When
-        Generator<Integer> actualGenerator = finiteGenerator(listWith(1, 2, 3, 4));
+        Generator<Integer> actualGenerator = finiteGenerator(iterableWith(1, 2, 3, 4));
 
         // Then
         assertThat(actualGenerator, is(expectedGenerator));

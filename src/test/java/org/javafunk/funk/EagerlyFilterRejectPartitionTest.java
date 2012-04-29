@@ -16,14 +16,15 @@ import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class EagerlyFilterRejectPartitionTest {
     @Test
     public void shouldOnlyReturnThoseElementsMatchingTheSuppliedPredicate() {
         // Given
-        Iterable<Integer> inputs = listWith(1, 2, 3, 4, 5, 6);
-        Collection<Integer> expectedOutput = listWith(2, 4, 6);
+        Iterable<Integer> inputs = iterableWith(1, 2, 3, 4, 5, 6);
+        Collection<Integer> expectedOutput = collectionWith(2, 4, 6);
 
         // When
         Collection<Integer> actualOutput = Eagerly.filter(inputs, new Predicate<Integer>() {
@@ -44,8 +45,8 @@ public class EagerlyFilterRejectPartitionTest {
     @Test
     public void shouldOnlyReturnThoseElementsThatDoNotMatchTheSuppliedPredicate() {
         // Given
-        Iterable<Integer> inputs = listWith(1, 2, 3, 4, 5, 6);
-        Collection<Integer> expectedOutput = listWith(1, 3, 5);
+        Iterable<Integer> inputs = iterableWith(1, 2, 3, 4, 5, 6);
+        Collection<Integer> expectedOutput = collectionWith(1, 3, 5);
 
         // When
         Collection<Integer> actualOutput = Eagerly.reject(inputs, new Predicate<Integer>() {
@@ -66,9 +67,9 @@ public class EagerlyFilterRejectPartitionTest {
     @Test
     public void shouldReturnTheMatchingElementsFirstAndTheNonMatchingElementsSecond() {
         // Given
-        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h");
-        Collection<String> expectedMatchingItems = listWith("a", "b", "c", "d");
-        Collection<String> expectedNonMatchingItems = listWith("e", "f", "g", "h");
+        Iterable<String> input = iterableWith("a", "b", "c", "d", "e", "f", "g", "h");
+        Collection<String> expectedMatchingItems = collectionWith("a", "b", "c", "d");
+        Collection<String> expectedNonMatchingItems = collectionWith("e", "f", "g", "h");
 
         // When
         Pair<Collection<String>, Collection<String>> partitionResults = Eagerly.partition(input,

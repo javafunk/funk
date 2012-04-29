@@ -14,14 +14,14 @@ import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.Strings.join;
 
 public class StringsTest {
     @Test
     public void shouldJoinAllStringsInTheCollectionUsingTheSeparator() {
         // Given
-        Collection<String> strings = listWith("First", "Second", "Third");
+        Collection<String> strings = collectionWith("First", "Second", "Third");
         String separator = ", ";
 
         // When
@@ -34,7 +34,7 @@ public class StringsTest {
     @Test
     public void shouldJoinAllStringsInTheCollectionWithNoSeparator() {
         // Given
-        Collection<String> strings = listWith("He", "ll", "o");
+        Collection<String> strings = collectionWith("He", "ll", "o");
 
         // When
         String joinedStrings = join(strings);

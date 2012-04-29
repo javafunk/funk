@@ -14,6 +14,7 @@ import org.junit.Test;
 import java.util.Iterator;
 import java.util.List;
 
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.Literals.listWith;
 import static org.mockito.Mockito.*;
 
@@ -21,7 +22,7 @@ public class LazilyEachTest {
     @Test
     public void shouldLazilyExecuteSuppliedFunctionOnEachElement() {
         // Given
-        Iterable<Target> targets = listWith(mock(Target.class), mock(Target.class), mock(Target.class));
+        Iterable<Target> targets = iterableWith(mock(Target.class), mock(Target.class), mock(Target.class));
 
         // When
         Iterable<Target> preparedTargets = Lazily.each(targets, new Action<Target>() {

@@ -1,15 +1,15 @@
 package org.javafunk.funk.datastructures.tuples;
 
-import org.javafunk.funk.Literals;
 import org.javafunk.funk.behaviours.ordinals.*;
 import org.javafunk.funk.testclasses.Name;
 import org.junit.Test;
 
-import java.util.List;
+import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
+import static org.javafunk.funk.Literals.collectionOf;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.testclasses.Name.name;
 
@@ -193,7 +193,7 @@ public class SextupleTest {
     public void shouldBeIterable() {
         // Given
         Sextuple<Integer, String, Boolean, Double, Long, Name> sextuple1 = tuple(5, "Five", true, 3.6, 23L, name("fred"));
-        List<Object> expected = Literals.listWith(5, "Five", true, 3.6, 23L, name("fred"));
+        Collection<Object> expected = collectionOf(Object.class).with(5, "Five", true, 3.6, 23L, name("fred"));
 
         // When
         Boolean isEqual = materialize(sextuple1).equals(expected);

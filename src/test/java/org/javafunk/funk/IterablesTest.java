@@ -39,7 +39,7 @@ public class IterablesTest {
     public void shouldMaterialiseTheSuppliedIterableToACollection() throws Exception {
         // Given
         Iterable<Integer> iterable = basicIterableOver(1, 2, 2, 3, 3, 3);
-        Collection<Integer> expectedCollection = listWith(1, 2, 2, 3, 3, 3);
+        Collection<Integer> expectedCollection = collectionWith(1, 2, 2, 3, 3, 3);
 
         // When
         Collection<Integer> actualCollection = materialize(iterable);

@@ -1,7 +1,7 @@
 package org.javafunk.funk.generators;
 
-import org.javafunk.funk.functors.Action;
 import org.javafunk.funk.behaviours.Generator;
+import org.javafunk.funk.functors.Action;
 import org.javafunk.funk.matchers.SelfDescribingPredicate;
 import org.junit.Test;
 
@@ -11,14 +11,14 @@ import static org.javafunk.funk.Eagerly.times;
 import static org.javafunk.funk.Generators.toGeneratable;
 import static org.javafunk.funk.Lazily.batch;
 import static org.javafunk.funk.Lazily.take;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.matchers.Matchers.trueForAll;
 
 public class CyclicGeneratorTest {
     @Test
     public void shouldInfinitelyCycleThroughTheSuppliedIterable() throws Exception {
         // Given
-        final Iterable<Integer> expectedValues = listWith(1, 2, 3);
+        final Iterable<Integer> expectedValues = iterableWith(1, 2, 3);
         final Generator<Integer> generator = new CyclicGenerator<Integer>(expectedValues);
 
         // When
@@ -39,9 +39,9 @@ public class CyclicGeneratorTest {
     @Test
     public void shouldBeEqualIfSuppliedIterableIsTheSameAndCursorPositionThroughTheIterableIsTheSame() throws Exception {
         // Given
-        Generator<Integer> firstGenerator = new CyclicGenerator<Integer>(listWith(1, 2, 3));
+        Generator<Integer> firstGenerator = new CyclicGenerator<Integer>(iterableWith(1, 2, 3));
         times(10, progress(firstGenerator));
-        Generator<Integer> secondGenerator = new CyclicGenerator<Integer>(listWith(1, 2, 3));
+        Generator<Integer> secondGenerator = new CyclicGenerator<Integer>(iterableWith(1, 2, 3));
         times(10, progress(secondGenerator));
 
         // When
@@ -54,9 +54,9 @@ public class CyclicGeneratorTest {
     @Test
     public void shouldBeEqualIfSuppliedIterableIsTheSameAndNextElementWouldBeTheSameEvenIfCycleCountDifferent() throws Exception {
         // Given
-        Generator<Integer> firstGenerator = new CyclicGenerator<Integer>(listWith(1, 2, 3));
+        Generator<Integer> firstGenerator = new CyclicGenerator<Integer>(iterableWith(1, 2, 3));
         times(13, progress(firstGenerator));
-        Generator<Integer> secondGenerator = new CyclicGenerator<Integer>(listWith(1, 2, 3));
+        Generator<Integer> secondGenerator = new CyclicGenerator<Integer>(iterableWith(1, 2, 3));
         times(16, progress(secondGenerator));
 
         // When
@@ -69,8 +69,8 @@ public class CyclicGeneratorTest {
     @Test
     public void shouldNotBeEqualIfSuppliedIterablesAreDifferent() throws Exception {
         // Given
-        Generator<Integer> firstGenerator = new CyclicGenerator<Integer>(listWith(1, 2, 3));
-        Generator<Integer> secondGenerator = new CyclicGenerator<Integer>(listWith(4, 5, 6));
+        Generator<Integer> firstGenerator = new CyclicGenerator<Integer>(iterableWith(1, 2, 3));
+        Generator<Integer> secondGenerator = new CyclicGenerator<Integer>(iterableWith(4, 5, 6));
 
         // When
         boolean equal = firstGenerator.equals(secondGenerator);
@@ -82,9 +82,9 @@ public class CyclicGeneratorTest {
     @Test
     public void shouldNotBeEqualIfAtDifferentPositionsThroughTheIterable() throws Exception {
         // Given
-        Generator<Integer> firstGenerator = new CyclicGenerator<Integer>(listWith(1, 2, 3));
+        Generator<Integer> firstGenerator = new CyclicGenerator<Integer>(iterableWith(1, 2, 3));
         times(13, progress(firstGenerator));
-        Generator<Integer> secondGenerator = new CyclicGenerator<Integer>(listWith(1, 2, 3));
+        Generator<Integer> secondGenerator = new CyclicGenerator<Integer>(iterableWith(1, 2, 3));
         times(17, progress(secondGenerator));
 
         // When

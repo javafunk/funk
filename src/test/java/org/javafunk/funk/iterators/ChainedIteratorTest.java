@@ -18,15 +18,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.javafunk.funk.Iterators.emptyIterator;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.Literals.listWith;
 
 public class ChainedIteratorTest {
     @Test
     public void shouldReturnElementsFromEachIteratorInOrder() throws Exception {
         // Given
-        Iterator<Integer> firstIterator = listWith(1, 2).iterator();
-        Iterator<Integer> secondIterator = listWith(3, 4).iterator();
-        Iterator<Integer> thirdIterator = listWith(5, 6).iterator();
+        Iterator<Integer> firstIterator = iterableWith(1, 2).iterator();
+        Iterator<Integer> secondIterator = iterableWith(3, 4).iterator();
+        Iterator<Integer> thirdIterator = iterableWith(5, 6).iterator();
 
         // When
         Iterator<Integer> chainedIterator = new ChainedIterator<Integer>(firstIterator, secondIterator, thirdIterator);
@@ -44,9 +45,9 @@ public class ChainedIteratorTest {
     public void shouldAllowEmptyIteratorsToBeSupplied() throws Exception {
         // Given
         Iterator<Integer> firstIterator = emptyIterator();
-        Iterator<Integer> secondIterator = listWith(1, 2, 3).iterator();
+        Iterator<Integer> secondIterator = iterableWith(1, 2, 3).iterator();
         Iterator<Integer> thirdIterator = emptyIterator();
-        Iterator<Integer> fourthIterator = listWith(4).iterator();
+        Iterator<Integer> fourthIterator = iterableWith(4).iterator();
 
         // When
         Iterator<Integer> chainedIterator = new ChainedIterator<Integer>(
@@ -62,9 +63,9 @@ public class ChainedIteratorTest {
     @Test(expected = NoSuchElementException.class)
     public void shouldThrowANoSuchElementExceptionWhenAllIteratorsAreExhausted() throws Exception {
         // Given
-        Iterator<Integer> firstIterator = listWith(1, 2).iterator();
+        Iterator<Integer> firstIterator = iterableWith(1, 2).iterator();
         Iterator<Integer> secondIterator = emptyIterator();
-        Iterator<Integer> thirdIterator = listWith(3).iterator();
+        Iterator<Integer> thirdIterator = iterableWith(3).iterator();
         Iterator<Integer> fourthIterator = emptyIterator();
 
         // When
@@ -82,8 +83,8 @@ public class ChainedIteratorTest {
     @Test
     public void shouldAllowHasNextToBeCalledMultipleTimesWithoutProgressingTheIterator() throws Exception {
         // Given
-        Iterator<Integer> firstIterator = listWith(1).iterator();
-        Iterator<Integer> secondIterator = listWith(2).iterator();
+        Iterator<Integer> firstIterator = iterableWith(1).iterator();
+        Iterator<Integer> secondIterator = iterableWith(2).iterator();
 
         // When
         Iterator<Integer> chainedIterator = new ChainedIterator<Integer>(firstIterator, secondIterator);
@@ -129,8 +130,8 @@ public class ChainedIteratorTest {
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledBeforeNext() throws Exception {
         // Given
-        Iterator<Integer> firstIterator = listWith(1).iterator();
-        Iterator<Integer> secondIterator = listWith(2).iterator();
+        Iterator<Integer> firstIterator = iterableWith(1).iterator();
+        Iterator<Integer> secondIterator = iterableWith(2).iterator();
 
         // When
         Iterator<Integer> chainedIterator = new ChainedIterator<Integer>(firstIterator, secondIterator);
@@ -144,8 +145,8 @@ public class ChainedIteratorTest {
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledMoreThanOnceInARow() throws Exception {
         // Given
-        Iterator<Integer> firstIterator = listWith(1).iterator();
-        Iterator<Integer> secondIterator = listWith(2).iterator();
+        Iterator<Integer> firstIterator = iterableWith(1).iterator();
+        Iterator<Integer> secondIterator = iterableWith(2).iterator();
 
         // When
         Iterator<Integer> chainedIterator = new ChainedIterator<Integer>(firstIterator, secondIterator);
@@ -160,8 +161,8 @@ public class ChainedIteratorTest {
     @Test
     public void shouldAllowNullValuesInTheIterator() throws Exception {
         // Given
-        Iterator<Integer> firstIterator = listWith(1, null).iterator();
-        Iterator<Integer> secondIterator = listWith(2).iterator();
+        Iterator<Integer> firstIterator = iterableWith(1, null).iterator();
+        Iterator<Integer> secondIterator = iterableWith(2).iterator();
 
         // When
         Iterator<Integer> chainedIterator = new ChainedIterator<Integer>(firstIterator, secondIterator);

@@ -2,7 +2,7 @@ package org.javafunk.funk.datastructures.tuples;
 
 import org.javafunk.funk.behaviours.ordinals.*;
 
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class Nonuple<R, S, T, U, V, W, X, Y, Z>
         extends AbstractTuple
@@ -30,7 +30,7 @@ public class Nonuple<R, S, T, U, V, W, X, Y, Z>
     }
 
     @Override public Iterable<Object> values() {
-        return listWith(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);
+        return iterableWith(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);
     }
 
     @Override public R first() {

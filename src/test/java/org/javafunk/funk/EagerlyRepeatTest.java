@@ -14,14 +14,15 @@ import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class EagerlyRepeatTest {
     @Test
     public void shouldRepeatTheElementsOfTheSpecifiedIterableInOrderTheSpecifiedNumberOfTimes() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2);
-        Collection<Integer> expectedOutput = listWith(1, 2, 1, 2, 1, 2);
+        Iterable<Integer> input = iterableWith(1, 2);
+        Collection<Integer> expectedOutput = collectionWith(1, 2, 1, 2, 1, 2);
 
         // When
         Collection<Integer> actualOutput = Eagerly.repeat(input, 3);

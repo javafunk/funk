@@ -2,7 +2,7 @@ package org.javafunk.funk.datastructures.tuples;
 
 import org.javafunk.funk.behaviours.ordinals.*;
 
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class Quintuple<R, S, T, U, V>
         extends AbstractTuple
@@ -42,6 +42,6 @@ public class Quintuple<R, S, T, U, V>
     }
 
     @Override public Iterable<Object> values() {
-        return listWith(first, second, third, fourth, fifth);
+        return iterableWith(first, second, third, fourth, fifth);
     }
 }

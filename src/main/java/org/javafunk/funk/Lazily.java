@@ -84,7 +84,7 @@ public class Lazily {
                         break;
                     }
                 }
-                return new ChainedIterator<T>(listWith(next).iterator(), iterator);
+                return new ChainedIterator<T>(iterableWith(next).iterator(), iterator);
             }
         };
     }
@@ -100,7 +100,7 @@ public class Lazily {
                         break;
                     }
                 }
-                return new ChainedIterator<T>(listWith(next).iterator(), iterator);
+                return new ChainedIterator<T>(iterableWith(next).iterator(), iterator);
             }
         };
     }
@@ -205,23 +205,23 @@ public class Lazily {
             final Iterable<S> first, final Iterable<T> second) {
         return concat(map(first, new Mapper<S, Iterable<Pair<S, T>>>() {
             public Iterable<Pair<S, T>> map(S input) {
-                return zip(cycle(listWith(input)), second);
+                return zip(cycle(iterableWith(input)), second);
             }
         }));
     }
 
     public static <S, T, V> Iterable<Triple<S, T, V>> cartesianProduct(
             Iterable<S> first, Iterable<T> second, Iterable<V> third) {
-        return map(cartesianProduct(listWith(first, second, third)), Mappers.<S, T, V>toTriple());
+        return map(cartesianProduct(iterableWith(first, second, third)), Mappers.<S, T, V>toTriple());
     }
 
     public static <S, T, U, V> Iterable<Quadruple<S, T, U, V>> cartesianProduct(
             Iterable<S> first, Iterable<T> second, Iterable<U> third, Iterable<V> fourth) {
-        return map(cartesianProduct(listWith(first, second, third, fourth)), Mappers.<S, T, U, V>toQuadruple());
+        return map(cartesianProduct(iterableWith(first, second, third, fourth)), Mappers.<S, T, U, V>toQuadruple());
     }
 
     public static Iterable<? extends Iterable<?>> cartesianProduct(final Iterable<? extends Iterable<?>> iterables) {
-        return cartesianProduct(listFrom(iterables));
+        return cartesianProduct(iterableFrom(iterables));
     }
 
     private static Iterable<? extends Iterable<?>> cartesianProduct(final List<? extends Iterable<?>> iterables) {
@@ -235,19 +235,19 @@ public class Lazily {
 
         return map(pairs, new Mapper<Pair<?, ? extends Iterable<?>>, Iterable<?>>() {
             public Iterable<?> map(Pair<?, ? extends Iterable<?>> input) {
-                return listWith(input.first()).and(input.second());
+                return iterableWith(input.first()).and(input.second());
             }
         });
     }
 
     public static <R, S> Iterable<Pair<R, S>> zip(
             Iterable<R> first, Iterable<S> second) {
-        return map(zip(listWith(first, second)), Mappers.<R, S>toPair());
+        return map(zip(iterableWith(first, second)), Mappers.<R, S>toPair());
     }
 
     public static <R, S, T> Iterable<Triple<R, S, T>> zip(
             Iterable<R> first, Iterable<S> second, Iterable<T> third) {
-        return map(zip(listWith(first, second, third)), Mappers.<R, S, T>toTriple());
+        return map(zip(iterableWith(first, second, third)), Mappers.<R, S, T>toTriple());
     }
 
     private static Iterable<? extends Iterable<?>> zip(final Iterable<? extends Iterable<?>> iterables) {

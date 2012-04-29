@@ -10,6 +10,7 @@ package org.javafunk.funk;
 
 import java.util.List;
 
+import static org.javafunk.funk.Literals.iterableFrom;
 import static org.javafunk.funk.Literals.listFrom;
 
 public class Arrays {
@@ -20,6 +21,6 @@ public class Arrays {
     }
 
     public static <T> Iterable<T> asIterable(T[] array) {
-        return listFrom(array);
+        return iterableFrom(array);
     }
 }

@@ -7,7 +7,7 @@ import java.util.Random;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -17,7 +17,7 @@ public class RandomGeneratorTest {
         // Given
         Random random = mock(Random.class);
         RandomGenerator<String> generator = new RandomGenerator<String>(
-                listWith("zeroth", "first", "second"),
+                iterableWith("zeroth", "first", "second"),
                 random);
 
         ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
@@ -35,8 +35,8 @@ public class RandomGeneratorTest {
     @Test
     public void shouldBeEqualIfSuppliedIterablesAreTheSame() throws Exception {
         // Given
-        RandomGenerator<Integer> firstGenerator = new RandomGenerator<Integer>(listWith(1, 2, 3, 4, 5, 6));
-        RandomGenerator<Integer> secondGenerator = new RandomGenerator<Integer>(listWith(1, 2, 3, 4, 5, 6));
+        RandomGenerator<Integer> firstGenerator = new RandomGenerator<Integer>(iterableWith(1, 2, 3, 4, 5, 6));
+        RandomGenerator<Integer> secondGenerator = new RandomGenerator<Integer>(iterableWith(1, 2, 3, 4, 5, 6));
 
         // When
         boolean equal = firstGenerator.equals(secondGenerator);
@@ -48,8 +48,8 @@ public class RandomGeneratorTest {
     @Test
     public void shouldNotBeEqualIfSuppliedIterablesAreDifferent() throws Exception {
         // Given
-        RandomGenerator<Integer> firstGenerator = new RandomGenerator<Integer>(listWith(1, 2, 3, 4, 5, 6));
-        RandomGenerator<Integer> secondGenerator = new RandomGenerator<Integer>(listWith(7, 8, 9, 10, 11, 12));
+        RandomGenerator<Integer> firstGenerator = new RandomGenerator<Integer>(iterableWith(1, 2, 3, 4, 5, 6));
+        RandomGenerator<Integer> secondGenerator = new RandomGenerator<Integer>(iterableWith(7, 8, 9, 10, 11, 12));
 
         // When
         boolean equal = firstGenerator.equals(secondGenerator);

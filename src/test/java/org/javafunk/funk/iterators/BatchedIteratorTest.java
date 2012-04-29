@@ -17,7 +17,8 @@ import java.util.NoSuchElementException;
 
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
@@ -25,9 +26,9 @@ public class BatchedIteratorTest {
     @Test
     public void shouldReturnElementsOfTheIterableInBatchesOfTheSpecifiedSize() {
         // Given
-        Iterable<String> input = listWith("a", "b", "c", "d");
-        Iterator<String> expectedFirstBatch = listWith("a", "b").iterator();
-        Iterator<String> expectedSecondBatch = listWith("c", "d").iterator();
+        Iterable<String> input = iterableWith("a", "b", "c", "d");
+        Iterator<String> expectedFirstBatch = iterableWith("a", "b").iterator();
+        Iterator<String> expectedSecondBatch = iterableWith("c", "d").iterator();
 
         // When
         Iterator<Iterable<String>> returnedIterator = Lazily.batch(input, 2).iterator();
@@ -44,7 +45,7 @@ public class BatchedIteratorTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowAnIllegalArgumentExceptionIfTheSuppliedBatchSizeIsZero() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "b", "c", "d");
+        Iterable<String> input = iterableWith("a", "b", "c", "d");
         int batchSize = 0;
 
         // When
@@ -56,7 +57,7 @@ public class BatchedIteratorTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowAnIllegalArgumentExceptionIfTheSuppliedBatchSizeIsLessThanZero() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "b", "c", "d");
+        Iterable<String> input = iterableWith("a", "b", "c", "d");
         int batchSize = -3;
 
         // When
@@ -68,7 +69,7 @@ public class BatchedIteratorTest {
     @Test
     public void shouldAllowLaterIterablesToBeTraversedBeforeEarlierOnes() {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4);
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4);
 
         // When
         Iterator<Iterable<Integer>> returnedIterator = Lazily.batch(input, 2).iterator();
@@ -85,7 +86,7 @@ public class BatchedIteratorTest {
     @Test
     public void shouldAllowHasNextToBeCalledMultipleTimesOnEachIterableWithoutIncrementingTheIterator() {
         // Given
-        Iterable<Integer> input = listWith(1, 2);
+        Iterable<Integer> input = iterableWith(1, 2);
 
         // When
         Iterator<Iterable<Integer>> returnedIterator = Lazily.batch(input, 1).iterator();
@@ -116,9 +117,9 @@ public class BatchedIteratorTest {
     @Test
     public void shouldLeaveLastIterableShortIfBatchSizeDoesNotDivideNumberOfItems() {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4);
-        Collection<Integer> expectedFirstBatch = listWith(1, 2, 3);
-        Collection<Integer> expectedSecondBatch = listWith(4);
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4);
+        Collection<Integer> expectedFirstBatch = collectionWith(1, 2, 3);
+        Collection<Integer> expectedSecondBatch = collectionWith(4);
 
         // When
         Iterator<Iterable<Integer>> returnedIterator = Lazily.batch(input, 3).iterator();
@@ -133,7 +134,7 @@ public class BatchedIteratorTest {
     @Test
     public void shouldThrowNoSuchElementExceptionOnceEachIterableHasBeenDepleted() {
         // Given
-        Iterable<String> input = listWith("a", "b");
+        Iterable<String> input = iterableWith("a", "b");
 
         // When
         Iterator<Iterable<String>> returnedIterator = Lazily.batch(input, 1).iterator();
@@ -166,7 +167,7 @@ public class BatchedIteratorTest {
     @Test
     public void shouldNotSupportRemovingElementsFromAnyReturnedIterables() {
         // Given
-        Iterable<String> input = listWith("a", "b");
+        Iterable<String> input = iterableWith("a", "b");
 
         // When
         Iterator<Iterable<String>> returnedIterator = Lazily.batch(input, 1).iterator();
@@ -196,9 +197,9 @@ public class BatchedIteratorTest {
     @Test
     public void shouldAllowNullValuesInTheInputIterator() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", null, null, "d");
-        Iterator<String> expectedFirstBatch = listWith("a", null).iterator();
-        Iterator<String> expectedSecondBatch = listWith(null, "d").iterator();
+        Iterable<String> input = iterableWith("a", null, null, "d");
+        Iterator<String> expectedFirstBatch = iterableWith("a", null).iterator();
+        Iterator<String> expectedSecondBatch = iterableWith(null, "d").iterator();
 
         // When
         Iterator<Iterable<String>> returnedIterator = Lazily.batch(input, 2).iterator();
@@ -215,7 +216,7 @@ public class BatchedIteratorTest {
     @Test
     public void shouldAllowIteratorToBeCalledMultipleTimesOnTheReturnedIterablesReturningDifferentIterators() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6);
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5, 6);
         Iterator<Iterable<Integer>> batchIterator = new BatchedIterator<Integer>(input.iterator(), 3);
 
         // When

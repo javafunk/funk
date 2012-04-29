@@ -13,7 +13,7 @@ import org.javafunk.funk.behaviours.ordinals.Fourth;
 import org.javafunk.funk.behaviours.ordinals.Second;
 import org.javafunk.funk.behaviours.ordinals.Third;
 
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class Quadruple<R, S, T, U>
         extends AbstractTuple
@@ -47,6 +47,6 @@ public class Quadruple<R, S, T, U>
     }
 
     @Override public Iterable<Object> values() {
-        return listWith(first, second, third, fourth);
+        return iterableWith(first, second, third, fourth);
     }
 }

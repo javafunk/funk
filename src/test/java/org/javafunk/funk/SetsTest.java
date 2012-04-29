@@ -46,7 +46,7 @@ public class SetsTest {
         Iterable<String> firstIterable = setWith("a", "b", "c");
         Iterable<String> secondIterable = listWith("c", "d", "c", "e");
         Iterable<String> thirdIterable = multisetWith("a", "c", "f", "f");
-        Iterable<Iterable<String>> sets = listWith(firstIterable, secondIterable, thirdIterable);
+        Iterable<Iterable<String>> sets = iterableWith(firstIterable, secondIterable, thirdIterable);
         Set<String> expectedUnionSet = setWith("a", "b", "c", "d", "e", "f");
 
         // When
@@ -64,7 +64,7 @@ public class SetsTest {
         Cat snowy = cat(colour("white"), name("snowy"));
         Cat smudge = cat(colour("grey"), name("smudge"));
         Iterable<Dog> dogs = setWith(fido, spud);
-        Iterable<Cat> cats = listWith(snowy, smudge, snowy);
+        Iterable<Cat> cats = iterableWith(snowy, smudge, snowy);
         Set<Animal> expectedMenagerie = setOf(Animal.class).with(fido, smudge, spud, snowy);
 
         // When
@@ -95,7 +95,7 @@ public class SetsTest {
         Iterable<String> firstIterable = setWith("a", "b", "c", "q");
         Iterable<String> secondIterable = listWith("c", "c", "d", "q", "e");
         Iterable<String> thirdIterable = multisetWith("a", "c", "f", "f", "q");
-        Iterable<Iterable<String>> iterables = listWith(firstIterable, secondIterable, thirdIterable);
+        Iterable<Iterable<String>> iterables = iterableWith(firstIterable, secondIterable, thirdIterable);
         Set<String> expectedIntersectionSet = setWith("c", "q");
 
         // When
@@ -109,7 +109,7 @@ public class SetsTest {
     public void shouldReturnTheInputSetForTheSetDifferenceOfASingleSet() throws Exception {
         //Given
         Iterable<String> firstIterable = setWith("a", "b");
-        Iterable<Iterable<String>> singleIterable = listWith(firstIterable);
+        Iterable<Iterable<String>> singleIterable = iterableWith(firstIterable);
 
         //When
         Set<String> difference = Sets.difference(singleIterable);
@@ -152,7 +152,7 @@ public class SetsTest {
         Iterable<String> firstIterable = setWith("a", "b", "c", "q");
         Iterable<String> secondIterable = listWith("d", "d", "q", "e");
         Iterable<String> thirdIterable = multisetWith("a", "f", "q", "q", "q");
-        Iterable<Iterable<String>> iterables = listWith(firstIterable, secondIterable, thirdIterable);
+        Iterable<Iterable<String>> iterables = iterableWith(firstIterable, secondIterable, thirdIterable);
         Set<String> expectedDifferenceSet = setWith("b", "c");
 
         // When
@@ -183,7 +183,7 @@ public class SetsTest {
         Iterable<String> firstIterable = setWith("a", "b", "c", "q");
         Iterable<String> secondIterable = listWith("c", "d", "d", "q", "d", "e");
         Iterable<String> thirdIterable = multisetWith("a", "c", "d", "q");
-        Iterable<Iterable<String>> sets = listWith(firstIterable, secondIterable, thirdIterable);
+        Iterable<Iterable<String>> sets = iterableWith(firstIterable, secondIterable, thirdIterable);
         Set<String> expectedSymmetricDifferenceSet = setWith("b", "c", "e", "q");
 
         // When

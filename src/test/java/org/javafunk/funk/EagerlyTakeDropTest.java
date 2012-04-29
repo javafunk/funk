@@ -16,14 +16,15 @@ import java.util.Collections;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class EagerlyTakeDropTest {
     @Test
     public void shouldTakeTheSpecifiedNumberOfElements() {
         // Given
-        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
-        Collection<String> expectedOutput = listWith("a", "b", "c", "d", "e");
+        Iterable<String> input = iterableWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+        Collection<String> expectedOutput = collectionWith("a", "b", "c", "d", "e");
 
         // When
         Collection<String> actualOutput = Eagerly.take(input, 5);
@@ -35,7 +36,7 @@ public class EagerlyTakeDropTest {
     @Test
     public void shouldReturnAnEmptyCollectionIfTheNumberToTakeIsZero() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+        Iterable<String> input = iterableWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
         Collection<String> expectedOutput = Collections.emptyList();
         Integer numberToTake = 0;
 
@@ -49,7 +50,7 @@ public class EagerlyTakeDropTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowAnIllegalArgumentExceptionIfTheNumberToTakeIsLessThanZero() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+        Iterable<String> input = iterableWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
         Integer numberToTake = -5;
 
         // When
@@ -61,8 +62,8 @@ public class EagerlyTakeDropTest {
     @Test
     public void shouldDropTheSpecifiedNumberOfElements() {
         // Given
-        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
-        Collection<String> expectedOutput = listWith("f", "g", "h", "i", "j");
+        Iterable<String> input = iterableWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+        Collection<String> expectedOutput = collectionWith("f", "g", "h", "i", "j");
 
         // When
         Collection<String> actualOutput = Eagerly.drop(input, 5);
@@ -74,8 +75,8 @@ public class EagerlyTakeDropTest {
     @Test
     public void shouldReturnTheSuppliedIterableIfTheNumberToDropIsZero() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
-        Collection<String> expectedOutput = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+        Iterable<String> input = iterableWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+        Collection<String> expectedOutput = collectionWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
         Integer numberToDrop = 0;
 
         // When
@@ -88,7 +89,7 @@ public class EagerlyTakeDropTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowAnIllegalArgumentExceptionIfTheNumberToDropIsLessThanZero() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+        Iterable<String> input = iterableWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
         Integer numberToDrop = -4;
 
         // When
@@ -100,8 +101,8 @@ public class EagerlyTakeDropTest {
     @Test
     public void shouldTakeElementsWhileTheSuppliedPredicateIsTrue() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 1, 2, 3);
-        Collection<Integer> expectedOutput = listWith(1, 2, 1, 2);
+        Iterable<Integer> input = iterableWith(1, 2, 1, 2, 3);
+        Collection<Integer> expectedOutput = collectionWith(1, 2, 1, 2);
 
         // When
         Collection<Integer> actualOutput = Eagerly.takeWhile(input, new Predicate<Integer>() {
@@ -117,8 +118,8 @@ public class EagerlyTakeDropTest {
     @Test
     public void shouldTakeElementsUntilTheSuppliedPredicateBecomesTrue() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5);
-        Collection<Integer> expectedOutput = listWith(1, 2, 3);
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5);
+        Collection<Integer> expectedOutput = collectionWith(1, 2, 3);
 
         // When
         Collection<Integer> actualOutput = Eagerly.takeUntil(input, new Predicate<Integer>() {
@@ -134,8 +135,8 @@ public class EagerlyTakeDropTest {
     @Test
     public void shouldDropElementsWhileTheSuppliedPredicateIsTrue() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
-        Collection<String> expectedOutput = listWith("aaa", "aaaa");
+        Iterable<String> input = iterableWith("a", "aa", "aaa", "aaaa");
+        Collection<String> expectedOutput = collectionWith("aaa", "aaaa");
 
         // When
         Collection<String> actualOutput = Eagerly.dropWhile(input, new Predicate<String>() {
@@ -152,8 +153,8 @@ public class EagerlyTakeDropTest {
     @Test
     public void shouldDropElementsUntilTheSuppliedPredicateBecomesTrue() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "aa", "aab", "aba", "aba");
-        Collection<String> expectedOutput = listWith("aab", "aba", "aba");
+        Iterable<String> input = iterableWith("a", "aa", "aab", "aba", "aba");
+        Collection<String> expectedOutput = collectionWith("aab", "aba", "aba");
 
         // When
         Collection<String> actualOutput = Eagerly.dropUntil(input, new Predicate<String>() {

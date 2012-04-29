@@ -8,7 +8,7 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.matchers.Matchers.hasOnlyItemsInAnyOrder;
 
 public class EithersTest {
@@ -19,7 +19,7 @@ public class EithersTest {
         Either<String, Integer> secondEither = Either.left("second");
         Either<String, Integer> thirdEither = Either.right(3);
         Either<String, Integer> fourthEither = Either.right(4);
-        Iterable<Either<String, Integer>> eithers = listWith(firstEither, secondEither, thirdEither, fourthEither);
+        Iterable<Either<String, Integer>> eithers = iterableWith(firstEither, secondEither, thirdEither, fourthEither);
 
         // When
         Iterable<Integer> rights = Eithers.rights(eithers);
@@ -35,7 +35,7 @@ public class EithersTest {
         Either<String, Integer> secondEither = Either.left("second");
         Either<String, Integer> thirdEither = Either.right(3);
         Either<String, Integer> fourthEither = Either.right(4);
-        Iterable<Either<String, Integer>> eithers = listWith(firstEither, secondEither, thirdEither, fourthEither);
+        Iterable<Either<String, Integer>> eithers = iterableWith(firstEither, secondEither, thirdEither, fourthEither);
 
         // When
         Iterable<String> lefts = Eithers.lefts(eithers);

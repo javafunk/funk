@@ -1,6 +1,5 @@
 package org.javafunk.funk.datastructures.tuples;
 
-import org.javafunk.funk.Literals;
 import org.javafunk.funk.behaviours.ordinals.*;
 import org.javafunk.funk.testclasses.Age;
 import org.javafunk.funk.testclasses.Colour;
@@ -8,11 +7,12 @@ import org.javafunk.funk.testclasses.Location;
 import org.javafunk.funk.testclasses.Name;
 import org.junit.Test;
 
-import java.util.List;
+import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
+import static org.javafunk.funk.Literals.collectionOf;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.testclasses.Age.age;
 import static org.javafunk.funk.testclasses.Colour.colour;
@@ -296,7 +296,7 @@ public class NonupleTest {
         // Given
         Nonuple<Integer, String, Boolean, Double, Long, Name, Colour, Age, Location> nonuple1 =
                 tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"));
-        List<Object> expected = Literals.listWith(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"));
+        Collection<Object> expected = collectionOf(Object.class).with(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"));
 
         // When
         Boolean isEqual = materialize(nonuple1).equals(expected);

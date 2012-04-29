@@ -18,7 +18,7 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.collectionWith;
 
 public class IntegerRangeTest {
     @Test
@@ -117,7 +117,7 @@ public class IntegerRangeTest {
     public void shouldIterateOverAllIntegersInTheSpecifiedRangeWhenAStepSizeOfOneIsSupplied() throws Exception {
         // Given
         Range<Integer> range = new IntegerRange(0, 10, 1);
-        Collection<Integer> expectedRange = listWith(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Collection<Integer> expectedRange = collectionWith(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 
         // When
         Collection<Integer> materializedRange = materialize(range);
@@ -130,7 +130,7 @@ public class IntegerRangeTest {
     public void shouldIterateOverAllIntegersInTheSpecifiedRangeSpacedByTheSpecifiedStepSize() throws Exception {
         // Given
         Range<Integer> range = new IntegerRange(0, 10, 2);
-        Collection<Integer> expectedRange = listWith(0, 2, 4, 6, 8);
+        Collection<Integer> expectedRange = collectionWith(0, 2, 4, 6, 8);
 
         // When
         Collection<Integer> materializedRange = materialize(range);
@@ -143,7 +143,7 @@ public class IntegerRangeTest {
     public void shouldIterateInReverseIfTheStepSizeIsNegativeAndTheStartIsGreaterThanTheEnd() throws Exception {
         // Given
         Range<Integer> range = new IntegerRange(10, 0, -2);
-        Collection<Integer> expectedRange = listWith(10, 8, 6, 4, 2);
+        Collection<Integer> expectedRange = collectionWith(10, 8, 6, 4, 2);
 
         // When
         Collection<Integer> materializedRange = materialize(range);
@@ -180,7 +180,7 @@ public class IntegerRangeTest {
     public void shouldIteratePositivelyOverANegativeRange() throws Exception {
         // Given
         Range<Integer> range = new IntegerRange(-20, -10, 2);
-        Collection<Integer> expectedRange = listWith(-20, -18, -16, -14, -12);
+        Collection<Integer> expectedRange = collectionWith(-20, -18, -16, -14, -12);
 
         // When
         Collection<Integer> materializedRange = materialize(range);
@@ -193,7 +193,7 @@ public class IntegerRangeTest {
     public void shouldIterateNegativelyOverANegativeRange() throws Exception {
         // Given
         Range<Integer> range = new IntegerRange(-10, -20, -2);
-        Collection<Integer> expectedRange = listWith(-10, -12, -14, -16, -18);
+        Collection<Integer> expectedRange = collectionWith(-10, -12, -14, -16, -18);
 
         // When
         Collection<Integer> materializedRange = materialize(range);

@@ -15,15 +15,16 @@ import java.util.Iterator;
 
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.junit.Assert.assertThat;
 
 public class LazilySliceTest {
     @Test
     public void shouldTakeElementsFromTheIterableBetweenTheSpecifiedStartAndStopInStepsOfTheSpecifiedSize() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9);
-        Collection<Integer> expectedOutput = listWith(3, 5, 7);
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Collection<Integer> expectedOutput = collectionWith(3, 5, 7);
 
         // When
         Collection<Integer> actualOutput = materialize(Lazily.slice(input, 2, 7, 2));
@@ -35,7 +36,7 @@ public class LazilySliceTest {
     @Test
     public void shouldAllowIteratorToBeCalledMultipleTimesReturningDifferentIterators() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
         // When
         Iterable<Integer> iterable = Lazily.slice(input, 2, 7, 2);

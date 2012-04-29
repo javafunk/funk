@@ -399,7 +399,7 @@ public class LiteralsTest {
     @Test
     public void shouldReturnAMultisetContainingTheSuppliedElements() {
         // Given
-        Multiset<String> expectedMultiset = HashMultiset.create(listWith("a", "a", "b", "c"));
+        Multiset<String> expectedMultiset = HashMultiset.create(iterableWith("a", "a", "b", "c"));
 
         // When
         Multiset<String> actualMultiset = multisetWith("a", "a", "b", "c");
@@ -411,7 +411,7 @@ public class LiteralsTest {
     @Test
     public void shouldAllowMoreElementsToBeAddedToTheMultisetWithAnd() {
         // Given
-        Multiset<String> expectedMultiset = HashMultiset.create(listWith("a", "a", "b", "c", "c", "d"));
+        Multiset<String> expectedMultiset = HashMultiset.create(iterableWith("a", "a", "b", "c", "c", "d"));
 
         // When
         Multiset<String> actualMultiset = multisetWith("a", "a", "b").and("c", "c", "d");
@@ -436,8 +436,8 @@ public class LiteralsTest {
     @Test
     public void shouldAllowIterablesOfElementsToBeAddedToTheMultisetWithAnd() throws Exception {
         // Given
-        Multiset<String> expectedMultiset = HashMultiset.create(listWith("a", "a", "b", "c"));
-        Iterable<String> someOtherElements = listWith("b", "c");
+        Multiset<String> expectedMultiset = HashMultiset.create(iterableWith("a", "a", "b", "c"));
+        Iterable<String> someOtherElements = iterableWith("b", "c");
 
         // When
         Multiset<String> actualMultiset = multisetWith("a", "a").and(someOtherElements);
@@ -520,7 +520,7 @@ public class LiteralsTest {
     @Test
     public void shouldReturnASetContainingTheSuppliedElements() {
         // Given
-        Set<String> expectedSet = new HashSet<String>(listWith("a", "b"));
+        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b"));
 
         // When
         Set<String> actualSet = setWith("a", "a", "b");
@@ -532,7 +532,7 @@ public class LiteralsTest {
     @Test
     public void shouldAllowMoreElementsToBeAddedToTheSetWithAnd() {
         // Given
-        Set<String> expectedSet = new HashSet<String>(listWith("a", "b", "c"));
+        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b", "c"));
 
         // When
         Set<String> actualSet = setWith("a", "a", "b").and("b", "c", "c");
@@ -544,7 +544,7 @@ public class LiteralsTest {
     @Test
     public void shouldAllowArraysOfElementsToBeAddedToTheSetWithAnd() throws Exception {
 // Given
-        Set<String> expectedSet = new HashSet<String>(listWith("a", "b", "c"));
+        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b", "c"));
         String[] elementArray = new String[]{"a", "a", "b"};
 
         // When
@@ -557,8 +557,8 @@ public class LiteralsTest {
     @Test
     public void shouldAllowIterablesOfElementsToBeAddedToTheSetWithAnd() throws Exception {
         // Given
-        Set<String> expectedSet = new HashSet<String>(listWith("a", "b", "c"));
-        Iterable<String> someOtherElements = listWith("b", "c", "c");
+        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b", "c"));
+        Iterable<String> someOtherElements = iterableWith("b", "c", "c");
 
         // When
         Set<String> actualSet = setWith("a", "b").and(someOtherElements);
@@ -570,7 +570,7 @@ public class LiteralsTest {
     @Test
     public void shouldAllowElementsToBeAddedToASetWithWith() throws Exception {
         // Given
-        Set<String> expectedSet = new HashSet<String>(listWith("a", "b", "c"));
+        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b", "c"));
 
         // When
         Set<String> actualSet = setOf(String.class)
@@ -585,7 +585,7 @@ public class LiteralsTest {
     @Test
     public void shouldAllowArraysOfElementsToBeAddedToTheSetWithWith() throws Exception {
         // Given
-        Set<String> expectedSet = new HashSet<String>(listWith("a", "b", "c"));
+        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b", "c"));
         String[] elementArray = new String[]{"a", "a", "b"};
 
         // When
@@ -598,9 +598,9 @@ public class LiteralsTest {
     @Test
     public void shouldAllowIterablesOfElementsToBeAddedToTheSetWithWith() throws Exception {
         // Given
-        Set<String> expectedSet = new HashSet<String>(listWith("a", "b", "c"));
-        Iterable<String> firstInputIterable = listWith("a", "a");
-        Iterable<String> secondInputIterable = listWith("b", "c", "c");
+        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b", "c"));
+        Iterable<String> firstInputIterable = iterableWith("a", "a");
+        Iterable<String> secondInputIterable = iterableWith("b", "c", "c");
 
         // When
         Set<String> actualSet = setOf(String.class)
@@ -616,9 +616,9 @@ public class LiteralsTest {
     @Test
     public void shouldReturnASetContainingAllElementsInTheSuppliedIterable() throws Exception {
         // Given
-        Set<String> expectedSet = new HashSet<String>(listWith("a", "b", "c"));
-        Iterable<String> firstInputIterable = listWith("a", "a");
-        Iterable<String> secondInputIterable = listWith("b", "c", "c");
+        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b", "c"));
+        Iterable<String> firstInputIterable = iterableWith("a", "a");
+        Iterable<String> secondInputIterable = iterableWith("b", "c", "c");
 
         // When
         Set<String> actualSet = setFrom(firstInputIterable).with(secondInputIterable);
@@ -630,7 +630,7 @@ public class LiteralsTest {
     @Test
     public void shouldReturnASetContainingAllElementsInTheSuppliedArray() throws Exception {
         // Given
-        Set<String> expectedSet = new HashSet<String>(listWith("a", "b", "c"));
+        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b", "c"));
         String[] elementArray = new String[]{"a", "b", "c", "c"};
 
         // When

@@ -18,13 +18,14 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class MappedIteratorTest {
     @Test
     public void shouldHaveNextAsLongAsDelegateHasNext() {
         // Given
-        Iterator<Integer> delegateIterator = listWith(1, 2, 3).iterator();
+        Iterator<Integer> delegateIterator = iterableWith(1, 2, 3).iterator();
 
         // When
         MappedIterator<Integer, String> iterator = new MappedIterator<Integer, String>(
@@ -43,7 +44,7 @@ public class MappedIteratorTest {
     @Test
     public void shouldMapTheValuesOfTheDelegateIteratorUsingTheSuppliedMapFunction() {
         // Given
-        Iterator<Integer> delegateIterator = listWith(1, 2, 3).iterator();
+        Iterator<Integer> delegateIterator = iterableWith(1, 2, 3).iterator();
 
         // When
         MappedIterator<Integer, String> iterator = new MappedIterator<Integer, String>(
@@ -58,7 +59,7 @@ public class MappedIteratorTest {
     @Test(expected = NoSuchElementException.class)
     public void shouldThrowANoSuchElementExceptionIfNoMoreElements() {
         // Given
-        Iterator<Integer> delegateIterator = listWith(1, 2, 3).iterator();
+        Iterator<Integer> delegateIterator = iterableWith(1, 2, 3).iterator();
 
         // When
         MappedIterator<Integer, String> iterator = new MappedIterator<Integer, String>(
@@ -74,8 +75,8 @@ public class MappedIteratorTest {
     @Test
     public void shouldRemoveTheElementFromTheUnderlyingIterator() {
         // Given
-        Collection<Integer> initialElements = listWith(1, 2, 3);
-        Collection<Integer> expectedElements = listWith(3);
+        Collection<Integer> initialElements = collectionWith(1, 2, 3);
+        Collection<Integer> expectedElements = collectionWith(3);
         Iterator<Integer> delegateIterator = initialElements.iterator();
 
         // When
@@ -94,7 +95,7 @@ public class MappedIteratorTest {
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledBeforeNext() throws Exception {
         // Given
-        Iterator<Integer> delegateIterator = listWith(1, 2, 3).iterator();
+        Iterator<Integer> delegateIterator = iterableWith(1, 2, 3).iterator();
 
         // When
         MappedIterator<Integer, String> iterator = new MappedIterator<Integer, String>(
@@ -109,7 +110,7 @@ public class MappedIteratorTest {
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledMoreThanOnceInARow() throws Exception {
         // Given
-        Iterator<Integer> delegateIterator = listWith(1, 2, 3).iterator();
+        Iterator<Integer> delegateIterator = iterableWith(1, 2, 3).iterator();
 
         // When
         MappedIterator<Integer, String> iterator = new MappedIterator<Integer, String>(
@@ -125,7 +126,7 @@ public class MappedIteratorTest {
     @Test
     public void shouldAllowNullValuesInTheIterator() throws Exception {
         // Given
-        Iterator<Integer> delegateIterator = listWith(1, null, 2).iterator();
+        Iterator<Integer> delegateIterator = iterableWith(1, null, 2).iterator();
 
         // When
         MappedIterator<Integer, Integer> iterator = new MappedIterator<Integer, Integer>(delegateIterator,

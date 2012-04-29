@@ -40,7 +40,7 @@ public class EagerlyMinMaxTest {
     public void shouldReturnTheMinimumValueAccordingToTheSuppliedComparator() throws Exception {
         // Given
 
-        List<NonComparableObject> list = Literals.listWith(
+        List<NonComparableObject> list = listWith(
                 nonComparableObject("aaaa"),
                 nonComparableObject("aa"),
                 nonComparableObject("aaa"),
@@ -72,7 +72,7 @@ public class EagerlyMinMaxTest {
     @Test
     public void shouldReturnTheMaximumValueAccordingToTheSuppliedComparator() throws Exception {
         // Given
-        List<NonComparableObject> list = Literals.listWith(
+        List<NonComparableObject> list = listWith(
                 nonComparableObject("aaaa"),
                 nonComparableObject("aa"),
                 nonComparableObject("aaa"),

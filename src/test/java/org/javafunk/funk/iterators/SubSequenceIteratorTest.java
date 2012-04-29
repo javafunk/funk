@@ -17,14 +17,15 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.junit.Assert.fail;
-import static org.javafunk.funk.Literals.listWith;
 
 public class SubSequenceIteratorTest {
     @Test
     public void shouldTakeElementsFromTheIteratorBetweenTheSpecifiedStartAndStopWithTheSpecifiedStep() throws Exception {
         // Given
-        Iterator<String> input = listWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k").iterator();
+        Iterator<String> input = iterableWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k").iterator();
 
         // When
         Iterator<String> subSequenceIterator = new SubSequenceIterator<String>(input, 2, 9, 3);
@@ -42,7 +43,7 @@ public class SubSequenceIteratorTest {
     @Test
     public void shouldReturnAnEmptyIteratorIfSuppliedStartIsEqualToSuppliedStop() throws Exception {
         // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Iterator<Integer> input = iterableWith(0, 1, 2, 3, 4).iterator();
         Integer start = 2, stop = 2, step = 1;
 
         // When
@@ -55,7 +56,7 @@ public class SubSequenceIteratorTest {
     @Test
     public void shouldReturnAnEmptyIteratorIfSuppliedStartAndStopAreBothZero() throws Exception {
         // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Iterator<Integer> input = iterableWith(0, 1, 2, 3, 4).iterator();
         Integer start = 0, stop = 0, step = 2;
 
         // When
@@ -68,7 +69,7 @@ public class SubSequenceIteratorTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowAnIllegalArgumentExceptionIfSuppliedStartIsLessThanZero() throws Exception {
         // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Iterator<Integer> input = iterableWith(0, 1, 2, 3, 4).iterator();
         Integer start = -5, stop = 2, step = 2;
 
         // When
@@ -80,7 +81,7 @@ public class SubSequenceIteratorTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowAnIllegalArgumentExceptionIfSuppliedStopIsLessThanZero() throws Exception {
         // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Iterator<Integer> input = iterableWith(0, 1, 2, 3, 4).iterator();
         Integer start = 0, stop = -5, step = 2;
 
         // When
@@ -92,7 +93,7 @@ public class SubSequenceIteratorTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowAnIllegalArgumentExceptionIfSuppliedStepIsZero() throws Exception {
         // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Iterator<Integer> input = iterableWith(0, 1, 2, 3, 4).iterator();
         Integer start = 1, stop = 2, step = 0;
 
         // When
@@ -104,7 +105,7 @@ public class SubSequenceIteratorTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowAnIllegalArgumentExceptionIfSuppliedStepIsLessThanZero() throws Exception {
         // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Iterator<Integer> input = iterableWith(0, 1, 2, 3, 4).iterator();
         Integer start = 1, stop = 2, step = -3;
 
         // When
@@ -116,7 +117,7 @@ public class SubSequenceIteratorTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowAnIllegalArgumentExceptionIfSuppliedStartIsGreaterThanSuppliedStop() throws Exception {
         // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Iterator<Integer> input = iterableWith(0, 1, 2, 3, 4).iterator();
         Integer start = 6, stop = 4, step = 1;
 
         // When
@@ -128,7 +129,7 @@ public class SubSequenceIteratorTest {
     @Test
     public void shouldDefaultToZeroForStartIfNullSupplied() throws Exception {
         // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4, 5, 6, 7, 8).iterator();
+        Iterator<Integer> input = iterableWith(0, 1, 2, 3, 4, 5, 6, 7, 8).iterator();
         Integer start = null, stop = 7, step = 2;
 
         // When
@@ -144,7 +145,7 @@ public class SubSequenceIteratorTest {
     @Test
     public void shouldDefaultToTheEndOfTheIteratorForStopIfNullSupplied() throws Exception {
         // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4, 5, 6, 7, 8).iterator();
+        Iterator<Integer> input = iterableWith(0, 1, 2, 3, 4, 5, 6, 7, 8).iterator();
         Integer start = 1, stop = null, step = 2;
 
         // When
@@ -167,7 +168,7 @@ public class SubSequenceIteratorTest {
     @Test
     public void shouldDefaultToAStepOfOne() throws Exception {
         // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Iterator<Integer> input = iterableWith(0, 1, 2, 3, 4).iterator();
 
         // When
         Iterator<Integer> subSequenceIterator = new SubSequenceIterator<Integer>(input, 1, 4);
@@ -185,7 +186,7 @@ public class SubSequenceIteratorTest {
     @Test
     public void shouldDefaultToAStepOfOneIfNullSupplied() throws Exception {
         // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Iterator<Integer> input = iterableWith(0, 1, 2, 3, 4).iterator();
 
         // When
         Iterator<Integer> subSequenceIterator = new SubSequenceIterator<Integer>(input, 1, 4, null);
@@ -203,7 +204,7 @@ public class SubSequenceIteratorTest {
     @Test
     public void shouldAllowNextToBeCalledWithoutCallingHasNext() throws Exception {
         // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Iterator<Integer> input = iterableWith(0, 1, 2, 3, 4).iterator();
 
         // When
         Iterator<Integer> subSequenceIterator = new SubSequenceIterator<Integer>(input, 1, 4);
@@ -217,7 +218,7 @@ public class SubSequenceIteratorTest {
     @Test
     public void shouldAllowHasNextToBeCalledMultipleTimesWithoutProgressingTheIterator() throws Exception {
         // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4, 5, 6).iterator();
+        Iterator<Integer> input = iterableWith(0, 1, 2, 3, 4, 5, 6).iterator();
 
         // When
         Iterator<Integer> subSequenceIterator = new SubSequenceIterator<Integer>(input, 1, 6, 2);
@@ -239,7 +240,7 @@ public class SubSequenceIteratorTest {
     @Test(expected = NoSuchElementException.class)
     public void shouldThrowANoSuchElementExceptionWhenStopHasBeenReached() throws Exception {
         // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Iterator<Integer> input = iterableWith(0, 1, 2, 3, 4).iterator();
 
         // When
         Iterator<Integer> subSequenceIterator = new SubSequenceIterator<Integer>(input, 1, 2);
@@ -253,7 +254,7 @@ public class SubSequenceIteratorTest {
     @Test(expected = NoSuchElementException.class)
     public void shouldThrowANoSuchElementExceptionIfTheUnderlyingIteratorIsExhausted() throws Exception {
         // Given
-        Iterator<Integer> input = listWith(0, 1, 2, 3, 4).iterator();
+        Iterator<Integer> input = iterableWith(0, 1, 2, 3, 4).iterator();
 
         // When
         Iterator<Integer> subSequenceIterator = new SubSequenceIterator<Integer>(input, 3, 10);
@@ -268,7 +269,7 @@ public class SubSequenceIteratorTest {
     @Test
     public void shouldAllowNullValuesInTheIterator() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, null, 3, 4);
+        Iterable<Integer> input = iterableWith(1, 2, null, 3, 4);
 
         // When
         Iterator<Integer> iterator = new SubSequenceIterator<Integer>(input.iterator(), 1, 4);
@@ -286,8 +287,8 @@ public class SubSequenceIteratorTest {
     @Test
     public void shouldRemoveTheElementFromTheUnderlyingIterator() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
-        Iterable<String> expectedOutput = listWith("a", "aaa", "aaaa");
+        Iterable<String> input = iterableWith("a", "aa", "aaa", "aaaa");
+        Iterable<String> expectedOutput = iterableWith("a", "aaa", "aaaa");
 
         // When
         Iterator<String> iterator = new SubSequenceIterator<String>(input.iterator(), 1, 3);
@@ -302,7 +303,7 @@ public class SubSequenceIteratorTest {
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledBeforeNext() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
+        Iterable<String> input = iterableWith("a", "aa", "aaa", "aaaa");
 
         // When
         Iterator<String> iterator = new SubSequenceIterator<String>(input.iterator(), 1, 3);
@@ -316,7 +317,7 @@ public class SubSequenceIteratorTest {
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledMoreThanOnceInARow() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
+        Iterable<String> input = iterableWith("a", "aa", "aaa", "aaaa");
 
         // When
         Iterator<String> iterator = new SubSequenceIterator<String>(input.iterator(), 1, 3);
@@ -331,8 +332,8 @@ public class SubSequenceIteratorTest {
     @Test
     public void shouldNotRemoveAnElementAfterStopHasBeenReached() throws Exception {
         // Given
-        Collection<String> input = listWith("a", "aa", "aaa", "aaaa");
-        Collection<String> expectedResult = listWith("a", "aaa", "aaaa");
+        Collection<String> input = collectionWith("a", "aa", "aaa", "aaaa");
+        Collection<String> expectedResult = collectionWith("a", "aaa", "aaaa");
 
         // When
         Iterator<String> iterator = new SubSequenceIterator<String>(input.iterator(), 1, 2);
@@ -355,8 +356,8 @@ public class SubSequenceIteratorTest {
     @Test
     public void shouldNotRemoveAnElementAfterStopHasBeenReachedEvenIfNextHasBeenCalled() throws Exception {
         // Given
-        Collection<String> input = listWith("a", "aa", "aaa", "aaaa");
-        Collection<String> expectedResult = listWith("a", "aaa", "aaaa");
+        Collection<String> input = collectionWith("a", "aa", "aaa", "aaaa");
+        Collection<String> expectedResult = collectionWith("a", "aaa", "aaaa");
 
         // When
         Iterator<String> iterator = new SubSequenceIterator<String>(input.iterator(), 1, 2);

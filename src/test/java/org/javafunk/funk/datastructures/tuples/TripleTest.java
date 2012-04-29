@@ -8,17 +8,17 @@
  */
 package org.javafunk.funk.datastructures.tuples;
 
-import org.javafunk.funk.Literals;
 import org.javafunk.funk.behaviours.ordinals.First;
 import org.javafunk.funk.behaviours.ordinals.Second;
 import org.javafunk.funk.behaviours.ordinals.Third;
 import org.junit.Test;
 
-import java.util.List;
+import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
+import static org.javafunk.funk.Literals.collectionOf;
 import static org.javafunk.funk.Literals.tuple;
 
 public class TripleTest {
@@ -126,7 +126,7 @@ public class TripleTest {
     public void shouldBeIterable() {
         // Given
         Triple<Integer, String, Boolean> triple1 = tuple(5, "Five", true);
-        List<Object> expected = Literals.<Object>listWith(5, "Five", true);
+        Collection<Object> expected = collectionOf(Object.class).with(5, "Five", true);
 
         // When
         Boolean isEqual = materialize(triple1).equals(expected);

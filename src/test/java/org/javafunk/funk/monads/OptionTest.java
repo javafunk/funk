@@ -11,7 +11,7 @@ import java.util.concurrent.Callable;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.matchers.Matchers.trueForAll;
 import static org.javafunk.funk.monads.Option.*;
 
@@ -599,7 +599,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondNone.equals(firstNone);
 
         // Then
-        assertThat(listWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(true));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(true));
     }
 
     @Test
@@ -613,7 +613,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondNone.equals(firstNone);
 
         // Then
-        assertThat(listWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(true));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(true));
     }
 
     @Test
@@ -627,7 +627,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondOption.equals(firstOption);
 
         // Then
-        assertThat(listWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(true));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(true));
     }
 
     @Test
@@ -641,7 +641,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondOption.equals(firstOption);
 
         // Then
-        assertThat(listWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(true));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(true));
     }
 
     @Test
@@ -655,7 +655,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondOption.equals(firstOption);
 
         // Then
-        assertThat(listWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(false));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(false));
     }
 
     @Test
@@ -669,7 +669,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondOption.equals(firstOption);
 
         // Then
-        assertThat(listWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(false));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(false));
     }
 
     @Test
@@ -683,7 +683,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondOption.equals(firstOption);
 
         // Then
-        assertThat(listWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(false));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(false));
     }
 
     private static class TrackingCallable implements Callable<String> {

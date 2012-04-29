@@ -10,15 +10,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Eagerly.take;
 import static org.javafunk.funk.Generators.toGeneratable;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class FiniteGeneratorTest {
     @Test
     public void shouldGenerateValuesInTheSameOrderAsTheUnderlyingIterable() throws Exception {
         // Given
-        Iterable<Integer> backingValues = listWith(1, 4, 9, 16, 25);
+        Iterable<Integer> backingValues = iterableWith(1, 4, 9, 16, 25);
         Generator<Integer> generator = new FiniteGenerator<Integer>(backingValues);
-        Collection<Integer> expectedValues = listWith(1, 4, 9, 16);
+        Collection<Integer> expectedValues = collectionWith(1, 4, 9, 16);
 
         // When
         Collection<Integer> actualValues = take(toGeneratable(generator), 4);
@@ -30,7 +31,7 @@ public class FiniteGeneratorTest {
     @Test(expected = NoSuchElementException.class)
     public void shouldThrowNoSuchElementExceptionOnceGeneratorExhausted() throws Exception {
         // Given
-        Iterable<Integer> backingValues = listWith(1);
+        Iterable<Integer> backingValues = iterableWith(1);
         Generator<Integer> generator = new FiniteGenerator<Integer>(backingValues);
         generator.next();
 
@@ -43,7 +44,7 @@ public class FiniteGeneratorTest {
     @Test
     public void shouldNotHaveNextOnceGeneratorExhausted() throws Exception {
         // Given
-        Iterable<Integer> backingValues = listWith(1);
+        Iterable<Integer> backingValues = iterableWith(1);
         Generator<Integer> generator = new FiniteGenerator<Integer>(backingValues);
 
         // When
@@ -56,7 +57,7 @@ public class FiniteGeneratorTest {
     @Test
     public void shouldBeEqualIfSuppliedIterableIsEqualAndSameNumberOfItemsGeneratedFromEach() throws Exception {
         // Given
-        Iterable<Integer> backingValues = listWith(1, 2, 3, 4);
+        Iterable<Integer> backingValues = iterableWith(1, 2, 3, 4);
         Generator<Integer> firstGenerator = new FiniteGenerator<Integer>(backingValues);
         firstGenerator.next();
         firstGenerator.next();
@@ -74,8 +75,8 @@ public class FiniteGeneratorTest {
     @Test
     public void shouldNotBeEqualIfSuppliedIterablesAreDifferent() throws Exception {
         // Given
-        Generator<Integer> firstGenerator = new FiniteGenerator<Integer>(listWith(1, 2, 3));
-        Generator<Integer> secondGenerator = new FiniteGenerator<Integer>(listWith(4, 5, 6));
+        Generator<Integer> firstGenerator = new FiniteGenerator<Integer>(iterableWith(1, 2, 3));
+        Generator<Integer> secondGenerator = new FiniteGenerator<Integer>(iterableWith(4, 5, 6));
 
         // When
         boolean equal = firstGenerator.equals(secondGenerator);
@@ -87,9 +88,9 @@ public class FiniteGeneratorTest {
     @Test
     public void shouldNotBeEqualIfDifferentNumbersOfItemsGeneratedFromEach() throws Exception {
         // Given
-        Generator<Integer> firstGenerator = new FiniteGenerator<Integer>(listWith(1, 2, 3, 4));
+        Generator<Integer> firstGenerator = new FiniteGenerator<Integer>(iterableWith(1, 2, 3, 4));
         firstGenerator.next();
-        Generator<Integer> secondGenerator = new FiniteGenerator<Integer>(listWith(1, 2, 3, 4));
+        Generator<Integer> secondGenerator = new FiniteGenerator<Integer>(iterableWith(1, 2, 3, 4));
         secondGenerator.next();
         secondGenerator.next();
 

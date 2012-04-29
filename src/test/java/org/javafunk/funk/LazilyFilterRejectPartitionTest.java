@@ -18,6 +18,8 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.Literals.listWith;
 import static org.junit.Assert.assertThat;
 
@@ -26,7 +28,7 @@ public class LazilyFilterRejectPartitionTest {
     public void shouldOnlyReturnThoseElementsMatchingTheSuppliedPredicate() {
         // Given
         List<String> inputs = listWith("ac", "ab", "bc", "abc", "bcd", "bad");
-        Collection<String> expectedOutputs = listWith("ac", "bc", "abc", "bcd");
+        Collection<String> expectedOutputs = collectionWith("ac", "bc", "abc", "bcd");
 
         // When
         Collection<String> actualOutputs = materialize(Lazily.filter(inputs, new Predicate<String>() {
@@ -66,7 +68,7 @@ public class LazilyFilterRejectPartitionTest {
     public void shouldOnlyReturnThoseElementsThatDoNotMatchTheSuppliedPredicate() {
         // Given
         List<String> inputs = listWith("ac", "ab", "bc", "abc", "bcd", "bad");
-        Collection<String> expectedOutputs = listWith("ab", "bad");
+        Collection<String> expectedOutputs = collectionWith("ab", "bad");
 
         // When
         Collection<String> actualOutputs = materialize(Lazily.reject(inputs, new Predicate<String>() {
@@ -105,9 +107,9 @@ public class LazilyFilterRejectPartitionTest {
     @Test
     public void shouldReturnMatchingElementsFirstAndNonMatchingElementsSecond() {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8);
-        Collection<Integer> expectedMatchingItems = listWith(2, 4, 6, 8);
-        Collection<Integer> expectedNonMatchingItems = listWith(1, 3, 5, 7);
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5, 6, 7, 8);
+        Collection<Integer> expectedMatchingItems = collectionWith(2, 4, 6, 8);
+        Collection<Integer> expectedNonMatchingItems = collectionWith(1, 3, 5, 7);
 
         // When
         Pair<Iterable<Integer>, Iterable<Integer>> partitionResults = Lazily.partition(input,
@@ -132,7 +134,7 @@ public class LazilyFilterRejectPartitionTest {
     @Test
     public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheMatchingAndNonMatchingIterables() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8);
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5, 6, 7, 8);
 
         // When
         Pair<Iterable<Integer>, Iterable<Integer>> partitionResult = Lazily.partition(input,

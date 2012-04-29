@@ -15,13 +15,13 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class EagerlySumTest {
     @Test
     public void shouldSumTheSuppliedIntegers() {
         // Given
-        List<Integer> inputs = listWith(1, 2, 3);
+        Iterable<Integer> inputs = iterableWith(1, 2, 3);
 
         // When
         Integer sum = Eagerly.sum(inputs);
@@ -33,7 +33,7 @@ public class EagerlySumTest {
     @Test
     public void shouldSumTheSuppliedLongs() {
         // Given
-        List<Long> inputs = listWith(1L, 2L, 3L);
+        Iterable<Long> inputs = iterableWith(1L, 2L, 3L);
 
         // When
         Long sum = Eagerly.sum(inputs);
@@ -45,7 +45,7 @@ public class EagerlySumTest {
     @Test
     public void shouldSumTheSuppliedDoubles() {
         // Given
-        List<Double> inputs = listWith(1.6D, 2.2D, 3.5D);
+        Iterable<Double> inputs = iterableWith(1.6D, 2.2D, 3.5D);
 
         // When
         Double sum = Eagerly.sum(inputs);
@@ -57,7 +57,7 @@ public class EagerlySumTest {
     @Test
     public void shouldSumTheSuppliedFloats() {
         // Given
-        List<Float> inputs = listWith(1.6F, 2.2F, 3.5F);
+        Iterable<Float> inputs = iterableWith(1.6F, 2.2F, 3.5F);
 
         // When
         Float sum = Eagerly.sum(inputs);

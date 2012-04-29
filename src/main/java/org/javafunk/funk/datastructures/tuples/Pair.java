@@ -11,7 +11,7 @@ package org.javafunk.funk.datastructures.tuples;
 import org.javafunk.funk.behaviours.ordinals.First;
 import org.javafunk.funk.behaviours.ordinals.Second;
 
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class Pair<R, S>
         extends AbstractTuple
@@ -33,6 +33,6 @@ public class Pair<R, S>
     }
 
     @Override public Iterable<Object> values() {
-        return listWith(first, second);
+        return iterableWith(first, second);
     }
 }

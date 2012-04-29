@@ -18,14 +18,15 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.junit.Assert.fail;
-import static org.javafunk.funk.Literals.listWith;
 
 public class FilteredIteratorTest {
     @Test
     public void shouldAllowHasNextToBeCalledMultipleTimesWithoutProgressingTheIterator() {
         // Given
-        Iterable<String> iterable = listWith("one", "two", "three", "four", "five");
+        Iterable<String> iterable = iterableWith("one", "two", "three", "four", "five");
         Predicate<String> predicate = new Predicate<String>() {
             public boolean evaluate(String item) {
                 return item.contains("o");
@@ -52,7 +53,7 @@ public class FilteredIteratorTest {
     @Test
     public void shouldAllowNextToBeCalledWithoutHavingCalledHasNext() {
         // Given
-        Iterable<String> iterable = listWith("one", "two", "three", "four", "five");
+        Iterable<String> iterable = iterableWith("one", "two", "three", "four", "five");
         Predicate<String> predicate = new Predicate<String>() {
             public boolean evaluate(String item) {
                 return item.contains("o");
@@ -71,7 +72,7 @@ public class FilteredIteratorTest {
     @Test(expected = NoSuchElementException.class)
     public void shouldThrowNoSuchElementExceptionIfDoesntHaveNext() {
         // Given
-        Iterable<String> iterable = listWith("one", "two", "three", "four", "five");
+        Iterable<String> iterable = iterableWith("one", "two", "three", "four", "five");
         Predicate<String> predicate = new Predicate<String>() {
             public boolean evaluate(String item) {
                 return item.contains("o");
@@ -91,8 +92,8 @@ public class FilteredIteratorTest {
     @Test
     public void shouldRemoveTheElementFromTheUnderlyingIterator() {
         // Given
-        Collection<String> actualList = listWith("one", "two", "three", "four", "five");
-        Collection<String> expectedList = listWith("three", "four", "five");
+        Collection<String> actualList = collectionWith("one", "two", "three", "four", "five");
+        Collection<String> expectedList = collectionWith("three", "four", "five");
         Iterator<String> iterator = actualList.iterator();
 
         // When
@@ -114,7 +115,7 @@ public class FilteredIteratorTest {
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfNextHasNotBeenCalledBeforeRemove() throws Exception {
         // Given
-        Iterator<String> iterator = listWith("one", "two", "three").iterator();
+        Iterator<String> iterator = iterableWith("one", "two", "three").iterator();
 
         // When
         FilteredIterator<String> filteredIterator = new FilteredIterator<String>(iterator, new Predicate<String>() {
@@ -132,7 +133,7 @@ public class FilteredIteratorTest {
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledMoreThanOnceInARow() throws Exception {
         // Given
-        Iterator<String> iterator = listWith("one", "two", "three").iterator();
+        Iterator<String> iterator = iterableWith("one", "two", "three").iterator();
 
         // When
         FilteredIterator<String> filteredIterator = new FilteredIterator<String>(iterator, new Predicate<String>() {
@@ -151,8 +152,8 @@ public class FilteredIteratorTest {
     @Test
     public void shouldNotRemoveAnElementThatDoesNotMatchTheSuppliedPredicate() throws Exception {
         // Given
-        Collection<String> initialElements = listWith("one", "three");
-        Collection<String> expectedElements = listWith("three");
+        Collection<String> initialElements = collectionWith("one", "three");
+        Collection<String> expectedElements = collectionWith("three");
 
         // When
         FilteredIterator<String> filteredIterator = new FilteredIterator<String>(initialElements.iterator(),
@@ -180,8 +181,8 @@ public class FilteredIteratorTest {
     @Test
     public void shouldNotRemoveAnElementThatDoesNotMatchTheSuppliedPredicateEvenIfNextCalled() throws Exception {
         // Given
-        Collection<String> initialElements = listWith("one", "three");
-        Collection<String> expectedElements = listWith("three");
+        Collection<String> initialElements = collectionWith("one", "three");
+        Collection<String> expectedElements = collectionWith("three");
 
         // When
         FilteredIterator<String> filteredIterator = new FilteredIterator<String>(initialElements.iterator(),
@@ -215,7 +216,7 @@ public class FilteredIteratorTest {
     @Test
     public void shouldAllowNullValuesInTheIterator() throws Exception {
         // Given
-        Iterator<Integer> delegateIterator = listWith(1, null, 10, 5).iterator();
+        Iterator<Integer> delegateIterator = iterableWith(1, null, 10, 5).iterator();
 
         // When
         FilteredIterator<Integer> iterator = new FilteredIterator<Integer>(delegateIterator, new Predicate<Integer>(){

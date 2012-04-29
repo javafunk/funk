@@ -23,12 +23,12 @@ public class EagerlyGroupIndexTest {
     @Test
     public void shouldGroupTheElementsOfTheIterableUsingTheSpecifiedIndexer() throws Exception {
         // Given
-        Iterable<String> input = listWith("apple", "pear", "lemon", "apricot", "orange", "papaya", "banana");
+        Iterable<String> input = iterableWith("apple", "pear", "lemon", "apricot", "orange", "papaya", "banana");
 
-        Collection<String> fourLetterFruits = listWith("pear");
-        Collection<String> fiveLetterFruits = listWith("apple", "lemon");
-        Collection<String> sixLetterFruits = listWith("orange", "papaya", "banana");
-        Collection<String> sevenLetterFruits = listWith("apricot");
+        Collection<String> fourLetterFruits = collectionWith("pear");
+        Collection<String> fiveLetterFruits = collectionWith("apple", "lemon");
+        Collection<String> sixLetterFruits = collectionWith("orange", "papaya", "banana");
+        Collection<String> sevenLetterFruits = collectionWith("apricot");
         
         Map<Integer, Collection<String>> expectedOutput =
                 mapWith(4, fourLetterFruits)
@@ -50,8 +50,8 @@ public class EagerlyGroupIndexTest {
     @Test
     public void shouldReturnATwoTupleWithTheIndexFirstAndTheElementSecond() throws Exception {
         // Given
-        Iterable<String> input = listWith("apple", "pear", "lemon", "apricot", "orange", "papaya", "banana");
-        Collection<Pair<Integer, String>> expectedOutput = listWith(
+        Iterable<String> input = iterableWith("apple", "pear", "lemon", "apricot", "orange", "papaya", "banana");
+        Collection<Pair<Integer, String>> expectedOutput = collectionWith(
                 tuple(5, "apple"),
                 tuple(4, "pear"),
                 tuple(5, "lemon"),

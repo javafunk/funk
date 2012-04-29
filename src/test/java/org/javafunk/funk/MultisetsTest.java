@@ -29,7 +29,7 @@ public class MultisetsTest {
         Iterable<String> firstIterable = listWith("a", "b", "a", "c");
         Iterable<String> secondIterable = setWith("c", "d", "e");
         Iterable<String> thirdIterable = multisetWith("a", "a", "c", "b");
-        Iterable<Iterable<String>> iterables = listWith(firstIterable, secondIterable, thirdIterable);
+        Iterable<Iterable<String>> iterables = iterableWith(firstIterable, secondIterable, thirdIterable);
         Multiset<String> expectedConcatenatedMultiset = multisetWith(
                 "a", "a", "a", "a", "b", "b", "c", "c", "c", "d", "e");
 
@@ -81,7 +81,7 @@ public class MultisetsTest {
         Iterable<String> firstIterable = listWith("a", "b", "a", "a", "c");
         Iterable<String> secondIterable = setWith("c", "d", "e");
         Iterable<String> thirdIterable = multisetWith("a", "a", "c", "c", "b");
-        Iterable<Iterable<String>> iterables = listWith(firstIterable, secondIterable, thirdIterable);
+        Iterable<Iterable<String>> iterables = iterableWith(firstIterable, secondIterable, thirdIterable);
         Multiset<String> expectedUnionMultiset = multisetWith("a", "a", "a", "b", "c", "c", "d", "e");
 
         // When
@@ -116,7 +116,7 @@ public class MultisetsTest {
         Cat smudge = cat(colour("grey"), name("smudge"));
         Iterable<Dog> firstDogs = multisetWith(fido, spud, fido);
         Iterable<Dog> secondDogs = multisetWith(rex, spud, spud);
-        Iterable<Cat> cats = listWith(snowy, snowy, smudge);
+        Iterable<Cat> cats = iterableWith(snowy, snowy, smudge);
         Multiset<Animal> expectedMenagerie = multisetOf(Animal.class)
                 .with(fido, spud, fido, smudge, snowy, spud, snowy, rex);
 
@@ -149,7 +149,7 @@ public class MultisetsTest {
         Iterable<String> firstIterable = multisetWith("a", "b", "c", "c", "q", "q");
         Iterable<String> secondIterable = listWith("c", "c", "c", "d", "q", "e");
         Iterable<String> thirdIterable = multisetWith("a", "c", "f", "c", "f", "q", "q");
-        Iterable<Iterable<String>> iterables = listWith(firstIterable, secondIterable, thirdIterable);
+        Iterable<Iterable<String>> iterables = iterableWith(firstIterable, secondIterable, thirdIterable);
         Multiset<String> expectedIntersectionMultiset = multisetWith("c", "q", "c");
 
         // When
@@ -164,7 +164,7 @@ public class MultisetsTest {
         // Given
         Iterable<String> firstIterable = listWith("a", "b", "b", "b", "c", "c", "c", "d");
         Iterable<String> secondIterable = multisetWith("a", "a", "a", "b", "b", "c");
-        Iterable<Iterable<String>> iterables = listWith(firstIterable, secondIterable);
+        Iterable<Iterable<String>> iterables = iterableWith(firstIterable, secondIterable);
         Multiset<String> expectedDifference = multisetWith("c", "c", "b", "d");
 
         // When

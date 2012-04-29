@@ -15,14 +15,14 @@ import java.util.Iterator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class LazilyEquateTest {
     @Test
     public void shouldReturnAnIterableContainingTheResultOfEquatingEachElementInTheSuppliedIterables() throws Exception {
         // Given
-        Iterable<String> first = listWith("Dog", "Cat", "Goldfish");
-        Iterable<String> second = listWith("DOG", "BAT", "GOLDFISH");
+        Iterable<String> first = iterableWith("Dog", "Cat", "Goldfish");
+        Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH");
         
         // When
         Iterable<Boolean> equateResultIterable = Lazily.equate(first, second, new Equivalence<String>() {
@@ -45,8 +45,8 @@ public class LazilyEquateTest {
     @Test
     public void shouldOnlyEquateAsManyElementsAsPossibleIfTheFirstIterableIsShorterThanTheSecond() throws Exception {
         // Given
-        Iterable<String> first = listWith("Dog", "Cat", "Goldfish");
-        Iterable<String> second = listWith("DOG", "BAT", "GOLDFISH", "HORSE", "PIG");
+        Iterable<String> first = iterableWith("Dog", "Cat", "Goldfish");
+        Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH", "HORSE", "PIG");
 
         // When
         Iterable<Boolean> equateResultIterable = Lazily.equate(first, second, new Equivalence<String>() {
@@ -69,8 +69,8 @@ public class LazilyEquateTest {
     @Test
     public void shouldOnlyEquateAsManyElementsAsPossibleIfTheSecondIterableIsShorterThanTheFirst() throws Exception {
         // Given
-        Iterable<String> first = listWith("Dog", "Cat", "Goldfish", "Horse", "Pig");
-        Iterable<String> second = listWith("DOG", "BAT", "GOLDFISH");
+        Iterable<String> first = iterableWith("Dog", "Cat", "Goldfish", "Horse", "Pig");
+        Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH");
 
         // When
         Iterable<Boolean> equateResultIterable = Lazily.equate(first, second, new Equivalence<String>() {
@@ -93,8 +93,8 @@ public class LazilyEquateTest {
     @Test
     public void shouldAllowIteratorToBeCalledMultipleTimesReturningDifferentIterators() throws Exception {
         // Given
-        Iterable<String> first = listWith("Dog", "Cat", "Goldfish");
-        Iterable<String> second = listWith("DOG", "BAT", "GOLDFISH");
+        Iterable<String> first = iterableWith("Dog", "Cat", "Goldfish");
+        Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH");
 
         // When
         Iterable<Boolean> iterable = Lazily.equate(first, second, new Equivalence<String>() {

@@ -18,6 +18,8 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.Literals.listWith;
 import static org.junit.Assert.assertThat;
 
@@ -26,7 +28,7 @@ public class LazilyTakeDropTest {
     public void shouldReturnAnIterableContainingTheSpecifiedNumberOfElements() {
         // Given
         List<Integer> fibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
-        Collection<Integer> expectedOutput = listWith(1, 1, 2, 3, 5);
+        Collection<Integer> expectedOutput = collectionWith(1, 1, 2, 3, 5);
 
         // When
         Collection<Integer> actualOutput = materialize(Lazily.take(fibonaccis, 5));
@@ -84,7 +86,7 @@ public class LazilyTakeDropTest {
     public void shouldReturnAnIterableWithTheFirstNElementsDropped() {
         // Given
         List<Integer> tenFibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
-        Collection<Integer> expectedOutput = listWith(8, 13, 21, 34, 55);
+        Collection<Integer> expectedOutput = collectionWith(8, 13, 21, 34, 55);
 
         // When
         Collection<Integer> actualOutput = materialize(Lazily.drop(tenFibonaccis, 5));
@@ -97,7 +99,7 @@ public class LazilyTakeDropTest {
     public void shouldReturnTheSuppliedIterableIfTheNumberOfElementsToDropIsZero() throws Exception {
         // Given
         List<Integer> fibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
-        Collection<Integer> expectedOutput = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
+        Collection<Integer> expectedOutput = collectionWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
         Integer numberToTake = 0;
 
         // When
@@ -142,8 +144,8 @@ public class LazilyTakeDropTest {
     @Test
     public void shouldTakeElementsFromTheIterableWhileTheSuppliedPredicateIsTrue() {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8);
-        Collection<Integer> expectedOutput = listWith(1, 2, 3, 4);
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5, 6, 7, 8);
+        Collection<Integer> expectedOutput = collectionWith(1, 2, 3, 4);
 
         // When
         Collection<Integer> actualOutput = materialize(Lazily.takeWhile(input, new Predicate<Integer>() {
@@ -159,7 +161,7 @@ public class LazilyTakeDropTest {
     @Test
     public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedTakeWhileIterable() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8);
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5, 6, 7, 8);
 
         // When
         Iterable<Integer> iterable = Lazily.takeWhile(input, new Predicate<Integer>() {
@@ -182,8 +184,8 @@ public class LazilyTakeDropTest {
     @Test
     public void shouldTakeElementsFromTheIterableUntilTheSuppliedPredicateIsTrue() {
         // Given
-        Iterable<Integer> input = listWith(8, 7, 6, 5, 4, 3, 2, 1);
-        Collection<Integer> expectedOutput = listWith(8, 7, 6, 5);
+        Iterable<Integer> input = iterableWith(8, 7, 6, 5, 4, 3, 2, 1);
+        Collection<Integer> expectedOutput = collectionWith(8, 7, 6, 5);
 
         // When
         Collection<Integer> actualOutput = materialize(Lazily.takeUntil(input, new Predicate<Integer>() {
@@ -199,7 +201,7 @@ public class LazilyTakeDropTest {
     @Test
     public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedTakeUntilIterable() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(8, 7, 6, 5, 4, 3, 2, 1);
+        Iterable<Integer> input = iterableWith(8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
         Iterable<Integer> iterable = Lazily.takeUntil(input, new Predicate<Integer>() {
@@ -222,8 +224,8 @@ public class LazilyTakeDropTest {
     @Test
     public void shouldDropElementsFromTheIterableWhileTheSuppliedPredicateIsTrue() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(8, 7, 6, 5, 4, 3, 2, 1);
-        Collection<Integer> expectedOutput = listWith(4, 3, 2, 1);
+        Iterable<Integer> input = iterableWith(8, 7, 6, 5, 4, 3, 2, 1);
+        Collection<Integer> expectedOutput = collectionWith(4, 3, 2, 1);
 
         // When
         Collection<Integer> actualOutput = materialize(Lazily.dropWhile(input, new Predicate<Integer>() {
@@ -239,7 +241,7 @@ public class LazilyTakeDropTest {
     @Test
     public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedDropWhileIterable() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(8, 7, 6, 5, 4, 3, 2, 1);
+        Iterable<Integer> input = iterableWith(8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
         Iterable<Integer> iterable = Lazily.dropWhile(input, new Predicate<Integer>() {
@@ -262,8 +264,8 @@ public class LazilyTakeDropTest {
     @Test
     public void shouldDropElementsFromTheIterableUntilTheSuppliedPredicateIsTrue() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(8, 7, 6, 5, 4, 3, 2, 1);
-        Collection<Integer> expectedOutput = listWith(4, 3, 2, 1);
+        Iterable<Integer> input = iterableWith(8, 7, 6, 5, 4, 3, 2, 1);
+        Collection<Integer> expectedOutput = collectionWith(4, 3, 2, 1);
 
         // When
         Collection<Integer> actualOutput = materialize(Lazily.dropUntil(input, new Predicate<Integer>() {
@@ -279,7 +281,7 @@ public class LazilyTakeDropTest {
     @Test
     public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedDropUntilIterable() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(8, 7, 6, 5, 4, 3, 2, 1);
+        Iterable<Integer> input = iterableWith(8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
         Iterable<Integer> iterable = Lazily.dropUntil(input, new Predicate<Integer>() {

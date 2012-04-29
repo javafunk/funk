@@ -8,18 +8,18 @@
  */
 package org.javafunk.funk.datastructures.tuples;
 
-import org.javafunk.funk.Literals;
 import org.javafunk.funk.behaviours.ordinals.First;
 import org.javafunk.funk.behaviours.ordinals.Fourth;
 import org.javafunk.funk.behaviours.ordinals.Second;
 import org.javafunk.funk.behaviours.ordinals.Third;
 import org.junit.Test;
 
-import java.util.List;
+import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
+import static org.javafunk.funk.Literals.collectionOf;
 import static org.javafunk.funk.Literals.tuple;
 
 public class QuadrupleTest {
@@ -152,7 +152,7 @@ public class QuadrupleTest {
     public void shouldBeIterable() {
         // Given
         Quadruple<Integer, String, Boolean, Double> quadruple1 = tuple(5, "Five", true, 3.6);
-        List<Object> expected = Literals.<Object>listWith(5, "Five", true, 3.6);
+        Collection<Object> expected = collectionOf(Object.class).with(5, "Five", true, 3.6);
 
         // When
         Boolean isEqual = materialize(quadruple1).equals(expected);

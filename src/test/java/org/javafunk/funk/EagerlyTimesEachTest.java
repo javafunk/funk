@@ -11,7 +11,7 @@ package org.javafunk.funk;
 import org.javafunk.funk.functors.Action;
 import org.junit.Test;
 
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
@@ -20,7 +20,7 @@ public class EagerlyTimesEachTest {
     @SuppressWarnings("unchecked")
     public void shouldExecuteSuppliedFunctionOnEachElement() {
         // Given
-        Iterable<Target<Object>> targets = listWith(
+        Iterable<Target<Object>> targets = iterableWith(
                 (Target<Object>) mock(Target.class),
                 (Target<Object>) mock(Target.class),
                 (Target<Object>) mock(Target.class));

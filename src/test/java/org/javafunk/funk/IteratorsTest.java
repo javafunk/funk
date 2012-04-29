@@ -24,7 +24,7 @@ public class IteratorsTest {
     @Test
     public void shouldWrapTheSuppliedIteratorInAnIterable() {
         // Given
-        Iterator<String> iterator = listWith("a", "b", "c").iterator();
+        Iterator<String> iterator = iterableWith("a", "b", "c").iterator();
 
         // When
         Iterable<String> iterable = asIterable(iterator);
@@ -58,7 +58,7 @@ public class IteratorsTest {
     @Test
     public void shouldConvertTheSuppliedIteratorToASet() {
         // Given
-        Iterator<String> iterator = listWith("a", "a", "c", "d").iterator();
+        Iterator<String> iterator = iterableWith("a", "a", "c", "d").iterator();
         Set<String> expectedSet = setWith("a", "c", "d");
 
         // When

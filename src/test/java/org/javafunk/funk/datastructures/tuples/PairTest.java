@@ -8,16 +8,16 @@
  */
 package org.javafunk.funk.datastructures.tuples;
 
-import org.javafunk.funk.Literals;
 import org.javafunk.funk.behaviours.ordinals.First;
 import org.javafunk.funk.behaviours.ordinals.Second;
 import org.junit.Test;
 
-import java.util.List;
+import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
+import static org.javafunk.funk.Literals.collectionOf;
 import static org.javafunk.funk.Literals.tuple;
 
 public class PairTest {
@@ -113,7 +113,7 @@ public class PairTest {
     public void shouldBeIterable() {
         // Given
         Pair<Integer, String> pair1 = tuple(5, "Five");
-        List<Object> expected = Literals.<Object>listWith(5, "Five");
+        Collection<Object> expected = collectionOf(Object.class).with(5, "Five");
 
         // When
         Boolean isEqual = materialize(pair1).equals(expected);

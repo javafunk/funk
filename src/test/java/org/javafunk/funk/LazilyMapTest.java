@@ -16,14 +16,14 @@ import java.util.Iterator;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.javafunk.funk.Iterables.asList;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.junit.Assert.assertThat;
 
 public class LazilyMapTest {
     @Test
     public void shouldMapIterableUsingCustomMapFunction() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3);
+        Iterable<Integer> input = iterableWith(1, 2, 3);
 
         // When
         Iterable<String> actual = Lazily.map(input, new Mapper<Integer, String>() {
@@ -39,7 +39,7 @@ public class LazilyMapTest {
     @Test
     public void shouldAllowIteratorToBeCalledMultipleTimesReturningDifferentIterators() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3);
+        Iterable<Integer> input = iterableWith(1, 2, 3);
 
         // When
         Iterable<String> iterable = Lazily.map(input, new Mapper<Integer, String>() {

@@ -20,7 +20,7 @@ import java.util.Collections;
 import static java.lang.String.format;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.matchers.MatchersTest.Bean.bean;
 
 public class MatchersTest {
@@ -28,8 +28,8 @@ public class MatchersTest {
     @Test
     public void shouldReportOnMismatchedItemsInHasOnlyItemsInAnyOrder() {
         // Given
-        Collection<Integer> actual = listWith(1, 2, 5, 6);
-        Collection<Integer> expected = listWith(1, 2, 3, 4);
+        Collection<Integer> actual = collectionWith(1, 2, 5, 6);
+        Collection<Integer> expected = collectionWith(1, 2, 3, 4);
 
         // When
         Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
@@ -43,8 +43,8 @@ public class MatchersTest {
     @Test
     public void shouldReportOnTooManyItemsInHasOnlyItemsInAnyOrder() {
         // Given
-        Collection<Integer> actual = listWith(1, 2, 5, 6);
-        Collection<Integer> expected = listWith(1, 2);
+        Collection<Integer> actual = collectionWith(1, 2, 5, 6);
+        Collection<Integer> expected = collectionWith(1, 2);
 
         // When
         Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
@@ -58,8 +58,8 @@ public class MatchersTest {
     @Test
     public void shouldReportOnTooFewItemsInHasOnlyItemsInAnyOrder() {
         // Given
-        Collection<Integer> actual = listWith(1, 2);
-        Collection<Integer> expected = listWith(1, 2, 4, 5);
+        Collection<Integer> actual = collectionWith(1, 2);
+        Collection<Integer> expected = collectionWith(1, 2, 4, 5);
 
         // When
         Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
@@ -73,8 +73,8 @@ public class MatchersTest {
     @Test
     public void shouldMatchIdenticalCollectionsInHasOnlyItemsInAnyOrder() {
         // Given
-        Collection<Integer> actual = listWith(1, 2, 3);
-        Collection<Integer> expected = listWith(1, 2, 3);
+        Collection<Integer> actual = collectionWith(1, 2, 3);
+        Collection<Integer> expected = collectionWith(1, 2, 3);
 
         // When
         Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
@@ -86,8 +86,8 @@ public class MatchersTest {
     @Test
     public void shouldMatchCollectionsDifferingOnlyInOrderInHasOnlyItemsInAnyOrder() {
         // Given
-        Collection<Integer> actual = listWith(1, 2, 3);
-        Collection<Integer> expected = listWith(1, 3, 2);
+        Collection<Integer> actual = collectionWith(1, 2, 3);
+        Collection<Integer> expected = collectionWith(1, 3, 2);
 
         // When
         Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
@@ -99,8 +99,8 @@ public class MatchersTest {
     @Test
     public void shouldMismatchCollectionsDifferingOnlyInItemCountInHasOnlyItemsInAnyOrder() {
         // Given
-        Collection<Integer> actual = listWith(1, 2, 2, 3);
-        Collection<Integer> expected = listWith(1, 3, 3, 2);
+        Collection<Integer> actual = collectionWith(1, 2, 2, 3);
+        Collection<Integer> expected = collectionWith(1, 3, 3, 2);
 
         // When
         Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
@@ -116,7 +116,7 @@ public class MatchersTest {
     public void shouldReportWhenActualItemsIsEmpty() {
         // Given
         Collection<Integer> actual = Collections.emptyList();
-        Collection<Integer> expected = listWith(1, 2, 3, 4);
+        Collection<Integer> expected = collectionWith(1, 2, 3, 4);
 
         // When
         Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
@@ -129,7 +129,7 @@ public class MatchersTest {
     public void shouldReportWhenActualItemsIsNull() {
         // Given
         Collection<Integer> actual = null;
-        Collection<Integer> expected = listWith(1, 2, 3, 4);
+        Collection<Integer> expected = collectionWith(1, 2, 3, 4);
 
         // When
         Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
@@ -166,7 +166,7 @@ public class MatchersTest {
     @Test
     public void shouldReportItemsFoundInExpectedCollection() {
         // Given
-        Collection<Integer> expected = listWith(1, 2, 3, 4);
+        Collection<Integer> expected = collectionWith(1, 2, 3, 4);
 
         // When
         Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
@@ -178,8 +178,8 @@ public class MatchersTest {
     @Test
     public void shouldReportOnMismatchedItemsInHasOnlyItemsInOrder() {
         // Given
-        Collection<Integer> actual = listWith(1, 2, 5, 6);
-        Collection<Integer> expected = listWith(1, 2, 3, 4);
+        Collection<Integer> actual = collectionWith(1, 2, 5, 6);
+        Collection<Integer> expected = collectionWith(1, 2, 3, 4);
 
         // When
         Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInOrder(expected);
@@ -193,8 +193,8 @@ public class MatchersTest {
     @Test
     public void shouldReportOnTooManyItemsInHasOnlyItemsInOrder() {
         // Given
-        Collection<Integer> actual = listWith(1, 2, 5, 6);
-        Collection<Integer> expected = listWith(1, 2);
+        Collection<Integer> actual = collectionWith(1, 2, 5, 6);
+        Collection<Integer> expected = collectionWith(1, 2);
 
         // When
         Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInOrder(expected);
@@ -208,8 +208,8 @@ public class MatchersTest {
     @Test
     public void shouldReportOnTooFewItemsInHasOnlyItemsInOrder() {
         // Given
-        Collection<Integer> actual = listWith(1, 2);
-        Collection<Integer> expected = listWith(1, 2, 4, 5);
+        Collection<Integer> actual = collectionWith(1, 2);
+        Collection<Integer> expected = collectionWith(1, 2, 4, 5);
 
         // When
         Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInOrder(expected);
@@ -223,8 +223,8 @@ public class MatchersTest {
     @Test
     public void shouldReportOnIncorrectOrderInHasOnlyItemsInOrder() {
         // Given
-        Collection<Integer> actual = listWith(1, 2, 4, 3);
-        Collection<Integer> expected = listWith(1, 2, 3, 4);
+        Collection<Integer> actual = collectionWith(1, 2, 4, 3);
+        Collection<Integer> expected = collectionWith(1, 2, 3, 4);
 
         // When
         Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInOrder(expected);

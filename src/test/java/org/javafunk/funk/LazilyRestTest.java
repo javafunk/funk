@@ -4,15 +4,15 @@ import org.junit.Test;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.junit.Assert.assertThat;
 
 public class LazilyRestTest {
     @Test
     public void shouldReturnTheRestOfTheIterable(){
         //given
-        Iterable<String> iterable = listWith("a", "b", "c", "d");
-        Iterable<String> expectedRest = listWith("b", "c", "d");
+        Iterable<String> iterable = iterableWith("a", "b", "c", "d");
+        Iterable<String> expectedRest = iterableWith("b", "c", "d");
 
         //when
         Iterable<String> rest = Lazily.rest(iterable);
@@ -24,7 +24,7 @@ public class LazilyRestTest {
     @Test
     public void shouldReturnEmptyIterableForAnIterableWithOneElement(){
         //given
-        Iterable<String> iterable = listWith("a");
+        Iterable<String> iterable = iterableWith("a");
         Iterable<String> expectedRest = Iterables.empty();
 
         //when

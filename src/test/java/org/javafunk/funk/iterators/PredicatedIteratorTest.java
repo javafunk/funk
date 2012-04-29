@@ -18,14 +18,15 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.junit.Assert.fail;
-import static org.javafunk.funk.Literals.listWith;
 
 public class PredicatedIteratorTest {
     @Test
     public void shouldOnlyReturnElementsFromTheUnderlyingIteratorWhileThePredicateIsTrue() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
+        Iterable<String> input = iterableWith("a", "aa", "aaa", "aaaa");
 
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
@@ -46,7 +47,7 @@ public class PredicatedIteratorTest {
     @Test
     public void shouldAllowHasNextToBeCalledMultipleTimesWithoutProgressingTheIterator() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "aa");
+        Iterable<String> input = iterableWith("a", "aa");
 
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
@@ -67,7 +68,7 @@ public class PredicatedIteratorTest {
     @Test
     public void shouldAllowNextToBeCalledWithoutCallingHasNextFirst() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
+        Iterable<String> input = iterableWith("a", "aa", "aaa", "aaaa");
 
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
@@ -85,7 +86,7 @@ public class PredicatedIteratorTest {
     @Test(expected = NoSuchElementException.class)
     public void shouldThrowNoSuchElementExceptionIfTheUnderlyingIteratorIsExhausted() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "aa");
+        Iterable<String> input = iterableWith("a", "aa");
 
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
@@ -105,7 +106,7 @@ public class PredicatedIteratorTest {
     @Test(expected = NoSuchElementException.class)
     public void shouldThrowNoSuchElementExceptionIfNoMoreElementsMatchThePredicate() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
+        Iterable<String> input = iterableWith("a", "aa", "aaa", "aaaa");
 
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
@@ -125,7 +126,7 @@ public class PredicatedIteratorTest {
     @Test
     public void shouldAllowNullValuesInTheIterator() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, null, 1, 2);
+        Iterable<Integer> input = iterableWith(1, null, 1, 2);
 
         // When
         Iterator<Integer> predicatedIterator = new PredicatedIterator<Integer>(input.iterator(), new Predicate<Integer>(){
@@ -148,8 +149,8 @@ public class PredicatedIteratorTest {
     @Test
     public void shouldRemoveTheElementFromTheUnderlyingIterator() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
-        Iterable<String> expectedOutput = listWith("aa", "aaa", "aaaa");
+        Iterable<String> input = iterableWith("a", "aa", "aaa", "aaaa");
+        Iterable<String> expectedOutput = iterableWith("aa", "aaa", "aaaa");
 
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
@@ -169,7 +170,7 @@ public class PredicatedIteratorTest {
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledBeforeNext() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
+        Iterable<String> input = iterableWith("a", "aa", "aaa", "aaaa");
 
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
@@ -188,7 +189,7 @@ public class PredicatedIteratorTest {
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledMoreThanOnceInARow() throws Exception {
         // Given
-        Iterable<String> input = listWith("a", "aa", "aaa", "aaaa");
+        Iterable<String> input = iterableWith("a", "aa", "aaa", "aaaa");
 
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
@@ -208,8 +209,8 @@ public class PredicatedIteratorTest {
     @Test
     public void shouldNotRemoveAnElementThatDoesNotMatchTheSuppliedPredicate() throws Exception {
         // Given
-        Collection<String> input = listWith("a", "aa", "aaa", "aaaa");
-        Collection<String> expectedResult = listWith("aa", "aaa", "aaaa");
+        Collection<String> input = collectionWith("a", "aa", "aaa", "aaaa");
+        Collection<String> expectedResult = collectionWith("aa", "aaa", "aaaa");
 
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){
@@ -237,8 +238,8 @@ public class PredicatedIteratorTest {
     @Test
     public void shouldNotRemoveAnElementThatDoesNotMatchTheSuppliedPredicateEvenIfNextCalled() throws Exception {
         // Given
-        Collection<String> input = listWith("a", "aa", "aaa", "aaaa");
-        Collection<String> expectedResult = listWith("aa", "aaa", "aaaa");
+        Collection<String> input = collectionWith("a", "aa", "aaa", "aaaa");
+        Collection<String> expectedResult = collectionWith("aa", "aaa", "aaaa");
 
         // When
         Iterator<String> predicatedIterator = new PredicatedIterator<String>(input.iterator(), new Predicate<String>(){

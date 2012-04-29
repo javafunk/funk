@@ -2,7 +2,7 @@ package org.javafunk.funk.datastructures.tuples;
 
 import org.javafunk.funk.behaviours.ordinals.*;
 
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class Septuple<R, S, T, U, V, W, X>
         extends AbstractTuple
@@ -26,7 +26,7 @@ public class Septuple<R, S, T, U, V, W, X>
     }
 
     @Override public Iterable<Object> values() {
-        return listWith(first, second, third, fourth, fifth, sixth, seventh);
+        return iterableWith(first, second, third, fourth, fifth, sixth, seventh);
     }
 
     @Override public R first() {

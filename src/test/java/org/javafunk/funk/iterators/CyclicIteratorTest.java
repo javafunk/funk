@@ -16,14 +16,14 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.javafunk.funk.Literals.listOf;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableOf;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class CyclicIteratorTest {
     @Test
     public void shouldCycleThroughTheSuppliedIteratorInfinitely() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2);
+        Iterable<Integer> input = iterableWith(1, 2);
 
         // When
         CyclicIterator<Integer> iterator = new CyclicIterator<Integer>(input.iterator());
@@ -46,7 +46,7 @@ public class CyclicIteratorTest {
     @Test
     public void shouldCycleThroughTheSuppliedIteratorTheSpecifiedNumberOfTimes() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2);
+        Iterable<Integer> input = iterableWith(1, 2);
 
         // When
         CyclicIterator<Integer> iterator = new CyclicIterator<Integer>(input.iterator(), 2);
@@ -66,7 +66,7 @@ public class CyclicIteratorTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedNumberOfTimesToRepeatIsNegative() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2);
+        Iterable<Integer> input = iterableWith(1, 2);
 
         // When
         new CyclicIterator<Integer>(input.iterator(), -5);
@@ -77,7 +77,7 @@ public class CyclicIteratorTest {
     @Test
     public void shouldReturnFalseForHasNextIfANumberOfRepeatsOfZeroIsSpecified() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2);
+        Iterable<Integer> input = iterableWith(1, 2);
 
         // When
         CyclicIterator<Integer> iterator = new CyclicIterator<Integer>(input.iterator(), 0);
@@ -89,7 +89,7 @@ public class CyclicIteratorTest {
     @Test(expected = NoSuchElementException.class)
     public void shouldThrowNoSuchElementExceptionIfNextIsCalledAndANumberOfRepeatsOfZeroIsSpecified() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2);
+        Iterable<Integer> input = iterableWith(1, 2);
         CyclicIterator<Integer> iterator = new CyclicIterator<Integer>(input.iterator(), 0);
 
         // When
@@ -101,7 +101,7 @@ public class CyclicIteratorTest {
     @Test
     public void shouldReturnFalseForHasNextIfAnEmptyIteratorIsSupplied() throws Exception {
         // Given
-        Iterable<Integer> input = listOf(Integer.class);
+        Iterable<Integer> input = iterableOf(Integer.class);
 
         // When
         CyclicIterator<Integer> iterator = new CyclicIterator<Integer>(input.iterator());
@@ -113,7 +113,7 @@ public class CyclicIteratorTest {
     @Test(expected = NoSuchElementException.class)
     public void shouldThrowNoSuchElementExceptionIfNextIsCalledAndAnEmptyIteratorIsSupplied() throws Exception {
         // Given
-        Iterable<Integer> input = listOf(Integer.class);
+        Iterable<Integer> input = iterableOf(Integer.class);
         CyclicIterator<Integer> iterator = new CyclicIterator<Integer>(input.iterator());
 
         // When
@@ -125,7 +125,7 @@ public class CyclicIteratorTest {
     @Test
     public void shouldAllowNextToBeCalledWithoutCallingHasNextFirst() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3);
+        Iterable<Integer> input = iterableWith(1, 2, 3);
 
         // When
         CyclicIterator<Integer> iterator = new CyclicIterator<Integer>(input.iterator());
@@ -142,7 +142,7 @@ public class CyclicIteratorTest {
     @Test
     public void shouldAllowHasNextToBeCalledMultipleTimesWithoutProgressingTheIterator() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2);
+        Iterable<Integer> input = iterableWith(1, 2);
 
         // When
         CyclicIterator<Integer> iterator = new CyclicIterator<Integer>(input.iterator());
@@ -165,7 +165,7 @@ public class CyclicIteratorTest {
     @Test(expected = UnsupportedOperationException.class)
     public void shouldThrowAnUnsupportedOperationExceptionWhenTryingToRemoveElements() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2);
+        Iterable<Integer> input = iterableWith(1, 2);
 
         // When
         CyclicIterator<Integer> iterator = new CyclicIterator<Integer>(input.iterator());
@@ -178,7 +178,7 @@ public class CyclicIteratorTest {
     @Test
     public void shouldAllowNullValuesInTheInputIterator() throws Exception {
         // Given
-        Iterator<String> input = listWith("a", "b", null).iterator();
+        Iterator<String> input = iterableWith("a", "b", null).iterator();
 
         // When
         Iterator<String> iterator = new CyclicIterator<String>(input);

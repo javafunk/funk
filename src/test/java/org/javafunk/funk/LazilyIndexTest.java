@@ -16,14 +16,14 @@ import java.util.Iterator;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.Literals.tuple;
 
 public class LazilyIndexTest {
     @Test
     public void shouldReturnTwoTuplesWithTheIndexFirstAndTheElementSecond() throws Exception {
         // Given
-        Iterable<String> input = listWith("apple", "pear", "lemon");
+        Iterable<String> input = iterableWith("apple", "pear", "lemon");
 
         // When
         Iterable<Pair<Integer, String>> outputIterable = Lazily.index(input, new Indexer<String, Integer>() {
@@ -46,7 +46,7 @@ public class LazilyIndexTest {
     @Test
     public void shouldAllowIteratorToBeCalledMultipleTimesReturningDifferentIterators() throws Exception {
         // Given
-        Iterable<String> input = listWith("apple", "pear", "lemon");
+        Iterable<String> input = iterableWith("apple", "pear", "lemon");
 
         // When
         Iterable<Pair<Integer, String>> iterable = Lazily.index(input, new Indexer<String, Integer>() {

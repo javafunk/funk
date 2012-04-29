@@ -15,16 +15,15 @@ import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.listWith;
-import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.Literals.*;
 
 public class EagerlyZipEnumerateTest {
     @Test
     public void shouldZipIterables() {
         // Given
-        Iterable<Integer> iterable1 = listWith(1, 2, 3);
-        Iterable<String> iterable2 = listWith("First", "Second", "Third");
-        Collection<Pair<Integer, String>> expectedOutput = listWith(
+        Iterable<Integer> iterable1 = iterableWith(1, 2, 3);
+        Iterable<String> iterable2 = iterableWith("First", "Second", "Third");
+        Collection<Pair<Integer, String>> expectedOutput = collectionWith(
                 tuple(1, "First"),
                 tuple(2, "Second"),
                 tuple(3, "Third"));
@@ -39,8 +38,8 @@ public class EagerlyZipEnumerateTest {
     @Test
     public void shouldEnumerateIterable() {
         // Given
-        Iterable<String> iterable = listWith("a", "b", "c");
-        Collection<Pair<Integer, String>> expectedOutput = listWith(
+        Iterable<String> iterable = iterableWith("a", "b", "c");
+        Collection<Pair<Integer, String>> expectedOutput = collectionWith(
                 tuple(0, "a"),
                 tuple(1, "b"),
                 tuple(2, "c"));

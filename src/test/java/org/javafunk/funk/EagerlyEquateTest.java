@@ -15,15 +15,16 @@ import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class EagerlyEquateTest {
     @Test
     public void shouldReturnACollectionContainingTheResultOfEquatingEachElementUsingTheSuppliedEquator() throws Exception {
         // Given
-        Iterable<String> first = listWith("Dog", "Cat", "Goldfish");
-        Iterable<String> second = listWith("DOG", "BAT", "GOLDFISH");
-        Collection<Boolean> expectedEqualityResult = listWith(true, false, true);
+        Iterable<String> first = iterableWith("Dog", "Cat", "Goldfish");
+        Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH");
+        Collection<Boolean> expectedEqualityResult = collectionWith(true, false, true);
 
         // When
         Collection<Boolean> actualEqualityResult = Eagerly.equate(first, second, new Equivalence<String>() {
@@ -39,9 +40,9 @@ public class EagerlyEquateTest {
     @Test
     public void shouldOnlyEquateAsManyElementsAsPossibleIfTheFirstIterableIsShorterThanTheSecond() throws Exception {
         // Given
-        Iterable<String> first = listWith("Dog", "Cat", "Goldfish");
-        Iterable<String> second = listWith("DOG", "BAT", "GOLDFISH", "HORSE", "PIG");
-        Collection<Boolean> expectedEqualityResult = listWith(true, false, true);
+        Iterable<String> first = iterableWith("Dog", "Cat", "Goldfish");
+        Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH", "HORSE", "PIG");
+        Collection<Boolean> expectedEqualityResult = collectionWith(true, false, true);
 
         // When
         Collection<Boolean> actualEqualityResult = Eagerly.equate(first, second, new Equivalence<String>() {
@@ -57,9 +58,9 @@ public class EagerlyEquateTest {
     @Test
     public void shouldOnlyEquateAsManyElementsAsPossibleIfTheSecondIterableIsShorterThanTheFirst() throws Exception {
         // Given
-        Iterable<String> first = listWith("Dog", "Cat", "Goldfish", "Horse", "Pig");
-        Iterable<String> second = listWith("DOG", "BAT", "GOLDFISH");
-        Collection<Boolean> expectedEqualityResult = listWith(true, false, true);
+        Iterable<String> first = iterableWith("Dog", "Cat", "Goldfish", "Horse", "Pig");
+        Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH");
+        Collection<Boolean> expectedEqualityResult = collectionWith(true, false, true);
 
         // When
         Collection<Boolean> actualEqualityResult = Eagerly.equate(first, second, new Equivalence<String>() {

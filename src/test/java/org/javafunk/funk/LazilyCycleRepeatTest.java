@@ -13,14 +13,14 @@ import org.junit.Test;
 import java.util.Iterator;
 
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.junit.Assert.assertThat;
 
 public class LazilyCycleRepeatTest {
     @Test
     public void shouldCycleTheSuppliedIterableInfinitely() {
         // Given
-        Iterable<String> input = listWith("Red", "Green", "Blue");
+        Iterable<String> input = iterableWith("Red", "Green", "Blue");
 
         // When
         Iterable<String> output = Lazily.cycle(input);
@@ -37,7 +37,7 @@ public class LazilyCycleRepeatTest {
     @Test
     public void shouldAllowIteratorToBeCalledMultipleTimesOnCycleIterableReturningDifferentIterators() throws Exception {
         // Given
-        Iterable<String> input = listWith("Red", "Green", "Blue");
+        Iterable<String> input = iterableWith("Red", "Green", "Blue");
 
         // When
         Iterable<String> iterable = Lazily.cycle(input);
@@ -56,7 +56,7 @@ public class LazilyCycleRepeatTest {
     @Test
     public void shouldRepeatTheSuppliedIterableTheSpecifiedNumberOfTimes() throws Exception {
         // Given
-        Iterable<String> input = listWith("Black", "White");
+        Iterable<String> input = iterableWith("Black", "White");
 
         // When
         Iterable<String> output = Lazily.repeat(input, 2);
@@ -77,7 +77,7 @@ public class LazilyCycleRepeatTest {
     @Test
     public void shouldAllowIteratorToBeCalledMultipleTimesOnRepeatIterableReturningDifferentIterators() throws Exception {
         // Given
-        Iterable<String> input = listWith("Black", "White");
+        Iterable<String> input = iterableWith("Black", "White");
 
         // When
         Iterable<String> iterable = Lazily.repeat(input, 2);

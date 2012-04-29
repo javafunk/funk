@@ -18,14 +18,16 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.javafunk.funk.Accumulators.longAdditionAccumulator;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.Literals.listWith;
 
 public class EagerlyMapReduceTest {
     @Test
     public void shouldMapIterableUsingCustomMapFunction() {
         // Given
-        Iterable<Integer> inputs = listWith(1, 2, 3);
-        Collection<Integer> expectedOutputs = listWith(2, 4, 6);
+        Iterable<Integer> inputs = iterableWith(1, 2, 3);
+        Collection<Integer> expectedOutputs = collectionWith(2, 4, 6);
 
         // When
         Collection<Integer> actualOutputs = Eagerly.map(inputs, new Mapper<Integer, Integer>() {
@@ -42,7 +44,7 @@ public class EagerlyMapReduceTest {
     @Test
     public void shouldReduceTheSuppliedInputToTheirSumUsingALongAccumulator() throws Exception {
         // Given
-        Collection<Long> input = listWith(2L, 3L, 4L);
+        Collection<Long> input = collectionWith(2L, 3L, 4L);
 
         // When
         Long actual = Eagerly.reduce(input, longAdditionAccumulator());

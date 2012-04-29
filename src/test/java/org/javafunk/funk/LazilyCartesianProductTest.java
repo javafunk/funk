@@ -17,17 +17,16 @@ import static org.javafunk.funk.Eagerly.times;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Lazily.cartesianProduct;
 import static org.javafunk.funk.Lazily.cycle;
-import static org.javafunk.funk.Literals.listWith;
-import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.matchers.Matchers.hasOnlyItemsInAnyOrder;
 
 public class LazilyCartesianProductTest {
     @Test
     public void shouldReturnTheCartesianProductOfTheSuppliedIterablesAsAnIterableOfTuples() throws Exception {
         // Given
-        Iterable<Integer> input1 = listWith(1, 2, 3);
-        Iterable<String> input2 = listWith("a", "b", "c");
-        Collection<Pair<Integer, String>> expectedCartesianProduct = listWith(
+        Iterable<Integer> input1 = iterableWith(1, 2, 3);
+        Iterable<String> input2 = iterableWith("a", "b", "c");
+        Collection<Pair<Integer, String>> expectedCartesianProduct = collectionWith(
                 tuple(1, "a"), tuple(1, "b"), tuple(1, "c"),
                 tuple(2, "a"), tuple(2, "b"), tuple(2, "c"),
                 tuple(3, "a"), tuple(3, "b"), tuple(3, "c"));
@@ -43,15 +42,14 @@ public class LazilyCartesianProductTest {
     @SuppressWarnings("unchecked")
     public void shouldReturnTheCartesianProductOfThreeSuppliedIterablesAsAnIterableOfTriples() throws Exception {
         // Given
-        Iterable<Integer> input1 = listWith(1, 2);
-        Iterable<String> input2 = listWith("a", "b", "c");
-        Iterable<Long> input3 = listWith(1L);
+        Iterable<Integer> input1 = iterableWith(1, 2);
+        Iterable<String> input2 = iterableWith("a", "b", "c");
+        Iterable<Long> input3 = iterableWith(1L);
 
-        Collection<Triple<Integer, String, Long>> expectedCartesianProduct = Literals.listWith(
+        Collection<Triple<Integer, String, Long>> expectedCartesianProduct = collectionWith(
                 tuple(1, "a", 1L), tuple(2, "a", 1L),
                 tuple(1, "b", 1L), tuple(2, "b", 1L),
-                tuple(1, "c", 1L), tuple(2, "c", 1L)
-        );
+                tuple(1, "c", 1L), tuple(2, "c", 1L));
 
         // When
         Collection<Triple<Integer, String, Long>> actualCartesianProduct = materialize(Lazily.cartesianProduct(input1, input2, input3));
@@ -64,12 +62,12 @@ public class LazilyCartesianProductTest {
     @SuppressWarnings("unchecked")
     public void shouldReturnTheCartesianProductOfFourSuppliedIterablesAsAnIterableOfQuadruples() throws Exception {
         // Given
-        Iterable<Integer> input1 = listWith(1, 2);
-        Iterable<String> input2 = listWith("a", "b", "c");
-        Iterable<Long> input3 = listWith(1L, 2L, 3L);
-        Iterable<String> input4 = listWith("hi", "bye");
+        Iterable<Integer> input1 = iterableWith(1, 2);
+        Iterable<String> input2 = iterableWith("a", "b", "c");
+        Iterable<Long> input3 = iterableWith(1L, 2L, 3L);
+        Iterable<String> input4 = iterableWith("hi", "bye");
 
-        Collection<Quadruple<Integer, String, Long, String>> expectedCartesianProduct = Literals.listWith(
+        Collection<Quadruple<Integer, String, Long, String>> expectedCartesianProduct = collectionWith(
                 tuple(1, "a", 1L, "hi"), tuple(1, "a", 1L, "bye"),
                 tuple(1, "b", 1L, "hi"), tuple(1, "b", 1L, "bye"),
                 tuple(1, "c", 1L, "hi"), tuple(1, "c", 1L, "bye"),
@@ -99,26 +97,29 @@ public class LazilyCartesianProductTest {
 
     @Test
     @SuppressWarnings("unchecked")
+    @ToDo(raisedBy = "Toby",
+          date     = "2012-04-29",
+          message  = "Reinstate type safety.")
     public void shouldReturnTheCartesianProductOfNSuppliedIterablesAsAnIterableOfIterables() throws Exception {
         // Given
-        Iterable<Integer> input1 = listWith(1, 2);
-        Iterable<String> input2 = listWith("a", "b", "c");
-        Iterable<Long> input3 = listWith(1L, 2L, 3L);
+        Iterable<Integer> input1 = iterableWith(1, 2);
+        Iterable<String> input2 = iterableWith("a", "b", "c");
+        Iterable<Long> input3 = iterableWith(1L, 2L, 3L);
 
-        Collection expectedCartesianProduct = Literals.listWith(
-                listWith(1, "a", 1L), listWith(2, "a", 1L),
-                listWith(1, "b", 1L), listWith(2, "b", 1L),
-                listWith(1, "c", 1L), listWith(2, "c", 1L),
-                listWith(1, "a", 2L), listWith(2, "a", 2L),
-                listWith(1, "b", 2L), listWith(2, "b", 2L),
-                listWith(1, "c", 2L), listWith(2, "c", 2L),
-                listWith(1, "a", 3L), listWith(2, "a", 3L),
-                listWith(1, "b", 3L), listWith(2, "b", 3L),
-                listWith(1, "c", 3L), listWith(2, "c", 3L)
+        Collection expectedCartesianProduct = Literals.collectionWith(
+                iterableWith(1, "a", 1L), iterableWith(2, "a", 1L),
+                iterableWith(1, "b", 1L), iterableWith(2, "b", 1L),
+                iterableWith(1, "c", 1L), iterableWith(2, "c", 1L),
+                iterableWith(1, "a", 2L), iterableWith(2, "a", 2L),
+                iterableWith(1, "b", 2L), iterableWith(2, "b", 2L),
+                iterableWith(1, "c", 2L), iterableWith(2, "c", 2L),
+                iterableWith(1, "a", 3L), iterableWith(2, "a", 3L),
+                iterableWith(1, "b", 3L), iterableWith(2, "b", 3L),
+                iterableWith(1, "c", 3L), iterableWith(2, "c", 3L)
         );
 
         // When
-        Collection actualCartesianProduct = materialize(Lazily.cartesianProduct(listWith(input1, input2, input3)));
+        Collection actualCartesianProduct = materialize(Lazily.cartesianProduct(iterableWith(input1, input2, input3)));
 
         // Then
         assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
@@ -127,8 +128,8 @@ public class LazilyCartesianProductTest {
     @Test
     public void shouldAllowIteratorToBeCalledMultipleTimesReturningDifferentIterators() throws Exception {
         // Given
-        Iterable<Integer> input1 = listWith(1, 2, 3);
-        Iterable<String> input2 = listWith("a", "b", "c");
+        Iterable<Integer> input1 = iterableWith(1, 2, 3);
+        Iterable<String> input2 = iterableWith("a", "b", "c");
 
         // When
         Iterable<Pair<Integer, String>> iterable = Lazily.cartesianProduct(input1, input2);
@@ -149,9 +150,9 @@ public class LazilyCartesianProductTest {
     @Test
     public void shouldAllowSecondIterableToBeLongerThanFirst() throws Exception {
         // Given
-        Iterable<Long> firstIterable = listWith(90L, 80L);
-        Iterable<String> secondIterable = listWith("a", "b", "c", "d");
-        Collection<Pair<Long, String>> expectedCartesianProduct = listWith(
+        Iterable<Long> firstIterable = iterableWith(90L, 80L);
+        Iterable<String> secondIterable = iterableWith("a", "b", "c", "d");
+        Collection<Pair<Long, String>> expectedCartesianProduct = collectionWith(
                 tuple(90L, "a"), tuple(90L, "b"), tuple(90L, "c"), tuple(90L, "d"),
                 tuple(80L, "a"), tuple(80L, "b"), tuple(80L, "c"), tuple(80L, "d"));
 
@@ -168,8 +169,8 @@ public class LazilyCartesianProductTest {
           message  = "There must be a better way to test this...")
     public void shouldAllowInfiniteIterableInEitherSlot() throws Exception {
         // Given
-        Iterable<Integer> firstIterable = cycle(listWith(1, 2, 3));
-        Iterable<String> secondIterable = cycle(listWith("a", "b", "c"));
+        Iterable<Integer> firstIterable = cycle(iterableWith(1, 2, 3));
+        Iterable<String> secondIterable = cycle(iterableWith("a", "b", "c"));
 
         // When
         final Iterator<Pair<Integer, String>> iterator = cartesianProduct(firstIterable, secondIterable).iterator();
@@ -190,8 +191,8 @@ public class LazilyCartesianProductTest {
     @Test
     public void shouldAllowNextToBeCalledWithoutCallingHasNext() throws Exception {
         // Given
-        Iterable<String> firstIterable = listWith("a", "b", "c");
-        Iterable<Integer> secondIterable = listWith(1, 2, 3);
+        Iterable<String> firstIterable = iterableWith("a", "b", "c");
+        Iterable<Integer> secondIterable = iterableWith(1, 2, 3);
 
         // When
         Iterator<Pair<String, Integer>> iterator = cartesianProduct(firstIterable, secondIterable).iterator();
@@ -206,8 +207,8 @@ public class LazilyCartesianProductTest {
     @Test
     public void shouldAllowHasNextToBeCalledMultipleTimesWithoutProgressingTheIterator() throws Exception {
         // Given
-        Iterable<String> firstIterable = listWith("a", "b", "c");
-        Iterable<Integer> secondIterable = listWith(1, 2);
+        Iterable<String> firstIterable = iterableWith("a", "b", "c");
+        Iterable<Integer> secondIterable = iterableWith(1, 2);
 
         // When
         Iterator<Pair<String, Integer>> iterator = cartesianProduct(firstIterable, secondIterable).iterator();
@@ -229,8 +230,8 @@ public class LazilyCartesianProductTest {
     @Test(expected = UnsupportedOperationException.class)
     public void shouldThrowAnUnsupportedOperationExceptionWhenTryingToRemoveElements() throws Exception {
         // Given
-        Iterable<String> firstIterable = listWith("a", "b");
-        Iterable<Integer> secondIterable = listWith(1, 2, 3);
+        Iterable<String> firstIterable = iterableWith("a", "b");
+        Iterable<Integer> secondIterable = iterableWith(1, 2, 3);
 
         // When
         Iterator<Pair<String, Integer>> iterator = cartesianProduct(firstIterable, secondIterable).iterator();

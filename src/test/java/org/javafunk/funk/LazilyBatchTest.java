@@ -15,17 +15,18 @@ import java.util.Iterator;
 
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.junit.Assert.assertThat;
 
 public class LazilyBatchTest {
     @Test
     public void shouldReturnElementsOfTheIterableInBatchesOfTheSpecifiedSize() {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9);
-        Collection<Integer> firstBatch = listWith(1, 2, 3);
-        Collection<Integer> secondBatch = listWith(4, 5, 6);
-        Collection<Integer> thirdBatch = listWith(7, 8, 9);
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Collection<Integer> firstBatch = collectionWith(1, 2, 3);
+        Collection<Integer> secondBatch = collectionWith(4, 5, 6);
+        Collection<Integer> thirdBatch = collectionWith(7, 8, 9);
 
         // When
         Iterator<Iterable<Integer>> returnedIterator = Lazily.batch(input, 3).iterator();
@@ -39,7 +40,7 @@ public class LazilyBatchTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowAnIllegalArgumentExceptionIfTheSuppliedBatchSizeIsZero() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5, 6, 7, 8, 9);
         Integer batchSize = 0;
 
         // When
@@ -51,10 +52,10 @@ public class LazilyBatchTest {
     @Test
     public void shouldAllowIteratorToBeCalledMultipleTimesReturningDifferentIterators() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6, 7, 8, 9);
-        Collection<Integer> firstBatch = listWith(1, 2, 3);
-        Collection<Integer> secondBatch = listWith(4, 5, 6);
-        Collection<Integer> thirdBatch = listWith(7, 8, 9);
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Collection<Integer> firstBatch = collectionWith(1, 2, 3);
+        Collection<Integer> secondBatch = collectionWith(4, 5, 6);
+        Collection<Integer> thirdBatch = collectionWith(7, 8, 9);
 
         // When
         Iterable<Iterable<Integer>> iterable = Lazily.batch(input, 3);
@@ -73,7 +74,7 @@ public class LazilyBatchTest {
     @Test
     public void shouldAllowIteratorToBeCalledMultipleTimesOnABatchIterableReturningDifferentIterators() throws Exception {
         // Given
-        Iterable<Integer> input = listWith(1, 2, 3, 4, 5, 6);
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5, 6);
 
         // When
         Iterable<Iterable<Integer>> batchIterator = Lazily.batch(input, 3);
