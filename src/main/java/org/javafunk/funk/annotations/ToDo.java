@@ -5,5 +5,7 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.SOURCE)
 public @interface ToDo {
-    String value();
+    String raisedBy();
+    String date();
+    String message();
 }

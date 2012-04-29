@@ -163,7 +163,9 @@ public class LazilyCartesianProductTest {
     }
 
     @Test
-    @ToDo("There must be a better way to test this...")
+    @ToDo(raisedBy = "Toby",
+          date     = "2012-04-28",
+          message  = "There must be a better way to test this...")
     public void shouldAllowInfiniteIterableInEitherSlot() throws Exception {
         // Given
         Iterable<Integer> firstIterable = cycle(listWith(1, 2, 3));
