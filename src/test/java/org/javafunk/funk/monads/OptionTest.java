@@ -711,7 +711,7 @@ public class OptionTest {
                 return "equal to " + booleanValue.toString();
             }
 
-            @Override public Boolean evaluate(Boolean item) {
+            @Override public boolean evaluate(Boolean item) {
                 return item.equals(booleanValue);
             }
         });

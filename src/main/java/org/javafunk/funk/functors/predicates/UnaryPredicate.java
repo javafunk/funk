@@ -4,7 +4,7 @@ import org.javafunk.funk.functors.functions.UnaryFunction;
 
 public abstract class UnaryPredicate<A>
         implements UnaryFunction<A, Boolean> {
-    public abstract Boolean evaluate(A firstInput);
+    public abstract boolean evaluate(A firstInput);
 
     @Override public Boolean call(A firstArgument) {
         return evaluate(firstArgument);

@@ -74,7 +74,7 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Integer output = Eagerly.first(input, new Predicate<Integer>() {
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -94,7 +94,7 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Eagerly.first(input, new Predicate<Integer>() {
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -113,7 +113,7 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Eagerly.first(input, new Predicate<Integer>() {
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -196,7 +196,7 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Collection<Integer> actualOutput = Eagerly.first(input, 2, new Predicate<Integer>() {
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -217,7 +217,7 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Collection<Integer> actualOutput = Eagerly.first(input, 4, new Predicate<Integer>() {
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -238,7 +238,7 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Collection<Integer> actualOutput = Eagerly.first(input, 3, new Predicate<Integer>() {
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -259,7 +259,7 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Collection<Integer> actualOutput = Eagerly.first(input, 0, new Predicate<Integer>() {
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -280,7 +280,7 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Collection<Integer> actualOutput = Eagerly.first(input, 2, new Predicate<Integer>() {
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -323,7 +323,7 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Integer output = Eagerly.last(input, new Predicate<Integer>() {
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -343,7 +343,7 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Eagerly.last(input, new Predicate<Integer>() {
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -362,7 +362,7 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Eagerly.last(input, new Predicate<Integer>() {
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -445,7 +445,7 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Collection<Integer> actualOutput = Eagerly.last(input, 3, new Predicate<Integer>() {
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -466,7 +466,7 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Collection<Integer> actualOutput = Eagerly.last(input, 4, new Predicate<Integer>() {
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -487,7 +487,7 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Collection<Integer> actualOutput = Eagerly.last(input, 3, new Predicate<Integer>() {
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -508,7 +508,7 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Collection<Integer> actualOutput = Eagerly.last(input, 0, new Predicate<Integer>() {
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -529,7 +529,7 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Collection<Integer> actualOutput = Eagerly.last(input, 2, new Predicate<Integer>() {
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 

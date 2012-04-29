@@ -4,7 +4,7 @@ import org.javafunk.funk.functors.functions.QuinaryFunction;
 
 public abstract class QuinaryPredicate<A, B, C, D, E>
         implements QuinaryFunction<A, B, C, D, E, Boolean> {
-    public abstract Boolean evaluate(A firstInput,
+    public abstract boolean evaluate(A firstInput,
                                      B secondInput,
                                      C thirdInput,
                                      D fourthInput,

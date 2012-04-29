@@ -6,7 +6,7 @@ import org.javafunk.funk.functors.Predicate;
 
 public class TruePredicate<T> extends Predicate<T> {
     @Override
-    public Boolean evaluate(T item) {
+    public boolean evaluate(T item) {
         return true;
     }
 

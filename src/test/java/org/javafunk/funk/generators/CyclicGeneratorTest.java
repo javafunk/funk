@@ -26,7 +26,7 @@ public class CyclicGeneratorTest {
 
         // Then
         assertThat(actualValues, trueForAll(new SelfDescribingPredicate<Iterable<Integer>>() {
-            @Override public Boolean evaluate(Iterable<Integer> batch) {
+            @Override public boolean evaluate(Iterable<Integer> batch) {
                 return batch.equals(expectedValues);
             }
 

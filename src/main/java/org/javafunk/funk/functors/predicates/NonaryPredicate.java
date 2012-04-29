@@ -4,7 +4,7 @@ import org.javafunk.funk.functors.functions.NonaryFunction;
 
 public abstract class NonaryPredicate<A, B, C, D, E, F, G, H, I>
         implements NonaryFunction<A, B, C, D, E, F, G, H, I, Boolean> {
-    public abstract Boolean evaluate(A firstInput,
+    public abstract boolean evaluate(A firstInput,
                                      B secondInput,
                                      C thirdInput,
                                      D fourthInput,

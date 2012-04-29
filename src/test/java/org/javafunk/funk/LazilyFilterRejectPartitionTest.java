@@ -30,7 +30,7 @@ public class LazilyFilterRejectPartitionTest {
 
         // When
         Collection<String> actualOutputs = materialize(Lazily.filter(inputs, new Predicate<String>() {
-            public Boolean evaluate(String item) {
+            public boolean evaluate(String item) {
                 return item.contains("c");
             }
         }));
@@ -46,7 +46,7 @@ public class LazilyFilterRejectPartitionTest {
 
         // When
         Iterable<String> iterable = Lazily.filter(inputs, new Predicate<String>() {
-            public Boolean evaluate(String item) {
+            public boolean evaluate(String item) {
                 return item.contains("c");
             }
         });
@@ -70,7 +70,7 @@ public class LazilyFilterRejectPartitionTest {
 
         // When
         Collection<String> actualOutputs = materialize(Lazily.reject(inputs, new Predicate<String>() {
-            public Boolean evaluate(String item) {
+            public boolean evaluate(String item) {
                 return item.contains("c");
             }
         }));
@@ -86,7 +86,7 @@ public class LazilyFilterRejectPartitionTest {
 
         // When
         Iterable<String> iterable = Lazily.reject(inputs, new Predicate<String>() {
-            public Boolean evaluate(String item) {
+            public boolean evaluate(String item) {
                 return item.contains("c");
             }
         });
@@ -112,7 +112,7 @@ public class LazilyFilterRejectPartitionTest {
         // When
         Pair<Iterable<Integer>, Iterable<Integer>> partitionResults = Lazily.partition(input,
                 new Predicate<Integer>() {
-                    public Boolean evaluate(Integer item) {
+                    public boolean evaluate(Integer item) {
                         return isEven(item);
                     }
 
@@ -137,7 +137,7 @@ public class LazilyFilterRejectPartitionTest {
         // When
         Pair<Iterable<Integer>, Iterable<Integer>> partitionResult = Lazily.partition(input,
                 new Predicate<Integer>() {
-                    public Boolean evaluate(Integer item) {
+                    public boolean evaluate(Integer item) {
                         return isEven(item);
                     }
 

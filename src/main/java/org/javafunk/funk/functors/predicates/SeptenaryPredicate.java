@@ -4,7 +4,7 @@ import org.javafunk.funk.functors.functions.SeptenaryFunction;
 
 public abstract class SeptenaryPredicate<A, B, C, D, E, F, G>
         implements SeptenaryFunction<A, B, C, D, E, F, G, Boolean> {
-    public abstract Boolean evaluate(A firstInput,
+    public abstract boolean evaluate(A firstInput,
                                      B secondInput,
                                      C thirdInput,
                                      D fourthInput,

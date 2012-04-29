@@ -28,7 +28,7 @@ public class EagerlyFilterRejectPartitionTest {
         // When
         Collection<Integer> actualOutput = Eagerly.filter(inputs, new Predicate<Integer>() {
             @Override
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -50,7 +50,7 @@ public class EagerlyFilterRejectPartitionTest {
         // When
         Collection<Integer> actualOutput = Eagerly.reject(inputs, new Predicate<Integer>() {
             @Override
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -73,7 +73,7 @@ public class EagerlyFilterRejectPartitionTest {
         // When
         Pair<Collection<String>, Collection<String>> partitionResults = Eagerly.partition(input,
                 new Predicate<String>() {
-                    public Boolean evaluate(String item) {
+                    public boolean evaluate(String item) {
                         return item.compareTo("e") < 0;
                     }
                 });

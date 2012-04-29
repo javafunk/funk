@@ -56,7 +56,7 @@ public class Sets {
     public static <T> Set<T> symmetricDifference(Iterable<? extends Iterable<? extends T>> iterables) {
         final Multiset<T> unionMultiset = Multisets.concatenate(iterables);
         return asSet(filter(unionMultiset, new Predicate<T>() {
-            public Boolean evaluate(T element) {
+            public boolean evaluate(T element) {
                 return isOdd(unionMultiset.count(element));
             }
 

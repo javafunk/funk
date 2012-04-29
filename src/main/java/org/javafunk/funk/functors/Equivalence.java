@@ -13,7 +13,7 @@ import org.javafunk.funk.functors.predicates.BinaryPredicate;
 public abstract class Equivalence<T> extends BinaryPredicate<T, T> {
     public abstract boolean equal(T first, T second);
 
-    @Override public Boolean evaluate(T first, T second) {
+    @Override public boolean evaluate(T first, T second) {
         return equal(first, second);
     }
 }

@@ -26,7 +26,7 @@ public class EagerlyAnyAllNoneTest {
         // When
         Boolean result = Eagerly.any(inputNumbers, new Predicate<Integer>() {
             @Override
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return item > 15;
             }
         });
@@ -43,7 +43,7 @@ public class EagerlyAnyAllNoneTest {
         // When
         Boolean result = Eagerly.any(items, new Predicate<Integer>() {
             @Override
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return item > 25;
             }
         });
@@ -60,7 +60,7 @@ public class EagerlyAnyAllNoneTest {
         // When
         Boolean result = Eagerly.all(items, new Predicate<String>() {
             @Override
-            public Boolean evaluate(String item) {
+            public boolean evaluate(String item) {
                 return item.length() > 2;
             }
         });
@@ -77,7 +77,7 @@ public class EagerlyAnyAllNoneTest {
         // When
         Boolean result = Eagerly.all(items, new Predicate<String>() {
             @Override
-            public Boolean evaluate(String item) {
+            public boolean evaluate(String item) {
                 return item.length() > 3;
             }
         });
@@ -94,7 +94,7 @@ public class EagerlyAnyAllNoneTest {
         // When
         Boolean result = Eagerly.none(items, new Predicate<Integer>() {
             @Override
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 
@@ -115,7 +115,7 @@ public class EagerlyAnyAllNoneTest {
         // When
         Boolean result = Eagerly.none(items, new Predicate<Integer>() {
             @Override
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return isEven(item);
             }
 

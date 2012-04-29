@@ -27,7 +27,7 @@ public class FilteredIteratorTest {
         // Given
         Iterable<String> iterable = listWith("one", "two", "three", "four", "five");
         Predicate<String> predicate = new Predicate<String>() {
-            public Boolean evaluate(String item) {
+            public boolean evaluate(String item) {
                 return item.contains("o");
             }
         };
@@ -54,7 +54,7 @@ public class FilteredIteratorTest {
         // Given
         Iterable<String> iterable = listWith("one", "two", "three", "four", "five");
         Predicate<String> predicate = new Predicate<String>() {
-            public Boolean evaluate(String item) {
+            public boolean evaluate(String item) {
                 return item.contains("o");
             }
         };
@@ -73,7 +73,7 @@ public class FilteredIteratorTest {
         // Given
         Iterable<String> iterable = listWith("one", "two", "three", "four", "five");
         Predicate<String> predicate = new Predicate<String>() {
-            public Boolean evaluate(String item) {
+            public boolean evaluate(String item) {
                 return item.contains("o");
             }
         };
@@ -97,7 +97,7 @@ public class FilteredIteratorTest {
 
         // When
         FilteredIterator<String> filteredIterator = new FilteredIterator<String>(iterator, new Predicate<String>() {
-            public Boolean evaluate(String item) {
+            public boolean evaluate(String item) {
                 return item.contains("o");
             }
         });
@@ -118,7 +118,7 @@ public class FilteredIteratorTest {
 
         // When
         FilteredIterator<String> filteredIterator = new FilteredIterator<String>(iterator, new Predicate<String>() {
-            public Boolean evaluate(String item) {
+            public boolean evaluate(String item) {
                 return item.contains("o");
             }
         });
@@ -136,7 +136,7 @@ public class FilteredIteratorTest {
 
         // When
         FilteredIterator<String> filteredIterator = new FilteredIterator<String>(iterator, new Predicate<String>() {
-            public Boolean evaluate(String item) {
+            public boolean evaluate(String item) {
                 return item.contains("o");
             }
         });
@@ -157,7 +157,7 @@ public class FilteredIteratorTest {
         // When
         FilteredIterator<String> filteredIterator = new FilteredIterator<String>(initialElements.iterator(),
                 new Predicate<String>() {
-                    public Boolean evaluate(String item) {
+                    public boolean evaluate(String item) {
                         return item.contains("o");
                     }
                 });
@@ -186,7 +186,7 @@ public class FilteredIteratorTest {
         // When
         FilteredIterator<String> filteredIterator = new FilteredIterator<String>(initialElements.iterator(),
                 new Predicate<String>() {
-                    public Boolean evaluate(String item) {
+                    public boolean evaluate(String item) {
                         return item.contains("o");
                     }
                 });
@@ -219,7 +219,7 @@ public class FilteredIteratorTest {
 
         // When
         FilteredIterator<Integer> iterator = new FilteredIterator<Integer>(delegateIterator, new Predicate<Integer>(){
-            public Boolean evaluate(Integer item) {
+            public boolean evaluate(Integer item) {
                 return item == null || item % 10 != 0;
             }
         });

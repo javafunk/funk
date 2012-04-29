@@ -264,7 +264,7 @@ public class Lazily {
 
         public boolean hasNext() {
             return Eagerly.all(iterators, new Predicate<Iterator<?>>() {
-                public Boolean evaluate(Iterator<?> iterator) {
+                public boolean evaluate(Iterator<?> iterator) {
                     return iterator.hasNext();
                 }
             });

@@ -4,7 +4,7 @@ import org.javafunk.funk.functors.functions.NullaryFunction;
 
 public abstract class NullaryPredicate
         implements NullaryFunction<Boolean> {
-    public abstract Boolean evaluate();
+    public abstract boolean evaluate();
 
     @Override public Boolean call() {
         return evaluate();

@@ -4,7 +4,7 @@ import org.javafunk.funk.functors.functions.TernaryFunction;
 
 public abstract class TernaryPredicate<A, B, C>
         implements TernaryFunction<A, B, C, Boolean> {
-    public abstract Boolean evaluate(A firstInput,
+    public abstract boolean evaluate(A firstInput,
                                      B secondInput,
                                      C thirdInput);
 

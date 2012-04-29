@@ -34,7 +34,7 @@ public class Eithers {
 
     public static <S, T> Predicate<? super Either<S, T>> isRight() {
         return new Predicate<Either<S, T>>() {
-            @Override public Boolean evaluate(Either<S, T> either) {
+            @Override public boolean evaluate(Either<S, T> either) {
                 return either.isRight();
             }
         };
@@ -42,7 +42,7 @@ public class Eithers {
 
     public static <S, T> Predicate<? super Either<S, T>> isLeft() {
         return new Predicate<Either<S, T>>() {
-            @Override public Boolean evaluate(Either<S, T> either) {
+            @Override public boolean evaluate(Either<S, T> either) {
                 return either.isLeft();
             }
         };

@@ -21,7 +21,7 @@ public class ConstantGeneratorTest {
 
         // Then
         assertThat(values, trueForAll(new SelfDescribingPredicate<String>() {
-            @Override public Boolean evaluate(String actualValue) {
+            @Override public boolean evaluate(String actualValue) {
                 return actualValue.equals(expectedValue);
             }
 

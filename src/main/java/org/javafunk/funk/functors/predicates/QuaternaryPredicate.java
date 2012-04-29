@@ -4,7 +4,7 @@ import org.javafunk.funk.functors.functions.QuaternaryFunction;
 
 public abstract class QuaternaryPredicate<A, B, C, D>
         implements QuaternaryFunction<A, B, C, D, Boolean> {
-    public abstract Boolean evaluate(A firstInput,
+    public abstract boolean evaluate(A firstInput,
                                      B secondInput,
                                      C thirdInput,
                                      D fourthInput);

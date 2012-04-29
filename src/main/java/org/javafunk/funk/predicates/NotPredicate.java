@@ -20,7 +20,7 @@ public class NotPredicate<T> extends Predicate<T> {
     }
 
     @Override
-    public Boolean evaluate(T item) {
+    public boolean evaluate(T item) {
         return !predicate.evaluate(item);
     }
 
