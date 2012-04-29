@@ -10,6 +10,7 @@ package org.javafunk.funk;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
+import org.javafunk.funk.annotations.ToDo;
 
 import java.util.*;
 
@@ -40,6 +41,9 @@ public class Iterators {
         return HashMultiset.create(asList(iterator));
     }
 
+    @ToDo(raisedBy = "Toby",
+          date     = "2012-04-28",
+          message  = "This breaks the contract of Iterable, instead it should tee and memoize.")
     public static class IteratorAsIterable<T> implements Iterable<T> {
 
         private Iterator<T> iterator;
