@@ -8,15 +8,15 @@
  */
 package org.javafunk.funk.iterators;
 
-import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 
 import java.util.Iterator;
 
 public class MappedIterator<S, T> implements Iterator<T> {
     private Iterator<? extends S> iterator;
-    private Mapper<? super S, ? extends T> function;
+    private UnaryFunction<? super S, ? extends T> function;
 
-    public MappedIterator(Iterator<? extends S> iterator, Mapper<? super S, ? extends T> function) {
+    public MappedIterator(Iterator<? extends S> iterator, UnaryFunction<? super S, ? extends T> function) {
         this.iterator = iterator;
         this.function = function;
     }
@@ -26,7 +26,7 @@ public class MappedIterator<S, T> implements Iterator<T> {
     }
 
     public T next() {
-        return function.map(iterator.next());
+        return function.call(iterator.next());
     }
 
     public void remove() {

@@ -10,7 +10,12 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.IntegerRange;
 import org.javafunk.funk.datastructures.tuples.Pair;
-import org.javafunk.funk.functors.*;
+import org.javafunk.funk.functors.Reducer;
+import org.javafunk.funk.functors.functions.BinaryFunction;
+import org.javafunk.funk.functors.functions.UnaryFunction;
+import org.javafunk.funk.functors.predicates.BinaryPredicate;
+import org.javafunk.funk.functors.predicates.UnaryPredicate;
+import org.javafunk.funk.functors.procedures.UnaryProcedure;
 
 import java.util.*;
 
@@ -23,15 +28,15 @@ import static org.javafunk.funk.Literals.tuple;
 public class Eagerly {
     private Eagerly() {}
 
-    public static <S, T> T reduce(Iterable<? extends S> iterable, T initialValue, Reducer<? super S, T> function) {
+    public static <S, T> T reduce(Iterable<? extends S> iterable, T initialValue, BinaryFunction<T, ? super S, T> function) {
         T accumulator = initialValue;
         for (S element : iterable) {
-            accumulator = function.accumulate(accumulator, element);
+            accumulator = function.call(accumulator, element);
         }
         return accumulator;
     }
 
-    public static <T> T reduce(Iterable<T> iterable, Reducer<? super T, T> function) {
+    public static <T> T reduce(Iterable<T> iterable, BinaryFunction<T, ? super T, T> function) {
         final Iterator<T> iterator = iterable.iterator();
         final T firstElement = iterator.next();
         final Iterable<T> restOfElements = asIterable(iterator);
@@ -70,7 +75,7 @@ public class Eagerly {
         return reduce(iterable, doubleMultiplicationAccumulator());
     }
 
-    public static <T> Boolean any(Iterable<T> iterable, Predicate<? super T> predicate) {
+    public static <T> Boolean any(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
         for (T item : iterable) {
             if (predicate.evaluate(item)) {
                 return true;
@@ -79,7 +84,7 @@ public class Eagerly {
         return false;
     }
 
-    public static <T> Boolean all(Iterable<T> iterable, Predicate<? super T> predicate) {
+    public static <T> Boolean all(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
         for (T item : iterable) {
             if (!predicate.evaluate(item)) {
                 return false;
@@ -88,7 +93,7 @@ public class Eagerly {
         return true;
     }
 
-    public static <T> Boolean none(Iterable<T> items, Predicate<? super T> predicate) {
+    public static <T> Boolean none(Iterable<T> items, UnaryPredicate<? super T> predicate) {
         return !any(items, predicate);
     }
 
@@ -124,7 +129,7 @@ public class Eagerly {
         });
     }
 
-    public static <S, T> Collection<T> map(Iterable<S> iterable, Mapper<? super S, T> function) {
+    public static <S, T> Collection<T> map(Iterable<S> iterable, UnaryFunction<? super S, T> function) {
         return materialize(Lazily.map(iterable, function));
     }
 
@@ -136,18 +141,18 @@ public class Eagerly {
         return materialize(Lazily.enumerate(iterable));
     }
 
-    public static <T> Collection<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equivalence<? super T> equivalence) {
-        return materialize(Lazily.equate(first, second, equivalence));
+    public static <T> Collection<Boolean> equate(Iterable<T> first, Iterable<T> second, final BinaryPredicate<? super T, ? super T> predicate) {
+        return materialize(Lazily.equate(first, second, predicate));
     }
 
-    public static <S, T> Collection<Pair<T, S>> index(Iterable<S> iterable, final Indexer<? super S, T> indexer) {
-        return materialize(Lazily.index(iterable, indexer));
+    public static <S, T> Collection<Pair<T, S>> index(Iterable<S> iterable, final UnaryFunction<? super S, T> function) {
+        return materialize(Lazily.index(iterable, function));
     }
 
-    public static <S, T> Map<T, Collection<S>> group(Iterable<S> iterable, Indexer<? super S, T> indexer) {
+    public static <S, T> Map<T, Collection<S>> group(Iterable<S> iterable, UnaryFunction<? super S, T> indexer) {
         Map<T, Collection<S>> groupedElements = new HashMap<T, Collection<S>>();
         for (S element : iterable) {
-            T index = indexer.index(element);
+            T index = indexer.call(element);
             if (!groupedElements.containsKey(index)) {
                 groupedElements.put(index, new ArrayList<S>());
             }
@@ -156,15 +161,15 @@ public class Eagerly {
         return groupedElements;
     }
 
-    public static <T> void each(Iterable<T> targets, Action<? super T> function) {
-        materialize(Lazily.each(targets, function));
+    public static <T> void each(Iterable<T> targets, UnaryProcedure<? super T> procedure) {
+        materialize(Lazily.each(targets, procedure));
     }
 
-    public static <T> Collection<T> filter(Iterable<T> iterable, Predicate<? super T> predicate) {
+    public static <T> Collection<T> filter(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
         return materialize(Lazily.filter(iterable, predicate));
     }
 
-    public static <T> Collection<T> reject(Iterable<T> iterable, Predicate<? super T> predicate) {
+    public static <T> Collection<T> reject(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
         return materialize(Lazily.reject(iterable, predicate));
     }
 
@@ -172,7 +177,7 @@ public class Eagerly {
         return iterable.iterator().next();
     }
 
-    public static <T> T first(Iterable<T> iterable, Predicate<? super T> predicate) {
+    public static <T> T first(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
         return first(filter(iterable, predicate));
     }
 
@@ -180,7 +185,7 @@ public class Eagerly {
         return take(iterable, numberOfElementsRequired);
     }
 
-    public static <T> Collection<T> first(Iterable<T> iterable, int numberOfElementsRequired, Predicate<? super T> predicate) {
+    public static <T> Collection<T> first(Iterable<T> iterable, int numberOfElementsRequired, UnaryPredicate<? super T> predicate) {
         return first(filter(iterable, predicate), numberOfElementsRequired);
     }
 
@@ -188,7 +193,7 @@ public class Eagerly {
         return slice(iterable, -1, null).iterator().next();
     }
 
-    public static <T> T last(Iterable<T> iterable, Predicate<? super T> predicate) {
+    public static <T> T last(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
         return last(filter(iterable, predicate));
     }
 
@@ -202,7 +207,7 @@ public class Eagerly {
         return slice(iterable, -numberOfElementsRequired, null);
     }
 
-    public static <T> Collection<T> last(Iterable<T> iterable, int numberOfElementsRequired, Predicate<? super T> predicate) {
+    public static <T> Collection<T> last(Iterable<T> iterable, int numberOfElementsRequired, UnaryPredicate<? super T> predicate) {
         return last(filter(iterable, predicate), numberOfElementsRequired);
     }
 
@@ -218,7 +223,7 @@ public class Eagerly {
         return materialize(Lazily.drop(iterable, numberToDrop));
     }
 
-    public static <T> Pair<Collection<T>, Collection<T>> partition(Iterable<T> iterable, Predicate<? super T> predicate) {
+    public static <T> Pair<Collection<T>, Collection<T>> partition(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
         Pair<Iterable<T>, Iterable<T>> partition = Lazily.partition(iterable, predicate);
         return tuple(materialize(partition.first()), materialize(partition.second()));
     }
@@ -232,28 +237,28 @@ public class Eagerly {
         return result;
     }
 
-    public static void times(int numberOfTimes, Action<? super Integer> function) {
+    public static void times(int numberOfTimes, UnaryProcedure<? super Integer> procedure) {
         if (numberOfTimes < 0) {
             throw new IllegalArgumentException("The number of times to execute the function cannot be less than zero.");
         }
         for (int i = 0; i < numberOfTimes; i++) {
-            function.on(i);
+            procedure.execute(i);
         }
     }
 
-    public static <T> Collection<T> takeWhile(Iterable<T> iterable, Predicate<? super T> predicate) {
+    public static <T> Collection<T> takeWhile(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
         return materialize(Lazily.takeWhile(iterable, predicate));
     }
 
-    public static <T> Collection<T> takeUntil(Iterable<T> iterable, Predicate<? super T> predicate) {
+    public static <T> Collection<T> takeUntil(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
         return materialize(Lazily.takeUntil(iterable, predicate));
     }
 
-    public static <T> Collection<T> dropWhile(Iterable<T> iterable, Predicate<? super T> predicate) {
+    public static <T> Collection<T> dropWhile(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
         return materialize(Lazily.dropWhile(iterable, predicate));
     }
 
-    public static <T> Collection<T> dropUntil(Iterable<T> iterable, Predicate<? super T> predicate) {
+    public static <T> Collection<T> dropUntil(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
         return materialize(Lazily.dropUntil(iterable, predicate));
     }
 

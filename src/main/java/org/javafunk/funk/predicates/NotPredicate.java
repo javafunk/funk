@@ -11,11 +11,12 @@ package org.javafunk.funk.predicates;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.javafunk.funk.functors.Predicate;
+import org.javafunk.funk.functors.predicates.UnaryPredicate;
 
 public class NotPredicate<T> extends Predicate<T> {
-    private Predicate<? super T> predicate;
+    private UnaryPredicate<? super T> predicate;
 
-    public NotPredicate(Predicate<? super T> predicate) {
+    public NotPredicate(UnaryPredicate<? super T> predicate) {
         this.predicate = predicate;
     }
 

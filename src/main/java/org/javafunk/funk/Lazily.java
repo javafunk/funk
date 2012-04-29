@@ -11,7 +11,12 @@ package org.javafunk.funk;
 import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.datastructures.tuples.Quadruple;
 import org.javafunk.funk.datastructures.tuples.Triple;
-import org.javafunk.funk.functors.*;
+import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.functors.Predicate;
+import org.javafunk.funk.functors.functions.UnaryFunction;
+import org.javafunk.funk.functors.predicates.BinaryPredicate;
+import org.javafunk.funk.functors.predicates.UnaryPredicate;
+import org.javafunk.funk.functors.procedures.UnaryProcedure;
 import org.javafunk.funk.iterators.*;
 import org.javafunk.funk.predicates.NotPredicate;
 
@@ -28,8 +33,7 @@ import static org.javafunk.funk.Sequences.increasing;
 import static org.javafunk.funk.Sequences.integers;
 
 public class Lazily {
-    private Lazily() {
-    }
+    private Lazily() {}
 
     public static <T> Iterable<Iterable<T>> batch(final Iterable<T> iterable, final int batchSize) {
         if (batchSize <= 0) {
@@ -69,7 +73,7 @@ public class Lazily {
         };
     }
 
-    public static <T> Iterable<T> dropUntil(final Iterable<T> iterable, final Predicate<? super T> predicate) {
+    public static <T> Iterable<T> dropUntil(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 Iterator<? extends T> iterator = iterable.iterator();
@@ -85,7 +89,7 @@ public class Lazily {
         };
     }
 
-    public static <T> Iterable<T> dropWhile(final Iterable<T> iterable, final Predicate<? super T> predicate) {
+    public static <T> Iterable<T> dropWhile(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 Iterator<T> iterator = iterable.iterator();
@@ -101,10 +105,10 @@ public class Lazily {
         };
     }
 
-    public static <T> Iterable<T> each(final Iterable<T> iterable, final Action<? super T> action) {
+    public static <T> Iterable<T> each(final Iterable<T> iterable, final UnaryProcedure<? super T> procedure) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
-                return new EachIterator<T>(iterable.iterator(), action);
+                return new EachIterator<T>(iterable.iterator(), procedure);
             }
         };
 
@@ -114,15 +118,15 @@ public class Lazily {
         return zip(integers(increasing()), iterable);
     }
 
-    public static <S, T> Iterable<Pair<T, S>> index(Iterable<S> iterable, final Indexer<? super S, T> indexer) {
+    public static <S, T> Iterable<Pair<T, S>> index(Iterable<S> iterable, final UnaryFunction<? super S, T> function) {
         return zip(map(iterable, new Mapper<S, T>() {
             public T map(S input) {
-                return indexer.index(input);
+                return function.call(input);
             }
         }), iterable);
     }
 
-    public static <S, T> Iterable<T> map(final Iterable<S> iterable, final Mapper<? super S, T> function) {
+    public static <S, T> Iterable<T> map(final Iterable<S> iterable, final UnaryFunction<? super S, T> function) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new MappedIterator<S, T>(iterable.iterator(), function);
@@ -130,15 +134,15 @@ public class Lazily {
         };
     }
 
-    public static <T> Iterable<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equivalence<? super T> equivalence) {
+    public static <T> Iterable<Boolean> equate(Iterable<T> first, Iterable<T> second, final BinaryPredicate<? super T, ? super T> predicate) {
         return map(zip(first, second), new Mapper<Pair<T, T>, Boolean>() {
             public Boolean map(Pair<T, T> input) {
-                return equivalence.equal(input.first(), input.second());
+                return predicate.call(input.first(), input.second());
             }
         });
     }
 
-    public static <T> Iterable<T> filter(final Iterable<T> iterable, final Predicate<? super T> predicate) {
+    public static <T> Iterable<T> filter(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new FilteredIterator<T>(iterable.iterator(), predicate);
@@ -146,7 +150,7 @@ public class Lazily {
         };
     }
 
-    public static <T> Iterable<T> reject(final Iterable<T> iterable, final Predicate<? super T> predicate) {
+    public static <T> Iterable<T> reject(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new FilteredIterator<T>(iterable.iterator(), new NotPredicate<T>(predicate));
@@ -154,7 +158,7 @@ public class Lazily {
         };
     }
 
-    public static <T> Pair<Iterable<T>, Iterable<T>> partition(Iterable<T> iterable, Predicate<? super T> predicate) {
+    public static <T> Pair<Iterable<T>, Iterable<T>> partition(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
         return tuple(filter(iterable, predicate), reject(iterable, predicate));
     }
 
@@ -181,7 +185,7 @@ public class Lazily {
         };
     }
 
-    public static <T> Iterable<T> takeUntil(final Iterable<T> iterable, final Predicate<? super T> predicate) {
+    public static <T> Iterable<T> takeUntil(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new PredicatedIterator<T>(iterable.iterator(), new NotPredicate<T>(predicate));
@@ -189,7 +193,7 @@ public class Lazily {
         };
     }
 
-    public static <T> Iterable<T> takeWhile(final Iterable<T> iterable, final Predicate<? super T> predicate) {
+    public static <T> Iterable<T> takeWhile(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new PredicatedIterator<T>(iterable.iterator(), predicate);
@@ -289,11 +293,11 @@ public class Lazily {
 
     private static class EachIterator<T> implements Iterator<T> {
         private Iterator<T> iterator;
-        private Action<? super T> action;
+        private UnaryProcedure<? super T> procedure;
 
-        private EachIterator(Iterator<T> iterator, Action<? super T> action) {
+        private EachIterator(Iterator<T> iterator, UnaryProcedure<? super T> procedure) {
             this.iterator = iterator;
-            this.action = action;
+            this.procedure = procedure;
         }
 
         @Override
@@ -304,7 +308,7 @@ public class Lazily {
         @Override
         public T next() {
             T next = iterator.next();
-            action.on(next);
+            procedure.execute(next);
             return next;
         }
 

@@ -8,16 +8,16 @@
  */
 package org.javafunk.funk.iterators;
 
-import org.javafunk.funk.functors.Predicate;
+import org.javafunk.funk.functors.predicates.UnaryPredicate;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class PredicatedIterator<T> extends CachingIterator<T> {
     private Iterator<? extends T> iterator;
-    private Predicate<? super T> predicate;
+    private UnaryPredicate<? super T> predicate;
 
-    public PredicatedIterator(Iterator<? extends T> iterator, Predicate<? super T> predicate) {
+    public PredicatedIterator(Iterator<? extends T> iterator, UnaryPredicate<? super T> predicate) {
         this.iterator = iterator;
         this.predicate = predicate;
     }
