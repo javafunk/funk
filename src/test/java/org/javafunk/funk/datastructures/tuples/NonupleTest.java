@@ -20,7 +20,7 @@ import java.util.Collection;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Literals.collectionOf;
+import static org.javafunk.funk.Literals.collectionBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.testclasses.Age.age;
 import static org.javafunk.funk.testclasses.Colour.colour;
@@ -304,7 +304,9 @@ public class NonupleTest {
         // Given
         Nonuple<Integer, String, Boolean, Double, Long, Name, Colour, Age, Location> nonuple1 =
                 tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"));
-        Collection<Object> expected = collectionOf(Object.class).with(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"));
+        Collection<Object> expected = collectionBuilderOf(Object.class)
+                .with(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"))
+                .build();
 
         // When
         Boolean isEqual = materialize(nonuple1).equals(expected);

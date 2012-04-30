@@ -18,7 +18,7 @@ import java.util.Collection;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Literals.collectionOf;
+import static org.javafunk.funk.Literals.collectionBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Name.name;
@@ -230,7 +230,9 @@ public class SeptupleTest {
     public void shouldBeIterable() {
         // Given
         Septuple<Integer, String, Boolean, Double, Long, Name, Colour> septuple1 = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"));
-        Collection<Object> expected = collectionOf(Object.class).with(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"));
+        Collection<Object> expected = collectionBuilderOf(Object.class)
+                .with(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"))
+                .build();
 
         // When
         Boolean isEqual = materialize(septuple1).equals(expected);

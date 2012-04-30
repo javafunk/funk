@@ -16,7 +16,7 @@ import java.util.Collection;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Literals.collectionOf;
+import static org.javafunk.funk.Literals.collectionBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
 
 public class QuintupleTest {
@@ -174,7 +174,9 @@ public class QuintupleTest {
     public void shouldBeIterable() {
         // Given
         Quintuple<Integer, String, Boolean, Double, Long> quintuple1 = tuple(5, "Five", true, 3.6, 23L);
-        Collection<Object> expected = collectionOf(Object.class).with(5, "Five", true, 3.6, 23L);
+        Collection<Object> expected = collectionBuilderOf(Object.class)
+                .with(5, "Five", true, 3.6, 23L)
+                .build();
 
         // When
         Boolean isEqual = materialize(quintuple1).equals(expected);

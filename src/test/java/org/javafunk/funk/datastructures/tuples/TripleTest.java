@@ -18,7 +18,7 @@ import java.util.Collection;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Literals.collectionOf;
+import static org.javafunk.funk.Literals.collectionBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
 
 public class TripleTest {
@@ -126,7 +126,9 @@ public class TripleTest {
     public void shouldBeIterable() {
         // Given
         Triple<Integer, String, Boolean> triple1 = tuple(5, "Five", true);
-        Collection<Object> expected = collectionOf(Object.class).with(5, "Five", true);
+        Collection<Object> expected = collectionBuilderOf(Object.class)
+                .with(5, "Five", true)
+                .build();
 
         // When
         Boolean isEqual = materialize(triple1).equals(expected);
