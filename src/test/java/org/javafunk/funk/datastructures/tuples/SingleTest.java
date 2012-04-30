@@ -16,7 +16,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Literals.listOf;
+import static org.javafunk.funk.Literals.listBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
 
 public class SingleTest {
@@ -74,7 +74,7 @@ public class SingleTest {
     public void shouldBeIterable() {
         // Given
         Single<Integer> single1 = tuple(5);
-        List<Object> expected = listOf(Object.class).with(5);
+        List<Object> expected = listBuilderOf(Object.class).with(5).build();
 
         // When
         Boolean isEqual = materialize(single1).equals(expected);

@@ -57,9 +57,9 @@ public class EagerlyMapReduceTest {
     public void shouldReduceToTheSameTypeUsingACustomReduceFunction() throws Exception {
         // Given
         List<List<Integer>> inputLists = listWith(
-                listWith(1, 2, 3).build(),
-                listWith(4, 5, 6).build(),
-                listWith(7, 8, 9).build());
+                listWith(1, 2, 3),
+                listWith(4, 5, 6),
+                listWith(7, 8, 9));
 
         // When
         List<Integer> actual = Eagerly.reduce(inputLists, new Reducer<List<Integer>, List<Integer>>() {
