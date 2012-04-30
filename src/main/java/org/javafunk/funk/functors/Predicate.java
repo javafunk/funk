@@ -10,4 +10,4 @@ package org.javafunk.funk.functors;
 
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 
-public abstract class Predicate<T> extends UnaryPredicate<T> {}
+public interface Predicate<T> extends UnaryPredicate<T> {}

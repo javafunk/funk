@@ -1,19 +1,13 @@
+/*
+ * Copyright (C) 2011 Funk committers.
+ * All rights reserved.
+ *
+ * The software in this package is published under the terms of the BSD
+ * style license a copy of which has been included with this distribution in
+ * the LICENSE.txt file.
+ */
 package org.javafunk.funk.functors.predicates;
 
-import org.javafunk.funk.functors.functions.TernaryFunction;
-
-public abstract class TernaryPredicate<A, B, C>
-        implements TernaryFunction<A, B, C, Boolean> {
-    public abstract boolean evaluate(A firstInput,
-                                     B secondInput,
-                                     C thirdInput);
-
-    @Override public Boolean call(A firstArgument,
-                                  B secondArgument,
-                                  C thirdArgument) {
-        return evaluate(
-                firstArgument,
-                secondArgument,
-                thirdArgument);
-    }
+public interface TernaryPredicate<A, B, C> {
+    boolean evaluate(A firstInput, B secondInput, C thirdInput);
 }

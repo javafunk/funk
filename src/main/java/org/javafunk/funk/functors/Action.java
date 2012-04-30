@@ -8,12 +8,6 @@
  */
 package org.javafunk.funk.functors;
 
-import org.javafunk.funk.functors.procedures.UnaryProcedure;
-
-public abstract class Action<T> implements UnaryProcedure<T> {
-    public abstract void on(T input);
-
-    @Override public void execute(T input) {
-        on(input);
-    }
+public interface Action<T> {
+    void on(T input);
 }

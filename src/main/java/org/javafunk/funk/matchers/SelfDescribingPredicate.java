@@ -8,8 +8,7 @@
  */
 package org.javafunk.funk.matchers;
 
+import org.javafunk.funk.behaviours.Describable;
 import org.javafunk.funk.functors.Predicate;
 
-public abstract class SelfDescribingPredicate<T> extends Predicate<T> {
-    public abstract String describe();
-}
+public interface SelfDescribingPredicate<T> extends Predicate<T>, Describable {}

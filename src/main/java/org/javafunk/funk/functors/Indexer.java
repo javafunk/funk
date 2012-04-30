@@ -8,12 +8,6 @@
  */
 package org.javafunk.funk.functors;
 
-import org.javafunk.funk.functors.functions.UnaryFunction;
-
-public abstract class Indexer<I, O> implements UnaryFunction<I, O> {
-    public abstract O index(I item);
-
-    @Override public O call(I item) {
-        return index(item);
-    }
+public interface Indexer<I, O> {
+    O index(I item);
 }

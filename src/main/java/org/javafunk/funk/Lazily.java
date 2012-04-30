@@ -11,8 +11,7 @@ package org.javafunk.funk;
 import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.datastructures.tuples.Quadruple;
 import org.javafunk.funk.datastructures.tuples.Triple;
-import org.javafunk.funk.functors.Mapper;
-import org.javafunk.funk.functors.Predicate;
+import org.javafunk.funk.functors.*;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.functors.predicates.BinaryPredicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
@@ -31,6 +30,10 @@ import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.Mappers.toIterators;
 import static org.javafunk.funk.Sequences.increasing;
 import static org.javafunk.funk.Sequences.integers;
+import static org.javafunk.funk.functors.adapters.ActionUnaryProcedureAdapter.actionUnaryProcedure;
+import static org.javafunk.funk.functors.adapters.EquivalenceBinaryPredicateAdapter.equivalenceBinaryPredicate;
+import static org.javafunk.funk.functors.adapters.IndexerUnaryFunctionAdapter.indexerUnaryFunction;
+import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 
 public class Lazily {
     private Lazily() {}
@@ -111,7 +114,10 @@ public class Lazily {
                 return new EachIterator<T>(iterable.iterator(), procedure);
             }
         };
+    }
 
+    public static <T> Iterable<T> each(final Iterable<T> iterable, final Action<? super T> action) {
+        return each(iterable, actionUnaryProcedure(action));
     }
 
     public static <T> Iterable<Pair<Integer, T>> enumerate(final Iterable<T> iterable) {
@@ -126,6 +132,10 @@ public class Lazily {
         }), iterable);
     }
 
+    public static <S, T> Iterable<Pair<T, S>> index(Iterable<S> iterable, final Indexer<? super S, T> indexer) {
+        return index(iterable, indexerUnaryFunction(indexer));
+    }
+
     public static <S, T> Iterable<T> map(final Iterable<S> iterable, final UnaryFunction<? super S, T> function) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
@@ -134,13 +144,22 @@ public class Lazily {
         };
     }
 
+    public static <S, T> Iterable<T> map(final Iterable<S> iterable, final Mapper<? super S, T> mapper) {
+        return map(iterable, mapperUnaryFunction(mapper));
+    }
+
     public static <T> Iterable<Boolean> equate(Iterable<T> first, Iterable<T> second, final BinaryPredicate<? super T, ? super T> predicate) {
         return map(zip(first, second), new Mapper<Pair<T, T>, Boolean>() {
             public Boolean map(Pair<T, T> input) {
-                return predicate.call(input.first(), input.second());
+                return predicate.evaluate(input.first(), input.second());
             }
         });
     }
+
+    public static <T> Iterable<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equivalence<? super T> equivalence) {
+        return equate(first, second, equivalenceBinaryPredicate(equivalence));
+    }
+
 
     public static <T> Iterable<T> filter(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
         return new Iterable<T>() {

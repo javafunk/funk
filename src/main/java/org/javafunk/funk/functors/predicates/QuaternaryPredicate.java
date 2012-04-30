@@ -1,22 +1,14 @@
+/*
+ * Copyright (C) 2011 Funk committers.
+ * All rights reserved.
+ *
+ * The software in this package is published under the terms of the BSD
+ * style license a copy of which has been included with this distribution in
+ * the LICENSE.txt file.
+ */
 package org.javafunk.funk.functors.predicates;
 
-import org.javafunk.funk.functors.functions.QuaternaryFunction;
-
-public abstract class QuaternaryPredicate<A, B, C, D>
-        implements QuaternaryFunction<A, B, C, D, Boolean> {
-    public abstract boolean evaluate(A firstInput,
-                                     B secondInput,
-                                     C thirdInput,
-                                     D fourthInput);
-
-    @Override public Boolean call(A firstArgument,
-                                  B secondArgument,
-                                  C thirdArgument,
-                                  D fourthArgument) {
-        return evaluate(
-                firstArgument,
-                secondArgument,
-                thirdArgument,
-                fourthArgument);
-    }
+public interface QuaternaryPredicate<A, B, C, D> {
+    boolean evaluate(A firstInput, B secondInput, C thirdInput,
+                     D fourthInput);
 }

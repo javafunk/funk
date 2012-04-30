@@ -10,7 +10,7 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.IntegerRange;
 import org.javafunk.funk.datastructures.tuples.Pair;
-import org.javafunk.funk.functors.Reducer;
+import org.javafunk.funk.functors.*;
 import org.javafunk.funk.functors.functions.BinaryFunction;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.functors.predicates.BinaryPredicate;
@@ -24,6 +24,11 @@ import static org.javafunk.funk.Accumulators.*;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Iterators.asIterable;
 import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.functors.adapters.ActionUnaryProcedureAdapter.actionUnaryProcedure;
+import static org.javafunk.funk.functors.adapters.EquivalenceBinaryPredicateAdapter.equivalenceBinaryPredicate;
+import static org.javafunk.funk.functors.adapters.IndexerUnaryFunctionAdapter.indexerUnaryFunction;
+import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
+import static org.javafunk.funk.functors.adapters.ReducerBinaryFunctionAdapter.reducerBinaryFunction;
 
 public class Eagerly {
     private Eagerly() {}
@@ -36,11 +41,19 @@ public class Eagerly {
         return accumulator;
     }
 
+    public static <S, T> T reduce(Iterable<? extends S> iterable, T initialValue, Reducer<? super S, T> reducer) {
+        return reduce(iterable, initialValue, reducerBinaryFunction(reducer));
+    }
+
     public static <T> T reduce(Iterable<T> iterable, BinaryFunction<T, ? super T, T> function) {
         final Iterator<T> iterator = iterable.iterator();
         final T firstElement = iterator.next();
         final Iterable<T> restOfElements = asIterable(iterator);
         return reduce(restOfElements, firstElement, function);
+    }
+
+    public static <T> T reduce(Iterable<T> iterable, Reducer<T, T> reducer) {
+        return reduce(iterable, reducerBinaryFunction(reducer));
     }
 
     public static Integer sum(Iterable<Integer> iterable) {
@@ -133,6 +146,10 @@ public class Eagerly {
         return materialize(Lazily.map(iterable, function));
     }
 
+    public static <S, T> Collection<T> map(Iterable<S> iterable, Mapper<? super S, T> mapper) {
+        return map(iterable, mapperUnaryFunction(mapper));
+    }
+
     public static <S, T> Collection<Pair<S, T>> zip(Iterable<S> iterable1, Iterable<T> iterable2) {
         return materialize(Lazily.zip(iterable1, iterable2));
     }
@@ -145,8 +162,16 @@ public class Eagerly {
         return materialize(Lazily.equate(first, second, predicate));
     }
 
+    public static <T> Collection<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equivalence<? super T> equivalence) {
+        return equate(first, second, equivalenceBinaryPredicate(equivalence));
+    }
+
     public static <S, T> Collection<Pair<T, S>> index(Iterable<S> iterable, final UnaryFunction<? super S, T> function) {
         return materialize(Lazily.index(iterable, function));
+    }
+
+    public static <S, T> Collection<Pair<T, S>> index(Iterable<S> iterable, final Indexer<? super S, T> indexer) {
+        return index(iterable, indexerUnaryFunction(indexer));
     }
 
     public static <S, T> Map<T, Collection<S>> group(Iterable<S> iterable, UnaryFunction<? super S, T> indexer) {
@@ -161,8 +186,16 @@ public class Eagerly {
         return groupedElements;
     }
 
+    public static <S, T> Map<T, Collection<S>> group(Iterable<S> iterable, Indexer<? super S, T> indexer) {
+        return group(iterable, indexerUnaryFunction(indexer));
+    }
+
     public static <T> void each(Iterable<T> targets, UnaryProcedure<? super T> procedure) {
         materialize(Lazily.each(targets, procedure));
+    }
+
+    public static <T> void each(Iterable<T> targets, Action<? super T> action) {
+        each(targets, actionUnaryProcedure(action));
     }
 
     public static <T> Collection<T> filter(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
@@ -244,6 +277,10 @@ public class Eagerly {
         for (int i = 0; i < numberOfTimes; i++) {
             procedure.execute(i);
         }
+    }
+
+    public static void times(int numberOfTimes, Action<? super Integer> action) {
+        times(numberOfTimes, actionUnaryProcedure(action));
     }
 
     public static <T> Collection<T> takeWhile(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
@@ -329,6 +366,5 @@ public class Eagerly {
                 return step;
             }
         }
-
     }
 }

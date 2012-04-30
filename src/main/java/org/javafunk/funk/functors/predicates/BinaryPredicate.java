@@ -1,16 +1,13 @@
+/*
+ * Copyright (C) 2011 Funk committers.
+ * All rights reserved.
+ *
+ * The software in this package is published under the terms of the BSD
+ * style license a copy of which has been included with this distribution in
+ * the LICENSE.txt file.
+ */
 package org.javafunk.funk.functors.predicates;
 
-import org.javafunk.funk.functors.functions.BinaryFunction;
-
-public abstract class BinaryPredicate<A, B>
-        implements BinaryFunction<A, B, Boolean> {
-    public abstract boolean evaluate(A firstInput,
-                                     B secondInput);
-
-    @Override public Boolean call(A firstArgument,
-                                  B secondArgument) {
-        return evaluate(
-                firstArgument,
-                secondArgument);
-    }
+public interface BinaryPredicate<A, B> {
+    boolean evaluate(A firstInput, B secondInput);
 }

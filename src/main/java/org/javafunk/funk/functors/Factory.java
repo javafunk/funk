@@ -8,12 +8,6 @@
  */
 package org.javafunk.funk.functors;
 
-import org.javafunk.funk.functors.functions.NullaryFunction;
-
-public abstract class Factory<T> implements NullaryFunction<T> {
+public interface Factory<T> {
     public abstract T create();
-
-    @Override public T call() {
-        return create();
-    }
 }

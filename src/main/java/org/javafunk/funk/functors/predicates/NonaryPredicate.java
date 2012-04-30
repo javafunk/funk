@@ -1,37 +1,15 @@
+/*
+ * Copyright (C) 2011 Funk committers.
+ * All rights reserved.
+ *
+ * The software in this package is published under the terms of the BSD
+ * style license a copy of which has been included with this distribution in
+ * the LICENSE.txt file.
+ */
 package org.javafunk.funk.functors.predicates;
 
-import org.javafunk.funk.functors.functions.NonaryFunction;
-
-public abstract class NonaryPredicate<A, B, C, D, E, F, G, H, I>
-        implements NonaryFunction<A, B, C, D, E, F, G, H, I, Boolean> {
-    public abstract boolean evaluate(A firstInput,
-                                     B secondInput,
-                                     C thirdInput,
-                                     D fourthInput,
-                                     E fifthInput,
-                                     F sixthInput,
-                                     G seventhInput,
-                                     H octaryInput,
-                                     I ninthInput);
-
-    @Override public Boolean call(A firstArgument,
-                                  B secondArgument,
-                                  C thirdArgument,
-                                  D fourthArgument,
-                                  E fifthArgument,
-                                  F sixthArgument,
-                                  G seventhArgument,
-                                  H octaryArgument,
-                                  I ninthArgument) {
-        return evaluate(
-                firstArgument,
-                secondArgument,
-                thirdArgument,
-                fourthArgument,
-                fifthArgument,
-                sixthArgument,
-                seventhArgument,
-                octaryArgument,
-                ninthArgument);
-    }
+public interface NonaryPredicate<A, B, C, D, E, F, G, H, I> {
+    boolean evaluate(A firstInput, B secondInput, C thirdInput,
+                     D fourthInput, E fifthInput, F sixthInput,
+                     G seventhInput, H octaryInput, I ninthInput);
 }

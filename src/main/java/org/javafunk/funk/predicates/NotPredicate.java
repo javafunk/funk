@@ -13,7 +13,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.javafunk.funk.functors.Predicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 
-public class NotPredicate<T> extends Predicate<T> {
+public class NotPredicate<T> implements Predicate<T> {
     private UnaryPredicate<? super T> predicate;
 
     public NotPredicate(UnaryPredicate<? super T> predicate) {

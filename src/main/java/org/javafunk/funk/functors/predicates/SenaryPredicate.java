@@ -1,28 +1,14 @@
+/*
+ * Copyright (C) 2011 Funk committers.
+ * All rights reserved.
+ *
+ * The software in this package is published under the terms of the BSD
+ * style license a copy of which has been included with this distribution in
+ * the LICENSE.txt file.
+ */
 package org.javafunk.funk.functors.predicates;
 
-import org.javafunk.funk.functors.functions.SenaryFunction;
-
-public abstract class SenaryPredicate<A, B, C, D, E, F>
-        implements SenaryFunction<A, B, C, D, E, F, Boolean> {
-    public abstract boolean evaluate(A firstInput,
-                                     B secondInput,
-                                     C thirdInput,
-                                     D fourthInput,
-                                     E fifthInput,
-                                     F sixthInput);
-
-    @Override public Boolean call(A firstArgument,
-                                  B secondArgument,
-                                  C thirdArgument,
-                                  D fourthArgument,
-                                  E fifthArgument,
-                                  F sixthArgument) {
-        return evaluate(
-                firstArgument,
-                secondArgument,
-                thirdArgument,
-                fourthArgument,
-                fifthArgument,
-                sixthArgument);
-    }
+public interface SenaryPredicate<A, B, C, D, E, F> {
+    boolean evaluate(A firstInput, B secondInput, C thirdInput,
+                     D fourthInput, E fifthInput, F sixthInput);
 }
