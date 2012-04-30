@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static java.util.Arrays.asList;
-import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.funk.Literals.iterableBuilderWith;
 
 public class ChainedIterator<T> implements Iterator<T> {
     private Iterator<? extends Iterator<? extends T>> iteratorsIterator;
@@ -98,6 +98,6 @@ public class ChainedIterator<T> implements Iterator<T> {
     public ChainedIterator(
             Iterator<? extends T> i1, Iterator<? extends T> i2, Iterator<? extends T> i3, Iterator<? extends T> i4,
             Iterator<? extends T> i5, Iterator<? extends T> i6, Iterator<? extends T>... i7on) {
-        this(iterableWith(i1, i2, i3, i4, i5, i6).and(i7on));
+        this(iterableBuilderWith(i1, i2, i3, i4, i5, i6).and(i7on).build());
     }
 }

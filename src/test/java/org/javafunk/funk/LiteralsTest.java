@@ -10,6 +10,7 @@ package org.javafunk.funk;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
+import org.javafunk.funk.builders.IterableBuilder;
 import org.javafunk.funk.builders.ListBuilder;
 import org.javafunk.funk.datastructures.tuples.*;
 import org.javafunk.funk.testclasses.Age;
@@ -23,6 +24,7 @@ import java.util.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
+import static org.javafunk.funk.builders.IterableBuilder.iterableBuilder;
 import static org.javafunk.funk.testclasses.Age.age;
 import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Location.location;
@@ -153,125 +155,121 @@ public class LiteralsTest {
     }
 
     @Test
-    public void shouldReturnAIterableContainingTheSuppliedElements() throws Exception {
+    public void shouldReturnAnEmptyIterable() throws Exception {
         // Given
-        Iterable<Integer> expectedIterable = asList(5, 10, 15);
+        Iterable<Integer> expected = new ArrayList<Integer>();
 
         // When
-        Iterable<Integer> actualList = iterableWith(5, 10, 15);
+        Iterable<Integer> actual = iterable();
 
         // Then
-        assertThat(actualList, is(expectedIterable));
+        assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldAllowMoreElementsToBeAddedToTheIterableWithAnd() throws Exception {
+    public void shouldReturnAnEmptyIterableWithElementsOfTheSpecifiedType() throws Exception {
         // Given
-        Iterable<Integer> expectedIterable = asList(5, 10, 15, 20, 25, 30);
-
-        // When
-        Iterable<Integer> actualIterable = iterableWith(5, 10, 15).and(20, 25, 30);
+        Iterable<Integer> expected = new ArrayList<Integer>();
 
         // Then
-        assertThat(actualIterable, is(expectedIterable));
+        assertThat(iterableOf(Integer.class), is(expected));
     }
 
     @Test
-    public void shouldAllowArraysOfElementsToBeAddedToTheIterableWithAnd() throws Exception {
+    public void shouldReturnAnIterableContainingTheSuppliedElements() {
         // Given
-        Iterable<Integer> expectedIterable = asList(5, 10, 15, 20, 25, 30);
-        Integer[] elementArray = new Integer[]{20, 25, 30};
+        Iterable<Integer> expected = asList(5, 10, 15);
 
         // When
-        Iterable<Integer> actualList = iterableWith(5, 10, 15).and(elementArray);
+        Iterable<Integer> actual = iterableWith(5, 10, 15);
 
         // Then
-        assertThat(actualList, is(expectedIterable));
+        assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldAllowIterablesOfElementsToBeAddedToTheIterableWithAnd() throws Exception {
+    public void shouldReturnAnIterableContainingAllElementsInTheSuppliedIterable() {
         // Given
-        Iterable<Integer> expectedIterable = asList(1, 2, 3, 4, 5, 6);
-        Iterable<Integer> someOtherElements = asList(4, 5, 6);
+        Iterable<Integer> expected = asList(5, 10, 15);
+        Iterable<Integer> elements = asList(5, 10, 15);
 
         // When
-        Iterable<Integer> actualIterable = iterableWith(1, 2, 3).and(someOtherElements);
+        Iterable<Integer> actual = iterableFrom(elements);
 
         // Then
-        assertThat(actualIterable, is(expectedIterable));
+        assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldAllowElementsToBeAddedToAIterableWithWith() throws Exception {
+    public void shouldReturnAnIterableContainingAllElementsInTheSuppliedArray() {
         // Given
-        Iterable<Integer> expectedIterable = asList(1, 2, 3, 4, 5, 6);
+        Iterable<Integer> expected = asList(5, 10, 15);
+        Integer[] elements = new Integer[]{5, 10, 15};
 
         // When
-        Iterable<Integer> actualIterable = iterableOf(Integer.class)
-                .with(1, 2, 3)
-                .with(4, 5, 6)
-                .build();
+        Iterable<Integer> actual = iterableFrom(elements);
 
         // Then
-        assertThat(actualIterable, is(expectedIterable));
+        assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldAllowArraysOfElementsToBeAddedToTheIterableWithWith() throws Exception {
+    public void shouldReturnAnEmptyIterableBuilder() throws Exception {
         // Given
-        Iterable<Integer> expectedIterable = asList(5, 10, 15, 20, 25, 30);
-        Integer[] elementArray = new Integer[]{20, 25, 30};
+        IterableBuilder<Integer> expected = new IterableBuilder<Integer>();
 
         // When
-        Iterable<Integer> actualIterable = iterableWith(5, 10, 15).with(elementArray);
+        IterableBuilder<Integer> actual = iterableBuilder();
 
         // Then
-        assertThat(actualIterable, is(expectedIterable));
+        assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldAllowIterablesOfElementsToBeAddedToTheIterableWithWith() throws Exception {
+    public void shouldReturnAnEmptyIterableBuilderWithElementsOfTheSpecifiedType() throws Exception {
         // Given
-        Iterable<Integer> expectedIterable = asList(1, 2, 3, 4, 5, 6);
-        Iterable<Integer> firstInputIterable = asList(1, 2, 3);
-        Iterable<Integer> secondInputIterable = asList(4, 5, 6);
-
-        // When
-        Iterable<Integer> actualIterable = iterableOf(Integer.class)
-                .with(firstInputIterable)
-                .with(secondInputIterable)
-                .build();
+        IterableBuilder<Integer> expected = new IterableBuilder<Integer>();
 
         // Then
-        assertThat(actualIterable, is(expectedIterable));
+        assertThat(iterableBuilderOf(Integer.class), is(expected));
     }
 
     @Test
-    public void shouldReturnAIterableContainingAllElementsInTheSuppliedIterable() throws Exception {
+    public void shouldReturnAnIterableBuilderWithTheSuppliedElements() {
         // Given
-        Iterable<Integer> expectedIterable = asList(1, 2, 3, 4, 5, 6);
-        Iterable<Integer> firstInputIterable = asList(1, 2, 3);
-        Iterable<Integer> secondInputIterable = asList(4, 5, 6);
+        IterableBuilder<Integer> expected = new IterableBuilder<Integer>().with(5, 10, 15);
 
         // When
-        Iterable<Integer> actualIterable = iterableFrom(firstInputIterable).with(secondInputIterable);
+        IterableBuilder<Integer> actual = iterableBuilderWith(5, 10, 15);
 
         // Then
-        assertThat(actualIterable, is(expectedIterable));
+        assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldReturnAIterableContainingAllElementsInTheSuppliedArray() throws Exception {
+    public void shouldReturnAnIterableBuilderContainingAllElementsInTheSuppliedIterable() {
         // Given
-        String[] elementArray = new String[]{"a", "b", "c"};
-        Iterable<String> expectedIterable = asList("a", "b", "c");
+        IterableBuilder<Integer> expected = new IterableBuilder<Integer>().with(5, 10, 15);
+        Iterable<Integer> elements = asList(5, 10, 15);
 
         // When
-        Iterable<String> actualIterable = iterableFrom(elementArray);
+        IterableBuilder<Integer> actual = iterableBuilderFrom(elements);
 
         // Then
-        assertThat(actualIterable, is(expectedIterable));
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnIterableBuilderContainingAllElementsInTheSuppliedArray() {
+        // Given
+        IterableBuilder<Integer> expected = new IterableBuilder<Integer>().with(5, 10, 15);
+        Integer[] elements = new Integer[]{5, 10, 15};
+
+        // When
+        IterableBuilder<Integer> actual = iterableBuilderFrom(elements);
+
+        // Then
+        assertThat(actual, is(expected));
     }
 
     @Test

@@ -97,7 +97,7 @@ public class Multisets {
     public static <T> Multiset<T> concatenate(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
-        return concatenate(iterableWith(i1, i2, i3, i4, i5, i6).and(i7on));
+        return concatenate(iterableBuilderWith(i1, i2, i3, i4, i5, i6).and(i7on).build());
     }
     
     @SuppressWarnings("unchecked")
@@ -136,7 +136,7 @@ public class Multisets {
     public static <T> Multiset<T> union(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
-        return union(iterableWith(i1, i2, i3, i4, i5, i6).and(i7on));
+        return union(iterableBuilderWith(i1, i2, i3, i4, i5, i6).and(i7on).build());
     }
 
     @SuppressWarnings("unchecked")
@@ -175,7 +175,7 @@ public class Multisets {
     public static <T> Multiset<T> intersection(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
-        return intersection(iterableWith(i1, i2, i3, i4, i5, i6).and(i7on));
+        return intersection(iterableBuilderWith(i1, i2, i3, i4, i5, i6).and(i7on).build());
     }
 
     @SuppressWarnings("unchecked")
@@ -214,6 +214,6 @@ public class Multisets {
     public static <T> Multiset<T> difference(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
-        return difference(iterableWith(i1, i2, i3, i4, i5, i6).and(i7on));
+        return difference(iterableBuilderWith(i1, i2, i3, i4, i5, i6).and(i7on).build());
     }
 }

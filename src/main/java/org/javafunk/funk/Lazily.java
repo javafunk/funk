@@ -240,7 +240,7 @@ public class Lazily {
     }
 
     public static Iterable<? extends Iterable<?>> cartesianProduct(final Iterable<? extends Iterable<?>> iterables) {
-        return cartesianProduct(iterableFrom(iterables));
+        return cartesianProduct(listFrom(iterables));
     }
 
     private static Iterable<? extends Iterable<?>> cartesianProduct(final List<? extends Iterable<?>> iterables) {
@@ -254,7 +254,7 @@ public class Lazily {
 
         return map(pairs, new Mapper<Pair<?, ? extends Iterable<?>>, Iterable<?>>() {
             public Iterable<?> map(Pair<?, ? extends Iterable<?>> input) {
-                return iterableWith(input.first()).and(input.second());
+                return iterableBuilderWith(input.first()).and(input.second()).build();
             }
         });
     }

@@ -20,9 +20,7 @@ import static org.javafunk.funk.Eagerly.first;
 import static org.javafunk.funk.Eagerly.rest;
 import static org.javafunk.funk.Iterables.asSet;
 import static org.javafunk.funk.Lazily.filter;
-import static org.javafunk.funk.Literals.collectionFrom;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.listFrom;
+import static org.javafunk.funk.Literals.*;
 
 public class Sets {
     private Sets() {}
@@ -103,7 +101,7 @@ public class Sets {
     public static <T> Set<T> union(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
-        return union(iterableWith(i1, i2, i3, i4, i5, i6).and(asList(i7on)));
+        return union(iterableBuilderWith(i1, i2, i3, i4, i5, i6).and(asList(i7on)).build());
     }
 
     @SuppressWarnings("unchecked")
@@ -142,7 +140,7 @@ public class Sets {
     public static <T> Set<T> intersection(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
-        return intersection(iterableWith(i1, i2, i3, i4, i5, i6).and(asList(i7on)));
+        return intersection(iterableBuilderWith(i1, i2, i3, i4, i5, i6).and(asList(i7on)).build());
     }
 
     @SuppressWarnings("unchecked")
@@ -181,7 +179,7 @@ public class Sets {
     public static <T> Set<T> difference(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4, 
             Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
-        return difference(iterableWith(i1, i2, i3, i4, i5, i6).and(asList(i7on)));
+        return difference(iterableBuilderWith(i1, i2, i3, i4, i5, i6).and(asList(i7on)).build());
     }
 
     @SuppressWarnings("unchecked")
@@ -220,6 +218,6 @@ public class Sets {
     public static <T> Set<T> symmetricDifference(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
-        return symmetricDifference(iterableWith(i1, i2, i3, i4, i5, i6).and(asList(i7on)));
+        return symmetricDifference(iterableBuilderWith(i1, i2, i3, i4, i5, i6).and(asList(i7on)).build());
     }
 }
