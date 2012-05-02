@@ -65,7 +65,7 @@ public class SetsTest {
         Cat smudge = cat(colour("grey"), name("smudge"));
         Iterable<Dog> dogs = setWith(fido, spud);
         Iterable<Cat> cats = iterableWith(snowy, smudge, snowy);
-        Set<Animal> expectedMenagerie = setOf(Animal.class).with(fido, smudge, spud, snowy);
+        Set<Animal> expectedMenagerie = setBuilderOf(Animal.class).with(fido, smudge, spud, snowy).build();
 
         // When
         Set<Animal> actualMenagerie = Sets.union(dogs, cats);

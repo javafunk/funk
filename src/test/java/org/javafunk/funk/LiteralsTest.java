@@ -13,6 +13,7 @@ import com.google.common.collect.Multiset;
 import org.javafunk.funk.builders.CollectionBuilder;
 import org.javafunk.funk.builders.IterableBuilder;
 import org.javafunk.funk.builders.ListBuilder;
+import org.javafunk.funk.builders.SetBuilder;
 import org.javafunk.funk.datastructures.tuples.*;
 import org.javafunk.funk.testclasses.Age;
 import org.javafunk.funk.testclasses.Colour;
@@ -510,126 +511,121 @@ public class LiteralsTest {
     }
 
     @Test
+    public void shouldReturnAnEmptySet() throws Exception {
+        // Given
+        Set<Integer> expected = new HashSet<Integer>();
+
+        // When
+        Set<Integer> actual = set();
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnEmptySetWithElementsOfTheSpecifiedType() throws Exception {
+        // Given
+        Set<Integer> expected = new HashSet<Integer>();
+
+        // Then
+        assertThat(setOf(Integer.class), is(expected));
+    }
+
+    @Test
     public void shouldReturnASetContainingTheSuppliedElements() {
         // Given
-        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b"));
+        Set<Integer> expectedSet = new HashSet<Integer>(asList(5, 10, 15));
 
         // When
-        Set<String> actualSet = setWith("a", "a", "b");
+        Set<Integer> actualSet = setWith(5, 10, 15);
 
         // Then
         assertThat(actualSet, is(expectedSet));
     }
 
     @Test
-    public void shouldAllowMoreElementsToBeAddedToTheSetWithAnd() {
+    public void shouldReturnASetContainingAllElementsInTheSuppliedIterable() {
         // Given
-        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b", "c"));
+        Set<Integer> expected = new HashSet<Integer>(asList(5, 10, 15));
+        Iterable<Integer> elements = asList(5, 10, 15);
 
         // When
-        Set<String> actualSet = setWith("a", "a", "b").and("b", "c", "c");
+        Set<Integer> actual = setFrom(elements);
 
         // Then
-        assertThat(actualSet, is(expectedSet));
+        assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldAllowArraysOfElementsToBeAddedToTheSetWithAnd() throws Exception {
-// Given
-        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b", "c"));
-        String[] elementArray = new String[]{"a", "a", "b"};
-
-        // When
-        Set<String> actualSet = setWith("a", "c").and(elementArray);
-
-        // Then
-        assertThat(actualSet, is(expectedSet));
-    }
-
-    @Test
-    public void shouldAllowIterablesOfElementsToBeAddedToTheSetWithAnd() throws Exception {
+    public void shouldReturnASetContainingAllElementsInTheSuppliedArray() {
         // Given
-        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b", "c"));
-        Iterable<String> someOtherElements = iterableWith("b", "c", "c");
+        Set<Integer> expected = new HashSet<Integer>(asList(5, 10, 15));
+        Integer[] elements = new Integer[]{5, 10, 15};
 
         // When
-        Set<String> actualSet = setWith("a", "b").and(someOtherElements);
+        Set<Integer> actual = setFrom(elements);
 
         // Then
-        assertThat(actualSet, is(expectedSet));
+        assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldAllowElementsToBeAddedToASetWithWith() throws Exception {
+    public void shouldReturnAnEmptySetBuilder() throws Exception {
         // Given
-        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b", "c"));
+        SetBuilder<Integer> expected = new SetBuilder<Integer>();
 
         // When
-        Set<String> actualSet = setOf(String.class)
-                .with("a", "a")
-                .with("b", "c")
-                .build();
+        SetBuilder<Integer> actual = setBuilder();
 
         // Then
-        assertThat(actualSet, is(expectedSet));
+        assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldAllowArraysOfElementsToBeAddedToTheSetWithWith() throws Exception {
+    public void shouldReturnAnEmptySetBuilderWithElementsOfTheSpecifiedType() throws Exception {
         // Given
-        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b", "c"));
-        String[] elementArray = new String[]{"a", "a", "b"};
-
-        // When
-        Set<String> actualSet = setWith("a", "c").with(elementArray);
+        SetBuilder<Integer> expected = new SetBuilder<Integer>();
 
         // Then
-        assertThat(actualSet, is(expectedSet));
+        assertThat(setBuilderOf(Integer.class), is(expected));
     }
 
     @Test
-    public void shouldAllowIterablesOfElementsToBeAddedToTheSetWithWith() throws Exception {
+    public void shouldReturnASetBuilderWithTheSuppliedElements() {
         // Given
-        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b", "c"));
-        Iterable<String> firstInputIterable = iterableWith("a", "a");
-        Iterable<String> secondInputIterable = iterableWith("b", "c", "c");
+        SetBuilder<Integer> expected = new SetBuilder<Integer>().with(5, 10, 15);
 
         // When
-        Set<String> actualSet = setOf(String.class)
-                .with(firstInputIterable)
-                .with(secondInputIterable)
-                .build();
+        SetBuilder<Integer> actual = setBuilderWith(5, 10, 15);
 
         // Then
-        assertThat(actualSet, is(expectedSet));
-    }
-
-
-    @Test
-    public void shouldReturnASetContainingAllElementsInTheSuppliedIterable() throws Exception {
-        // Given
-        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b", "c"));
-        Iterable<String> firstInputIterable = iterableWith("a", "a");
-        Iterable<String> secondInputIterable = iterableWith("b", "c", "c");
-
-        // When
-        Set<String> actualSet = setFrom(firstInputIterable).with(secondInputIterable);
-
-        // Then
-        assertThat(actualSet, is(expectedSet));
+        assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldReturnASetContainingAllElementsInTheSuppliedArray() throws Exception {
+    public void shouldReturnASetBuilderContainingAllElementsInTheSuppliedIterable() {
         // Given
-        Set<String> expectedSet = new HashSet<String>(collectionWith("a", "b", "c"));
-        String[] elementArray = new String[]{"a", "b", "c", "c"};
+        SetBuilder<Integer> expected = new SetBuilder<Integer>().with(5, 10, 15);
+        Iterable<Integer> elements = asList(5, 10, 15);
 
         // When
-        Set<String> actualSet = setFrom(elementArray);
+        SetBuilder<Integer> actual = setBuilderFrom(elements);
 
         // Then
-        assertThat(actualSet, is(expectedSet));
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnASetBuilderContainingAllElementsInTheSuppliedArray() {
+        // Given
+        SetBuilder<Integer> expected = new SetBuilder<Integer>().with(5, 10, 15);
+        Integer[] elements = new Integer[]{5, 10, 15};
+
+        // When
+        SetBuilder<Integer> actual = setBuilderFrom(elements);
+
+        // Then
+        assertThat(actual, is(expected));
     }
 
     @Test
