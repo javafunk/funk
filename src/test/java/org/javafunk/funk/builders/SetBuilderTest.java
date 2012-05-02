@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.SortedSet;
+import java.util.TreeSet;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -190,10 +190,10 @@ public class SetBuilderTest {
         SetBuilder<Integer> setBuilder = setBuilderWith(1, 2, 3);
 
         // When
-        Set<Integer> actual = setBuilder.build(SortedSet.class);
+        Set<Integer> actual = setBuilder.build(TreeSet.class);
 
         // Then
-        assertThat(actual instanceof SortedSet, is(true));
+        assertThat(actual instanceof TreeSet, is(true));
         assertThat(actual, is(expected));
     }
 
