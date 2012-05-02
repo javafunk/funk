@@ -66,7 +66,7 @@ public class MultisetsTest {
         Cat smudge = cat(colour("grey"), name("smudge"));
         Iterable<Dog> dogs = multisetWith(fido, spud, fido);
         Iterable<Cat> cats = listWith(snowy, snowy, smudge);
-        Multiset<Animal> expectedMenagerie = multisetOf(Animal.class).with(fido, fido, smudge, snowy, spud, snowy);
+        Multiset<Animal> expectedMenagerie = multisetBuilderOf(Animal.class).with(fido, fido, smudge, snowy, spud, snowy).build();
 
         // When
         Multiset<Animal> actualMenagerie = Multisets.concatenate(dogs, cats);
@@ -117,8 +117,9 @@ public class MultisetsTest {
         Iterable<Dog> firstDogs = multisetWith(fido, spud, fido);
         Iterable<Dog> secondDogs = multisetWith(rex, spud, spud);
         Iterable<Cat> cats = iterableWith(snowy, snowy, smudge);
-        Multiset<Animal> expectedMenagerie = multisetOf(Animal.class)
-                .with(fido, spud, fido, smudge, snowy, spud, snowy, rex);
+        Multiset<Animal> expectedMenagerie = multisetBuilderOf(Animal.class)
+                .with(fido, spud, fido, smudge, snowy, spud, snowy, rex)
+                .build();
 
         // When
         Multiset<Animal> actualMenagerie = Multisets.union(firstDogs, secondDogs, cats);

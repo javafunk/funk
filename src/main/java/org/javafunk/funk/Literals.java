@@ -8,6 +8,7 @@
  */
 package org.javafunk.funk;
 
+import com.google.common.collect.Multiset;
 import org.javafunk.funk.builders.*;
 import org.javafunk.funk.datastructures.tuples.*;
 
@@ -148,19 +149,35 @@ public class Literals {
         return new SetBuilder<E>().with(elementArray);
     }
 
-    public static <E> MultisetBuilder<E> multiset() {
+    public static <E> Multiset<E> multiset() {
+        return new MultisetBuilder<E>().build();
+    }
+
+    public static <E> Multiset<E> multisetOf(Class<E> elementClass) {
+        return new MultisetBuilder<E>().build();
+    }
+
+    public static <E> Multiset<E> multisetFrom(Iterable<? extends E> elements) {
+        return new MultisetBuilder<E>().with(elements).build();
+    }
+
+    public static <E> Multiset<E> multisetFrom(E[] elementArray) {
+        return new MultisetBuilder<E>().with(elementArray).build();
+    }
+    
+    public static <E> MultisetBuilder<E> multisetBuilder() {
         return new MultisetBuilder<E>();
     }
 
-    public static <E> MultisetBuilder<E> multisetOf(Class<E> elementClass) {
+    public static <E> MultisetBuilder<E> multisetBuilderOf(Class<E> elementClass) {
         return new MultisetBuilder<E>();
     }
 
-    public static <E> MultisetBuilder<E> multisetFrom(Iterable<? extends E> elements) {
+    public static <E> MultisetBuilder<E> multisetBuilderFrom(Iterable<? extends E> elements) {
         return new MultisetBuilder<E>().with(elements);
     }
 
-    public static <E> MultisetBuilder<E> multisetFrom(E[] elementArray) {
+    public static <E> MultisetBuilder<E> multisetBuilderFrom(E[] elementArray) {
         return new MultisetBuilder<E>().with(elementArray);
     }
 
@@ -308,15 +325,27 @@ public class Literals {
     @SuppressWarnings("unchecked") public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return setBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
     @SuppressWarnings("unchecked") public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E e11on) { return setBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)); }
 
-    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetWith(E e) { return multisetFrom(asList(e)); }
-    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetWith(E e1, E e2) { return multisetFrom(asList(e1, e2)); }
-    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3) { return multisetFrom(asList(e1, e2, e3)); }
-    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4) { return multisetFrom(asList(e1, e2, e3, e4)); }
-    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4, E e5) { return multisetFrom(asList(e1, e2, e3, e4, e5)); }
-    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6) { return multisetFrom(asList(e1, e2, e3, e4, e5, e6)); }
-    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7)); }
-    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8)); }
-    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)); }
+    @SuppressWarnings("unchecked") public static <E> Multiset<E> multisetWith(E e) { return multisetFrom(asList(e)); }
+    @SuppressWarnings("unchecked") public static <E> Multiset<E> multisetWith(E e1, E e2) { return multisetFrom(asList(e1, e2)); }
+    @SuppressWarnings("unchecked") public static <E> Multiset<E> multisetWith(E e1, E e2, E e3) { return multisetFrom(asList(e1, e2, e3)); }
+    @SuppressWarnings("unchecked") public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4) { return multisetFrom(asList(e1, e2, e3, e4)); }
+    @SuppressWarnings("unchecked") public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5) { return multisetFrom(asList(e1, e2, e3, e4, e5)); }
+    @SuppressWarnings("unchecked") public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6) { return multisetFrom(asList(e1, e2, e3, e4, e5, e6)); }
+    @SuppressWarnings("unchecked") public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7)); }
+    @SuppressWarnings("unchecked") public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8)); }
+    @SuppressWarnings("unchecked") public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
+    @SuppressWarnings("unchecked") public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
+    @SuppressWarnings("unchecked") public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return multisetBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)).build(); }
+    
+    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetBuilderWith(E e) { return multisetBuilderFrom(asList(e)); }
+    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2) { return multisetBuilderFrom(asList(e1, e2)); }
+    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3) { return multisetBuilderFrom(asList(e1, e2, e3)); }
+    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4) { return multisetBuilderFrom(asList(e1, e2, e3, e4)); }
+    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5) { return multisetBuilderFrom(asList(e1, e2, e3, e4, e5)); }
+    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) { return multisetBuilderFrom(asList(e1, e2, e3, e4, e5, e6)); }
+    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return multisetBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7)); }
+    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return multisetBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8)); }
+    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return multisetBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
+    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return multisetBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
+    @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return multisetBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)); }
 }

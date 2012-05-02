@@ -10,10 +10,7 @@ package org.javafunk.funk;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
-import org.javafunk.funk.builders.CollectionBuilder;
-import org.javafunk.funk.builders.IterableBuilder;
-import org.javafunk.funk.builders.ListBuilder;
-import org.javafunk.funk.builders.SetBuilder;
+import org.javafunk.funk.builders.*;
 import org.javafunk.funk.datastructures.tuples.*;
 import org.javafunk.funk.testclasses.Age;
 import org.javafunk.funk.testclasses.Colour;
@@ -390,124 +387,121 @@ public class LiteralsTest {
     }
 
     @Test
+    public void shouldReturnAnEmptyMultiset() throws Exception {
+        // Given
+        Multiset<Integer> expected = HashMultiset.create();
+
+        // When
+        Multiset<Integer> actual = multiset();
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyMultisetWithElementsOfTheSpecifiedType() throws Exception {
+        // Given
+        Multiset<Integer> expected = HashMultiset.create();
+
+        // Then
+        assertThat(multisetOf(Integer.class), is(expected));
+    }
+
+    @Test
     public void shouldReturnAMultisetContainingTheSuppliedElements() {
         // Given
-        Multiset<String> expectedMultiset = HashMultiset.create(iterableWith("a", "a", "b", "c"));
+        Multiset<Integer> expectedMultiset = HashMultiset.create(asList(5, 10, 15));
 
         // When
-        Multiset<String> actualMultiset = multisetWith("a", "a", "b", "c");
+        Multiset<Integer> actualMultiset = multisetWith(5, 10, 15);
 
         // Then
         assertThat(actualMultiset, is(expectedMultiset));
     }
 
     @Test
-    public void shouldAllowMoreElementsToBeAddedToTheMultisetWithAnd() {
+    public void shouldReturnAMultisetContainingAllElementsInTheSuppliedIterable() {
         // Given
-        Multiset<String> expectedMultiset = HashMultiset.create(iterableWith("a", "a", "b", "c", "c", "d"));
+        Multiset<Integer> expected = HashMultiset.create(asList(5, 10, 15));
+        Iterable<Integer> elements = asList(5, 10, 15);
 
         // When
-        Multiset<String> actualMultiset = multisetWith("a", "a", "b").and("c", "c", "d");
+        Multiset<Integer> actual = multisetFrom(elements);
 
         // Then
-        assertThat(actualMultiset, is(expectedMultiset));
+        assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldAllowArraysOfElementsToBeAddedToTheMultisetWithAnd() throws Exception {
+    public void shouldReturnAMultisetContainingAllElementsInTheSuppliedArray() {
         // Given
-        Multiset<Integer> expectedMultiset = HashMultiset.create(asList(1, 1, 2, 3, 3, 4));
-        Integer[] elementArray = new Integer[]{1, 3, 4};
+        Multiset<Integer> expected = HashMultiset.create(asList(5, 10, 15));
+        Integer[] elements = new Integer[]{5, 10, 15};
 
         // When
-        Multiset<Integer> actualMultiset = multisetWith(1, 2, 3).and(elementArray);
+        Multiset<Integer> actual = multisetFrom(elements);
 
         // Then
-        assertThat(actualMultiset, is(expectedMultiset));
+        assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldAllowIterablesOfElementsToBeAddedToTheMultisetWithAnd() throws Exception {
+    public void shouldReturnAnEmptyMultisetBuilder() throws Exception {
         // Given
-        Multiset<String> expectedMultiset = HashMultiset.create(iterableWith("a", "a", "b", "c"));
-        Iterable<String> someOtherElements = iterableWith("b", "c");
+        MultisetBuilder<Integer> expected = new MultisetBuilder<Integer>();
 
         // When
-        Multiset<String> actualMultiset = multisetWith("a", "a").and(someOtherElements);
+        MultisetBuilder<Integer> actual = multisetBuilder();
 
         // Then
-        assertThat(actualMultiset, is(expectedMultiset));
+        assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldAllowElementsToBeAddedToAMultisetWithWith() throws Exception {
+    public void shouldReturnAnEmptyMultisetBuilderWithElementsOfTheSpecifiedType() throws Exception {
         // Given
-        Multiset<Integer> expectedMultiset = HashMultiset.create(asList(1, 1, 2, 2, 3, 3));
-
-        // When
-        Multiset<Integer> actualMultiset = multisetOf(Integer.class)
-                .with(1, 1, 2)
-                .with(2, 3, 3)
-                .build();
+        MultisetBuilder<Integer> expected = new MultisetBuilder<Integer>();
 
         // Then
-        assertThat(actualMultiset, is(expectedMultiset));
+        assertThat(multisetBuilderOf(Integer.class), is(expected));
     }
 
     @Test
-    public void shouldAllowArraysOfElementsToBeAddedToAMultisetWithWith() throws Exception {
-        Multiset<Integer> expectedMultiset = HashMultiset.create(asList(1, 1, 2, 4, 5, 6));
-        Integer[] elementArray = new Integer[]{1, 4, 5};
-
-        // When
-        Multiset<Integer> actualMultiset = multisetWith(1, 2, 6).with(elementArray);
-
-        // Then
-        assertThat(actualMultiset, is(expectedMultiset));
-    }
-
-    @Test
-    public void shouldAllowIterablesOfElementsToBeAddedToAMultisetWithWith() throws Exception {
+    public void shouldReturnAMultisetBuilderWithTheSuppliedElements() {
         // Given
-        Multiset<Integer> expectedMultiset = HashMultiset.create(asList(1, 1, 2, 4, 5, 6));
-        Iterable<Integer> firstInputIterable = asList(1, 2, 4);
-        Iterable<Integer> secondInputIterable = asList(1, 5, 6);
+        MultisetBuilder<Integer> expected = new MultisetBuilder<Integer>().with(5, 10, 15);
 
         // When
-        Multiset<Integer> actualMultiset = multisetOf(Integer.class)
-                .with(firstInputIterable)
-                .with(secondInputIterable)
-                .build();
+        MultisetBuilder<Integer> actual = multisetBuilderWith(5, 10, 15);
 
         // Then
-        assertThat(actualMultiset, is(expectedMultiset));
+        assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldReturnAMultisetContainingAllElementsInTheSuppliedIterable() throws Exception {
+    public void shouldReturnAMultisetBuilderContainingAllElementsInTheSuppliedIterable() {
         // Given
-        Multiset<Integer> expectedMultiset = HashMultiset.create(asList(1, 1, 2, 4, 5, 6));
-        Iterable<Integer> firstInputIterable = asList(1, 2, 4);
-        Iterable<Integer> secondInputIterable = asList(1, 5, 6);
+        MultisetBuilder<Integer> expected = new MultisetBuilder<Integer>().with(5, 10, 15);
+        Iterable<Integer> elements = asList(5, 10, 15);
 
         // When
-        Multiset<Integer> actualMultiset = multisetFrom(firstInputIterable).with(secondInputIterable);
+        MultisetBuilder<Integer> actual = multisetBuilderFrom(elements);
 
         // Then
-        assertThat(actualMultiset, is(expectedMultiset));
+        assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldReturnAMultisetContainingAllElementsInTheSuppliedArray() throws Exception {
+    public void shouldReturnAMultisetBuilderContainingAllElementsInTheSuppliedArray() {
         // Given
-        Multiset<Integer> expectedBag = HashMultiset.create(asList(1, 1, 2));
-        Integer[] elementArray = new Integer[]{1, 1, 2};
+        MultisetBuilder<Integer> expected = new MultisetBuilder<Integer>().with(5, 10, 15);
+        Integer[] elements = new Integer[]{5, 10, 15};
 
         // When
-        Multiset<Integer> actualBag = multisetFrom(elementArray);
+        MultisetBuilder<Integer> actual = multisetBuilderFrom(elements);
 
         // Then
-        assertThat(actualBag, is(expectedBag));
+        assertThat(actual, is(expected));
     }
 
     @Test
