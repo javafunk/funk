@@ -3,7 +3,7 @@
     <groupId>org.javafunk.funk</groupId>
     <artifactId>funk</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.9-SNAPSHOT</version>
+    <version>0.1.9</version>
 
     <name>Funk</name>
     <description>Functional utilities for Java</description>
