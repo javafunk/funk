@@ -17,6 +17,8 @@ import org.javafunk.funk.generators.FiniteGenerator;
 import java.util.Iterator;
 
 public class Generators {
+    private Generators() {}
+
     public static <T> Generator<T> constantGenerator(T value) {
         return new ConstantGenerator<T>(value);
     }

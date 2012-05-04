@@ -14,16 +14,17 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.mapWith;
+import static org.javafunk.funk.Literals.mapBuilderWith;
 import static org.javafunk.funk.Maps.getOrAddDefault;
 
 public class MapsTest {
     @Test
     public void shouldReturnTheValueFromTheMapIfTheKeyAlreadyExists() {
         // Given
-        Map<Integer, String> inputMap = mapWith(1, "one")
+        Map<Integer, String> inputMap = mapBuilderWith(1, "one")
                 .and(2, "two")
-                .and(3, "three");
+                .and(3, "three")
+                .build();
 
         // When
         String value = getOrAddDefault(inputMap, 2, defaultValueFactory());
@@ -35,9 +36,10 @@ public class MapsTest {
     @Test
     public void shouldReturnTheValueCreatedByTheDefaultFactoryIfTheKeyDoesNotExistInTheMap() {
         // Given
-        Map<Integer, String> inputMap = mapWith(1, "one")
+        Map<Integer, String> inputMap = mapBuilderWith(1, "one")
                 .and(2, "two")
-                .and(3, "three");
+                .and(3, "three")
+                .build();
 
         // When
         String value = getOrAddDefault(inputMap, 5, defaultValueFactory());
@@ -49,9 +51,10 @@ public class MapsTest {
     @Test
     public void shouldStoreTheDefaultValueInTheMapIfTheKeyDoesntExist() {
         // Given
-        Map<Integer, String> inputMap = mapWith(1, "one")
+        Map<Integer, String> inputMap = mapBuilderWith(1, "one")
                 .and(2, "two")
-                .and(3, "three");
+                .and(3, "three")
+                .build();
 
         // When
         getOrAddDefault(inputMap, 5, defaultValueFactory());

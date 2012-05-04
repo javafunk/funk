@@ -29,12 +29,13 @@ public class EagerlyGroupIndexTest {
         Collection<String> fiveLetterFruits = collectionWith("apple", "lemon");
         Collection<String> sixLetterFruits = collectionWith("orange", "papaya", "banana");
         Collection<String> sevenLetterFruits = collectionWith("apricot");
-        
+
         Map<Integer, Collection<String>> expectedOutput =
-                mapWith(4, fourLetterFruits)
-                   .and(5, fiveLetterFruits)
-                   .and(6, sixLetterFruits)
-                   .and(7, sevenLetterFruits);
+                mapBuilderWith(4, fourLetterFruits)
+                        .and(5, fiveLetterFruits)
+                        .and(6, sixLetterFruits)
+                        .and(7, sevenLetterFruits)
+                        .build();
 
         // When
         Map<Integer, Collection<String>> actualOutput = Eagerly.group(input, new Indexer<String, Integer>() {

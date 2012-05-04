@@ -15,6 +15,8 @@ import org.javafunk.funk.predicates.NotPredicate;
 import org.javafunk.funk.predicates.TruePredicate;
 
 public class Predicates {
+    private Predicates() {}
+
     public static <T> Predicate<T> alwaysTrue() {
         return new TruePredicate<T>();
     }

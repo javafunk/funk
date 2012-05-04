@@ -20,6 +20,8 @@ import static org.javafunk.funk.Lazily.rest;
 import static org.javafunk.funk.Literals.tuple;
 
 class Mappers {
+    private Mappers() {}
+
     @SuppressWarnings("unchecked")
     public static <S, T> Mapper<? super Iterable<?>, Pair<S, T>> toPair() {
         return new Mapper<Iterable<?>, Pair<S, T>>() {

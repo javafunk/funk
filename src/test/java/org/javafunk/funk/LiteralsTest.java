@@ -23,6 +23,7 @@ import java.util.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
+import static org.javafunk.funk.Literals.mapBuilderFromEntries;
 import static org.javafunk.funk.builders.IterableBuilder.iterableBuilder;
 import static org.javafunk.funk.testclasses.Age.age;
 import static org.javafunk.funk.testclasses.Colour.colour;
@@ -623,50 +624,263 @@ public class LiteralsTest {
     }
 
     @Test
-    public void shouldReturnAMapContainingTheSuppliedKeyAndValue() {
+    public void shouldReturnAnEmptyMap() throws Exception {
         // Given
-        Map<Integer, String> expectedMap = new HashMap<Integer, String>();
-        expectedMap.put(5, "a");
+        Map<String, Integer> expected = new HashMap<String, Integer>();
 
         // When
-        Map<Integer, String> actualMap = mapWith(5, "a");
+        Map<String, Integer> actual = map();
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyMapWithElementsOfTheSpecifiedType() throws Exception {
+        // Given
+        Map<String, Integer> expected = new HashMap<String, Integer>();
+
+        // Then
+        assertThat(mapOf(String.class, Integer.class), is(expected));
+    }
+
+    @Test
+    public void shouldReturnAMapContainingTheSuppliedMapEntries() {
+        // Given
+        Map<Integer, Boolean> expectedMap = new HashMap<Integer, Boolean>();
+        expectedMap.put(1, true);
+        expectedMap.put(2, false);
+
+        // When
+        Map<Integer, Boolean> actualMap = mapWith(mapEntryFor(1, true), mapEntryFor(2, false));
 
         // Then
         assertThat(actualMap, is(expectedMap));
     }
 
     @Test
-    public void shouldAllowMoreKeysAndValuesToBeAddedToTheMapWithAnd() {
+    public void shouldReturnAMapContainingTheSuppliedTuples() throws Exception {
         // Given
-        Map<Integer, String> expectedMap = new HashMap<Integer, String>();
-        expectedMap.put(5, "a");
-        expectedMap.put(10, "b");
-        expectedMap.put(15, "c");
+        Map<Integer, Boolean> expectedMap = new HashMap<Integer, Boolean>();
+        expectedMap.put(1, true);
+        expectedMap.put(2, false);
+        expectedMap.put(3, true);
 
         // When
-        Map<Integer, String> actualMap = mapWith(5, "a").and(10, "b").and(15, "c");
+        Map<Integer, Boolean> actualMap = mapWith(tuple(1, true), tuple(2, false), tuple(3, true));
 
         // Then
         assertThat(actualMap, is(expectedMap));
     }
 
     @Test
-    public void shouldAllowKeysAndValuesToBeAddedToAMapWithWith() throws Exception {
+    public void shouldReturnAMapContainingAllElementsInTheSuppliedIterableOfMapEntryInstances() {
         // Given
-        Map<Integer, String> expectedMap = new HashMap<Integer, String>();
-        expectedMap.put(5, "a");
-        expectedMap.put(10, "b");
-        expectedMap.put(15, "c");
+        Map<Integer, Boolean> expected = new HashMap<Integer, Boolean>();
+        expected.put(1, false);
+        expected.put(2, false);
+        Iterable<Map.Entry<Integer, Boolean>> elements = listWith(mapEntryFor(1, false), mapEntryFor(2, false));
 
         // When
-        Map<Integer, String> actualMap = mapOf(Integer.class, String.class)
-                .with(5, "a")
-                .with(10, "b")
-                .with(15, "c")
-                .build();
+        Map<Integer, Boolean> actual = mapFromEntries(elements);
 
         // Then
-        assertThat(actualMap, is(expectedMap));
+        assertThat(actual, is(expected));
+    }
+    
+    @Test
+    public void shouldReturnAMapContainingAllElementsInTheSuppliedIterableOfTupleInstances() {
+        // Given
+        Map<Integer, Boolean> expected = new HashMap<Integer, Boolean>();
+        expected.put(1, false);
+        expected.put(2, false);
+        Iterable<? extends Pair<Integer, Boolean>> tuples = iterableWith(tuple(1, false), tuple(2, false));
+
+        // When
+        Map<Integer, Boolean> actual = mapFromTuples(tuples);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAMapContainingAllElementsInTheSuppliedArrayOfMapEntryInstances() {
+        // Given
+        Map<Integer, Boolean> expected = new HashMap<Integer, Boolean>();
+        expected.put(1, false);
+        expected.put(2, true);
+        @SuppressWarnings("unchecked") Map.Entry<Integer, Boolean>[] elements = new Map.Entry[]{
+                mapEntryFor(1, false),
+                mapEntryFor(2, true)};
+
+        // When
+        Map<Integer, Boolean> actual = mapFromEntries(elements);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAMapContainingAllElementsInTheSuppliedArrayOfTupleInstances() {
+        // Given
+        Map<Integer, Boolean> expected = new HashMap<Integer, Boolean>();
+        expected.put(1, false);
+        expected.put(2, true);
+        @SuppressWarnings("unchecked") Pair<Integer, Boolean>[] tuples = new Pair[]{
+                tuple(1, false),
+                tuple(2, true)};
+
+        // When
+        Map<Integer, Boolean> actual = mapFromTuples(tuples);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyMapBuilder() throws Exception {
+        // Given
+        MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>();
+
+        // When
+        MapBuilder<String, Integer> actual = mapBuilder();
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyMapBuilderWithKeysAndValuesOfTheSpecifiedType() throws Exception {
+        // Given
+        MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>();
+
+        // Then
+        assertThat(mapBuilderOf(String.class, Integer.class), is(expected));
+    }
+
+    @Test
+    public void shouldReturnAMapBuilderWithTheSuppliedElements() {
+        // Given
+        MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>().with("five", 5, "ten", 10);
+
+        // When
+        MapBuilder<String, Integer> actual = mapBuilderWith("five", 5, "ten", 10);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAMapBuilderWithTheSuppliedMapEntryInstances() {
+        // Given
+        MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>()
+                .with("five", 5, "ten", 10);
+
+        // When
+        MapBuilder<String, Integer> actual = mapBuilderWith(mapEntryFor("five", 5), mapEntryFor("ten", 10));
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAMapBuilderWithTheSuppliedTupleInstances() {
+        // Given
+        MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>()
+                .with("five", 5, "ten", 10, "fifteen", 15);
+
+        // When
+        MapBuilder<String, Integer> actual = mapBuilderWith(tuple("five", 5), tuple("ten", 10), tuple("fifteen", 15));
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAMapBuilderContainingAllMapEntryInstancesInTheSuppliedIterable() {
+        // Given
+        MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().with(5, true, 10, false);
+        Iterable<Map.Entry<Integer, Boolean>> elements = iterableWith(
+                mapEntryFor(5, true), mapEntryFor(10, false));
+
+        // When
+        MapBuilder<Integer, Boolean> actual = mapBuilderFromEntries(elements);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAMapBuilderContainingAllTupleInstancesInTheSuppliedIterable() {
+        // Given
+        MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().with(5, true, 10, false);
+        Iterable<? extends Pair<Integer, Boolean>> tuples = iterableWith(
+                tuple(5, true), tuple(10, false));
+
+        // When
+        MapBuilder<Integer, Boolean> actual = mapBuilderFromTuples(tuples);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAMapBuilderContainingAllMapEntryInstancesInTheSuppliedArray() {
+        // Given
+        MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().with(5, true, 10, false);
+        @SuppressWarnings("unchecked") Map.Entry<Integer, Boolean>[] elements = new Map.Entry[]{
+                mapEntryFor(5, true),
+                mapEntryFor(10, false)
+        };
+
+        // When
+        MapBuilder<Integer, Boolean> actual = mapBuilderFromEntries(elements);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAMapBuilderContainingAllTupleInstancesInTheSuppliedArray() {
+        // Given
+        MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().with(5, true, 10, false);
+        @SuppressWarnings("unchecked") Pair<Integer, Boolean>[] tuples = new Pair[]{
+                tuple(5, true),
+                tuple(10, false)
+        };
+
+        // When
+        MapBuilder<Integer, Boolean> actual = mapBuilderFromTuples(tuples);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAMapEntryWithTheSpecifiedKeyAndValue() throws Exception {
+        // Given
+        String key = "key";
+        Integer value = 36;
+
+        // When
+        Map.Entry<String, Integer> mapEntry = mapEntryFor(key, value);
+
+        // Then
+        assertThat(mapEntry.getKey(), is(key));
+        assertThat(mapEntry.getValue(), is(value));
+    }
+
+    @Test
+    public void shouldReturnAMapEntryWithKeyAndValueTakenFromTheSpecifiedTuple() throws Exception {
+        // Given
+        Pair<String, String> keyValuePair = tuple("key", "value");
+
+        // When
+        Map.Entry<String, String> mapEntry = mapEntryFor(keyValuePair);
+
+        // Then
+        assertThat(mapEntry.getKey(), is("key"));
+        assertThat(mapEntry.getValue(), is("value"));
     }
 
     @Test

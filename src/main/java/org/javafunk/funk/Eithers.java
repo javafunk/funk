@@ -16,6 +16,8 @@ import static org.javafunk.funk.Lazily.filter;
 import static org.javafunk.funk.Lazily.map;
 
 public class Eithers {
+    private Eithers() {}
+
     public static <S, T> Iterable<T> rights(Iterable<Either<S, T>> eithers) {
         return map(filter(eithers, Eithers.<S, T>isRight()), Eithers.<S, T>toRight());
     }
