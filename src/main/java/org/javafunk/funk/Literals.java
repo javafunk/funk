@@ -51,6 +51,38 @@ public class Literals {
         return new IterableBuilder<E>().with(elementArray);
     }
 
+    public static <E> Iterator<E> iterator() {
+        return new IteratorBuilder<E>().build();
+    }
+
+    public static <E> Iterator<E> iteratorOf(Class<E> elementClass) {
+        return new IteratorBuilder<E>().build();
+    }
+
+    public static <E> Iterator<E> iteratorFrom(Iterable<? extends E> elements) {
+        return new IteratorBuilder<E>().with(elements).build();
+    }
+
+    public static <E> Iterator<E> iteratorFrom(E[] elementArray) {
+        return new IteratorBuilder<E>().with(elementArray).build();
+    }
+    
+    public static <E> IteratorBuilder<E> iteratorBuilder() {
+        return new IteratorBuilder<E>();
+    }
+
+    public static <E> IteratorBuilder<E> iteratorBuilderOf(Class<E> elementClass) {
+        return new IteratorBuilder<E>();
+    }
+
+    public static <E> IteratorBuilder<E> iteratorBuilderFrom(Iterable<? extends E> elements) {
+        return new IteratorBuilder<E>().with(elements);
+    }
+
+    public static <E> IteratorBuilder<E> iteratorBuilderFrom(E[] elementArray) {
+        return new IteratorBuilder<E>().with(elementArray);
+    }
+
     public static <E> Collection<E> collection() {
         return new CollectionBuilder<E>().build();
     }
@@ -294,6 +326,30 @@ public class Literals {
     @SuppressWarnings("unchecked") public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return iterableBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
     @SuppressWarnings("unchecked") public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return iterableBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
     @SuppressWarnings("unchecked") public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return iterableBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)); }
+    
+    @SuppressWarnings("unchecked") public static <E> Iterator<E> iteratorWith(E e) { return iteratorFrom(asList(e)); }
+    @SuppressWarnings("unchecked") public static <E> Iterator<E> iteratorWith(E e1, E e2) { return iteratorFrom(asList(e1, e2)); }
+    @SuppressWarnings("unchecked") public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3) { return iteratorFrom(asList(e1, e2, e3)); }
+    @SuppressWarnings("unchecked") public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4) { return iteratorFrom(asList(e1, e2, e3, e4)); }
+    @SuppressWarnings("unchecked") public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5) { return iteratorFrom(asList(e1, e2, e3, e4, e5)); }
+    @SuppressWarnings("unchecked") public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6) { return iteratorFrom(asList(e1, e2, e3, e4, e5, e6)); }
+    @SuppressWarnings("unchecked") public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return iteratorFrom(asList(e1, e2, e3, e4, e5, e6, e7)); }
+    @SuppressWarnings("unchecked") public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return iteratorFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8)); }
+    @SuppressWarnings("unchecked") public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return iteratorFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
+    @SuppressWarnings("unchecked") public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return iteratorFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
+    @SuppressWarnings("unchecked") public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return iteratorBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)).build(); }
+    
+    @SuppressWarnings("unchecked") public static <E> IteratorBuilder<E> iteratorBuilderWith(E e) { return iteratorBuilderFrom(asList(e)); }
+    @SuppressWarnings("unchecked") public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2) { return iteratorBuilderFrom(asList(e1, e2)); }
+    @SuppressWarnings("unchecked") public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3) { return iteratorBuilderFrom(asList(e1, e2, e3)); }
+    @SuppressWarnings("unchecked") public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4) { return iteratorBuilderFrom(asList(e1, e2, e3, e4)); }
+    @SuppressWarnings("unchecked") public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5) { return iteratorBuilderFrom(asList(e1, e2, e3, e4, e5)); }
+    @SuppressWarnings("unchecked") public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) { return iteratorBuilderFrom(asList(e1, e2, e3, e4, e5, e6)); }
+    @SuppressWarnings("unchecked") public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return iteratorBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7)); }
+    @SuppressWarnings("unchecked") public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return iteratorBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8)); }
+    @SuppressWarnings("unchecked") public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return iteratorBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
+    @SuppressWarnings("unchecked") public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return iteratorBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
+    @SuppressWarnings("unchecked") public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return iteratorBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)); }
 
     @SuppressWarnings("unchecked") public static <E> Collection<E> collectionWith(E e) { return collectionFrom(asList(e)); }
     @SuppressWarnings("unchecked") public static <E> Collection<E> collectionWith(E e1, E e2) { return collectionFrom(asList(e1, e2)); }

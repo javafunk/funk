@@ -21,18 +21,17 @@ import org.junit.Test;
 import java.util.*;
 
 import static java.util.Arrays.asList;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
-import static org.javafunk.funk.Literals.mapBuilderFromEntries;
 import static org.javafunk.funk.builders.IterableBuilder.iterableBuilder;
+import static org.javafunk.funk.matchers.IteratorMatchers.isIteratorWithSameElementsAs;
 import static org.javafunk.funk.testclasses.Age.age;
 import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Location.location;
 import static org.javafunk.funk.testclasses.Name.name;
-import static org.junit.Assert.assertThat;
 
 public class LiteralsTest {
-
     @Test
     public void shouldReturnAnEmptyIterable() throws Exception {
         // Given
@@ -146,6 +145,124 @@ public class LiteralsTest {
 
         // When
         IterableBuilder<Integer> actual = iterableBuilderFrom(elements);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyIterator() throws Exception {
+        // Given
+        Iterator<Integer> expected = new ArrayList<Integer>().iterator();
+
+        // When
+        Iterator<Integer> actual = iterator();
+
+        // Then
+        assertThat(actual, isIteratorWithSameElementsAs(expected));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyIteratorWithElementsOfTheSpecifiedType() throws Exception {
+        // Given
+        Iterator<Integer> expected = new ArrayList<Integer>().iterator();
+
+        // Then
+        assertThat(iteratorOf(Integer.class), isIteratorWithSameElementsAs(expected));
+    }
+
+    @Test
+    public void shouldReturnAnIteratorContainingTheSuppliedElements() {
+        // Given
+        Iterator<Integer> expected = asList(5, 10, 15).iterator();
+
+        // When
+        Iterator<Integer> actual = iteratorWith(5, 10, 15);
+
+        // Then
+        assertThat(actual, isIteratorWithSameElementsAs(expected));
+    }
+
+    @Test
+    public void shouldReturnAnIteratorContainingAllElementsInTheSuppliedIterable() {
+        // Given
+        Iterator<Integer> expected = asList(5, 10, 15).iterator();
+        Iterable<Integer> elements = asList(5, 10, 15);
+
+        // When
+        Iterator<Integer> actual = iteratorFrom(elements);
+
+        // Then
+        assertThat(actual, isIteratorWithSameElementsAs(expected));
+    }
+
+    @Test
+    public void shouldReturnAnIteratorContainingAllElementsInTheSuppliedArray() {
+        // Given
+        Iterator<Integer> expected = asList(5, 10, 15).iterator();
+        Integer[] elements = new Integer[]{5, 10, 15};
+
+        // When
+        Iterator<Integer> actual = iteratorFrom(elements);
+
+        // Then
+        assertThat(actual, isIteratorWithSameElementsAs(expected));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyIteratorBuilder() throws Exception {
+        // Given
+        IteratorBuilder<Integer> expected = new IteratorBuilder<Integer>();
+
+        // When
+        IteratorBuilder<Integer> actual = iteratorBuilder();
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyIteratorBuilderWithElementsOfTheSpecifiedType() throws Exception {
+        // Given
+        IteratorBuilder<Integer> expected = new IteratorBuilder<Integer>();
+
+        // Then
+        assertThat(iteratorBuilderOf(Integer.class), is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnIteratorBuilderWithTheSuppliedElements() {
+        // Given
+        IteratorBuilder<Integer> expected = new IteratorBuilder<Integer>().with(5, 10, 15);
+
+        // When
+        IteratorBuilder<Integer> actual = iteratorBuilderWith(5, 10, 15);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnIteratorBuilderContainingAllElementsInTheSuppliedIterable() {
+        // Given
+        IteratorBuilder<Integer> expected = new IteratorBuilder<Integer>().with(5, 10, 15);
+        Iterable<Integer> elements = asList(5, 10, 15);
+
+        // When
+        IteratorBuilder<Integer> actual = iteratorBuilderFrom(elements);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnIteratorBuilderContainingAllElementsInTheSuppliedArray() {
+        // Given
+        IteratorBuilder<Integer> expected = new IteratorBuilder<Integer>().with(5, 10, 15);
+        Integer[] elements = new Integer[]{5, 10, 15};
+
+        // When
+        IteratorBuilder<Integer> actual = iteratorBuilderFrom(elements);
 
         // Then
         assertThat(actual, is(expected));
