@@ -16,38 +16,50 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.Comparator;
-import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.listWith;
 import static org.javafunk.funk.EagerlyMinMaxTest.NonComparableObject.nonComparableObject;
+import static org.javafunk.funk.Literals.iterable;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class EagerlyMinMaxTest {
     @Test
     public void shouldReturnTheMinimumValue() throws Exception {
         // Given
-        List<String> list = listWith("b", "a", "c");
+        Iterable<String> iterable = iterableWith("b", "a", "c");
 
         // When
-        String actual = Eagerly.min(list);
+        String actual = Eagerly.min(iterable);
 
         // Then
         assertThat(actual, is("a"));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void shouldThrowNoSuchElementExceptionIfAnEmptyIterableIsSuppliedToMin() throws Exception {
+        // Given
+        Iterable<Integer> iterable = iterable();
+
+        // When
+        Eagerly.min(iterable);
+
+        // Then a NoSuchElementException is thrown
     }
 
     @Test
     public void shouldReturnTheMinimumValueAccordingToTheSuppliedComparator() throws Exception {
         // Given
 
-        List<NonComparableObject> list = listWith(
+        Iterable<NonComparableObject> iterable = iterableWith(
                 nonComparableObject("aaaa"),
                 nonComparableObject("aa"),
                 nonComparableObject("aaa"),
                 nonComparableObject("aaaaa"));
 
         // When
-        NonComparableObject actual = Eagerly.min(list, new Comparator<NonComparableObject>() {
+        NonComparableObject actual = Eagerly.min(iterable, new Comparator<NonComparableObject>() {
             public int compare(NonComparableObject first, NonComparableObject second) {
                 return first.length() - second.length();
             }
@@ -57,29 +69,56 @@ public class EagerlyMinMaxTest {
         MatcherAssert.assertThat(actual, Matchers.is(nonComparableObject("aa")));
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void shouldThrowNoSuchElementExceptionIfAnEmptyIterableAndAComparatorIsSuppliedToMin() throws Exception {
+        // Given
+        Iterable<NonComparableObject> iterable = iterable();
+
+        // When
+
+        Eagerly.min(iterable, new Comparator<NonComparableObject>() {
+            @Override public int compare(NonComparableObject first, NonComparableObject second) {
+                return first.length() - second.length();
+            }
+        });
+
+        // Then a NoSuchElementException is thrown
+    }
+
     @Test
     public void shouldReturnTheMaximumValue() throws Exception {
         // Given
-        List<Integer> list = listWith(3, 2, 6);
+        Iterable<Integer> iterable = iterableWith(3, 2, 6);
 
         // When
-        Integer actual = Eagerly.max(list);
+        Integer actual = Eagerly.max(iterable);
 
         // Then
         assertThat(actual, is(6));
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void shouldThrowNoSuchElementExceptionIfAnEmptyIterableIsSuppliedToMax() throws Exception {
+        // Given
+        Iterable<Integer> iterable = iterable();
+
+        // When
+        Eagerly.max(iterable);
+
+        // Then a NoSuchElementException is thrown
+    }
+
     @Test
     public void shouldReturnTheMaximumValueAccordingToTheSuppliedComparator() throws Exception {
         // Given
-        List<NonComparableObject> list = listWith(
+        Iterable<NonComparableObject> iterable = iterableWith(
                 nonComparableObject("aaaa"),
                 nonComparableObject("aa"),
                 nonComparableObject("aaa"),
                 nonComparableObject("aaaaa"));
 
         // When
-        NonComparableObject actual = Eagerly.max(list, new Comparator<NonComparableObject>() {
+        NonComparableObject actual = Eagerly.max(iterable, new Comparator<NonComparableObject>() {
             public int compare(NonComparableObject first, NonComparableObject second) {
                 return first.length() - second.length();
             }
@@ -87,6 +126,22 @@ public class EagerlyMinMaxTest {
 
         // Then
         MatcherAssert.assertThat(actual, Matchers.is(nonComparableObject("aaaaa")));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void shouldThrowNoSuchElementExceptionIfAnEmptyIterableAndAComparatorIsSuppliedToMax() throws Exception {
+        // Given
+        Iterable<NonComparableObject> iterable = iterable();
+
+        // When
+
+        Eagerly.max(iterable, new Comparator<NonComparableObject>() {
+            @Override public int compare(NonComparableObject first, NonComparableObject second) {
+                return first.length() - second.length();
+            }
+        });
+
+        // Then a NoSuchElementException is thrown
     }
 
     static class NonComparableObject {
