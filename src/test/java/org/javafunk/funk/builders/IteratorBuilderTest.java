@@ -1,6 +1,5 @@
 package org.javafunk.funk.builders;
 
-import org.javafunk.funk.matchers.IteratorMatchers;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -9,6 +8,7 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.builders.IteratorBuilder.iteratorBuilder;
+import static org.javafunk.funk.matchers.IteratorMatchers.isIteratorWithSameElementsAs;
 
 public class IteratorBuilderTest {
     @Test
@@ -24,7 +24,7 @@ public class IteratorBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, IteratorMatchers.isIteratorWithSameElementsAs(expected));
+        assertThat(actual, isIteratorWithSameElementsAs(expected));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class IteratorBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, IteratorMatchers.isIteratorWithSameElementsAs(expected));
+        assertThat(actual, isIteratorWithSameElementsAs(expected));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class IteratorBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, IteratorMatchers.isIteratorWithSameElementsAs(expected));
+        assertThat(actual, isIteratorWithSameElementsAs(expected));
     }
 
     @Test
@@ -76,7 +76,7 @@ public class IteratorBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, IteratorMatchers.isIteratorWithSameElementsAs(expected));
+        assertThat(actual, isIteratorWithSameElementsAs(expected));
     }
 
     @Test
@@ -93,7 +93,7 @@ public class IteratorBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, IteratorMatchers.isIteratorWithSameElementsAs(expected));
+        assertThat(actual, isIteratorWithSameElementsAs(expected));
     }
 
     @Test
@@ -110,7 +110,7 @@ public class IteratorBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, IteratorMatchers.isIteratorWithSameElementsAs(expected));
+        assertThat(actual, isIteratorWithSameElementsAs(expected));
     }
 
     @Test
@@ -134,7 +134,7 @@ public class IteratorBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, IteratorMatchers.isIteratorWithSameElementsAs(expected));
+        assertThat(actual, isIteratorWithSameElementsAs(expected));
     }
 
     @Test
@@ -158,6 +158,6 @@ public class IteratorBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, IteratorMatchers.isIteratorWithSameElementsAs(expected));
+        assertThat(actual, isIteratorWithSameElementsAs(expected));
     }
 }

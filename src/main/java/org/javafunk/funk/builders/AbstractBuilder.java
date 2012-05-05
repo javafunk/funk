@@ -3,7 +3,7 @@ package org.javafunk.funk.builders;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import static java.util.Arrays.asList;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public abstract class AbstractBuilder<E, B extends AbstractBuilder, C> {
     public abstract C build();
@@ -21,8 +21,8 @@ public abstract class AbstractBuilder<E, B extends AbstractBuilder, C> {
     }
 
     public B and(E[] elements) {
-        for (int i = 0, elementsLength = elements.length; i < elementsLength; i++) {
-            handle(elements[i]);
+        for (E element : elements) {
+            handle(element);
         }
         return updatedBuilder();
     }
@@ -46,34 +46,34 @@ public abstract class AbstractBuilder<E, B extends AbstractBuilder, C> {
         S build(Class<? extends T> implementationClass) throws IllegalAccessException, InstantiationException;
     }
 
-    @SuppressWarnings("unchecked") public B with(E e) { return and(asList(e)); }
-    @SuppressWarnings("unchecked") public B with(E e1, E e2) { return and(asList(e1, e2)); }
-    @SuppressWarnings("unchecked") public B with(E e1, E e2, E e3) { return and(asList(e1, e2, e3)); }
-    @SuppressWarnings("unchecked") public B with(E e1, E e2, E e3, E e4) { return and(asList(e1, e2, e3, e4)); }
-    @SuppressWarnings("unchecked") public B with(E e1, E e2, E e3, E e4, E e5) { return and(asList(e1, e2, e3, e4, e5)); }
-    @SuppressWarnings("unchecked") public B with(E e1, E e2, E e3, E e4, E e5, E e6) { return and(asList(e1, e2, e3, e4, e5, e6)); }
-    @SuppressWarnings("unchecked") public B with(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return and(asList(e1, e2, e3, e4, e5, e6, e7)); }
-    @SuppressWarnings("unchecked") public B with(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return and(asList(e1, e2, e3, e4, e5, e6, e7, e8)); }
-    @SuppressWarnings("unchecked") public B with(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return and(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    @SuppressWarnings("unchecked") public B with(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return and(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    @SuppressWarnings("unchecked") public B with(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
-        and(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    public B with(E e) { return and(iterableWith(e)); }
+    public B with(E e1, E e2) { return and(iterableWith(e1, e2)); }
+    public B with(E e1, E e2, E e3) { return and(iterableWith(e1, e2, e3)); }
+    public B with(E e1, E e2, E e3, E e4) { return and(iterableWith(e1, e2, e3, e4)); }
+    public B with(E e1, E e2, E e3, E e4, E e5) { return and(iterableWith(e1, e2, e3, e4, e5)); }
+    public B with(E e1, E e2, E e3, E e4, E e5, E e6) { return and(iterableWith(e1, e2, e3, e4, e5, e6)); }
+    public B with(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return and(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
+    public B with(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return and(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
+    public B with(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return and(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
+    public B with(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return and(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
+    public B with(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        and(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
         and(e11on);
         return updatedBuilder();
     }
 
-    @SuppressWarnings("unchecked") public B and(E e) { return and(asList(e)); }
-    @SuppressWarnings("unchecked") public B and(E e1, E e2) { return and(asList(e1, e2)); }
-    @SuppressWarnings("unchecked") public B and(E e1, E e2, E e3) { return and(asList(e1, e2, e3)); }
-    @SuppressWarnings("unchecked") public B and(E e1, E e2, E e3, E e4) { return and(asList(e1, e2, e3, e4)); }
-    @SuppressWarnings("unchecked") public B and(E e1, E e2, E e3, E e4, E e5) { return and(asList(e1, e2, e3, e4, e5)); }
-    @SuppressWarnings("unchecked") public B and(E e1, E e2, E e3, E e4, E e5, E e6) { return and(asList(e1, e2, e3, e4, e5, e6)); }
-    @SuppressWarnings("unchecked") public B and(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return and(asList(e1, e2, e3, e4, e5, e6, e7)); }
-    @SuppressWarnings("unchecked") public B and(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return and(asList(e1, e2, e3, e4, e5, e6, e7, e8)); }
-    @SuppressWarnings("unchecked") public B and(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return and(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    @SuppressWarnings("unchecked") public B and(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return and(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    @SuppressWarnings("unchecked") public B and(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
-        and(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    public B and(E e) { return and(iterableWith(e)); }
+    public B and(E e1, E e2) { return and(iterableWith(e1, e2)); }
+    public B and(E e1, E e2, E e3) { return and(iterableWith(e1, e2, e3)); }
+    public B and(E e1, E e2, E e3, E e4) { return and(iterableWith(e1, e2, e3, e4)); }
+    public B and(E e1, E e2, E e3, E e4, E e5) { return and(iterableWith(e1, e2, e3, e4, e5)); }
+    public B and(E e1, E e2, E e3, E e4, E e5, E e6) { return and(iterableWith(e1, e2, e3, e4, e5, e6)); }
+    public B and(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return and(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
+    public B and(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return and(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
+    public B and(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return and(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
+    public B and(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return and(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
+    public B and(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        and(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
         and(e11on);
         return updatedBuilder();
     }
