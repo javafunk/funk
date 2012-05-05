@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.asList;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.*;
-import static org.javafunk.funk.matchers.Matchers.hasOnlyItemsInOrder;
+import static org.javafunk.funk.matchers.IterableMatchers.hasOnlyItemsInOrder;
 import static org.junit.Assert.assertThat;
 
 public class LazilyZipEnumerateTest {

@@ -14,25 +14,24 @@ import org.hamcrest.StringDescription;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.junit.Test;
 
-import java.util.Collection;
-import java.util.Collections;
-
 import static java.lang.String.format;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.collectionWith;
-import static org.javafunk.funk.matchers.MatchersTest.Bean.bean;
+import static org.javafunk.funk.Literals.iterable;
+import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.funk.matchers.IterableMatchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.funk.matchers.IterableMatchers.hasOnlyItemsInOrder;
+import static org.javafunk.funk.matchers.IterableMatchersTest.Bean.bean;
 
-public class MatchersTest {
-
+public class IterableMatchersTest {
     @Test
     public void shouldReportOnMismatchedItemsInHasOnlyItemsInAnyOrder() {
         // Given
-        Collection<Integer> actual = collectionWith(1, 2, 5, 6);
-        Collection<Integer> expected = collectionWith(1, 2, 3, 4);
+        Iterable<Integer> actual = iterableWith(1, 2, 5, 6);
+        Iterable<Integer> expected = iterableWith(1, 2, 3, 4);
 
         // When
-        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
+        Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
 
         // Then
         assertThat(matcher, mismatchesSampleWithMessage(actual, "got <1>, <2>, <5>, <6>\n" +
@@ -43,11 +42,11 @@ public class MatchersTest {
     @Test
     public void shouldReportOnTooManyItemsInHasOnlyItemsInAnyOrder() {
         // Given
-        Collection<Integer> actual = collectionWith(1, 2, 5, 6);
-        Collection<Integer> expected = collectionWith(1, 2);
+        Iterable<Integer> actual = iterableWith(1, 2, 5, 6);
+        Iterable<Integer> expected = iterableWith(1, 2);
 
         // When
-        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
+        Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
 
         // Then
         assertThat(matcher, mismatchesSampleWithMessage(actual, "got <1>, <2>, <5>, <6>\n" +
@@ -58,11 +57,11 @@ public class MatchersTest {
     @Test
     public void shouldReportOnTooFewItemsInHasOnlyItemsInAnyOrder() {
         // Given
-        Collection<Integer> actual = collectionWith(1, 2);
-        Collection<Integer> expected = collectionWith(1, 2, 4, 5);
+        Iterable<Integer> actual = iterableWith(1, 2);
+        Iterable<Integer> expected = iterableWith(1, 2, 4, 5);
 
         // When
-        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
+        Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
 
         // Then
         assertThat(matcher, mismatchesSampleWithMessage(actual, "got <1>, <2>\n" +
@@ -71,39 +70,39 @@ public class MatchersTest {
     }
 
     @Test
-    public void shouldMatchIdenticalCollectionsInHasOnlyItemsInAnyOrder() {
+    public void shouldMatchIdenticalIterablesInHasOnlyItemsInAnyOrder() {
         // Given
-        Collection<Integer> actual = collectionWith(1, 2, 3);
-        Collection<Integer> expected = collectionWith(1, 2, 3);
+        Iterable<Integer> actual = iterableWith(1, 2, 3);
+        Iterable<Integer> expected = iterableWith(1, 2, 3);
 
         // When
-        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
+        Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
 
         // Then
         assertThat(matcher, matches(actual));
     }
 
     @Test
-    public void shouldMatchCollectionsDifferingOnlyInOrderInHasOnlyItemsInAnyOrder() {
+    public void shouldMatchIterablesDifferingOnlyInOrderInHasOnlyItemsInAnyOrder() {
         // Given
-        Collection<Integer> actual = collectionWith(1, 2, 3);
-        Collection<Integer> expected = collectionWith(1, 3, 2);
+        Iterable<Integer> actual = iterableWith(1, 2, 3);
+        Iterable<Integer> expected = iterableWith(1, 3, 2);
 
         // When
-        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
+        Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
 
         // Then
         assertThat(matcher, matches(actual));
     }
 
     @Test
-    public void shouldMismatchCollectionsDifferingOnlyInItemCountInHasOnlyItemsInAnyOrder() {
+    public void shouldMismatchIterablesDifferingOnlyInItemCountInHasOnlyItemsInAnyOrder() {
         // Given
-        Collection<Integer> actual = collectionWith(1, 2, 2, 3);
-        Collection<Integer> expected = collectionWith(1, 3, 3, 2);
+        Iterable<Integer> actual = iterableWith(1, 2, 2, 3);
+        Iterable<Integer> expected = iterableWith(1, 3, 3, 2);
 
         // When
-        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
+        Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
 
         // Then
         assertThat(matcher, mismatchesSampleWithMessage(actual, "got <1>, <2>, <2>, <3>\n" +
@@ -115,11 +114,11 @@ public class MatchersTest {
     @Test
     public void shouldReportWhenActualItemsIsEmpty() {
         // Given
-        Collection<Integer> actual = Collections.emptyList();
-        Collection<Integer> expected = collectionWith(1, 2, 3, 4);
+        Iterable<Integer> actual = iterable();
+        Iterable<Integer> expected = iterableWith(1, 2, 3, 4);
 
         // When
-        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
+        Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
 
         // Then
         assertThat(matcher, mismatchesSampleWithMessage(actual, "got empty collection"));
@@ -128,11 +127,11 @@ public class MatchersTest {
     @Test
     public void shouldReportWhenActualItemsIsNull() {
         // Given
-        Collection<Integer> actual = null;
-        Collection<Integer> expected = collectionWith(1, 2, 3, 4);
+        Iterable<Integer> actual = null;
+        Iterable<Integer> expected = iterableWith(1, 2, 3, 4);
 
         // When
-        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
+        Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
 
         // Then
         assertThat(matcher, mismatchesSampleWithMessage(actual, "was null"));
@@ -141,10 +140,10 @@ public class MatchersTest {
     @Test
     public void shouldReportWhenExpectedItemsIsEmpty() {
         // Given
-        Collection<Integer> expected = Collections.emptyList();
+        Iterable<Integer> expected = iterable();
 
         // When
-        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
+        Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
 
         // Then
         assertThat(matcher.toString(), is("Empty collection"));
@@ -153,23 +152,23 @@ public class MatchersTest {
     @Test
     public void shouldMatchWhenExpectedAndActualItemsAreEmpty() {
         // Given
-        Collection<Integer> actual = Collections.emptyList();
-        Collection<Integer> expected = Collections.emptyList();
+        Iterable<Integer> actual = iterable();
+        Iterable<Integer> expected = iterable();
 
         // When
-        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
+        Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
 
         // Then
         assertThat(matcher, matches(actual));
     }
 
     @Test
-    public void shouldReportItemsFoundInExpectedCollection() {
+    public void shouldReportItemsFoundInExpectedIterable() {
         // Given
-        Collection<Integer> expected = collectionWith(1, 2, 3, 4);
+        Iterable<Integer> expected = iterableWith(1, 2, 3, 4);
 
         // When
-        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInAnyOrder(expected);
+        Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
 
         // Then
         assertThat(matcher.toString(), is("Collection with size <4> containing exactly items <1>, <2>, <3>, <4> in any order."));
@@ -178,11 +177,11 @@ public class MatchersTest {
     @Test
     public void shouldReportOnMismatchedItemsInHasOnlyItemsInOrder() {
         // Given
-        Collection<Integer> actual = collectionWith(1, 2, 5, 6);
-        Collection<Integer> expected = collectionWith(1, 2, 3, 4);
+        Iterable<Integer> actual = iterableWith(1, 2, 5, 6);
+        Iterable<Integer> expected = iterableWith(1, 2, 3, 4);
 
         // When
-        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInOrder(expected);
+        Matcher<Iterable<Integer>> matcher = hasOnlyItemsInOrder(expected);
 
         // Then
         assertThat(matcher, mismatchesSampleWithMessage(actual, "got <1>, <2>, <5>, <6>\n" +
@@ -193,11 +192,11 @@ public class MatchersTest {
     @Test
     public void shouldReportOnTooManyItemsInHasOnlyItemsInOrder() {
         // Given
-        Collection<Integer> actual = collectionWith(1, 2, 5, 6);
-        Collection<Integer> expected = collectionWith(1, 2);
+        Iterable<Integer> actual = iterableWith(1, 2, 5, 6);
+        Iterable<Integer> expected = iterableWith(1, 2);
 
         // When
-        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInOrder(expected);
+        Matcher<Iterable<Integer>> matcher = hasOnlyItemsInOrder(expected);
 
         // Then
         assertThat(matcher, mismatchesSampleWithMessage(actual, "got <1>, <2>, <5>, <6>\n" +
@@ -208,11 +207,11 @@ public class MatchersTest {
     @Test
     public void shouldReportOnTooFewItemsInHasOnlyItemsInOrder() {
         // Given
-        Collection<Integer> actual = collectionWith(1, 2);
-        Collection<Integer> expected = collectionWith(1, 2, 4, 5);
+        Iterable<Integer> actual = iterableWith(1, 2);
+        Iterable<Integer> expected = iterableWith(1, 2, 4, 5);
 
         // When
-        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInOrder(expected);
+        Matcher<Iterable<Integer>> matcher = hasOnlyItemsInOrder(expected);
 
         // Then
         assertThat(matcher, mismatchesSampleWithMessage(actual, "got <1>, <2>\n" +
@@ -223,11 +222,11 @@ public class MatchersTest {
     @Test
     public void shouldReportOnIncorrectOrderInHasOnlyItemsInOrder() {
         // Given
-        Collection<Integer> actual = collectionWith(1, 2, 4, 3);
-        Collection<Integer> expected = collectionWith(1, 2, 3, 4);
+        Iterable<Integer> actual = iterableWith(1, 2, 4, 3);
+        Iterable<Integer> expected = iterableWith(1, 2, 3, 4);
 
         // When
-        Matcher<Collection<Integer>> matcher = Matchers.hasOnlyItemsInOrder(expected);
+        Matcher<Iterable<Integer>> matcher = hasOnlyItemsInOrder(expected);
 
         // Then
         assertThat(matcher, mismatchesSampleWithMessage(actual, "got <1>, <2>, <4>, <3>\n" +
@@ -241,7 +240,7 @@ public class MatchersTest {
         Bean expected = bean("A", "B", "C", "D");
 
         // When
-        Matcher<Bean> matcher = Matchers.isBeanWithSameAttributesAs(expected);
+        Matcher<Bean> matcher = ObjectMatchers.isBeanWithSameAttributesAs(expected);
 
         // Then
         assertThat(matcher, matches(actual));
@@ -254,7 +253,7 @@ public class MatchersTest {
         Bean expected = bean("A", "B", "C", "E");
 
         // When
-        Matcher<Bean> matcher = Matchers.isBeanWithSameAttributesAs(expected);
+        Matcher<Bean> matcher = ObjectMatchers.isBeanWithSameAttributesAs(expected);
 
         // Then
         assertThat(matcher, mismatchesSampleWithMessage(actual, "got      Bean <Bean<attribute1=<A>, attribute2=<B>, attribute3=<C>, attribute4=<E>, >>\n" +

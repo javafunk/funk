@@ -15,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Generators.toGeneratable;
 import static org.javafunk.funk.Lazily.take;
-import static org.javafunk.funk.matchers.Matchers.trueForAll;
+import static org.javafunk.funk.matchers.IterableMatchers.hasAllElementsSatisfying;
 
 public class ConstantGeneratorTest {
     @Test
@@ -28,7 +28,7 @@ public class ConstantGeneratorTest {
         Iterable<String> values = take(toGeneratable(generator), 1000);
 
         // Then
-        assertThat(values, trueForAll(new SelfDescribingPredicate<String>() {
+        assertThat(values, hasAllElementsSatisfying(new SelfDescribingPredicate<String>() {
             @Override public boolean evaluate(String actualValue) {
                 return actualValue.equals(expectedValue);
             }

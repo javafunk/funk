@@ -26,7 +26,7 @@ import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Lazily.cartesianProduct;
 import static org.javafunk.funk.Lazily.cycle;
 import static org.javafunk.funk.Literals.*;
-import static org.javafunk.funk.matchers.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.funk.matchers.IterableMatchers.hasOnlyItemsInAnyOrder;
 
 public class LazilyCartesianProductTest {
     @Test

@@ -20,7 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.matchers.Matchers.trueForAll;
+import static org.javafunk.funk.matchers.IterableMatchers.hasAllElementsSatisfying;
 import static org.javafunk.funk.monads.Option.*;
 
 public class OptionTest {
@@ -714,7 +714,7 @@ public class OptionTest {
          }
 
     private Matcher<Iterable<Boolean>> hasAllElementsEqualTo(final Boolean booleanValue) {
-        return trueForAll(new SelfDescribingPredicate<Boolean>(){
+        return hasAllElementsSatisfying(new SelfDescribingPredicate<Boolean>() {
             @Override public String describe() {
                 return "equal to " + booleanValue.toString();
             }

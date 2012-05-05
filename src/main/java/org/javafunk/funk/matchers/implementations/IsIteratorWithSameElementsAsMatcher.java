@@ -1,14 +1,14 @@
-package org.javafunk.funk.matchers;
+package org.javafunk.funk.matchers.implementations;
 
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
 import java.util.Iterator;
 
-public class IsValidIteratorWithSameElementsAs<E> extends TypeSafeMatcher<Iterator<E>> {
+public class IsIteratorWithSameElementsAsMatcher<E> extends TypeSafeMatcher<Iterator<E>> {
     private final Iterator<? extends E> expected;
 
-    public IsValidIteratorWithSameElementsAs(Iterator<? extends E> expected) {
+    public IsIteratorWithSameElementsAsMatcher(Iterator<? extends E> expected) {
         this.expected = expected;
     }
 

@@ -17,7 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.matchers.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.funk.matchers.IterableMatchers.hasOnlyItemsInAnyOrder;
 
 public class EithersTest {
     @Test

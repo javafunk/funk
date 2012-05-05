@@ -20,7 +20,7 @@ import static org.javafunk.funk.Generators.toGeneratable;
 import static org.javafunk.funk.Lazily.batch;
 import static org.javafunk.funk.Lazily.take;
 import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.matchers.Matchers.trueForAll;
+import static org.javafunk.funk.matchers.IterableMatchers.hasAllElementsSatisfying;
 
 public class CyclicGeneratorTest {
     @Test
@@ -33,7 +33,7 @@ public class CyclicGeneratorTest {
         Iterable<Iterable<Integer>> actualValues = batch(take(toGeneratable(generator), 3000), 3);
 
         // Then
-        assertThat(actualValues, trueForAll(new SelfDescribingPredicate<Iterable<Integer>>() {
+        assertThat(actualValues, hasAllElementsSatisfying(new SelfDescribingPredicate<Iterable<Integer>>() {
             @Override public boolean evaluate(Iterable<Integer> batch) {
                 return batch.equals(expectedValues);
             }
