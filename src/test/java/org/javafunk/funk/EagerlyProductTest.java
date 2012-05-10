@@ -10,6 +10,9 @@ package org.javafunk.funk;
 
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.is;
@@ -41,6 +44,18 @@ public class EagerlyProductTest {
     }
 
     @Test
+    public void shouldCalculateTheProductOfTheSuppliedBigIntegers() throws Exception {
+        // Given
+        Iterable<BigInteger> input = iterableWith(new BigInteger("123"), new BigInteger("456"), new BigInteger("789"));
+
+        // When
+        BigInteger result = Eagerly.product(input);
+
+        // Then
+        assertThat(result, is(new BigInteger("44253432")));
+    }
+
+    @Test
     public void shouldCalculateTheProductOfTheSuppliedFloats() throws Exception {
         // Given
         Iterable<Float> input = iterableWith(1.1F, 1.2F, 1.3F, 1.4F, 1.5F);
@@ -62,5 +77,17 @@ public class EagerlyProductTest {
 
         // Then
         assertThat(result, is(closeTo(3.6036F, 0.0001)));
+    }
+
+    @Test
+    public void shouldCalculateTheProductOfTheSuppliedBigDecimals() throws Exception {
+        // Given
+        Iterable<BigDecimal> input = iterableWith(new BigDecimal("1.23"), new BigDecimal("4.56"), new BigDecimal("7.89"));
+
+        // When
+        BigDecimal result = Eagerly.product(input);
+
+        // Then
+        assertThat(result, is(new BigDecimal("44.253432")));
     }
 }

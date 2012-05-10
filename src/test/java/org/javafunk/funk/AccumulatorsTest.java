@@ -11,6 +11,9 @@ package org.javafunk.funk;
 import org.javafunk.funk.functors.Reducer;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.is;
@@ -41,6 +44,18 @@ public class AccumulatorsTest {
     }
 
     @Test
+    public void shouldReturnAnAccumulatorThatAddsTheSuppliedBigIntegerInputToTheSuppliedAccumulatorValue() throws Exception {
+        // Given
+        Reducer<BigInteger, BigInteger> bigIntegerAdditionAccumulator = Accumulators.bigIntegerAdditionAccumulator();
+
+        // When
+        BigInteger result = bigIntegerAdditionAccumulator.accumulate(new BigInteger("123"), new BigInteger("345"));
+
+        // Then
+        assertThat(result, is(new BigInteger("468")));
+    }
+
+    @Test
     public void shouldReturnAnAccumulatorThatAddsTheSuppliedFloatInputToTheSuppliedAccumulatorValue() throws Exception {
         // Given
         Reducer<Float, Float> floatAdditionAccumulator = Accumulators.floatAdditionAccumulator();
@@ -61,7 +76,19 @@ public class AccumulatorsTest {
         Double result = doubleAdditionAccumulator.accumulate(21.4D, 6.7D);
 
         // Then
-        assertThat(result.doubleValue(), is(closeTo(28.1, 0.01)));
+        assertThat(result, is(closeTo(28.1, 0.01)));
+    }
+
+    @Test
+    public void shouldReturnAnAccumulatorThatAddsTheSuppliedBigDecimalInputToTheSuppliedAccumulatorValue() throws Exception {
+        // Given
+        Reducer<BigDecimal, BigDecimal> bigDecimalAdditionAccumulator = Accumulators.bigDecimalAdditionAccumulator();
+
+        // When
+        BigDecimal result = bigDecimalAdditionAccumulator.accumulate(new BigDecimal("1.23"), new BigDecimal("3.45"));
+
+        // Then
+        assertThat(result, is(new BigDecimal("4.68")));
     }
 
     @Test
@@ -89,6 +116,18 @@ public class AccumulatorsTest {
     }
 
     @Test
+    public void shouldReturnAnAccumulatorThatMultipliesTheSuppliedAccumulatorValueByTheSuppliedBigIntegerInput() throws Exception {
+        // Given
+        Reducer<BigInteger, BigInteger> doubleMultiplicationAccumulator = Accumulators.bigIntegerMultiplicationAccumulator();
+
+        // When
+        BigInteger result = doubleMultiplicationAccumulator.accumulate(new BigInteger("123"), new BigInteger("456"));
+
+        // Then
+        assertThat(result, is(new BigInteger("56088")));
+    }
+
+    @Test
     public void shouldReturnAnAccumulatorThatMultipliesTheSuppliedAccumulatorValueByTheSuppliedFloatInput() throws Exception {
         // Given
         Reducer<Float, Float> floatMultiplicationAccumulator = Accumulators.floatMultiplicationAccumulator();
@@ -109,6 +148,18 @@ public class AccumulatorsTest {
         Double result = doubleMultiplicationAccumulator.accumulate(2.5D, 3.7D);
 
         // Then
-        assertThat(result.doubleValue(), is(closeTo(9.25D, 0.01)));
+        assertThat(result, is(closeTo(9.25D, 0.01)));
+    }
+
+    @Test
+    public void shouldReturnAnAccumulatorThatMultipliesTheSuppliedAccumulatorValueByTheSuppliedBigDecimalInput() throws Exception {
+        // Given
+        Reducer<BigDecimal, BigDecimal> doubleMultiplicationAccumulator = Accumulators.bigDecimalMultiplicationAccumulator();
+
+        // When
+        BigDecimal result = doubleMultiplicationAccumulator.accumulate(new BigDecimal("1.23"), new BigDecimal("4.56"));
+
+        // Then
+        assertThat(result, is(new BigDecimal("5.6088")));
     }
 }

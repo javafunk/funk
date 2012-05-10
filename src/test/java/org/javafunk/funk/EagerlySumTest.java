@@ -10,6 +10,8 @@ package org.javafunk.funk;
 
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -43,6 +45,18 @@ public class EagerlySumTest {
     }
 
     @Test
+    public void shouldSumTheSuppliedBigIntegers() {
+        // Given
+        Iterable<BigInteger> inputs = iterableWith(new BigInteger("123"), new BigInteger("234"), new BigInteger("345"));
+
+        // When
+        BigInteger sum = Eagerly.sum(inputs);
+
+        // Then
+        assertThat(sum, is(new BigInteger("702")));
+    }
+
+    @Test
     public void shouldSumTheSuppliedDoubles() {
         // Given
         Iterable<Double> inputs = iterableWith(1.6D, 2.2D, 3.5D);
@@ -64,5 +78,17 @@ public class EagerlySumTest {
 
         // Then
         assertThat(sum.doubleValue(), is(closeTo(7.3D, 0.01)));
+    }
+
+    @Test
+    public void shouldSumTheSuppliedBigDecimals() {
+        // Given
+        Iterable<BigDecimal> inputs = iterableWith(new BigDecimal("1.23"), new BigDecimal("2.34"), new BigDecimal("3.45"));
+
+        // When
+        BigDecimal sum = Eagerly.sum(inputs);
+
+        // Then
+        assertThat(sum, is(new BigDecimal("7.02")));
     }
 }

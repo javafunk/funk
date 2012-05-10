@@ -17,6 +17,8 @@ import org.javafunk.funk.functors.predicates.BinaryPredicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.javafunk.funk.functors.procedures.UnaryProcedure;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 
 import static java.util.Collections.emptyList;
@@ -64,12 +66,20 @@ public class Eagerly {
         return reduce(iterable, longAdditionAccumulator());
     }
 
+    public static BigInteger sum(Iterable<BigInteger> iterable) {
+        return reduce(iterable, bigIntegerAdditionAccumulator());
+    }
+
     public static Double sum(Iterable<Double> iterable) {
         return reduce(iterable, doubleAdditionAccumulator());
     }
 
     public static Float sum(Iterable<Float> iterable) {
         return reduce(iterable, floatAdditionAccumulator());
+    }
+
+    public static BigDecimal sum(Iterable<BigDecimal> iterable) {
+        return reduce(iterable, bigDecimalAdditionAccumulator());
     }
 
     public static Integer product(Iterable<Integer> iterable) {
@@ -80,12 +90,20 @@ public class Eagerly {
         return reduce(iterable, longMultiplicationAccumulator());
     }
 
+    public static BigInteger product(Iterable<BigInteger> iterable) {
+        return reduce(iterable, bigIntegerMultiplicationAccumulator());
+    }
+
     public static Float product(Iterable<Float> iterable) {
         return reduce(iterable, floatMultiplicationAccumulator());
     }
 
     public static Double product(Iterable<Double> iterable) {
         return reduce(iterable, doubleMultiplicationAccumulator());
+    }
+
+    public static BigDecimal product(Iterable<BigDecimal> iterable) {
+        return reduce(iterable, bigDecimalMultiplicationAccumulator());
     }
 
     public static <T> Boolean any(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
