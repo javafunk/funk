@@ -12,6 +12,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.javafunk.funk.behaviours.Mappable;
 import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.functors.functions.NullaryFunction;
 
 import java.util.NoSuchElementException;
 import java.util.concurrent.Callable;
@@ -48,6 +49,8 @@ public abstract class Option<T>
     public abstract T getOrElse(T value);
 
     public abstract T getOrNull();
+
+    public abstract T getOrCall(NullaryFunction<T> function);
 
     public abstract T getOrCall(Callable<T> callable) throws Exception;
 
@@ -93,6 +96,11 @@ public abstract class Option<T>
 
         @Override public T getOrNull() {
             return null;
+        }
+
+        @Override public T getOrCall(NullaryFunction<T> function) {
+            checkNotNull(function);
+            return function.call();
         }
 
         @Override public T getOrCall(Callable<T> callable) throws Exception {
@@ -157,6 +165,11 @@ public abstract class Option<T>
         }
 
         @Override public T getOrNull() {
+            return get();
+        }
+
+        @Override public T getOrCall(NullaryFunction<T> function) {
+            checkNotNull(function);
             return get();
         }
 
