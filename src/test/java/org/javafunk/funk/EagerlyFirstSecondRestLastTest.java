@@ -300,26 +300,27 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldReturnTheLastElementFromTheSuppliedIterable() throws Exception {
+    public void shouldReturnAnOptionOfTheLastElementFromTheSuppliedIterable() throws Exception {
         // Given
         Iterable<Integer> input = listWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Integer output = Eagerly.last(input);
+        Option<Integer> output = Eagerly.last(input);
 
         // Then
-        assertThat(output, is(1));
+        assertThat(output, is(some(1)));
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void shouldThrowANoSuchElementExceptionForLastIfTheSuppliedIterableIsEmpty() throws Exception {
+    @Test
+    public void shouldReturnNoneForLastIfTheSuppliedIterableIsEmpty() throws Exception {
         // Given
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Eagerly.last(input);
+        Option<Integer> output = Eagerly.last(input);
 
-        // Then a NoSuchElementException should be thrown.
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
     }
 
     @Test
