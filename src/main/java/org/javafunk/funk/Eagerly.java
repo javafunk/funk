@@ -32,7 +32,6 @@ import static org.javafunk.funk.functors.adapters.EquivalenceBinaryPredicateAdap
 import static org.javafunk.funk.functors.adapters.IndexerUnaryFunctionAdapter.indexerUnaryFunction;
 import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 import static org.javafunk.funk.functors.adapters.ReducerBinaryFunctionAdapter.reducerBinaryFunction;
-import static org.javafunk.funk.monads.Option.some;
 
 public class Eagerly {
     private Eagerly() {}
@@ -353,8 +352,8 @@ public class Eagerly {
         return materialize(Lazily.repeat(iterable, numberOfTimesToRepeat));
     }
 
-    static <T> T second(Iterable<? extends T> iterable) {
-        return first(Lazily.rest(iterable)).get();
+    static <T> Option<T> second(Iterable<? extends T> iterable) {
+        return first(Lazily.rest(iterable));
     }
 
     private static class SliceHelper {
