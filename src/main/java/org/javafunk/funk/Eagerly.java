@@ -250,8 +250,8 @@ public class Eagerly {
         return first(slice(iterable, -1, null));
     }
 
-    public static <T> T last(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
-        return last(filter(iterable, predicate)).get();
+    public static <T> Option<T> last(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
+        return last(filter(iterable, predicate));
     }
 
     public static <T> Collection<T> last(Iterable<T> iterable, int numberOfElementsRequired) {
