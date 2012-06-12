@@ -9,6 +9,7 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.functors.Predicate;
+import org.javafunk.funk.monads.Option;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -18,9 +19,8 @@ import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.collectionWith;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.*;
+import static org.javafunk.funk.monads.Option.some;
 
 public class EagerlyFirstSecondRestLastTest {
     @Test
@@ -29,21 +29,22 @@ public class EagerlyFirstSecondRestLastTest {
         Iterable<Integer> input = iterableWith(10, 9, 8, 7);
 
         // When
-        Integer output = Eagerly.first(input);
+        Option<Integer> output = Eagerly.first(input);
 
         // Then
-        assertThat(output, is(10));
+        assertThat(output, is(some(10)));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void shouldThrowANoSuchElementExceptionForFirstIfTheSuppliedIterableIsEmpty() throws Exception {
         // Given
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Eagerly.first(input);
+        Option<Integer> output = Eagerly.first(input);
 
-        // Then a NoSuchElementException should be thrown.
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
     }
 
     @Test

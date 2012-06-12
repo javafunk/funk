@@ -16,6 +16,7 @@ import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.functors.predicates.BinaryPredicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.javafunk.funk.functors.procedures.UnaryProcedure;
+import org.javafunk.funk.monads.Option;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -31,6 +32,7 @@ import static org.javafunk.funk.functors.adapters.EquivalenceBinaryPredicateAdap
 import static org.javafunk.funk.functors.adapters.IndexerUnaryFunctionAdapter.indexerUnaryFunction;
 import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 import static org.javafunk.funk.functors.adapters.ReducerBinaryFunctionAdapter.reducerBinaryFunction;
+import static org.javafunk.funk.monads.Option.some;
 
 public class Eagerly {
     private Eagerly() {}
@@ -224,12 +226,17 @@ public class Eagerly {
         return materialize(Lazily.reject(iterable, predicate));
     }
 
-    public static <T> T first(Iterable<? extends T> iterable) {
-        return iterable.iterator().next();
+    public static <T> Option<T> first(Iterable<? extends T> iterable) {
+        Iterator<? extends T> iterator = iterable.iterator();
+        if(iterator.hasNext()){
+            return Option.some(iterator.next());
+        }else{
+            return Option.none();
+        }
     }
 
     public static <T> T first(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
-        return first(filter(iterable, predicate));
+        return first(filter(iterable, predicate)).get();
     }
 
     public static <T> Collection<T> first(Iterable<T> iterable, int numberOfElementsRequired) {
@@ -347,7 +354,7 @@ public class Eagerly {
     }
 
     static <T> T second(Iterable<? extends T> iterable) {
-        return first(Lazily.rest(iterable));
+        return first(Lazily.rest(iterable)).get();
     }
 
     private static class SliceHelper {
