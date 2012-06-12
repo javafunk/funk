@@ -53,21 +53,22 @@ public class EagerlyFirstSecondRestLastTest {
         Iterable<Integer> input = iterableWith(10, 9, 8, 7);
 
         // When
-        Integer output = Eagerly.second(input);
+        Option<Integer> output = Eagerly.second(input);
 
         // Then
-        assertThat(output, is(9));
+        assertThat(output, is(some(9)));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void shouldThrowANoSuchElementExceptionForSecondIfTheSuppliedIterableIsEmpty() throws Exception {
         // Given
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Eagerly.second(input);
+        Option<Integer> output = Eagerly.second(input);
 
-        // Then a NoSuchElementException should be thrown.
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
     }
 
     @Test
