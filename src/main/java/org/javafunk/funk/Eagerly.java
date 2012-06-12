@@ -246,12 +246,12 @@ public class Eagerly {
         return first(filter(iterable, predicate), numberOfElementsRequired);
     }
 
-    public static <T> T last(Iterable<T> iterable) {
-        return slice(iterable, -1, null).iterator().next();
+    public static <T> Option<T> last(Iterable<T> iterable) {
+        return first(slice(iterable, -1, null));
     }
 
     public static <T> T last(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
-        return last(filter(iterable, predicate));
+        return last(filter(iterable, predicate)).get();
     }
 
     public static <T> Collection<T> last(Iterable<T> iterable, int numberOfElementsRequired) {
