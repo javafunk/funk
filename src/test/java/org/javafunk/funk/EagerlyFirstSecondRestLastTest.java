@@ -24,7 +24,7 @@ import static org.javafunk.funk.monads.Option.some;
 
 public class EagerlyFirstSecondRestLastTest {
     @Test
-    public void shouldReturnTheFirstElementFromTheSuppliedIterable() throws Exception {
+    public void shouldReturnAnOptionOfTheFirstElementFromTheSuppliedIterable() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(10, 9, 8, 7);
 
@@ -36,7 +36,7 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldThrowANoSuchElementExceptionForFirstIfTheSuppliedIterableIsEmpty() throws Exception {
+    public void shouldReturnNoneForFirstIfTheSuppliedIterableIsEmpty() throws Exception {
         // Given
         Iterable<Integer> input = new ArrayList<Integer>();
 
@@ -48,7 +48,7 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldReturnTheSecondElementFromTheSuppliedIterable() throws Exception {
+    public void shouldReturnAnOptionOfTheSecondElementFromTheSuppliedIterable() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(10, 9, 8, 7);
 
@@ -60,7 +60,7 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldThrowANoSuchElementExceptionForSecondIfTheSuppliedIterableIsEmpty() throws Exception {
+    public void shouldReturnNoneForSecondIfTheSuppliedIterableIsEmpty() throws Exception {
         // Given
         Iterable<Integer> input = new ArrayList<Integer>();
 
@@ -72,12 +72,12 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldReturnTheFirstElementInTheSuppliedIterableMatchingTheSuppliedPredicate() throws Exception {
+    public void shouldReturnAnOptionOfTheFirstElementInTheSuppliedIterableMatchingTheSuppliedPredicate() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Integer output = Eagerly.first(input, new Predicate<Integer>() {
+        Option<Integer> output = Eagerly.first(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -88,16 +88,16 @@ public class EagerlyFirstSecondRestLastTest {
         });
 
         // Then
-        assertThat(output, is(8));
+        assertThat(output, is(some(8)));
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void shouldThrowANoSuchElementExceptionForPredicatedFirstIfTheSuppliedIterableIsEmpty() throws Exception {
+    @Test
+    public void shouldReturnNoneForPredicatedFirstIfTheSuppliedIterableIsEmpty() throws Exception {
         // Given
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Eagerly.first(input, new Predicate<Integer>() {
+        Option<Integer> output = Eagerly.first(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -107,16 +107,17 @@ public class EagerlyFirstSecondRestLastTest {
             }
         });
 
-        // Then a NoSuchElementException is thrown
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void shouldThrowANoSuchElementExceptionForPredicatedFirstIfNoElementsInTheSuppliedIterableMatch() throws Exception {
+    @Test
+    public void shouldReturnNoneForPredicatedFirstIfNoElementsInTheSuppliedIterableMatch() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(1, 3, 5, 7);
 
         // When
-        Eagerly.first(input, new Predicate<Integer>() {
+        Option<Integer> output = Eagerly.first(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -126,7 +127,8 @@ public class EagerlyFirstSecondRestLastTest {
             }
         });
 
-        // Then a NoSuchElementException is thrown
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
     }
 
     @Test

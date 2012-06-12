@@ -234,8 +234,8 @@ public class Eagerly {
         }
     }
 
-    public static <T> T first(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
-        return first(filter(iterable, predicate)).get();
+    public static <T> Option<T> first(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
+        return first(filter(iterable, predicate));
     }
 
     public static <T> Collection<T> first(Iterable<T> iterable, int numberOfElementsRequired) {
