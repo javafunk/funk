@@ -12,6 +12,7 @@ import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.datastructures.tuples.Quadruple;
 import org.javafunk.funk.datastructures.tuples.Triple;
 import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 
 import java.util.Iterator;
 
@@ -19,7 +20,7 @@ import static org.javafunk.funk.Eagerly.first;
 import static org.javafunk.funk.Lazily.rest;
 import static org.javafunk.funk.Literals.tuple;
 
-class Mappers {
+public class Mappers {
     private Mappers() {}
 
     @SuppressWarnings("unchecked")
@@ -62,6 +63,14 @@ class Mappers {
         return new Mapper<Iterable<? extends T>, Iterator<? extends T>>() {
             public Iterator<? extends T> map(Iterable<? extends T> iterable) {
                 return iterable.iterator();
+            }
+        };
+    }
+
+    public static <T> Mapper<T, T> identity() {
+        return new Mapper<T, T>() {
+            @Override public T map(T input) {
+                return input;
             }
         };
     }
