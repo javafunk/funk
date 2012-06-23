@@ -34,7 +34,7 @@ public class Sets {
     }
 
     public static <T> Set<T> intersection(Iterable<? extends Iterable<? extends T>> iterables) {
-        Set<T> intersectionSet = new HashSet<T>(collectionFrom(first(iterables)));
+        Set<T> intersectionSet = new HashSet<T>(collectionFrom(first(iterables).get()));
         for (Iterable<? extends T> iterable : rest(iterables)) {
             intersectionSet.retainAll(collectionFrom(iterable));
         }
@@ -46,7 +46,7 @@ public class Sets {
         if(arguments.isEmpty()){
             return new HashSet<T>();
         }else{
-            Set<T> differenceSet = asSet(first(arguments));
+            Set<T> differenceSet = asSet(first(arguments).get());
             differenceSet.removeAll(union(rest(arguments)));
             return differenceSet;
         }

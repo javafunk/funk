@@ -28,8 +28,8 @@ public class Mappers {
         return new Mapper<Iterable<?>, Pair<S, T>>() {
             public Pair<S, T> map(Iterable<?> input) {
                 return tuple(
-                        (S) first(input),
-                        (T) first(rest(input)));
+                        (S) first(input).get(),
+                        (T) first(rest(input)).get());
             }
         };
     }
@@ -39,9 +39,9 @@ public class Mappers {
         return new Mapper<Iterable<?>, Triple<S, T, V>>() {
             public Triple<S, T, V> map(Iterable<?> input) {
                 return tuple(
-                        (S) first(input),
-                        (T) first(rest(input)),
-                        (V) first(rest(rest(input))));
+                        (S) first(input).get(),
+                        (T) first(rest(input)).get(),
+                        (V) first(rest(rest(input))).get());
             }
         };
     }
@@ -51,10 +51,10 @@ public class Mappers {
         return new Mapper<Iterable<?>, Quadruple<S, T, U, V>>() {
             public Quadruple<S, T, U, V> map(Iterable<?> iterable) {
                 return tuple(
-                        (S) first(iterable),
-                        (T) first(rest(iterable)),
-                        (U) first(rest(rest(iterable))),
-                        (V) first(rest(rest(rest(iterable)))));
+                        (S) first(iterable).get(),
+                        (T) first(rest(iterable)).get(),
+                        (U) first(rest(rest(iterable))).get(),
+                        (V) first(rest(rest(rest(iterable)))).get());
             }
         };
     }

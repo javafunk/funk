@@ -16,6 +16,7 @@ import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.functors.predicates.BinaryPredicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.javafunk.funk.functors.procedures.UnaryProcedure;
+import org.javafunk.funk.monads.Option;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -224,11 +225,16 @@ public class Eagerly {
         return materialize(Lazily.reject(iterable, predicate));
     }
 
-    public static <T> T first(Iterable<? extends T> iterable) {
-        return iterable.iterator().next();
+    public static <T> Option<T> first(Iterable<? extends T> iterable) {
+        Iterator<? extends T> iterator = iterable.iterator();
+        if(iterator.hasNext()){
+            return Option.some(iterator.next());
+        }else{
+            return Option.none();
+        }
     }
 
-    public static <T> T first(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
+    public static <T> Option<T> first(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
         return first(filter(iterable, predicate));
     }
 
@@ -240,11 +246,11 @@ public class Eagerly {
         return first(filter(iterable, predicate), numberOfElementsRequired);
     }
 
-    public static <T> T last(Iterable<T> iterable) {
-        return slice(iterable, -1, null).iterator().next();
+    public static <T> Option<T> last(Iterable<T> iterable) {
+        return first(slice(iterable, -1, null));
     }
 
-    public static <T> T last(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
+    public static <T> Option<T> last(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
         return last(filter(iterable, predicate));
     }
 
@@ -346,7 +352,7 @@ public class Eagerly {
         return materialize(Lazily.repeat(iterable, numberOfTimesToRepeat));
     }
 
-    static <T> T second(Iterable<? extends T> iterable) {
+    static <T> Option<T> second(Iterable<? extends T> iterable) {
         return first(Lazily.rest(iterable));
     }
 
