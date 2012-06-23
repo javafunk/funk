@@ -9,73 +9,74 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.functors.Predicate;
+import org.javafunk.funk.monads.Option;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.collectionWith;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.*;
+import static org.javafunk.funk.monads.Option.some;
 
 public class EagerlyFirstSecondRestLastTest {
     @Test
-    public void shouldReturnTheFirstElementFromTheSuppliedIterable() throws Exception {
+    public void shouldReturnAnOptionOfTheFirstElementFromTheSuppliedIterable() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(10, 9, 8, 7);
 
         // When
-        Integer output = Eagerly.first(input);
+        Option<Integer> output = Eagerly.first(input);
 
         // Then
-        assertThat(output, is(10));
+        assertThat(output, is(some(10)));
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void shouldThrowANoSuchElementExceptionForFirstIfTheSuppliedIterableIsEmpty() throws Exception {
+    @Test
+    public void shouldReturnNoneForFirstIfTheSuppliedIterableIsEmpty() throws Exception {
         // Given
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Eagerly.first(input);
+        Option<Integer> output = Eagerly.first(input);
 
-        // Then a NoSuchElementException should be thrown.
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
     }
 
     @Test
-    public void shouldReturnTheSecondElementFromTheSuppliedIterable() throws Exception {
+    public void shouldReturnAnOptionOfTheSecondElementFromTheSuppliedIterable() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(10, 9, 8, 7);
 
         // When
-        Integer output = Eagerly.second(input);
+        Option<Integer> output = Eagerly.second(input);
 
         // Then
-        assertThat(output, is(9));
+        assertThat(output, is(some(9)));
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void shouldThrowANoSuchElementExceptionForSecondIfTheSuppliedIterableIsEmpty() throws Exception {
+    @Test
+    public void shouldReturnNoneForSecondIfTheSuppliedIterableIsEmpty() throws Exception {
         // Given
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Eagerly.second(input);
+        Option<Integer> output = Eagerly.second(input);
 
-        // Then a NoSuchElementException should be thrown.
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
     }
 
     @Test
-    public void shouldReturnTheFirstElementInTheSuppliedIterableMatchingTheSuppliedPredicate() throws Exception {
+    public void shouldReturnAnOptionOfTheFirstElementInTheSuppliedIterableMatchingTheSuppliedPredicate() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Integer output = Eagerly.first(input, new Predicate<Integer>() {
+        Option<Integer> output = Eagerly.first(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -86,16 +87,16 @@ public class EagerlyFirstSecondRestLastTest {
         });
 
         // Then
-        assertThat(output, is(8));
+        assertThat(output, is(some(8)));
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void shouldThrowANoSuchElementExceptionForPredicatedFirstIfTheSuppliedIterableIsEmpty() throws Exception {
+    @Test
+    public void shouldReturnNoneForPredicatedFirstIfTheSuppliedIterableIsEmpty() throws Exception {
         // Given
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Eagerly.first(input, new Predicate<Integer>() {
+        Option<Integer> output = Eagerly.first(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -105,16 +106,17 @@ public class EagerlyFirstSecondRestLastTest {
             }
         });
 
-        // Then a NoSuchElementException is thrown
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void shouldThrowANoSuchElementExceptionForPredicatedFirstIfNoElementsInTheSuppliedIterableMatch() throws Exception {
+    @Test
+    public void shouldReturnNoneForPredicatedFirstIfNoElementsInTheSuppliedIterableMatch() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(1, 3, 5, 7);
 
         // When
-        Eagerly.first(input, new Predicate<Integer>() {
+        Option<Integer> output = Eagerly.first(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -124,7 +126,8 @@ public class EagerlyFirstSecondRestLastTest {
             }
         });
 
-        // Then a NoSuchElementException is thrown
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
     }
 
     @Test
@@ -296,35 +299,36 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldReturnTheLastElementFromTheSuppliedIterable() throws Exception {
+    public void shouldReturnAnOptionOfTheLastElementFromTheSuppliedIterable() throws Exception {
         // Given
         Iterable<Integer> input = listWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Integer output = Eagerly.last(input);
+        Option<Integer> output = Eagerly.last(input);
 
         // Then
-        assertThat(output, is(1));
+        assertThat(output, is(some(1)));
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void shouldThrowANoSuchElementExceptionForLastIfTheSuppliedIterableIsEmpty() throws Exception {
+    @Test
+    public void shouldReturnNoneForLastIfTheSuppliedIterableIsEmpty() throws Exception {
         // Given
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Eagerly.last(input);
+        Option<Integer> output = Eagerly.last(input);
 
-        // Then a NoSuchElementException should be thrown.
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
     }
 
     @Test
-    public void shouldReturnTheLastElementInTheSuppliedIterableMatchingTheSuppliedPredicate() throws Exception {
+    public void shouldReturnAnOptionOfTheLastElementInTheSuppliedIterableMatchingTheSuppliedPredicate() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Integer output = Eagerly.last(input, new Predicate<Integer>() {
+        Option<Integer> output = Eagerly.last(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -335,16 +339,16 @@ public class EagerlyFirstSecondRestLastTest {
         });
 
         // Then
-        assertThat(output, is(2));
+        assertThat(output, is(some(2)));
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void shouldThrowANoSuchElementExceptionForPredicatedLastIfTheSuppliedIterableIsEmpty() throws Exception {
+    @Test
+    public void shouldReturnNoneForPredicatedLastIfTheSuppliedIterableIsEmpty() throws Exception {
         // Given
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Eagerly.last(input, new Predicate<Integer>() {
+        Option<Integer> output = Eagerly.last(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -354,16 +358,17 @@ public class EagerlyFirstSecondRestLastTest {
             }
         });
 
-        // Then a NoSuchElementException is thrown
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void shouldThrowANoSuchElementExceptionForPredicatedLastIfNoElementsInTheSuppliedIterableMatch() throws Exception {
+    @Test
+    public void shouldReturnNoneForPredicatedLastIfNoElementsInTheSuppliedIterableMatch() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(1, 3, 5, 7);
 
         // When
-        Eagerly.last(input, new Predicate<Integer>() {
+        Option<Integer> output = Eagerly.last(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -373,7 +378,8 @@ public class EagerlyFirstSecondRestLastTest {
             }
         });
 
-        // Then a NoSuchElementException is thrown
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
     }
 
     @Test

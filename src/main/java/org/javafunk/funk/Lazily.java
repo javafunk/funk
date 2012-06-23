@@ -245,11 +245,11 @@ public class Lazily {
 
     private static Iterable<? extends Iterable<?>> cartesianProduct(final List<? extends Iterable<?>> iterables) {
         if (iterables.size() == 2) {
-            return cartesianProduct(first(iterables), second(iterables));
+            return cartesianProduct(first(iterables).get(), second(iterables).get());
         }
 
         Iterable<? extends Pair<?, ? extends Iterable<?>>> pairs = cartesianProduct(
-                first(iterables),
+                first(iterables).get(),
                 cartesianProduct(rest(iterables)));
 
         return map(pairs, new Mapper<Pair<?, ? extends Iterable<?>>, Iterable<?>>() {
