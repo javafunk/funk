@@ -11,6 +11,7 @@ package org.javafunk.funk.monads;
 import org.hamcrest.Matcher;
 import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.NullaryFunction;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.matchers.SelfDescribingPredicate;
 import org.junit.Test;
 
@@ -284,7 +285,6 @@ public class OptionTest {
 
         // Then a NullPointerException is thrown.
     }
-
 
     @Test
     public void shouldReturnNoneOverTheMappedTypeIfMapCalledOnNone() throws Exception {
@@ -623,6 +623,54 @@ public class OptionTest {
     }
 
     @Test
+    public void shouldMapSomeUsingUnaryFunction() throws Exception {
+        // Given
+        Option<String> option = some("string");
+        UnaryFunction<String, Integer> function = new UnaryFunction<String, Integer>() {
+            @Override public Integer call(String string) {
+                return string.length();
+            }
+        };
+        Option<Integer> expected = some(6);
+
+        // When
+        Option<Integer> actual = option.map(function);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnNoneIfMappingNoneWithUnaryFunction() throws Exception {
+        // Given
+        Option<String> option = none();
+        UnaryFunction<String, Integer> function = new UnaryFunction<String, Integer>() {
+            @Override public Integer call(String string) {
+                return string.length();
+            }
+        };
+        Option<Integer> expected = none();
+
+        // When
+        Option<Integer> actual = option.map(function);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfMappingUsingNullUnaryFunction() throws Exception {
+        // Given
+        Option<String> option = some("string");
+        UnaryFunction<String, Option<Integer>> function = null;
+
+        // When
+        option.map(function);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test
     public void shouldReturnTheReturnValueOfTheSuppliedMapperIfFlatMapCalledOnSome() throws Exception {
         // Given
         Option<String> option = some("string");
@@ -648,6 +696,54 @@ public class OptionTest {
 
         // When
         option.flatMap(mapper);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test
+    public void shouldFlatMapSomeUsingUnaryFunction() throws Exception {
+        // Given
+        Option<String> option = some("string");
+        UnaryFunction<String, Option<Integer>> function = new UnaryFunction<String, Option<Integer>>() {
+            @Override public Option<Integer> call(String input) {
+                return some(input.length());
+            }
+        };
+        Option<Integer> expected = some(6);
+
+        // When
+        Option<Integer> actual = option.flatMap(function);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnNoneIfFlatMappingNoneWithUnaryFunction() throws Exception {
+        // Given
+        Option<String> option = none();
+        UnaryFunction<String, Option<Integer>> function = new UnaryFunction<String, Option<Integer>>() {
+            @Override public Option<Integer> call(String string) {
+                return some(string.length());
+            }
+        };
+        Option<Integer> expected = none();
+
+        // When
+        Option<Integer> actual = option.flatMap(function);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfFlatMappingUsingNullUnaryFunction() throws Exception {
+        // Given
+        Option<String> option = some("string");
+        UnaryFunction<String, Option<Integer>> function = null;
+
+        // When
+        option.flatMap(function);
 
         // Then a NullPointerException is thrown.
     }

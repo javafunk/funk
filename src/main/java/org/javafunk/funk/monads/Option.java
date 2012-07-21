@@ -14,12 +14,14 @@ import org.javafunk.funk.behaviours.Mappable;
 import org.javafunk.funk.behaviours.Value;
 import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.NullaryFunction;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.monads.options.None;
 import org.javafunk.funk.monads.options.Some;
 
 import java.util.concurrent.Callable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 
 /**
  * The {@code Option<T>} class is a base class for implementations of the option monad.
@@ -138,9 +140,17 @@ public abstract class Option<T>
 
     public abstract Option<T> orOption(T other);
 
-    public abstract <S> Option<S> map(Mapper<? super T, ? extends S> mapper);
+    public abstract <S> Option<S> map(UnaryFunction<? super T, ? extends S> function);
 
-    public abstract <S> Option<S> flatMap(Mapper<? super T, ? extends Option<S>> mapper);
+    public <S> Option<S> map(Mapper<? super T, ? extends S> mapper) {
+        return map(mapperUnaryFunction(checkNotNull(mapper)));
+    }
+
+    public abstract <S> Option<S> flatMap(UnaryFunction<? super T, ? extends Option<S>> function);
+
+    public <S> Option<S> flatMap(Mapper<? super T, ? extends Option<S>> mapper) {
+        return flatMap(mapperUnaryFunction(checkNotNull(mapper)));
+    }
 
     @Override
     public boolean equals(Object other) {

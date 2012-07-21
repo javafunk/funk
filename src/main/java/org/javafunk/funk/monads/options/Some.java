@@ -1,12 +1,15 @@
 package org.javafunk.funk.monads.options;
 
 import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter;
 import org.javafunk.funk.functors.functions.NullaryFunction;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.monads.Option;
 
 import java.util.concurrent.Callable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 
 public class Some<T> extends Option<T> {
     private final T value;
@@ -68,14 +71,14 @@ public class Some<T> extends Option<T> {
         return this;
     }
 
-    @Override public <S> Option<S> map(Mapper<? super T, ? extends S> mapper) {
-        checkNotNull(mapper);
-        return some(mapper.map(get()));
+    @Override public <S> Option<S> map(UnaryFunction<? super T, ? extends S> function) {
+        checkNotNull(function);
+        return some(function.call(get()));
     }
 
-    @Override public <S> Option<S> flatMap(Mapper<? super T, ? extends Option<S>> mapper) {
-        checkNotNull(mapper);
-        return mapper.map(get());
+    @Override public <S> Option<S> flatMap(UnaryFunction<? super T, ? extends Option<S>> function) {
+        checkNotNull(function);
+        return function.call(get());
     }
 
     @Override

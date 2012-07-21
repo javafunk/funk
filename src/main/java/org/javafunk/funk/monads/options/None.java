@@ -4,7 +4,9 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.javafunk.funk.behaviours.Value;
 import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter;
 import org.javafunk.funk.functors.functions.NullaryFunction;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.monads.Option;
 
 import java.lang.reflect.ParameterizedType;
@@ -13,9 +15,9 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.Callable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 
 public class None<T> extends Option<T> {
-    private Value<T> valueForEquality;
 
     public static <T> None<T> none() {
         return new None<T>();
@@ -74,13 +76,13 @@ public class None<T> extends Option<T> {
         return option(other);
     }
 
-    @Override public <S> Option<S> map(Mapper<? super T, ? extends S> mapper) {
-        checkNotNull(mapper);
+    @Override public <S> Option<S> map(UnaryFunction<? super T, ? extends S> unaryFunction) {
+        checkNotNull(unaryFunction);
         return none();
     }
 
-    @Override public <S> Option<S> flatMap(Mapper<? super T, ? extends Option<S>> mapper) {
-        checkNotNull(mapper);
+    @Override public <S> Option<S> flatMap(UnaryFunction<? super T, ? extends Option<S>> function) {
+        checkNotNull(function);
         return none();
     }
 
