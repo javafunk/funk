@@ -11,34 +11,110 @@ package org.javafunk.funk.monads;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.javafunk.funk.behaviours.Mappable;
+import org.javafunk.funk.behaviours.Value;
 import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.NullaryFunction;
+import org.javafunk.funk.monads.options.None;
+import org.javafunk.funk.monads.options.Some;
 
-import java.util.NoSuchElementException;
 import java.util.concurrent.Callable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * The {@code Option<T>} class is a base class for implementations of the option monad.
+ * The option monad represents the presence or absence of a value of some type. An option
+ * with a value is represented by the {@code Some<T>} subclass and an option with no value
+ * is represented by the {@code None<T>} subclass. For a more mathematical description of the
+ * option monad, see the
+ * <a href="http://en.wikipedia.org/wiki/Option_type">option type article on Wikipedia</a>.
+ *
+ * <p>The {@code Option} class provides factory methods for constructing {@code Option} instances.
+ * {@code Option} instances provide query methods, value access methods, translation methods
+ * and mapping methods as described below.</p>
+ *
+ * <p>{@code Option} equality is based on the equivalence of the contained value, i.e.,
+ * {@code Option} is a value object. Unfortunately, due to type erasure,
+ * {@code new None<X>().equals(new None<Y>())} is {@code true} which may not be desired.</p>
+ *
+ * <h4>Example Usage</h4>
+ *
+ * A {@code null} safe option can be created as follows:
+ * <blockquote>
+ * <pre>
+ *   Option<String> option = Option.option("Hello");
+ * </pre>
+ * </blockquote>
+ * We can query the option to find out if it has a value:
+ * <blockquote>
+ * <pre>
+ *   option.hasValue()   // => true
+ *   option.hasNoValue() // => false
+ * </pre>
+ * </blockquote>
+ * The value of the option can be retrieved:
+ * <blockquote>
+ * <pre>
+ *   option.get()                              // => "Hello"
+ *   option.getOrNull()                        // => "Hello"
+ *   option.getOrElse("Goodbye")               // => "Hello"
+ *   option.getOrThrow(new MannersException()) // => "Hello"
+ * </pre>
+ * </blockquote>
+ * or mapped into something else:
+ *  <blockquote>
+ * <pre>
+ *   option.map(new Mapper&lt;String, Integer&gt;(){
+ *       &#64;Override public Integer map(String input) {
+ *           return input.length();
+ *       }
+ *   });
+ *   option.get() // => 5
+ *
+ *   option.flatMap(new Mapper&lt;String, Option&lt;Integer&gt;&gt;() {
+ *       &#64;Override public Integer map(String input) {
+ *           Integer length = input.length();
+ *           if (length &gt; 10) {
+ *               return Option.option(length - 10);
+ *           }
+ *           return Option.none();
+ *       }
+ *   });
+ *   option.get()        // => throws NoSuchElementException
+ *   option.getOrElse(0) // => 0
+ * </pre>
+ * </blockquote>
+ * See the
+ * <a href="https://github.com/javafunk/funk/blob/master/src/test/java/org/javafunk/funk/monads/OptionTest.java">tests </a>
+ * and {@link Some} and {@link None} for more examples.
+ *
+ * @param <T> The type of the value of this {@code Option}.
+ * @see org.javafunk.funk.monads.options.Some
+ * @see org.javafunk.funk.monads.options.None
+ * @since 1.0
+ */
 public abstract class Option<T>
-        implements Mappable<T, Option<?>> {
+        implements Mappable<T, Option<?>>, Value<T> {
     public static <T> Option<T> none() {
-        return new None<T>();
+        return None.none();
     }
 
     public static <T> Option<T> none(Class<T> typeClass) {
-        return new None<T>();
+        return None.none(typeClass);
     }
 
     public static <T> Option<T> some(T value) {
-        return new Some<T>(value);
+        return Some.some(value);
     }
 
     public static <T> Option<T> option(T value) {
         if (value == null) {
-            return none();
+            return None.none();
         }
-        return some(value);
+        return Some.some(value);
     }
+
+    protected Option() {}
 
     public abstract Boolean hasValue();
 
@@ -74,141 +150,5 @@ public abstract class Option<T>
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
-    }
-
-    private static class None<T> extends Option<T> {
-        @Override public Boolean hasValue() {
-            return false;
-        }
-
-        @Override public Boolean hasNoValue() {
-            return true;
-        }
-
-        @Override public T get() {
-            throw new NoSuchElementException();
-        }
-
-        @Override public T getOrElse(T value) {
-            checkNotNull(value);
-            return value;
-        }
-
-        @Override public T getOrNull() {
-            return null;
-        }
-
-        @Override public T getOrCall(NullaryFunction<T> function) {
-            checkNotNull(function);
-            return function.call();
-        }
-
-        @Override public T getOrCall(Callable<T> callable) throws Exception {
-            checkNotNull(callable);
-            return callable.call();
-        }
-
-        @Override public <E extends Throwable> T getOrThrow(E throwable) throws E {
-            throw throwable;
-        }
-
-        @Override public Option<T> or(Option<T> other) {
-            return checkNotNull(other);
-        }
-
-        @Override public Option<T> orSome(T other) {
-            return some(other);
-        }
-
-        @Override public Option<T> orOption(T other) {
-            return option(other);
-        }
-
-        @Override public <S> Option<S> map(Mapper<? super T, ? extends S> mapper) {
-            checkNotNull(mapper);
-            return none();
-        }
-
-        @Override public <S> Option<S> flatMap(Mapper<? super T, ? extends Option<S>> mapper) {
-            checkNotNull(mapper);
-            return none();
-        }
-
-        @Override
-        public String toString() {
-            return "Option::None[]";
-        }
-    }
-
-    private static class Some<T> extends Option<T> {
-        private final T value;
-
-        public Some(T value) {
-            this.value = value;
-        }
-
-        @Override public Boolean hasValue() {
-            return true;
-        }
-
-        @Override public Boolean hasNoValue() {
-            return false;
-        }
-
-        @Override public T get() {
-            return value;
-        }
-
-        @Override public T getOrElse(T value) {
-            checkNotNull(value);
-            return get();
-        }
-
-        @Override public T getOrNull() {
-            return get();
-        }
-
-        @Override public T getOrCall(NullaryFunction<T> function) {
-            checkNotNull(function);
-            return get();
-        }
-
-        @Override public T getOrCall(Callable<T> callable) {
-            checkNotNull(callable);
-            return get();
-        }
-
-        @Override public <E extends Throwable> T getOrThrow(E throwable) throws E {
-            checkNotNull(throwable);
-            return get();
-        }
-
-        @Override public Option<T> or(Option<T> other) {
-            checkNotNull(other);
-            return this;
-        }
-
-        @Override public Option<T> orSome(T other) {
-            return this;
-        }
-
-        @Override public Option<T> orOption(T other) {
-            return this;
-        }
-
-        @Override public <S> Option<S> map(Mapper<? super T, ? extends S> mapper) {
-            checkNotNull(mapper);
-            return some(mapper.map(get()));
-        }
-
-        @Override public <S> Option<S> flatMap(Mapper<? super T, ? extends Option<S>> mapper) {
-            checkNotNull(mapper);
-            return mapper.map(get());
-        }
-
-        @Override
-        public String toString() {
-            return String.format("Option::Some[%s]", get());
-        }
     }
 }

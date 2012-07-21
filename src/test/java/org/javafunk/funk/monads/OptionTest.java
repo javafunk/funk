@@ -59,7 +59,7 @@ public class OptionTest {
         // Then
         assertThat(none(String.class), is(expected));
     }
-    
+
     @Test
     public void shouldNotHaveValueIfNone() throws Exception {
         // Given
@@ -750,7 +750,7 @@ public class OptionTest {
         assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(false));
     }
 
-    private static class TrackingNullaryFunction<R> implements NullaryFunction<R>{
+    private static class TrackingNullaryFunction<R> implements NullaryFunction<R> {
         private final R result;
 
         private Boolean wasCalled = false;
