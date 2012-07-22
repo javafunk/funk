@@ -278,6 +278,7 @@ public abstract class Option<T>
      *                 {@code Option}.
      * @return The value contained in this {@code Option}, otherwise the result of
      *         calling the supplied function.
+     * @throws NullPointerException if the supplied function is {@code null}.
      */
     public abstract T getOrCall(NullaryFunction<? extends T> function);
 
@@ -291,7 +292,8 @@ public abstract class Option<T>
      *                 {@code Option}.
      * @return The value contained in this {@code Option}, otherwise the result of
      *         calling the supplied callable.
-     * @throws Exception if the supplied callable throws Exception
+     * @throws Exception if the supplied callable throws Exception.
+     * @throws NullPointerException if the supplied callable is {@code null}.
      */
     public abstract T getOrCall(Callable<? extends T> callable) throws Exception;
 
@@ -318,10 +320,14 @@ public abstract class Option<T>
      * {@link #flatMap(org.javafunk.funk.functors.functions.UnaryFunction)} or
      * {@link #flatMap(org.javafunk.funk.functors.Mapper)}.</p>
      *
+     * <p>If the supplied {@code Option} is {@code null}, a {@code NullPointerException}
+     * is thrown.</p>
+     *
      * @param other The {@code Option} to return in the case that this {@code Option}
      *              contains no value.
      * @return This {@code Option} if a value is present, otherwise the supplied
      *         {@code Option}.
+     * @throws NullPointerException if the supplied {@code Option} is {@code null}.
      */
     public abstract Option<T> or(Option<? extends T> other);
 
@@ -357,8 +363,100 @@ public abstract class Option<T>
      */
     public abstract Option<T> orOption(T other);
 
+    /**
+     * A mapping method to map the value of this {@code Option} into an {@code Option}
+     * over a value of type {@code S} built by calling {@link #some(Object)} on the
+     * value returned after calling the supplied {@link UnaryFunction} with the current
+     * value.
+     *
+     * <p>In the case that this {@code Option} contains no value, an {@code Option} with
+     * no value of type {@code S} is returned and the supplied function will not be
+     * called.</p>
+     *
+     * <p>If the supplied function is {@code null}, a {@code NullPointerException}
+     * will be thrown.</p>
+     *
+     * <h4>Example Usage</h4>
+     *
+     * <blockquote>
+     * <pre>
+     *   Option&lt;String&gt; some = Option.some("Flip");
+     *   Option&lt;String&gt; firstResult = some.map(new UnaryFunction&lt;String, String&gt;() {
+     *      &#64;Override public String call(String value) {
+     *          return "Flop";
+     *      }
+     *   });
+     *   firstResult.hasValue(); // => true
+     *   firstResult.get();      // => "Flop"
+     *
+     *   Option&lt;String&gt; none = Option.none();
+     *   Option&lt;Integer&gt; secondResult = none.map(new UnaryFunction&lt;String, Integer&gt;() {
+     *      &#64;Override public Integer call(String value) {
+     *          throw new ShouldNotGetCalledException();
+     *      }
+     *   });
+     *   secondResult.hasValue();   // => false
+     *   secondResult.getOrElse(0); // => 0
+     * </pre>
+     * </blockquote>
+     *
+     * @param function A function to map from the value of this {@code Option} into
+     *                 a value of type {@code S}.
+     * @param <S> The type of the value of the resulting {@code Option}.
+     * @return An {@code Option} built using {@link #some(Object)} containing the
+     *         value returned after calling the supplied {@link UnaryFunction} with
+     *         the current value of this {@code Option} if one is present, otherwise
+     *         an {@code Option} of type {@code S} containing no value.
+     * @throws NullPointerException if the supplied function is {@code null}.
+     */
     public abstract <S> Option<S> map(UnaryFunction<? super T, ? extends S> function);
 
+    /**
+     * A mapping method to map the value of this {@code Option} into an {@code Option}
+     * over a value of type {@code S} built by calling {@link #some(Object)} on the
+     * value returned after calling the supplied {@link Mapper} with the current
+     * value.
+     *
+     * <p>In the case that this {@code Option} contains no value, an {@code Option} with
+     * no value of type {@code S} is returned and the supplied mapper will not be
+     * called.</p>
+     *
+     * <p>If the supplied mapper is {@code null}, a {@code NullPointerException}
+     * will be thrown.</p>
+     *
+     * <h4>Example Usage</h4>
+     *
+     * <blockquote>
+     * <pre>
+     *   Option&lt;String&gt; some = Option.some("Flip");
+     *   Option&lt;String&gt; firstResult = some.map(new Mapper&lt;String, String&gt;() {
+     *      &#64;Override public String map(String value) {
+     *          return "Flop";
+     *      }
+     *   });
+     *   firstResult.hasValue(); // => true
+     *   firstResult.get();      // => "Flop"
+     *
+     *   Option&lt;String&gt; none = Option.none();
+     *   Option&lt;Integer&gt; secondResult = none.map(new Mapper&lt;String, Integer&gt;() {
+     *      &#64;Override public Integer map(String value) {
+     *          throw new ShouldNotGetCalledException();
+     *      }
+     *   });
+     *   secondResult.hasValue();   // => false
+     *   secondResult.getOrElse(0); // => 0
+     * </pre>
+     * </blockquote>
+     *
+     * @param mapper A mapper to map from the value of this {@code Option} into
+     *               a value of type {@code S}.
+     * @param <S> The type of the value of the resulting {@code Option}.
+     * @return An {@code Option} built using {@link #some(Object)} containing the
+     *         value returned after calling the supplied {@link Mapper} with
+     *         the current value of this {@code Option} if one is present, otherwise
+     *         an {@code Option} of type {@code S} containing no value.
+     * @throws NullPointerException if the supplied mapper is {@code null}.
+     */
     public <S> Option<S> map(Mapper<? super T, ? extends S> mapper) {
         return map(mapperUnaryFunction(checkNotNull(mapper)));
     }
