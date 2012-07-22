@@ -43,12 +43,12 @@ public class Some<T> extends Option<T> {
         return get();
     }
 
-    @Override public T getOrCall(NullaryFunction<T> function) {
+    @Override public T getOrCall(NullaryFunction<? extends T> function) {
         checkNotNull(function);
         return get();
     }
 
-    @Override public T getOrCall(Callable<T> callable) {
+    @Override public T getOrCall(Callable<? extends T> callable) {
         checkNotNull(callable);
         return get();
     }

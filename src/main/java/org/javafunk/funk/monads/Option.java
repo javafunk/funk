@@ -39,28 +39,31 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  * {@code Option} is a value object. Unfortunately, due to type erasure,
  * {@code new None<X>().equals(new None<Y>())} is {@code true} which may not be desired.</p>
  *
+ * <p>An {@code Option} is immutable, however the provided translation and mapping methods
+ * allow the contained value to be transformed as necessary.</p>
+ *
  * <h4>Example Usage</h4>
  *
  * A {@code null} safe option can be created as follows:
  * <blockquote>
  * <pre>
- *   Option<String> option = Option.option("Hello");
+ *   Option&lt;String&gt; option = Option.option("Hello");
  * </pre>
  * </blockquote>
  * We can query the option to find out if it has a value:
  * <blockquote>
  * <pre>
- *   option.hasValue()   // => true
- *   option.hasNoValue() // => false
+ *   option.hasValue();   // => true
+ *   option.hasNoValue(); // => false
  * </pre>
  * </blockquote>
  * The value of the option can be retrieved:
  * <blockquote>
  * <pre>
- *   option.get()                              // => "Hello"
- *   option.getOrNull()                        // => "Hello"
- *   option.getOrElse("Goodbye")               // => "Hello"
- *   option.getOrThrow(new MannersException()) // => "Hello"
+ *   option.get();                              // => "Hello"
+ *   option.getOrNull();                        // => "Hello"
+ *   option.getOrElse("Goodbye");               // => "Hello"
+ *   option.getOrThrow(new MannersException()); // => "Hello"
  * </pre>
  * </blockquote>
  * or mapped into something else:
@@ -71,7 +74,7 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  *           return input.length();
  *       }
  *   });
- *   option.get() // => 5
+ *   option.get(); // => 5
  *
  *   option.flatMap(new Mapper&lt;String, Option&lt;Integer&gt;&gt;() {
  *       &#64;Override public Integer map(String input) {
@@ -82,8 +85,8 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  *           return Option.none();
  *       }
  *   });
- *   option.get()        // => throws NoSuchElementException
- *   option.getOrElse(0) // => 0
+ *   option.get();        // => throws NoSuchElementException
+ *   option.getOrElse(0); // => 0
  * </pre>
  * </blockquote>
  * See the
@@ -97,18 +100,92 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  */
 public abstract class Option<T>
         implements Mappable<T, Option<?>>, Value<T> {
+    /**
+     * A generic factory method for building an {@code Option} of type
+     * {@code T} representing the absence of a value.
+     *
+     * @param <T> The type of the value of the built {@code Option}.
+     * @return An {@code Option<T>} representing the absence of a value.
+     */
     public static <T> Option<T> none() {
         return None.none();
     }
 
+    /**
+     * A generic factory method for building an {@code Option} of type
+     * {@code T} representing the absence of a value.
+     *
+     * <p>This overloaded version of {@link #none()} is provided so that
+     * the generic type resolution works correctly when the factory is
+     * used inline. For example, compare the following:
+     * <blockquote>
+     * <pre>
+     *   someObject.methodTakingOption(Option.none(Integer.class));
+     *   someObject.methodTakingOption(Option.&lt;Integer&gt;none();
+     * </pre>
+     * </blockquote>
+     * the benefit being that the first call to none can be statically imported
+     * whilst the second cannot.</p>
+     *
+     * @param typeClass The class of the type {@code T} that this option contains.
+     * @param <T> The type of the value of the built {@code Option}.
+     * @return An {@code Option<T>} representing the absence of a value.
+     */
     public static <T> Option<T> none(Class<T> typeClass) {
         return None.none(typeClass);
     }
 
+    /**
+     * A generic factory method for building an {@code Option} of type
+     * {@code T} representing the presence of a value.
+     *
+     * <p>Note that {@code null} is not explicitly forbidden in an {@code Option}
+     * to be consistent with the rest of Funk which allows {@code null}s as
+     * valid values. In order to have {@code null} coerced into {@code None<T>},
+     * use {@link #option(Object)}. For example, consider the following:
+     * <blockquote>
+     * <pre>
+     *   Option&lt;String&gt; nullNotAllowed = Option.option(null);
+     *   nullNotAllowed.get(); // => NoSuchElementException
+     *
+     *   Option&lt;String&gt; nullAllowed = Option.some(null);
+     *   nullAllowed.get(); // => null
+     * </pre>
+     * </blockquote>
+     * Thus, it is important to ensure the correct factory method is used for the
+     * desired behaviour.</p>
+     *
+     * @param value The value of the resulting {@code Option}.
+     * @param <T> The type of the value of the built {@code Option}.
+     * @return An {@code Option<T>} representing the presence of the supplied value.
+     */
     public static <T> Option<T> some(T value) {
         return Some.some(value);
     }
 
+    /**
+     * A generic factory method for building an {@code Option} of type
+     * {@code T} representing the presence of a value.
+     *
+     * <p>Note that this method will coerce {@code null} into {@code None<T>}.
+     * Compare this with {@link #some(Object)} which allows {@code null} as a value.
+     * As an example, consider the following:
+     * <blockquote>
+     * <pre>
+     *   Option&lt;String&gt; nullAllowed = Option.some(null);
+     *   nullAllowed.get(); // => null
+     *
+     *   Option&lt;String&gt; nullNotAllowed = Option.option(null);
+     *   nullNotAllowed.get(); // => NoSuchElementException
+     * </pre>
+     * </blockquote>
+     * Thus, it is important to ensure the correct factory method is used for the
+     * desired behaviour.</p>
+     *
+     * @param value The value of the resulting {@code Option}.
+     * @param <T> The type of the value of the built {@code Option}.
+     * @return An {@code Option<T>} representing the presence of the supplied value.
+     */
     public static <T> Option<T> option(T value) {
         if (value == null) {
             return None.none();
@@ -116,22 +193,119 @@ public abstract class Option<T>
         return Some.some(value);
     }
 
+    /**
+     * The no arguments constructor is protected since all sub classes should decide
+     * whether or not it should be exposed. The preferred construction mechanism
+     * is via the generic factory methods on {@link Option}, {@link Some} and {@link None}.
+     */
     protected Option() {}
 
+    /**
+     * A query method to determine whether this {@code Option} has a value.
+     * This method will return {@code true} in the presence of a value
+     * and {@code false} in the absence.
+     *
+     * @return A {@code Boolean} representing whether or not a value
+     * is present in this {@code Option}.
+     */
     public abstract Boolean hasValue();
 
+    /**
+     * A query method to determine whether this {@code Option} has no value.
+     * This method will return {@code true} in the absence of a value and
+     * {@code false} in the presence.
+     *
+     * @return A {@code Boolean} representing whether or not a value
+     * is absent in this {@code Option}.
+     */
     public abstract Boolean hasNoValue();
 
+    /**
+     * A value access method to obtain the value contained in this {@code Option}.
+     * If a value is present, it is returned. If no value is present, a
+     * {@code NoSuchElementException} is thrown.
+     *
+     * <p>This method is present to satisfy the {@link Value} interface. It is
+     * contract equivalent with {@link #get()} and that method should be
+     * preferred when interacting with {@code Option}s.</p>
+     *
+     * @return The value contained in this {@code Option} if one is present.
+     * @throws java.util.NoSuchElementException if no value is present;
+     */
+    @Override public T getValue() { return get(); }
+
+    /**
+     * A value access method to obtain the value contained in this {@code Option}.
+     * If a value is present, it is returned. If no value is present, a
+     * {@code NoSuchElementException} is thrown.
+     *
+     * @return The value contained in this {@code Option} if one is present.
+     * @throws java.util.NoSuchElementException if no value is present;
+     */
     public abstract T get();
 
+    /**
+     * A value access method to obtain the value contained in this {@code Option}
+     * or an alternative. If a value is present, it is returned. If no value is
+     * present, the supplied alternative value is returned.
+     *
+     * <p>This access method will throw a {@code NullPointerException} if the supplied
+     * value is {@code null}. In the case that {@code null} is required, use
+     * {@link #getOrNull()}.</p>
+     *
+     * @param value The value to return in the case that this {@code Option} does not
+     *              contain a value
+     * @return The value contained in this {@code Option}, otherwise the supplied value.
+     */
     public abstract T getOrElse(T value);
 
+    /**
+     * A value access method to obtain the value contained in this {@code Option}
+     * or null. If a value is present, it is returned. If no value is present,
+     * {@code null} is returned.
+     *
+     * @return The value contained in this {@code Option}, otherwise {@code null}.
+     */
     public abstract T getOrNull();
 
-    public abstract T getOrCall(NullaryFunction<T> function);
+    /**
+     * A value access method to obtain the value contained in this {@code Option}
+     * or the result of calling a {@code NullaryFunction<? extends T>}. If a value
+     * is present, it is returned. If no value is present, the result of calling
+     * the supplied function is returned.
+     *
+     * @param function A function to call in the absence of a value in this
+     *                 {@code Option}.
+     * @return The value contained in this {@code Option}, otherwise the result of
+     *         calling the supplied function.
+     */
+    public abstract T getOrCall(NullaryFunction<? extends T> function);
 
-    public abstract T getOrCall(Callable<T> callable) throws Exception;
+    /**
+     * A value access method to obtain the value contained in this {@code Option}
+     * or the result of calling a {@code Callable<? extends T>}. If a value is
+     * present, it is returned. If no value is present, the result of calling
+     * the supplied callable is returned.
+     *
+     * @param callable A callable to call in the absence of a value in this
+     *                 {@code Option}.
+     * @return The value contained in this {@code Option}, otherwise the result of
+     *         calling the supplied callable.
+     * @throws Exception if the supplied callable throws Exception
+     */
+    public abstract T getOrCall(Callable<? extends T> callable) throws Exception;
 
+    /**
+     * A value access method to obtain the value contained in this {@code Option}
+     * or throw the provided exception. If a value is present, it is returned.
+     * If no value is present, the supplied exception is thrown.
+     *
+     * @param throwable An exception to throw in the absence of a value in this
+     *                  {@code Option}.
+     * @param <E> The type of the exception to throw.
+     * @return The value contained in this {@code Option}.
+     * @throws E if this {@code Option} contains no value.
+     */
     public abstract <E extends Throwable> T getOrThrow(E throwable) throws E;
 
     public abstract Option<T> or(Option<T> other);

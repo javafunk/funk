@@ -50,12 +50,12 @@ public class None<T> extends Option<T> {
         return null;
     }
 
-    @Override public T getOrCall(NullaryFunction<T> function) {
+    @Override public T getOrCall(NullaryFunction<? extends T> function) {
         checkNotNull(function);
         return function.call();
     }
 
-    @Override public T getOrCall(Callable<T> callable) throws Exception {
+    @Override public T getOrCall(Callable<? extends T> callable) throws Exception {
         checkNotNull(callable);
         return callable.call();
     }
