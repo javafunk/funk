@@ -308,10 +308,53 @@ public abstract class Option<T>
      */
     public abstract <E extends Throwable> T getOrThrow(E throwable) throws E;
 
-    public abstract Option<T> or(Option<T> other);
+    /**
+     * A translation method to translate this {@code Option} into another {@code Option}
+     * in the case that it does not contain a value. If a value is present, the
+     * {@code Option} itself is returned. If no value is present the supplied
+     * {@code Option} is returned.
+     *
+     * <p>This is a shortcut method in the constant case for calling
+     * {@link #flatMap(org.javafunk.funk.functors.functions.UnaryFunction)} or
+     * {@link #flatMap(org.javafunk.funk.functors.Mapper)}.</p>
+     *
+     * @param other The {@code Option} to return in the case that this {@code Option}
+     *              contains no value.
+     * @return This {@code Option} if a value is present, otherwise the supplied
+     *         {@code Option}.
+     */
+    public abstract Option<T> or(Option<? extends T> other);
 
+    /**
+     * A translation method to translate this {@code Option} into an {@code Option}
+     * built by calling {@link #some(Object)} over the supplied value in the case
+     * that it does not contain a value. If a value is present, the {@code Option}
+     * itself is returned. If no value is present the result of calling
+     * {@link #some(Object)} on the supplied value is returned.
+     *
+     * <p>This is a shortcut method in the constant case for calling
+     * {@link #map(org.javafunk.funk.functors.functions.UnaryFunction)} or
+     * {@link #map(org.javafunk.funk.functors.Mapper)}.</p>
+     *
+     * @param other The value of an {@code Option} built with {@link #some(Object)}
+     *              to return in the case that this {@code Option} contains no value.
+     * @return This {@code Option} if a value is present, otherwise an {@code Option}
+     *         over the supplied value.
+     */
     public abstract Option<T> orSome(T other);
 
+    /**
+     * A translation method to translate this {@code Option} into an {@code Option}
+     * built by calling {@link #option(Object)} over the supplied value in the case
+     * that it does not contain a value. If a value is present, the {@code Option}
+     * itself is returned. If no value is present the result of calling
+     * {@link #option(Object)} on the supplied value is returned.
+     *
+     * @param other The value of an {@code Option} built with {@link #option(Object)}
+     *              to return in the case that this {@code Option} contains no value.
+     * @return This {@code Option} if a value is present, otherwise an {@code Option}
+     *         over the supplied value.
+     */
     public abstract Option<T> orOption(T other);
 
     public abstract <S> Option<S> map(UnaryFunction<? super T, ? extends S> function);
@@ -320,7 +363,7 @@ public abstract class Option<T>
         return map(mapperUnaryFunction(checkNotNull(mapper)));
     }
 
-    public abstract <S> Option<S> flatMap(UnaryFunction<? super T, ? extends Option<S>> function);
+    public abstract <S> Option<S> flatMap(UnaryFunction<? super T, ? extends Option<? extends S>> function);
 
     public <S> Option<S> flatMap(Mapper<? super T, ? extends Option<S>> mapper) {
         return flatMap(mapperUnaryFunction(checkNotNull(mapper)));

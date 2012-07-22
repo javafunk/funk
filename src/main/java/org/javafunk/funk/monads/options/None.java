@@ -64,8 +64,9 @@ public class None<T> extends Option<T> {
         throw throwable;
     }
 
-    @Override public Option<T> or(Option<T> other) {
-        return checkNotNull(other);
+    @SuppressWarnings("unchecked")
+    @Override public Option<T> or(Option<? extends T> other) {
+        return (Option<T>) checkNotNull(other);
     }
 
     @Override public Option<T> orSome(T other) {
@@ -81,7 +82,7 @@ public class None<T> extends Option<T> {
         return none();
     }
 
-    @Override public <S> Option<S> flatMap(UnaryFunction<? super T, ? extends Option<S>> function) {
+    @Override public <S> Option<S> flatMap(UnaryFunction<? super T, ? extends Option<? extends S>> function) {
         checkNotNull(function);
         return none();
     }

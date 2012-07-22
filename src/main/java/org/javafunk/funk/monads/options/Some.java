@@ -58,7 +58,7 @@ public class Some<T> extends Option<T> {
         return get();
     }
 
-    @Override public Option<T> or(Option<T> other) {
+    @Override public Option<T> or(Option<? extends T> other) {
         checkNotNull(other);
         return this;
     }
@@ -76,9 +76,10 @@ public class Some<T> extends Option<T> {
         return some(function.call(get()));
     }
 
-    @Override public <S> Option<S> flatMap(UnaryFunction<? super T, ? extends Option<S>> function) {
+    @SuppressWarnings("unchecked")
+    @Override public <S> Option<S> flatMap(UnaryFunction<? super T, ? extends Option<? extends S>> function) {
         checkNotNull(function);
-        return function.call(get());
+        return (Option<S>) function.call(get());
     }
 
     @Override
