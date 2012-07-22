@@ -376,7 +376,7 @@ public abstract class Option<T>
      * <p>If the supplied function is {@code null}, a {@code NullPointerException}
      * will be thrown.</p>
      *
-     * <h4>Example Usage</h4>
+     * <h4>Example Usage:</h4>
      *
      * <blockquote>
      * <pre>
@@ -424,7 +424,7 @@ public abstract class Option<T>
      * <p>If the supplied mapper is {@code null}, a {@code NullPointerException}
      * will be thrown.</p>
      *
-     * <h4>Example Usage</h4>
+     * <h4>Example Usage:</h4>
      *
      * <blockquote>
      * <pre>
@@ -461,17 +461,120 @@ public abstract class Option<T>
         return map(mapperUnaryFunction(checkNotNull(mapper)));
     }
 
+    /**
+     * A mapping method to map the value of this {@code Option} into the {@code Option}
+     * returned after calling the supplied {@link UnaryFunction} with the current value.
+     *
+     * <p>In the case that this {@code Option} contains no value, an {@code Option} with
+     * no value of type {@code S} is returned and the supplied function will not be
+     * called.</p>
+     *
+     * <p>If the supplied function is {@code null}, a {@code NullPointerException}
+     * will be thrown.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * <blockquote>
+     * <pre>
+     *   Option&lt;String&gt; some = Option.some("Flip");
+     *   Option&lt;Person&gt; firstResult = some.map(new UnaryFunction&lt;String, Option&lt;Person&gt;&gt;() {
+     *      &#64;Override public Option&lt;Person&gt; map(String name) {
+     *          return Option.option(repository.find(name));
+     *      }
+     *   });
+     *   firstResult.hasValue(); // => dependent on result of repository.find(name)
+     *
+     *   Option&lt;String&gt; none = Option.none();
+     *   Option&lt;Person&gt; secondResult = none.map(new UnaryFunction&lt;String, Option&lt;Person&gt;&gt;() {
+     *      &#64;Override public Option&lt;Person&gt; map(String value) {
+     *          throw new ShouldNotGetCalledException();
+     *      }
+     *   });
+     *   secondResult.hasValue();   // => false
+     *   secondResult.getOrNull();  // => null
+     * </pre>
+     * </blockquote>
+     *
+     * @param function A function to map from the value of this {@code Option} into
+     *                 an {@code Option} of type {@code S}.
+     * @param <S> The type of the value of the resulting {@code Option}.
+     * @return The {@code Option} resulting from  calling the supplied {@link UnaryFunction} with
+     *         the current value of this {@code Option} if one is present, otherwise
+     *         an {@code Option} of type {@code S} containing no value.
+     * @throws NullPointerException if the supplied function is {@code null}.
+     */
     public abstract <S> Option<S> flatMap(UnaryFunction<? super T, ? extends Option<? extends S>> function);
 
-    public <S> Option<S> flatMap(Mapper<? super T, ? extends Option<S>> mapper) {
+    /**
+     * A mapping method to map the value of this {@code Option} into the {@code Option}
+     * returned after calling the supplied {@link Mapper} with the current value.
+     *
+     * <p>In the case that this {@code Option} contains no value, an {@code Option} with
+     * no value of type {@code S} is returned and the supplied mapper will not be
+     * called.</p>
+     *
+     * <p>If the supplied mapper is {@code null}, a {@code NullPointerException}
+     * will be thrown.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * <blockquote>
+     * <pre>
+     *   Option&lt;String&gt; some = Option.some("Flip");
+     *   Option&lt;Person&gt; firstResult = some.map(new Mapper&lt;String, Option&lt;Person&gt;&gt;() {
+     *      &#64;Override public Option&lt;Person&gt; map(String name) {
+     *          return Option.option(repository.find(name));
+     *      }
+     *   });
+     *   firstResult.hasValue(); // => dependent on result of repository.find(name)
+     *
+     *   Option&lt;String&gt; none = Option.none();
+     *   Option&lt;Person&gt; secondResult = none.map(new Mapper&lt;String, Option&lt;Person&gt;&gt;() {
+     *      &#64;Override public Option&lt;Person&gt; map(String value) {
+     *          throw new ShouldNotGetCalledException();
+     *      }
+     *   });
+     *   secondResult.hasValue();   // => false
+     *   secondResult.getOrNull();  // => null
+     * </pre>
+     * </blockquote>
+     *
+     * @param mapper A mapper to map from the value of this {@code Option} into
+     *               an {@code Option} of type {@code S}.
+     * @param <S> The type of the value of the resulting {@code Option}.
+     * @return The {@code Option} resulting from  calling the supplied {@link Mapper} with
+     *         the current value of this {@code Option} if one is present, otherwise
+     *         an {@code Option} of type {@code S} containing no value.
+     * @throws NullPointerException if the supplied mapper is {@code null}.
+     */
+    public <S> Option<S> flatMap(Mapper<? super T, ? extends Option<? extends S>> mapper) {
         return flatMap(mapperUnaryFunction(checkNotNull(mapper)));
     }
 
+    /**
+     * Implements value equality for {@code Option} instances. Two {@code Option}s are
+     * equal if they both contain the same value or both contain no value, otherwise
+     * they are not equal.
+     *
+     * <p>Due to type erasure, {@code Option.<X>none().equals(Option.<Y>none()} will
+     * be {@code true} for all types {@code X} and {@code Y}.</p>
+     *
+     * @param other The object to check for equality to this {@code Option}.
+     * @return {@code true} if the supplied {@code Option} is equal to this {@code Option},
+     *         otherwise, {@code false}.
+     */
     @Override
     public boolean equals(Object other) {
         return EqualsBuilder.reflectionEquals(this, other);
     }
 
+    /**
+     * Two {@code Option} objects with have equal hash codes either if they both represent
+     * the absence of a value (of any type) or if they contain the same value (of the same
+     * type).
+     *
+     * @return The hash code of this {@code Option}.
+     */
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
