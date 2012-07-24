@@ -14,8 +14,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * {@link Option} for more details.
  *
  * @param <T> The type of value contained by this {@code Some}.
- * @see {@code Option}
- * @see {@code None}
+ * @see Option
+ * @see None
  * @since 1.0
  */
 public class Some<T> extends Option<T> {
