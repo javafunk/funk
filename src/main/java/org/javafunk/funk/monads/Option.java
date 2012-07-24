@@ -18,6 +18,7 @@ import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.monads.options.None;
 import org.javafunk.funk.monads.options.Some;
 
+import java.util.Iterator;
 import java.util.concurrent.Callable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -99,7 +100,9 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  * @since 1.0
  */
 public abstract class Option<T>
-        implements Mappable<T, Option<?>>, Value<T> {
+        implements Mappable<T, Option<?>>,
+                   Value<T>,
+                   Iterable<T> {
     /**
      * A generic factory method for building an {@code Option} of type
      * {@code T} representing the absence of a value.

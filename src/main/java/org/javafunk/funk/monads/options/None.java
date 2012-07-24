@@ -1,13 +1,17 @@
 package org.javafunk.funk.monads.options;
 
+import org.javafunk.funk.Iterators;
 import org.javafunk.funk.functors.functions.NullaryFunction;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.monads.Option;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.Callable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.javafunk.funk.Literals.collection;
 
 /**
  * The {@code None<T>} class is an implementation of {@code Option}
@@ -63,6 +67,21 @@ public class None<T> extends Option<T> {
      * and {@link Option#none(Class)}.
      */
     private None() { super(); }
+
+    /**
+     * Provides an iterator so that {@code Option} instances conform to the
+     * {@code Iterable} interface.
+     *
+     * <p>Since a {@code None} instance represents the absence of a value,
+     * the iterator returned will be empty.</p>
+     *
+     * <p>The returned iterator does not support removal.</p>
+     *
+     * @return An empty iterator.
+     */
+    @Override public Iterator<T> iterator() {
+        return Iterators.emptyIterator();
+    }
 
     /**
      * A query method for whether this {@code None} contains a value, which
