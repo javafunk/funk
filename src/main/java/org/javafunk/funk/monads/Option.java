@@ -569,7 +569,7 @@ public abstract class Option<T>
     }
 
     /**
-     * Two {@code Option} objects with have equal hash codes either if they both represent
+     * Two {@code Option} objects will have equal hash codes either if they both represent
      * the absence of a value (of any type) or if they contain the same value (of the same
      * type).
      *
