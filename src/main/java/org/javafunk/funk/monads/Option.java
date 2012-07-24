@@ -10,17 +10,22 @@ package org.javafunk.funk.monads;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.javafunk.funk.Iterators;
 import org.javafunk.funk.behaviours.Mappable;
 import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.NullaryFunction;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.Callable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Collections.unmodifiableCollection;
+import static org.javafunk.funk.Literals.collectionWith;
 
 public abstract class Option<T>
-        implements Mappable<T, Option<?>> {
+        implements Mappable<T, Option<?>>,
+                   Iterable<T> {
     public static <T> Option<T> none() {
         return new None<T>();
     }
@@ -77,6 +82,21 @@ public abstract class Option<T>
     }
 
     private static class None<T> extends Option<T> {
+        /**
+         * Provides an iterator so that {@code Option} instances conform to the
+         * {@code Iterable} interface.
+         *
+         * <p>Since a {@code None} instance represents the absence of a value,
+         * the iterator returned will be empty.</p>
+         *
+         * <p>The returned iterator does not support removal.</p>
+         *
+         * @return An empty iterator.
+         */
+        @Override public Iterator<T> iterator() {
+            return Iterators.emptyIterator();
+        }
+
         @Override public Boolean hasValue() {
             return false;
         }
@@ -145,6 +165,21 @@ public abstract class Option<T>
 
         public Some(T value) {
             this.value = value;
+        }
+
+        /**
+         * Provides an iterator so that {@code Option} instances conform to the
+         * {@code Iterable} interface.
+         *
+         * <p>Since a {@code Some} instance represents the presence of a value,
+         * the iterator returned will be over the value of this {@code Some}.</p>
+         *
+         * <p>The returned iterator does not support removal.</p>
+         *
+         * @return An iterator over the value of this {@code Some}.
+         */
+        @Override public Iterator<T> iterator() {
+            return unmodifiableCollection(collectionWith(value)).iterator();
         }
 
         @Override public Boolean hasValue() {
