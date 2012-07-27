@@ -258,6 +258,19 @@ public class Some<T> extends Option<T> {
     }
 
     /**
+     * A translation method to translate this {@code Option} into {@code null} in
+     * the case that it does not contain a value.
+     *
+     * <p>Since a {@code Some} instance represents the presence of a value,
+     * this method with always return this {@code Some} instance.</p>
+     *
+     * @return This {@code Option} instance.
+     */
+    @Override public Option<T> orNull() {
+        return this;
+    }
+
+    /**
      * A mapping method to map the value of this {@code Option} into an {@code Option}
      * over a value of type {@code S} built by calling {@link #some(Object)} on the
      * value returned after calling the supplied {@link UnaryFunction} with the current

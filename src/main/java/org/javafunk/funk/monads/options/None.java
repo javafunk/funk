@@ -265,6 +265,20 @@ public class None<T> extends Option<T> {
     }
 
     /**
+     * A translation method to translate this {@code Option} into {@code null} in the
+     * case that it does not contain a value.
+     *
+     * <p>Since a {@code None} instance represents the absence of a value,
+     * {@code null} will always be returned.</p>
+     *
+     * @return {@code null} always, since {@code None} represents the absence of a
+     *         value.
+     */
+    @Override public Option<T> orNull() {
+        return null;
+    }
+
+    /**
      * A mapping method to map the value of this {@code Option} into an {@code Option}
      * over a value of type {@code S} built by calling {@link #some(Object)} on the
      * value returned after calling the supplied {@link UnaryFunction} with the current

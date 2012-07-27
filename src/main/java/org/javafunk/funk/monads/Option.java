@@ -367,6 +367,15 @@ public abstract class Option<T>
     public abstract Option<T> orOption(T other);
 
     /**
+     * A translation method to translate this {@code Option} into {@code null} in the
+     * case that it does not contain a value. If a value is present, the {@code Option}
+     * itself is returned. If no value is present, {@code null} is returned.
+     *
+     * @return This {@code Option} if a value is present, otherwise {@code null}.
+     */
+    public abstract Option<T> orNull();
+
+    /**
      * A mapping method to map the value of this {@code Option} into an {@code Option}
      * over a value of type {@code S} built by calling {@link #some(Object)} on the
      * value returned after calling the supplied {@link UnaryFunction} with the current

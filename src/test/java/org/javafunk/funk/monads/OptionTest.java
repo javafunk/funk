@@ -173,6 +173,19 @@ public class OptionTest {
         assertThat(actual, is(expected));
     }
 
+    @Test
+    public void shouldReturnNullWhenOrNullCalledOnNone() throws Exception {
+        // Given
+        Option<Integer> initial = none();
+        Option<Integer> expected = null;
+
+        // When
+        Option<Integer> actual = initial.orNull();
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
     @Test(expected = Throwable.class)
     public void shouldThrowSuppliedExceptionIfGetOrThrowCalledOnNone() throws Throwable {
         // Given
@@ -454,6 +467,19 @@ public class OptionTest {
 
         // When
         Option<Integer> actual = initial.orOption(null);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnSelfWhenOrNullCalledOnSome() throws Exception {
+        // Given
+        Option<Integer> initial = some(10);
+        Option<Integer> expected = some(10);
+
+        // When
+        Option<Integer> actual = initial.orNull();
 
         // Then
         assertThat(actual, is(expected));
