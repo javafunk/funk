@@ -15,6 +15,7 @@ import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.matchers.SelfDescribingPredicate;
 import org.junit.Test;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.Callable;
 
@@ -844,6 +845,45 @@ public class OptionTest {
 
         // Then
         assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(false));
+    }
+
+    @Test
+    public void shouldBeEmptyIterableIfNone() throws Exception {
+        // Given
+        Option<Integer> option = none();
+
+        // When
+        Iterator<Integer> iterator = option.iterator();
+
+        // Then
+        assertThat(iterator.hasNext(), is(false));
+    }
+
+    @Test
+    public void shouldBeIterableOverValueIfSome() throws Exception {
+        // Given
+        Option<Integer> option = some(10);
+
+        // When
+        Iterator<Integer> iterator = option.iterator();
+
+        // Then
+        assertThat(iterator.hasNext(), is(true));
+        assertThat(iterator.next(), is(10));
+        assertThat(iterator.hasNext(), is(false));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void shouldBeReadOnlyIterableIfSome() throws Exception {
+        // Given
+        Option<Integer> option = some(10);
+        Iterator<Integer> iterator = option.iterator();
+        iterator.next();
+
+        // When
+        iterator.remove();
+
+        // Then an UnsupportedOperationException is thrown.
     }
 
     private static class TrackingNullaryFunction<R> implements NullaryFunction<R> {

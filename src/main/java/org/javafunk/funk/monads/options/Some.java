@@ -4,9 +4,13 @@ import org.javafunk.funk.functors.functions.NullaryFunction;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.monads.Option;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.concurrent.Callable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Collections.unmodifiableCollection;
+import static org.javafunk.funk.Literals.collectionWith;
 
 /**
  * The {@code Some<T>} class is an implementation of {@code Option}
@@ -46,6 +50,21 @@ public class Some<T> extends Option<T> {
      */
     private Some(T value) {
         this.value = value;
+    }
+
+    /**
+     * Provides an iterator so that {@code Option} instances conform to the
+     * {@code Iterable} interface.
+     *
+     * <p>Since a {@code Some} instance represents the presence of a value,
+     * the iterator returned will be over the value of this {@code Some}.</p>
+     *
+     * <p>The returned iterator does not support removal.</p>
+     *
+     * @return An iterator over the value of this {@code Some}.
+     */
+    @Override public Iterator<T> iterator() {
+        return unmodifiableCollection(collectionWith(value)).iterator();
     }
 
     /**
