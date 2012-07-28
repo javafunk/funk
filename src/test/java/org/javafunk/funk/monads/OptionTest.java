@@ -25,6 +25,7 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.matchers.IterableMatchers.hasAllElementsSatisfying;
 import static org.javafunk.funk.monads.Option.*;
+import static org.javafunk.funk.monads.OptionTest.TrackingNullaryFunction.trackingNullaryFunction;
 
 public class OptionTest {
     @Test
@@ -116,7 +117,33 @@ public class OptionTest {
         Option<String> initial = none();
 
         // When
-        initial.or(null);
+        initial.or((Option<? extends String>) null);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test
+    public void shouldReturnValueObtainedFromCallingSuppliedNullaryFunctionWhenOrCalledOnNone() throws Exception {
+        // Given
+        Option<String> initial = none();
+        TrackingNullaryFunction<Option<String>> function = trackingNullaryFunction(option("a"));
+        Option<String> expected = option("a");
+
+        // When
+        Option<String> actual = initial.or(function);
+
+        // Then
+        assertThat(function.wasCalled(), is(true));
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionWhenOrCalledOnNoneIfSuppliedWithNullNullaryFunction() throws Exception {
+        // Given
+        Option<String> initial = none();
+
+        // When
+        initial.or((NullaryFunction<? extends Option<? extends String>>) null);
 
         // Then a NullPointerException is thrown
     }
@@ -402,7 +429,33 @@ public class OptionTest {
         Option<String> initial = some("thing");
 
         // When
-        initial.or(null);
+        initial.or((Option<? extends String>) null);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test
+    public void shouldReturnSelfWhenOrCalledOnSomeWithNullaryFunction() throws Exception {
+        // Given
+        Option<Integer> initial = some(10);
+        TrackingNullaryFunction<Option<Integer>> function = trackingNullaryFunction(option(5));
+        Option<Integer> expected = some(10);
+
+        // When
+        Option<Integer> actual = initial.or(function);
+
+        // Then
+        assertThat(function.wasCalled(), is(false));
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionWhenOrCalledOnSomeIfSuppliedWithNullNullaryFunction() throws Exception {
+        // Given
+        Option<String> initial = some("thing");
+
+        // When
+        initial.or((NullaryFunction<? extends Option<? extends String>>) null);
 
         // Then a NullPointerException is thrown
     }
@@ -886,12 +939,16 @@ public class OptionTest {
         // Then an UnsupportedOperationException is thrown.
     }
 
-    private static class TrackingNullaryFunction<R> implements NullaryFunction<R> {
+    public static class TrackingNullaryFunction<R> implements NullaryFunction<R> {
         private final R result;
 
         private Boolean wasCalled = false;
 
-        private TrackingNullaryFunction(R result) {
+        public static <R> TrackingNullaryFunction<R> trackingNullaryFunction(R result) {
+            return new TrackingNullaryFunction<R>(result);
+        }
+
+        public TrackingNullaryFunction(R result) {
             this.result = result;
         }
 

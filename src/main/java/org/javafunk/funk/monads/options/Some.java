@@ -215,16 +215,35 @@ public class Some<T> extends Option<T> {
 
     /**
      * A translation method to translate this {@code Option} into an {@code Option}
+     * obtained by calling the supplied {@code NullaryFunction} in the case that it
+     * does not contain a value.
+     *
+     * <p>Since a {@code Some} instance represents the presence of a value,
+     * the supplied function will never be used and this method will always return
+     * this {@code Some} instance.</p>
+     *
+     * <p>This translation method will throw a {@code NullPointerException} if the supplied
+     * function is {@code null}, even though it is not used, to maintain the contract
+     * defined by {@code Option}.</p>
+     *
+     * @param function A function to call in order to obtain an {@code Option} to return
+     *                 if this {@code Option} implementation represented the absence of
+     *                 a value.
+     * @return This {@code Option} instance.
+     */
+    @Override public Option<T> or(NullaryFunction<? extends Option<? extends T>> function) {
+        checkNotNull(function);
+        return this;
+    }
+
+    /**
+     * A translation method to translate this {@code Option} into an {@code Option}
      * built by calling {@link #some(Object)} over the supplied value in the case
      * that it does not contain a value.
      *
      * <p>Since a {@code Some} instance represents the presence of a value,
      * the supplied value will never be used and this method will always return
      * this {@code Some} instance.</p>
-     *
-     * <p>This translation method will throw a {@code NullPointerException} if the supplied
-     * value is {@code null}, even though it is not used, to maintain the contract
-     * defined by {@code Option}.</p>
      *
      * @param other The value of an {@code Option} built with {@link #some(Object)}
      *              that would be returned if this {@code Option} implementation
@@ -267,6 +286,9 @@ public class Some<T> extends Option<T> {
      * the function will always be called and this {@code Some}'s value will
      * always be mapped.</p>
      *
+     * <p>Currently the supplied {@code UnaryFunction} will be called eagerly
+     * although this may become lazy in a future version of Funk.</p>
+     *
      * <p>If the supplied function is {@code null}, a {@code NullPointerException}
      * will be thrown.</p>
      *
@@ -290,6 +312,9 @@ public class Some<T> extends Option<T> {
      * <p>Since a {@code Some} instance represents the presence of a value,
      * the function will always be called and this {@code Some}'s value will
      * always be mapped.</p>
+     *
+     * <p>Currently the supplied {@code UnaryFunction} will be called eagerly
+     * although this may become lazy in a future version of Funk.</p>
      *
      * <p>If the supplied function is {@code null}, a {@code NullPointerException}
      * will be thrown.</p>
