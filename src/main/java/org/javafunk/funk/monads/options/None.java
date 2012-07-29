@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.Callable;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.javafunk.funk.Literals.collection;
 
@@ -226,6 +227,30 @@ public class None<T> extends Option<T> {
     @SuppressWarnings("unchecked")
     @Override public Option<T> or(Option<? extends T> other) {
         return (Option<T>) checkNotNull(other);
+    }
+
+    /**
+     * A translation method to translate this {@code Option} into an {@code Option}
+     * obtained by calling the supplied {@code NullaryFunction} in the case that it
+     * does not contain a value.
+     *
+     * <p>Since a {@code None} instance represents the absence of a value,
+     * the supplied function will always be called and this method will always return
+     * the {@code Option} obtained from it.</p>
+     *
+     * <p>If the supplied function is {@code null}, a {@code NullPointerException}
+     * will be thrown.</p>
+     *
+     * @param function A function to call to obtain an {@code Option} which will
+     *                 be returned since this {@code Option} implementation
+     *                 represents the absence of a value.
+     * @return An {@code Option} instance obtained by calling the supplied function.
+     * @throws NullPointerException if the supplied function is {@code null}.
+     */
+    @SuppressWarnings("unchecked")
+    @Override public Option<T> or(NullaryFunction<? extends Option<? extends T>> function) {
+        checkNotNull(function);
+        return (Option<T>) function.call();
     }
 
     /**
