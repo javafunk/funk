@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.concurrent.Callable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.javafunk.funk.functors.adapters.CallableNullaryFunctionAdapter.callableNullaryFunction;
 import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 
 /**
@@ -319,10 +320,6 @@ public abstract class Option<T>
      * {@code Option} itself is returned. If no value is present the supplied
      * {@code Option} is returned.
      *
-     * <p>This is a shortcut method in the constant case for calling
-     * {@link #flatMap(org.javafunk.funk.functors.functions.UnaryFunction)} or
-     * {@link #flatMap(org.javafunk.funk.functors.Mapper)}.</p>
-     *
      * <p>If the supplied {@code Option} is {@code null}, a {@code NullPointerException}
      * is thrown.</p>
      *
@@ -336,14 +333,59 @@ public abstract class Option<T>
 
     /**
      * A translation method to translate this {@code Option} into an {@code Option}
+     * obtained by calling the supplied {@code NullaryFunction} in the case that it
+     * does not contain a value. If a value is present, the {@code Option} itself
+     * is returned. If no value is present, the result of calling the supplied
+     * function is returned.
+     *
+     * <p>Currently the supplied {@code NullaryFunction} will be called eagerly
+     * in the case that no value is present although this may become lazy in
+     * a future version of Funk.</p>
+     *
+     * <p>If the supplied {@code NullaryFunction} is {@code null}, a
+     * {@code NullPointerException} is thrown.</p>
+     *
+     * @param function A function to call to obtain an {@code Option} to return in the case
+     *                 that this {@code Option} contains no value.
+     * @return This {@code Option} if a value is present, otherwise an {@code Option}
+     *         obtained by calling the supplied {@code NullaryFunction}.
+     * @throws NullPointerException if the supplied {@code NullaryFunction} is {@code null}.
+     */
+    public abstract Option<T> or(NullaryFunction<? extends Option<? extends T>> function);
+
+    /**
+     * A translation method to translate this {@code Option} into an {@code Option}
+     * obtained by calling the supplied {@code Callable} in the case that it
+     * does not contain a value. If a value is present, the {@code Option} itself
+     * is returned. If no value is present, the result of calling the supplied
+     * function is returned.
+     *
+     * <p>Currently the supplied {@code Callable} will be called eagerly
+     * in the case that no value is present although this may become lazy in
+     * a future version of Funk.</p>
+     *
+     * <p>If the supplied {@code Callable} is {@code null}, a
+     * {@code NullPointerException} is thrown.</p>
+     *
+     * <p>Note that any checked exception thrown by the {@code Callable} is rethrown
+     * as a {@code RuntimeException} instance.</p>
+     *
+     * @param function A function to call to obtain an {@code Option} to return in the case
+     *                 that this {@code Option} contains no value.
+     * @return This {@code Option} if a value is present, otherwise an {@code Option}
+     *         obtained by calling the supplied {@code Callable}.
+     * @throws NullPointerException if the supplied {@code Callable} is {@code null}.
+     */
+    public Option<T> or(Callable<? extends Option<? extends T>> function) {
+        return or(callableNullaryFunction(checkNotNull(function)));
+    }
+
+    /**
+     * A translation method to translate this {@code Option} into an {@code Option}
      * built by calling {@link #some(Object)} over the supplied value in the case
      * that it does not contain a value. If a value is present, the {@code Option}
      * itself is returned. If no value is present the result of calling
      * {@link #some(Object)} on the supplied value is returned.
-     *
-     * <p>This is a shortcut method in the constant case for calling
-     * {@link #map(org.javafunk.funk.functors.functions.UnaryFunction)} or
-     * {@link #map(org.javafunk.funk.functors.Mapper)}.</p>
      *
      * @param other The value of an {@code Option} built with {@link #some(Object)}
      *              to return in the case that this {@code Option} contains no value.
@@ -375,6 +417,10 @@ public abstract class Option<T>
      * <p>In the case that this {@code Option} contains no value, an {@code Option} with
      * no value of type {@code S} is returned and the supplied function will not be
      * called.</p>
+     *
+     * <p>Currently the supplied {@code UnaryFunction} will be called eagerly
+     * in the case that a value is present although this may become lazy in
+     * a future version of Funk.</p>
      *
      * <p>If the supplied function is {@code null}, a {@code NullPointerException}
      * will be thrown.</p>
@@ -424,6 +470,10 @@ public abstract class Option<T>
      * no value of type {@code S} is returned and the supplied mapper will not be
      * called.</p>
      *
+     * <p>Currently the supplied {@code Mapper} will be called eagerly
+     * in the case that a value is present although this may become lazy in
+     * a future version of Funk.</p>
+     *
      * <p>If the supplied mapper is {@code null}, a {@code NullPointerException}
      * will be thrown.</p>
      *
@@ -472,6 +522,10 @@ public abstract class Option<T>
      * no value of type {@code S} is returned and the supplied function will not be
      * called.</p>
      *
+     * <p>Currently the supplied {@code UnaryFunction} will be called eagerly
+     * in the case that a value is present although this may become lazy in
+     * a future version of Funk.</p>
+     *
      * <p>If the supplied function is {@code null}, a {@code NullPointerException}
      * will be thrown.</p>
      *
@@ -515,6 +569,10 @@ public abstract class Option<T>
      * <p>In the case that this {@code Option} contains no value, an {@code Option} with
      * no value of type {@code S} is returned and the supplied mapper will not be
      * called.</p>
+     *
+     * <p>Currently the supplied {@code Mapper} will be called eagerly
+     * in the case that a value is present although this may become lazy in
+     * a future version of Funk.</p>
      *
      * <p>If the supplied mapper is {@code null}, a {@code NullPointerException}
      * will be thrown.</p>
