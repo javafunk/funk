@@ -33,6 +33,9 @@ import static org.javafunk.funk.functors.adapters.IndexerUnaryFunctionAdapter.in
 import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 import static org.javafunk.funk.functors.adapters.ReducerBinaryFunctionAdapter.reducerBinaryFunction;
 
+/**
+ * @since 1.0
+ */
 public class Eagerly {
     private Eagerly() {}
 
