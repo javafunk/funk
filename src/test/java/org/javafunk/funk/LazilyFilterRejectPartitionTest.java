@@ -18,9 +18,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Literals.collectionWith;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.*;
 import static org.junit.Assert.assertThat;
 
 public class LazilyFilterRejectPartitionTest {

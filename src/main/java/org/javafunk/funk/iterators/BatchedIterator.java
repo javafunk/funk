@@ -8,7 +8,10 @@
  */
 package org.javafunk.funk.iterators;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import static java.util.Collections.unmodifiableList;
 
