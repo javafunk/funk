@@ -184,12 +184,12 @@ public class Eagerly {
     }
 
     /**
-     * Maps an iterable of elements of type {@code S} into a collection of elements of
-     * type {@code T} using the supplied {@code UnaryFunction}. The {@code UnaryFunction}
-     * will be provided with each element in the input {@code Iterable} and the value
-     * returned from the {@code UnaryFunction} will be used in place of the input element
-     * in the returned {@code Collection}. For a more mathematical description of the
-     * map higher order function, see the
+     * Maps an {@code Iterable} of elements of type {@code S} into a {@code Collection}
+     * of elements of type {@code T} using the supplied {@code UnaryFunction}. The
+     * {@code UnaryFunction} will be provided with each element in the input
+     * {@code Iterable} and the value returned from the {@code UnaryFunction} will be
+     * used in place of the input element in the returned {@code Collection}. For a
+     * more mathematical description of the map higher order function, see the
      * <a href="http://en.wikipedia.org/wiki/Map_(higher-order_function)">
      * map article on Wikipedia</a>.
      *
@@ -201,7 +201,7 @@ public class Eagerly {
      * {@code Iterable}, they are passed to the function in the same way as any other
      * value. Similarly, any {@code null} values returned are retained in the output
      * {@code Collection}. Thus, the input and output collections will always be of
-     * the same size satisfying the homomorphism property of the map function.</p>
+     * the same size.</p>
      *
      * <h4>Example Usage</h4>
      *
@@ -295,12 +295,12 @@ public class Eagerly {
     }
 
     /**
-     * Maps an iterable of elements of type {@code S} into a collection of elements of
-     * type {@code T} using the supplied {@code Mapper}. The {@code Mapper} will be
-     * provided with each element in the input {@code Iterable} and the value returned
-     * from the {@code Mapper} will be used in place of the input element in the
-     * returned {@code Collection}. For a more mathematical description of the
-     * map higher order function, see the
+     * Maps an {@code Iterable} of elements of type {@code S} into a {@code Collection}
+     * of elements of type {@code T} using the supplied {@code Mapper}. The
+     * {@code Mapper} will be provided with each element in the input {@code Iterable}
+     * and the value returned from the {@code Mapper} will be used in place of the
+     * input element in the returned {@code Collection}. For a more mathematical
+     * description of the map higher order function, see the
      * <a href="http://en.wikipedia.org/wiki/Map_(higher-order_function)">
      * map article on Wikipedia</a>.
      *
