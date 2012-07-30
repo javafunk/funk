@@ -4,7 +4,6 @@ import org.javafunk.funk.functors.functions.NullaryFunction;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.monads.Option;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.concurrent.Callable;
 

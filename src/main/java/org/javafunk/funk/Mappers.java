@@ -12,7 +12,6 @@ import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.datastructures.tuples.Quadruple;
 import org.javafunk.funk.datastructures.tuples.Triple;
 import org.javafunk.funk.functors.Mapper;
-import org.javafunk.funk.functors.functions.UnaryFunction;
 
 import java.util.Iterator;
 

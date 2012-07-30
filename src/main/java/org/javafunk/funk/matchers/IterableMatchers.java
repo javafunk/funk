@@ -9,7 +9,10 @@
 package org.javafunk.funk.matchers;
 
 import org.hamcrest.Matcher;
-import org.javafunk.funk.matchers.implementations.*;
+import org.javafunk.funk.matchers.implementations.HasAllElementsSatisfyingMatcher;
+import org.javafunk.funk.matchers.implementations.HasOnlyItemsInAnyOrderMatcher;
+import org.javafunk.funk.matchers.implementations.HasOnlyItemsInOrderMatcher;
+import org.javafunk.funk.matchers.implementations.HasSomeElementsSatisfyingMatcher;
 
 import static java.util.Arrays.asList;
 

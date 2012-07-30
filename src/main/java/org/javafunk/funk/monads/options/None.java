@@ -5,13 +5,11 @@ import org.javafunk.funk.functors.functions.NullaryFunction;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.monads.Option;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.Callable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.javafunk.funk.Literals.collection;
 
 /**
  * The {@code None<T>} class is an implementation of {@code Option}

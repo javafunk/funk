@@ -18,7 +18,6 @@ import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.monads.options.None;
 import org.javafunk.funk.monads.options.Some;
 
-import java.util.Iterator;
 import java.util.concurrent.Callable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
