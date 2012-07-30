@@ -13,6 +13,8 @@ import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.NullaryFunction;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.matchers.SelfDescribingPredicate;
+import org.javafunk.funk.testclasses.TrackingCallable;
+import org.javafunk.funk.testclasses.TrackingNullaryFunction;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -25,6 +27,8 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.matchers.IterableMatchers.hasAllElementsSatisfying;
 import static org.javafunk.funk.monads.Option.*;
+import static org.javafunk.funk.testclasses.TrackingCallable.trackingCallable;
+import static org.javafunk.funk.testclasses.TrackingNullaryFunction.trackingNullaryFunction;
 
 public class OptionTest {
     @Test
@@ -116,7 +120,59 @@ public class OptionTest {
         Option<String> initial = none();
 
         // When
-        initial.or(null);
+        initial.or((Option<? extends String>) null);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test
+    public void shouldReturnValueObtainedFromCallingSuppliedNullaryFunctionWhenOrCalledOnNone() throws Exception {
+        // Given
+        Option<String> initial = none();
+        TrackingNullaryFunction<Option<String>> function = trackingNullaryFunction(option("a"));
+        Option<String> expected = option("a");
+
+        // When
+        Option<String> actual = initial.or(function);
+
+        // Then
+        assertThat(function.wasCalled(), is(true));
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionWhenOrCalledOnNoneIfSuppliedWithNullNullaryFunction() throws Exception {
+        // Given
+        Option<String> initial = none();
+
+        // When
+        initial.or((NullaryFunction<? extends Option<? extends String>>) null);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test
+    public void shouldReturnValueObtainedFromCallingSuppliedCallableWhenOrCalledOnNone() throws Exception {
+        // Given
+        Option<String> initial = none();
+        TrackingCallable<Option<String>> function = trackingCallable(option("a"));
+        Option<String> expected = option("a");
+
+        // When
+        Option<String> actual = initial.or(function);
+
+        // Then
+        assertThat(function.wasCalled(), is(true));
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionWhenOrCalledOnNoneIfSuppliedWithNullCallable() throws Exception {
+        // Given
+        Option<String> initial = none();
+
+        // When
+        initial.or((Callable<? extends Option<? extends String>>) null);
 
         // Then a NullPointerException is thrown
     }
@@ -237,7 +293,7 @@ public class OptionTest {
     public void shouldReturnTheResultOfCallingTheSuppliedCallableIfGetOrCallCalledOnNone() throws Exception {
         // Given
         Option<String> option = none();
-        TrackingCallable callable = new TrackingCallable("call result");
+        TrackingCallable<String> callable = trackingCallable("call result");
         String expected = "call result";
 
         // When
@@ -267,10 +323,9 @@ public class OptionTest {
     public void shouldThrowNullPointerExceptionIfGetOrCallIsCalledOnNoneWithNullCallable() throws Exception {
         // Given
         Option<String> option = none();
-        TrackingCallable callable = null;
 
         // When
-        option.getOrCall(callable);
+        option.getOrCall((Callable<? extends String>) null);
 
         // Then a NullPointerException is thrown.
     }
@@ -402,7 +457,59 @@ public class OptionTest {
         Option<String> initial = some("thing");
 
         // When
-        initial.or(null);
+        initial.or((Option<? extends String>) null);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test
+    public void shouldReturnSelfWhenOrCalledOnSomeWithNullaryFunction() throws Exception {
+        // Given
+        Option<Integer> initial = some(10);
+        TrackingNullaryFunction<Option<Integer>> function = trackingNullaryFunction(option(5));
+        Option<Integer> expected = some(10);
+
+        // When
+        Option<Integer> actual = initial.or(function);
+
+        // Then
+        assertThat(function.wasCalled(), is(false));
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionWhenOrCalledOnSomeIfSuppliedWithNullNullaryFunction() throws Exception {
+        // Given
+        Option<String> initial = some("thing");
+
+        // When
+        initial.or((NullaryFunction<? extends Option<? extends String>>) null);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test
+    public void shouldReturnSelfWhenOrCalledOnSomeWithCallable() throws Exception {
+        // Given
+        Option<Integer> initial = some(10);
+        TrackingCallable<Option<Integer>> function = trackingCallable(option(5));
+        Option<Integer> expected = some(10);
+
+        // When
+        Option<Integer> actual = initial.or(function);
+
+        // Then
+        assertThat(function.wasCalled(), is(false));
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionWhenOrCalledOnSomeIfSuppliedWithNullCallable() throws Exception {
+        // Given
+        Option<String> initial = some("thing");
+
+        // When
+        initial.or((Callable<? extends Option<? extends String>>) null);
 
         // Then a NullPointerException is thrown
     }
@@ -525,7 +632,7 @@ public class OptionTest {
     public void shouldReturnTheResultOfCallingGetIfGetOrCallCalledOnSomeWhenSuppliedCallable() throws Exception {
         // Given
         Option<String> option = some("thing");
-        TrackingCallable callable = new TrackingCallable("call result");
+        TrackingCallable<String> callable = trackingCallable("call result");
         String expected = "thing";
 
         // When
@@ -555,10 +662,9 @@ public class OptionTest {
     public void shouldThrowNullPointerExceptionIfGetOrCallIsCalledOnSomeWithNullCallable() throws Exception {
         // Given
         Option<String> option = some("thing");
-        TrackingCallable callable = null;
 
         // When
-        option.getOrCall(callable);
+        option.getOrCall((Callable<? extends String>) null);
 
         // Then a NullPointerException is thrown.
     }
@@ -884,44 +990,6 @@ public class OptionTest {
         iterator.remove();
 
         // Then an UnsupportedOperationException is thrown.
-    }
-
-    private static class TrackingNullaryFunction<R> implements NullaryFunction<R> {
-        private final R result;
-
-        private Boolean wasCalled = false;
-
-        private TrackingNullaryFunction(R result) {
-            this.result = result;
-        }
-
-        @Override public R call() {
-            this.wasCalled = true;
-            return result;
-        }
-
-        public Boolean wasCalled() {
-            return wasCalled;
-        }
-    }
-
-    private static class TrackingCallable implements Callable<String> {
-        private final String callResult;
-
-        private Boolean wasCalled = false;
-
-        public TrackingCallable(String callResult) {
-            this.callResult = callResult;
-        }
-
-        @Override public String call() throws Exception {
-            wasCalled = true;
-            return callResult;
-        }
-
-        public boolean wasCalled() {
-            return wasCalled;
-        }
     }
 
     private Matcher<Iterable<Boolean>> hasAllElementsEqualTo(final Boolean booleanValue) {
