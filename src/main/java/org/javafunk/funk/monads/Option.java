@@ -95,8 +95,8 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  * and {@link Some} and {@link None} for more examples.
  *
  * @param <T> The type of the value of this {@code Option}.
- * @see org.javafunk.funk.monads.options.Some
- * @see org.javafunk.funk.monads.options.None
+ * @see Some
+ * @see None
  * @since 1.0
  */
 public abstract class Option<T>
@@ -209,7 +209,7 @@ public abstract class Option<T>
      * and {@code false} in the absence.
      *
      * @return A {@code Boolean} representing whether or not a value
-     * is present in this {@code Option}.
+     *         is present in this {@code Option}.
      */
     public abstract Boolean hasValue();
 
