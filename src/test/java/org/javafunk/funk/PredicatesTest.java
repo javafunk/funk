@@ -16,9 +16,7 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Predicates.alwaysFalse;
-import static org.javafunk.funk.Predicates.alwaysTrue;
-import static org.javafunk.funk.Predicates.not;
+import static org.javafunk.funk.Predicates.*;
 
 public class PredicatesTest {
     @Test
