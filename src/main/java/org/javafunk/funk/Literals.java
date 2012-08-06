@@ -19,6 +19,17 @@ import static java.util.Arrays.asList;
 public class Literals {
     private Literals() {}
 
+    /**
+     * Older APIs are sometimes written to accept arrays of objects as arguments in cases where we'd like to use varargs.
+     *
+     * @param elements The elements we'd like to convert to an array.
+     *
+     * @return The given elements as an array.
+     */
+    public static <E> E[] array(E... elements) {
+        return elements;
+    }
+
     public static <E> Iterable<E> iterable() {
         return new IterableBuilder<E>().build();
     }

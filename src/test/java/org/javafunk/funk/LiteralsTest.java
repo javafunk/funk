@@ -23,6 +23,7 @@ import java.util.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.collection.IsArrayContainingInOrder.arrayContaining;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.builders.IterableBuilder.iterableBuilder;
 import static org.javafunk.funk.matchers.IteratorMatchers.isIteratorWithSameElementsAs;
@@ -32,6 +33,16 @@ import static org.javafunk.funk.testclasses.Location.location;
 import static org.javafunk.funk.testclasses.Name.name;
 
 public class LiteralsTest {
+    @Test
+    public void shouldReturnVaragsAsArray() {
+        Object one = new Object();
+        Object two = new Object();
+
+        Object[] actual = array(one, two);
+
+        assertThat(actual, arrayContaining(one, two));
+    }
+
     @Test
     public void shouldReturnAnEmptyIterable() throws Exception {
         // Given
