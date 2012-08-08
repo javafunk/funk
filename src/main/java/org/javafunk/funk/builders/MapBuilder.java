@@ -43,19 +43,19 @@ public class MapBuilder<K, V>
         return map;
     }
 
-    public MapBuilder<K, V> and(Pair<K, V>[] pairs) {
-        return and(iterableFrom(pairs));
+    public MapBuilder<K, V> andPairs(Pair<K, V>[] pairs) {
+        return andPairs(iterableFrom(pairs));
     }
 
-    public MapBuilder<K, V> and(Iterable<? extends Pair<K, V>> pairs) {
+    public MapBuilder<K, V> andPairs(Iterable<? extends Pair<K, V>> pairs) {
         return and(map(pairs, Tuples.<K, V>toMapEntry()));
     }
 
-    public MapBuilder<K, V> with(Pair<K, V>[] pairs) {
-        return and(iterableFrom(pairs));
+    public MapBuilder<K, V> withPairs(Pair<K, V>[] pairs) {
+        return andPairs(iterableFrom(pairs));
     }
 
-    public MapBuilder<K, V> with(Iterable<? extends Pair<K, V>> pairs) {
+    public MapBuilder<K, V> withPairs(Iterable<? extends Pair<K, V>> pairs) {
         return and(map(pairs, Tuples.<K, V>toMapEntry()));
     }
     
@@ -161,7 +161,7 @@ public class MapBuilder<K, V>
     }
     public MapBuilder<K, V> with(Pair<K, V> p1, Pair<K, V> p2, Pair<K, V> p3, Pair<K, V> p4, Pair<K, V> p5, Pair<K, V> p6, Pair<K, V> p7, Pair<K, V> p8, Pair<K, V> p9, Pair<K, V> p10, Pair<K, V>... p11on) {
         return and(mapEntryFor(p1), mapEntryFor(p2), mapEntryFor(p3), mapEntryFor(p4), mapEntryFor(p5), mapEntryFor(p6), mapEntryFor(p7), mapEntryFor(p8), mapEntryFor(p9), mapEntryFor(p10))
-                .and(p11on);
+                .andPairs(p11on);
     }
 
     public MapBuilder<K, V> and(Pair<K, V> p1) {
@@ -196,6 +196,6 @@ public class MapBuilder<K, V>
     }
     public MapBuilder<K, V> and(Pair<K, V> p1, Pair<K, V> p2, Pair<K, V> p3, Pair<K, V> p4, Pair<K, V> p5, Pair<K, V> p6, Pair<K, V> p7, Pair<K, V> p8, Pair<K, V> p9, Pair<K, V> p10, Pair<K, V>... p11on) {
         return and(mapEntryFor(p1), mapEntryFor(p2), mapEntryFor(p3), mapEntryFor(p4), mapEntryFor(p5), mapEntryFor(p6), mapEntryFor(p7), mapEntryFor(p8), mapEntryFor(p9), mapEntryFor(p10))
-                .and(p11on);
+                .andPairs(p11on);
     }
 }
