@@ -25,7 +25,7 @@ public class EagerlySumTest {
         Iterable<Integer> inputs = iterableWith(1, 2, 3);
 
         // When
-        Integer sum = Eagerly.sum(inputs);
+        Integer sum = Eagerly.sumIntegers(inputs);
 
         // Then
         assertThat(sum, is(6));
@@ -37,7 +37,7 @@ public class EagerlySumTest {
         Iterable<Long> inputs = iterableWith(1L, 2L, 3L);
 
         // When
-        Long sum = Eagerly.sum(inputs);
+        Long sum = Eagerly.sumLongs(inputs);
 
         // Then
         assertThat(sum, is(6L));
@@ -49,7 +49,7 @@ public class EagerlySumTest {
         Iterable<BigInteger> inputs = iterableWith(new BigInteger("123"), new BigInteger("234"), new BigInteger("345"));
 
         // When
-        BigInteger sum = Eagerly.sum(inputs);
+        BigInteger sum = Eagerly.sumBigIntegers(inputs);
 
         // Then
         assertThat(sum, is(new BigInteger("702")));
@@ -61,7 +61,7 @@ public class EagerlySumTest {
         Iterable<Double> inputs = iterableWith(1.6D, 2.2D, 3.5D);
 
         // When
-        Double sum = Eagerly.sum(inputs);
+        Double sum = Eagerly.sumDoubles(inputs);
 
         // Then
         assertThat(sum, is(closeTo(7.3D, 0.01D)));
@@ -73,7 +73,7 @@ public class EagerlySumTest {
         Iterable<Float> inputs = iterableWith(1.6F, 2.2F, 3.5F);
 
         // When
-        Float sum = Eagerly.sum(inputs);
+        Float sum = Eagerly.sumFloats(inputs);
 
         // Then
         assertThat(sum.doubleValue(), is(closeTo(7.3D, 0.01)));
@@ -85,7 +85,7 @@ public class EagerlySumTest {
         Iterable<BigDecimal> inputs = iterableWith(new BigDecimal("1.23"), new BigDecimal("2.34"), new BigDecimal("3.45"));
 
         // When
-        BigDecimal sum = Eagerly.sum(inputs);
+        BigDecimal sum = Eagerly.sumBigDecimals(inputs);
 
         // Then
         assertThat(sum, is(new BigDecimal("7.02")));
