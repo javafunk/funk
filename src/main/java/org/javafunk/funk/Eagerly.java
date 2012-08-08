@@ -70,51 +70,51 @@ public class Eagerly {
         return reduce(iterable, reducerBinaryFunction(reducer));
     }
 
-    public static Integer sum(Iterable<Integer> iterable) {
+    public static Integer sumIntegers(Iterable<Integer> iterable) {
         return reduce(iterable, integerAdditionAccumulator());
     }
 
-    public static Long sum(Iterable<Long> iterable) {
+    public static Long sumLongs(Iterable<Long> iterable) {
         return reduce(iterable, longAdditionAccumulator());
     }
 
-    public static BigInteger sum(Iterable<BigInteger> iterable) {
+    public static BigInteger sumBigIntegers(Iterable<BigInteger> iterable) {
         return reduce(iterable, bigIntegerAdditionAccumulator());
     }
 
-    public static Double sum(Iterable<Double> iterable) {
+    public static Double sumDoubles(Iterable<Double> iterable) {
         return reduce(iterable, doubleAdditionAccumulator());
     }
 
-    public static Float sum(Iterable<Float> iterable) {
+    public static Float sumFloats(Iterable<Float> iterable) {
         return reduce(iterable, floatAdditionAccumulator());
     }
 
-    public static BigDecimal sum(Iterable<BigDecimal> iterable) {
+    public static BigDecimal sumBigDecimals(Iterable<BigDecimal> iterable) {
         return reduce(iterable, bigDecimalAdditionAccumulator());
     }
 
-    public static Integer product(Iterable<Integer> iterable) {
+    public static Integer multiplyIntegers(Iterable<Integer> iterable) {
         return reduce(iterable, integerMultiplicationAccumulator());
     }
 
-    public static Long product(Iterable<Long> iterable) {
+    public static Long multiplyLongs(Iterable<Long> iterable) {
         return reduce(iterable, longMultiplicationAccumulator());
     }
 
-    public static BigInteger product(Iterable<BigInteger> iterable) {
+    public static BigInteger multiplyBigIntegers(Iterable<BigInteger> iterable) {
         return reduce(iterable, bigIntegerMultiplicationAccumulator());
     }
 
-    public static Float product(Iterable<Float> iterable) {
+    public static Float multiplyFloats(Iterable<Float> iterable) {
         return reduce(iterable, floatMultiplicationAccumulator());
     }
 
-    public static Double product(Iterable<Double> iterable) {
+    public static Double multiplyDoubles(Iterable<Double> iterable) {
         return reduce(iterable, doubleMultiplicationAccumulator());
     }
 
-    public static BigDecimal product(Iterable<BigDecimal> iterable) {
+    public static BigDecimal multiplyBigDecimals(Iterable<BigDecimal> iterable) {
         return reduce(iterable, bigDecimalMultiplicationAccumulator());
     }
 
