@@ -239,11 +239,11 @@ public class Literals {
     }
 
     public static <K, V> Map<K, V> mapFromTuples(Iterable<? extends Pair<K, V>> elements) {
-        return new MapBuilder<K, V>().with(elements).build();
+        return new MapBuilder<K, V>().withPairs(elements).build();
     }
 
     public static <K, V> Map<K, V> mapFromTuples(Pair<K, V>[] elementArray) {
-        return new MapBuilder<K, V>().with(elementArray).build();
+        return new MapBuilder<K, V>().withPairs(elementArray).build();
     }
 
     public static <K, V> MapBuilder<K, V> mapBuilder() {
@@ -263,11 +263,11 @@ public class Literals {
     }
 
     public static <K, V> MapBuilder<K, V> mapBuilderFromTuples(Iterable<? extends Pair<K, V>> entries) {
-        return new MapBuilder<K, V>().with(entries);
+        return new MapBuilder<K, V>().withPairs(entries);
     }
 
     public static <K, V> MapBuilder<K, V> mapBuilderFromTuples(Pair<K, V>[] entries) {
-        return new MapBuilder<K, V>().with(entries);
+        return new MapBuilder<K, V>().withPairs(entries);
     }
 
     public static <K, V> Map.Entry<K, V> mapEntryFor(K key, V value) {
@@ -511,7 +511,7 @@ public class Literals {
     public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8) { return mapFromTuples(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
     public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9) { return mapFromTuples(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
     public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10) { return mapFromTuples(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10, Pair<K, V>... e11on) { return mapBuilderFromTuples(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).and(e11on).build(); }
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10, Pair<K, V>... e11on) { return mapBuilderFromTuples(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).andPairs(e11on).build(); }
     
     public static <K, V> MapBuilder<K, V> mapBuilderWith(K k1, V v1) {
         return new MapBuilder<K, V>().with(mapEntryFor(k1, v1));
@@ -566,5 +566,5 @@ public class Literals {
     public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8) { return mapBuilderFromTuples(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
     public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9) { return mapBuilderFromTuples(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
     public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10) { return mapBuilderFromTuples(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10, Pair<K, V>... e11on) { return mapBuilderFromTuples(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).and(e11on); }
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10, Pair<K, V>... e11on) { return mapBuilderFromTuples(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).andPairs(e11on); }
 }
