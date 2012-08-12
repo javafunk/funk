@@ -22,6 +22,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @param <L> The type of the left slot of this {@code Either}.
  * @param <R> The type of the right slot of this {@code Either}.
+ * @see Either
+ * @see Left
+ * @since 1.0
  */
 public class Right<L, R> extends Either<L, R> {
     private R value;
@@ -120,11 +123,30 @@ public class Right<L, R> extends Either<L, R> {
         return right(checkNotNull(function).call(value));
     }
 
+    /**
+     * Implements value equality for {@code Right} instances. Two {@code Either}s are
+     * equal if they both contain the same value in the same slot thus in the case of
+     * {@code Right}, if both {@code Either} instances are {@code Right} instances and
+     * they hold the same value, they are equal, otherwise they are not.
+     *
+     * <p>Due to type erasure, {@code Either.<Y, X>right(x).equals(Either.<Z, X>right(x)}
+     * will be {@code true} for all types {@code X} and {@code Y} and {@code Z}.</p>
+     *
+     * @param other The object to check for equality to this {@code Right}.
+     * @return {@code true} if the supplied {@code Right} is equal to this {@code Right},
+     *         otherwise, {@code false}.
+     */
     @Override
     public boolean equals(Object other) {
         return EqualsBuilder.reflectionEquals(this, other);
     }
 
+    /**
+     * Two {@code Either} objects will have equal hash codes either if they both represent
+     * the same slot and they both contain the same value (of the same type) in that slot.
+     *
+     * @return The hash code of this {@code Either}.
+     */
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);

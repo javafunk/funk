@@ -22,6 +22,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @param <L> The type of the left slot of this {@code Either}.
  * @param <R> The type of the right slot of this {@code Either}.
+ * @see Either
+ * @see Right
+ * @since 1.0
  */
 public class Left<L, R> extends Either<L, R> {
     private L value;
@@ -108,7 +111,7 @@ public class Left<L, R> extends Either<L, R> {
      * @param function A {@code UnaryFunction} that would be used to map the
      *                 right value of this {@code Either} into a value of type
      *                 {@code S} if it did not represent a left value.
-     * @param <S> The type of the right slot in the resulting {@code Either}.
+     * @param <S>      The type of the right slot in the resulting {@code Either}.
      * @return A {@code Left} over the current left value of type {@code S} in
      *         the right slot.
      * @throws NullPointerException if the supplied function is {@code null}.
@@ -119,11 +122,30 @@ public class Left<L, R> extends Either<L, R> {
         return left(value);
     }
 
+    /**
+     * Implements value equality for {@code Left} instances. Two {@code Either}s are
+     * equal if they both contain the same value in the same slot thus in the case of
+     * {@code Left}, if both {@code Either} instances are {@code Left} instances and
+     * they hold the same value, they are equal, otherwise they are not.
+     *
+     * <p>Due to type erasure, {@code Either.<X, Y>left(x).equals(Either.<X, Z>left(x)}
+     * will be {@code true} for all types {@code X} and {@code Y} and {@code Z}.</p>
+     *
+     * @param other The object to check for equality to this {@code Left}.
+     * @return {@code true} if the supplied {@code Left} is equal to this {@code Left},
+     *         otherwise, {@code false}.
+     */
     @Override
     public boolean equals(Object other) {
         return EqualsBuilder.reflectionEquals(this, other);
     }
 
+    /**
+     * Two {@code Either} objects will have equal hash codes either if they both represent
+     * the same slot and they both contain the same value (of the same type) in that slot.
+     *
+     * @return The hash code of this {@code Either}.
+     */
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);

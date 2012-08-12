@@ -37,7 +37,10 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  *
  * <p>{@code Either} equality is based on the equivalence of the contained value and
  * the nature of the {@code Either} whether that be {@code Left} or {@code Right}.
- * Thus {@code Either} is a value object.</p>
+ * Thus {@code Either} is a value object. Unfortunately, due to type erasure,
+ * {@code new Left<Integer, String>(1).equals(new Left<Integer, Long>(1))} is
+ * {@code true}, i.e., for a {@code Left}, equality does not include the type
+ * of the right slot. The same is true for {@code Right}.</p>
  *
  * <p>An {@code Either} is immutable but translation and mapping methods are planned
  * for a future release.</p>
