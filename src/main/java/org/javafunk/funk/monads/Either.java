@@ -69,6 +69,18 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  *   return xmlFetchEither.getRight()
  * </pre>
  * </blockquote>
+ * It can also be mapped into a new value in the case that it is a right, whilst propagating the
+ * ErrorReport in the case that it is a left:
+ * <blockquote>
+ * <pre>
+ *   Either&lt;ErrorReport, XmlFeed&gt; xmlFetchEither = xmlFeedService.fetchFor(Dates.today());
+ *   Either&lt;ErrorReport, XmlNode&gt; xmlNodeEither = xmlFetchEither.map(new Mapper&lt;XmlFeed, XmlNode&gt;>(){
+ *       &#64;Override public XmlNode map(XmlFeed feed) {
+ *           return feed.getNode("postcode");
+ *       }
+ *   });
+ * </pre>
+ * </blockquote>
  * A potential implementation of the {@code XmlFeedService} might look like:
  * <blockquote>
  * <pre>
@@ -212,6 +224,21 @@ public abstract class Either<L, R> implements Mappable<R, Either<L, ?>> {
      *
      * <h4>Example Usage:</h4>
      *
+     * <blockquote>
+     * <pre>
+     *   Either&lt;Error, String&gt; content = loader.load("books/the_cat_in_the_hat.txt");
+     *   Either&lt;Error, List&lt;String&gt;&gt; paragraphs = content.map(new Mapper&lt;String, List&lt;String&gt;&gt;(){
+     *       &#64;Override public List&lt;String&gt; map(String content) {
+     *           return listFrom(content.split("\\n\\n"));
+     *       }
+     *   }
+     *   if(paragraphs.isLeft) {
+     *       throw new FailedToLoadBookException();
+     *   }
+     *   return paragraphs.getRight();
+     * </pre>
+     * </blockquote>
+     *
      * @param mapper A {@code Mapper} to map the right value of this
      *               {@code Either} into a value of type {@code S}.
      * @param <S>    The type of the right value of the resulting {@code Either}.
@@ -250,6 +277,21 @@ public abstract class Either<L, R> implements Mappable<R, Either<L, ?>> {
      * {@code NullPointerException} will be thrown.</p>
      *
      * <h4>Example Usage:</h4>
+     *
+     * <blockquote>
+     * <pre>
+     *   Either&lt;Error, String&gt; content = loader.load("books/the_cat_in_the_hat.txt");
+     *   Either&lt;Error, List&lt;String&gt;&gt; paragraphs = content.map(new UnaryFunction&lt;String, List&lt;String&gt;&gt;(){
+     *       &#64;Override public List&lt;String&gt; call(String content) {
+     *           return listFrom(content.split("\\n\\n"));
+     *       }
+     *   }
+     *   if(paragraphs.isLeft) {
+     *       throw new FailedToLoadBookException();
+     *   }
+     *   return paragraphs.getRight();
+     * </pre>
+     * </blockquote>
      *
      * @param function A {@code UnaryFunction} to map the right value of
      *                 this {@code Either} into a value of type {@code S}.
