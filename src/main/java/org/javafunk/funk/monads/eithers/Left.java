@@ -8,7 +8,12 @@
  */
 package org.javafunk.funk.monads.eithers;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.monads.Either;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * The {@code Right<L, R>} class is an implementation of {@code Either}
@@ -26,8 +31,8 @@ public class Left<L, R> extends Either<L, R> {
      * the types {@code L} and {@code R} with the supplied value.
      *
      * @param value The value to be contained in the built {@code Left}.
-     * @param <L> The type of the left slot of this {@code Left}.
-     * @param <R> The type of the right slot of this {@code Left}.
+     * @param <L>   The type of the left slot of this {@code Left}.
+     * @param <R>   The type of the right slot of this {@code Left}.
      * @return A {@code Left<L, R>} containing the supplied value.
      */
     public static <L, R> Left<L, R> left(L value) {
@@ -46,7 +51,7 @@ public class Left<L, R> extends Either<L, R> {
      * should go through the static factory methods {@link Left#left(Object)}
      * and {@link Either#left(Object)}.
      */
-    private Left(L value){
+    private Left(L value) {
         this.value = value;
     }
 
@@ -83,7 +88,49 @@ public class Left<L, R> extends Either<L, R> {
      * @return The value contained in the left slot of this {@code Left}.
      */
     @Override
-    public L getLeft(){
+    public L getLeft() {
         return value;
+    }
+
+    /**
+     * A mapping method to map this {@code Either} into an {@code Either} over
+     * a right value of type {@code S} obtained by calling the supplied
+     * {@code UnaryFunction} with the current right value of this
+     * {@code Either}.
+     *
+     * <p>Since, by definition, a {@code Left} represents the absence of a right
+     * value, the supplied mapper will not be called and a {@code Left} over the
+     * current value of type {@code S} in the right slot will be returned.</p>
+     *
+     * <p>If the supplied {@code UnaryFunction} is {@code null}, a
+     * {@code NullPointerException} will be thrown.</p>
+     *
+     * @param function A {@code UnaryFunction} that would be used to map the
+     *                 right value of this {@code Either} into a value of type
+     *                 {@code S} if it did not represent a left value.
+     * @param <S> The type of the right slot in the resulting {@code Either}.
+     * @return A {@code Left} over the current left value of type {@code S} in
+     *         the right slot.
+     * @throws NullPointerException if the supplied function is {@code null}.
+     */
+    @Override
+    public <S> Either<L, S> map(UnaryFunction<? super R, ? extends S> function) {
+        checkNotNull(function);
+        return left(value);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return EqualsBuilder.reflectionEquals(this, other);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Either::Left[%s]", value);
     }
 }

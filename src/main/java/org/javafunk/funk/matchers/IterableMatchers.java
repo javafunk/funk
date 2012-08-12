@@ -43,4 +43,15 @@ public class IterableMatchers {
         return new HasSomeElementsSatisfyingMatcher<T>(predicate);
     }
 
+    public static Matcher<Iterable<Boolean>> hasAllElementsEqualTo(final Boolean booleanValue) {
+        return hasAllElementsSatisfying(new SelfDescribingPredicate<Boolean>() {
+            @Override public String describe() {
+                return "equal to " + booleanValue.toString();
+            }
+
+            @Override public boolean evaluate(Boolean item) {
+                return item.equals(booleanValue);
+            }
+        });
+    }
 }
