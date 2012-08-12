@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Funk committers.
+ * Copyright (C) 2011-Present Funk committers.
  * All rights reserved.
  *
  * The software in this package is published under the terms of the BSD
