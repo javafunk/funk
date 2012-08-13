@@ -286,8 +286,8 @@ public class Eagerly {
      * @param iterable The {@code Iterable} of elements to be mapped.
      * @param function A {@code UnaryFunction} which, given an element from the input iterable,
      *                 returns that element mapped to a new value potentially of a different type.
-     * @param <S> The type of the input elements, i.e., the elements to map.
-     * @param <T> The type of the output elements, i.e., the mapped elements.
+     * @param <S>      The type of the input elements, i.e., the elements to map.
+     * @param <T>      The type of the output elements, i.e., the mapped elements.
      * @return A {@code Collection} containing each instance of {@code S} from the input
      *         {@code Iterable} mapped to an instance of {@code T}.
      */
@@ -319,8 +319,8 @@ public class Eagerly {
      * @param iterable The {@code Iterable} of elements to be mapped.
      * @param mapper   A {@code Mapper} which, given an element from the input iterable,
      *                 returns that element mapped to a new value potentially of a different type.
-     * @param <S> The type of the input elements, i.e., the elements to map.
-     * @param <T> The type of the output elements, i.e., the mapped elements.
+     * @param <S>      The type of the input elements, i.e., the elements to map.
+     * @param <T>      The type of the output elements, i.e., the mapped elements.
      * @return A {@code Collection} containing each instance of {@code S} from the input
      *         {@code Iterable} mapped to an instance of {@code T}.
      * @see #map(Iterable, org.javafunk.funk.functors.functions.UnaryFunction)
@@ -395,6 +395,116 @@ public class Eagerly {
         each(targets, actionUnaryProcedure(action));
     }
 
+    /**
+     * Filters those elements from the input {@code Iterable} of type {@code T}
+     * that satisfy the supplied {@code Predicate} into a {@code Collection}
+     * of elements of type {@code T} . The {@code Predicate} will be provided
+     * with each element in the input {@code Iterable} and the element will be
+     * retained in the output {@code Collection} if and only if the
+     * {@code Predicate} returns {@code true}. If it returns {@code false},
+     * the element will be discarded.
+     *
+     * <p>For a more complete description of the filter higher order function,
+     * see the <a href="http://en.wikipedia.org/wiki/Filter_(higher-order_function)">
+     * filter article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} instance is returned, the filtering is performed
+     * eagerly, i.e., the {@code UnaryPredicate} is applied to each element in the input
+     * {@code Iterable} immediately.</p>
+     *
+     * <p>{@code filter} does not discriminate against {@code null} values in the input
+     * {@code Iterable}, they are passed to the {@code Predicate} in the same way as
+     * any other value. Similarly, if the {@code Predicate} returns {@code true} when
+     * called with a {@code null} value, the {@code null} value will be retained in
+     * the output {@code Collection}.</p>
+     *
+     * <h4>Example Usage</h4>
+     *
+     * Consider a collection of {@code Pet} objects where a {@code Pet} is defined
+     * by the following interface:
+     * <blockquote>
+     * <pre>
+     *   public interface Pet {
+     *       String getName();
+     *   }
+     * </pre>
+     * </blockquote>
+     * Now, consider {@code Pet} has two implementations, {@code Cat} and
+     * {@code Dog}, defined by the following classes:
+     * <blockquote>
+     * <pre>
+     *   public class Dog implements Pet {
+     *       private String name;
+     *
+     *       public Dog(String name) {
+     *           this.name = name;
+     *       }
+     *
+     *       &#64;Override
+     *       public String getName() {
+     *           return String.format("Bark, bark, %s, bark", name);
+     *       }
+     *   }
+     *
+     *   public class Cat implements Pet {
+     *       private String name;
+     *
+     *       public Cat(String name) {
+     *           this.name = name;
+     *       }
+     *
+     *       &#64;Override
+     *       public String getName() {
+     *           return String.format("%s, miaow", name);
+     *       }
+     *   }
+     * </pre>
+     * </blockquote>
+     * Say we have an in memory database of all pets in a neighbourhood:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Pet&gt; pets = Literals.listWith(
+     *           new Dog("Fido"),
+     *           new Dog("Bones"),
+     *           new Cat("Fluff"),
+     *           new Dog("Graham"),
+     *           new Cat("Ginger"));
+     * </pre>
+     * </blockquote>
+     * It's vaccination season for the dogs in the neighbourhood so we need to
+     * get hold of a list of all of them. We can do this using {@code filter}:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Pet&gt; names = Eagerly.filter(pets, new Predicate&lt;Pet&gt;() {
+     *       &#64;Override public boolean evaluate(Pet pet) {
+     *           return pet instanceof Dog;
+     *       }
+     *   });
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * <p>The resulting collection is equivalent to the following:</p>
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Pet&gt; names = Literals.collectionWith(
+     *           new Dog("Fido"),
+     *           new Dog("Bones"),
+     *           new Dog("Graham"));
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable  The {@code Iterable} of elements to be filtered.
+     * @param predicate A {@code UnaryPredicate} which, given an element from the input iterable,
+     *                  returns {@code true} if that element should be retained and {@code false}
+     *                  if it should be discarded.
+     * @param <T>       The type of the elements to be filtered.
+     * @return A {@code Collection} containing those elements of type {@code T} from the input
+     *         {@code Iterable} that evaluate to {@code true} when passed to the supplied
+     *         {@code UnaryPredicate}.
+     */
     public static <T> Collection<T> filter(
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
@@ -409,9 +519,9 @@ public class Eagerly {
 
     public static <T> Option<T> first(Iterable<? extends T> iterable) {
         Iterator<? extends T> iterator = iterable.iterator();
-        if(iterator.hasNext()){
+        if (iterator.hasNext()) {
             return Option.some(iterator.next());
-        }else{
+        } else {
             return Option.none();
         }
     }
