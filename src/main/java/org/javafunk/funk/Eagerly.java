@@ -206,7 +206,7 @@ public class Eagerly {
      * {@code Collection}. Thus, the input and output collections will always be of
      * the same size.</p>
      *
-     * <h4>Example Usage</h4>
+     * <h4>Example Usage:</h4>
      *
      * Consider a collection of {@code Person} objects where a {@code Person} is defined
      * by the following class:
@@ -517,6 +517,50 @@ public class Eagerly {
         return materialize(Lazily.reject(iterable, predicate));
     }
 
+    /**
+     * Returns an {@code Option} over the first element in the supplied {@code Iterable}.
+     * If the {@code Iterable} is empty, {@code None} is returned, otherwise, a
+     * {@code Some} is returned over the first value found.
+     *
+     * <p>This method has a return type of {@code Option} rather than returning the
+     * first value directly since, in the case of an empty {@code Iterable}, an
+     * exception would have to be thrown using that approach. Instead, the
+     * {@code Option} can be queried for whether it contains a value or not,
+     * avoiding any exception handling.</p>
+     *
+     * <p>Since an {@code Option} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the first element from the underlying
+     * {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * The first element in the {@code Iterable} can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *   Option&lt;Integer&gt; valueOption = first(values);
+     *   Integer value = valueOption.get(); // => 5
+     * </pre>
+     * </blockquote>
+     * Similarly, we can handle the empty {@code Iterable} case gracefully:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable();
+     *   Option&lt;Integer&gt; valueOption = first(values);
+     *   Integer value = valueOption.getOrElse(10); // => 10
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which the first element is required.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Option} instance representing the first element in the supplied
+     *         {@code Iterable}.
+     */
     public static <T> Option<T> first(Iterable<? extends T> iterable) {
         Iterator<? extends T> iterator = iterable.iterator();
         if (iterator.hasNext()) {
@@ -526,18 +570,222 @@ public class Eagerly {
         }
     }
 
+    /**
+     * Returns an {@code Option} over the first element in the supplied {@code Iterable}
+     * that satisfies the supplied {@code UnaryPredicate}. If the {@code Iterable} is
+     * empty, {@code None} is returned, otherwise, a {@code Some} is returned over
+     * the first matching value found.
+     *
+     * <p>This method has a return type of {@code Option} rather than returning the
+     * first matching value directly since, in the case of an empty {@code Iterable},
+     * an exception would have to be thrown using that approach. Instead, the
+     * {@code Option} can be queried for whether it contains a value or not,
+     * avoiding an exception handling.</p>
+     *
+     * <p>Since an {@code Option} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the first matching element from the
+     * underlying {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * The first even element in the {@code Iterable} can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *   Option&lt;Integer&gt; valueOption = first(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Integer value = valueOption.get(); // => 4
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * <p>Thanks to the {@code Option} returned, we can handle the empty {@code Iterable}
+     * case gracefully:</p>
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable();
+     *   Option&lt;Integer&gt; valueOption = first(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Integer value = valueOption.getOrElse(10); // => 10
+     * </pre>
+     * </blockquote>
+     * Similarly, if no elements match the supplied {@code UnaryPredicate}, we are returned
+     * a {@code None}:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable(9, 7, 5, 3, 1);
+     *   Option&lt;Integer&gt; valueOption = first(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   valueOption.hasValue(); // => false
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable  The {@code Iterable} to search for an element matching the supplied
+     *                  {@code UnaryPredicate}.
+     * @param predicate A {@code UnaryPredicate} that must be satisfied by an element in the
+     *                  supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Option} instance representing the first element in the supplied
+     *         {@code Iterable} satisfying the supplied {@code UnaryPredicate}.
+     */
     public static <T> Option<T> first(
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
         return first(filter(iterable, predicate));
     }
 
+    /**
+     * Returns a {@code Collection} containing the first <em>n</em> elements in the supplied
+     * {@code Iterable} where <em>n</em> is given by the supplied integer value. If the
+     * {@code Iterable} is empty, an empty {@code Collection} is returned, otherwise,
+     * a {@code Collection} containing the first <em>n</em> elements is returned.
+     *
+     * <p>In the case that the supplied {@code Iterable} does not contain enough
+     * elements to satisfy the required number, a {@code Collection} containing
+     * as many elements as possible is returned.</p>
+     *
+     * <p>Since a {@code Collection} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the elements from the underlying
+     * {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Using {@code first}, we can obtain the first three elements in the {@code Iterable}.
+     * The following two lines are equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; firstThreeValues = first(values, 3);
+     *   Collection&lt;Integer&gt; equivalentValues = Literals.collectionWith(5, 4, 3);
+     * </pre>
+     * </blockquote>
+     * If the input {@code Iterable} does not contain enough elements, we are returned a
+     * {@code Collection} with as many elements as possible. The following two lines are
+     * equivalent:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; firstSixValues = first(values, 6);
+     *   Collection&lt;Integer&gt; equivalentValues = Literals.collectionWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Similarly, if the input {@code Iterable} contains no elements, an empty
+     * {@code Collection} is returned:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable();
+     *   Collection&lt;Integer&gt; firstThreeElements = first(values, 3);
+     *   firstThreeElements.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which the first <em>n</em> elements
+     *                 should be taken.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} instance containing the required number of elements
+     *         (or less) from the supplied {@code Iterable}.
+     */
     public static <T> Collection<T> first(
             Iterable<T> iterable,
             int numberOfElementsRequired) {
         return take(iterable, numberOfElementsRequired);
     }
 
+    /**
+     * Returns a {@code Collection} containing the first <em>n</em> elements in the supplied
+     * {@code Iterable} that satisfy the supplied {@code UnaryPredicate} where <em>n</em>
+     * is given by the supplied integer value. If the {@code Iterable} is empty,
+     * an empty {@code Collection} is returned, otherwise, a {@code Collection} containing
+     * the first <em>n</em> matching elements is returned.
+     *
+     * <p>In the case that the supplied {@code Iterable} does not contain enough
+     * matching elements to satisfy the required number, a {@code Collection} containing
+     * as many elements as possible is returned.</p>
+     *
+     * <p>Since a {@code Collection} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve matching elements from the underlying
+     * {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterableWith(8, 7, 6, 5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Using {@code first}, we can obtain the first three even elements in the {@code Iterable}.
+     * The following two expressions are equivalent:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; firstThreeEvens = first(values, 3, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Collection&lt;Integer&gt; equivalentEvens = Literals.collectionWith(8, 6, 4);
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * <p>If the input {@code Iterable} does not contain enough elements satisfying the
+     * supplied {@code UnaryPredicate}, we are returned a {@code Collection} with as
+     * many matching elements as possible. The following two lines are equivalent:</p>
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; firstFiveEvens = first(values, 5, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Collection&lt;Integer&gt; equivalentEvens = Literals.collectionWith(8, 6, 4, 2);
+     * </pre>
+     * </blockquote>
+     * Similarly, if no elements match the supplied {@code UnaryPredicate}, we are returned an
+     * empty {@code Collection}:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable(9, 7, 5, 3, 1);
+     *   Collection&lt;Integer&gt; firstThreeEvens = first(values, 3, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   firstThreeEvens.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable  The {@code Iterable} to search for elements matching the supplied
+     *                  {@code UnaryPredicate}.
+     * @param predicate A {@code UnaryPredicate} that must be satisfied by elements in the
+     *                  supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} instance containing the required number of elements
+     *         (or less) from the supplied {@code Iterable} matching the supplied
+     *         {@code UnaryPredicate}.
+     */
     public static <T> Collection<T> first(
             Iterable<T> iterable,
             int numberOfElementsRequired,
