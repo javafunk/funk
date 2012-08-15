@@ -8,11 +8,10 @@
  */
 package org.javafunk.funk.monads;
 
-import org.hamcrest.Matcher;
 import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.NullaryFunction;
 import org.javafunk.funk.functors.functions.UnaryFunction;
-import org.javafunk.funk.matchers.SelfDescribingPredicate;
+import org.javafunk.funk.matchers.IterableMatchers;
 import org.javafunk.funk.testclasses.TrackingCallable;
 import org.javafunk.funk.testclasses.TrackingNullaryFunction;
 import org.junit.Test;
@@ -25,7 +24,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.matchers.IterableMatchers.hasAllElementsSatisfying;
 import static org.javafunk.funk.monads.Option.*;
 import static org.javafunk.funk.testclasses.TrackingCallable.trackingCallable;
 import static org.javafunk.funk.testclasses.TrackingNullaryFunction.trackingNullaryFunction;
@@ -866,7 +864,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondNone.equals(firstNone);
 
         // Then
-        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(true));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), IterableMatchers.hasAllElementsEqualTo(true));
     }
 
     @Test
@@ -880,7 +878,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondNone.equals(firstNone);
 
         // Then
-        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(true));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), IterableMatchers.hasAllElementsEqualTo(true));
     }
 
     @Test
@@ -894,7 +892,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondOption.equals(firstOption);
 
         // Then
-        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(true));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), IterableMatchers.hasAllElementsEqualTo(true));
     }
 
     @Test
@@ -908,7 +906,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondOption.equals(firstOption);
 
         // Then
-        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(true));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), IterableMatchers.hasAllElementsEqualTo(true));
     }
 
     @Test
@@ -922,7 +920,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondOption.equals(firstOption);
 
         // Then
-        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(false));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), IterableMatchers.hasAllElementsEqualTo(false));
     }
 
     @Test
@@ -936,7 +934,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondOption.equals(firstOption);
 
         // Then
-        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(false));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), IterableMatchers.hasAllElementsEqualTo(false));
     }
 
     @Test
@@ -950,7 +948,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondOption.equals(firstOption);
 
         // Then
-        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), hasAllElementsEqualTo(false));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), IterableMatchers.hasAllElementsEqualTo(false));
     }
 
     @Test
@@ -990,17 +988,5 @@ public class OptionTest {
         iterator.remove();
 
         // Then an UnsupportedOperationException is thrown.
-    }
-
-    private Matcher<Iterable<Boolean>> hasAllElementsEqualTo(final Boolean booleanValue) {
-        return hasAllElementsSatisfying(new SelfDescribingPredicate<Boolean>() {
-            @Override public String describe() {
-                return "equal to " + booleanValue.toString();
-            }
-
-            @Override public boolean evaluate(Boolean item) {
-                return item.equals(booleanValue);
-            }
-        });
     }
 }
