@@ -160,7 +160,7 @@ public class Literals {
      *
      * @param elementClass A {@code Class} representing the type of elements
      *                     contained in this {@code List}
-     * @param <E> The type of the elements contained in the {@code List}.
+     * @param <E>          The type of the elements contained in the {@code List}.
      * @return A {@code List} instance over the type {@code E} containing no elements.
      */
     public static <E> List<E> listOf(Class<E> elementClass) {
@@ -189,7 +189,7 @@ public class Literals {
      *
      * @param elements An {@code Iterable} of elements from which a {@code List} should be
      *                 constructed.
-     * @param <E> The type of the elements to be contained in the returned {@code List}.
+     * @param <E>      The type of the elements to be contained in the returned {@code List}.
      * @return A {@code List} over the type {@code E} containing all elements from the
      *         supplied {@code Iterable} in the order they are yielded.
      */
@@ -219,7 +219,7 @@ public class Literals {
      *
      * @param elementArray An array of elements from which a {@code List} should be
      *                     constructed.
-     * @param <E> The type of the elements to be contained in the returned {@code List}.
+     * @param <E>          The type of the elements to be contained in the returned {@code List}.
      * @return A {@code List} over the type {@code E} containing all elements from the
      *         supplied array in the same order as the supplied array.
      */
@@ -232,7 +232,7 @@ public class Literals {
      *
      * @param e   An element from which to construct a {@code List}.
      * @param <E> The type of the element contained in the returned {@code List}.
-     * @return    A {@code List} instance over type {@code E} containing the supplied element.
+     * @return A {@code List} instance over type {@code E} containing the supplied element.
      */
     public static <E> List<E> listWith(E e) {
         return listFrom(iterableWith(e));
@@ -246,7 +246,7 @@ public class Literals {
      * @param e1  The first element from which to construct a {@code List}.
      * @param e2  The second element from which to construct a {@code List}.
      * @param <E> The type of the elements contained in the returned {@code List}.
-     * @return A {@code List} instance over type {@code E} containing the supplied element.
+     * @return A {@code List} instance over type {@code E} containing the supplied elements.
      */
     public static <E> List<E> listWith(E e1, E e2) {
         return listFrom(iterableWith(e1, e2));
@@ -261,7 +261,7 @@ public class Literals {
      * @param e2  The second element from which to construct a {@code List}.
      * @param e3  The third element from which to construct a {@code List}.
      * @param <E> The type of the elements contained in the returned {@code List}.
-     * @return A {@code List} instance over type {@code E} containing the supplied element.
+     * @return A {@code List} instance over type {@code E} containing the supplied elements.
      */
     public static <E> List<E> listWith(E e1, E e2, E e3) {
         return listFrom(iterableWith(e1, e2, e3));
@@ -277,7 +277,7 @@ public class Literals {
      * @param e3  The third element from which to construct a {@code List}.
      * @param e4  The fourth element from which to construct a {@code List}.
      * @param <E> The type of the elements contained in the returned {@code List}.
-     * @return A {@code List} instance over type {@code E} containing the supplied element.
+     * @return A {@code List} instance over type {@code E} containing the supplied elements.
      */
     public static <E> List<E> listWith(E e1, E e2, E e3, E e4) {
         return listFrom(iterableWith(e1, e2, e3, e4));
@@ -294,7 +294,7 @@ public class Literals {
      * @param e4  The fourth element from which to construct a {@code List}.
      * @param e5  The fifth element from which to construct a {@code List}.
      * @param <E> The type of the elements contained in the returned {@code List}.
-     * @return A {@code List} instance over type {@code E} containing the supplied element.
+     * @return A {@code List} instance over type {@code E} containing the supplied elements.
      */
     public static <E> List<E> listWith(E e1, E e2, E e3, E e4, E e5) {
         return listFrom(iterableWith(e1, e2, e3, e4, e5));
@@ -312,7 +312,7 @@ public class Literals {
      * @param e5  The fifth element from which to construct a {@code List}.
      * @param e6  The sixth element from which to construct a {@code List}.
      * @param <E> The type of the elements contained in the returned {@code List}.
-     * @return A {@code List} instance over type {@code E} containing the supplied element.
+     * @return A {@code List} instance over type {@code E} containing the supplied elements.
      */
     public static <E> List<E> listWith(E e1, E e2, E e3, E e4, E e5, E e6) {
         return listFrom(iterableWith(e1, e2, e3, e4, e5, e6));
@@ -331,7 +331,7 @@ public class Literals {
      * @param e6  The sixth element from which to construct a {@code List}.
      * @param e7  The seventh element from which to construct a {@code List}.
      * @param <E> The type of the elements contained in the returned {@code List}.
-     * @return A {@code List} instance over type {@code E} containing the supplied element.
+     * @return A {@code List} instance over type {@code E} containing the supplied elements.
      */
     public static <E> List<E> listWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
         return listFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
@@ -351,7 +351,7 @@ public class Literals {
      * @param e7  The seventh element from which to construct a {@code List}.
      * @param e8  The eighth element from which to construct a {@code List}.
      * @param <E> The type of the elements contained in the returned {@code List}.
-     * @return A {@code List} instance over type {@code E} containing the supplied element.
+     * @return A {@code List} instance over type {@code E} containing the supplied elements.
      */
     public static <E> List<E> listWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
         return listFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
@@ -372,7 +372,7 @@ public class Literals {
      * @param e8  The eighth element from which to construct a {@code List}.
      * @param e9  The ninth element from which to construct a {@code List}.
      * @param <E> The type of the elements contained in the returned {@code List}.
-     * @return A {@code List} instance over type {@code E} containing the supplied element.
+     * @return A {@code List} instance over type {@code E} containing the supplied elements.
      */
     public static <E> List<E> listWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
         return listFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
@@ -394,7 +394,7 @@ public class Literals {
      * @param e9  The ninth element from which to construct a {@code List}.
      * @param e10 The tenth element from which to construct a {@code List}.
      * @param <E> The type of the elements contained in the returned {@code List}.
-     * @return A {@code List} instance over type {@code E} containing the supplied element.
+     * @return A {@code List} instance over type {@code E} containing the supplied elements.
      */
     public static <E> List<E> listWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
         return listFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
@@ -422,39 +422,362 @@ public class Literals {
      * @param e10   The tenth element from which to construct a {@code List}.
      * @param e11on The remaining elements from which to construct a {@code List}.
      * @param <E>   The type of the elements contained in the returned {@code List}.
-     * @return A {@code List} instance over type {@code E} containing the supplied element.
+     * @return A {@code List} instance over type {@code E} containing the supplied elements.
      */
     public static <E> List<E> listWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
         return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)).build();
     }
 
+    /**
+     * Returns a {@code ListBuilder} containing no elements.
+     *
+     * <h4>Example Usage:</h4>
+     * A {@code ListBuilder} can be used to assemble a {@code List} as follows:
+     * <blockquote>
+     * <pre>
+     *   List&lt;Integer&gt; list = Literals.&lt;Integer&gt;listBuilder()
+     *           .with(1, 2, 3)
+     *           .and(4, 5, 6)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   List&lt;Integer&gt; list = Literals.listWith(1, 2, 3, 4, 5, 6);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code ListBuilder} is that the list can be built up from
+     * individual objects, arrays or existing iterables. See {@link ListBuilder} for
+     * further details.
+     *
+     * @param <E> The type of the elements contained in the {@code ListBuilder}.
+     * @return A {@code ListBuilder} instance over the type {@code E} containing no elements.
+     */
     public static <E> ListBuilder<E> listBuilder() {
         return new ListBuilder<E>();
     }
 
+    /**
+     * Returns a {@code ListBuilder} over the type of the supplied {@code Class}
+     * containing no elements.
+     *
+     * <h4>Example Usage:</h4>
+     * A {@code ListBuilder} can be used to assemble a {@code List} as follows:
+     * <blockquote>
+     * <pre>
+     *   List&lt;Integer&gt; list = listBuilderOf(Integer.class)
+     *           .with(1, 2, 3)
+     *           .and(4, 5, 6)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   List&lt;Integer&gt; list = Literals.listWith(1, 2, 3, 4, 5, 6);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code ListBuilder} is that the list can be built up from
+     * individual objects, arrays or existing iterables. See {@link ListBuilder} for
+     * further details.
+     *
+     * @param elementClass A {@code Class} representing the type of elements
+     *                     contained in this {@code ListBuilder}
+     * @param <E>          The type of the elements contained in the {@code ListBuilder}.
+     * @return A {@code ListBuilder} instance over the type {@code E} containing no
+     *         elements.
+     */
     public static <E> ListBuilder<E> listBuilderOf(Class<E> elementClass) {
         return new ListBuilder<E>();
     }
 
+    /**
+     * Returns a {@code ListBuilder} over type {@code E} initialised with the elements
+     * contained in the supplied {@code Iterable}.
+     *
+     * <h4>Example Usage:</h4>
+     * A {@code ListBuilder} can be used to assemble a {@code List} from two existing
+     * {@code Collection} instances as follows:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; firstCollection = Literals.collectionWith(1, 2, 3);
+     *   Collection&lt;Integer&gt; secondCollection = Literals.collectionWith(3, 4, 5);
+     *   List&lt;Integer&gt; list = listBuilderFrom(firstCollection)
+     *           .with(secondCollection)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   List&lt;Integer&gt; list = Literals.listWith(1, 2, 3, 3, 4, 5);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code ListBuilder} is that the list can be built up from
+     * individual objects, arrays or existing iterables. See {@link ListBuilder} for
+     * further details.
+     *
+     * @param elements An {@code Iterable} containing elements with which the
+     *                 {@code ListBuilder} should be initialised.
+     * @param <E>      The type of the elements contained in the {@code ListBuilder}.
+     * @return A {@code ListBuilder} instance over the type {@code E} containing
+     *         the elements from the supplied {@code Iteralble}.
+     */
     public static <E> ListBuilder<E> listBuilderFrom(Iterable<? extends E> elements) {
         return new ListBuilder<E>().with(elements);
     }
 
+    /**
+     * Returns a {@code ListBuilder} over type {@code E} initialised with the elements
+     * contained in the supplied array.
+     *
+     * <h4>Example Usage:</h4>
+     * A {@code ListBuilder} can be used to assemble a {@code List} from two existing
+     * arrays as follows:
+     * <blockquote>
+     * <pre>
+     *   Integer[] firstArray = new Integer[]{1, 2, 3};
+     *   Integer[] secondArray = new Integer[]{3, 4, 5};
+     *   List&lt;Integer&gt; list = listBuilderFrom(firstArray)
+     *           .with(secondArray)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   List&lt;Integer&gt; list = Literals.listWith(1, 2, 3, 3, 4, 5);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code ListBuilder} is that the list can be built up from
+     * individual objects, arrays or existing iterables. See {@link ListBuilder} for
+     * further details.
+     *
+     * @param elementArray An array containing elements with which the
+     *                     {@code ListBuilder} should be initialised.
+     * @param <E>          The type of the elements contained in the {@code ListBuilder}.
+     * @return A {@code ListBuilder} instance over the type {@code E} containing
+     *         the elements from the supplied {@code Iteralble}.
+     */
     public static <E> ListBuilder<E> listBuilderFrom(E[] elementArray) {
         return new ListBuilder<E>().with(elementArray);
     }
 
-    public static <E> ListBuilder<E> listBuilderWith(E e) { return listBuilderFrom(iterableWith(e)); }
-    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2) { return listBuilderFrom(iterableWith(e1, e2)); }
-    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3) { return listBuilderFrom(iterableWith(e1, e2, e3)); }
-    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3, E e4) { return listBuilderFrom(iterableWith(e1, e2, e3, e4)); }
-    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3, E e4, E e5) { return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5)); }
-    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) { return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
-    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
-    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
-    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on); }
+    /**
+     * Returns a {@code ListBuilder} instance over the type {@code E} containing the supplied element.
+     *
+     * @param e   The element to be added to the {@code ListBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ListBuilder}.
+     * @return A {@code ListBuilder} instance over type {@code E} containing the supplied
+     *         element.
+     */
+    public static <E> ListBuilder<E> listBuilderWith(E e) {
+        return listBuilderFrom(iterableWith(e));
+    }
+
+    /**
+     * Returns a {@code ListBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ListBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code ListBuilder}.
+     * @param e2  The second element to be added to the {@code ListBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ListBuilder}.
+     * @return A {@code ListBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2) {
+        return listBuilderFrom(iterableWith(e1, e2));
+    }
+
+    /**
+     * Returns a {@code ListBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ListBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code ListBuilder}.
+     * @param e2  The second element to be added to the {@code ListBuilder}.
+     * @param e3  The third element to be added to the {@code ListBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ListBuilder}.
+     * @return A {@code ListBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3) {
+        return listBuilderFrom(iterableWith(e1, e2, e3));
+    }
+
+    /**
+     * Returns a {@code ListBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ListBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code ListBuilder}.
+     * @param e2  The second element to be added to the {@code ListBuilder}.
+     * @param e3  The third element to be added to the {@code ListBuilder}.
+     * @param e4  The fourth element to be added to the {@code ListBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ListBuilder}.
+     * @return A {@code ListBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3, E e4) {
+        return listBuilderFrom(iterableWith(e1, e2, e3, e4));
+    }
+
+    /**
+     * Returns a {@code ListBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ListBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code ListBuilder}.
+     * @param e2  The second element to be added to the {@code ListBuilder}.
+     * @param e3  The third element to be added to the {@code ListBuilder}.
+     * @param e4  The fourth element to be added to the {@code ListBuilder}.
+     * @param e5  The fifth element to be added to the {@code ListBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ListBuilder}.
+     * @return A {@code ListBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3, E e4, E e5) {
+        return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5));
+    }
+
+    /**
+     * Returns a {@code ListBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ListBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code ListBuilder}.
+     * @param e2  The second element to be added to the {@code ListBuilder}.
+     * @param e3  The third element to be added to the {@code ListBuilder}.
+     * @param e4  The fourth element to be added to the {@code ListBuilder}.
+     * @param e5  The fifth element to be added to the {@code ListBuilder}.
+     * @param e6  The sixth element to be added to the {@code ListBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ListBuilder}.
+     * @return A {@code ListBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
+
+    /**
+     * Returns a {@code ListBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ListBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code ListBuilder}.
+     * @param e2  The second element to be added to the {@code ListBuilder}.
+     * @param e3  The third element to be added to the {@code ListBuilder}.
+     * @param e4  The fourth element to be added to the {@code ListBuilder}.
+     * @param e5  The fifth element to be added to the {@code ListBuilder}.
+     * @param e6  The sixth element to be added to the {@code ListBuilder}.
+     * @param e7  The seventh element to be added to the {@code ListBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ListBuilder}.
+     * @return A {@code ListBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    /**
+     * Returns a {@code ListBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ListBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code ListBuilder}.
+     * @param e2  The second element to be added to the {@code ListBuilder}.
+     * @param e3  The third element to be added to the {@code ListBuilder}.
+     * @param e4  The fourth element to be added to the {@code ListBuilder}.
+     * @param e5  The fifth element to be added to the {@code ListBuilder}.
+     * @param e6  The sixth element to be added to the {@code ListBuilder}.
+     * @param e7  The seventh element to be added to the {@code ListBuilder}.
+     * @param e8  The eighth element to be added to the {@code ListBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ListBuilder}.
+     * @return A {@code ListBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    /**
+     * Returns a {@code ListBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ListBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code ListBuilder}.
+     * @param e2  The second element to be added to the {@code ListBuilder}.
+     * @param e3  The third element to be added to the {@code ListBuilder}.
+     * @param e4  The fourth element to be added to the {@code ListBuilder}.
+     * @param e5  The fifth element to be added to the {@code ListBuilder}.
+     * @param e6  The sixth element to be added to the {@code ListBuilder}.
+     * @param e7  The seventh element to be added to the {@code ListBuilder}.
+     * @param e8  The eighth element to be added to the {@code ListBuilder}.
+     * @param e9  The ninth element to be added to the {@code ListBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ListBuilder}.
+     * @return A {@code ListBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    /**
+     * Returns a {@code ListBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ListBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code ListBuilder}.
+     * @param e2  The second element to be added to the {@code ListBuilder}.
+     * @param e3  The third element to be added to the {@code ListBuilder}.
+     * @param e4  The fourth element to be added to the {@code ListBuilder}.
+     * @param e5  The fifth element to be added to the {@code ListBuilder}.
+     * @param e6  The sixth element to be added to the {@code ListBuilder}.
+     * @param e7  The seventh element to be added to the {@code ListBuilder}.
+     * @param e8  The eighth element to be added to the {@code ListBuilder}.
+     * @param e9  The ninth element to be added to the {@code ListBuilder}.
+     * @param e10 The tenth element to be added to the {@code ListBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ListBuilder}.
+     * @return A {@code ListBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    /**
+     * Returns a {@code ListBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ListBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * <p>Note that this literal uses a generic varargs parameter as the last argument in the
+     * argument list and as such will cause unchecked cast warnings. Explicit argument
+     * lists for up to ten arguments have been provided for convenience. In order to avoid
+     * the unchecked cast warnings, a {@link ListBuilder} instance can be used directly with
+     * multiple method calls accumulating the builder contents.</p>
+     *
+     * @param e1    The first element to be added to the {@code ListBuilder}.
+     * @param e2    The second element to be added to the {@code ListBuilder}.
+     * @param e3    The third element to be added to the {@code ListBuilder}.
+     * @param e4    The fourth element to be added to the {@code ListBuilder}.
+     * @param e5    The fifth element to be added to the {@code ListBuilder}.
+     * @param e6    The sixth element to be added to the {@code ListBuilder}.
+     * @param e7    The seventh element to be added to the {@code ListBuilder}.
+     * @param e8    The eighth element to be added to the {@code ListBuilder}.
+     * @param e9    The ninth element to be added to the {@code ListBuilder}.
+     * @param e10   The tenth element to be added to the {@code ListBuilder}.
+     * @param e11on The remaining elements to be added to the {@code ListBuilder}. The elements
+     *              will be added to the {@code ListBuilder} in the order they are defined in the
+     *              argument list.
+     * @param <E>   The type of the elements contained in the returned {@code ListBuilder}.
+     * @return A {@code ListBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on));
+    }
 
     public static <E> Set<E> set() {
         return new SetBuilder<E>().build();
