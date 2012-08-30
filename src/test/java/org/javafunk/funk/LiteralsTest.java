@@ -34,13 +34,13 @@ import static org.javafunk.funk.testclasses.Name.name;
 
 public class LiteralsTest {
     @Test
-    public void shouldReturnVaragsAsArray() {
+    public void shouldReturnVariadicArgumentsInTheOrderSuppliedAsAnArray() {
         Object one = new Object();
         Object two = new Object();
 
         Object[] actual = array(one, two);
 
-        assertThat(actual, arrayContaining(one, two));
+        assertThat(actual, is(arrayContaining(one, two)));
     }
 
     @Test
