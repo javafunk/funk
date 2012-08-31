@@ -8,10 +8,16 @@
  */
 package org.javafunk.funk.monads;
 
+import org.javafunk.funk.behaviours.Mappable;
+import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.monads.eithers.Left;
 import org.javafunk.funk.monads.eithers.Right;
 
 import java.util.NoSuchElementException;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 
 /**
  * The {@code Either<L, R>} class is a base class for implementations of the either monad.
@@ -26,11 +32,15 @@ import java.util.NoSuchElementException;
  * a returned value that can be queried for the outcome of an operation.</p>
  *
  * <p>The {@code Either} class provides factory methods for constructing {@code Either}
- * instances. {@code Either} instances provide query methods and value access methods.</p>
+ * instances. {@code Either} instances provide query methods, value access methods
+ * and mapping methods.</p>
  *
  * <p>{@code Either} equality is based on the equivalence of the contained value and
  * the nature of the {@code Either} whether that be {@code Left} or {@code Right}.
- * Thus {@code Either} is a value object.</p>
+ * Thus {@code Either} is a value object. Unfortunately, due to type erasure,
+ * {@code new Left<Integer, String>(1).equals(new Left<Integer, Long>(1))} is
+ * {@code true}, i.e., for a {@code Left}, equality does not include the type
+ * of the right slot. The same is true for {@code Right}.</p>
  *
  * <p>An {@code Either} is immutable but translation and mapping methods are planned
  * for a future release.</p>
@@ -59,6 +69,18 @@ import java.util.NoSuchElementException;
  *   return xmlFetchEither.getRight()
  * </pre>
  * </blockquote>
+ * It can also be mapped into a new value in the case that it is a right, whilst propagating the
+ * ErrorReport in the case that it is a left:
+ * <blockquote>
+ * <pre>
+ *   Either&lt;ErrorReport, XmlFeed&gt; xmlFetchEither = xmlFeedService.fetchFor(Dates.today());
+ *   Either&lt;ErrorReport, XmlNode&gt; xmlNodeEither = xmlFetchEither.map(new Mapper&lt;XmlFeed, XmlNode&gt;>(){
+ *       &#64;Override public XmlNode map(XmlFeed feed) {
+ *           return feed.getNode("postcode");
+ *       }
+ *   });
+ * </pre>
+ * </blockquote>
  * A potential implementation of the {@code XmlFeedService} might look like:
  * <blockquote>
  * <pre>
@@ -84,20 +106,20 @@ import java.util.NoSuchElementException;
  * @see Right
  * @since 1.0
  */
-public abstract class Either<L, R>{
+public abstract class Either<L, R> implements Mappable<R, Either<L, ?>> {
     /**
      * A generic factory method for building an {@code Either} over types
      * {@code L} and {@code R} representing the presence of a value of
      * type {@code L}, i.e., representing a left.
      *
      * @param value A value of type {@code L} to be used in the left slot
-     *             of this {@code Either}.
-     * @param <L> The type of the left slot of this {@code Either}.
-     * @param <R> The type of the right slot of this {@code Either}.
+     *              of this {@code Either}.
+     * @param <L>   The type of the left slot of this {@code Either}.
+     * @param <R>   The type of the right slot of this {@code Either}.
      * @return An {@code Either<L, R>} representing a left with the
      *         supplied value.
      */
-    public static <L, R> Either<L, R> left(L value){
+    public static <L, R> Either<L, R> left(L value) {
         return Left.left(value);
     }
 
@@ -108,8 +130,8 @@ public abstract class Either<L, R>{
      *
      * @param value A value of type {@code R} to be used in the right slot
      *              of this {@code Either}.
-     * @param <L> The type of the left slot of this {@code Either}.
-     * @param <R> The type of the right slot of this {@code Either}.
+     * @param <L>   The type of the left slot of this {@code Either}.
+     * @param <R>   The type of the right slot of this {@code Either}.
      * @return An {@code Either<L, R>} representing a right with the
      *         supplied value.
      */
@@ -156,9 +178,9 @@ public abstract class Either<L, R>{
      * @return The value contained in the right slot of this {@code Either}
      *         if one is present.
      * @throws NoSuchElementException if this {@code Either} does not represent
-     *         a right.
+     *                                a right.
      */
-    public R getRight(){
+    public R getRight() {
         throw new NoSuchElementException();
     }
 
@@ -171,9 +193,114 @@ public abstract class Either<L, R>{
      * @return The value contained in the left slot of this {@code Either}
      *         if one is present.
      * @throws NoSuchElementException if this {@code Either} does not represent
-     *         a left.
+     *                                a left.
      */
-    public L getLeft(){
+    public L getLeft() {
         throw new NoSuchElementException();
     }
+
+    /**
+     * A mapping method to map this {@code Either} into an {@code Either}
+     * over a right value of type {@code S} obtained by calling the
+     * supplied {@code Mapper} with the current right value of this
+     * {@code Either}.
+     *
+     * <p>In the case that this {@code Either} represents a left value, this
+     * {@code Either} will be returned and the supplied {@code Mapper} will
+     * not be called.</p>
+     *
+     * <p>The default mapping for an {@code Either} is of the right slot
+     * since conventionally, when used for error handling, this slot
+     * holds the correct value. Other mapping methods will be introduced
+     * in future to map the left slot, either slot and to flat map the
+     * {@code Either}.</p>
+     *
+     * <p>Currently the supplied {@code Mapper} will be called eagerly
+     * in the case that this {@code Either} represents a right value
+     * although this may become lazy in a future version of Funk.</p>
+     *
+     * <p>If the supplied {@code Mapper} is {@code null}, a
+     * {@code NullPointerException} will be thrown.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * <blockquote>
+     * <pre>
+     *   Either&lt;Error, String&gt; content = loader.load("books/the_cat_in_the_hat.txt");
+     *   Either&lt;Error, List&lt;String&gt;&gt; paragraphs = content.map(new Mapper&lt;String, List&lt;String&gt;&gt;(){
+     *       &#64;Override public List&lt;String&gt; map(String content) {
+     *           return listFrom(content.split("\\n\\n"));
+     *       }
+     *   }
+     *   if(paragraphs.isLeft) {
+     *       throw new FailedToLoadBookException();
+     *   }
+     *   return paragraphs.getRight();
+     * </pre>
+     * </blockquote>
+     *
+     * @param mapper A {@code Mapper} to map the right value of this
+     *               {@code Either} into a value of type {@code S}.
+     * @param <S>    The type of the right value of the resulting {@code Either}.
+     * @return An {@code Either} representing a right value of type {@code S}
+     *         obtained by calling the supplied {@code Mapper} with the
+     *         current right value if this {@code Either} represents a right
+     *         value, otherwise, this {@code Either}.
+     * @throws NullPointerException if the supplied mapper is {@code null}.
+     */
+    public <S> Either<L, S> map(Mapper<? super R, ? extends S> mapper) {
+        checkNotNull(mapper);
+        return map(mapperUnaryFunction(mapper));
+    }
+
+    /**
+     * A mapping method to map this {@code Either} into an {@code Either}
+     * over a right value of type {@code S} obtained by calling the
+     * supplied {@code UnaryFunction} with the current right value of this
+     * {@code Either}.
+     *
+     * <p>In the case that this {@code Either} represents a left value, this
+     * {@code Either} will be returned and the supplied {@code UnaryFunction}
+     * will not be called.</p>
+     *
+     * <p>The default mapping for an {@code Either} is of the right slot
+     * since conventionally, when used for error handling, this slot
+     * holds the correct value. Other mapping methods will be introduced
+     * in future to map the left slot, either slot and to flat map the
+     * {@code Either}.</p>
+     *
+     * <p>Currently the supplied {@code UnaryFunction} will be called eagerly
+     * in the case that this {@code Either} represents a right value
+     * although this may become lazy in a future version of Funk.</p>
+     *
+     * <p>If the supplied {@code UnaryFunction} is {@code null}, a
+     * {@code NullPointerException} will be thrown.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * <blockquote>
+     * <pre>
+     *   Either&lt;Error, String&gt; content = loader.load("books/the_cat_in_the_hat.txt");
+     *   Either&lt;Error, List&lt;String&gt;&gt; paragraphs = content.map(new UnaryFunction&lt;String, List&lt;String&gt;&gt;(){
+     *       &#64;Override public List&lt;String&gt; call(String content) {
+     *           return listFrom(content.split("\\n\\n"));
+     *       }
+     *   }
+     *   if(paragraphs.isLeft) {
+     *       throw new FailedToLoadBookException();
+     *   }
+     *   return paragraphs.getRight();
+     * </pre>
+     * </blockquote>
+     *
+     * @param function A {@code UnaryFunction} to map the right value of
+     *                 this {@code Either} into a value of type {@code S}.
+     * @param <S>      The type of the right value of the resulting {@code Either}.
+     * @return An {@code Either} representing a right value of type {@code S}
+     *         obtained by calling the supplied {@code UnaryFunction} with the
+     *         current right value if this {@code Either} represents a right
+     *         value, otherwise, this {@code Either}.
+     * @throws NullPointerException if the supplied mapper is {@code null}.
+     */
+    public abstract <S> Either<L, S> map(UnaryFunction<? super R, ? extends S> function);
 }
