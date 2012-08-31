@@ -144,24 +144,225 @@ public class Literals {
         return Arrays.copyOf(elementArray, elementArray.length);
     }
 
-//    /**
-//     * Older APIs are sometimes written to accept arrays of objects as arguments in cases where we'd like to use varargs.
-//     *
-//     * @param elements The elements we'd like to convert to an array.
-//     *
-//     * @return The given elements as an array.
-//     */
-    public static <E> E[] arrayWith(E e) { return arrayFrom(iterableWith(e)); }
-    public static <E> E[] arrayWith(E e1, E e2) { return arrayFrom(iterableWith(e1, e2)); }
-    public static <E> E[] arrayWith(E e1, E e2, E e3) { return arrayFrom(iterableWith(e1, e2, e3)); }
-    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4) { return arrayFrom(iterableWith(e1, e2, e3, e4)); }
-    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5) { return arrayFrom(iterableWith(e1, e2, e3, e4, e5)); }
-    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6) { return arrayFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
-    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return arrayFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
-    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return arrayFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
-    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return arrayFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return arrayFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return arrayFrom(iterableBuilderWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10).and(e11on).build()); }
+    /**
+     * Returns an array over the type {@code E} containing the supplied element.
+     *
+     * <p>The {@code arrayWith} literals are useful in cases such as when an API
+     * is written to accept arrays of objects as arguments where a varargs style
+     * is more appropriate.</p>
+     *
+     * @param e   An element from which to construct an array.
+     * @param <E> The type of the element contained in the returned array.
+     * @return    An array instance over type {@code E} containing the supplied element.
+     */
+    public static <E> E[] arrayWith(E e) {
+        return arrayFrom(iterableWith(e));
+    }
+
+    /**
+     * Returns an array over the type {@code E} containing the supplied elements.
+     *
+     * <p>The {@code arrayWith} literals are useful in cases such as when an API
+     * is written to accept arrays of objects as arguments where a varargs style
+     * is more appropriate.</p>
+     *
+     * @param e1  The first element from which to construct an array.
+     * @param e2  The second element from which to construct an array.
+     * @param <E> The type of the element contained in the returned array.
+     * @return    An array instance over type {@code E} containing the supplied element.
+     */
+    public static <E> E[] arrayWith(E e1, E e2) {
+        return arrayFrom(iterableWith(e1, e2));
+    }
+
+    /**
+     * Returns an array over the type {@code E} containing the supplied elements.
+     *
+     * <p>The {@code arrayWith} literals are useful in cases such as when an API
+     * is written to accept arrays of objects as arguments where a varargs style
+     * is more appropriate.</p>
+     *
+     * @param e1  The first element from which to construct an array.
+     * @param e2  The second element from which to construct an array.
+     * @param e3  The third element from which to construct an array.
+     * @param <E> The type of the element contained in the returned array.
+     * @return    An array instance over type {@code E} containing the supplied element.
+     */
+    public static <E> E[] arrayWith(E e1, E e2, E e3) {
+        return arrayFrom(iterableWith(e1, e2, e3));
+    }
+
+    /**
+     * Returns an array over the type {@code E} containing the supplied elements.
+     *
+     * <p>The {@code arrayWith} literals are useful in cases such as when an API
+     * is written to accept arrays of objects as arguments where a varargs style
+     * is more appropriate.</p>
+     *
+     * @param e1  The first element from which to construct an array.
+     * @param e2  The second element from which to construct an array.
+     * @param e3  The third element from which to construct an array.
+     * @param e4  The fourth element from which to construct an array.
+     * @param <E> The type of the element contained in the returned array.
+     * @return    An array instance over type {@code E} containing the supplied element.
+     */
+    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4) {
+        return arrayFrom(iterableWith(e1, e2, e3, e4));
+    }
+
+    /**
+     * Returns an array over the type {@code E} containing the supplied elements.
+     *
+     * <p>The {@code arrayWith} literals are useful in cases such as when an API
+     * is written to accept arrays of objects as arguments where a varargs style
+     * is more appropriate.</p>
+     *
+     * @param e1  The first element from which to construct an array.
+     * @param e2  The second element from which to construct an array.
+     * @param e3  The third element from which to construct an array.
+     * @param e4  The fourth element from which to construct an array.
+     * @param e5  The fifth element from which to construct an array.
+     * @param <E> The type of the element contained in the returned array.
+     * @return    An array instance over type {@code E} containing the supplied element.
+     */
+    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5) {
+        return arrayFrom(iterableWith(e1, e2, e3, e4, e5));
+    }
+
+    /**
+     * Returns an array over the type {@code E} containing the supplied elements.
+     *
+     * <p>The {@code arrayWith} literals are useful in cases such as when an API
+     * is written to accept arrays of objects as arguments where a varargs style
+     * is more appropriate.</p>
+     *
+     * @param e1  The first element from which to construct an array.
+     * @param e2  The second element from which to construct an array.
+     * @param e3  The third element from which to construct an array.
+     * @param e4  The fourth element from which to construct an array.
+     * @param e5  The fifth element from which to construct an array.
+     * @param e6  The sixth element from which to construct an array.
+     * @param <E> The type of the element contained in the returned array.
+     * @return    An array instance over type {@code E} containing the supplied element.
+     */
+    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return arrayFrom(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
+
+    /**
+     * Returns an array over the type {@code E} containing the supplied elements.
+     *
+     * <p>The {@code arrayWith} literals are useful in cases such as when an API
+     * is written to accept arrays of objects as arguments where a varargs style
+     * is more appropriate.</p>
+     *
+     * @param e1  The first element from which to construct an array.
+     * @param e2  The second element from which to construct an array.
+     * @param e3  The third element from which to construct an array.
+     * @param e4  The fourth element from which to construct an array.
+     * @param e5  The fifth element from which to construct an array.
+     * @param e6  The sixth element from which to construct an array.
+     * @param e7  The seventh element from which to construct an array.
+     * @param <E> The type of the element contained in the returned array.
+     * @return    An array instance over type {@code E} containing the supplied element.
+     */
+    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return arrayFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    /**
+     * Returns an array over the type {@code E} containing the supplied elements.
+     *
+     * <p>The {@code arrayWith} literals are useful in cases such as when an API
+     * is written to accept arrays of objects as arguments where a varargs style
+     * is more appropriate.</p>
+     *
+     * @param e1  The first element from which to construct an array.
+     * @param e2  The second element from which to construct an array.
+     * @param e3  The third element from which to construct an array.
+     * @param e4  The fourth element from which to construct an array.
+     * @param e5  The fifth element from which to construct an array.
+     * @param e6  The sixth element from which to construct an array.
+     * @param e7  The seventh element from which to construct an array.
+     * @param e8  The eighth element from which to construct an array.
+     * @param <E> The type of the element contained in the returned array.
+     * @return    An array instance over type {@code E} containing the supplied element.
+     */
+    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return arrayFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    /**
+     * Returns an array over the type {@code E} containing the supplied elements.
+     *
+     * <p>The {@code arrayWith} literals are useful in cases such as when an API
+     * is written to accept arrays of objects as arguments where a varargs style
+     * is more appropriate.</p>
+     *
+     * @param e1  The first element from which to construct an array.
+     * @param e2  The second element from which to construct an array.
+     * @param e3  The third element from which to construct an array.
+     * @param e4  The fourth element from which to construct an array.
+     * @param e5  The fifth element from which to construct an array.
+     * @param e6  The sixth element from which to construct an array.
+     * @param e7  The seventh element from which to construct an array.
+     * @param e8  The eighth element from which to construct an array.
+     * @param e9  The ninth element from which to construct an array.
+     * @param <E> The type of the element contained in the returned array.
+     * @return    An array instance over type {@code E} containing the supplied element.
+     */
+    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return arrayFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    /**
+     * Returns an array over the type {@code E} containing the supplied elements.
+     *
+     * <p>The {@code arrayWith} literals are useful in cases such as when an API
+     * is written to accept arrays of objects as arguments where a varargs style
+     * is more appropriate.</p>
+     *
+     * @param e1  The first element from which to construct an array.
+     * @param e2  The second element from which to construct an array.
+     * @param e3  The third element from which to construct an array.
+     * @param e4  The fourth element from which to construct an array.
+     * @param e5  The fifth element from which to construct an array.
+     * @param e6  The sixth element from which to construct an array.
+     * @param e7  The seventh element from which to construct an array.
+     * @param e8  The eighth element from which to construct an array.
+     * @param e9  The ninth element from which to construct an array.
+     * @param e10 The tenth element from which to construct an array.
+     * @param <E> The type of the element contained in the returned array.
+     * @return    An array instance over type {@code E} containing the supplied element.
+     */
+    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return arrayFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    /**
+     * Returns an array over the type {@code E} containing the supplied elements.
+     *
+     * <p>The {@code arrayWith} literals are useful in cases such as when an API
+     * is written to accept arrays of objects as arguments where a varargs style
+     * is more appropriate.</p>
+     *
+     * @param e1    The first element from which to construct an array.
+     * @param e2    The second element from which to construct an array.
+     * @param e3    The third element from which to construct an array.
+     * @param e4    The fourth element from which to construct an array.
+     * @param e5    The fifth element from which to construct an array.
+     * @param e6    The sixth element from which to construct an array.
+     * @param e7    The seventh element from which to construct an array.
+     * @param e8    The eighth element from which to construct an array.
+     * @param e9    The ninth element from which to construct an array.
+     * @param e10   The tenth element from which to construct an array.
+     * @param e11on The remaining elements from which to construct an array.
+     * @param <E>   The type of the element contained in the returned array.
+     * @return An array instance over type {@code E} containing the supplied element.
+     */
+    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return arrayFrom(iterableBuilderWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10).and(e11on).build());
+    }
 
     public static <E> Iterable<E> iterable() {
         return new IterableBuilder<E>().build();
