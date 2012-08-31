@@ -9,26 +9,67 @@
 package org.javafunk.funk;
 
 import com.google.common.collect.Multiset;
+import com.sun.tools.internal.jxc.gen.config.Classes;
 import org.javafunk.funk.builders.*;
 import org.javafunk.funk.datastructures.tuples.*;
 
+import java.lang.reflect.Array;
 import java.util.*;
+import java.util.Arrays;
 
 import static java.util.Arrays.asList;
+import static org.javafunk.funk.Eagerly.first;
+import static org.javafunk.funk.Predicates.instanceOf;
+import static org.javafunk.funk.Predicates.not;
 
 public class Literals {
     private Literals() {}
 
-    /**
-     * Older APIs are sometimes written to accept arrays of objects as arguments in cases where we'd like to use varargs.
-     *
-     * @param elements The elements we'd like to convert to an array.
-     *
-     * @return The given elements as an array.
-     */
-    public static <E> E[] array(E... elements) {
-        return elements;
+    @SuppressWarnings("unchecked")
+    public static <E> E[] arrayOf(Class<E> elementClass) {
+        return (E[]) Array.newInstance(elementClass, 0);
     }
+
+    @SuppressWarnings("unchecked")
+    public static <E> E[] arrayFrom(Iterable<E> elements) {
+        Collection<E> elementCollection = collectionFrom(elements);
+        if (elementCollection.isEmpty()) {
+            throw new IllegalArgumentException("Cannot construct array from empty Iterable.");
+        }
+        Class<?> targetClass = first(elementCollection).get().getClass();
+        if (Eagerly.any(elementCollection, not(instanceOf(targetClass)))) {
+            throw new IllegalArgumentException("Cannot construct array from Iterable containing instances of different classes");
+        }
+        return elementCollection.toArray((E[]) Array.newInstance(targetClass, 0));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <E> E[] arrayFrom(Iterable<? extends E> elements, Class<E> elementClass) {
+        return collectionFrom(elements).toArray((E[]) Array.newInstance(elementClass, 0));
+    }
+
+    public static <E> E[] arrayFrom(E[] elementArray) {
+        return Arrays.copyOf(elementArray, elementArray.length);
+    }
+
+//    /**
+//     * Older APIs are sometimes written to accept arrays of objects as arguments in cases where we'd like to use varargs.
+//     *
+//     * @param elements The elements we'd like to convert to an array.
+//     *
+//     * @return The given elements as an array.
+//     */
+    public static <E> E[] arrayWith(E e) { return arrayFrom(iterableWith(e)); }
+    public static <E> E[] arrayWith(E e1, E e2) { return arrayFrom(iterableWith(e1, e2)); }
+    public static <E> E[] arrayWith(E e1, E e2, E e3) { return arrayFrom(iterableWith(e1, e2, e3)); }
+    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4) { return arrayFrom(iterableWith(e1, e2, e3, e4)); }
+    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5) { return arrayFrom(iterableWith(e1, e2, e3, e4, e5)); }
+    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6) { return arrayFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
+    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return arrayFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
+    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return arrayFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
+    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return arrayFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
+    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return arrayFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
+    public static <E> E[] arrayWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return arrayFrom(iterableBuilderWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10).and(e11on).build()); }
 
     public static <E> Iterable<E> iterable() {
         return new IterableBuilder<E>().build();
@@ -77,7 +118,7 @@ public class Literals {
     public static <E> Iterator<E> iteratorFrom(E[] elementArray) {
         return new IteratorBuilder<E>().with(elementArray).build();
     }
-    
+
     public static <E> IteratorBuilder<E> iteratorBuilder() {
         return new IteratorBuilder<E>();
     }
@@ -109,7 +150,7 @@ public class Literals {
     public static <E> Collection<E> collectionFrom(E[] elementArray) {
         return new CollectionBuilder<E>().with(elementArray).build();
     }
-    
+
     public static <E> CollectionBuilder<E> collectionBuilder() {
         return new CollectionBuilder<E>();
     }
@@ -205,7 +246,7 @@ public class Literals {
     public static <E> Multiset<E> multisetFrom(E[] elementArray) {
         return new MultisetBuilder<E>().with(elementArray).build();
     }
-    
+
     public static <E> MultisetBuilder<E> multisetBuilder() {
         return new MultisetBuilder<E>();
     }
@@ -325,7 +366,7 @@ public class Literals {
     @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
     @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
     @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return iterableBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)).build(); }
-    
+
     @SuppressWarnings("unchecked") public static <E> IterableBuilder<E> iterableBuilderWith(E e) { return iterableBuilderFrom(asList(e)); }
     @SuppressWarnings("unchecked") public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2) { return iterableBuilderFrom(asList(e1, e2)); }
     @SuppressWarnings("unchecked") public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3) { return iterableBuilderFrom(asList(e1, e2, e3)); }
@@ -337,7 +378,7 @@ public class Literals {
     @SuppressWarnings("unchecked") public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return iterableBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
     @SuppressWarnings("unchecked") public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return iterableBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
     @SuppressWarnings("unchecked") public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return iterableBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)); }
-    
+
     @SuppressWarnings("unchecked") public static <E> Iterator<E> iteratorWith(E e) { return iteratorFrom(asList(e)); }
     @SuppressWarnings("unchecked") public static <E> Iterator<E> iteratorWith(E e1, E e2) { return iteratorFrom(asList(e1, e2)); }
     @SuppressWarnings("unchecked") public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3) { return iteratorFrom(asList(e1, e2, e3)); }
@@ -349,7 +390,7 @@ public class Literals {
     @SuppressWarnings("unchecked") public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return iteratorFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
     @SuppressWarnings("unchecked") public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return iteratorFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
     @SuppressWarnings("unchecked") public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return iteratorBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)).build(); }
-    
+
     @SuppressWarnings("unchecked") public static <E> IteratorBuilder<E> iteratorBuilderWith(E e) { return iteratorBuilderFrom(asList(e)); }
     @SuppressWarnings("unchecked") public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2) { return iteratorBuilderFrom(asList(e1, e2)); }
     @SuppressWarnings("unchecked") public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3) { return iteratorBuilderFrom(asList(e1, e2, e3)); }
@@ -385,7 +426,7 @@ public class Literals {
     @SuppressWarnings("unchecked") public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return collectionBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
     @SuppressWarnings("unchecked") public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return collectionBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
     @SuppressWarnings("unchecked") public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return collectionBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)); }
-    
+
     @SuppressWarnings("unchecked") public static <E> List<E> listWith(E e) { return listFrom(asList(e)); }
     @SuppressWarnings("unchecked") public static <E> List<E> listWith(E e1, E e2) { return listFrom(asList(e1, e2)); }
     @SuppressWarnings("unchecked") public static <E> List<E> listWith(E e1, E e2, E e3) { return listFrom(asList(e1, e2, e3)); }
@@ -421,7 +462,7 @@ public class Literals {
     @SuppressWarnings("unchecked") public static <E> Set<E> setWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return setFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
     @SuppressWarnings("unchecked") public static <E> Set<E> setWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return setFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
     @SuppressWarnings("unchecked") public static <E> Set<E> setWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E e11on) { return setBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)).build(); }
-    
+
     @SuppressWarnings("unchecked") public static <E> SetBuilder<E> setBuilderWith(E e) { return setBuilderFrom(asList(e)); }
     @SuppressWarnings("unchecked") public static <E> SetBuilder<E> setBuilderWith(E e1, E e2) { return setBuilderFrom(asList(e1, e2)); }
     @SuppressWarnings("unchecked") public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3) { return setBuilderFrom(asList(e1, e2, e3)); }
@@ -445,7 +486,7 @@ public class Literals {
     @SuppressWarnings("unchecked") public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
     @SuppressWarnings("unchecked") public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return multisetFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
     @SuppressWarnings("unchecked") public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return multisetBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)).build(); }
-    
+
     @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetBuilderWith(E e) { return multisetBuilderFrom(asList(e)); }
     @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2) { return multisetBuilderFrom(asList(e1, e2)); }
     @SuppressWarnings("unchecked") public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3) { return multisetBuilderFrom(asList(e1, e2, e3)); }
@@ -512,7 +553,7 @@ public class Literals {
     public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9) { return mapFromTuples(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
     public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10) { return mapFromTuples(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
     public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10, Pair<K, V>... e11on) { return mapBuilderFromTuples(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).andPairs(e11on).build(); }
-    
+
     public static <K, V> MapBuilder<K, V> mapBuilderWith(K k1, V v1) {
         return new MapBuilder<K, V>().with(mapEntryFor(k1, v1));
     }
@@ -543,7 +584,7 @@ public class Literals {
     public static <K, V> MapBuilder<K, V> mapBuilderWith(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9, K k10, V v10) {
         return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9), mapEntryFor(k10, v10));
     }
-    
+
     public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1) { return mapBuilderFromEntries(iterableWith(e1)); }
     public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2) { return mapBuilderFromEntries(iterableWith(e1, e2)); }
     public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3) { return mapBuilderFromEntries(iterableWith(e1, e2, e3)); }

@@ -12,10 +12,7 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import org.javafunk.funk.builders.*;
 import org.javafunk.funk.datastructures.tuples.*;
-import org.javafunk.funk.testclasses.Age;
-import org.javafunk.funk.testclasses.Colour;
-import org.javafunk.funk.testclasses.Location;
-import org.javafunk.funk.testclasses.Name;
+import org.javafunk.funk.testclasses.*;
 import org.junit.Test;
 
 import java.util.*;
@@ -23,24 +20,118 @@ import java.util.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.collection.IsArrayContainingInOrder.arrayContaining;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.builders.IterableBuilder.iterableBuilder;
 import static org.javafunk.funk.matchers.IteratorMatchers.isIteratorWithSameElementsAs;
 import static org.javafunk.funk.testclasses.Age.age;
+import static org.javafunk.funk.testclasses.Animal.animal;
+import static org.javafunk.funk.testclasses.Cat.cat;
 import static org.javafunk.funk.testclasses.Colour.colour;
+import static org.javafunk.funk.testclasses.Dog.dog;
 import static org.javafunk.funk.testclasses.Location.location;
 import static org.javafunk.funk.testclasses.Name.name;
+import static org.junit.Assert.fail;
 
 public class LiteralsTest {
     @Test
-    public void shouldReturnVariadicArgumentsInTheOrderSuppliedAsAnArray() {
-        Object one = new Object();
-        Object two = new Object();
+    public void shouldReturnAnEmptyArrayWithElementsOfTheSpecifiedType() throws Exception {
+        // Given
+        Integer[] expected = new Integer[]{};
 
-        Object[] actual = array(one, two);
+        // When
+        Integer[] actual = arrayOf(Integer.class);
 
-        assertThat(actual, is(arrayContaining(one, two)));
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnArrayContainingTheSuppliedElements() {
+        // Given
+        String first = "first";
+        String second = "second";
+        String[] expected = new String[]{first, second};
+
+        // When
+        String[] actual = arrayWith(first, second);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnArrayContainingAllElementsInTheSuppliedIterable() {
+        // Given
+        Iterable<Name> elements = iterableWith(name("Tim"), name("Jeremy"), name("Fred"));
+        Name[] expected = new Name[]{name("Tim"), name("Jeremy"), name("Fred")};
+
+        // When
+        Name[] actual = arrayFrom(elements);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionIfTheSuppliedIterableIsEmpty() throws Exception {
+        // Given
+        Iterable<Integer> iterable = iterable();
+
+        try {
+            // When
+            arrayFrom(iterable);
+            fail("Expected IllegalArgumentException to be thrown but nothing was.");
+        } catch(IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(), is("Cannot construct array from empty Iterable."));
+        }
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionIfIterableContainsInstancesOfDifferentConcreteTypes() throws Exception {
+        // Given
+        Dog animal1 = dog(colour("Brown"), name("Fido"));
+        Cat animal2 = cat(colour("White"), name("Fluff"));
+        Animal animal3 = animal(colour("Green"), name("Fishy"));
+        Iterable<Animal> input = iterableWith(animal1, animal2, animal3);
+
+        try {
+            // When
+            arrayFrom(input);
+            fail("Expected IllegalArgumentException to be thrown but nothing was.");
+        } catch(IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(), is("Cannot construct array from Iterable containing instances of different classes"));
+        }
+    }
+
+    @Test
+    public void shouldReturnAnArrayContainingAllElementsInTheSuppliedIterableOfTheSuppliedType() throws Exception {
+        // Given
+        Dog animal1 = dog(colour("Brown"), name("Fido"));
+        Cat animal2 = cat(colour("White"), name("Fluff"));
+        Animal animal3 = animal(colour("Green"), name("Fishy"));
+        Iterable<Animal> input = iterableWith(animal1, animal2, animal3);
+        Animal[] expected = new Animal[]{animal1, animal2, animal3};
+
+        // When
+        Animal[] actual = arrayFrom(input, Animal.class);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnArrayContainingAllElementsInTheSuppliedArray() {
+        // Given
+        Integer[] elements = new Integer[]{5, 10, 15};
+        Integer[] expected = new Integer[]{5, 10, 15};
+
+        // When
+        Integer[] array = arrayFrom(elements);
+
+        // Then
+        assertThat(array, is(expected));
     }
 
     @Test
@@ -815,7 +906,7 @@ public class LiteralsTest {
         // Then
         assertThat(actual, is(expected));
     }
-    
+
     @Test
     public void shouldReturnAMapContainingAllElementsInTheSuppliedIterableOfTupleInstances() {
         // Given
