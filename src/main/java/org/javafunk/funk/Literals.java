@@ -364,6 +364,10 @@ public class Literals {
         return arrayFrom(iterableBuilderWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10).and(e11on).build());
     }
 
+    public static <E> ArrayBuilder<E> arrayBuilder() {
+        return new ArrayBuilder<E>();
+    }
+
     public static <E> Iterable<E> iterable() {
         return new IterableBuilder<E>().build();
     }
