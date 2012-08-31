@@ -9,7 +9,6 @@
 package org.javafunk.funk;
 
 import com.google.common.collect.Multiset;
-import com.sun.tools.internal.jxc.gen.config.Classes;
 import org.javafunk.funk.builders.*;
 import org.javafunk.funk.datastructures.tuples.*;
 
@@ -25,29 +24,122 @@ import static org.javafunk.funk.Predicates.not;
 public class Literals {
     private Literals() {}
 
+    /**
+     * Returns an empty array instance over the type {@code E}.
+     *
+     * @param <E> The type of the elements that would be contained by this array
+     *            if it contained any.
+     * @return An array instance over the type {@code E} containing no elements.
+     */
     @SuppressWarnings("unchecked")
     public static <E> E[] arrayOf(Class<E> elementClass) {
         return (E[]) Array.newInstance(elementClass, 0);
     }
 
+    /**
+     * Returns an array instance over the type {@code E} containing all elements
+     * from the supplied {@code Iterable}. The order of the elements in the resulting
+     * array is determined by the order in which they are yielded from the
+     * {@code Iterable}.
+     *
+     * <p>The supplied {@code Iterable} must contain at least one element so that
+     * the type E can be correctly inferred when constructing the array. In the
+     * case that the {@code Iterable} is empty, an {@code IllegalArgumentException}
+     * will be thrown.</p>
+     *
+     * <p>The elements in the supplied {@code Iterable} must all be of the same
+     * concrete type so that the type E can be inferred deterministically when
+     * constructing the array. In the case that the {@code Iterable} contains
+     * elements of different concrete types, an {@code IllegalArgumentException}
+     * will be thrown. If an array containing multiple concrete types of some
+     * supertype is required, use the {@link #arrayFrom(Iterable, Class)}
+     * variant.</p>
+     *
+     * @param elements An {@code Iterable} of elements from which an array should be
+     *                 constructed.
+     * @param <E> The type of the elements to be contained in the returned array.
+     * @return An array over the type {@code E} containing all elements from the
+     *         supplied {@code Iterable} in the order they are yielded.
+     * @throws IllegalArgumentException if the supplied {@code Iterable} contains no
+     *                                  elements or contains elements of different
+     *                                  concrete types.
+     */
     @SuppressWarnings("unchecked")
     public static <E> E[] arrayFrom(Iterable<E> elements) {
-        Collection<E> elementCollection = collectionFrom(elements);
-        if (elementCollection.isEmpty()) {
+        List<E> elementList = listFrom(elements);
+        if (elementList.isEmpty()) {
             throw new IllegalArgumentException("Cannot construct array from empty Iterable.");
         }
-        Class<?> targetClass = first(elementCollection).get().getClass();
-        if (Eagerly.any(elementCollection, not(instanceOf(targetClass)))) {
+        Class<?> targetClass = first(elementList).get().getClass();
+        if (Eagerly.any(elementList, not(instanceOf(targetClass)))) {
             throw new IllegalArgumentException("Cannot construct array from Iterable containing instances of different classes");
         }
-        return elementCollection.toArray((E[]) Array.newInstance(targetClass, 0));
+        return elementList.toArray((E[]) Array.newInstance(targetClass, 0));
     }
 
+    /**
+     * Returns an array instance over the type {@code E} containing all elements
+     * from the supplied {@code Iterable}. The order of the elements in the resulting
+     * array is determined by the order in which they are yielded from the
+     * {@code Iterable}.
+     *
+     * <p>Unlike {@link #arrayFrom(Iterable)}, this variant accepts empty
+     * {@code Iterable}s and {@code Iterable}s containing instances of different
+     * concrete types and so should be used in preference of {@link #arrayFrom(Iterable)}
+     * if such {@code Iterable}s are expected.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Assume that we have the following instances:
+     * <blockquote>
+     * <pre>
+     *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
+     *   FullTimeEmployee fullTimeEmployee = new FullTimeEmployee("Manufacturer", "Fred");
+     *   HourlyEmployee hourlyEmployee = new HourlyEmployee("Materials Consultant", "Andy");
+     *   Iterable&lt;Employee&gt; employees = iterableWith(partTimeEmployee, fullTimeEmployee, hourlyEmployee);
+     * </pre>
+     * </blockquote>
+     * If we attempt to construct an array directly from the {@code Iterable}, an
+     * {@code IllegalArgumentException} will be thrown:
+     * <blockquote>
+     * <pre>
+     *   Employee[] employeeArray = Literals.arrayFrom(employees); => IllegalArgumentException
+     * </pre>
+     * </blockquote>
+     * However using this variant, we obtain an array of {@code Employee} instances. The following
+     * two arrays are equivalent:
+     * <blockquote>
+     * <pre>
+     *   Employee[] employeeArray = Literals.arrayFrom(employees, Employee.class);
+     *   Employee[] employeeArray = new Employee[]{partTimeEmployee, fullTimeEmployee, hourlyEmployee};
+     * </pre>
+     * </blockquote>
+     *
+     * @param elements     An {@code Iterable} of elements from which an array should be
+     *                     constructed.
+     * @param elementClass A {@code Class} representing the required type {@code E} of
+     *                     the resultant array.
+     * @param <E> The type of the elements to be contained in the returned array.
+     * @return An array over the type {@code E} containing all elements from the
+     *         supplied {@code Iterable} in the order they are yielded.
+     */
     @SuppressWarnings("unchecked")
     public static <E> E[] arrayFrom(Iterable<? extends E> elements, Class<E> elementClass) {
-        return collectionFrom(elements).toArray((E[]) Array.newInstance(elementClass, 0));
+        return listFrom(elements).toArray((E[]) Array.newInstance(elementClass, 0));
     }
 
+    /**
+     * Returns an array instance over the type {@code E} containing all elements
+     * from the supplied array. The order of the elements in the resulting array
+     * is the same as the order of the elements in the supplied array and the
+     * resulting array is a shallow copy of the input array such that
+     * modifications of the input array will not affect the resulting array.
+     *
+     * @param elementArray An array of elements from which an array should be
+     *                     constructed.
+     * @param <E> The type of the elements to be contained in the returned array.
+     * @return An array over the type {@code E} containing all elements from the
+     *         supplied array in the same order as the supplied array.
+     */
     public static <E> E[] arrayFrom(E[] elementArray) {
         return Arrays.copyOf(elementArray, elementArray.length);
     }
