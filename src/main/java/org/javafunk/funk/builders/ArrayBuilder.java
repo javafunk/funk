@@ -3,6 +3,7 @@ package org.javafunk.funk.builders;
 import org.javafunk.funk.Eagerly;
 import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.NullaryFunction;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.monads.Option;
 
 import java.lang.reflect.Array;
@@ -39,12 +40,12 @@ public class ArrayBuilder<E> extends AbstractBuilder<E, ArrayBuilder<E>, E[]> {
     @Override
     public E[] build() {
         return elementClassOption
-                .map(toArrayUsingKnownClass())
-                .getOrCall(toArrayUsingInferredClass());
+                .map(toArrayUsingKnownClass(elements))
+                .getOrCall(toArrayUsingInferredClass(elements));
     }
 
     @SuppressWarnings("unchecked")
-    private NullaryFunction<E[]> toArrayUsingInferredClass() {
+    private NullaryFunction<E[]> toArrayUsingInferredClass(final List<E> elements) {
         return new NullaryFunction<E[]>() {
             @Override public E[] call() {
                 if (elements.isEmpty()) {
@@ -62,9 +63,9 @@ public class ArrayBuilder<E> extends AbstractBuilder<E, ArrayBuilder<E>, E[]> {
     }
 
     @SuppressWarnings("unchecked")
-    private Mapper<Class<E>, E[]> toArrayUsingKnownClass() {
-        return new Mapper<Class<E>, E[]>() {
-            @Override public E[] map(Class<E> elementClass) {
+    private UnaryFunction<Class<E>, E[]> toArrayUsingKnownClass(final List<E> elements) {
+        return new UnaryFunction<Class<E>, E[]>() {
+            @Override public E[] call(Class<E> elementClass) {
                 return listFrom(elements).toArray((E[]) Array.newInstance(elementClass, 0));
             }
         };
