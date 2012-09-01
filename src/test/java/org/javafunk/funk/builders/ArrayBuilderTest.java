@@ -199,7 +199,7 @@ public class ArrayBuilderTest {
         } catch (IllegalArgumentException exception) {
             // Then
             assertThat(exception.getMessage(),
-                    is("Cannot construct array containing instances of different classes without knowing desired element class"));
+                    is("Cannot construct array containing instances of different classes without knowing desired element class."));
         }
     }
 

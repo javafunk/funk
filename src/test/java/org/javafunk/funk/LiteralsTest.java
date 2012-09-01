@@ -19,6 +19,7 @@ import java.util.*;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.array;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.builders.IterableBuilder.iterableBuilder;
@@ -83,7 +84,8 @@ public class LiteralsTest {
             fail("Expected IllegalArgumentException to be thrown but nothing was.");
         } catch(IllegalArgumentException exception) {
             // Then
-            assertThat(exception.getMessage(), is("Cannot construct array from empty Iterable."));
+            assertThat(exception.getMessage(),
+                    is("Cannot construct empty array without knowing desired element class."));
         }
     }
 
@@ -101,7 +103,8 @@ public class LiteralsTest {
             fail("Expected IllegalArgumentException to be thrown but nothing was.");
         } catch(IllegalArgumentException exception) {
             // Then
-            assertThat(exception.getMessage(), is("Cannot construct array from Iterable containing instances of different classes"));
+            assertThat(exception.getMessage(),
+                    is("Cannot construct array containing instances of different classes without knowing desired element class."));
         }
     }
 
@@ -132,6 +135,65 @@ public class LiteralsTest {
 
         // Then
         assertThat(array, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyArrayBuilder() throws Exception {
+        // Given
+        ArrayBuilder<Integer> expected = new ArrayBuilder<Integer>();
+
+        // When
+        ArrayBuilder<Integer> actual = arrayBuilder();
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnEmptyArrayBuilderOverElementsOfTheSpecifiedType() throws Exception {
+        // Given
+        ArrayBuilder<Integer> expected = new ArrayBuilder<Integer>(Integer.class);
+
+        // Then
+        assertThat(arrayBuilderOf(Integer.class), is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnArrayBuilderWithTheSuppliedElements() {
+        // Given
+        ArrayBuilder<Integer> expected = new ArrayBuilder<Integer>().with(5, 10, 15);
+
+        // When
+        ArrayBuilder<Integer> actual = arrayBuilderWith(5, 10, 15);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnArrayBuilderContainingAllElementsInTheSuppliedIterable() {
+        // Given
+        ArrayBuilder<Integer> expected = new ArrayBuilder<Integer>().with(5, 10, 15);
+        Iterable<Integer> elements = asList(5, 10, 15);
+
+        // When
+        ArrayBuilder<Integer> actual = arrayBuilderFrom(elements);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnAnArrayBuilderContainingAllElementsInTheSuppliedArray() {
+        // Given
+        ArrayBuilder<Integer> expected = new ArrayBuilder<Integer>().with(5, 10, 15);
+        Integer[] elements = new Integer[]{5, 10, 15};
+
+        // When
+        ArrayBuilder<Integer> actual = arrayBuilderFrom(elements);
+
+        // Then
+        assertThat(actual, is(expected));
     }
 
     @Test

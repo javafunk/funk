@@ -360,6 +360,62 @@ public class Literals {
         return new ArrayBuilder<E>();
     }
 
+    public static <E> ArrayBuilder<E> arrayBuilderOf(Class<E> elementClass) {
+        return new ArrayBuilder<E>(elementClass);
+    }
+
+    public static <E> ArrayBuilder<E> arrayBuilderFrom(Iterable<E> elements) {
+        return new ArrayBuilder<E>().with(elements);
+    }
+
+    public static <E> ArrayBuilder<E> arrayBuilderFrom(E[] elementArray) {
+        return new ArrayBuilder<E>().with(elementArray);
+    }
+
+    public static <E> ArrayBuilder<E> arrayBuilderWith(E e) {
+        return arrayBuilderFrom(iterableWith(e));
+    }
+
+    public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2) {
+        return arrayBuilderFrom(iterableWith(e1, e2));
+    }
+
+    public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3) {
+        return arrayBuilderFrom(iterableWith(e1, e2, e3));
+    }
+
+    public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3, E e4) {
+        return arrayBuilderFrom(iterableWith(e1, e2, e3, e4));
+    }
+
+    public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3, E e4, E e5) {
+        return arrayBuilderFrom(iterableWith(e1, e2, e3, e4, e5));
+    }
+
+    public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return arrayBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
+
+    public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return arrayBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return arrayBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return arrayBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return arrayBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return arrayBuilderFrom(iterableBuilderWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10).and(e11on).build());
+    }
+
     public static <E> Iterable<E> iterable() {
         return new IterableBuilder<E>().build();
     }

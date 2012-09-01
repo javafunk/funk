@@ -54,7 +54,7 @@ public class ArrayBuilder<E> extends AbstractBuilder<E, ArrayBuilder<E>, E[]> {
                 Class<?> targetClass = first(elements).get().getClass();
                 if (Eagerly.any(elements, not(instanceOf(targetClass)))) {
                     throw new IllegalArgumentException(
-                            "Cannot construct array containing instances of different classes without knowing desired element class");
+                            "Cannot construct array containing instances of different classes without knowing desired element class.");
                 }
                 return elements.toArray((E[]) Array.newInstance(targetClass, 0));
             }
