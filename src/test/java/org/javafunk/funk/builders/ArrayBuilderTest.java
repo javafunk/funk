@@ -1,11 +1,20 @@
 package org.javafunk.funk.builders;
 
+import org.javafunk.funk.testclasses.Animal;
+import org.javafunk.funk.testclasses.Cat;
+import org.javafunk.funk.testclasses.Dog;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.builders.ArrayBuilder.arrayBuilder;
+import static org.javafunk.funk.testclasses.Animal.animal;
+import static org.javafunk.funk.testclasses.Cat.cat;
+import static org.javafunk.funk.testclasses.Colour.colour;
+import static org.javafunk.funk.testclasses.Dog.dog;
+import static org.javafunk.funk.testclasses.Name.name;
+import static org.junit.Assert.fail;
 
 public class ArrayBuilderTest {
     @Test
@@ -27,13 +36,12 @@ public class ArrayBuilderTest {
     @Test
     public void shouldAllowArraysOfElementsToBeAddedToTheArrayWithWith() throws Exception {
         // Given
-        ArrayBuilder<Integer> arrayBuilder = arrayBuilder();
         Integer[] expected = new Integer[]{5, 10, 15, 20, 25, 30};
         Integer[] firstElementArray = new Integer[]{5, 10, 15};
         Integer[] secondElementArray = new Integer[]{20, 25, 30};
 
         // When
-        Integer[] actual = arrayBuilder
+        Integer[] actual = arrayBuilder(Integer.class)
                 .with(firstElementArray)
                 .with(secondElementArray)
                 .build();
@@ -154,6 +162,73 @@ public class ArrayBuilderTest {
                 .and(iterableOfElements)
                 .and(arrayOfElements)
                 .build();
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenTryingToBuildEmptyArrayWithoutPassingElementType() throws Exception {
+        // Given
+        ArrayBuilder<String> arrayBuilder = arrayBuilder();
+
+        try {
+            // When
+            arrayBuilder.build();
+            fail("Expected IllegalArgumentException to be thrown but nothing was.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    is("Cannot construct empty array without knowing desired element class."));
+        }
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionIfAccumulatedElementsIncludesInstancesOfDifferentConcreteTypes() throws Exception {
+        // Given
+        ArrayBuilder<Animal> arrayBuilder = arrayBuilder();
+
+        // When
+        arrayBuilder = arrayBuilder
+                .with(dog(colour("Brown"), name("Fido")))
+                .with(cat(colour("White"), name("Fluffball")))
+                .with(animal(colour("Orange"), name("Fishy")));
+        try {
+            arrayBuilder.build();
+            fail("Expected IllegalArgumentException to be thrown but nothing was.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    is("Cannot construct array containing instances of different classes without knowing desired element class"));
+        }
+    }
+
+    @Test
+    public void shouldReturnAnArrayOfTheSpecifiedElementClassWhenOneIsSupplied() throws Exception {
+        // Given
+        Dog fido = dog(colour("Brown"), name("Fido"));
+        Cat fluffball = cat(colour("White"), name("Fluffball"));
+        Animal fishy = animal(colour("Orange"), name("Fishy"));
+        ArrayBuilder<Animal> arrayBuilder = arrayBuilder(Animal.class)
+                .with(fido)
+                .with(fluffball, fishy);
+        Animal[] expected = new Animal[]{fido, fluffball, fishy};
+
+        // When
+        Animal[] actual = arrayBuilder.build();
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnTypedEmptyArrayWhenElementClassIsSupplied() throws Exception {
+        // Given
+        ArrayBuilder<Integer> arrayBuilder = arrayBuilder(Integer.class);
+        Integer[] expected = new Integer[]{};
+
+        // When
+        Integer[] actual = arrayBuilder.build();
 
         // Then
         assertThat(actual, is(expected));

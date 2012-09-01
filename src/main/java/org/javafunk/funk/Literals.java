@@ -33,7 +33,7 @@ public class Literals {
      */
     @SuppressWarnings("unchecked")
     public static <E> E[] arrayOf(Class<E> elementClass) {
-        return (E[]) Array.newInstance(elementClass, 0);
+        return new ArrayBuilder<E>(elementClass).build();
     }
 
     /**
@@ -66,15 +66,7 @@ public class Literals {
      */
     @SuppressWarnings("unchecked")
     public static <E> E[] arrayFrom(Iterable<E> elements) {
-        List<E> elementList = listFrom(elements);
-        if (elementList.isEmpty()) {
-            throw new IllegalArgumentException("Cannot construct array from empty Iterable.");
-        }
-        Class<?> targetClass = first(elementList).get().getClass();
-        if (Eagerly.any(elementList, not(instanceOf(targetClass)))) {
-            throw new IllegalArgumentException("Cannot construct array from Iterable containing instances of different classes");
-        }
-        return elementList.toArray((E[]) Array.newInstance(targetClass, 0));
+        return new ArrayBuilder<E>().with(elements).build();
     }
 
     /**
@@ -102,7 +94,7 @@ public class Literals {
      * {@code IllegalArgumentException} will be thrown:
      * <blockquote>
      * <pre>
-     *   Employee[] employeeArray = Literals.arrayFrom(employees); => IllegalArgumentException
+     *   Employee[] employeeArray = Literals.arrayFrom(employees); // => IllegalArgumentException
      * </pre>
      * </blockquote>
      * However using this variant, we obtain an array of {@code Employee} instances. The following
@@ -124,7 +116,7 @@ public class Literals {
      */
     @SuppressWarnings("unchecked")
     public static <E> E[] arrayFrom(Iterable<? extends E> elements, Class<E> elementClass) {
-        return listFrom(elements).toArray((E[]) Array.newInstance(elementClass, 0));
+        return new ArrayBuilder<E>(elementClass).with(elements).build();
     }
 
     /**
@@ -141,7 +133,7 @@ public class Literals {
      *         supplied array in the same order as the supplied array.
      */
     public static <E> E[] arrayFrom(E[] elementArray) {
-        return Arrays.copyOf(elementArray, elementArray.length);
+        return new ArrayBuilder<E>().with(elementArray).build();
     }
 
     /**
