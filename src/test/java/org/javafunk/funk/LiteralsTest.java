@@ -1133,6 +1133,18 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
+    @Test public void shouldReturnAnArrayBuilderContainingAllElementsInTheSuppliedArrayOverTheSpecifiedType() {
+        // Given
+        ArrayBuilder<Integer> expected = new ArrayBuilder<Integer>(Integer.class).with(5, 10, 15);
+        Integer[] elements = new Integer[]{5, 10, 15};
+
+        // When
+        ArrayBuilder<Integer> actual = arrayBuilderFrom(elements, Integer.class);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
     @Test public void shouldReturnASingleContainingTheSuppliedElement() {
         // Given
         Single<Integer> expectedSingle = new Single<Integer>(5);

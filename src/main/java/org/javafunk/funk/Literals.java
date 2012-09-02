@@ -13,7 +13,6 @@ import org.javafunk.funk.builders.*;
 import org.javafunk.funk.datastructures.tuples.*;
 
 import java.util.*;
-import java.util.Arrays;
 
 import static java.util.Arrays.asList;
 
@@ -846,6 +845,47 @@ public class Literals {
     }
 
     /**
+     * Returns an {@code ArrayBuilder} over the type of the supplied {@code Class}
+     * initialised with the elements contained in the supplied array. When asked to
+     * build an array, the supplied element class will be used allowing empty arrays
+     * and mixed concrete type arrays to be constructed.
+     *
+     * <h4>Example Usage:</h4>
+     * An {@code ArrayBuilder} can be used to assemble an array from two existing
+     * arrays as follows:
+     * <blockquote>
+     * <pre>
+     *   Integer[] firstArray = new Integer[]{1, 2, 3};
+     *   Integer[] secondArray = new Integer[]{3, 4, 5};
+     *   Integer[] array = arrayBuilderFrom(firstArray, Integer.class)
+     *           .with(secondArray)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Integer[] array = new Integer[]{1, 2, 3, 3, 4, 5};
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code ArrayBuilder} is that the array can be built up from
+     * individual objects, iterables or existing arrays. See {@link ArrayBuilder} for
+     * further details.
+     *
+     * @param elementArray An array containing elements with which the
+     *                     {@code ArrayBuilder} should be initialised.
+     * @param elementClass A {@code Class} representing the type of elements
+     *                     contained in this {@code ArrayBuilder} and the type represented
+     *                     by the built array.
+     * @param <E>          The type of the elements contained in the {@code ArrayBuilder}.
+     * @return An {@code ArrayBuilder} instance over the type {@code E} containing
+     *         the elements from the supplied array.
+     */
+    public static <E> ArrayBuilder<E> arrayBuilderFrom(E[] elementArray, Class<E> elementClass) {
+        return new ArrayBuilder<E>(elementClass).with(elementArray);
+    }
+
+    /**
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the
      * supplied element.
      *
@@ -1214,7 +1254,7 @@ public class Literals {
      * @param e8    The eighth element to be added to the {@code ArrayBuilder}.
      * @param e9    The ninth element to be added to the {@code ArrayBuilder}.
      * @param e10   The tenth element to be added to the {@code ArrayBuilder}.
-     * @param e11on The tenth element to be added to the {@code ArrayBuilder}.
+     * @param e11on The remaining elements to be added to the {@code ArrayBuilder}.
      * @param <E> The type of the elements contained in the returned {@code ArrayBuilder}.
      * @return An {@code ArrayBuilder} instance over type {@code E} containing the supplied
      *         elements.
