@@ -50,12 +50,14 @@ public class ArrayBuilder<E> extends AbstractBuilder<E, ArrayBuilder<E>, E[]> {
             @Override public E[] call() {
                 if (elements.isEmpty()) {
                     throw new IllegalArgumentException(
-                            "Cannot construct empty array without knowing desired element class.");
+                            "Cannot construct empty array without knowing desired element class. " +
+                                    "Consider supplying element class at builder construction time.");
                 }
                 Class<?> targetClass = first(elements).get().getClass();
                 if (Eagerly.any(elements, not(instanceOf(targetClass)))) {
                     throw new IllegalArgumentException(
-                            "Cannot construct array containing instances of different classes without knowing desired element class.");
+                            "Cannot construct array containing instances of different classes without knowing desired element class. " +
+                                    "Consider supplying element class at builder construction time.");
                 }
                 return elements.toArray((E[]) Array.newInstance(targetClass, 0));
             }

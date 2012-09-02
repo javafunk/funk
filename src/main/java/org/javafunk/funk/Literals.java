@@ -599,66 +599,565 @@ public class Literals {
         return arrayFrom(iterableBuilderWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10).and(e11on).build());
     }
 
+    /**
+     * Returns an {@code ArrayBuilder} containing no elements. When asked to
+     * build an array, the element class will be inferred from the added elements
+     * which means empty arrays and mixed concrete type arrays cannot be constructed.
+     *
+     * <h4>Example Usage:</h4>
+     * An {@code ArrayBuilder} can be used to assemble an array as follows:
+     * <blockquote>
+     * <pre>
+     *   Integer[] array = Literals.&lt;Integer&gt;arrayBuilder()
+     *           .with(1, 2, 3)
+     *           .and(4, 5, 6)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Integer[] array = new Integer[]{1, 2, 3, 4, 5, 6}
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code ArrayBuilder} is that the array can be built up from
+     * individual objects, iterables or existing arrays. See {@link ArrayBuilder} for
+     * further details.
+     *
+     * @param <E> The type of the elements contained in the {@code ArrayBuilder}.
+     * @return An {@code ArrayBuilder} instance over the type {@code E} containing no elements.
+     */
     public static <E> ArrayBuilder<E> arrayBuilder() {
         return new ArrayBuilder<E>();
     }
 
+    /**
+     * Returns an {@code ArrayBuilder} over the type of the supplied {@code Class}
+     * containing no elements. When asked to build an array, the supplied element
+     * class will be used allowing empty arrays and mixed concrete type arrays to
+     * be constructed.
+     *
+     * <h4>Example Usage:</h4>
+     * An {@code ArrayBuilder} can be used to assemble an array as follows:
+     * <blockquote>
+     * <pre>
+     *   Integer[] array = arrayBuilderOf(Integer.class)
+     *           .with(1, 2, 3)
+     *           .and(4, 5, 6)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Integer[] array = new Integer[]{1, 2, 3, 4, 5, 6}
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code ArrayBuilder} is that the array can be built up from
+     * individual objects, iterables or existing arrays. See {@link ArrayBuilder} for
+     * further details.
+     *
+     * @param <E>          The type of the elements contained in the {@code ArrayBuilder}.
+     * @param elementClass A {@code Class} representing the type of elements
+     *                     contained in this {@code ArrayBuilder} and the type represented
+     *                     by the built array.
+     * @return An {@code ArrayBuilder} instance over the type {@code E} containing no elements.
+     */
     public static <E> ArrayBuilder<E> arrayBuilderOf(Class<E> elementClass) {
         return new ArrayBuilder<E>(elementClass);
     }
 
+    /**
+     * Returns an {@code ArrayBuilder} over type {@code E} initialised with the elements
+     * contained in the supplied {@code Iterable}. When asked to build an array, the
+     * element class will be inferred from the added elements which means empty arrays
+     * and mixed concrete type arrays cannot be constructed.
+     *
+     * <h4>Example Usage:</h4>
+     * An {@code ArrayBuilder} can be used to assemble an array from two existing
+     * {@code Collection} instances as follows:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; firstCollection = Literals.collectionWith(1, 2, 3);
+     *   Collection&lt;Integer&gt; secondCollection = Literals.collectionWith(3, 4, 5);
+     *   Integer[] array = arrayBuilderFrom(firstCollection)
+     *           .with(secondCollection)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Integer[] array = new Integer[]{1, 2, 3, 3, 4, 5};
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code ArrayBuilder} is that the array can be built up from
+     * individual objects, iterables or existing arrays. See {@link ArrayBuilder} for
+     * further details.
+     *
+     * @param elements An {@code Iterable} containing elements with which the
+     *                 {@code ArrayBuilder} should be initialised.
+     * @param <E>      The type of the elements contained in the {@code ArrayBuilder}.
+     * @return An {@code ArrayBuilder} instance over the type {@code E} containing
+     *         the elements from the supplied {@code Iterable}.
+     */
     public static <E> ArrayBuilder<E> arrayBuilderFrom(Iterable<E> elements) {
         return new ArrayBuilder<E>().with(elements);
     }
 
+    /**
+     * Returns an {@code ArrayBuilder} over the type of the supplied {@code Class}
+     * initialised with the elements contained in the supplied {@code Iterable}.
+     * When asked to build an array, the supplied element class will be used allowing
+     * empty arrays and mixed concrete type arrays to be constructed.
+     *
+     * <h4>Example Usage:</h4>
+     * An {@code ArrayBuilder} can be used to assemble an array from two existing
+     * {@code Collection} instances as follows:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; firstCollection = Literals.collectionWith(1, 2, 3);
+     *   Collection&lt;Integer&gt; secondCollection = Literals.collectionWith(3, 4, 5);
+     *   Integer[] array = arrayBuilderFrom(firstCollection, Integer.class)
+     *           .with(secondCollection)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Integer[] array = new Integer[]{1, 2, 3, 3, 4, 5};
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code ArrayBuilder} is that the array can be built up from
+     * individual objects, iterables or existing arrays. See {@link ArrayBuilder} for
+     * further details.
+     *
+     * @param elements An {@code Iterable} containing elements with which the
+     *                 {@code ArrayBuilder} should be initialised.
+     * @param elementClass A {@code Class} representing the type of elements
+     *                     contained in this {@code ArrayBuilder} and the type represented
+     *                     by the built array.
+     * @param <E>      The type of the elements contained in the {@code ArrayBuilder}.
+     * @return An {@code ArrayBuilder} instance over the type {@code E} containing
+     *         the elements from the supplied {@code Iterable}.
+     */
     public static <E> ArrayBuilder<E> arrayBuilderFrom(Iterable<? extends E> elements, Class<E> elementClass) {
         return new ArrayBuilder<E>(elementClass).with(elements);
     }
 
+    /**
+     * Returns an {@code ArrayBuilder} over type {@code E} initialised with the elements
+     * contained in the supplied array. When asked to build an array, the element class
+     * will be inferred from the added elements which means empty arrays and mixed
+     * concrete type arrays cannot be constructed.
+     *
+     * <h4>Example Usage:</h4>
+     * An {@code ArrayBuilder} can be used to assemble an array from two existing
+     * arrays as follows:
+     * <blockquote>
+     * <pre>
+     *   Integer[] firstArray = new Integer[]{1, 2, 3};
+     *   Integer[] secondArray = new Integer[]{3, 4, 5};
+     *   Integer[] array = arrayBuilderFrom(firstArray)
+     *           .with(secondArray)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Integer[] array = new Integer[]{1, 2, 3, 3, 4, 5};
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code ArrayBuilder} is that the array can be built up from
+     * individual objects, iterables or existing arrays. See {@link ArrayBuilder} for
+     * further details.
+     *
+     * @param elementArray An array containing elements with which the {@code ArrayBuilder}
+     *                     should be initialised.
+     * @param <E>          The type of the elements contained in the {@code ArrayBuilder}.
+     * @return An {@code ArrayBuilder} instance over the type {@code E} containing
+     *         the elements from the supplied {@code Iterable}.
+     */
     public static <E> ArrayBuilder<E> arrayBuilderFrom(E[] elementArray) {
         return new ArrayBuilder<E>().with(elementArray);
     }
 
+    /**
+     * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the
+     * supplied element.
+     *
+     * @param e   The element to be added to the {@code ArrayBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ArrayBuilder}.
+     * @return An {@code ArrayBuilder} instance over type {@code E} containing the supplied
+     *         element.
+     */
     public static <E> ArrayBuilder<E> arrayBuilderWith(E e) {
         return arrayBuilderFrom(iterableWith(e));
     }
 
+    /**
+     * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
+     * type otherwise the array cannot be instantiated. If an array needs to be constructed
+     * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
+     * in the class of the elements to be contained in the resulting array. For example:
+     * <blockquote>
+     * <pre>
+     *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
+     *   FullTimeEmployee fullTimeEmployee = new FullTimeEmployee("Manufacturer", "Fred");
+     *   HourlyEmployee hourlyEmployee = new HourlyEmployee("Materials Consultant", "Andy");
+     *
+     *   Employee[] employees = arrayBuilderOf(Employee.class)
+     *          .with(partTimeEmployee, fullTimeEmployee, hourlyEmployee)
+     *          .build();
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param e1  The first element to be added to the {@code ArrayBuilder}.
+     * @param e2  The second element to be added to the {@code ArrayBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ArrayBuilder}.
+     * @return An {@code ArrayBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
     public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2) {
         return arrayBuilderFrom(iterableWith(e1, e2));
     }
 
+    /**
+     * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
+     * type otherwise the array cannot be instantiated. If an array needs to be constructed
+     * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
+     * in the class of the elements to be contained in the resulting array. For example:
+     * <blockquote>
+     * <pre>
+     *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
+     *   FullTimeEmployee fullTimeEmployee = new FullTimeEmployee("Manufacturer", "Fred");
+     *   HourlyEmployee hourlyEmployee = new HourlyEmployee("Materials Consultant", "Andy");
+     *
+     *   Employee[] employees = arrayBuilderOf(Employee.class)
+     *          .with(partTimeEmployee, fullTimeEmployee, hourlyEmployee)
+     *          .build();
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param e1  The first element to be added to the {@code ArrayBuilder}.
+     * @param e2  The second element to be added to the {@code ArrayBuilder}.
+     * @param e3  The third element to be added to the {@code ArrayBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ArrayBuilder}.
+     * @return An {@code ArrayBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
     public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3) {
         return arrayBuilderFrom(iterableWith(e1, e2, e3));
     }
 
+    /**
+     * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
+     * type otherwise the array cannot be instantiated. If an array needs to be constructed
+     * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
+     * in the class of the elements to be contained in the resulting array. For example:
+     * <blockquote>
+     * <pre>
+     *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
+     *   FullTimeEmployee fullTimeEmployee = new FullTimeEmployee("Manufacturer", "Fred");
+     *   HourlyEmployee hourlyEmployee = new HourlyEmployee("Materials Consultant", "Andy");
+     *
+     *   Employee[] employees = arrayBuilderOf(Employee.class)
+     *          .with(partTimeEmployee, fullTimeEmployee, hourlyEmployee)
+     *          .build();
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param e1  The first element to be added to the {@code ArrayBuilder}.
+     * @param e2  The second element to be added to the {@code ArrayBuilder}.
+     * @param e3  The third element to be added to the {@code ArrayBuilder}.
+     * @param e4  The fourth element to be added to the {@code ArrayBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ArrayBuilder}.
+     * @return An {@code ArrayBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
     public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3, E e4) {
         return arrayBuilderFrom(iterableWith(e1, e2, e3, e4));
     }
 
+    /**
+     * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
+     * type otherwise the array cannot be instantiated. If an array needs to be constructed
+     * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
+     * in the class of the elements to be contained in the resulting array. For example:
+     * <blockquote>
+     * <pre>
+     *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
+     *   FullTimeEmployee fullTimeEmployee = new FullTimeEmployee("Manufacturer", "Fred");
+     *   HourlyEmployee hourlyEmployee = new HourlyEmployee("Materials Consultant", "Andy");
+     *
+     *   Employee[] employees = arrayBuilderOf(Employee.class)
+     *          .with(partTimeEmployee, fullTimeEmployee, hourlyEmployee)
+     *          .build();
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param e1  The first element to be added to the {@code ArrayBuilder}.
+     * @param e2  The second element to be added to the {@code ArrayBuilder}.
+     * @param e3  The third element to be added to the {@code ArrayBuilder}.
+     * @param e4  The fourth element to be added to the {@code ArrayBuilder}.
+     * @param e5  The fifth element to be added to the {@code ArrayBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ArrayBuilder}.
+     * @return An {@code ArrayBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
     public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3, E e4, E e5) {
         return arrayBuilderFrom(iterableWith(e1, e2, e3, e4, e5));
     }
 
+    /**
+     * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
+     * type otherwise the array cannot be instantiated. If an array needs to be constructed
+     * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
+     * in the class of the elements to be contained in the resulting array. For example:
+     * <blockquote>
+     * <pre>
+     *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
+     *   FullTimeEmployee fullTimeEmployee = new FullTimeEmployee("Manufacturer", "Fred");
+     *   HourlyEmployee hourlyEmployee = new HourlyEmployee("Materials Consultant", "Andy");
+     *
+     *   Employee[] employees = arrayBuilderOf(Employee.class)
+     *          .with(partTimeEmployee, fullTimeEmployee, hourlyEmployee)
+     *          .build();
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param e1  The first element to be added to the {@code ArrayBuilder}.
+     * @param e2  The second element to be added to the {@code ArrayBuilder}.
+     * @param e3  The third element to be added to the {@code ArrayBuilder}.
+     * @param e4  The fourth element to be added to the {@code ArrayBuilder}.
+     * @param e5  The fifth element to be added to the {@code ArrayBuilder}.
+     * @param e6  The sixth element to be added to the {@code ArrayBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ArrayBuilder}.
+     * @return An {@code ArrayBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
     public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) {
         return arrayBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6));
     }
 
+    /**
+     * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
+     * type otherwise the array cannot be instantiated. If an array needs to be constructed
+     * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
+     * in the class of the elements to be contained in the resulting array. For example:
+     * <blockquote>
+     * <pre>
+     *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
+     *   FullTimeEmployee fullTimeEmployee = new FullTimeEmployee("Manufacturer", "Fred");
+     *   HourlyEmployee hourlyEmployee = new HourlyEmployee("Materials Consultant", "Andy");
+     *
+     *   Employee[] employees = arrayBuilderOf(Employee.class)
+     *          .with(partTimeEmployee, fullTimeEmployee, hourlyEmployee)
+     *          .build();
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param e1  The first element to be added to the {@code ArrayBuilder}.
+     * @param e2  The second element to be added to the {@code ArrayBuilder}.
+     * @param e3  The third element to be added to the {@code ArrayBuilder}.
+     * @param e4  The fourth element to be added to the {@code ArrayBuilder}.
+     * @param e5  The fifth element to be added to the {@code ArrayBuilder}.
+     * @param e6  The sixth element to be added to the {@code ArrayBuilder}.
+     * @param e7  The seventh element to be added to the {@code ArrayBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ArrayBuilder}.
+     * @return An {@code ArrayBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
     public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
         return arrayBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
     }
 
+    /**
+     * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
+     * type otherwise the array cannot be instantiated. If an array needs to be constructed
+     * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
+     * in the class of the elements to be contained in the resulting array. For example:
+     * <blockquote>
+     * <pre>
+     *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
+     *   FullTimeEmployee fullTimeEmployee = new FullTimeEmployee("Manufacturer", "Fred");
+     *   HourlyEmployee hourlyEmployee = new HourlyEmployee("Materials Consultant", "Andy");
+     *
+     *   Employee[] employees = arrayBuilderOf(Employee.class)
+     *          .with(partTimeEmployee, fullTimeEmployee, hourlyEmployee)
+     *          .build();
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param e1  The first element to be added to the {@code ArrayBuilder}.
+     * @param e2  The second element to be added to the {@code ArrayBuilder}.
+     * @param e3  The third element to be added to the {@code ArrayBuilder}.
+     * @param e4  The fourth element to be added to the {@code ArrayBuilder}.
+     * @param e5  The fifth element to be added to the {@code ArrayBuilder}.
+     * @param e6  The sixth element to be added to the {@code ArrayBuilder}.
+     * @param e7  The seventh element to be added to the {@code ArrayBuilder}.
+     * @param e8  The eighth element to be added to the {@code ArrayBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ArrayBuilder}.
+     * @return An {@code ArrayBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
     public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
         return arrayBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
     }
 
+    /**
+     * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
+     * type otherwise the array cannot be instantiated. If an array needs to be constructed
+     * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
+     * in the class of the elements to be contained in the resulting array. For example:
+     * <blockquote>
+     * <pre>
+     *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
+     *   FullTimeEmployee fullTimeEmployee = new FullTimeEmployee("Manufacturer", "Fred");
+     *   HourlyEmployee hourlyEmployee = new HourlyEmployee("Materials Consultant", "Andy");
+     *
+     *   Employee[] employees = arrayBuilderOf(Employee.class)
+     *          .with(partTimeEmployee, fullTimeEmployee, hourlyEmployee)
+     *          .build();
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param e1  The first element to be added to the {@code ArrayBuilder}.
+     * @param e2  The second element to be added to the {@code ArrayBuilder}.
+     * @param e3  The third element to be added to the {@code ArrayBuilder}.
+     * @param e4  The fourth element to be added to the {@code ArrayBuilder}.
+     * @param e5  The fifth element to be added to the {@code ArrayBuilder}.
+     * @param e6  The sixth element to be added to the {@code ArrayBuilder}.
+     * @param e7  The seventh element to be added to the {@code ArrayBuilder}.
+     * @param e8  The eighth element to be added to the {@code ArrayBuilder}.
+     * @param e9  The ninth element to be added to the {@code ArrayBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ArrayBuilder}.
+     * @return An {@code ArrayBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
     public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
         return arrayBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
     }
 
+    /**
+     * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
+     * type otherwise the array cannot be instantiated. If an array needs to be constructed
+     * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
+     * in the class of the elements to be contained in the resulting array. For example:
+     * <blockquote>
+     * <pre>
+     *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
+     *   FullTimeEmployee fullTimeEmployee = new FullTimeEmployee("Manufacturer", "Fred");
+     *   HourlyEmployee hourlyEmployee = new HourlyEmployee("Materials Consultant", "Andy");
+     *
+     *   Employee[] employees = arrayBuilderOf(Employee.class)
+     *          .with(partTimeEmployee, fullTimeEmployee, hourlyEmployee)
+     *          .build();
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param e1  The first element to be added to the {@code ArrayBuilder}.
+     * @param e2  The second element to be added to the {@code ArrayBuilder}.
+     * @param e3  The third element to be added to the {@code ArrayBuilder}.
+     * @param e4  The fourth element to be added to the {@code ArrayBuilder}.
+     * @param e5  The fifth element to be added to the {@code ArrayBuilder}.
+     * @param e6  The sixth element to be added to the {@code ArrayBuilder}.
+     * @param e7  The seventh element to be added to the {@code ArrayBuilder}.
+     * @param e8  The eighth element to be added to the {@code ArrayBuilder}.
+     * @param e9  The ninth element to be added to the {@code ArrayBuilder}.
+     * @param e10 The tenth element to be added to the {@code ArrayBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ArrayBuilder}.
+     * @return An {@code ArrayBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
     public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
         return arrayBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
     }
 
+    /**
+     * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
+     * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
+     * order as they are defined in the argument list.
+     *
+     * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
+     * type otherwise the array cannot be instantiated. If an array needs to be constructed
+     * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
+     * in the class of the elements to be contained in the resulting array. For example:
+     * <blockquote>
+     * <pre>
+     *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
+     *   FullTimeEmployee fullTimeEmployee = new FullTimeEmployee("Manufacturer", "Fred");
+     *   HourlyEmployee hourlyEmployee = new HourlyEmployee("Materials Consultant", "Andy");
+     *
+     *   Employee[] employees = arrayBuilderOf(Employee.class)
+     *          .with(partTimeEmployee, fullTimeEmployee, hourlyEmployee)
+     *          .build();
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param e1    The first element to be added to the {@code ArrayBuilder}.
+     * @param e2    The second element to be added to the {@code ArrayBuilder}.
+     * @param e3    The third element to be added to the {@code ArrayBuilder}.
+     * @param e4    The fourth element to be added to the {@code ArrayBuilder}.
+     * @param e5    The fifth element to be added to the {@code ArrayBuilder}.
+     * @param e6    The sixth element to be added to the {@code ArrayBuilder}.
+     * @param e7    The seventh element to be added to the {@code ArrayBuilder}.
+     * @param e8    The eighth element to be added to the {@code ArrayBuilder}.
+     * @param e9    The ninth element to be added to the {@code ArrayBuilder}.
+     * @param e10   The tenth element to be added to the {@code ArrayBuilder}.
+     * @param e11on The tenth element to be added to the {@code ArrayBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code ArrayBuilder}.
+     * @return An {@code ArrayBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
     public static <E> ArrayBuilder<E> arrayBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
         return arrayBuilderFrom(iterableBuilderWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10).and(e11on).build());
     }

@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.builders.ArrayBuilder.arrayBuilder;
 import static org.javafunk.funk.testclasses.Animal.animal;
@@ -17,8 +18,7 @@ import static org.javafunk.funk.testclasses.Name.name;
 import static org.junit.Assert.fail;
 
 public class ArrayBuilderTest {
-    @Test
-    public void shouldAllowElementsToBeAddedToTheArrayWithWith() throws Exception {
+    @Test public void shouldAllowElementsToBeAddedToTheArrayWithWith() throws Exception {
         // Given
         ArrayBuilder<String> arrayBuilder = arrayBuilder();
         String[] expected = new String[]{"first", "second", "third", "fourth", "fifth", "sixth"};
@@ -33,8 +33,7 @@ public class ArrayBuilderTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldAllowArraysOfElementsToBeAddedToTheArrayWithWith() throws Exception {
+    @Test public void shouldAllowArraysOfElementsToBeAddedToTheArrayWithWith() throws Exception {
         // Given
         Integer[] expected = new Integer[]{5, 10, 15, 20, 25, 30};
         Integer[] firstElementArray = new Integer[]{5, 10, 15};
@@ -50,8 +49,7 @@ public class ArrayBuilderTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldAllowIterablesOfElementsToBeAddedToTheArrayWithWith() throws Exception {
+    @Test public void shouldAllowIterablesOfElementsToBeAddedToTheArrayWithWith() throws Exception {
         // Given
         ArrayBuilder<Integer> arrayBuilder = arrayBuilder();
         Integer[] expected = new Integer[]{1, 2, 3, 4, 5, 6};
@@ -68,8 +66,7 @@ public class ArrayBuilderTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldAllowElementsToBeAddedToTheArrayWithAnd() {
+    @Test public void shouldAllowElementsToBeAddedToTheArrayWithAnd() {
         // Given
         ArrayBuilder<Integer> arrayBuilder = arrayBuilder();
         Integer[] expected = new Integer[]{5, 10, 15, 20, 25, 30, 35, 40, 45};
@@ -85,8 +82,7 @@ public class ArrayBuilderTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldAllowArraysOfElementsToBeAddedToTheArrayWithAnd() throws Exception {
+    @Test public void shouldAllowArraysOfElementsToBeAddedToTheArrayWithAnd() throws Exception {
         // Given
         ArrayBuilder<Integer> arrayBuilder = arrayBuilder();
         Integer[] expected = new Integer[]{5, 10, 15, 20, 25, 30};
@@ -102,8 +98,7 @@ public class ArrayBuilderTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldAllowIterablesOfElementsToBeAddedToTheArrayWithAnd() throws Exception {
+    @Test public void shouldAllowIterablesOfElementsToBeAddedToTheArrayWithAnd() throws Exception {
         // Given
         ArrayBuilder<Integer> arrayBuilder = arrayBuilder();
         Integer[] expected = new Integer[]{1, 2, 3, 4, 5, 6};
@@ -119,8 +114,7 @@ public class ArrayBuilderTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldAddElementsCorrectlyWhenElementTypeIsIterable() throws Exception {
+    @Test public void shouldAddElementsCorrectlyWhenElementTypeIsIterable() throws Exception {
         // Given
         ArrayBuilder<Iterable<Integer>> arrayBuilder = arrayBuilder();
         Iterable<Integer> firstElement = asList(1, 2);
@@ -143,8 +137,7 @@ public class ArrayBuilderTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldAddElementsCorrectlyWhenElementTypeIsArray() throws Exception {
+    @Test public void shouldAddElementsCorrectlyWhenElementTypeIsArray() throws Exception {
         // Given
         ArrayBuilder<Integer[]> arrayBuilder = arrayBuilder();
         Integer[] firstElement = new Integer[]{1, 2};
@@ -167,8 +160,7 @@ public class ArrayBuilderTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldThrowIllegalArgumentExceptionWhenTryingToBuildEmptyArrayWithoutPassingElementType() throws Exception {
+    @Test public void shouldThrowIllegalArgumentExceptionWhenTryingToBuildEmptyArrayWithoutPassingElementType() throws Exception {
         // Given
         ArrayBuilder<String> arrayBuilder = arrayBuilder();
 
@@ -179,12 +171,11 @@ public class ArrayBuilderTest {
         } catch (IllegalArgumentException exception) {
             // Then
             assertThat(exception.getMessage(),
-                    is("Cannot construct empty array without knowing desired element class."));
+                    containsString("Cannot construct empty array without knowing desired element class."));
         }
     }
 
-    @Test
-    public void shouldThrowIllegalArgumentExceptionIfAccumulatedElementsIncludesInstancesOfDifferentConcreteTypes() throws Exception {
+    @Test public void shouldThrowIllegalArgumentExceptionIfAccumulatedElementsIncludesInstancesOfDifferentConcreteTypes() throws Exception {
         // Given
         ArrayBuilder<Animal> arrayBuilder = arrayBuilder();
 
@@ -199,12 +190,11 @@ public class ArrayBuilderTest {
         } catch (IllegalArgumentException exception) {
             // Then
             assertThat(exception.getMessage(),
-                    is("Cannot construct array containing instances of different classes without knowing desired element class."));
+                    containsString("Cannot construct array containing instances of different classes without knowing desired element class."));
         }
     }
 
-    @Test
-    public void shouldReturnAnArrayOfTheSpecifiedElementClassWhenOneIsSupplied() throws Exception {
+    @Test public void shouldReturnAnArrayOfTheSpecifiedElementClassWhenOneIsSupplied() throws Exception {
         // Given
         Dog fido = dog(colour("Brown"), name("Fido"));
         Cat fluffball = cat(colour("White"), name("Fluffball"));
@@ -221,8 +211,7 @@ public class ArrayBuilderTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnTypedEmptyArrayWhenElementClassIsSupplied() throws Exception {
+    @Test public void shouldReturnTypedEmptyArrayWhenElementClassIsSupplied() throws Exception {
         // Given
         ArrayBuilder<Integer> arrayBuilder = arrayBuilder(Integer.class);
         Integer[] expected = new Integer[]{};

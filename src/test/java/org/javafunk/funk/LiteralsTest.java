@@ -19,6 +19,7 @@ import java.util.*;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.builders.IterableBuilder.iterableBuilder;
@@ -969,7 +970,7 @@ public class LiteralsTest {
         } catch (IllegalArgumentException exception) {
             // Then
             assertThat(exception.getMessage(),
-                    is("Cannot construct empty array without knowing desired element class."));
+                    containsString("Cannot construct empty array without knowing desired element class."));
         }
     }
 
@@ -987,7 +988,7 @@ public class LiteralsTest {
         } catch (IllegalArgumentException exception) {
             // Then
             assertThat(exception.getMessage(),
-                    is("Cannot construct array containing instances of different classes without knowing desired element class."));
+                    containsString("Cannot construct array containing instances of different classes without knowing desired element class."));
         }
     }
 
