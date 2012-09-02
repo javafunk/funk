@@ -1019,6 +1019,54 @@ public class LiteralsTest {
         assertThat(array, is(expected));
     }
 
+    @Test public void shouldThrowIllegalArgumentExceptionIfTheSuppliedArrayIsEmpty() throws Exception {
+        // Given
+        Integer[] array = new Integer[]{};
+
+        try {
+            // When
+            arrayFrom(array);
+            fail("Expected IllegalArgumentException to be thrown but nothing was.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString("Cannot construct empty array without knowing desired element class."));
+        }
+    }
+
+    @Test public void shouldThrowIllegalArgumentExceptionIfArrayContainsInstancesOfDifferentConcreteTypes() throws Exception {
+        // Given
+        Dog animal1 = dog(colour("Brown"), name("Fido"));
+        Cat animal2 = cat(colour("White"), name("Fluff"));
+        Animal animal3 = animal(colour("Green"), name("Fishy"));
+        Animal[] input = new Animal[]{animal1, animal2, animal3};
+
+        try {
+            // When
+            arrayFrom(input);
+            fail("Expected IllegalArgumentException to be thrown but nothing was.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString("Cannot construct array containing instances of different classes without knowing desired element class."));
+        }
+    }
+
+    @Test public void shouldReturnAnArrayContainingAllElementsInTheSuppliedArrayOfTheSuppliedType() throws Exception {
+        // Given
+        Dog animal1 = dog(colour("Brown"), name("Fido"));
+        Cat animal2 = cat(colour("White"), name("Fluff"));
+        Animal animal3 = animal(colour("Green"), name("Fishy"));
+        Animal[] input = new Animal[]{animal1, animal2, animal3};
+        Animal[] expected = new Animal[]{animal1, animal2, animal3};
+
+        // When
+        Animal[] actual = arrayFrom(input, Animal.class);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
     @Test public void shouldReturnAnEmptyArrayBuilder() throws Exception {
         // Given
         ArrayBuilder<Integer> expected = new ArrayBuilder<Integer>();

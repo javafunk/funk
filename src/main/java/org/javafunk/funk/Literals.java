@@ -13,6 +13,7 @@ import org.javafunk.funk.builders.*;
 import org.javafunk.funk.datastructures.tuples.*;
 
 import java.util.*;
+import java.util.Arrays;
 
 import static java.util.Arrays.asList;
 
@@ -357,26 +358,86 @@ public class Literals {
      * @return An array over the type {@code E} containing all elements from the
      *         supplied {@code Iterable} in the order they are yielded.
      */
-    @SuppressWarnings("unchecked")
     public static <E> E[] arrayFrom(Iterable<? extends E> elements, Class<E> elementClass) {
         return new ArrayBuilder<E>(elementClass).with(elements).build();
     }
 
     /**
      * Returns an array instance over the type {@code E} containing all elements
-     * from the supplied array. The order of the elements in the resulting array
-     * is the same as the order of the elements in the supplied array and the
-     * resulting array is a shallow copy of the input array such that
-     * modifications of the input array will not affect the resulting array.
+     * from the supplied array. The order of the elements in the resulting
+     * array is the same as the order of elements in the supplied array.
+     *
+     * <p>The supplied array must contain at least one element so that the type E
+     * can be correctly inferred when constructing the array to return. In the
+     * case that the array is empty, an {@code IllegalArgumentException}
+     * will be thrown.</p>
+     *
+     * <p>The elements in the supplied array must all be of the same
+     * concrete type so that the type E can be inferred deterministically when
+     * constructing the array. In the case that the array contains
+     * elements of different concrete types, an {@code IllegalArgumentException}
+     * will be thrown. If an array containing multiple concrete types of some
+     * supertype is required, use the {@link #arrayFrom(Object[], Class)}
+     * variant.</p>
      *
      * @param elementArray An array of elements from which an array should be
      *                     constructed.
      * @param <E>          The type of the elements to be contained in the returned array.
      * @return An array over the type {@code E} containing all elements from the
      *         supplied array in the same order as the supplied array.
+     * @throws IllegalArgumentException if the supplied {@code Iterable} contains no
+     *                                  elements or contains elements of different
+     *                                  concrete types.
      */
     public static <E> E[] arrayFrom(E[] elementArray) {
         return new ArrayBuilder<E>().with(elementArray).build();
+    }
+
+    /**
+     * Returns an array instance over the type {@code E} containing all elements
+     * from the supplied array. The order of the elements in the resulting
+     * array is the same as the order of elements in the supplied array.
+     *
+     * <p>Unlike {@link #arrayFrom(Object[])}, this variant accepts empty
+     * arrays and arrays containing instances of different concrete types and
+     * so should be used in preference of {@link #arrayFrom(Object[])}
+     * if such arrays are expected.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Assume that we have the following instances:
+     * <blockquote>
+     * <pre>
+     *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
+     *   FullTimeEmployee fullTimeEmployee = new FullTimeEmployee("Manufacturer", "Fred");
+     *   HourlyEmployee hourlyEmployee = new HourlyEmployee("Materials Consultant", "Andy");
+     *   Employee[] employees = new Employee[]{partTimeEmployee, fullTimeEmployee, hourlyEmployee};
+     * </pre>
+     * </blockquote>
+     * If we attempt to construct an array directly from the array, an
+     * {@code IllegalArgumentException} will be thrown:
+     * <blockquote>
+     * <pre>
+     *   Employee[] employeeArray = Literals.arrayFrom(employees); // => IllegalArgumentException
+     * </pre>
+     * </blockquote>
+     * However using this variant, we obtain an array of {@code Employee} instances. The following
+     * two arrays are equivalent:
+     * <blockquote>
+     * <pre>
+     *   Employee[] employeeArray = Literals.arrayFrom(employees, Employee.class);
+     *   Employee[] employeeArray = new Employee[]{partTimeEmployee, fullTimeEmployee, hourlyEmployee};
+     * </pre>
+     * </blockquote>
+     *
+     * @param elementArray An array of elements from which an array should be constructed.
+     * @param elementClass A {@code Class} representing the required type {@code E} of
+     *                     the resultant array.
+     * @param <E>          The type of the elements to be contained in the returned array.
+     * @return An array over the type {@code E} containing all elements from the
+     *         supplied array in the same order.
+     */
+    public static <E> E[] arrayFrom(E[] elementArray, Class<E> elementClass) {
+        return new ArrayBuilder<E>(elementClass).with(elementArray).build();
     }
 
     /**
