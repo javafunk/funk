@@ -10,9 +10,7 @@ package org.javafunk.funk.datastructures.tuples;
 
 import org.javafunk.funk.behaviours.ordinals.First;
 
-import java.util.ArrayList;
-
-import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableBuilderOf;
 
 public class Single<R>
         extends AbstractTuple
@@ -28,6 +26,6 @@ public class Single<R>
     }
 
     @Override public Iterable<Object> values() {
-        return new ArrayList<Object>(collectionWith(first));
+        return iterableBuilderOf(Object.class).with(first).build();
     }
 }
