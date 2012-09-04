@@ -175,7 +175,7 @@ public class Literals {
      *
      * <p>This form of literal is useful when a number of lazy operations have been
      * performed resulting in an {@code Iterable} where a collection implementing
-     * the {@code List} interface is required. For example:
+     * the {@code List} contract is required. For example:
      * <blockquote>
      * <pre>
      *   List&lt;Person&gt; people = Literals.listWith(firstPerson, secondPerson, thirdPerson);
