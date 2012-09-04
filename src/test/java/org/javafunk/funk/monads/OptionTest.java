@@ -11,7 +11,7 @@ package org.javafunk.funk.monads;
 import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.NullaryFunction;
 import org.javafunk.funk.functors.functions.UnaryFunction;
-import org.javafunk.funk.matchers.IterableMatchers;
+import org.javafunk.funk.testclasses.Matchers;
 import org.javafunk.funk.testclasses.TrackingCallable;
 import org.javafunk.funk.testclasses.TrackingNullaryFunction;
 import org.junit.Test;
@@ -864,7 +864,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondNone.equals(firstNone);
 
         // Then
-        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), IterableMatchers.hasAllElementsEqualTo(true));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), Matchers.hasAllElementsEqualTo(true));
     }
 
     @Test
@@ -878,7 +878,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondNone.equals(firstNone);
 
         // Then
-        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), IterableMatchers.hasAllElementsEqualTo(true));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), Matchers.hasAllElementsEqualTo(true));
     }
 
     @Test
@@ -892,7 +892,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondOption.equals(firstOption);
 
         // Then
-        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), IterableMatchers.hasAllElementsEqualTo(true));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), Matchers.hasAllElementsEqualTo(true));
     }
 
     @Test
@@ -906,7 +906,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondOption.equals(firstOption);
 
         // Then
-        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), IterableMatchers.hasAllElementsEqualTo(true));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), Matchers.hasAllElementsEqualTo(true));
     }
 
     @Test
@@ -920,7 +920,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondOption.equals(firstOption);
 
         // Then
-        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), IterableMatchers.hasAllElementsEqualTo(false));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), Matchers.hasAllElementsEqualTo(false));
     }
 
     @Test
@@ -934,7 +934,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondOption.equals(firstOption);
 
         // Then
-        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), IterableMatchers.hasAllElementsEqualTo(false));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), Matchers.hasAllElementsEqualTo(false));
     }
 
     @Test
@@ -948,7 +948,7 @@ public class OptionTest {
         Boolean secondEqualsFirst = secondOption.equals(firstOption);
 
         // Then
-        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), IterableMatchers.hasAllElementsEqualTo(false));
+        assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst), Matchers.hasAllElementsEqualTo(false));
     }
 
     @Test
