@@ -1076,20 +1076,348 @@ public class Literals {
         return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)).build();
     }
 
+    /**
+     * Returns a {@code SetBuilder} containing no elements.
+     *
+     * <h4>Example Usage:</h4>
+     * A {@code SetBuilder} can be used to assemble a {@code Set} as follows:
+     * <blockquote>
+     * <pre>
+     *   Set&lt;Double&gt; set = Literals.&lt;Double&gt;setBuilder()
+     *           .with(1.56, 2.33, 3.1)
+     *           .and(4.04, 5.3, 6)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Set&lt;Double&gt; set = Literals.setWith(4.04, 2.33, 3.1, 5.3, 6, 1.56);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code SetBuilder} is that the set can be built up from
+     * individual objects, arrays or existing iterables. See {@link SetBuilder} for
+     * further details.
+     *
+     * @param <E> The type of the elements contained in the {@code SetBuilder}.
+     * @return A {@code SetBuilder} instance over the type {@code E} containing no elements.
+     */
     public static <E> SetBuilder<E> setBuilder() {
         return new SetBuilder<E>();
     }
 
+    /**
+     * Returns a {@code SetBuilder} over the type of the supplied {@code Class}
+     * containing no elements.
+     *
+     * <h4>Example Usage:</h4>
+     * A {@code SetBuilder} can be used to assemble a {@code Set} as follows:
+     * <blockquote>
+     * <pre>
+     *   Set&lt;Integer&gt; set = setBuilderOf(Integer.class)
+     *           .with(1, 1, 2)
+     *           .and(4, 5, 5)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Set&lt;Integer&gt; set = Literals.setWith(1, 1, 2, 4, 5, 5);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code SetBuilder} is that the set can be built up from
+     * individual objects, arrays or existing iterables. See {@link SetBuilder} for
+     * further details.
+     *
+     * @param elementClass A {@code Class} representing the type of elements
+     *                     contained in this {@code SetBuilder}
+     * @param <E>          The type of the elements contained in the {@code SetBuilder}.
+     * @return A {@code SetBuilder} instance over the type {@code E} containing no
+     *         elements.
+     */
     public static <E> SetBuilder<E> setBuilderOf(Class<E> elementClass) {
         return new SetBuilder<E>();
     }
 
+    /**
+     * Returns a {@code SetBuilder} over type {@code E} initialised with the elements
+     * contained in the supplied {@code Iterable}.
+     *
+     * <h4>Example Usage:</h4>
+     * A {@code SetBuilder} can be used to assemble a {@code Set} from two existing
+     * {@code Collection} instances as follows:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; firstCollection = Literals.collectionWith(1, 2, 3);
+     *   Collection&lt;Integer&gt; secondCollection = Literals.collectionWith(3, 4, 5);
+     *   Set&lt;Integer&gt; set = setBuilderFrom(firstCollection)
+     *           .with(secondCollection)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Set&lt;Integer&gt; set = Literals.setWith(1, 2, 3, 4, 5);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code SetBuilder} is that the set can be built up from
+     * individual objects, arrays or existing iterables. See {@link SetBuilder} for
+     * further details.
+     *
+     * @param elements An {@code Iterable} containing elements with which the
+     *                 {@code SetBuilder} should be initialised.
+     * @param <E>      The type of the elements contained in the {@code SetBuilder}.
+     * @return A {@code SetBuilder} instance over the type {@code E} containing
+     *         the elements from the supplied {@code Iterable}.
+     */
     public static <E> SetBuilder<E> setBuilderFrom(Iterable<? extends E> elements) {
         return new SetBuilder<E>().with(elements);
     }
 
+    /**
+     * Returns a {@code SetBuilder} over type {@code E} initialised with the elements
+     * contained in the supplied array.
+     *
+     * <h4>Example Usage:</h4>
+     * A {@code SetBuilder} can be used to assemble a {@code Set} from two existing
+     * arrays as follows:
+     * <blockquote>
+     * <pre>
+     *   Integer[] firstArray = new Integer[]{1, 2, 3};
+     *   Integer[] secondArray = new Integer[]{3, 4, 5};
+     *   Set&lt;Integer&gt; set = setBuilderFrom(firstArray)
+     *           .with(secondArray)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Set&lt;Integer&gt; set = Literals.setWith(1, 2, 3, 4, 5);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code SetBuilder} is that the set can be built up from
+     * individual objects, arrays or existing iterables. See {@link SetBuilder} for
+     * further details.
+     *
+     * @param elementArray An array containing elements with which the
+     *                     {@code SetBuilder} should be initialised.
+     * @param <E>          The type of the elements contained in the {@code SetBuilder}.
+     * @return A {@code SetBuilder} instance over the type {@code E} containing
+     *         the elements from the supplied {@code Iterable}.
+     */
     public static <E> SetBuilder<E> setBuilderFrom(E[] elementArray) {
         return new SetBuilder<E>().with(elementArray);
+    }
+
+    /**
+     * Returns a {@code SetBuilder} instance over the type {@code E} containing the supplied
+     * element.
+     *
+     * @param e   The element to be added to the {@code SetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code SetBuilder}.
+     * @return A {@code SetBuilder} instance over type {@code E} containing the supplied
+     *         element.
+     */
+    public static <E> SetBuilder<E> setBuilderWith(E e) {
+        return setBuilderFrom(iterableWith(e));
+    }
+
+    /**
+     * Returns a {@code SetBuilder} instance over the type {@code E} containing the supplied
+     * elements. Due to the nature of a {@code Set}, any supplied duplicate elements will be
+     * removed.
+     *
+     * @param e1  The first element to be added to the {@code SetBuilder}.
+     * @param e2  The second element to be added to the {@code SetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code SetBuilder}.
+     * @return A {@code SetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2) {
+        return setBuilderFrom(iterableWith(e1, e2));
+    }
+
+    /**
+     * Returns a {@code SetBuilder} instance over the type {@code E} containing the supplied
+     * elements. Due to the nature of a {@code Set}, any supplied duplicate elements will be
+     * removed.
+     *
+     * @param e1  The first element to be added to the {@code SetBuilder}.
+     * @param e2  The second element to be added to the {@code SetBuilder}.
+     * @param e3  The third element to be added to the {@code SetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code SetBuilder}.
+     * @return A {@code SetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3) {
+        return setBuilderFrom(iterableWith(e1, e2, e3));
+    }
+
+    /**
+     * Returns a {@code SetBuilder} instance over the type {@code E} containing the supplied
+     * elements. Due to the nature of a {@code Set}, any supplied duplicate elements will be
+     * removed.
+     *
+     * @param e1  The first element to be added to the {@code SetBuilder}.
+     * @param e2  The second element to be added to the {@code SetBuilder}.
+     * @param e3  The third element to be added to the {@code SetBuilder}.
+     * @param e4  The fourth element to be added to the {@code SetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code SetBuilder}.
+     * @return A {@code SetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4) {
+        return setBuilderFrom(iterableWith(e1, e2, e3, e4));
+    }
+
+    /**
+     * Returns a {@code SetBuilder} instance over the type {@code E} containing the supplied
+     * elements. Due to the nature of a {@code Set}, any supplied duplicate elements will be
+     * removed.
+     *
+     * @param e1  The first element to be added to the {@code SetBuilder}.
+     * @param e2  The second element to be added to the {@code SetBuilder}.
+     * @param e3  The third element to be added to the {@code SetBuilder}.
+     * @param e4  The fourth element to be added to the {@code SetBuilder}.
+     * @param e5  The fifth element to be added to the {@code SetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code SetBuilder}.
+     * @return A {@code SetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4, E e5) {
+        return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5));
+    }
+
+    /**
+     * Returns a {@code SetBuilder} instance over the type {@code E} containing the supplied
+     * elements. Due to the nature of a {@code Set}, any supplied duplicate elements will be
+     * removed.
+     *
+     * @param e1  The first element to be added to the {@code SetBuilder}.
+     * @param e2  The second element to be added to the {@code SetBuilder}.
+     * @param e3  The third element to be added to the {@code SetBuilder}.
+     * @param e4  The fourth element to be added to the {@code SetBuilder}.
+     * @param e5  The fifth element to be added to the {@code SetBuilder}.
+     * @param e6  The sixth element to be added to the {@code SetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code SetBuilder}.
+     * @return A {@code SetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
+
+    /**
+     * Returns a {@code SetBuilder} instance over the type {@code E} containing the supplied
+     * elements. Due to the nature of a {@code Set}, any supplied duplicate elements will be
+     * removed.
+     *
+     * @param e1  The first element to be added to the {@code SetBuilder}.
+     * @param e2  The second element to be added to the {@code SetBuilder}.
+     * @param e3  The third element to be added to the {@code SetBuilder}.
+     * @param e4  The fourth element to be added to the {@code SetBuilder}.
+     * @param e5  The fifth element to be added to the {@code SetBuilder}.
+     * @param e6  The sixth element to be added to the {@code SetBuilder}.
+     * @param e7  The seventh element to be added to the {@code SetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code SetBuilder}.
+     * @return A {@code SetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    /**
+     * Returns a {@code SetBuilder} instance over the type {@code E} containing the supplied
+     * elements. Due to the nature of a {@code Set}, any supplied duplicate elements will be
+     * removed.
+     *
+     * @param e1  The first element to be added to the {@code SetBuilder}.
+     * @param e2  The second element to be added to the {@code SetBuilder}.
+     * @param e3  The third element to be added to the {@code SetBuilder}.
+     * @param e4  The fourth element to be added to the {@code SetBuilder}.
+     * @param e5  The fifth element to be added to the {@code SetBuilder}.
+     * @param e6  The sixth element to be added to the {@code SetBuilder}.
+     * @param e7  The seventh element to be added to the {@code SetBuilder}.
+     * @param e8  The eighth element to be added to the {@code SetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code SetBuilder}.
+     * @return A {@code SetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    /**
+     * Returns a {@code SetBuilder} instance over the type {@code E} containing the supplied
+     * elements. Due to the nature of a {@code Set}, any supplied duplicate elements will be
+     * removed.
+     *
+     * @param e1  The first element to be added to the {@code SetBuilder}.
+     * @param e2  The second element to be added to the {@code SetBuilder}.
+     * @param e3  The third element to be added to the {@code SetBuilder}.
+     * @param e4  The fourth element to be added to the {@code SetBuilder}.
+     * @param e5  The fifth element to be added to the {@code SetBuilder}.
+     * @param e6  The sixth element to be added to the {@code SetBuilder}.
+     * @param e7  The seventh element to be added to the {@code SetBuilder}.
+     * @param e8  The eighth element to be added to the {@code SetBuilder}.
+     * @param e9  The ninth element to be added to the {@code SetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code SetBuilder}.
+     * @return A {@code SetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    /**
+     * Returns a {@code SetBuilder} instance over the type {@code E} containing the supplied
+     * elements. Due to the nature of a {@code Set}, any supplied duplicate elements will be
+     * removed.
+     *
+     * @param e1  The first element to be added to the {@code SetBuilder}.
+     * @param e2  The second element to be added to the {@code SetBuilder}.
+     * @param e3  The third element to be added to the {@code SetBuilder}.
+     * @param e4  The fourth element to be added to the {@code SetBuilder}.
+     * @param e5  The fifth element to be added to the {@code SetBuilder}.
+     * @param e6  The sixth element to be added to the {@code SetBuilder}.
+     * @param e7  The seventh element to be added to the {@code SetBuilder}.
+     * @param e8  The eighth element to be added to the {@code SetBuilder}.
+     * @param e9  The ninth element to be added to the {@code SetBuilder}.
+     * @param e10 The tenth element to be added to the {@code SetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code SetBuilder}.
+     * @return A {@code SetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    /**
+     * Returns a {@code SetBuilder} instance over the type {@code E} containing the supplied
+     * elements. Due to the nature of a {@code Set}, any supplied duplicate elements will be
+     * removed.
+     *
+     * @param e1    The first element to be added to the {@code SetBuilder}.
+     * @param e2    The second element to be added to the {@code SetBuilder}.
+     * @param e3    The third element to be added to the {@code SetBuilder}.
+     * @param e4    The fourth element to be added to the {@code SetBuilder}.
+     * @param e5    The fifth element to be added to the {@code SetBuilder}.
+     * @param e6    The sixth element to be added to the {@code SetBuilder}.
+     * @param e7    The seventh element to be added to the {@code SetBuilder}.
+     * @param e8    The eighth element to be added to the {@code SetBuilder}.
+     * @param e9    The ninth element to be added to the {@code SetBuilder}.
+     * @param e10   The tenth element to be added to the {@code SetBuilder}.
+     * @param e11on The remaining elements to be added to the {@code SetBuilder}.
+     * @param <E>   The type of the elements contained in the returned {@code SetBuilder}.
+     * @return A {@code SetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E e11on) {
+        return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on));
     }
 
     public static <E> Multiset<E> multiset() {
@@ -2283,18 +2611,6 @@ public class Literals {
     public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
     public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
     public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on); }
-
-    public static <E> SetBuilder<E> setBuilderWith(E e) { return setBuilderFrom(iterableWith(e)); }
-    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2) { return setBuilderFrom(iterableWith(e1, e2)); }
-    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3) { return setBuilderFrom(iterableWith(e1, e2, e3)); }
-    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4) { return setBuilderFrom(iterableWith(e1, e2, e3, e4)); }
-    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4, E e5) { return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5)); }
-    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) { return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
-    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
-    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
-    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E e11on) { return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on); }
 
     public static <E> Multiset<E> multisetWith(E e) { return multisetFrom(iterableWith(e)); }
     public static <E> Multiset<E> multisetWith(E e1, E e2) { return multisetFrom(iterableWith(e1, e2)); }
