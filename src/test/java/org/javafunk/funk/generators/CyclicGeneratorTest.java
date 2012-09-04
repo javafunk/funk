@@ -10,7 +10,7 @@ package org.javafunk.funk.generators;
 
 import org.javafunk.funk.behaviours.Generator;
 import org.javafunk.funk.functors.Action;
-import org.javafunk.funk.matchers.SelfDescribingPredicate;
+import org.javafunk.matchbox.SelfDescribingPredicate;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,7 +20,7 @@ import static org.javafunk.funk.Generators.toGeneratable;
 import static org.javafunk.funk.Lazily.batch;
 import static org.javafunk.funk.Lazily.take;
 import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.matchers.IterableMatchers.hasAllElementsSatisfying;
+import static org.javafunk.matchbox.Matchers.hasAllElementsSatisfying;
 
 public class CyclicGeneratorTest {
     @Test

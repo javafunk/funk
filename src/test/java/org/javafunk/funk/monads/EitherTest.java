@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.matchers.IterableMatchers.hasAllElementsEqualTo;
+import static org.javafunk.funk.testclasses.Matchers.hasAllElementsEqualTo;
 
 public class EitherTest {
     @Test
