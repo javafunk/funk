@@ -522,7 +522,7 @@ public class Literals {
      *                 {@code ListBuilder} should be initialised.
      * @param <E>      The type of the elements contained in the {@code ListBuilder}.
      * @return A {@code ListBuilder} instance over the type {@code E} containing
-     *         the elements from the supplied {@code Iteralble}.
+     *         the elements from the supplied {@code Iterable}.
      */
     public static <E> ListBuilder<E> listBuilderFrom(Iterable<? extends E> elements) {
         return new ListBuilder<E>().with(elements);
@@ -558,7 +558,7 @@ public class Literals {
      *                     {@code ListBuilder} should be initialised.
      * @param <E>          The type of the elements contained in the {@code ListBuilder}.
      * @return A {@code ListBuilder} instance over the type {@code E} containing
-     *         the elements from the supplied {@code Iteralble}.
+     *         the elements from the supplied {@code Iterable}.
      */
     public static <E> ListBuilder<E> listBuilderFrom(E[] elementArray) {
         return new ListBuilder<E>().with(elementArray);
