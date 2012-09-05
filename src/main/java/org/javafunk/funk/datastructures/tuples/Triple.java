@@ -8,31 +8,18 @@
  */
 package org.javafunk.funk.datastructures.tuples;
 
-import org.javafunk.funk.behaviours.ordinals.First;
-import org.javafunk.funk.behaviours.ordinals.Second;
 import org.javafunk.funk.behaviours.ordinals.Third;
 
-import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.funk.Literals.iterableBuilderFrom;
 
 public class Triple<R, S, T>
-        extends AbstractTuple
-        implements First<R>, Second<S>, Third<T> {
-    private R first;
-    private S second;
+        extends Pair<R, S>
+        implements Third<T> {
     private T third;
 
     public Triple(R first, S second, T third) {
-        this.first = first;
-        this.second = second;
+        super(first, second);
         this.third = third;
-    }
-
-    @Override public R first() {
-        return first;
-    }
-
-    @Override public S second() {
-        return second;
     }
 
     @Override public T third() {
@@ -40,6 +27,6 @@ public class Triple<R, S, T>
     }
 
     @Override public Iterable<Object> values() {
-        return iterableWith(first, second, third);
+        return iterableBuilderFrom(super.values()).with(third()).build();
     }
 }

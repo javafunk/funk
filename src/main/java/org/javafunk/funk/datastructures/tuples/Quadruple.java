@@ -8,38 +8,18 @@
  */
 package org.javafunk.funk.datastructures.tuples;
 
-import org.javafunk.funk.behaviours.ordinals.First;
 import org.javafunk.funk.behaviours.ordinals.Fourth;
-import org.javafunk.funk.behaviours.ordinals.Second;
-import org.javafunk.funk.behaviours.ordinals.Third;
 
-import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.funk.Literals.iterableBuilderFrom;
 
 public class Quadruple<R, S, T, U>
-        extends AbstractTuple
-        implements First<R>, Second<S>, Third<T>, Fourth<U> {
-    private R first;
-    private S second;
-    private T third;
+        extends Triple<R, S, T>
+        implements Fourth<U> {
     private U fourth;
 
     public Quadruple(R first, S second, T third, U fourth) {
-        this.first = first;
-        this.second = second;
-        this.third = third;
+        super(first, second, third);
         this.fourth = fourth;
-    }
-
-    @Override public R first() {
-        return first;
-    }
-
-    @Override public S second() {
-        return second;
-    }
-
-    @Override public T third() {
-        return third;
     }
 
     @Override public U fourth() {
@@ -47,6 +27,6 @@ public class Quadruple<R, S, T, U>
     }
 
     @Override public Iterable<Object> values() {
-        return iterableWith(first, second, third, fourth);
+        return iterableBuilderFrom(super.values()).with(fourth()).build();
     }
 }

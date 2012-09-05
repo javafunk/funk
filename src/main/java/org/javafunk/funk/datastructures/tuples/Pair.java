@@ -8,24 +8,18 @@
  */
 package org.javafunk.funk.datastructures.tuples;
 
-import org.javafunk.funk.behaviours.ordinals.First;
 import org.javafunk.funk.behaviours.ordinals.Second;
 
-import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.funk.Literals.iterableBuilderFrom;
 
 public class Pair<R, S>
-        extends AbstractTuple
-        implements First<R>, Second<S> {
-    private R first;
+        extends Single<R>
+        implements Second<S> {
     private S second;
 
     public Pair(R first, S second) {
-        this.first = first;
+        super(first);
         this.second = second;
-    }
-
-    @Override public R first() {
-        return first;
     }
 
     @Override public S second() {
@@ -33,6 +27,6 @@ public class Pair<R, S>
     }
 
     @Override public Iterable<Object> values() {
-        return iterableWith(first, second);
+        return iterableBuilderFrom(super.values()).with(second()).build();
     }
 }
