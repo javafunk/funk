@@ -26,11 +26,11 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsArrayContainingInOrder.arrayContaining;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.builders.IterableBuilder.iterableBuilder;
-import static org.javafunk.funk.matchers.IteratorMatchers.isIteratorWithSameElementsAs;
 import static org.javafunk.funk.testclasses.Age.age;
 import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Location.location;
 import static org.javafunk.funk.testclasses.Name.name;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class LiteralsTest {
     @Test
@@ -170,7 +170,7 @@ public class LiteralsTest {
         Iterator<Integer> actual = iterator();
 
         // Then
-        assertThat(actual, isIteratorWithSameElementsAs(expected));
+        assertThat(Iterators.asList(actual), hasOnlyItemsInOrder(Iterators.asList(expected)));
     }
 
     @Test
@@ -179,7 +179,7 @@ public class LiteralsTest {
         Iterator<Integer> expected = new ArrayList<Integer>().iterator();
 
         // Then
-        assertThat(iteratorOf(Integer.class), isIteratorWithSameElementsAs(expected));
+        assertThat(Iterators.asList(iteratorOf(Integer.class)), hasOnlyItemsInOrder(Iterators.asList(expected)));
     }
 
     @Test
@@ -191,7 +191,7 @@ public class LiteralsTest {
         Iterator<Integer> actual = iteratorWith(5, 10, 15);
 
         // Then
-        assertThat(actual, isIteratorWithSameElementsAs(expected));
+        assertThat(Iterators.asList(actual), hasOnlyItemsInOrder(Iterators.asList(expected)));
     }
 
     @Test
@@ -204,7 +204,7 @@ public class LiteralsTest {
         Iterator<Integer> actual = iteratorFrom(elements);
 
         // Then
-        assertThat(actual, isIteratorWithSameElementsAs(expected));
+        assertThat(Iterators.asList(actual), hasOnlyItemsInOrder(Iterators.asList(expected)));
     }
 
     @Test
@@ -217,7 +217,7 @@ public class LiteralsTest {
         Iterator<Integer> actual = iteratorFrom(elements);
 
         // Then
-        assertThat(actual, isIteratorWithSameElementsAs(expected));
+        assertThat(Iterators.asList(actual), hasOnlyItemsInOrder(Iterators.asList(expected)));
     }
 
     @Test
