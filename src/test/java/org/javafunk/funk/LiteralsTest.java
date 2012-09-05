@@ -12,39 +12,29 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import org.javafunk.funk.builders.*;
 import org.javafunk.funk.datastructures.tuples.*;
-import org.javafunk.funk.testclasses.Age;
-import org.javafunk.funk.testclasses.Colour;
-import org.javafunk.funk.testclasses.Location;
-import org.javafunk.funk.testclasses.Name;
+import org.javafunk.funk.testclasses.*;
 import org.junit.Test;
 
 import java.util.*;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.collection.IsArrayContainingInOrder.arrayContaining;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.builders.IterableBuilder.iterableBuilder;
 import static org.javafunk.funk.testclasses.Age.age;
+import static org.javafunk.funk.testclasses.Animal.animal;
+import static org.javafunk.funk.testclasses.Cat.cat;
 import static org.javafunk.funk.testclasses.Colour.colour;
+import static org.javafunk.funk.testclasses.Dog.dog;
 import static org.javafunk.funk.testclasses.Location.location;
 import static org.javafunk.funk.testclasses.Name.name;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
+import static org.junit.Assert.fail;
 
 public class LiteralsTest {
-    @Test
-    public void shouldReturnVaragsAsArray() {
-        Object one = new Object();
-        Object two = new Object();
-
-        Object[] actual = array(one, two);
-
-        assertThat(actual, arrayContaining(one, two));
-    }
-
-    @Test
-    public void shouldReturnAnEmptyIterable() throws Exception {
+    @Test public void shouldReturnAnEmptyIterable() throws Exception {
         // Given
         Iterable<Integer> expected = new ArrayList<Integer>();
 
@@ -55,8 +45,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyIterableWithElementsOfTheSpecifiedType() throws Exception {
+    @Test public void shouldReturnAnEmptyIterableWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         Iterable<Integer> expected = new ArrayList<Integer>();
 
@@ -64,8 +53,7 @@ public class LiteralsTest {
         assertThat(iterableOf(Integer.class), is(expected));
     }
 
-    @Test
-    public void shouldReturnAnIterableContainingTheSuppliedElements() {
+    @Test public void shouldReturnAnIterableContainingTheSuppliedElements() {
         // Given
         Iterable<Integer> expected = asList(5, 10, 15);
 
@@ -76,8 +64,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnIterableContainingAllElementsInTheSuppliedIterable() {
+    @Test public void shouldReturnAnIterableContainingAllElementsInTheSuppliedIterable() {
         // Given
         Iterable<Integer> expected = asList(5, 10, 15);
         Iterable<Integer> elements = asList(5, 10, 15);
@@ -89,8 +76,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnIterableContainingAllElementsInTheSuppliedArray() {
+    @Test public void shouldReturnAnIterableContainingAllElementsInTheSuppliedArray() {
         // Given
         Iterable<Integer> expected = asList(5, 10, 15);
         Integer[] elements = new Integer[]{5, 10, 15};
@@ -102,8 +88,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyIterableBuilder() throws Exception {
+    @Test public void shouldReturnAnEmptyIterableBuilder() throws Exception {
         // Given
         IterableBuilder<Integer> expected = new IterableBuilder<Integer>();
 
@@ -114,8 +99,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyIterableBuilderWithElementsOfTheSpecifiedType() throws Exception {
+    @Test public void shouldReturnAnEmptyIterableBuilderWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         IterableBuilder<Integer> expected = new IterableBuilder<Integer>();
 
@@ -123,8 +107,7 @@ public class LiteralsTest {
         assertThat(iterableBuilderOf(Integer.class), is(expected));
     }
 
-    @Test
-    public void shouldReturnAnIterableBuilderWithTheSuppliedElements() {
+    @Test public void shouldReturnAnIterableBuilderWithTheSuppliedElements() {
         // Given
         IterableBuilder<Integer> expected = new IterableBuilder<Integer>().with(5, 10, 15);
 
@@ -135,8 +118,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnIterableBuilderContainingAllElementsInTheSuppliedIterable() {
+    @Test public void shouldReturnAnIterableBuilderContainingAllElementsInTheSuppliedIterable() {
         // Given
         IterableBuilder<Integer> expected = new IterableBuilder<Integer>().with(5, 10, 15);
         Iterable<Integer> elements = asList(5, 10, 15);
@@ -148,8 +130,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnIterableBuilderContainingAllElementsInTheSuppliedArray() {
+    @Test public void shouldReturnAnIterableBuilderContainingAllElementsInTheSuppliedArray() {
         // Given
         IterableBuilder<Integer> expected = new IterableBuilder<Integer>().with(5, 10, 15);
         Integer[] elements = new Integer[]{5, 10, 15};
@@ -161,8 +142,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyIterator() throws Exception {
+    @Test public void shouldReturnAnEmptyIterator() throws Exception {
         // Given
         Iterator<Integer> expected = new ArrayList<Integer>().iterator();
 
@@ -173,8 +153,7 @@ public class LiteralsTest {
         assertThat(Iterators.asList(actual), hasOnlyItemsInOrder(Iterators.asList(expected)));
     }
 
-    @Test
-    public void shouldReturnAnEmptyIteratorWithElementsOfTheSpecifiedType() throws Exception {
+    @Test public void shouldReturnAnEmptyIteratorWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         Iterator<Integer> expected = new ArrayList<Integer>().iterator();
 
@@ -182,8 +161,7 @@ public class LiteralsTest {
         assertThat(Iterators.asList(iteratorOf(Integer.class)), hasOnlyItemsInOrder(Iterators.asList(expected)));
     }
 
-    @Test
-    public void shouldReturnAnIteratorContainingTheSuppliedElements() {
+    @Test public void shouldReturnAnIteratorContainingTheSuppliedElements() {
         // Given
         Iterator<Integer> expected = asList(5, 10, 15).iterator();
 
@@ -194,8 +172,7 @@ public class LiteralsTest {
         assertThat(Iterators.asList(actual), hasOnlyItemsInOrder(Iterators.asList(expected)));
     }
 
-    @Test
-    public void shouldReturnAnIteratorContainingAllElementsInTheSuppliedIterable() {
+    @Test public void shouldReturnAnIteratorContainingAllElementsInTheSuppliedIterable() {
         // Given
         Iterator<Integer> expected = asList(5, 10, 15).iterator();
         Iterable<Integer> elements = asList(5, 10, 15);
@@ -207,8 +184,7 @@ public class LiteralsTest {
         assertThat(Iterators.asList(actual), hasOnlyItemsInOrder(Iterators.asList(expected)));
     }
 
-    @Test
-    public void shouldReturnAnIteratorContainingAllElementsInTheSuppliedArray() {
+    @Test public void shouldReturnAnIteratorContainingAllElementsInTheSuppliedArray() {
         // Given
         Iterator<Integer> expected = asList(5, 10, 15).iterator();
         Integer[] elements = new Integer[]{5, 10, 15};
@@ -220,8 +196,7 @@ public class LiteralsTest {
         assertThat(Iterators.asList(actual), hasOnlyItemsInOrder(Iterators.asList(expected)));
     }
 
-    @Test
-    public void shouldReturnAnEmptyIteratorBuilder() throws Exception {
+    @Test public void shouldReturnAnEmptyIteratorBuilder() throws Exception {
         // Given
         IteratorBuilder<Integer> expected = new IteratorBuilder<Integer>();
 
@@ -232,8 +207,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyIteratorBuilderWithElementsOfTheSpecifiedType() throws Exception {
+    @Test public void shouldReturnAnEmptyIteratorBuilderWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         IteratorBuilder<Integer> expected = new IteratorBuilder<Integer>();
 
@@ -241,8 +215,7 @@ public class LiteralsTest {
         assertThat(iteratorBuilderOf(Integer.class), is(expected));
     }
 
-    @Test
-    public void shouldReturnAnIteratorBuilderWithTheSuppliedElements() {
+    @Test public void shouldReturnAnIteratorBuilderWithTheSuppliedElements() {
         // Given
         IteratorBuilder<Integer> expected = new IteratorBuilder<Integer>().with(5, 10, 15);
 
@@ -253,8 +226,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnIteratorBuilderContainingAllElementsInTheSuppliedIterable() {
+    @Test public void shouldReturnAnIteratorBuilderContainingAllElementsInTheSuppliedIterable() {
         // Given
         IteratorBuilder<Integer> expected = new IteratorBuilder<Integer>().with(5, 10, 15);
         Iterable<Integer> elements = asList(5, 10, 15);
@@ -266,8 +238,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnIteratorBuilderContainingAllElementsInTheSuppliedArray() {
+    @Test public void shouldReturnAnIteratorBuilderContainingAllElementsInTheSuppliedArray() {
         // Given
         IteratorBuilder<Integer> expected = new IteratorBuilder<Integer>().with(5, 10, 15);
         Integer[] elements = new Integer[]{5, 10, 15};
@@ -279,8 +250,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyCollection() throws Exception {
+    @Test public void shouldReturnAnEmptyCollection() throws Exception {
         // Given
         Collection<Integer> expected = new ArrayList<Integer>();
 
@@ -291,8 +261,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyCollectionWithElementsOfTheSpecifiedType() throws Exception {
+    @Test public void shouldReturnAnEmptyCollectionWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         Collection<Integer> expected = new ArrayList<Integer>();
 
@@ -300,8 +269,7 @@ public class LiteralsTest {
         assertThat(collectionOf(Integer.class), is(expected));
     }
 
-    @Test
-    public void shouldReturnAnCollectionContainingTheSuppliedElements() {
+    @Test public void shouldReturnAnCollectionContainingTheSuppliedElements() {
         // Given
         Collection<Integer> expected = asList(5, 10, 15);
 
@@ -312,8 +280,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnCollectionContainingAllElementsInTheSuppliedIterable() {
+    @Test public void shouldReturnAnCollectionContainingAllElementsInTheSuppliedIterable() {
         // Given
         Collection<Integer> expected = asList(5, 10, 15);
         Iterable<Integer> elements = asList(5, 10, 15);
@@ -325,8 +292,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnCollectionContainingAllElementsInTheSuppliedArray() {
+    @Test public void shouldReturnAnCollectionContainingAllElementsInTheSuppliedArray() {
         // Given
         Collection<Integer> expected = asList(5, 10, 15);
         Integer[] elements = new Integer[]{5, 10, 15};
@@ -338,8 +304,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyCollectionBuilder() throws Exception {
+    @Test public void shouldReturnAnEmptyCollectionBuilder() throws Exception {
         // Given
         CollectionBuilder<Integer> expected = new CollectionBuilder<Integer>();
 
@@ -350,8 +315,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyCollectionBuilderWithElementsOfTheSpecifiedType() throws Exception {
+    @Test public void shouldReturnAnEmptyCollectionBuilderWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         CollectionBuilder<Integer> expected = new CollectionBuilder<Integer>();
 
@@ -359,8 +323,7 @@ public class LiteralsTest {
         assertThat(collectionBuilderOf(Integer.class), is(expected));
     }
 
-    @Test
-    public void shouldReturnAnCollectionBuilderWithTheSuppliedElements() {
+    @Test public void shouldReturnAnCollectionBuilderWithTheSuppliedElements() {
         // Given
         CollectionBuilder<Integer> expected = new CollectionBuilder<Integer>().with(5, 10, 15);
 
@@ -371,8 +334,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnCollectionBuilderContainingAllElementsInTheSuppliedIterable() {
+    @Test public void shouldReturnAnCollectionBuilderContainingAllElementsInTheSuppliedIterable() {
         // Given
         CollectionBuilder<Integer> expected = new CollectionBuilder<Integer>().with(5, 10, 15);
         Iterable<Integer> elements = asList(5, 10, 15);
@@ -384,8 +346,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnCollectionBuilderContainingAllElementsInTheSuppliedArray() {
+    @Test public void shouldReturnAnCollectionBuilderContainingAllElementsInTheSuppliedArray() {
         // Given
         CollectionBuilder<Integer> expected = new CollectionBuilder<Integer>().with(5, 10, 15);
         Integer[] elements = new Integer[]{5, 10, 15};
@@ -397,8 +358,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyList() throws Exception {
+    @Test public void shouldReturnAnEmptyList() throws Exception {
         // Given
         List<Integer> expected = new ArrayList<Integer>();
 
@@ -409,8 +369,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyListWithElementsOfTheSpecifiedType() throws Exception {
+    @Test public void shouldReturnAnEmptyListWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         List<Integer> expected = new ArrayList<Integer>();
 
@@ -418,8 +377,7 @@ public class LiteralsTest {
         assertThat(listOf(Integer.class), is(expected));
     }
 
-    @Test
-    public void shouldReturnAListContainingTheSuppliedElements() {
+    @Test public void shouldReturnAListContainingTheSuppliedElements() {
         // Given
         List<Integer> expectedList = asList(5, 10, 15);
 
@@ -430,8 +388,7 @@ public class LiteralsTest {
         assertThat(actualList, is(expectedList));
     }
 
-    @Test
-    public void shouldReturnAListContainingAllElementsInTheSuppliedIterable() {
+    @Test public void shouldReturnAListContainingAllElementsInTheSuppliedIterable() {
         // Given
         List<Integer> expected = asList(5, 10, 15);
         Iterable<Integer> elements = asList(5, 10, 15);
@@ -443,8 +400,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAListContainingAllElementsInTheSuppliedArray() {
+    @Test public void shouldReturnAListContainingAllElementsInTheSuppliedArray() {
         // Given
         List<Integer> expected = asList(5, 10, 15);
         Integer[] elements = new Integer[]{5, 10, 15};
@@ -456,8 +412,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyListBuilder() throws Exception {
+    @Test public void shouldReturnAnEmptyListBuilder() throws Exception {
         // Given
         ListBuilder<Integer> expected = new ListBuilder<Integer>();
 
@@ -468,8 +423,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyListBuilderWithElementsOfTheSpecifiedType() throws Exception {
+    @Test public void shouldReturnAnEmptyListBuilderWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         ListBuilder<Integer> expected = new ListBuilder<Integer>();
 
@@ -477,8 +431,7 @@ public class LiteralsTest {
         assertThat(listBuilderOf(Integer.class), is(expected));
     }
 
-    @Test
-    public void shouldReturnAListBuilderWithTheSuppliedElements() {
+    @Test public void shouldReturnAListBuilderWithTheSuppliedElements() {
         // Given
         ListBuilder<Integer> expected = new ListBuilder<Integer>().with(5, 10, 15);
 
@@ -489,8 +442,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAListBuilderContainingAllElementsInTheSuppliedIterable() {
+    @Test public void shouldReturnAListBuilderContainingAllElementsInTheSuppliedIterable() {
         // Given
         ListBuilder<Integer> expected = new ListBuilder<Integer>().with(5, 10, 15);
         Iterable<Integer> elements = asList(5, 10, 15);
@@ -502,8 +454,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAListBuilderContainingAllElementsInTheSuppliedArray() {
+    @Test public void shouldReturnAListBuilderContainingAllElementsInTheSuppliedArray() {
         // Given
         ListBuilder<Integer> expected = new ListBuilder<Integer>().with(5, 10, 15);
         Integer[] elements = new Integer[]{5, 10, 15};
@@ -515,8 +466,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyMultiset() throws Exception {
+    @Test public void shouldReturnAnEmptyMultiset() throws Exception {
         // Given
         Multiset<Integer> expected = HashMultiset.create();
 
@@ -527,8 +477,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyMultisetWithElementsOfTheSpecifiedType() throws Exception {
+    @Test public void shouldReturnAnEmptyMultisetWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         Multiset<Integer> expected = HashMultiset.create();
 
@@ -536,8 +485,7 @@ public class LiteralsTest {
         assertThat(multisetOf(Integer.class), is(expected));
     }
 
-    @Test
-    public void shouldReturnAMultisetContainingTheSuppliedElements() {
+    @Test public void shouldReturnAMultisetContainingTheSuppliedElements() {
         // Given
         Multiset<Integer> expectedMultiset = HashMultiset.create(asList(5, 10, 15));
 
@@ -548,8 +496,7 @@ public class LiteralsTest {
         assertThat(actualMultiset, is(expectedMultiset));
     }
 
-    @Test
-    public void shouldReturnAMultisetContainingAllElementsInTheSuppliedIterable() {
+    @Test public void shouldReturnAMultisetContainingAllElementsInTheSuppliedIterable() {
         // Given
         Multiset<Integer> expected = HashMultiset.create(asList(5, 10, 15));
         Iterable<Integer> elements = asList(5, 10, 15);
@@ -561,8 +508,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAMultisetContainingAllElementsInTheSuppliedArray() {
+    @Test public void shouldReturnAMultisetContainingAllElementsInTheSuppliedArray() {
         // Given
         Multiset<Integer> expected = HashMultiset.create(asList(5, 10, 15));
         Integer[] elements = new Integer[]{5, 10, 15};
@@ -574,8 +520,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyMultisetBuilder() throws Exception {
+    @Test public void shouldReturnAnEmptyMultisetBuilder() throws Exception {
         // Given
         MultisetBuilder<Integer> expected = new MultisetBuilder<Integer>();
 
@@ -586,8 +531,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyMultisetBuilderWithElementsOfTheSpecifiedType() throws Exception {
+    @Test public void shouldReturnAnEmptyMultisetBuilderWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         MultisetBuilder<Integer> expected = new MultisetBuilder<Integer>();
 
@@ -595,8 +539,7 @@ public class LiteralsTest {
         assertThat(multisetBuilderOf(Integer.class), is(expected));
     }
 
-    @Test
-    public void shouldReturnAMultisetBuilderWithTheSuppliedElements() {
+    @Test public void shouldReturnAMultisetBuilderWithTheSuppliedElements() {
         // Given
         MultisetBuilder<Integer> expected = new MultisetBuilder<Integer>().with(5, 10, 15);
 
@@ -607,8 +550,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAMultisetBuilderContainingAllElementsInTheSuppliedIterable() {
+    @Test public void shouldReturnAMultisetBuilderContainingAllElementsInTheSuppliedIterable() {
         // Given
         MultisetBuilder<Integer> expected = new MultisetBuilder<Integer>().with(5, 10, 15);
         Iterable<Integer> elements = asList(5, 10, 15);
@@ -620,8 +562,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAMultisetBuilderContainingAllElementsInTheSuppliedArray() {
+    @Test public void shouldReturnAMultisetBuilderContainingAllElementsInTheSuppliedArray() {
         // Given
         MultisetBuilder<Integer> expected = new MultisetBuilder<Integer>().with(5, 10, 15);
         Integer[] elements = new Integer[]{5, 10, 15};
@@ -633,8 +574,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptySet() throws Exception {
+    @Test public void shouldReturnAnEmptySet() throws Exception {
         // Given
         Set<Integer> expected = new HashSet<Integer>();
 
@@ -645,8 +585,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptySetWithElementsOfTheSpecifiedType() throws Exception {
+    @Test public void shouldReturnAnEmptySetWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         Set<Integer> expected = new HashSet<Integer>();
 
@@ -654,8 +593,7 @@ public class LiteralsTest {
         assertThat(setOf(Integer.class), is(expected));
     }
 
-    @Test
-    public void shouldReturnASetContainingTheSuppliedElements() {
+    @Test public void shouldReturnASetContainingTheSuppliedElements() {
         // Given
         Set<Integer> expectedSet = new HashSet<Integer>(asList(5, 10, 15));
 
@@ -666,8 +604,7 @@ public class LiteralsTest {
         assertThat(actualSet, is(expectedSet));
     }
 
-    @Test
-    public void shouldReturnASetContainingAllElementsInTheSuppliedIterable() {
+    @Test public void shouldReturnASetContainingAllElementsInTheSuppliedIterable() {
         // Given
         Set<Integer> expected = new HashSet<Integer>(asList(5, 10, 15));
         Iterable<Integer> elements = asList(5, 10, 15);
@@ -679,8 +616,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnASetContainingAllElementsInTheSuppliedArray() {
+    @Test public void shouldReturnASetContainingAllElementsInTheSuppliedArray() {
         // Given
         Set<Integer> expected = new HashSet<Integer>(asList(5, 10, 15));
         Integer[] elements = new Integer[]{5, 10, 15};
@@ -692,8 +628,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptySetBuilder() throws Exception {
+    @Test public void shouldReturnAnEmptySetBuilder() throws Exception {
         // Given
         SetBuilder<Integer> expected = new SetBuilder<Integer>();
 
@@ -704,8 +639,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptySetBuilderWithElementsOfTheSpecifiedType() throws Exception {
+    @Test public void shouldReturnAnEmptySetBuilderWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         SetBuilder<Integer> expected = new SetBuilder<Integer>();
 
@@ -713,8 +647,7 @@ public class LiteralsTest {
         assertThat(setBuilderOf(Integer.class), is(expected));
     }
 
-    @Test
-    public void shouldReturnASetBuilderWithTheSuppliedElements() {
+    @Test public void shouldReturnASetBuilderWithTheSuppliedElements() {
         // Given
         SetBuilder<Integer> expected = new SetBuilder<Integer>().with(5, 10, 15);
 
@@ -725,8 +658,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnASetBuilderContainingAllElementsInTheSuppliedIterable() {
+    @Test public void shouldReturnASetBuilderContainingAllElementsInTheSuppliedIterable() {
         // Given
         SetBuilder<Integer> expected = new SetBuilder<Integer>().with(5, 10, 15);
         Iterable<Integer> elements = asList(5, 10, 15);
@@ -738,8 +670,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnASetBuilderContainingAllElementsInTheSuppliedArray() {
+    @Test public void shouldReturnASetBuilderContainingAllElementsInTheSuppliedArray() {
         // Given
         SetBuilder<Integer> expected = new SetBuilder<Integer>().with(5, 10, 15);
         Integer[] elements = new Integer[]{5, 10, 15};
@@ -751,8 +682,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyMap() throws Exception {
+    @Test public void shouldReturnAnEmptyMap() throws Exception {
         // Given
         Map<String, Integer> expected = new HashMap<String, Integer>();
 
@@ -763,8 +693,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyMapWithElementsOfTheSpecifiedType() throws Exception {
+    @Test public void shouldReturnAnEmptyMapWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         Map<String, Integer> expected = new HashMap<String, Integer>();
 
@@ -772,8 +701,7 @@ public class LiteralsTest {
         assertThat(mapOf(String.class, Integer.class), is(expected));
     }
 
-    @Test
-    public void shouldReturnAMapContainingTheSuppliedMapEntries() {
+    @Test public void shouldReturnAMapContainingTheSuppliedMapEntries() {
         // Given
         Map<Integer, Boolean> expectedMap = new HashMap<Integer, Boolean>();
         expectedMap.put(1, true);
@@ -786,8 +714,7 @@ public class LiteralsTest {
         assertThat(actualMap, is(expectedMap));
     }
 
-    @Test
-    public void shouldReturnAMapContainingTheSuppliedTuples() throws Exception {
+    @Test public void shouldReturnAMapContainingTheSuppliedTuples() throws Exception {
         // Given
         Map<Integer, Boolean> expectedMap = new HashMap<Integer, Boolean>();
         expectedMap.put(1, true);
@@ -801,8 +728,7 @@ public class LiteralsTest {
         assertThat(actualMap, is(expectedMap));
     }
 
-    @Test
-    public void shouldReturnAMapContainingAllElementsInTheSuppliedIterableOfMapEntryInstances() {
+    @Test public void shouldReturnAMapContainingAllElementsInTheSuppliedIterableOfMapEntryInstances() {
         // Given
         Map<Integer, Boolean> expected = new HashMap<Integer, Boolean>();
         expected.put(1, false);
@@ -815,9 +741,8 @@ public class LiteralsTest {
         // Then
         assertThat(actual, is(expected));
     }
-    
-    @Test
-    public void shouldReturnAMapContainingAllElementsInTheSuppliedIterableOfTupleInstances() {
+
+    @Test public void shouldReturnAMapContainingAllElementsInTheSuppliedIterableOfTupleInstances() {
         // Given
         Map<Integer, Boolean> expected = new HashMap<Integer, Boolean>();
         expected.put(1, false);
@@ -831,8 +756,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAMapContainingAllElementsInTheSuppliedArrayOfMapEntryInstances() {
+    @Test public void shouldReturnAMapContainingAllElementsInTheSuppliedArrayOfMapEntryInstances() {
         // Given
         Map<Integer, Boolean> expected = new HashMap<Integer, Boolean>();
         expected.put(1, false);
@@ -848,8 +772,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAMapContainingAllElementsInTheSuppliedArrayOfTupleInstances() {
+    @Test public void shouldReturnAMapContainingAllElementsInTheSuppliedArrayOfTupleInstances() {
         // Given
         Map<Integer, Boolean> expected = new HashMap<Integer, Boolean>();
         expected.put(1, false);
@@ -865,8 +788,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyMapBuilder() throws Exception {
+    @Test public void shouldReturnAnEmptyMapBuilder() throws Exception {
         // Given
         MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>();
 
@@ -877,8 +799,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAnEmptyMapBuilderWithKeysAndValuesOfTheSpecifiedType() throws Exception {
+    @Test public void shouldReturnAnEmptyMapBuilderWithKeysAndValuesOfTheSpecifiedType() throws Exception {
         // Given
         MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>();
 
@@ -886,8 +807,7 @@ public class LiteralsTest {
         assertThat(mapBuilderOf(String.class, Integer.class), is(expected));
     }
 
-    @Test
-    public void shouldReturnAMapBuilderWithTheSuppliedElements() {
+    @Test public void shouldReturnAMapBuilderWithTheSuppliedElements() {
         // Given
         MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>().with("five", 5, "ten", 10);
 
@@ -898,8 +818,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAMapBuilderWithTheSuppliedMapEntryInstances() {
+    @Test public void shouldReturnAMapBuilderWithTheSuppliedMapEntryInstances() {
         // Given
         MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>()
                 .with("five", 5, "ten", 10);
@@ -911,8 +830,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAMapBuilderWithTheSuppliedTupleInstances() {
+    @Test public void shouldReturnAMapBuilderWithTheSuppliedTupleInstances() {
         // Given
         MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>()
                 .with("five", 5, "ten", 10, "fifteen", 15);
@@ -924,8 +842,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAMapBuilderContainingAllMapEntryInstancesInTheSuppliedIterable() {
+    @Test public void shouldReturnAMapBuilderContainingAllMapEntryInstancesInTheSuppliedIterable() {
         // Given
         MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().with(5, true, 10, false);
         Iterable<Map.Entry<Integer, Boolean>> elements = iterableWith(
@@ -938,8 +855,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAMapBuilderContainingAllTupleInstancesInTheSuppliedIterable() {
+    @Test public void shouldReturnAMapBuilderContainingAllTupleInstancesInTheSuppliedIterable() {
         // Given
         MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().with(5, true, 10, false);
         Iterable<? extends Pair<Integer, Boolean>> tuples = iterableWith(
@@ -952,8 +868,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAMapBuilderContainingAllMapEntryInstancesInTheSuppliedArray() {
+    @Test public void shouldReturnAMapBuilderContainingAllMapEntryInstancesInTheSuppliedArray() {
         // Given
         MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().with(5, true, 10, false);
         @SuppressWarnings("unchecked") Map.Entry<Integer, Boolean>[] elements = new Map.Entry[]{
@@ -968,8 +883,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAMapBuilderContainingAllTupleInstancesInTheSuppliedArray() {
+    @Test public void shouldReturnAMapBuilderContainingAllTupleInstancesInTheSuppliedArray() {
         // Given
         MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().with(5, true, 10, false);
         @SuppressWarnings("unchecked") Pair<Integer, Boolean>[] tuples = new Pair[]{
@@ -984,8 +898,7 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void shouldReturnAMapEntryWithTheSpecifiedKeyAndValue() throws Exception {
+    @Test public void shouldReturnAMapEntryWithTheSpecifiedKeyAndValue() throws Exception {
         // Given
         String key = "key";
         Integer value = 36;
@@ -998,8 +911,7 @@ public class LiteralsTest {
         assertThat(mapEntry.getValue(), is(value));
     }
 
-    @Test
-    public void shouldReturnAMapEntryWithKeyAndValueTakenFromTheSpecifiedTuple() throws Exception {
+    @Test public void shouldReturnAMapEntryWithKeyAndValueTakenFromTheSpecifiedTuple() throws Exception {
         // Given
         Pair<String, String> keyValuePair = tuple("key", "value");
 
@@ -1011,8 +923,229 @@ public class LiteralsTest {
         assertThat(mapEntry.getValue(), is("value"));
     }
 
-    @Test
-    public void shouldReturnASingleContainingTheSuppliedElement() {
+    @Test public void shouldReturnAnEmptyArrayWithElementsOfTheSpecifiedType() throws Exception {
+        // Given
+        Integer[] expected = new Integer[]{};
+
+        // When
+        Integer[] actual = arrayOf(Integer.class);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnAnArrayContainingTheSuppliedElements() {
+        // Given
+        String first = "first";
+        String second = "second";
+        String[] expected = new String[]{first, second};
+
+        // When
+        String[] actual = arrayWith(first, second);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnAnArrayContainingAllElementsInTheSuppliedIterable() {
+        // Given
+        Iterable<Name> elements = iterableWith(name("Tim"), name("Jeremy"), name("Fred"));
+        Name[] expected = new Name[]{name("Tim"), name("Jeremy"), name("Fred")};
+
+        // When
+        Name[] actual = arrayFrom(elements);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldThrowIllegalArgumentExceptionIfTheSuppliedIterableIsEmpty() throws Exception {
+        // Given
+        Iterable<Integer> iterable = iterable();
+
+        try {
+            // When
+            arrayFrom(iterable);
+            fail("Expected IllegalArgumentException to be thrown but nothing was.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString("Cannot construct empty array without knowing desired element class."));
+        }
+    }
+
+    @Test public void shouldThrowIllegalArgumentExceptionIfIterableContainsInstancesOfDifferentConcreteTypes() throws Exception {
+        // Given
+        Dog animal1 = dog(colour("Brown"), name("Fido"));
+        Cat animal2 = cat(colour("White"), name("Fluff"));
+        Animal animal3 = animal(colour("Green"), name("Fishy"));
+        Iterable<Animal> input = iterableWith(animal1, animal2, animal3);
+
+        try {
+            // When
+            arrayFrom(input);
+            fail("Expected IllegalArgumentException to be thrown but nothing was.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString("Cannot construct array containing instances of different classes without knowing desired element class."));
+        }
+    }
+
+    @Test public void shouldReturnAnArrayContainingAllElementsInTheSuppliedIterableOfTheSuppliedType() throws Exception {
+        // Given
+        Dog animal1 = dog(colour("Brown"), name("Fido"));
+        Cat animal2 = cat(colour("White"), name("Fluff"));
+        Animal animal3 = animal(colour("Green"), name("Fishy"));
+        Iterable<Animal> input = iterableWith(animal1, animal2, animal3);
+        Animal[] expected = new Animal[]{animal1, animal2, animal3};
+
+        // When
+        Animal[] actual = arrayFrom(input, Animal.class);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnAnArrayContainingAllElementsInTheSuppliedArray() {
+        // Given
+        Integer[] elements = new Integer[]{5, 10, 15};
+        Integer[] expected = new Integer[]{5, 10, 15};
+
+        // When
+        Integer[] array = arrayFrom(elements);
+
+        // Then
+        assertThat(array, is(expected));
+    }
+
+    @Test public void shouldThrowIllegalArgumentExceptionIfTheSuppliedArrayIsEmpty() throws Exception {
+        // Given
+        Integer[] array = new Integer[]{};
+
+        try {
+            // When
+            arrayFrom(array);
+            fail("Expected IllegalArgumentException to be thrown but nothing was.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString("Cannot construct empty array without knowing desired element class."));
+        }
+    }
+
+    @Test public void shouldThrowIllegalArgumentExceptionIfArrayContainsInstancesOfDifferentConcreteTypes() throws Exception {
+        // Given
+        Dog animal1 = dog(colour("Brown"), name("Fido"));
+        Cat animal2 = cat(colour("White"), name("Fluff"));
+        Animal animal3 = animal(colour("Green"), name("Fishy"));
+        Animal[] input = new Animal[]{animal1, animal2, animal3};
+
+        try {
+            // When
+            arrayFrom(input);
+            fail("Expected IllegalArgumentException to be thrown but nothing was.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString("Cannot construct array containing instances of different classes without knowing desired element class."));
+        }
+    }
+
+    @Test public void shouldReturnAnArrayContainingAllElementsInTheSuppliedArrayOfTheSuppliedType() throws Exception {
+        // Given
+        Dog animal1 = dog(colour("Brown"), name("Fido"));
+        Cat animal2 = cat(colour("White"), name("Fluff"));
+        Animal animal3 = animal(colour("Green"), name("Fishy"));
+        Animal[] input = new Animal[]{animal1, animal2, animal3};
+        Animal[] expected = new Animal[]{animal1, animal2, animal3};
+
+        // When
+        Animal[] actual = arrayFrom(input, Animal.class);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnAnEmptyArrayBuilder() throws Exception {
+        // Given
+        ArrayBuilder<Integer> expected = new ArrayBuilder<Integer>();
+
+        // When
+        ArrayBuilder<Integer> actual = arrayBuilder();
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnAnEmptyArrayBuilderOverElementsOfTheSpecifiedType() throws Exception {
+        // Given
+        ArrayBuilder<Integer> expected = new ArrayBuilder<Integer>(Integer.class);
+
+        // Then
+        assertThat(arrayBuilderOf(Integer.class), is(expected));
+    }
+
+    @Test public void shouldReturnAnArrayBuilderWithTheSuppliedElements() {
+        // Given
+        ArrayBuilder<Integer> expected = new ArrayBuilder<Integer>().with(5, 10, 15);
+
+        // When
+        ArrayBuilder<Integer> actual = arrayBuilderWith(5, 10, 15);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnAnArrayBuilderContainingAllElementsInTheSuppliedIterable() {
+        // Given
+        ArrayBuilder<Integer> expected = new ArrayBuilder<Integer>().with(5, 10, 15);
+        Iterable<Integer> elements = listWith(5, 10, 15);
+
+        // When
+        ArrayBuilder<Integer> actual = arrayBuilderFrom(elements);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnAnArrayBuilderOverTheSpecifiedElementTypeContainingAllElementsInTheSuppliedIterable() throws Exception {
+        // Given
+        ArrayBuilder<Integer> expected = new ArrayBuilder<Integer>(Integer.class).with(5, 10, 15);
+        Iterable<Integer> elements = listWith(5, 10, 15);
+
+        // When
+        ArrayBuilder<Integer> actual = arrayBuilderFrom(elements, Integer.class);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnAnArrayBuilderContainingAllElementsInTheSuppliedArray() {
+        // Given
+        ArrayBuilder<Integer> expected = new ArrayBuilder<Integer>().with(5, 10, 15);
+        Integer[] elements = new Integer[]{5, 10, 15};
+
+        // When
+        ArrayBuilder<Integer> actual = arrayBuilderFrom(elements);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnAnArrayBuilderContainingAllElementsInTheSuppliedArrayOverTheSpecifiedType() {
+        // Given
+        ArrayBuilder<Integer> expected = new ArrayBuilder<Integer>(Integer.class).with(5, 10, 15);
+        Integer[] elements = new Integer[]{5, 10, 15};
+
+        // When
+        ArrayBuilder<Integer> actual = arrayBuilderFrom(elements, Integer.class);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnASingleContainingTheSuppliedElement() {
         // Given
         Single<Integer> expectedSingle = new Single<Integer>(5);
 
@@ -1023,8 +1156,7 @@ public class LiteralsTest {
         assertThat(actualSingle, is(expectedSingle));
     }
 
-    @Test
-    public void shouldReturnAPairContainingTheSuppliedElements() {
+    @Test public void shouldReturnAPairContainingTheSuppliedElements() {
         // Given
         Pair<Integer, String> expectedPair = new Pair<Integer, String>(5, "Five");
 
@@ -1035,8 +1167,7 @@ public class LiteralsTest {
         assertThat(actualPair, is(expectedPair));
     }
 
-    @Test
-    public void shouldReturnATripleContainingTheSuppliedElements() {
+    @Test public void shouldReturnATripleContainingTheSuppliedElements() {
         // Given
         Triple<Integer, String, Boolean> expectedTriple =
                 new Triple<Integer, String, Boolean>(5, "Five", true);
@@ -1048,8 +1179,7 @@ public class LiteralsTest {
         assertThat(actualTriple, is(expectedTriple));
     }
 
-    @Test
-    public void shouldReturnAQuadrupleContainingTheSuppliedElements() {
+    @Test public void shouldReturnAQuadrupleContainingTheSuppliedElements() {
         // Given
         Quadruple<Integer, String, Boolean, Double> expectedQuadruple =
                 new Quadruple<Integer, String, Boolean, Double>(5, "Five", true, 1.6);
@@ -1061,8 +1191,7 @@ public class LiteralsTest {
         assertThat(actualQuadruple, is(expectedQuadruple));
     }
 
-    @Test
-    public void shouldReturnAQuintupleContainingTheSuppliedElements() {
+    @Test public void shouldReturnAQuintupleContainingTheSuppliedElements() {
         // Given
         Quintuple<Integer, String, Boolean, Double, Long> expectedQuintuple =
                 new Quintuple<Integer, String, Boolean, Double, Long>(5, "Five", true, 1.6, 26L);
@@ -1074,8 +1203,7 @@ public class LiteralsTest {
         assertThat(actualQuintuple, is(expectedQuintuple));
     }
 
-    @Test
-    public void shouldReturnASextupleContainingTheSuppliedElements() {
+    @Test public void shouldReturnASextupleContainingTheSuppliedElements() {
         // Given
         Sextuple<Integer, String, Boolean, Double, Long, Name> expectedSextuple =
                 new Sextuple<Integer, String, Boolean, Double, Long, Name>(5, "Five", true, 1.6, 26L, name("fred"));
@@ -1087,8 +1215,7 @@ public class LiteralsTest {
         assertThat(actualSextuple, is(expectedSextuple));
     }
 
-    @Test
-    public void shouldReturnASeptupleContainingTheSuppliedElements() {
+    @Test public void shouldReturnASeptupleContainingTheSuppliedElements() {
         // Given
         Septuple<Integer, String, Boolean, Double, Long, Name, Colour> expectedSeptuple =
                 new Septuple<Integer, String, Boolean, Double, Long, Name, Colour>(5, "Five", true, 1.6, 26L, name("fred"), colour("red"));
@@ -1101,8 +1228,7 @@ public class LiteralsTest {
         assertThat(actualSeptuple, is(expectedSeptuple));
     }
 
-    @Test
-    public void shouldReturnAOctupleContainingTheSuppliedElements() {
+    @Test public void shouldReturnAnOctupleContainingTheSuppliedElements() {
         // Given
         Octuple<Integer, String, Boolean, Double, Long, Name, Colour, Age> expectedOctuple =
                 new Octuple<Integer, String, Boolean, Double, Long, Name, Colour, Age>(
@@ -1116,8 +1242,7 @@ public class LiteralsTest {
         assertThat(actualOctuple, is(expectedOctuple));
     }
 
-    @Test
-    public void shouldReturnANonupleContainingTheSuppliedElements() {
+    @Test public void shouldReturnANonupleContainingTheSuppliedElements() {
         // Given
         Nonuple<Integer, String, Boolean, Double, Long, Name, Colour, Age, Location> expectedNonuple =
                 new Nonuple<Integer, String, Boolean, Double, Long, Name, Colour, Age, Location>(

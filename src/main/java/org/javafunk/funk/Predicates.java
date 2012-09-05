@@ -11,6 +11,7 @@ package org.javafunk.funk;
 import org.javafunk.funk.functors.Predicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.javafunk.funk.predicates.FalsePredicate;
+import org.javafunk.funk.predicates.InstanceOfPredicate;
 import org.javafunk.funk.predicates.NotPredicate;
 import org.javafunk.funk.predicates.TruePredicate;
 
@@ -27,5 +28,9 @@ public class Predicates {
 
     public static <T> Predicate<T> not(UnaryPredicate<? super T> predicate) {
         return new NotPredicate<T>(predicate);
+    }
+
+    public static <T> InstanceOfPredicate<T> instanceOf(Class<?> testClass) {
+        return new InstanceOfPredicate<T>(testClass);
     }
 }
