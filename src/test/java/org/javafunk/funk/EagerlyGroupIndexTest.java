@@ -32,9 +32,9 @@ public class EagerlyGroupIndexTest {
 
         Map<Integer, Collection<String>> expectedOutput =
                 mapBuilderWith(4, fourLetterFruits)
-                        .and(5, fiveLetterFruits)
-                        .and(6, sixLetterFruits)
-                        .and(7, sevenLetterFruits)
+                        .andKeyValuePair(5, fiveLetterFruits)
+                        .andKeyValuePair(6, sixLetterFruits)
+                        .andKeyValuePair(7, sevenLetterFruits)
                         .build();
 
         // When

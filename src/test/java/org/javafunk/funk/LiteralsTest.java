@@ -809,7 +809,7 @@ public class LiteralsTest {
 
     @Test public void shouldReturnAMapBuilderWithTheSuppliedElements() {
         // Given
-        MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>().with("five", 5, "ten", 10);
+        MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>().withKeyValuePairs("five", 5, "ten", 10);
 
         // When
         MapBuilder<String, Integer> actual = mapBuilderWith("five", 5, "ten", 10);
@@ -821,7 +821,7 @@ public class LiteralsTest {
     @Test public void shouldReturnAMapBuilderWithTheSuppliedMapEntryInstances() {
         // Given
         MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>()
-                .with("five", 5, "ten", 10);
+                .withKeyValuePairs("five", 5, "ten", 10);
 
         // When
         MapBuilder<String, Integer> actual = mapBuilderWith(mapEntryFor("five", 5), mapEntryFor("ten", 10));
@@ -833,7 +833,7 @@ public class LiteralsTest {
     @Test public void shouldReturnAMapBuilderWithTheSuppliedTupleInstances() {
         // Given
         MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>()
-                .with("five", 5, "ten", 10, "fifteen", 15);
+                .withKeyValuePairs("five", 5, "ten", 10, "fifteen", 15);
 
         // When
         MapBuilder<String, Integer> actual = mapBuilderWith(tuple("five", 5), tuple("ten", 10), tuple("fifteen", 15));
@@ -844,7 +844,7 @@ public class LiteralsTest {
 
     @Test public void shouldReturnAMapBuilderContainingAllMapEntryInstancesInTheSuppliedIterable() {
         // Given
-        MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().with(5, true, 10, false);
+        MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().withKeyValuePairs(5, true, 10, false);
         Iterable<Map.Entry<Integer, Boolean>> elements = iterableWith(
                 mapEntryFor(5, true), mapEntryFor(10, false));
 
@@ -857,7 +857,7 @@ public class LiteralsTest {
 
     @Test public void shouldReturnAMapBuilderContainingAllTupleInstancesInTheSuppliedIterable() {
         // Given
-        MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().with(5, true, 10, false);
+        MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().withKeyValuePairs(5, true, 10, false);
         Iterable<? extends Pair<Integer, Boolean>> tuples = iterableWith(
                 tuple(5, true), tuple(10, false));
 
@@ -870,7 +870,7 @@ public class LiteralsTest {
 
     @Test public void shouldReturnAMapBuilderContainingAllMapEntryInstancesInTheSuppliedArray() {
         // Given
-        MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().with(5, true, 10, false);
+        MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().withKeyValuePairs(5, true, 10, false);
         @SuppressWarnings("unchecked") Map.Entry<Integer, Boolean>[] elements = new Map.Entry[]{
                 mapEntryFor(5, true),
                 mapEntryFor(10, false)
@@ -885,7 +885,7 @@ public class LiteralsTest {
 
     @Test public void shouldReturnAMapBuilderContainingAllTupleInstancesInTheSuppliedArray() {
         // Given
-        MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().with(5, true, 10, false);
+        MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().withKeyValuePairs(5, true, 10, false);
         @SuppressWarnings("unchecked") Pair<Integer, Boolean>[] tuples = new Pair[]{
                 tuple(5, true),
                 tuple(10, false)
