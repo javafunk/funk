@@ -22,8 +22,8 @@ public class MapsTest {
     public void shouldReturnTheValueFromTheMapIfTheKeyAlreadyExists() {
         // Given
         Map<Integer, String> inputMap = mapBuilderWith(1, "one")
-                .and(2, "two")
-                .and(3, "three")
+                .andKeyValuePair(2, "two")
+                .andKeyValuePair(3, "three")
                 .build();
 
         // When
@@ -37,8 +37,8 @@ public class MapsTest {
     public void shouldReturnTheValueCreatedByTheDefaultFactoryIfTheKeyDoesNotExistInTheMap() {
         // Given
         Map<Integer, String> inputMap = mapBuilderWith(1, "one")
-                .and(2, "two")
-                .and(3, "three")
+                .andKeyValuePair(2, "two")
+                .andKeyValuePair(3, "three")
                 .build();
 
         // When
@@ -52,8 +52,8 @@ public class MapsTest {
     public void shouldStoreTheDefaultValueInTheMapIfTheKeyDoesntExist() {
         // Given
         Map<Integer, String> inputMap = mapBuilderWith(1, "one")
-                .and(2, "two")
-                .and(3, "three")
+                .andKeyValuePair(2, "two")
+                .andKeyValuePair(3, "three")
                 .build();
 
         // When

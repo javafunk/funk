@@ -124,7 +124,7 @@ public class ArrayBuilderTest {
 
         @SuppressWarnings("unchecked") Iterable<Iterable<Integer>> iterableOfElements = asList(secondElement, thirdElement);
         @SuppressWarnings("unchecked") Iterable<Integer>[] arrayOfElements = new Iterable[]{fourthElement};
-        @SuppressWarnings("unchecked") Iterable<Integer>[] expected = new Iterable[]{firstElement, secondElement, thirdElement, fourthElement};
+        Iterable[] expected = new Iterable[]{firstElement, secondElement, thirdElement, fourthElement};
 
         // When
         Iterable[] actual = arrayBuilder
