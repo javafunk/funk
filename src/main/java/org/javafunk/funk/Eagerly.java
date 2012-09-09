@@ -70,54 +70,6 @@ public class Eagerly {
         return reduce(iterable, reducerBinaryFunction(reducer));
     }
 
-    public static Integer sumIntegers(Iterable<Integer> iterable) {
-        return reduce(iterable, integerAdditionAccumulator());
-    }
-
-    public static Long sumLongs(Iterable<Long> iterable) {
-        return reduce(iterable, longAdditionAccumulator());
-    }
-
-    public static BigInteger sumBigIntegers(Iterable<BigInteger> iterable) {
-        return reduce(iterable, bigIntegerAdditionAccumulator());
-    }
-
-    public static Double sumDoubles(Iterable<Double> iterable) {
-        return reduce(iterable, doubleAdditionAccumulator());
-    }
-
-    public static Float sumFloats(Iterable<Float> iterable) {
-        return reduce(iterable, floatAdditionAccumulator());
-    }
-
-    public static BigDecimal sumBigDecimals(Iterable<BigDecimal> iterable) {
-        return reduce(iterable, bigDecimalAdditionAccumulator());
-    }
-
-    public static Integer multiplyIntegers(Iterable<Integer> iterable) {
-        return reduce(iterable, integerMultiplicationAccumulator());
-    }
-
-    public static Long multiplyLongs(Iterable<Long> iterable) {
-        return reduce(iterable, longMultiplicationAccumulator());
-    }
-
-    public static BigInteger multiplyBigIntegers(Iterable<BigInteger> iterable) {
-        return reduce(iterable, bigIntegerMultiplicationAccumulator());
-    }
-
-    public static Float multiplyFloats(Iterable<Float> iterable) {
-        return reduce(iterable, floatMultiplicationAccumulator());
-    }
-
-    public static Double multiplyDoubles(Iterable<Double> iterable) {
-        return reduce(iterable, doubleMultiplicationAccumulator());
-    }
-
-    public static BigDecimal multiplyBigDecimals(Iterable<BigDecimal> iterable) {
-        return reduce(iterable, bigDecimalMultiplicationAccumulator());
-    }
-
     public static <T> Boolean any(
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
