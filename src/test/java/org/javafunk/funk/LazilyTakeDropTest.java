@@ -8,6 +8,7 @@
  */
 package org.javafunk.funk;
 
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.javafunk.funk.functors.Predicate;
 import org.junit.Test;
@@ -30,6 +31,19 @@ public class LazilyTakeDropTest {
 
         // When
         Collection<Integer> actualOutput = materialize(Lazily.take(fibonaccis, 5));
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnAnIterableContainingAllAvailableElementsWhenNumberRequiredIsGreaterThanNumberAvailable() throws Exception {
+        // Given
+        List<Integer> fibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
+        Collection<Integer> expectedOutput = collectionWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
+
+        // When
+        Collection<Integer> actualOutput = materialize(Lazily.take(fibonaccis, 20));
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -88,6 +102,19 @@ public class LazilyTakeDropTest {
 
         // When
         Collection<Integer> actualOutput = materialize(Lazily.drop(tenFibonaccis, 5));
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldReturnAnIterableWithAllElementsDroppedIfTheNumberToDropIsGreaterThanOrEqualToTheNumberAvailable() throws Exception {
+        // Given
+        List<Integer> fiveFibonaccis = listWith(1, 1, 2, 3, 5);
+        Collection<Integer> expectedOutput = collection();
+
+        // When
+        Collection<Integer> actualOutput = materialize(Lazily.drop(fiveFibonaccis, 5));
 
         // Then
         assertThat(actualOutput, is(expectedOutput));

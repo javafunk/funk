@@ -13,11 +13,12 @@ import org.junit.Test;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.collectionWith;
-import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.funk.Iterables.materialize;
+import static org.javafunk.funk.Literals.*;
 
 public class EagerlyTakeDropTest {
     @Test
@@ -28,6 +29,19 @@ public class EagerlyTakeDropTest {
 
         // When
         Collection<String> actualOutput = Eagerly.take(input, 5);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldTakeAllAvailableElementsWhenNumberRequiredIsGreaterThanNumberAvailable() throws Exception {
+        // Given
+        Iterable<String> input = iterableWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+        Collection<String> expectedOutput = collectionWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+
+        // When
+        Collection<String> actualOutput = Eagerly.take(input, 20);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));
@@ -67,6 +81,19 @@ public class EagerlyTakeDropTest {
 
         // When
         Collection<String> actualOutput = Eagerly.drop(input, 5);
+
+        // Then
+        assertThat(actualOutput, is(expectedOutput));
+    }
+
+    @Test
+    public void shouldDropAllElementsAndReturnAnEmptyCollectionIfTheNumberToDropIsGreaterThanOrEqualToTheNumberAvailable() throws Exception {
+        // Given
+        Iterable<String> input = iterableWith("a", "b", "c", "d", "e");
+        Collection<String> expectedOutput = collection();
+
+        // When
+        Collection<String> actualOutput = Eagerly.drop(input, 7);
 
         // Then
         assertThat(actualOutput, is(expectedOutput));

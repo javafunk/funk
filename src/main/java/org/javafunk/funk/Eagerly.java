@@ -827,10 +827,130 @@ public class Eagerly {
         return slice(iterable, 1, null);
     }
 
+    /**
+     * Takes the first <em>n</em> elements from the supplied {@code Iterable} where <em>n</em>
+     * is given by the supplied integer value and returns them in a {@code Collection}. If the
+     * {@code Iterable} is empty, an empty {@code Collection} is returned, otherwise,
+     * a {@code Collection} containing the first <em>n</em> elements is returned.
+     *
+     * <p>In the case that the supplied {@code Iterable} does not contain enough
+     * elements to satisfy the required number, a {@code Collection} containing
+     * as many elements as possible is returned.</p>
+     *
+     * <p>If the supplied integer value is negative, an {@code IllegalArgumentException} is
+     * thrown.</p>
+     *
+     * <p>Since a {@code Collection} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the elements from the underlying
+     * {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Using {@code take}, we can take the first three elements from the {@code Iterable}.
+     * The following two lines are equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; firstThreeElements = take(elements, 3);
+     *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(5, 4, 3);
+     * </pre>
+     * </blockquote>
+     * If the input {@code Iterable} does not contain enough elements, we are returned a
+     * {@code Collection} with as many elements as possible. The following two lines are
+     * equivalent:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; firstSixElements = take(elements, 6);
+     *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Similarly, if the input {@code Iterable} contains no elements, an empty
+     * {@code Collection} is returned:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable();
+     *   Collection&lt;Integer&gt; firstThreeElements = take(elements, 3);
+     *   firstThreeElements.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which to take <em>n</em> elements.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} instance containing the required number of elements
+     *         (or less) from the supplied {@code Iterable}.
+     * @throws IllegalArgumentException if the required number of elements to take
+     *         is negative.
+     */
     public static <T> Collection<T> take(Iterable<T> iterable, int numberToTake) {
         return materialize(Lazily.take(iterable, numberToTake));
     }
 
+    /**
+     * Drops the first <em>n</em> elements from the supplied {@code Iterable} where <em>n</em>
+     * is given by the supplied integer value and returns a {@code Collection} containing
+     * the remaining elements. If the {@code Iterable} is empty, an empty {@code Collection}
+     * is returned, otherwise, a {@code Collection} containing the elements that remain after
+     * the first <em>n</em> elements have been discarded is returned.
+     *
+     * <p>In the case that the supplied {@code Iterable} contains less elements than the
+     * required number of elements to drop, all elements are dropped and an empty
+     * {@code Collection} is returned.</p>
+     *
+     * <p>If the supplied integer value is negative, an {@code IllegalArgumentException} is
+     * thrown.</p>
+     *
+     * <p>Since a {@code Collection} instance is returned, the element discardal is performed
+     * eagerly, i.e., the elements are discarded from the underlying {@code Iterable}
+     * immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Using {@code drop}, we can drop the first three elements from the {@code Iterable}.
+     * The following two lines are equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; remainingElements = drop(elements, 3);
+     *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(2, 1);
+     * </pre>
+     * </blockquote>
+     * If the input {@code Iterable} does not contain enough elements, we are returned
+     * an empty {@code Collection}. The following two lines are equivalent:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; remainingElements = drop(elements, 6);
+     *   Collection&lt;Integer&gt; equivalentElements = Literals.collection();
+     * </pre>
+     * </blockquote>
+     * Similarly, if the input {@code Iterable} contains no elements, an empty
+     * {@code Collection} is returned:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable();
+     *   Collection&lt;Integer&gt; remainingElements = drop(elements, 3);
+     *   remainingElements.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which to drop <em>n</em> elements
+     *                 and return the remainder.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} instance containing the remaining elements after
+     *         the required number of elements have been dropped from the supplied
+     *         {@code Iterable}.
+     * @throws IllegalArgumentException if the required number of elements to drop
+     *         is negative.
+     */
     public static <T> Collection<T> drop(Iterable<T> iterable, int numberToDrop) {
         return materialize(Lazily.drop(iterable, numberToDrop));
     }
@@ -867,24 +987,364 @@ public class Eagerly {
         times(numberOfTimes, actionUnaryProcedure(action));
     }
 
+    /**
+     * Takes elements from the supplied {@code Iterable} while the supplied {@code UnaryPredicate}
+     * evaluates true for those elements and returns them in a {@code Collection}. Each element
+     * taken from the {@code Iterable} is evaluated by the {@code UnaryPredicate} and as soon as
+     * an element is found that does not satisfy the {@code UnaryPredicate}, no more elements are taken
+     * and the {@code Collection} of satisfactory elements is returned. If the supplied {@code Iterable}
+     * is empty, an empty {@code Collection} is returned.
+     *
+     * <p>Since a {@code Collection} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the sequence of satisfactory elements from the
+     * underlying {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Using {@code takeWhile}, we can take elements from the {@code Iterable} while those elements
+     * are greater than 2. The following two lines are equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; firstElementsGreaterThanTwo = takeWhile(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(5, 4, 3);
+     * </pre>
+     * </blockquote>
+     * If the first element retrieved from the {@code Iterable} does not satisfy the supplied
+     * {@code UnaryPredicate}, an empty {@code Collection} is returned:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable(2, 1, 4, 5, 6);
+     *   Collection&lt;Integer&gt; firstElementsGreaterThanTwo = takeWhile(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   firstElementsGreaterThanTwo.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     * If no elements retrieved from the {@code Iterable} fail to satisfy the supplied
+     * {@code Predicate}, a {@code Collection} containing all elements is returned.
+     * The following two lines are equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable(4, 5, 6, 7, 8);
+     *   Collection&lt;Integer&gt; firstElementsGreaterThanTwo = takeWhile(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(4, 5, 6, 7, 8);
+     * </pre>
+     * </blockquote>
+     * If the input {@code Iterable} contains no elements, an empty {@code Collection} is returned:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable();
+     *   Collection&lt;Integer&gt; firstElementsGreaterThanTwo = takeWhile(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   firstElementsGreaterThanTwo.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * @param iterable  The {@code Iterable} from which to take the first sequence of elements
+     *                  satisfying the supplied {@code UnaryPredicate}.
+     * @param predicate A {@code UnaryPredicate} to evaluate each element against whilst
+     *                  taking from the supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} instance containing the first sequence of elements
+     *         satisfying the supplied {@code UnaryPredicate}.
+     */
     public static <T> Collection<T> takeWhile(
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
         return materialize(Lazily.takeWhile(iterable, predicate));
     }
 
+    /**
+     * Takes elements from the supplied {@code Iterable} until the supplied {@code UnaryPredicate}
+     * evaluates true for an element and returns them in a {@code Collection}. Each element
+     * taken from the {@code Iterable} is evaluated by the {@code UnaryPredicate} and as soon as
+     * an element is found that satisfies the {@code UnaryPredicate}, no more elements are taken
+     * and the {@code Collection} of elements not satisfying the {@code UnaryPredicate} is returned.
+     * If the supplied {@code Iterable} is empty, an empty {@code Collection} is returned.
+     *
+     * <p>Since a {@code Collection} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the sequence of elements not satisfying the
+     * {@code UnaryPredicate} from the underlying {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterableWith(1, 2, 3, 4, 5);
+     * </pre>
+     * </blockquote>
+     * Using {@code takeUntil}, we can take elements from the {@code Iterable} until an element is
+     * found that is greater than 2. The following two lines are equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; firstElementsNotGreaterThanTwo = takeUntil(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(1, 2);
+     * </pre>
+     * </blockquote>
+     * If the first element retrieved from the {@code Iterable} satisfies the supplied
+     * {@code UnaryPredicate}, an empty {@code Collection} is returned:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable(4, 5, 6, 7, 8);
+     *   Collection&lt;Integer&gt; firstElementsNotGreaterThanTwo = takeUntil(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   firstElementsNotGreaterThanTwo.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     * If no elements retrieved from the {@code Iterable} satisfy the supplied {@code Predicate},
+     * a {@code Collection} containing all elements is returned. The following two lines are
+     * equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable(-1, 0, 1, 2);
+     *   Collection&lt;Integer&gt; firstElementsNotGreaterThanTwo = takeUntil(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(-1, 0, 1, 2);
+     * </pre>
+     * </blockquote>
+     * If the input {@code Iterable} contains no elements, an empty {@code Collection} is returned:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable();
+     *   Collection&lt;Integer&gt; firstElementsNotGreaterThanTwo = takeUntil(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   firstElementsNotGreaterThanTwo.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * @param iterable  The {@code Iterable} from which to take a sequence of elements
+     *                  until the supplied {@code UnaryPredicate} is satisfied.
+     * @param predicate A {@code UnaryPredicate} to evaluate each element against whilst
+     *                  taking from the supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} instance containing the sequence of elements
+     *         taken from the supplied {@code Iterable} up until the supplied {@code UnaryPredicate}
+     *         is satisfied.
+     */
     public static <T> Collection<T> takeUntil(
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
         return materialize(Lazily.takeUntil(iterable, predicate));
     }
 
+    /**
+     * Drops elements from the supplied {@code Iterable} while the supplied {@code UnaryPredicate}
+     * evaluates true for those elements and returns a {@code Collection} containing
+     * the remaining elements. Each element retrieved from the {@code Iterable} is evaluated by the
+     * {@code UnaryPredicate} and as soon as an element is found that does not satisfy the
+     * {@code UnaryPredicate}, a {@code Collection} with that element as the head and the remaining
+     * elements in the {@code Iterable} as the tail is returned. If the supplied {@code Iterable}
+     * is empty, an empty {@code Collection} is returned.
+     *
+     * <p>Since a {@code Collection} instance is returned, the element discardal is performed
+     * eagerly, i.e., the elements are discarded from the underlying {@code Iterable}
+     * immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Using {@code dropWhile}, we can drop elements from the {@code Iterable} while those elements
+     * are greater than 2. The following two lines are equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; remainingElements = dropWhile(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(2, 1);
+     * </pre>
+     * </blockquote>
+     * If the first element retrieved from the {@code Iterable} does not satisfy the supplied
+     * {@code UnaryPredicate}, no elements are dropped and a {@code Collection} containing
+     * all elements from the input {@code Iterable} is returned. The following two lines are
+     * equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable(2, 1, 4, 5, 3);
+     *   Collection&lt;Integer&gt; remainingElements = dropWhile(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(2, 1, 4, 5, 3);
+     * </pre>
+     * </blockquote>
+     * If all elements retrieved from the {@code Iterable} satisfy the supplied
+     * {@code UnaryPredicate}, all elements are dropped and an empty {@code Collection} is returned.
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable(4, 5, 6, 7, 8);
+     *   Collection&lt;Integer&gt; remainingElements = dropWhile(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   remainingElements.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     * Similarly, if the input {@code Iterable} contains no elements, an empty {@code Collection}
+     * is returned:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable();
+     *   Collection&lt;Integer&gt; remainingElements = dropWhile(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   remainingElements.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * @param iterable  The {@code Iterable} from which to drop the first sequence of elements
+     *                  satisfying the supplied {@code UnaryPredicate}.
+     * @param predicate A {@code UnaryPredicate} to evaluate each element against whilst
+     *                  dropping from the supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} instance containing the remaining elements from the supplied
+     *         {@code Iterable} after dropping those elements that satisfy the supplied
+     *         {@code UnaryPredicate}.
+     */
     public static <T> Collection<T> dropWhile(
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
         return materialize(Lazily.dropWhile(iterable, predicate));
     }
 
+    /**
+     * Drops elements from the supplied {@code Iterable} until the supplied {@code UnaryPredicate}
+     * evaluates true for an element and returns a {@code Collection} containing the remaining
+     * elements. Each element retrieved from the {@code Iterable} is evaluated by the
+     * {@code UnaryPredicate} and as soon as an element is found that satisfies the
+     * {@code UnaryPredicate}, a {@code Collection} with that element as the head and the remaining
+     * elements in the {@code Iterable} as the tail is returned. If the supplied {@code Iterable}
+     * is empty, an empty {@code Collection} is returned.
+     *
+     * <p>Since a {@code Collection} instance is returned, the element discardal is performed
+     * eagerly, i.e., the elements are discarded from the underlying {@code Iterable}
+     * immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterableWith(1, 2, 3, 4, 5);
+     * </pre>
+     * </blockquote>
+     * Using {@code dropUntil}, we can drop elements from the {@code Iterable} until an element is
+     * found that is greater than 2. The following two lines are equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; remainingElements = dropUntil(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(3, 4, 5);
+     * </pre>
+     * </blockquote>
+     * If the first element retrieved from the {@code Iterable} satisfies the supplied
+     * {@code UnaryPredicate}, no elements are dropped and a {@code Collection} containing all
+     * elements from the input {@code Iterable} is returned. The following two lines
+     * are equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable(4, 5, 6, 7, 8);
+     *   Collection&lt;Integer&gt; remainingElements = dropUntil(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(4, 5, 6, 7, 8);
+     * </pre>
+     * </blockquote>
+     * If no elements retrieved from the {@code Iterable} satisfy the supplied {@code UnaryPredicate},
+     * all elements are dropped and an empty {@code Collection} is returned:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable(-1, 0, 1, 2);
+     *   Collection&lt;Integer&gt; remainingElements = dropUntil(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   remainingElements.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     * If the input {@code Iterable} contains no elements, an empty {@code Collection} is returned:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable();
+     *   Collection&lt;Integer&gt; remainingElements = dropUntil(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   remainingElements.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * @param iterable  The {@code Iterable} from which to drop a sequence of elements
+     *                  until the supplied {@code UnaryPredicate} is satisfied.
+     * @param predicate A {@code UnaryPredicate} to evaluate each element against whilst
+     *                  dropping from the supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} instance containing the remaining elements from the supplied
+     *         {@code Iterable} after dropping elements until the supplied {@code UnaryPredicate}
+     *         is satisfied.
+     */
     public static <T> Collection<T> dropUntil(
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
