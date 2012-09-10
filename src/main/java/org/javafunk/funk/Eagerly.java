@@ -580,7 +580,7 @@ public class Eagerly {
      * first matching value directly since, in the case of an empty {@code Iterable},
      * an exception would have to be thrown using that approach. Instead, the
      * {@code Option} can be queried for whether it contains a value or not,
-     * avoiding an exception handling.</p>
+     * avoiding any exception handling.</p>
      *
      * <p>Since an {@code Option} instance is returned, the element retrieval is performed
      * eagerly, i.e., an attempt is made to retrieve the first matching element from the
@@ -793,16 +793,189 @@ public class Eagerly {
         return first(filter(iterable, predicate), numberOfElementsRequired);
     }
 
-    public static <T> Option<T> last(Iterable<T> iterable) {
+    /**
+     * Returns an {@code Option} over the last element in the supplied {@code Iterable}.
+     * If the {@code Iterable} is empty, {@code None} is returned, otherwise, a
+     * {@code Some} is returned over the last element yielded by the {@code Iterable}.
+     *
+     * <p>This method has a return type of {@code Option} rather than returning the
+     * last value directly since, in the case of an empty {@code Iterable}, an
+     * exception would have to be thrown using that approach. Instead, the
+     * {@code Option} can be queried for whether it contains a value or not,
+     * avoiding any exception handling.</p>
+     *
+     * <p>Since an {@code Option} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the last element from the underlying
+     * {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code String} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;String&gt; values = Literals.iterableWith("first", "middle", "last");
+     * </pre>
+     * </blockquote>
+     * The last element in the {@code Iterable} can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *   Option&lt;String&gt; valueOption = last(values);
+     *   String value = valueOption.get(); // => "last"
+     * </pre>
+     * </blockquote>
+     * Similarly, we can handle the empty {@code Iterable} case gracefully:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;String&gt; values = Literals.iterable();
+     *   Option&lt;String&gt; valueOption = last(values);
+     *   String value = valueOption.getOrElse("some string"); // => "some string"
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which the last element is required.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Option} instance representing the last element in the supplied
+     *         {@code Iterable}.
+     */
+    public static <T> Option<T> last(Iterable<? extends T> iterable) {
         return first(slice(iterable, -1, null));
     }
 
+    /**
+     * Returns an {@code Option} over the last element in the supplied {@code Iterable}
+     * that satisfies the supplied {@code UnaryPredicate}. If the {@code Iterable} is
+     * empty, {@code None} is returned, otherwise, a {@code Some} is returned over
+     * the last matching value found.
+     *
+     * <p>This method has a return type of {@code Option} rather than returning the
+     * last matching value directly since, in the case of an empty {@code Iterable},
+     * an exception would have to be thrown using that approach. Instead, the
+     * {@code Option} can be queried for whether it contains a value or not,
+     * avoiding any exception handling.</p>
+     *
+     * <p>Since an {@code Option} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the last matching element from the
+     * underlying {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * The last even element in the {@code Iterable} can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *   Option&lt;Integer&gt; valueOption = last(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Integer value = valueOption.get(); // => 2
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * <p>Thanks to the {@code Option} returned, we can handle the empty {@code Iterable}
+     * case gracefully:</p>
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable();
+     *   Option&lt;Integer&gt; valueOption = last(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Integer value = valueOption.getOrElse(10); // => 10
+     * </pre>
+     * </blockquote>
+     * Similarly, if no elements match the supplied {@code UnaryPredicate}, we are returned
+     * a {@code None}:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable(9, 7, 5, 3, 1);
+     *   Option&lt;Integer&gt; valueOption = last(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   valueOption.hasValue(); // => false
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable  The {@code Iterable} to search for an element matching the supplied
+     *                  {@code UnaryPredicate}.
+     * @param predicate A {@code UnaryPredicate} that must be satisfied by an element in the
+     *                  supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Option} instance representing the last element in the supplied
+     *         {@code Iterable} satisfying the supplied {@code UnaryPredicate}.
+     */
     public static <T> Option<T> last(
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
         return last(filter(iterable, predicate));
     }
 
+    /**
+     * Returns a {@code Collection} containing the last <em>n</em> elements in the supplied
+     * {@code Iterable} where <em>n</em> is given by the supplied integer value. If the
+     * {@code Iterable} is empty, an empty {@code Collection} is returned, otherwise,
+     * a {@code Collection} containing the last <em>n</em> elements is returned.
+     *
+     * <p>In the case that the supplied {@code Iterable} does not contain enough
+     * elements to satisfy the required number, a {@code Collection} containing
+     * as many elements as possible is returned.</p>
+     *
+     * <p>Since a {@code Collection} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the elements from the underlying
+     * {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Using {@code last}, we can obtain the last three elements in the {@code Iterable}.
+     * The following two lines are equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; lastThreeValues = last(values, 3);
+     *   Collection&lt;Integer&gt; equivalentValues = Literals.collectionWith(3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * If the input {@code Iterable} does not contain enough elements, we are returned a
+     * {@code Collection} with as many elements as possible. The following two lines are
+     * equivalent:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; lastSixValues = last(values, 6);
+     *   Collection&lt;Integer&gt; equivalentValues = Literals.collectionWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Similarly, if the input {@code Iterable} contains no elements, an empty
+     * {@code Collection} is returned:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable();
+     *   Collection&lt;Integer&gt; lastThreeElements = last(values, 3);
+     *   lastThreeElements.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which the last <em>n</em> elements
+     *                 should be taken.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} instance containing the required number of elements
+     *         (or less) from the supplied {@code Iterable}.
+     */
     public static <T> Collection<T> last(
             Iterable<T> iterable,
             int numberOfElementsRequired) {
@@ -816,6 +989,81 @@ public class Eagerly {
         return slice(iterable, -numberOfElementsRequired, null);
     }
 
+    /**
+     * Returns a {@code Collection} containing the last <em>n</em> elements in the supplied
+     * {@code Iterable} that satisfy the supplied {@code UnaryPredicate} where <em>n</em>
+     * is given by the supplied integer value. If the {@code Iterable} is empty,
+     * an empty {@code Collection} is returned, otherwise, a {@code Collection} containing
+     * the last <em>n</em> matching elements is returned.
+     *
+     * <p>In the case that the supplied {@code Iterable} does not contain enough
+     * matching elements to satisfy the required number, a {@code Collection} containing
+     * as many elements as possible is returned.</p>
+     *
+     * <p>Since a {@code Collection} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve matching elements from the underlying
+     * {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterableWith(8, 7, 6, 5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Using {@code last}, we can obtain the last three even elements in the {@code Iterable}.
+     * The following two expressions are equivalent:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; lastThreeEvens = last(values, 3, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Collection&lt;Integer&gt; equivalentEvens = Literals.collectionWith(6, 4, 2);
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * <p>If the input {@code Iterable} does not contain enough elements satisfying the
+     * supplied {@code UnaryPredicate}, we are returned a {@code Collection} with as
+     * many matching elements as possible. The following two lines are equivalent:</p>
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; lastFiveEvens = last(values, 5, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Collection&lt;Integer&gt; equivalentEvens = Literals.collectionWith(8, 6, 4, 2);
+     * </pre>
+     * </blockquote>
+     * Similarly, if no elements match the supplied {@code UnaryPredicate}, we are returned an
+     * empty {@code Collection}:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable(9, 7, 5, 3, 1);
+     *   Collection&lt;Integer&gt; lastThreeEvens = last(values, 3, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   lastThreeEvens.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable  The {@code Iterable} to search for elements matching the supplied
+     *                  {@code UnaryPredicate}.
+     * @param predicate A {@code UnaryPredicate} that must be satisfied by elements in the
+     *                  supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} instance containing the required number of elements
+     *         (or less) from the supplied {@code Iterable} matching the supplied
+     *         {@code UnaryPredicate}.
+     */
     public static <T> Collection<T> last(
             Iterable<T> iterable,
             int numberOfElementsRequired,
