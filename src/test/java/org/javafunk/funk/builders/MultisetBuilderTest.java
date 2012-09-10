@@ -18,10 +18,13 @@ import java.util.Set;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
+import static org.javafunk.funk.Literals.collectionBuilderWith;
 import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.Literals.multisetBuilderWith;
 import static org.javafunk.funk.builders.MultisetBuilder.multisetBuilder;
+import static org.junit.Assert.fail;
 
 public class MultisetBuilderTest {
     @Test
@@ -197,43 +200,55 @@ public class MultisetBuilderTest {
         assertThat(actual instanceof NoArgsConstructorMultiset, is(true));
     }
 
-    @Test(expected = IllegalAccessException.class)
-    public void shouldThrowAnIllegalAccessExceptionIfTheSpecifiedImplementationDoesNotHaveAnAccessibleConstructor() throws Exception {
+    @Test
+    public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedImplementationDoesNotHaveAnAccessibleConstructor() throws Exception {
         // Given
         MultisetBuilder<Integer> multisetBuilder = multisetBuilderWith(1, 2, 3);
 
-        // When
-        multisetBuilder.build(PrivateAccessConstructorMultiset.class);
-
-        // Then an InstantiationException is thrown
+        try {
+            // When
+            multisetBuilder.build(PrivateAccessConstructorMultiset.class);
+            fail("Expected an IllegalArgumentException but got nothing.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString(
+                            "Could not instantiate instance of type PrivateAccessConstructorMultiset. " +
+                                    "Does it have a public no argument constructor?"));
+        }
     }
 
-    @Test(expected = InstantiationException.class)
-    public void shouldThrowAnInstantiationExceptionIfTheSpecifiedImplementationDoesNotHaveANoArgsConstructor() throws Exception {
+    @Test
+    public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedImplementationDoesNotHaveANoArgsConstructor() throws Exception {
         // Given
         MultisetBuilder<Integer> multisetBuilder = multisetBuilderWith(1, 2, 3);
 
-        // When
-        multisetBuilder.build(SomeArgsConstructorMultiset.class);
-
-        // Then an InstantiationException is thrown
+        try {
+            // When
+            multisetBuilder.build(SomeArgsConstructorMultiset.class);
+            fail("Expected an IllegalArgumentException but got nothing.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString(
+                            "Could not instantiate instance of type SomeArgsConstructorMultiset. " +
+                                    "Does it have a public no argument constructor?"));
+        }
     }
 
-    private static class NoArgsConstructorMultiset<E> extends AbstractTestMultiset<E> {
+    private static class NoArgsConstructorMultiset<E> extends StubMultiset<E> {
         public NoArgsConstructorMultiset() { }
     }
 
-    private static class PrivateAccessConstructorMultiset<E> extends AbstractTestMultiset<E> {
+    private static class PrivateAccessConstructorMultiset<E> extends StubMultiset<E> {
         private PrivateAccessConstructorMultiset() { }
     }
 
-    private static class SomeArgsConstructorMultiset<E> extends AbstractTestMultiset<E> {
+    private static class SomeArgsConstructorMultiset<E> extends StubMultiset<E> {
         private SomeArgsConstructorMultiset(Object first, Object second) { }
     }
 
-    private static class AbstractTestMultiset<E> implements Multiset<E> {
-        private Multiset<E> elements = HashMultiset.create();
-
+    private static class StubMultiset<E> implements Multiset<E> {
         @Override public int count(Object element) { return 0; }
         @Override public int add(E element, int occurrences) { return 0; }
         @Override public int remove(Object element, int occurrences) { return 0; }

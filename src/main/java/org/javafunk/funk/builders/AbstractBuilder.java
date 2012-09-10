@@ -11,11 +11,12 @@ package org.javafunk.funk.builders;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import static java.lang.String.format;
 import static org.javafunk.funk.Literals.iterableWith;
 
 public abstract class AbstractBuilder<E, B extends AbstractBuilder, C> {
     public abstract C build();
-    
+
     protected abstract void handle(E element);
 
     protected abstract B updatedBuilder();
@@ -50,20 +51,26 @@ public abstract class AbstractBuilder<E, B extends AbstractBuilder, C> {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-    public static interface WithCustomImplementationSupport<T, S extends T> {
-        S build(Class<? extends T> implementationClass) throws IllegalAccessException, InstantiationException;
-    }
-
     public B with(E e) { return and(iterableWith(e)); }
+
     public B with(E e1, E e2) { return and(iterableWith(e1, e2)); }
+
     public B with(E e1, E e2, E e3) { return and(iterableWith(e1, e2, e3)); }
+
     public B with(E e1, E e2, E e3, E e4) { return and(iterableWith(e1, e2, e3, e4)); }
+
     public B with(E e1, E e2, E e3, E e4, E e5) { return and(iterableWith(e1, e2, e3, e4, e5)); }
+
     public B with(E e1, E e2, E e3, E e4, E e5, E e6) { return and(iterableWith(e1, e2, e3, e4, e5, e6)); }
+
     public B with(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return and(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
+
     public B with(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return and(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
+
     public B with(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return and(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
+
     public B with(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return and(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
+
     public B with(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
         and(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
         and(e11on);
@@ -71,18 +78,46 @@ public abstract class AbstractBuilder<E, B extends AbstractBuilder, C> {
     }
 
     public B and(E e) { return and(iterableWith(e)); }
+
     public B and(E e1, E e2) { return and(iterableWith(e1, e2)); }
+
     public B and(E e1, E e2, E e3) { return and(iterableWith(e1, e2, e3)); }
+
     public B and(E e1, E e2, E e3, E e4) { return and(iterableWith(e1, e2, e3, e4)); }
+
     public B and(E e1, E e2, E e3, E e4, E e5) { return and(iterableWith(e1, e2, e3, e4, e5)); }
+
     public B and(E e1, E e2, E e3, E e4, E e5, E e6) { return and(iterableWith(e1, e2, e3, e4, e5, e6)); }
+
     public B and(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return and(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
+
     public B and(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return and(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
+
     public B and(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return and(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
+
     public B and(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return and(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
+
     public B and(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
         and(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
         and(e11on);
         return updatedBuilder();
+    }
+
+    public static abstract class WithCustomImplementationSupport<E, B extends AbstractBuilder, T, C extends T> extends AbstractBuilder<E, B, C> {
+        public C build(Class<? extends T> implementationClass) {
+            try {
+                return buildForClass(implementationClass);
+            } catch (InstantiationException e) {
+                throw new IllegalArgumentException(
+                        format("Could not instantiate instance of type %s. " +
+                                "Does it have a public no argument constructor?", implementationClass.getSimpleName()));
+            } catch (IllegalAccessException e) {
+                throw new IllegalArgumentException(
+                        format("Could not instantiate instance of type %s. " +
+                                "Does it have a public no argument constructor?", implementationClass.getSimpleName()));
+            }
+        }
+
+        protected abstract C buildForClass(Class<? extends T> implementationClass) throws IllegalAccessException, InstantiationException;
     }
 }

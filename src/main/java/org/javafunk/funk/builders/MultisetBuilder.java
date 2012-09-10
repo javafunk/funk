@@ -12,8 +12,7 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 
 public class MultisetBuilder<E>
-        extends AbstractBuilder<E, MultisetBuilder<E>, Multiset<E>>
-        implements AbstractBuilder.WithCustomImplementationSupport<Multiset, Multiset<E>> {
+        extends AbstractBuilder.WithCustomImplementationSupport<E, MultisetBuilder<E>, Multiset, Multiset<E>> {
     private HashMultiset<E> elements = HashMultiset.create();
 
     public static <E> MultisetBuilder<E> multisetBuilder() {
@@ -28,8 +27,7 @@ public class MultisetBuilder<E>
         return HashMultiset.create(elements);
     }
 
-    @Override
-    public Multiset<E> build(Class<? extends Multiset> implementationClass)
+    @Override protected Multiset<E> buildForClass(Class<? extends Multiset> implementationClass)
             throws IllegalAccessException, InstantiationException {
         @SuppressWarnings("unchecked")
         Multiset<E> multiset = (Multiset<E>) implementationClass.newInstance();

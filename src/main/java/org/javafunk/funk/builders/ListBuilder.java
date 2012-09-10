@@ -12,8 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListBuilder<E>
-        extends AbstractBuilder<E, ListBuilder<E>, List<E>>
-        implements AbstractBuilder.WithCustomImplementationSupport<List, List<E>> {
+        extends AbstractBuilder.WithCustomImplementationSupport<E, ListBuilder<E>, List, List<E>> {
     private List<E> elements = new ArrayList<E>();
 
     public static <E> ListBuilder<E> listBuilder() {
@@ -28,9 +27,8 @@ public class ListBuilder<E>
         return new ArrayList<E>(elements);
     }
 
-    @Override
-    public List<E> build(Class<? extends List> implementationClass)
-            throws IllegalAccessException, InstantiationException {
+    @Override protected List<E> buildForClass(Class<? extends List> implementationClass)
+            throws InstantiationException, IllegalAccessException {
         @SuppressWarnings("unchecked")
         List<E> list = (List<E>) implementationClass.newInstance();
         list.addAll(elements);

@@ -17,10 +17,12 @@ import java.util.TreeSet;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.collectionBuilderWith;
 import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.builders.CollectionBuilder.collectionBuilder;
+import static org.junit.Assert.fail;
 
 public class CollectionBuilderTest {
     @Test
@@ -187,26 +189,40 @@ public class CollectionBuilderTest {
         assertThat(actual, is(expected));
     }
 
-    @Test(expected = IllegalAccessException.class)
-    public void shouldThrowAnIllegalAccessExceptionIfTheSpecifiedImplementationDoesNotHaveAnAccessibleConstructor() throws Exception {
+    @Test
+    public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedImplementationDoesNotHaveAnAccessibleConstructor() throws Exception {
         // Given
         CollectionBuilder<Integer> collectionBuilder = collectionBuilderWith(1, 2, 3);
 
-        // When
-        collectionBuilder.build(ImmutableList.class);
-
-        // Then an InstantiationException is thrown
+        try {
+            // When
+            collectionBuilder.build(ImmutableList.class);
+            fail("Expected an IllegalArgumentException but got nothing.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString(
+                            "Could not instantiate instance of type ImmutableList. " +
+                                    "Does it have a public no argument constructor?"));
+        }
     }
 
-    @Test(expected = InstantiationException.class)
-    public void shouldThrowAnInstantiationExceptionIfTheSpecifiedImplementationDoesNotHaveANoArgsConstructor() throws Exception {
+    @Test
+    public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedImplementationDoesNotHaveANoArgsConstructor() throws Exception {
         // Given
         CollectionBuilder<Integer> collectionBuilder = collectionBuilderWith(1, 2, 3);
 
-        // When
-        collectionBuilder.build(NoNoArgsConstructorStack.class);
-
-        // Then an InstantiationException is thrown
+        try {
+            // When
+            collectionBuilder.build(NoNoArgsConstructorStack.class);
+            fail("Expected an IllegalArgumentException but got nothing.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString(
+                            "Could not instantiate instance of type NoNoArgsConstructorStack. " +
+                                    "Does it have a public no argument constructor?"));
+        }
     }
 
     private static class NoNoArgsConstructorStack<E> extends Stack<E> {

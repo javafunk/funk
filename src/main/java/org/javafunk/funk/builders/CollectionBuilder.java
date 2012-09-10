@@ -12,8 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class CollectionBuilder<E>
-        extends AbstractBuilder<E, CollectionBuilder<E>, Collection<E>>
-        implements AbstractBuilder.WithCustomImplementationSupport<Collection, Collection<E>> {
+        extends AbstractBuilder.WithCustomImplementationSupport<E, CollectionBuilder<E>, Collection, Collection<E>> {
     private Collection<E> elements = new ArrayList<E>();
 
     public static <E> CollectionBuilder<E> collectionBuilder() {
@@ -28,9 +27,8 @@ public class CollectionBuilder<E>
         return new ArrayList<E>(elements);
     }
 
-    @Override
-    public Collection<E> build(Class<? extends Collection> implementationClass)
-            throws IllegalAccessException, InstantiationException {
+    @Override protected Collection<E> buildForClass(Class<? extends Collection> implementationClass)
+            throws InstantiationException, IllegalAccessException {
         @SuppressWarnings("unchecked")
         Collection<E> collection = (Collection<E>) implementationClass.newInstance();
         collection.addAll(elements);
