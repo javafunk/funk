@@ -34,11 +34,7 @@ public class ListBuilder<E>
 
     @Override public List<E> build(Class<? extends List> implementationClass) {
         @SuppressWarnings("unchecked")
-        List<E> list = (List<E>) Classes.uncheckedInstantiate(
-                implementationClass,
-                new IllegalArgumentException(
-                        format("Could not instantiate instance of type %s. " +
-                                "Does it have a public no argument constructor?", implementationClass.getSimpleName())));
+        List<E> list = (List<E>) Classes.uncheckedInstantiate(implementationClass);
         list.addAll(elements);
         return list;
     }

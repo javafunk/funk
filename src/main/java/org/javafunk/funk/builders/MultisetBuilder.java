@@ -33,11 +33,7 @@ public class MultisetBuilder<E>
 
     @Override public Multiset<E> build(Class<? extends Multiset> implementationClass) {
         @SuppressWarnings("unchecked")
-        Multiset<E> multiset = (Multiset<E>) Classes.uncheckedInstantiate(
-                implementationClass,
-                new IllegalArgumentException(
-                        format("Could not instantiate instance of type %s. " +
-                                "Does it have a public no argument constructor?", implementationClass.getSimpleName())));
+        Multiset<E> multiset = (Multiset<E>) Classes.uncheckedInstantiate(implementationClass);
         multiset.addAll(elements);
         return multiset;
     }

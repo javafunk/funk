@@ -39,11 +39,7 @@ public class MapBuilder<K, V>
 
     @Override public Map<K, V> build(Class<? extends Map> implementationClass) {
         @SuppressWarnings("unchecked")
-        Map<K, V> map = (Map<K, V>) Classes.uncheckedInstantiate(
-                implementationClass,
-                new IllegalArgumentException(
-                        format("Could not instantiate instance of type %s. " +
-                                "Does it have a public no argument constructor?", implementationClass.getSimpleName())));
+        Map<K, V> map = (Map<K, V>) Classes.uncheckedInstantiate(implementationClass);
         map.putAll(elements);
         return map;
     }

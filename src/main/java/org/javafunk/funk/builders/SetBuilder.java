@@ -34,11 +34,7 @@ public class SetBuilder<E>
 
     @Override public Set<E> build(Class<? extends Set> implementationClass) {
         @SuppressWarnings("unchecked")
-        Set<E> set = (Set<E>) Classes.uncheckedInstantiate(
-                implementationClass,
-                new IllegalArgumentException(
-                        format("Could not instantiate instance of type %s. " +
-                                "Does it have a public no argument constructor?", implementationClass.getSimpleName())));
+        Set<E> set = (Set<E>) Classes.uncheckedInstantiate(implementationClass);
         set.addAll(elements);
         return set;
     }

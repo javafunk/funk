@@ -34,11 +34,7 @@ public class CollectionBuilder<E>
 
     @Override public Collection<E> build(Class<? extends Collection> implementationClass) {
         @SuppressWarnings("unchecked")
-        Collection<E> collection = Classes.uncheckedInstantiate(
-                implementationClass,
-                new IllegalArgumentException(
-                        format("Could not instantiate instance of type %s. " +
-                                "Does it have a public no argument constructor?", implementationClass.getSimpleName())));
+        Collection<E> collection = Classes.uncheckedInstantiate(implementationClass);
         collection.addAll(elements);
         return collection;
     }

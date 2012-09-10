@@ -2,11 +2,16 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.functors.functions.UnaryFunction;
 
+import static java.lang.String.format;
+
 public class Classes {
-    public static <T> T uncheckedInstantiate(Class<T> classToInstantiate) {
+    public static <T> T uncheckedInstantiate(final Class<T> classToInstantiate) {
         return uncheckedInstantiate(classToInstantiate, new UnaryFunction<Exception, RuntimeException>() {
             @Override public RuntimeException call(Exception exception) {
-                throw new RuntimeException(exception);
+                throw new IllegalArgumentException(
+                        format("Could not instantiate instance of type %s. Does it have a public no argument constructor?",
+                                classToInstantiate.getSimpleName()),
+                        exception);
             }
         });
     }
