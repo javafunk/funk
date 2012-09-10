@@ -8,18 +8,21 @@
  */
 package org.javafunk.funk.builders;
 
+import org.javafunk.funk.Classes;
 import org.javafunk.funk.Tuples;
 import org.javafunk.funk.datastructures.tuples.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.lang.String.format;
 import static org.javafunk.funk.Lazily.map;
 import static org.javafunk.funk.Literals.iterableFrom;
 import static org.javafunk.funk.Literals.mapEntryFor;
 
 public class MapBuilder<K, V>
-        extends AbstractBuilder.WithCustomImplementationSupport<Map.Entry<K, V>, MapBuilder<K, V>, Map, Map<K, V>> {
+        extends AbstractBuilder<Map.Entry<K, V>, MapBuilder<K, V>, Map<K, V>>
+        implements AbstractBuilder.WithCustomImplementationSupport<Map, Map<K, V>> {
     private Map<K, V> elements = new HashMap<K, V>();
 
     public static <K, V> MapBuilder<K, V> mapBuilder() {
@@ -34,10 +37,13 @@ public class MapBuilder<K, V>
         return new HashMap<K, V>(elements);
     }
 
-    protected Map<K, V> buildForClass(Class<? extends Map> implementationClass)
-            throws InstantiationException, IllegalAccessException {
+    @Override public Map<K, V> build(Class<? extends Map> implementationClass) {
         @SuppressWarnings("unchecked")
-        Map<K, V> map = (Map<K, V>) implementationClass.newInstance();
+        Map<K, V> map = (Map<K, V>) Classes.uncheckedInstantiate(
+                implementationClass,
+                new IllegalArgumentException(
+                        format("Could not instantiate instance of type %s. " +
+                                "Does it have a public no argument constructor?", implementationClass.getSimpleName())));
         map.putAll(elements);
         return map;
     }

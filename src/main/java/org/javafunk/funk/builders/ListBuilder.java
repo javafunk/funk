@@ -8,11 +8,16 @@
  */
 package org.javafunk.funk.builders;
 
+import org.javafunk.funk.Classes;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.String.format;
+
 public class ListBuilder<E>
-        extends AbstractBuilder.WithCustomImplementationSupport<E, ListBuilder<E>, List, List<E>> {
+        extends AbstractBuilder<E, ListBuilder<E>, List<E>>
+        implements AbstractBuilder.WithCustomImplementationSupport<List, List<E>> {
     private List<E> elements = new ArrayList<E>();
 
     public static <E> ListBuilder<E> listBuilder() {
@@ -27,10 +32,13 @@ public class ListBuilder<E>
         return new ArrayList<E>(elements);
     }
 
-    @Override protected List<E> buildForClass(Class<? extends List> implementationClass)
-            throws InstantiationException, IllegalAccessException {
+    @Override public List<E> build(Class<? extends List> implementationClass) {
         @SuppressWarnings("unchecked")
-        List<E> list = (List<E>) implementationClass.newInstance();
+        List<E> list = (List<E>) Classes.uncheckedInstantiate(
+                implementationClass,
+                new IllegalArgumentException(
+                        format("Could not instantiate instance of type %s. " +
+                                "Does it have a public no argument constructor?", implementationClass.getSimpleName())));
         list.addAll(elements);
         return list;
     }

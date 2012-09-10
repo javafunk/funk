@@ -8,11 +8,16 @@
  */
 package org.javafunk.funk.builders;
 
+import org.javafunk.funk.Classes;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static java.lang.String.format;
+
 public class CollectionBuilder<E>
-        extends AbstractBuilder.WithCustomImplementationSupport<E, CollectionBuilder<E>, Collection, Collection<E>> {
+        extends AbstractBuilder<E, CollectionBuilder<E>, Collection<E>>
+        implements AbstractBuilder.WithCustomImplementationSupport<Collection, Collection<E>> {
     private Collection<E> elements = new ArrayList<E>();
 
     public static <E> CollectionBuilder<E> collectionBuilder() {
@@ -27,10 +32,13 @@ public class CollectionBuilder<E>
         return new ArrayList<E>(elements);
     }
 
-    @Override protected Collection<E> buildForClass(Class<? extends Collection> implementationClass)
-            throws InstantiationException, IllegalAccessException {
+    @Override public Collection<E> build(Class<? extends Collection> implementationClass) {
         @SuppressWarnings("unchecked")
-        Collection<E> collection = (Collection<E>) implementationClass.newInstance();
+        Collection<E> collection = Classes.uncheckedInstantiate(
+                implementationClass,
+                new IllegalArgumentException(
+                        format("Could not instantiate instance of type %s. " +
+                                "Does it have a public no argument constructor?", implementationClass.getSimpleName())));
         collection.addAll(elements);
         return collection;
     }

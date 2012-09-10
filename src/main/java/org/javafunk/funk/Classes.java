@@ -1,0 +1,35 @@
+package org.javafunk.funk;
+
+import org.javafunk.funk.functors.functions.UnaryFunction;
+
+public class Classes {
+    public static <T> T uncheckedInstantiate(Class<T> classToInstantiate) {
+        return uncheckedInstantiate(classToInstantiate, new UnaryFunction<Exception, RuntimeException>() {
+            @Override public RuntimeException call(Exception exception) {
+                throw new RuntimeException(exception);
+            }
+        });
+    }
+
+    public static <T> T uncheckedInstantiate(
+            Class<T> classToInstantiate,
+            final RuntimeException exception) {
+        return uncheckedInstantiate(classToInstantiate, new UnaryFunction<Exception, RuntimeException>() {
+            @Override public RuntimeException call(Exception instantiationException) {
+                return exception;
+            }
+        });
+    }
+
+    public static <T> T uncheckedInstantiate(
+            Class<T> classToInstantiate,
+            UnaryFunction<? super Exception, ? extends RuntimeException> exceptionHandler) {
+        try {
+            return classToInstantiate.newInstance();
+        } catch (InstantiationException exception) {
+            throw exceptionHandler.call(exception);
+        } catch (IllegalAccessException exception) {
+            throw exceptionHandler.call(exception);
+        }
+    }
+}

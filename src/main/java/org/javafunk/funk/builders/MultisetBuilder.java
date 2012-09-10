@@ -10,9 +10,13 @@ package org.javafunk.funk.builders;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
+import org.javafunk.funk.Classes;
+
+import static java.lang.String.format;
 
 public class MultisetBuilder<E>
-        extends AbstractBuilder.WithCustomImplementationSupport<E, MultisetBuilder<E>, Multiset, Multiset<E>> {
+        extends AbstractBuilder<E, MultisetBuilder<E>, Multiset<E>>
+        implements AbstractBuilder.WithCustomImplementationSupport<Multiset, Multiset<E>> {
     private HashMultiset<E> elements = HashMultiset.create();
 
     public static <E> MultisetBuilder<E> multisetBuilder() {
@@ -27,10 +31,13 @@ public class MultisetBuilder<E>
         return HashMultiset.create(elements);
     }
 
-    @Override protected Multiset<E> buildForClass(Class<? extends Multiset> implementationClass)
-            throws IllegalAccessException, InstantiationException {
+    @Override public Multiset<E> build(Class<? extends Multiset> implementationClass) {
         @SuppressWarnings("unchecked")
-        Multiset<E> multiset = (Multiset<E>) implementationClass.newInstance();
+        Multiset<E> multiset = (Multiset<E>) Classes.uncheckedInstantiate(
+                implementationClass,
+                new IllegalArgumentException(
+                        format("Could not instantiate instance of type %s. " +
+                                "Does it have a public no argument constructor?", implementationClass.getSimpleName())));
         multiset.addAll(elements);
         return multiset;
     }

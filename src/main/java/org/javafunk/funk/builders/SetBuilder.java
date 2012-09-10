@@ -8,11 +8,16 @@
  */
 package org.javafunk.funk.builders;
 
+import org.javafunk.funk.Classes;
+
 import java.util.HashSet;
 import java.util.Set;
 
+import static java.lang.String.format;
+
 public class SetBuilder<E>
-        extends AbstractBuilder.WithCustomImplementationSupport<E, SetBuilder<E>, Set, Set<E>> {
+        extends AbstractBuilder<E, SetBuilder<E>, Set<E>>
+        implements AbstractBuilder.WithCustomImplementationSupport<Set, Set<E>> {
     private Set<E> elements = new HashSet<E>();
 
     public static <E> SetBuilder<E> setBuilder() {
@@ -27,10 +32,13 @@ public class SetBuilder<E>
         return new HashSet<E>(elements);
     }
 
-    @Override protected Set<E> buildForClass(Class<? extends Set> implementationClass)
-            throws IllegalAccessException, InstantiationException {
+    @Override public Set<E> build(Class<? extends Set> implementationClass) {
         @SuppressWarnings("unchecked")
-        Set<E> set = (Set<E>) implementationClass.newInstance();
+        Set<E> set = (Set<E>) Classes.uncheckedInstantiate(
+                implementationClass,
+                new IllegalArgumentException(
+                        format("Could not instantiate instance of type %s. " +
+                                "Does it have a public no argument constructor?", implementationClass.getSimpleName())));
         set.addAll(elements);
         return set;
     }

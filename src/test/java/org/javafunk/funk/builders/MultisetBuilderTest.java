@@ -236,19 +236,19 @@ public class MultisetBuilderTest {
         }
     }
 
-    private static class NoArgsConstructorMultiset<E> extends StubMultiset<E> {
+    public static class NoArgsConstructorMultiset<E> extends StubMultiset<E> {
         public NoArgsConstructorMultiset() { }
     }
 
-    private static class PrivateAccessConstructorMultiset<E> extends StubMultiset<E> {
+    public static class PrivateAccessConstructorMultiset<E> extends StubMultiset<E> {
         private PrivateAccessConstructorMultiset() { }
     }
 
-    private static class SomeArgsConstructorMultiset<E> extends StubMultiset<E> {
+    public static class SomeArgsConstructorMultiset<E> extends StubMultiset<E> {
         private SomeArgsConstructorMultiset(Object first, Object second) { }
     }
 
-    private static class StubMultiset<E> implements Multiset<E> {
+    public static class StubMultiset<E> implements Multiset<E> {
         @Override public int count(Object element) { return 0; }
         @Override public int add(E element, int occurrences) { return 0; }
         @Override public int remove(Object element, int occurrences) { return 0; }

@@ -10,6 +10,7 @@ package org.javafunk.funk.builders;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 
 import static java.lang.String.format;
 import static org.javafunk.funk.Literals.iterableWith;
@@ -49,6 +50,10 @@ public abstract class AbstractBuilder<E, B extends AbstractBuilder, C> {
 
     @Override public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    public static interface WithCustomImplementationSupport<S, C extends S> {
+        C build(Class<? extends S> implementationClass);
     }
 
     public B with(E e) { return and(iterableWith(e)); }
@@ -101,23 +106,5 @@ public abstract class AbstractBuilder<E, B extends AbstractBuilder, C> {
         and(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
         and(e11on);
         return updatedBuilder();
-    }
-
-    public static abstract class WithCustomImplementationSupport<E, B extends AbstractBuilder, T, C extends T> extends AbstractBuilder<E, B, C> {
-        public C build(Class<? extends T> implementationClass) {
-            try {
-                return buildForClass(implementationClass);
-            } catch (InstantiationException e) {
-                throw new IllegalArgumentException(
-                        format("Could not instantiate instance of type %s. " +
-                                "Does it have a public no argument constructor?", implementationClass.getSimpleName()));
-            } catch (IllegalAccessException e) {
-                throw new IllegalArgumentException(
-                        format("Could not instantiate instance of type %s. " +
-                                "Does it have a public no argument constructor?", implementationClass.getSimpleName()));
-            }
-        }
-
-        protected abstract C buildForClass(Class<? extends T> implementationClass) throws IllegalAccessException, InstantiationException;
     }
 }
