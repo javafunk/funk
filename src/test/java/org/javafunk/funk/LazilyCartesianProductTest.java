@@ -106,7 +106,6 @@ public class LazilyCartesianProductTest {
     }
 
     @Test
-    @Ignore
     @SuppressWarnings("unchecked")
     @ToDo(raisedBy = "Toby",
             date     = "2012-04-29",

@@ -241,7 +241,7 @@ public class Lazily {
     }
 
     public static Iterable<? extends Iterable<?>> cartesianProduct(final Iterable<? extends Iterable<?>> iterables) {
-        return cartesianProduct(listBuilderFrom(iterables).build(ArrayList.class));
+        return cartesianProduct(listFrom(iterables));
     }
 
     private static Iterable<? extends Iterable<?>> cartesianProduct(final List<? extends Iterable<?>> iterables) {

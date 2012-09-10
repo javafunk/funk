@@ -25,7 +25,7 @@ public class IteratorBuilder<E> extends AbstractBuilder<E, IteratorBuilder<E>, I
     }
 
     @Override public Iterator<E> build() {
-        return Collections.unmodifiableCollection(new ArrayList<E>(elements)).iterator();
+        return Collections.unmodifiableList(new ArrayList<E>(elements)).iterator();
     }
 
     @Override protected void handle(E element) {

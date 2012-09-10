@@ -28,17 +28,17 @@ public class EagerlyGroupIndexTest {
         // Given
         Iterable<String> input = iterableWith("apple", "pear", "lemon", "apricot", "orange", "papaya", "banana");
 
-        Collection<String> fourLetterFruits = collectionBuilderWith("pear").build(ArrayList.class);
-        Collection<String> fiveLetterFruits = collectionBuilderWith("apple", "lemon").build(ArrayList.class);
-        Collection<String> sixLetterFruits = collectionBuilderWith("orange", "papaya", "banana").build(ArrayList.class);
-        Collection<String> sevenLetterFruits = collectionBuilderWith("apricot").build(ArrayList.class);
+        Collection<String> fourLetterFruits = collectionWith("pear");
+        Collection<String> fiveLetterFruits = collectionWith("apple", "lemon");
+        Collection<String> sixLetterFruits = collectionWith("orange", "papaya", "banana");
+        Collection<String> sevenLetterFruits = collectionWith("apricot");
 
         Map<Integer, Collection<String>> expectedOutput =
                 mapBuilderWith(4, fourLetterFruits)
                         .andKeyValuePair(5, fiveLetterFruits)
                         .andKeyValuePair(6, sixLetterFruits)
                         .andKeyValuePair(7, sevenLetterFruits)
-                        .build(HashMap.class);
+                        .build();
 
         // When
         Map<Integer, Collection<String>> actualOutput = Eagerly.group(input, new Indexer<String, Integer>() {

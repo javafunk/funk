@@ -23,6 +23,7 @@ import static org.javafunk.funk.Iterators.emptyIterator;
 import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.Literals.listBuilderWith;
 import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class ChainedIteratorTest {
     @Test
@@ -123,11 +124,11 @@ public class ChainedIteratorTest {
         chainedIterator.next();
 
         // Then
-        List<Integer> expectedFirstList = listBuilderWith(1).build(ArrayList.class);
-        List<Integer> expectedSecondList = listBuilderWith(4).build(ArrayList.class);
+        List<Integer> expectedFirstList = listWith(1);
+        List<Integer> expectedSecondList = listWith(4);
 
-        assertThat(firstList, is(expectedFirstList));
-        assertThat(secondList, is(expectedSecondList));
+        assertThat(firstList, hasOnlyItemsInOrder(expectedFirstList));
+        assertThat(secondList, hasOnlyItemsInOrder(expectedSecondList));
     }
 
     @Test(expected = IllegalStateException.class)

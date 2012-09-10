@@ -39,10 +39,10 @@ public class GeneratorsTest {
     @Test
     public void shouldConstructAFiniteGeneratorUsingTheSpecifiedIterable() throws Exception {
         // Given
-        Generator<Integer> expectedGenerator = new FiniteGenerator<Integer>(listBuilderWith(1, 2, 3, 4).build(ArrayList.class));
+        Generator<Integer> expectedGenerator = new FiniteGenerator<Integer>(iterableWith(1, 2, 3, 4));
 
         // When
-        Generator<Integer> actualGenerator = finiteGenerator(listBuilderWith(1, 2, 3, 4).build(ArrayList.class));
+        Generator<Integer> actualGenerator = finiteGenerator(iterableWith(1, 2, 3, 4));
 
         // Then
         assertThat(actualGenerator, is(expectedGenerator));
