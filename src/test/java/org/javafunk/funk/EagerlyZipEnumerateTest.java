@@ -16,6 +16,8 @@ import java.util.Collection;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class EagerlyZipEnumerateTest {
     @Test
@@ -32,7 +34,7 @@ public class EagerlyZipEnumerateTest {
         Collection<Pair<Integer, String>> actualOutput = Eagerly.zip(iterable1, iterable2);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -48,6 +50,6 @@ public class EagerlyZipEnumerateTest {
         Collection<Pair<Integer, String>> actualOutput = Eagerly.enumerate(iterable);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 }

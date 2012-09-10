@@ -20,6 +20,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.*;
 import static org.javafunk.funk.Literals.*;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class IterablesTest {
     @Test
@@ -32,7 +34,7 @@ public class IterablesTest {
         List<Integer> actualList = asList(iterable);
 
         // Then
-        assertThat(actualList, is(expectedList));
+        assertThat(actualList, hasOnlyItemsInOrder(expectedList));
     }
 
     @Test
@@ -45,7 +47,7 @@ public class IterablesTest {
         Collection<Integer> actualCollection = materialize(iterable);
 
         // Then
-        assertThat(actualCollection, is(expectedCollection));
+        assertThat(actualCollection, hasOnlyItemsInOrder(expectedCollection));
     }
 
     @Test
@@ -58,7 +60,7 @@ public class IterablesTest {
         Set<Integer> actualSet = asSet(iterable);
 
         // Then
-        assertThat(actualSet, is(expectedSet));
+        assertThat(actualSet, hasOnlyItemsInAnyOrder(expectedSet));
     }
 
     @Test
@@ -71,7 +73,7 @@ public class IterablesTest {
         Multiset<Integer> actualMultiset = asMultiset(iterable);
 
         // Then
-        assertThat(actualMultiset, is(expectedMultiset));
+        assertThat(actualMultiset, hasOnlyItemsInAnyOrder(expectedMultiset));
     }
 
     private static <T> Iterable<T> basicIterableOver(final T... elements) {
@@ -82,14 +84,12 @@ public class IterablesTest {
                     private Integer cursor = 0;
 
                     @Override
-                    public boolean hasNext
-                            () {
+                    public boolean hasNext() {
                         return cursor < (elements.length);
                     }
 
                     @Override
-                    public T next
-                            () {
+                    public T next() {
                         T next = elements[cursor];
                         cursor++;
                         return next;
@@ -103,6 +103,4 @@ public class IterablesTest {
             }
         };
     }
-
-
 }

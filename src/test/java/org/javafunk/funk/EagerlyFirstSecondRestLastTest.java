@@ -20,6 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.monads.Option.some;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class EagerlyFirstSecondRestLastTest {
     @Test
@@ -140,7 +141,7 @@ public class EagerlyFirstSecondRestLastTest {
         Collection<Integer> actualOutput = Eagerly.first(input, 4);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -153,7 +154,7 @@ public class EagerlyFirstSecondRestLastTest {
         Collection<Integer> actualOutput = Eagerly.first(input, 4);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -166,7 +167,7 @@ public class EagerlyFirstSecondRestLastTest {
         Collection<Integer> actualOutput = Eagerly.first(input, 3);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -179,7 +180,7 @@ public class EagerlyFirstSecondRestLastTest {
         Collection<Integer> actualOutput = Eagerly.first(input, 0);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -211,7 +212,7 @@ public class EagerlyFirstSecondRestLastTest {
         });
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -232,7 +233,7 @@ public class EagerlyFirstSecondRestLastTest {
         });
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -253,7 +254,7 @@ public class EagerlyFirstSecondRestLastTest {
         });
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -274,7 +275,7 @@ public class EagerlyFirstSecondRestLastTest {
         });
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -295,7 +296,7 @@ public class EagerlyFirstSecondRestLastTest {
         });
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -392,7 +393,7 @@ public class EagerlyFirstSecondRestLastTest {
         Collection<Integer> actualOutput = Eagerly.last(input, 3);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -405,7 +406,7 @@ public class EagerlyFirstSecondRestLastTest {
         Collection<Integer> actualOutput = Eagerly.last(input, 4);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -418,7 +419,7 @@ public class EagerlyFirstSecondRestLastTest {
         Collection<Integer> actualOutput = Eagerly.last(input, 3);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -431,7 +432,7 @@ public class EagerlyFirstSecondRestLastTest {
         Collection<Integer> actualOutput = Eagerly.last(input, 0);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -463,7 +464,7 @@ public class EagerlyFirstSecondRestLastTest {
         });
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -484,7 +485,7 @@ public class EagerlyFirstSecondRestLastTest {
         });
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -505,7 +506,7 @@ public class EagerlyFirstSecondRestLastTest {
         });
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -526,7 +527,7 @@ public class EagerlyFirstSecondRestLastTest {
         });
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -547,7 +548,7 @@ public class EagerlyFirstSecondRestLastTest {
         });
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -560,7 +561,7 @@ public class EagerlyFirstSecondRestLastTest {
         Collection<Integer> actualOutput = Eagerly.rest(input);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -573,7 +574,7 @@ public class EagerlyFirstSecondRestLastTest {
         Collection<Integer> actualOutput = Eagerly.rest(input);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -586,6 +587,6 @@ public class EagerlyFirstSecondRestLastTest {
         Collection<Integer> actualOutput = Eagerly.rest(input);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 }

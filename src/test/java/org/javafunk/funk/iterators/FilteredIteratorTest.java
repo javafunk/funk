@@ -11,6 +11,7 @@ package org.javafunk.funk.iterators;
 import org.javafunk.funk.functors.Predicate;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -18,6 +19,7 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+import static org.javafunk.funk.Literals.collectionBuilderWith;
 import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.Literals.iterableWith;
 import static org.junit.Assert.fail;
@@ -92,8 +94,8 @@ public class FilteredIteratorTest {
     @Test
     public void shouldRemoveTheElementFromTheUnderlyingIterator() {
         // Given
-        Collection<String> actualList = collectionWith("one", "two", "three", "four", "five");
-        Collection<String> expectedList = collectionWith("three", "four", "five");
+        Collection<String> actualList = collectionBuilderWith("one", "two", "three", "four", "five").build(ArrayList.class);
+        Collection<String> expectedList = collectionBuilderWith("three", "four", "five").build(ArrayList.class);
         Iterator<String> iterator = actualList.iterator();
 
         // When
@@ -133,7 +135,7 @@ public class FilteredIteratorTest {
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledMoreThanOnceInARow() throws Exception {
         // Given
-        Iterator<String> iterator = iterableWith("one", "two", "three").iterator();
+        Iterator<String> iterator = collectionBuilderWith("one", "two", "three").build(ArrayList.class).iterator();
 
         // When
         FilteredIterator<String> filteredIterator = new FilteredIterator<String>(iterator, new Predicate<String>() {
@@ -152,8 +154,8 @@ public class FilteredIteratorTest {
     @Test
     public void shouldNotRemoveAnElementThatDoesNotMatchTheSuppliedPredicate() throws Exception {
         // Given
-        Collection<String> initialElements = collectionWith("one", "three");
-        Collection<String> expectedElements = collectionWith("three");
+        Collection<String> initialElements = collectionBuilderWith("one", "three").build(ArrayList.class);
+        Collection<String> expectedElements = collectionBuilderWith("three").build(ArrayList.class);
 
         // When
         FilteredIterator<String> filteredIterator = new FilteredIterator<String>(initialElements.iterator(),
@@ -181,8 +183,8 @@ public class FilteredIteratorTest {
     @Test
     public void shouldNotRemoveAnElementThatDoesNotMatchTheSuppliedPredicateEvenIfNextCalled() throws Exception {
         // Given
-        Collection<String> initialElements = collectionWith("one", "three");
-        Collection<String> expectedElements = collectionWith("three");
+        Collection<String> initialElements = collectionBuilderWith("one", "three").build(ArrayList.class);
+        Collection<String> expectedElements = collectionBuilderWith("three").build(ArrayList.class);
 
         // When
         FilteredIterator<String> filteredIterator = new FilteredIterator<String>(initialElements.iterator(),

@@ -19,6 +19,7 @@ import org.javafunk.funk.functors.procedures.UnaryProcedure;
 import org.javafunk.funk.iterators.*;
 import org.javafunk.funk.predicates.NotPredicate;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -240,7 +241,7 @@ public class Lazily {
     }
 
     public static Iterable<? extends Iterable<?>> cartesianProduct(final Iterable<? extends Iterable<?>> iterables) {
-        return cartesianProduct(listFrom(iterables));
+        return cartesianProduct(listBuilderFrom(iterables).build(ArrayList.class));
     }
 
     private static Iterable<? extends Iterable<?>> cartesianProduct(final List<? extends Iterable<?>> iterables) {

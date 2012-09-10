@@ -14,6 +14,8 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.builders.IterableBuilder.iterableBuilder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class IterableBuilderTest {
     @Test
@@ -29,7 +31,7 @@ public class IterableBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
     @Test
@@ -46,7 +48,7 @@ public class IterableBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
     @Test
@@ -64,7 +66,7 @@ public class IterableBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
     @Test
@@ -81,7 +83,7 @@ public class IterableBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
     @Test
@@ -98,7 +100,7 @@ public class IterableBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
     @Test
@@ -115,7 +117,7 @@ public class IterableBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
     @Test
@@ -139,7 +141,7 @@ public class IterableBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
     @Test
@@ -163,6 +165,6 @@ public class IterableBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 }

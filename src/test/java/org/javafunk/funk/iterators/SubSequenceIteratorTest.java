@@ -10,6 +10,7 @@ package org.javafunk.funk.iterators;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -17,6 +18,7 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+import static org.javafunk.funk.Literals.collectionBuilderWith;
 import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.Literals.iterableWith;
 import static org.junit.Assert.fail;
@@ -287,8 +289,8 @@ public class SubSequenceIteratorTest {
     @Test
     public void shouldRemoveTheElementFromTheUnderlyingIterator() throws Exception {
         // Given
-        Iterable<String> input = iterableWith("a", "aa", "aaa", "aaaa");
-        Iterable<String> expectedOutput = iterableWith("a", "aaa", "aaaa");
+        Iterable<String> input = collectionBuilderWith("a", "aa", "aaa", "aaaa").build(ArrayList.class);
+        Iterable<String> expectedOutput = collectionBuilderWith("a", "aaa", "aaaa").build(ArrayList.class);
 
         // When
         Iterator<String> iterator = new SubSequenceIterator<String>(input.iterator(), 1, 3);
@@ -317,7 +319,7 @@ public class SubSequenceIteratorTest {
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledMoreThanOnceInARow() throws Exception {
         // Given
-        Iterable<String> input = iterableWith("a", "aa", "aaa", "aaaa");
+        Iterable<String> input = collectionBuilderWith("a", "aa", "aaa", "aaaa").build(ArrayList.class);
 
         // When
         Iterator<String> iterator = new SubSequenceIterator<String>(input.iterator(), 1, 3);
@@ -332,8 +334,8 @@ public class SubSequenceIteratorTest {
     @Test
     public void shouldNotRemoveAnElementAfterStopHasBeenReached() throws Exception {
         // Given
-        Collection<String> input = collectionWith("a", "aa", "aaa", "aaaa");
-        Collection<String> expectedResult = collectionWith("a", "aaa", "aaaa");
+        Collection<String> input = collectionBuilderWith("a", "aa", "aaa", "aaaa").build(ArrayList.class);
+        Collection<String> expectedResult = collectionBuilderWith("a", "aaa", "aaaa").build(ArrayList.class);
 
         // When
         Iterator<String> iterator = new SubSequenceIterator<String>(input.iterator(), 1, 2);
@@ -356,8 +358,8 @@ public class SubSequenceIteratorTest {
     @Test
     public void shouldNotRemoveAnElementAfterStopHasBeenReachedEvenIfNextHasBeenCalled() throws Exception {
         // Given
-        Collection<String> input = collectionWith("a", "aa", "aaa", "aaaa");
-        Collection<String> expectedResult = collectionWith("a", "aaa", "aaaa");
+        Collection<String> input = collectionBuilderWith("a", "aa", "aaa", "aaaa").build(ArrayList.class);
+        Collection<String> expectedResult = collectionBuilderWith("a", "aaa", "aaaa").build(ArrayList.class);
 
         // When
         Iterator<String> iterator = new SubSequenceIterator<String>(input.iterator(), 1, 2);

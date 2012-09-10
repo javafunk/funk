@@ -8,6 +8,7 @@
  */
 package org.javafunk.funk;
 
+import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 
 import static java.util.Arrays.asList;
@@ -19,7 +20,7 @@ public class Multisets {
     private Multisets() {}
 
     public static <T> Multiset<T> concatenate(Iterable<? extends Iterable<? extends T>> iterables) {
-        Multiset<T> concatenatedMultiset = multisetFrom(first(iterables).get());
+        Multiset<T> concatenatedMultiset = HashMultiset.create(first(iterables).get());
         for (Iterable<? extends T> iterable : rest(iterables)) {
             concatenatedMultiset.addAll(collectionFrom(iterable));
         }
@@ -27,9 +28,9 @@ public class Multisets {
     }
 
     public static <T> Multiset<T> union(Iterable<? extends Iterable<? extends T>> iterables) {
-        Multiset<T> unionMultiset = multisetFrom(first(iterables).get());
+        Multiset<T> unionMultiset = HashMultiset.create(first(iterables).get());
         for (Iterable<? extends T> iterable : rest(iterables)) {
-            Multiset<T> currentMultiset = multisetFrom(iterable);
+            Multiset<T> currentMultiset = HashMultiset.create(iterable);
             for (T element : currentMultiset.elementSet()) {
                 int numberInUnionMultiset = unionMultiset.count(element);
                 int numberInCurrentMultiset = currentMultiset.count(element);
@@ -42,16 +43,16 @@ public class Multisets {
     }
 
     public static <T> Multiset<T> intersection(Iterable<? extends Iterable<? extends T>> iterables) {
-        Multiset<T> intersectionMultiset = multisetFrom(first(iterables).get());
+        Multiset<T> intersectionMultiset = HashMultiset.create(first(iterables).get());
         for (Iterable<? extends T> iterable : rest(iterables)) {
             intersectionMultiset = com.google.common.collect.Multisets.intersection(
-                    intersectionMultiset, multisetFrom(iterable));
+                    intersectionMultiset, HashMultiset.create(iterable));
         }
         return intersectionMultiset;
     }
 
     public static <T> Multiset<T> difference(Iterable<? extends Iterable<? extends T>> iterables) {
-        Multiset<T> differences = multisetFrom(first(iterables).get());
+        Multiset<T> differences = HashMultiset.create(first(iterables).get());
         for (Iterable<? extends T> iterable : rest(iterables)) {
             for (T item : iterable) {
                 differences.remove(item);

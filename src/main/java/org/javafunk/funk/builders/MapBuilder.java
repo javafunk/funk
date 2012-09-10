@@ -36,7 +36,7 @@ public class MapBuilder<K, V>
     }
 
     @Override public Map<K, V> build() {
-        return new HashMap<K, V>(elements);
+        return Collections.unmodifiableMap(new HashMap<K, V>(elements));
     }
 
     @Override public Map<K, V> build(Class<? extends Map> implementationClass) {

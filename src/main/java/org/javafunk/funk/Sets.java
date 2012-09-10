@@ -46,7 +46,7 @@ public class Sets {
         if(arguments.isEmpty()){
             return new HashSet<T>();
         }else{
-            Set<T> differenceSet = asSet(first(arguments).get());
+            Set<T> differenceSet = setBuilderFrom(first(arguments).get()).build(HashSet.class);
             differenceSet.removeAll(union(rest(arguments)));
             return differenceSet;
         }

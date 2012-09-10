@@ -11,6 +11,7 @@ package org.javafunk.funk.datastructures.tuples;
 import org.javafunk.funk.behaviours.ordinals.First;
 import org.junit.Test;
 
+import java.util.Collection;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -18,6 +19,8 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.listBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class SingleTest {
     @Test
@@ -73,13 +76,13 @@ public class SingleTest {
     @Test
     public void shouldBeIterable() {
         // Given
-        Single<Integer> single1 = tuple(5);
+        Single<Integer> single = tuple(5);
         List<Object> expected = listBuilderOf(Object.class).with(5).build();
 
         // When
-        Boolean isEqual = materialize(single1).equals(expected);
+        Collection<Object> actual = materialize(single);
 
         // Then
-        assertThat(isEqual, is(true));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 }

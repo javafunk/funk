@@ -23,6 +23,7 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.collectionBuilderWith;
 import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.builders.CollectionBuilder.collectionBuilder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
 import static org.junit.Assert.fail;
 
 public class CollectionBuilderTest {
@@ -39,7 +40,7 @@ public class CollectionBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test
@@ -56,7 +57,7 @@ public class CollectionBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test
@@ -74,7 +75,7 @@ public class CollectionBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test
@@ -91,7 +92,7 @@ public class CollectionBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test
@@ -108,7 +109,7 @@ public class CollectionBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test
@@ -125,7 +126,7 @@ public class CollectionBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test
@@ -149,7 +150,7 @@ public class CollectionBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test
@@ -173,7 +174,7 @@ public class CollectionBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test
@@ -187,7 +188,7 @@ public class CollectionBuilderTest {
 
         // Then
         assertThat(actual instanceof TreeSet, is(true));
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test
@@ -245,7 +246,7 @@ public class CollectionBuilderTest {
 
         // Then
         assertThat(actual instanceof Stack, is(true));
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     private static class NoNoArgsConstructorStack<E> extends Stack<E> {

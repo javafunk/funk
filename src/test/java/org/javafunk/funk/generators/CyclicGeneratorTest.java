@@ -13,6 +13,8 @@ import org.javafunk.funk.functors.Action;
 import org.javafunk.matchbox.SelfDescribingPredicate;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Eagerly.times;
@@ -20,7 +22,10 @@ import static org.javafunk.funk.Generators.toGeneratable;
 import static org.javafunk.funk.Lazily.batch;
 import static org.javafunk.funk.Lazily.take;
 import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.funk.Literals.listBuilderWith;
+import static org.javafunk.funk.Literals.listWith;
 import static org.javafunk.matchbox.Matchers.hasAllElementsSatisfying;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class CyclicGeneratorTest {
     @Test
@@ -35,7 +40,7 @@ public class CyclicGeneratorTest {
         // Then
         assertThat(actualValues, hasAllElementsSatisfying(new SelfDescribingPredicate<Iterable<Integer>>() {
             @Override public boolean evaluate(Iterable<Integer> batch) {
-                return batch.equals(expectedValues);
+                return hasOnlyItemsInOrder(expectedValues).matches(batch);
             }
 
             @Override public String describe() {
@@ -47,9 +52,9 @@ public class CyclicGeneratorTest {
     @Test
     public void shouldBeEqualIfSuppliedIterableIsTheSameAndCursorPositionThroughTheIterableIsTheSame() throws Exception {
         // Given
-        Generator<Integer> firstGenerator = new CyclicGenerator<Integer>(iterableWith(1, 2, 3));
+        Generator<Integer> firstGenerator = new CyclicGenerator<Integer>(listBuilderWith(1, 2, 3).build(ArrayList.class));
         times(10, progress(firstGenerator));
-        Generator<Integer> secondGenerator = new CyclicGenerator<Integer>(iterableWith(1, 2, 3));
+        Generator<Integer> secondGenerator = new CyclicGenerator<Integer>(listBuilderWith(1, 2, 3).build(ArrayList.class));
         times(10, progress(secondGenerator));
 
         // When
@@ -62,9 +67,9 @@ public class CyclicGeneratorTest {
     @Test
     public void shouldBeEqualIfSuppliedIterableIsTheSameAndNextElementWouldBeTheSameEvenIfCycleCountDifferent() throws Exception {
         // Given
-        Generator<Integer> firstGenerator = new CyclicGenerator<Integer>(iterableWith(1, 2, 3));
+        Generator<Integer> firstGenerator = new CyclicGenerator<Integer>(listBuilderWith(1, 2, 3).build(ArrayList.class));
         times(13, progress(firstGenerator));
-        Generator<Integer> secondGenerator = new CyclicGenerator<Integer>(iterableWith(1, 2, 3));
+        Generator<Integer> secondGenerator = new CyclicGenerator<Integer>(listBuilderWith(1, 2, 3).build(ArrayList.class));
         times(16, progress(secondGenerator));
 
         // When

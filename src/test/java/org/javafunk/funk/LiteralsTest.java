@@ -30,6 +30,7 @@ import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Dog.dog;
 import static org.javafunk.funk.testclasses.Location.location;
 import static org.javafunk.funk.testclasses.Name.name;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 import static org.junit.Assert.fail;
 
@@ -42,7 +43,7 @@ public class LiteralsTest {
         Iterable<Integer> actual = iterable();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
     @Test public void shouldReturnAnEmptyIterableWithElementsOfTheSpecifiedType() throws Exception {
@@ -50,7 +51,7 @@ public class LiteralsTest {
         Iterable<Integer> expected = new ArrayList<Integer>();
 
         // Then
-        assertThat(iterableOf(Integer.class), is(expected));
+        assertThat(iterableOf(Integer.class), hasOnlyItemsInOrder(expected));
     }
 
     @Test public void shouldReturnAnIterableContainingTheSuppliedElements() {
@@ -61,7 +62,7 @@ public class LiteralsTest {
         Iterable<Integer> actual = iterableWith(5, 10, 15);
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
     @Test public void shouldReturnAnIterableContainingAllElementsInTheSuppliedIterable() {
@@ -73,7 +74,7 @@ public class LiteralsTest {
         Iterable<Integer> actual = iterableFrom(elements);
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
     @Test public void shouldReturnAnIterableContainingAllElementsInTheSuppliedArray() {
@@ -85,7 +86,7 @@ public class LiteralsTest {
         Iterable<Integer> actual = iterableFrom(elements);
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
     @Test public void shouldReturnAnEmptyIterableBuilder() throws Exception {
@@ -258,7 +259,7 @@ public class LiteralsTest {
         Collection<Integer> actual = collection();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test public void shouldReturnAnEmptyCollectionWithElementsOfTheSpecifiedType() throws Exception {
@@ -266,7 +267,7 @@ public class LiteralsTest {
         Collection<Integer> expected = new ArrayList<Integer>();
 
         // Then
-        assertThat(collectionOf(Integer.class), is(expected));
+        assertThat(collectionOf(Integer.class), hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test public void shouldReturnAnCollectionContainingTheSuppliedElements() {
@@ -277,7 +278,7 @@ public class LiteralsTest {
         Collection<Integer> actual = collectionWith(5, 10, 15);
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test public void shouldReturnAnCollectionContainingAllElementsInTheSuppliedIterable() {
@@ -289,7 +290,7 @@ public class LiteralsTest {
         Collection<Integer> actual = collectionFrom(elements);
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test public void shouldReturnAnCollectionContainingAllElementsInTheSuppliedArray() {
@@ -301,7 +302,7 @@ public class LiteralsTest {
         Collection<Integer> actual = collectionFrom(elements);
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test public void shouldReturnAnEmptyCollectionBuilder() throws Exception {

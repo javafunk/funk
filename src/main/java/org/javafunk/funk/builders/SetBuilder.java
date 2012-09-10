@@ -31,7 +31,7 @@ public class SetBuilder<E>
     }
 
     @Override public Set<E> build() {
-        return new HashSet<E>(elements);
+        return Collections.unmodifiableSet(new HashSet<E>(elements));
     }
 
     @Override public Set<E> build(Class<? extends Set> implementationClass) {

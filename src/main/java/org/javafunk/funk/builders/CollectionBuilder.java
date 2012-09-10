@@ -31,7 +31,7 @@ public class CollectionBuilder<E>
     }
 
     @Override public Collection<E> build() {
-        return new ArrayList<E>(elements);
+        return Collections.unmodifiableCollection(new ArrayList<E>(elements));
     }
 
     @Override public Collection<E> build(Class<? extends Collection> implementationClass) {

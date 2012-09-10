@@ -12,12 +12,15 @@ import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.Indexer;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class EagerlyGroupIndexTest {
     @Test
@@ -25,17 +28,17 @@ public class EagerlyGroupIndexTest {
         // Given
         Iterable<String> input = iterableWith("apple", "pear", "lemon", "apricot", "orange", "papaya", "banana");
 
-        Collection<String> fourLetterFruits = collectionWith("pear");
-        Collection<String> fiveLetterFruits = collectionWith("apple", "lemon");
-        Collection<String> sixLetterFruits = collectionWith("orange", "papaya", "banana");
-        Collection<String> sevenLetterFruits = collectionWith("apricot");
+        Collection<String> fourLetterFruits = collectionBuilderWith("pear").build(ArrayList.class);
+        Collection<String> fiveLetterFruits = collectionBuilderWith("apple", "lemon").build(ArrayList.class);
+        Collection<String> sixLetterFruits = collectionBuilderWith("orange", "papaya", "banana").build(ArrayList.class);
+        Collection<String> sevenLetterFruits = collectionBuilderWith("apricot").build(ArrayList.class);
 
         Map<Integer, Collection<String>> expectedOutput =
                 mapBuilderWith(4, fourLetterFruits)
                         .andKeyValuePair(5, fiveLetterFruits)
                         .andKeyValuePair(6, sixLetterFruits)
                         .andKeyValuePair(7, sevenLetterFruits)
-                        .build();
+                        .build(HashMap.class);
 
         // When
         Map<Integer, Collection<String>> actualOutput = Eagerly.group(input, new Indexer<String, Integer>() {
@@ -69,6 +72,6 @@ public class EagerlyGroupIndexTest {
         });
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 }

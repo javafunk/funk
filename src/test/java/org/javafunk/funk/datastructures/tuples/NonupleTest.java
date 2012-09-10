@@ -26,6 +26,8 @@ import static org.javafunk.funk.testclasses.Age.age;
 import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Location.location;
 import static org.javafunk.funk.testclasses.Name.name;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class NonupleTest {
     @Test
@@ -302,16 +304,16 @@ public class NonupleTest {
     @Test
     public void shouldBeIterable() {
         // Given
-        Nonuple<Integer, String, Boolean, Double, Long, Name, Colour, Age, Location> nonuple1 =
+        Nonuple<Integer, String, Boolean, Double, Long, Name, Colour, Age, Location> nonuple =
                 tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"));
         Collection<Object> expected = collectionBuilderOf(Object.class)
                 .with(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"))
                 .build();
 
         // When
-        Boolean isEqual = materialize(nonuple1).equals(expected);
+        Collection<Object> actual = materialize(nonuple);
 
         // Then
-        assertThat(isEqual, is(true));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 }

@@ -10,6 +10,7 @@ package org.javafunk.funk.builders;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
+import com.google.common.collect.Multisets;
 import org.javafunk.funk.Classes;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 
@@ -31,7 +32,7 @@ public class MultisetBuilder<E>
     }
 
     @Override public Multiset<E> build() {
-        return HashMultiset.create(elements);
+        return Multisets.unmodifiableMultiset(HashMultiset.create(elements));
     }
 
     @Override public Multiset<E> build(Class<? extends Multiset> implementationClass) {

@@ -10,6 +10,7 @@ package org.javafunk.funk;
 
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -39,7 +40,7 @@ public class MapsTest {
         Map<Integer, String> inputMap = mapBuilderWith(1, "one")
                 .andKeyValuePair(2, "two")
                 .andKeyValuePair(3, "three")
-                .build();
+                .build(HashMap.class);
 
         // When
         String value = getOrAddDefault(inputMap, 5, defaultValueFactory());
@@ -54,7 +55,7 @@ public class MapsTest {
         Map<Integer, String> inputMap = mapBuilderWith(1, "one")
                 .andKeyValuePair(2, "two")
                 .andKeyValuePair(3, "three")
-                .build();
+                .build(HashMap.class);
 
         // When
         getOrAddDefault(inputMap, 5, defaultValueFactory());
