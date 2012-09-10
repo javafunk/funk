@@ -12,6 +12,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 
+import java.util.Collection;
+
 import static java.lang.String.format;
 import static org.javafunk.funk.Literals.iterableWith;
 
@@ -52,8 +54,9 @@ public abstract class AbstractBuilder<E, B extends AbstractBuilder, C> {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-    public static interface WithCustomImplementationSupport<S, C extends S> {
+    public static interface WithCustomImplementationSupport<E, S, C extends S> {
         C build(Class<? extends S> implementationClass);
+        C build(UnaryFunction<? super Iterable<E>, ? extends C> builderFunction);
     }
 
     public B with(E e) { return and(iterableWith(e)); }

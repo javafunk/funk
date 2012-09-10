@@ -11,7 +11,9 @@ package org.javafunk.funk.builders;
 import org.javafunk.funk.Classes;
 import org.javafunk.funk.Tuples;
 import org.javafunk.funk.datastructures.tuples.Pair;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +24,7 @@ import static org.javafunk.funk.Literals.mapEntryFor;
 
 public class MapBuilder<K, V>
         extends AbstractBuilder<Map.Entry<K, V>, MapBuilder<K, V>, Map<K, V>>
-        implements AbstractBuilder.WithCustomImplementationSupport<Map, Map<K, V>> {
+        implements AbstractBuilder.WithCustomImplementationSupport<Map.Entry<K, V>, Map, Map<K, V>> {
     private Map<K, V> elements = new HashMap<K, V>();
 
     public static <K, V> MapBuilder<K, V> mapBuilder() {
@@ -42,6 +44,10 @@ public class MapBuilder<K, V>
         Map<K, V> map = (Map<K, V>) Classes.uncheckedInstantiate(implementationClass);
         map.putAll(elements);
         return map;
+    }
+
+    @Override public Map<K, V> build(UnaryFunction<? super Iterable<Map.Entry<K, V>>, ? extends Map<K, V>> builderFunction) {
+        return builderFunction.call(Collections.unmodifiableSet(elements.entrySet()));
     }
 
     public MapBuilder<K, V> andPairs(Pair<K, V>[] pairs) {

@@ -9,6 +9,7 @@
 package org.javafunk.funk.builders;
 
 import com.google.common.collect.ImmutableList;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -223,6 +224,28 @@ public class CollectionBuilderTest {
                             "Could not instantiate instance of type NoNoArgsConstructorStack. " +
                                     "Does it have a public no argument constructor?"));
         }
+    }
+
+    @Test
+    public void shouldPassAccumulatedElementsToTheSuppliedBuilderFunctionAndReturnTheResult() throws Exception {
+        // Given
+        CollectionBuilder<Integer> collectionBuilder = collectionBuilderWith(1, 2, 3);
+        Collection<Integer> expected = collectionWith(1, 2, 3);
+
+        // When
+        Collection<Integer> actual = collectionBuilder.build(new UnaryFunction<Iterable<Integer>, Collection<Integer>>() {
+            @Override public Collection<Integer> call(Iterable<Integer> elements) {
+                Stack<Integer> collection = new Stack<Integer>();
+                for (Integer element : elements) {
+                    collection.push(element);
+                }
+                return collection;
+            }
+        });
+
+        // Then
+        assertThat(actual instanceof Stack, is(true));
+        assertThat(actual, is(expected));
     }
 
     private static class NoNoArgsConstructorStack<E> extends Stack<E> {

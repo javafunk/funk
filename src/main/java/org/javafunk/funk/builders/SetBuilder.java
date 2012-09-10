@@ -9,7 +9,9 @@
 package org.javafunk.funk.builders;
 
 import org.javafunk.funk.Classes;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +19,7 @@ import static java.lang.String.format;
 
 public class SetBuilder<E>
         extends AbstractBuilder<E, SetBuilder<E>, Set<E>>
-        implements AbstractBuilder.WithCustomImplementationSupport<Set, Set<E>> {
+        implements AbstractBuilder.WithCustomImplementationSupport<E, Set, Set<E>> {
     private Set<E> elements = new HashSet<E>();
 
     public static <E> SetBuilder<E> setBuilder() {
@@ -37,6 +39,10 @@ public class SetBuilder<E>
         Set<E> set = (Set<E>) Classes.uncheckedInstantiate(implementationClass);
         set.addAll(elements);
         return set;
+    }
+
+    @Override public Set<E> build(UnaryFunction<? super Iterable<E>, ? extends Set<E>> builderFunction) {
+        return builderFunction.call(Collections.unmodifiableSet(elements));
     }
 
     @Override protected void handle(E element) {

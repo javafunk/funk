@@ -10,11 +10,10 @@ package org.javafunk.funk.builders;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -234,6 +233,24 @@ public class SetBuilderTest {
                             "Could not instantiate instance of type NoNoArgsConstructorSet. " +
                                     "Does it have a public no argument constructor?"));
         }
+    }
+
+    @Test
+    public void shouldPassAccumulatedElementsToTheSuppliedBuilderFunctionAndReturnTheResult() throws Exception {
+        // Given
+        SetBuilder<Integer> setBuilder = setBuilderWith(1, 2, 3);
+        Set<Integer> expected = setWith(1, 2, 3);
+
+        // When
+        Set<Integer> actual = setBuilder.build(new UnaryFunction<Iterable<Integer>, Set<Integer>>() {
+            @Override public Set<Integer> call(Iterable<Integer> elements) {
+                return ImmutableSet.copyOf(elements);
+            }
+        });
+
+        // Then
+        assertThat(actual instanceof ImmutableSet, is(true));
+        assertThat(actual, is(expected));
     }
 
     private static class NoNoArgsConstructorSet<E> extends HashSet<E> {

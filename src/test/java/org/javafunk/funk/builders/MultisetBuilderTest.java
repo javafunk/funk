@@ -8,21 +8,22 @@
  */
 package org.javafunk.funk.builders;
 
+import com.google.common.collect.ConcurrentHashMultiset;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Stack;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.collectionBuilderWith;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.multisetBuilderWith;
+import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.builders.MultisetBuilder.multisetBuilder;
 import static org.junit.Assert.fail;
 
@@ -234,6 +235,24 @@ public class MultisetBuilderTest {
                             "Could not instantiate instance of type SomeArgsConstructorMultiset. " +
                                     "Does it have a public no argument constructor?"));
         }
+    }
+
+    @Test
+    public void shouldPassAccumulatedElementsToTheSuppliedBuilderFunctionAndReturnTheResult() throws Exception {
+        // Given
+        MultisetBuilder<Integer> multisetBuilder = multisetBuilderWith(1, 2, 3);
+        Multiset<Integer> expected = multisetWith(1, 2, 3);
+
+        // When
+        Multiset<Integer> actual = multisetBuilder.build(new UnaryFunction<Iterable<Integer>, Multiset<Integer>>() {
+            @Override public Multiset<Integer> call(Iterable<Integer> elements) {
+                return ConcurrentHashMultiset.create(elements);
+            }
+        });
+
+        // Then
+        assertThat(actual instanceof ConcurrentHashMultiset, is(true));
+        assertThat(actual, is(expected));
     }
 
     public static class NoArgsConstructorMultiset<E> extends StubMultiset<E> {

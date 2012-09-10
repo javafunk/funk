@@ -11,11 +11,10 @@ package org.javafunk.funk.builders;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.javafunk.funk.datastructures.tuples.Pair;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -385,6 +384,28 @@ public class MapBuilderTest {
                             "Could not instantiate instance of type NoNoArgsConstructorMap. " +
                                     "Does it have a public no argument constructor?"));
         }
+    }
+
+    @Test
+    public void shouldPassAccumulatedElementsToTheSuppliedBuilderFunctionAndReturnTheResult() throws Exception {
+        // Given
+        MapBuilder<String, Integer> mapBuilder = mapBuilderWith("first", 1);
+        Map<String, Integer> expected = mapWith("first", 1);
+
+        // When
+        Map<String, Integer> actual = mapBuilder.build(new UnaryFunction<Iterable<Map.Entry<String, Integer>>, Map<String, Integer>>() {
+            @Override public Map<String, Integer> call(Iterable<Map.Entry<String, Integer>> elements) {
+                ImmutableMap.Builder<String, Integer> builder = ImmutableMap.builder();
+                for (Map.Entry<String, Integer> element : elements) {
+                    builder.put(element.getKey(), element.getValue());
+                }
+                return builder.build();
+            }
+        });
+
+        // Then
+        assertThat(actual instanceof ImmutableMap, is(true));
+        assertThat(actual, is(expected));
     }
 
     private static class NoNoArgsConstructorMap<K, V> extends HashMap<K, V> {

@@ -11,12 +11,15 @@ package org.javafunk.funk.builders;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import org.javafunk.funk.Classes;
+import org.javafunk.funk.functors.functions.UnaryFunction;
+
+import java.util.Collections;
 
 import static java.lang.String.format;
 
 public class MultisetBuilder<E>
         extends AbstractBuilder<E, MultisetBuilder<E>, Multiset<E>>
-        implements AbstractBuilder.WithCustomImplementationSupport<Multiset, Multiset<E>> {
+        implements AbstractBuilder.WithCustomImplementationSupport<E, Multiset, Multiset<E>> {
     private HashMultiset<E> elements = HashMultiset.create();
 
     public static <E> MultisetBuilder<E> multisetBuilder() {
@@ -36,6 +39,10 @@ public class MultisetBuilder<E>
         Multiset<E> multiset = (Multiset<E>) Classes.uncheckedInstantiate(implementationClass);
         multiset.addAll(elements);
         return multiset;
+    }
+
+    @Override public Multiset<E> build(UnaryFunction<? super Iterable<E>, ? extends Multiset<E>> builderFunction) {
+        return builderFunction.call(Collections.unmodifiableCollection(elements));
     }
 
     @Override protected void handle(E element) {

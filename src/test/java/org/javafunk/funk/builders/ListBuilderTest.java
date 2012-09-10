@@ -9,11 +9,10 @@
 package org.javafunk.funk.builders;
 
 import com.google.common.collect.ImmutableList;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -233,6 +232,24 @@ public class ListBuilderTest {
                             "Could not instantiate instance of type NoNoArgsConstructorList. " +
                                     "Does it have a public no argument constructor?"));
         }
+    }
+
+    @Test
+    public void shouldPassAccumulatedElementsToTheSuppliedBuilderFunctionAndReturnTheResult() throws Exception {
+        // Given
+        ListBuilder<Integer> listBuilder = listBuilderWith(1, 2, 3);
+        List<Integer> expected = listWith(1, 2, 3);
+
+        // When
+        List<Integer> actual = listBuilder.build(new UnaryFunction<Iterable<Integer>, List<Integer>>() {
+            @Override public List<Integer> call(Iterable<Integer> elements) {
+                return ImmutableList.copyOf(elements);
+            }
+        });
+
+        // Then
+        assertThat(actual instanceof ImmutableList, is(true));
+        assertThat(actual, is(expected));
     }
     
     private static class NoNoArgsConstructorList<E> extends ArrayList<E> {

@@ -9,15 +9,17 @@
 package org.javafunk.funk.builders;
 
 import org.javafunk.funk.Classes;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import static java.lang.String.format;
 
 public class CollectionBuilder<E>
         extends AbstractBuilder<E, CollectionBuilder<E>, Collection<E>>
-        implements AbstractBuilder.WithCustomImplementationSupport<Collection, Collection<E>> {
+        implements AbstractBuilder.WithCustomImplementationSupport<E, Collection, Collection<E>> {
     private Collection<E> elements = new ArrayList<E>();
 
     public static <E> CollectionBuilder<E> collectionBuilder() {
@@ -37,6 +39,10 @@ public class CollectionBuilder<E>
         Collection<E> collection = Classes.uncheckedInstantiate(implementationClass);
         collection.addAll(elements);
         return collection;
+    }
+
+    @Override public Collection<E> build(UnaryFunction<? super Iterable<E>, ? extends Collection<E>> builderFunction) {
+        return builderFunction.call(Collections.unmodifiableCollection(elements));
     }
 
     @Override protected void handle(E element) {
