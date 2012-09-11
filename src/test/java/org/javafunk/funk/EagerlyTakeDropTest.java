@@ -13,12 +13,11 @@ import org.junit.Test;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.*;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class EagerlyTakeDropTest {
     @Test
@@ -31,7 +30,7 @@ public class EagerlyTakeDropTest {
         Collection<String> actualOutput = Eagerly.take(input, 5);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -58,7 +57,7 @@ public class EagerlyTakeDropTest {
         Collection<String> actualOutput = Eagerly.take(input, numberToTake);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -83,7 +82,7 @@ public class EagerlyTakeDropTest {
         Collection<String> actualOutput = Eagerly.drop(input, 5);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -110,7 +109,7 @@ public class EagerlyTakeDropTest {
         Collection<String> actualOutput = Eagerly.drop(input, numberToDrop);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -139,7 +138,7 @@ public class EagerlyTakeDropTest {
         });
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -156,7 +155,7 @@ public class EagerlyTakeDropTest {
         });
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -174,7 +173,7 @@ public class EagerlyTakeDropTest {
         });
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -192,6 +191,6 @@ public class EagerlyTakeDropTest {
         });
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 }

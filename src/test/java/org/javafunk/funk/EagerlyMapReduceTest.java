@@ -12,6 +12,7 @@ import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.Reducer;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,6 +20,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.javafunk.funk.Accumulators.longAdditionAccumulator;
 import static org.javafunk.funk.Literals.*;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class EagerlyMapReduceTest {
     @Test
@@ -36,7 +39,7 @@ public class EagerlyMapReduceTest {
         });
 
         // Then
-        assertThat(actualOutputs, is(expectedOutputs));
+        assertThat(actualOutputs, hasOnlyItemsInOrder(expectedOutputs));
     }
 
     @Test
@@ -55,9 +58,9 @@ public class EagerlyMapReduceTest {
     public void shouldReduceToTheSameTypeUsingACustomReduceFunction() throws Exception {
         // Given
         List<List<Integer>> inputLists = listWith(
-                listWith(1, 2, 3),
-                listWith(4, 5, 6),
-                listWith(7, 8, 9));
+                listBuilderWith(1, 2, 3).build(ArrayList.class),
+                listBuilderWith(4, 5, 6).build(ArrayList.class),
+                listBuilderWith(7, 8, 9).build(ArrayList.class));
 
         // When
         List<Integer> actual = Eagerly.reduce(inputLists, new Reducer<List<Integer>, List<Integer>>() {

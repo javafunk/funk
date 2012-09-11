@@ -8,8 +8,10 @@
  */
 package org.javafunk.funk.iterators;
 
+import com.sun.org.apache.bcel.internal.generic.ALOAD;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -19,7 +21,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.javafunk.funk.Iterators.emptyIterator;
 import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.funk.Literals.listBuilderWith;
 import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class ChainedIteratorTest {
     @Test
@@ -104,8 +108,8 @@ public class ChainedIteratorTest {
     @Test
     public void shouldRemoveFromTheUnderlyingIterator() throws Exception {
         // Given
-        List<Integer> firstList = listWith(1, 2);
-        List<Integer> secondList = listWith(3, 4);
+        List<Integer> firstList = listBuilderWith(1, 2).build(ArrayList.class);
+        List<Integer> secondList = listBuilderWith(3, 4).build(ArrayList.class);
         Iterator<Integer> firstIterator = firstList.iterator();
         Iterator<Integer> secondIterator = secondList.iterator();
 
@@ -123,15 +127,15 @@ public class ChainedIteratorTest {
         List<Integer> expectedFirstList = listWith(1);
         List<Integer> expectedSecondList = listWith(4);
 
-        assertThat(firstList, is(expectedFirstList));
-        assertThat(secondList, is(expectedSecondList));
+        assertThat(firstList, hasOnlyItemsInOrder(expectedFirstList));
+        assertThat(secondList, hasOnlyItemsInOrder(expectedSecondList));
     }
 
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledBeforeNext() throws Exception {
         // Given
-        Iterator<Integer> firstIterator = iterableWith(1).iterator();
-        Iterator<Integer> secondIterator = iterableWith(2).iterator();
+        Iterator<Integer> firstIterator = listBuilderWith(1).build(ArrayList.class).iterator();
+        Iterator<Integer> secondIterator = listBuilderWith(2).build(ArrayList.class).iterator();
 
         // When
         Iterator<Integer> chainedIterator = new ChainedIterator<Integer>(firstIterator, secondIterator);
@@ -145,8 +149,8 @@ public class ChainedIteratorTest {
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledMoreThanOnceInARow() throws Exception {
         // Given
-        Iterator<Integer> firstIterator = iterableWith(1).iterator();
-        Iterator<Integer> secondIterator = iterableWith(2).iterator();
+        Iterator<Integer> firstIterator = listBuilderWith(1).build(ArrayList.class).iterator();
+        Iterator<Integer> secondIterator = listBuilderWith(2).build(ArrayList.class).iterator();
 
         // When
         Iterator<Integer> chainedIterator = new ChainedIterator<Integer>(firstIterator, secondIterator);

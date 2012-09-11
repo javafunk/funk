@@ -21,6 +21,8 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class QuadrupleTest {
     @Test
@@ -151,15 +153,15 @@ public class QuadrupleTest {
     @Test
     public void shouldBeIterable() {
         // Given
-        Quadruple<Integer, String, Boolean, Double> quadruple1 = tuple(5, "Five", true, 3.6);
+        Quadruple<Integer, String, Boolean, Double> quadruple = tuple(5, "Five", true, 3.6);
         Collection<Object> expected = collectionBuilderOf(Object.class)
                 .with(5, "Five", true, 3.6)
                 .build();
 
         // When
-        Boolean isEqual = materialize(quadruple1).equals(expected);
+        Collection<Object> actual = materialize(quadruple);
 
         // Then
-        assertThat(isEqual, is(true));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 }

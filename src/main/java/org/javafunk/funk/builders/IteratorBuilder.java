@@ -9,6 +9,7 @@
 package org.javafunk.funk.builders;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class IteratorBuilder<E> extends AbstractBuilder<E, IteratorBuilder<E>, I
     }
 
     @Override public Iterator<E> build() {
-        return new ArrayList<E>(elements).iterator();
+        return Collections.unmodifiableList(new ArrayList<E>(elements)).iterator();
     }
 
     @Override protected void handle(E element) {

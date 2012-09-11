@@ -20,6 +20,8 @@ import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.testclasses.Name.name;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class SextupleTest {
     @Test
@@ -200,15 +202,15 @@ public class SextupleTest {
     @Test
     public void shouldBeIterable() {
         // Given
-        Sextuple<Integer, String, Boolean, Double, Long, Name> sextuple1 = tuple(5, "Five", true, 3.6, 23L, name("fred"));
+        Sextuple<Integer, String, Boolean, Double, Long, Name> sextuple = tuple(5, "Five", true, 3.6, 23L, name("fred"));
         Collection<Object> expected = collectionBuilderOf(Object.class)
                 .with(5, "Five", true, 3.6, 23L, name("fred"))
                 .build();
 
         // When
-        Boolean isEqual = materialize(sextuple1).equals(expected);
+        Collection<Object> actual = materialize(sextuple);
 
         // Then
-        assertThat(isEqual, is(true));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 }

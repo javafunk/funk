@@ -10,10 +10,17 @@ package org.javafunk.funk.builders;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
+import com.google.common.collect.Multisets;
+import org.javafunk.funk.Classes;
+import org.javafunk.funk.functors.functions.UnaryFunction;
+
+import java.util.Collections;
+
+import static java.lang.String.format;
 
 public class MultisetBuilder<E>
         extends AbstractBuilder<E, MultisetBuilder<E>, Multiset<E>>
-        implements AbstractBuilder.WithCustomImplementationSupport<Multiset, Multiset<E>> {
+        implements AbstractBuilder.WithCustomImplementationSupport<E, Multiset, Multiset<E>> {
     private HashMultiset<E> elements = HashMultiset.create();
 
     public static <E> MultisetBuilder<E> multisetBuilder() {
@@ -25,16 +32,18 @@ public class MultisetBuilder<E>
     }
 
     @Override public Multiset<E> build() {
-        return HashMultiset.create(elements);
+        return Multisets.unmodifiableMultiset(HashMultiset.create(elements));
     }
 
-    @Override
-    public Multiset<E> build(Class<? extends Multiset> implementationClass)
-            throws IllegalAccessException, InstantiationException {
+    @Override public Multiset<E> build(Class<? extends Multiset> implementationClass) {
         @SuppressWarnings("unchecked")
-        Multiset<E> multiset = (Multiset<E>) implementationClass.newInstance();
+        Multiset<E> multiset = (Multiset<E>) Classes.uncheckedInstantiate(implementationClass);
         multiset.addAll(elements);
         return multiset;
+    }
+
+    @Override public Multiset<E> build(UnaryFunction<? super Iterable<E>, ? extends Multiset<E>> builderFunction) {
+        return builderFunction.call(Collections.unmodifiableCollection(elements));
     }
 
     @Override protected void handle(E element) {

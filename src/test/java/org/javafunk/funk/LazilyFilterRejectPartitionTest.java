@@ -19,6 +19,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.*;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 import static org.junit.Assert.assertThat;
 
 public class LazilyFilterRejectPartitionTest {
@@ -36,7 +37,7 @@ public class LazilyFilterRejectPartitionTest {
         }));
 
         // Then
-        assertThat(actualOutputs, is(expectedOutputs));
+        assertThat(actualOutputs, hasOnlyItemsInOrder(expectedOutputs));
     }
 
     @Test
@@ -76,7 +77,7 @@ public class LazilyFilterRejectPartitionTest {
         }));
 
         // Then
-        assertThat(actualOutputs, is(expectedOutputs));
+        assertThat(actualOutputs, hasOnlyItemsInOrder(expectedOutputs));
     }
 
     @Test
@@ -125,8 +126,8 @@ public class LazilyFilterRejectPartitionTest {
         Collection<Integer> actualMatchingItems = materialize(partitionResults.first());
         Collection<Integer> actualNonMatchingItems = materialize(partitionResults.second());
 
-        assertThat(actualMatchingItems, is(expectedMatchingItems));
-        assertThat(actualNonMatchingItems, is(expectedNonMatchingItems));
+        assertThat(actualMatchingItems, hasOnlyItemsInOrder(expectedMatchingItems));
+        assertThat(actualNonMatchingItems, hasOnlyItemsInOrder(expectedNonMatchingItems));
     }
 
     @Test

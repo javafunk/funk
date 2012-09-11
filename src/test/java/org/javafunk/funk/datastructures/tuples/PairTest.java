@@ -19,6 +19,8 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class PairTest {
     @Test
@@ -112,15 +114,15 @@ public class PairTest {
     @Test
     public void shouldBeIterable() {
         // Given
-        Pair<Integer, String> pair1 = tuple(5, "Five");
+        Pair<Integer, String> pair = tuple(5, "Five");
         Collection<Object> expected = collectionBuilderOf(Object.class)
                 .with(5, "Five")
                 .build();
 
         // When
-        Boolean isEqual = materialize(pair1).equals(expected);
+        Collection<Object> actual = materialize(pair);
 
         // Then
-        assertThat(isEqual, is(true));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 }

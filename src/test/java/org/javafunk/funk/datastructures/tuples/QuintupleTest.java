@@ -18,6 +18,8 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class QuintupleTest {
     @Test
@@ -173,15 +175,15 @@ public class QuintupleTest {
     @Test
     public void shouldBeIterable() {
         // Given
-        Quintuple<Integer, String, Boolean, Double, Long> quintuple1 = tuple(5, "Five", true, 3.6, 23L);
+        Quintuple<Integer, String, Boolean, Double, Long> quintuple = tuple(5, "Five", true, 3.6, 23L);
         Collection<Object> expected = collectionBuilderOf(Object.class)
                 .with(5, "Five", true, 3.6, 23L)
                 .build();
 
         // When
-        Boolean isEqual = materialize(quintuple1).equals(expected);
+        Collection<Object> actual = materialize(quintuple);
 
         // Then
-        assertThat(isEqual, is(true));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 }

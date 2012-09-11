@@ -8,18 +8,20 @@
  */
 package org.javafunk.funk.builders;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.builders.SetBuilder.setBuilder;
+import static org.junit.Assert.fail;
 
 public class SetBuilderTest {
     @Test
@@ -197,26 +199,58 @@ public class SetBuilderTest {
         assertThat(actual, is(expected));
     }
 
-    @Test(expected = IllegalAccessException.class)
-    public void shouldThrowAnIllegalAccessExceptionIfTheSpecifiedImplementationDoesNotHaveAnAccessibleConstructor() throws Exception {
+    @Test
+    public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedImplementationDoesNotHaveAnAccessibleConstructor() throws Exception {
         // Given
         SetBuilder<Integer> setBuilder = setBuilderWith(1, 2, 3);
 
-        // When
-        setBuilder.build(ImmutableSet.class);
-
-        // Then an InstantiationException is thrown
+        try {
+            // When
+            setBuilder.build(ImmutableSet.class);
+            fail("Expected an IllegalArgumentException but got nothing.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString(
+                            "Could not instantiate instance of type ImmutableSet. " +
+                                    "Does it have a public no argument constructor?"));
+        }
     }
 
-    @Test(expected = InstantiationException.class)
-    public void shouldThrowAnInstantiationExceptionIfTheSpecifiedImplementationDoesNotHaveANoArgsConstructor() throws Exception {
+    @Test
+    public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedImplementationDoesNotHaveANoArgsConstructor() throws Exception {
         // Given
         SetBuilder<Integer> setBuilder = setBuilderWith(1, 2, 3);
 
-        // When
-        setBuilder.build(NoNoArgsConstructorSet.class);
+        try {
+            // When
+            setBuilder.build(NoNoArgsConstructorSet.class);
+            fail("Expected an IllegalArgumentException but got nothing.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString(
+                            "Could not instantiate instance of type NoNoArgsConstructorSet. " +
+                                    "Does it have a public no argument constructor?"));
+        }
+    }
 
-        // Then an InstantiationException is thrown
+    @Test
+    public void shouldPassAccumulatedElementsToTheSuppliedBuilderFunctionAndReturnTheResult() throws Exception {
+        // Given
+        SetBuilder<Integer> setBuilder = setBuilderWith(1, 2, 3);
+        Set<Integer> expected = setWith(1, 2, 3);
+
+        // When
+        Set<Integer> actual = setBuilder.build(new UnaryFunction<Iterable<Integer>, Set<Integer>>() {
+            @Override public Set<Integer> call(Iterable<Integer> elements) {
+                return ImmutableSet.copyOf(elements);
+            }
+        });
+
+        // Then
+        assertThat(actual instanceof ImmutableSet, is(true));
+        assertThat(actual, is(expected));
     }
 
     private static class NoNoArgsConstructorSet<E> extends HashSet<E> {

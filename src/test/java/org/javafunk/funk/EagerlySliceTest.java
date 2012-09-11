@@ -17,6 +17,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class EagerlySliceTest {
     @Test
@@ -29,7 +31,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, null, 6, 2);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -42,7 +44,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, 4, null, 2);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -55,7 +57,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, 1, 4, null);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -68,7 +70,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, null, null, null);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -92,7 +94,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, 1, 4);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -105,7 +107,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, 2, 9, 2);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -118,7 +120,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, 2, -2, 1);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -131,7 +133,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, -7, 9, 1);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -144,7 +146,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, -7, -2, 1);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -157,7 +159,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, 7, 1, -2);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -170,7 +172,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, -2, 2, -1);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -183,7 +185,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, 9, -8, -1);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -196,7 +198,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, -3, -8, -1);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -209,7 +211,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, -3, 3, 1);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -222,7 +224,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, 2, -2, -1);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -235,7 +237,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, -15, 2, 1);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -248,7 +250,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, 2, -15, -1);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -261,7 +263,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, 6, 20, 1);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -274,7 +276,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, 20, 6, -1);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -287,7 +289,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, 20, 6, 1);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -300,7 +302,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, 6, -15, 1);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -313,7 +315,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, -15, 6, -1);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -326,7 +328,7 @@ public class EagerlySliceTest {
         Collection<String> actualOutput = Eagerly.slice(input, 6, 20, -1);
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -339,7 +341,7 @@ public class EagerlySliceTest {
         Collection<String> actualCompleteSlice = Eagerly.slice(input, 0, null);
 
         // Then
-        assertThat(actualCompleteSlice, is(expectedCompleteSlice));
+        assertThat(actualCompleteSlice, hasOnlyItemsInOrder(expectedCompleteSlice));
     }
 
     @Test
@@ -352,7 +354,7 @@ public class EagerlySliceTest {
         Collection<String> actualFirstToEndSlice = Eagerly.slice(input, 1, null);
 
         // Then
-        assertThat(actualFirstToEndSlice, is(expectedFirstToEndSlice));
+        assertThat(actualFirstToEndSlice, hasOnlyItemsInOrder(expectedFirstToEndSlice));
     }
 
     @Test
@@ -365,7 +367,7 @@ public class EagerlySliceTest {
         Collection<String> actualFirstToEndSlice = Eagerly.slice(input, -1, 0, -1);
 
         // Then
-        assertThat(actualFirstToEndSlice, is(expectedFirstToEndSlice));
+        assertThat(actualFirstToEndSlice, hasOnlyItemsInOrder(expectedFirstToEndSlice));
     }
 
     @Test
@@ -378,7 +380,7 @@ public class EagerlySliceTest {
         Collection<String> actualCompleteSlice = Eagerly.slice(input, 0, null);
 
         // Then
-        assertThat(actualCompleteSlice, is(expectedCompleteSlice));
+        assertThat(actualCompleteSlice, hasOnlyItemsInOrder(expectedCompleteSlice));
     }
 
     @Test
@@ -391,7 +393,7 @@ public class EagerlySliceTest {
         Collection<String> actualCompleteSlice = Eagerly.slice(input, 5, null);
 
         // Then
-        assertThat(actualCompleteSlice, is(expectedCompleteSlice));
+        assertThat(actualCompleteSlice, hasOnlyItemsInOrder(expectedCompleteSlice));
     }
 
     @Test
@@ -404,6 +406,6 @@ public class EagerlySliceTest {
         Collection<String> actualCompleteSlice = Eagerly.slice(input, 5, 0, -1);
 
         // Then
-        assertThat(actualCompleteSlice, is(expectedCompleteSlice));
+        assertThat(actualCompleteSlice, hasOnlyItemsInOrder(expectedCompleteSlice));
     }
 }

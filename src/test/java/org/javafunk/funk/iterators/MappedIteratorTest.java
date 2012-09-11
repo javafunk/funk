@@ -11,6 +11,7 @@ package org.javafunk.funk.iterators;
 import org.javafunk.funk.functors.Mapper;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -18,6 +19,7 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+import static org.javafunk.funk.Literals.collectionBuilderWith;
 import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.Literals.iterableWith;
 
@@ -75,8 +77,8 @@ public class MappedIteratorTest {
     @Test
     public void shouldRemoveTheElementFromTheUnderlyingIterator() {
         // Given
-        Collection<Integer> initialElements = collectionWith(1, 2, 3);
-        Collection<Integer> expectedElements = collectionWith(3);
+        Collection<Integer> initialElements = collectionBuilderWith(1, 2, 3).build(ArrayList.class);
+        Collection<Integer> expectedElements = collectionBuilderWith(3).build(ArrayList.class);
         Iterator<Integer> delegateIterator = initialElements.iterator();
 
         // When
@@ -95,7 +97,7 @@ public class MappedIteratorTest {
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledBeforeNext() throws Exception {
         // Given
-        Iterator<Integer> delegateIterator = iterableWith(1, 2, 3).iterator();
+        Iterator<Integer> delegateIterator = collectionBuilderWith(1, 2, 3).build(ArrayList.class).iterator();
 
         // When
         MappedIterator<Integer, String> iterator = new MappedIterator<Integer, String>(
@@ -110,7 +112,7 @@ public class MappedIteratorTest {
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledMoreThanOnceInARow() throws Exception {
         // Given
-        Iterator<Integer> delegateIterator = iterableWith(1, 2, 3).iterator();
+        Iterator<Integer> delegateIterator = collectionBuilderWith(1, 2, 3).build(ArrayList.class).iterator();
 
         // When
         MappedIterator<Integer, String> iterator = new MappedIterator<Integer, String>(

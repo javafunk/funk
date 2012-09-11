@@ -13,6 +13,7 @@ import org.junit.Test;
 import static org.hamcrest.Matchers.equalTo;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 import static org.junit.Assert.assertThat;
 
 public class LazilyRestTest {
@@ -26,7 +27,7 @@ public class LazilyRestTest {
         Iterable<String> rest = Lazily.rest(iterable);
         
         //then
-        assertThat(materialize(rest), equalTo(expectedRest));
+        assertThat(materialize(rest), hasOnlyItemsInOrder(expectedRest));
     }
 
     @Test
@@ -39,7 +40,7 @@ public class LazilyRestTest {
         Iterable<String> rest = Lazily.rest(iterable);
 
         //then
-        assertThat(materialize(rest), equalTo(expectedRest));
+        assertThat(materialize(rest), hasOnlyItemsInOrder(expectedRest));
     }
 
     @Test
@@ -52,6 +53,6 @@ public class LazilyRestTest {
         Iterable<String> rest = Lazily.rest(iterable);
 
         //then
-        assertThat(materialize(rest), equalTo(expectedRest));
+        assertThat(materialize(rest), hasOnlyItemsInOrder(expectedRest));
     }
 }
