@@ -18,14 +18,14 @@ import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.iterableWith;
 
-public class EagerlySumTest {
+public class NumbersSumTest {
     @Test
     public void shouldSumTheSuppliedIntegers() {
         // Given
         Iterable<Integer> inputs = iterableWith(1, 2, 3);
 
         // When
-        Integer sum = Eagerly.sumIntegers(inputs);
+        Integer sum = Numbers.sum(inputs, Integer.class);
 
         // Then
         assertThat(sum, is(6));
@@ -37,7 +37,7 @@ public class EagerlySumTest {
         Iterable<Long> inputs = iterableWith(1L, 2L, 3L);
 
         // When
-        Long sum = Eagerly.sumLongs(inputs);
+        Long sum = Numbers.sum(inputs, Long.class);
 
         // Then
         assertThat(sum, is(6L));
@@ -49,7 +49,7 @@ public class EagerlySumTest {
         Iterable<BigInteger> inputs = iterableWith(new BigInteger("123"), new BigInteger("234"), new BigInteger("345"));
 
         // When
-        BigInteger sum = Eagerly.sumBigIntegers(inputs);
+        BigInteger sum = Numbers.sum(inputs, BigInteger.class);
 
         // Then
         assertThat(sum, is(new BigInteger("702")));
@@ -61,7 +61,7 @@ public class EagerlySumTest {
         Iterable<Double> inputs = iterableWith(1.6D, 2.2D, 3.5D);
 
         // When
-        Double sum = Eagerly.sumDoubles(inputs);
+        Double sum = Numbers.sum(inputs, Double.class);
 
         // Then
         assertThat(sum, is(closeTo(7.3D, 0.01D)));
@@ -73,7 +73,7 @@ public class EagerlySumTest {
         Iterable<Float> inputs = iterableWith(1.6F, 2.2F, 3.5F);
 
         // When
-        Float sum = Eagerly.sumFloats(inputs);
+        Float sum = Numbers.sum(inputs, Float.class);
 
         // Then
         assertThat(sum.doubleValue(), is(closeTo(7.3D, 0.01)));
@@ -85,7 +85,7 @@ public class EagerlySumTest {
         Iterable<BigDecimal> inputs = iterableWith(new BigDecimal("1.23"), new BigDecimal("2.34"), new BigDecimal("3.45"));
 
         // When
-        BigDecimal sum = Eagerly.sumBigDecimals(inputs);
+        BigDecimal sum = Numbers.sum(inputs, BigDecimal.class);
 
         // Then
         assertThat(sum, is(new BigDecimal("7.02")));

@@ -18,14 +18,14 @@ import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.iterableWith;
 
-public class EagerlyMultiplyTest {
+public class NumbersMultiplyTest {
     @Test
     public void shouldCalculateTheProductOfTheSuppliedIntegers() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5);
 
         // When
-        Integer result = Eagerly.multiplyIntegers(input);
+        Integer result = Numbers.multiply(input, Integer.class);
 
         // Then
         assertThat(result, is(120));
@@ -37,7 +37,7 @@ public class EagerlyMultiplyTest {
         Iterable<Long> input = iterableWith(1L, 2L, 3L, 4L, 5L);
 
         // When
-        Long result = Eagerly.multiplyLongs(input);
+        Long result = Numbers.multiply(input, Long.class);
 
         // Then
         assertThat(result, is(120L));
@@ -49,7 +49,7 @@ public class EagerlyMultiplyTest {
         Iterable<BigInteger> input = iterableWith(new BigInteger("123"), new BigInteger("456"), new BigInteger("789"));
 
         // When
-        BigInteger result = Eagerly.multiplyBigIntegers(input);
+        BigInteger result = Numbers.multiply(input, BigInteger.class);
 
         // Then
         assertThat(result, is(new BigInteger("44253432")));
@@ -61,7 +61,7 @@ public class EagerlyMultiplyTest {
         Iterable<Float> input = iterableWith(1.1F, 1.2F, 1.3F, 1.4F, 1.5F);
 
         // When
-        Float result = Eagerly.multiplyFloats(input);
+        Float result = Numbers.multiply(input, Float.class);
 
         // Then
         assertThat(result.doubleValue(), is(closeTo(3.6036F, 0.0001)));
@@ -73,7 +73,7 @@ public class EagerlyMultiplyTest {
         Iterable<Double> input = iterableWith(1.1D, 1.2D, 1.3D, 1.4D, 1.5D);
 
         // When
-        Double result = Eagerly.multiplyDoubles(input);
+        Double result = Numbers.multiply(input, Double.class);
 
         // Then
         assertThat(result, is(closeTo(3.6036F, 0.0001)));
@@ -85,7 +85,7 @@ public class EagerlyMultiplyTest {
         Iterable<BigDecimal> input = iterableWith(new BigDecimal("1.23"), new BigDecimal("4.56"), new BigDecimal("7.89"));
 
         // When
-        BigDecimal result = Eagerly.multiplyBigDecimals(input);
+        BigDecimal result = Numbers.multiply(input, BigDecimal.class);
 
         // Then
         assertThat(result, is(new BigDecimal("44.253432")));
