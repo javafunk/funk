@@ -24,6 +24,8 @@ import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.testclasses.Age.age;
 import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Name.name;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class OctupleTest {
     @Test
@@ -274,16 +276,16 @@ public class OctupleTest {
     @Test
     public void shouldBeIterable() {
         // Given
-        Octuple<Integer, String, Boolean, Double, Long, Name, Colour, Age> octuple1 =
+        Octuple<Integer, String, Boolean, Double, Long, Name, Colour, Age> octuple =
                 tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25));
         Collection<Object> expected = collectionBuilderOf(Object.class)
                 .with(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25))
                 .build();
 
         // When
-        Boolean isEqual = materialize(octuple1).equals(expected);
+        Collection<Object> actual = materialize(octuple);
 
         // Then
-        assertThat(isEqual, is(true));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 }

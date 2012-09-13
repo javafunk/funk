@@ -18,6 +18,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class EagerlyFilterRejectPartitionTest {
     @Test
@@ -39,7 +40,7 @@ public class EagerlyFilterRejectPartitionTest {
         });
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -61,7 +62,7 @@ public class EagerlyFilterRejectPartitionTest {
         });
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -83,7 +84,7 @@ public class EagerlyFilterRejectPartitionTest {
         Collection<String> actualMatchingItems = partitionResults.first();
         Collection<String> actualNonMatchingItems = partitionResults.second();
 
-        assertThat(actualMatchingItems, is(expectedMatchingItems));
-        assertThat(actualNonMatchingItems, is(expectedNonMatchingItems));
+        assertThat(actualMatchingItems, hasOnlyItemsInOrder(expectedMatchingItems));
+        assertThat(actualNonMatchingItems, hasOnlyItemsInOrder(expectedNonMatchingItems));
     }
 }

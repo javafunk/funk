@@ -22,6 +22,8 @@ import static org.javafunk.funk.Literals.collectionBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Name.name;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class SeptupleTest {
     @Test
@@ -229,15 +231,16 @@ public class SeptupleTest {
     @Test
     public void shouldBeIterable() {
         // Given
-        Septuple<Integer, String, Boolean, Double, Long, Name, Colour> septuple1 = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"));
+        Septuple<Integer, String, Boolean, Double, Long, Name, Colour> septuple =
+                tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"));
         Collection<Object> expected = collectionBuilderOf(Object.class)
                 .with(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"))
                 .build();
 
         // When
-        Boolean isEqual = materialize(septuple1).equals(expected);
+        Collection<Object> actual = materialize(septuple);
 
         // Then
-        assertThat(isEqual, is(true));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 }

@@ -9,17 +9,19 @@
 package org.javafunk.funk.builders;
 
 import com.google.common.collect.ImmutableList;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.builders.ListBuilder.listBuilder;
+import static org.junit.Assert.fail;
+
 public class ListBuilderTest {
     @Test
     public void shouldAllowElementsToBeAddedToTheListWithWith() throws Exception {
@@ -196,26 +198,58 @@ public class ListBuilderTest {
         assertThat(actual, is(expected));
     }
 
-    @Test(expected = IllegalAccessException.class)
-    public void shouldThrowAnIllegalAccessExceptionIfTheSpecifiedImplementationDoesNotHaveAnAccessibleConstructor() throws Exception {
+    @Test
+    public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedImplementationDoesNotHaveAnAccessibleConstructor() throws Exception {
         // Given
         ListBuilder<Integer> listBuilder = listBuilderWith(1, 2, 3);
 
-        // When
-        listBuilder.build(ImmutableList.class);
-
-        // Then an InstantiationException is thrown
+        try {
+            // When
+            listBuilder.build(ImmutableList.class);
+            fail("Expected an IllegalArgumentException but got nothing.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString(
+                            "Could not instantiate instance of type ImmutableList. " +
+                                    "Does it have a public no argument constructor?"));
+        }
     }
 
-    @Test(expected = InstantiationException.class)
-    public void shouldThrowAnInstantiationExceptionIfTheSpecifiedImplementationDoesNotHaveANoArgsConstructor() throws Exception {
+    @Test
+    public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedImplementationDoesNotHaveANoArgsConstructor() throws Exception {
         // Given
         ListBuilder<Integer> listBuilder = listBuilderWith(1, 2, 3);
 
-        // When
-        listBuilder.build(NoNoArgsConstructorList.class);
+        try {
+            // When
+            listBuilder.build(NoNoArgsConstructorList.class);
+            fail("Expected an IllegalArgumentException but got nothing.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString(
+                            "Could not instantiate instance of type NoNoArgsConstructorList. " +
+                                    "Does it have a public no argument constructor?"));
+        }
+    }
 
-        // Then an InstantiationException is thrown
+    @Test
+    public void shouldPassAccumulatedElementsToTheSuppliedBuilderFunctionAndReturnTheResult() throws Exception {
+        // Given
+        ListBuilder<Integer> listBuilder = listBuilderWith(1, 2, 3);
+        List<Integer> expected = listWith(1, 2, 3);
+
+        // When
+        List<Integer> actual = listBuilder.build(new UnaryFunction<Iterable<Integer>, List<Integer>>() {
+            @Override public List<Integer> call(Iterable<Integer> elements) {
+                return ImmutableList.copyOf(elements);
+            }
+        });
+
+        // Then
+        assertThat(actual instanceof ImmutableList, is(true));
+        assertThat(actual, is(expected));
     }
     
     private static class NoNoArgsConstructorList<E> extends ArrayList<E> {

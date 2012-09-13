@@ -19,6 +19,7 @@ import org.javafunk.funk.functors.procedures.UnaryProcedure;
 import org.javafunk.funk.iterators.*;
 import org.javafunk.funk.predicates.NotPredicate;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;

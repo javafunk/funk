@@ -17,6 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class EagerlyEquateTest {
     @Test
@@ -34,7 +35,7 @@ public class EagerlyEquateTest {
         });
 
         // Then
-        assertThat(actualEqualityResult, is(expectedEqualityResult));
+        assertThat(actualEqualityResult, hasOnlyItemsInOrder(expectedEqualityResult));
     }
 
     @Test
@@ -52,7 +53,7 @@ public class EagerlyEquateTest {
         });
 
         // Then
-        assertThat(actualEqualityResult, is(expectedEqualityResult));
+        assertThat(actualEqualityResult, hasOnlyItemsInOrder(expectedEqualityResult));
     }
 
     @Test
@@ -70,6 +71,6 @@ public class EagerlyEquateTest {
         });
 
         // Then
-        assertThat(actualEqualityResult, is(expectedEqualityResult));
+        assertThat(actualEqualityResult, hasOnlyItemsInOrder(expectedEqualityResult));
     }
 }

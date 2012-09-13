@@ -17,6 +17,7 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 import static org.junit.Assert.assertThat;
 
 public class LazilyBatchTest {
@@ -32,9 +33,9 @@ public class LazilyBatchTest {
         Iterator<Iterable<Integer>> returnedIterator = Lazily.batch(input, 3).iterator();
 
         // Then
-        assertThat(materialize(returnedIterator.next()), is(firstBatch));
-        assertThat(materialize(returnedIterator.next()), is(secondBatch));
-        assertThat(materialize(returnedIterator.next()), is(thirdBatch));
+        assertThat(materialize(returnedIterator.next()), hasOnlyItemsInOrder(firstBatch));
+        assertThat(materialize(returnedIterator.next()), hasOnlyItemsInOrder(secondBatch));
+        assertThat(materialize(returnedIterator.next()), hasOnlyItemsInOrder(thirdBatch));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -63,12 +64,12 @@ public class LazilyBatchTest {
         Iterator<Iterable<Integer>> iterator2 = iterable.iterator();
 
         // Then
-        assertThat(materialize(iterator1.next()), is(firstBatch));
-        assertThat(materialize(iterator1.next()), is(secondBatch));
-        assertThat(materialize(iterator2.next()), is(firstBatch));
-        assertThat(materialize(iterator1.next()), is(thirdBatch));
-        assertThat(materialize(iterator2.next()), is(secondBatch));
-        assertThat(materialize(iterator2.next()), is(thirdBatch));
+        assertThat(materialize(iterator1.next()), hasOnlyItemsInOrder(firstBatch));
+        assertThat(materialize(iterator1.next()), hasOnlyItemsInOrder(secondBatch));
+        assertThat(materialize(iterator2.next()), hasOnlyItemsInOrder(firstBatch));
+        assertThat(materialize(iterator1.next()), hasOnlyItemsInOrder(thirdBatch));
+        assertThat(materialize(iterator2.next()), hasOnlyItemsInOrder(secondBatch));
+        assertThat(materialize(iterator2.next()), hasOnlyItemsInOrder(thirdBatch));
     }
 
     @Test

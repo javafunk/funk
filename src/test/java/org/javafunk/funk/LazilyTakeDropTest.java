@@ -20,6 +20,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.*;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 import static org.junit.Assert.assertThat;
 
 public class LazilyTakeDropTest {
@@ -33,7 +34,7 @@ public class LazilyTakeDropTest {
         Collection<Integer> actualOutput = materialize(Lazily.take(fibonaccis, 5));
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -104,7 +105,7 @@ public class LazilyTakeDropTest {
         Collection<Integer> actualOutput = materialize(Lazily.drop(tenFibonaccis, 5));
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -131,7 +132,7 @@ public class LazilyTakeDropTest {
         Collection<Integer> actualOutput = materialize(Lazily.drop(fibonaccis, numberToTake));
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -180,7 +181,7 @@ public class LazilyTakeDropTest {
         }));
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -220,7 +221,7 @@ public class LazilyTakeDropTest {
         }));
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -260,7 +261,7 @@ public class LazilyTakeDropTest {
         }));
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
@@ -300,7 +301,7 @@ public class LazilyTakeDropTest {
         }));
 
         // Then
-        assertThat(actualOutput, is(expectedOutput));
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test

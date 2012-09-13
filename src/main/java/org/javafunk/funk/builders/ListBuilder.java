@@ -8,12 +8,18 @@
  */
 package org.javafunk.funk.builders;
 
+import org.javafunk.funk.Classes;
+import org.javafunk.funk.functors.functions.UnaryFunction;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static java.lang.String.format;
 
 public class ListBuilder<E>
         extends AbstractBuilder<E, ListBuilder<E>, List<E>>
-        implements AbstractBuilder.WithCustomImplementationSupport<List, List<E>> {
+        implements AbstractBuilder.WithCustomImplementationSupport<E, List, List<E>> {
     private List<E> elements = new ArrayList<E>();
 
     public static <E> ListBuilder<E> listBuilder() {
@@ -25,16 +31,18 @@ public class ListBuilder<E>
     }
 
     @Override public List<E> build() {
-        return new ArrayList<E>(elements);
+        return Collections.unmodifiableList(new ArrayList<E>(elements));
     }
 
-    @Override
-    public List<E> build(Class<? extends List> implementationClass)
-            throws IllegalAccessException, InstantiationException {
+    @Override public List<E> build(Class<? extends List> implementationClass) {
         @SuppressWarnings("unchecked")
-        List<E> list = (List<E>) implementationClass.newInstance();
+        List<E> list = (List<E>) Classes.uncheckedInstantiate(implementationClass);
         list.addAll(elements);
         return list;
+    }
+
+    @Override public List<E> build(UnaryFunction<? super Iterable<E>, ? extends List<E>> builderFunction) {
+        return builderFunction.call(Collections.unmodifiableList(elements));
     }
 
     @Override protected void handle(E element) {

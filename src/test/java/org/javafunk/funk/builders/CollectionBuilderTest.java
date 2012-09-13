@@ -9,6 +9,7 @@
 package org.javafunk.funk.builders;
 
 import com.google.common.collect.ImmutableList;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -17,10 +18,13 @@ import java.util.TreeSet;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.collectionBuilderWith;
 import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.builders.CollectionBuilder.collectionBuilder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
+import static org.junit.Assert.fail;
 
 public class CollectionBuilderTest {
     @Test
@@ -36,7 +40,7 @@ public class CollectionBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test
@@ -53,7 +57,7 @@ public class CollectionBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test
@@ -71,7 +75,7 @@ public class CollectionBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test
@@ -88,7 +92,7 @@ public class CollectionBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test
@@ -105,7 +109,7 @@ public class CollectionBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test
@@ -122,7 +126,7 @@ public class CollectionBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test
@@ -146,7 +150,7 @@ public class CollectionBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test
@@ -170,7 +174,7 @@ public class CollectionBuilderTest {
                 .build();
 
         // Then
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     @Test
@@ -184,29 +188,65 @@ public class CollectionBuilderTest {
 
         // Then
         assertThat(actual instanceof TreeSet, is(true));
-        assertThat(actual, is(expected));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
-    @Test(expected = IllegalAccessException.class)
-    public void shouldThrowAnIllegalAccessExceptionIfTheSpecifiedImplementationDoesNotHaveAnAccessibleConstructor() throws Exception {
+    @Test
+    public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedImplementationDoesNotHaveAnAccessibleConstructor() throws Exception {
         // Given
         CollectionBuilder<Integer> collectionBuilder = collectionBuilderWith(1, 2, 3);
 
-        // When
-        collectionBuilder.build(ImmutableList.class);
-
-        // Then an InstantiationException is thrown
+        try {
+            // When
+            collectionBuilder.build(ImmutableList.class);
+            fail("Expected an IllegalArgumentException but got nothing.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString(
+                            "Could not instantiate instance of type ImmutableList. " +
+                                    "Does it have a public no argument constructor?"));
+        }
     }
 
-    @Test(expected = InstantiationException.class)
-    public void shouldThrowAnInstantiationExceptionIfTheSpecifiedImplementationDoesNotHaveANoArgsConstructor() throws Exception {
+    @Test
+    public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedImplementationDoesNotHaveANoArgsConstructor() throws Exception {
         // Given
         CollectionBuilder<Integer> collectionBuilder = collectionBuilderWith(1, 2, 3);
 
-        // When
-        collectionBuilder.build(NoNoArgsConstructorStack.class);
+        try {
+            // When
+            collectionBuilder.build(NoNoArgsConstructorStack.class);
+            fail("Expected an IllegalArgumentException but got nothing.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString(
+                            "Could not instantiate instance of type NoNoArgsConstructorStack. " +
+                                    "Does it have a public no argument constructor?"));
+        }
+    }
 
-        // Then an InstantiationException is thrown
+    @Test
+    public void shouldPassAccumulatedElementsToTheSuppliedBuilderFunctionAndReturnTheResult() throws Exception {
+        // Given
+        CollectionBuilder<Integer> collectionBuilder = collectionBuilderWith(1, 2, 3);
+        Collection<Integer> expected = collectionWith(1, 2, 3);
+
+        // When
+        Collection<Integer> actual = collectionBuilder.build(new UnaryFunction<Iterable<Integer>, Collection<Integer>>() {
+            @Override public Collection<Integer> call(Iterable<Integer> elements) {
+                Stack<Integer> collection = new Stack<Integer>();
+                for (Integer element : elements) {
+                    collection.push(element);
+                }
+                return collection;
+            }
+        });
+
+        // Then
+        assertThat(actual instanceof Stack, is(true));
+        assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
     private static class NoNoArgsConstructorStack<E> extends Stack<E> {

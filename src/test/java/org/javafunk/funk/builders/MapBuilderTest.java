@@ -8,18 +8,20 @@
  */
 package org.javafunk.funk.builders;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.javafunk.funk.datastructures.tuples.Pair;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.builders.MapBuilder.mapBuilder;
+import static org.junit.Assert.fail;
 
 public class MapBuilderTest {
     @Test
@@ -348,26 +350,62 @@ public class MapBuilderTest {
         assertThat(actual, is(expected));
     }
 
-    @Test(expected = IllegalAccessException.class)
-    public void shouldThrowAnIllegalAccessExceptionIfTheSpecifiedImplementationDoesNotHaveAnAccessibleConstructor() throws Exception {
+    @Test
+    public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedImplementationDoesNotHaveAnAccessibleConstructor() throws Exception {
         // Given
         MapBuilder<String, Integer> mapBuilder = mapBuilderWith("first", 1);
 
-        // When
-        mapBuilder.build(ImmutableMap.class);
-
-        // Then an InstantiationException is thrown
+        try {
+            // When
+            mapBuilder.build(ImmutableMap.class);
+            fail("Expected an IllegalArgumentException but got nothing.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString(
+                            "Could not instantiate instance of type ImmutableMap. " +
+                                    "Does it have a public no argument constructor?"));
+        }
     }
 
-    @Test(expected = InstantiationException.class)
-    public void shouldThrowAnInstantiationExceptionIfTheSpecifiedImplementationDoesNotHaveANoArgsConstructor() throws Exception {
+    @Test
+    public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedImplementationDoesNotHaveANoArgsConstructor() throws Exception {
         // Given
         MapBuilder<String, Integer> mapBuilder = mapBuilderWith("first", 1);
 
-        // When
-        mapBuilder.build(NoNoArgsConstructorMap.class);
+        try {
+            // When
+            mapBuilder.build(NoNoArgsConstructorMap.class);
+            fail("Expected an IllegalArgumentException but got nothing.");
+        } catch (IllegalArgumentException exception) {
+            // Then
+            assertThat(exception.getMessage(),
+                    containsString(
+                            "Could not instantiate instance of type NoNoArgsConstructorMap. " +
+                                    "Does it have a public no argument constructor?"));
+        }
+    }
 
-        // Then an InstantiationException is thrown
+    @Test
+    public void shouldPassAccumulatedElementsToTheSuppliedBuilderFunctionAndReturnTheResult() throws Exception {
+        // Given
+        MapBuilder<String, Integer> mapBuilder = mapBuilderWith("first", 1);
+        Map<String, Integer> expected = mapWith("first", 1);
+
+        // When
+        Map<String, Integer> actual = mapBuilder.build(new UnaryFunction<Iterable<Map.Entry<String, Integer>>, Map<String, Integer>>() {
+            @Override public Map<String, Integer> call(Iterable<Map.Entry<String, Integer>> elements) {
+                ImmutableMap.Builder<String, Integer> builder = ImmutableMap.builder();
+                for (Map.Entry<String, Integer> element : elements) {
+                    builder.put(element.getKey(), element.getValue());
+                }
+                return builder.build();
+            }
+        });
+
+        // Then
+        assertThat(actual instanceof ImmutableMap, is(true));
+        assertThat(actual, is(expected));
     }
 
     private static class NoNoArgsConstructorMap<K, V> extends HashMap<K, V> {

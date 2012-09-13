@@ -20,6 +20,7 @@ import static org.javafunk.funk.Eagerly.take;
 import static org.javafunk.funk.Generators.toGeneratable;
 import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
 
 public class FiniteGeneratorTest {
     @Test
@@ -33,7 +34,7 @@ public class FiniteGeneratorTest {
         Collection<Integer> actualValues = take(toGeneratable(generator), 4);
 
         // Then
-        assertThat(actualValues, is(expectedValues));
+        assertThat(actualValues, hasOnlyItemsInAnyOrder(expectedValues));
     }
 
     @Test(expected = NoSuchElementException.class)

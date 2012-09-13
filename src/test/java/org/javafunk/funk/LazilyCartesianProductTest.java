@@ -14,6 +14,7 @@ import org.javafunk.funk.datastructures.tuples.Quadruple;
 import org.javafunk.funk.datastructures.tuples.Triple;
 import org.javafunk.funk.functors.Action;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -27,6 +28,7 @@ import static org.javafunk.funk.Lazily.cartesianProduct;
 import static org.javafunk.funk.Lazily.cycle;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class LazilyCartesianProductTest {
     @Test
@@ -43,7 +45,7 @@ public class LazilyCartesianProductTest {
         Collection<Pair<Integer, String>> actualCartesianProduct = materialize(Lazily.cartesianProduct(input1, input2));
 
         // Then
-        assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
+        assertThat(actualCartesianProduct, hasOnlyItemsInOrder(expectedCartesianProduct));
     }
 
     @Test
@@ -106,8 +108,8 @@ public class LazilyCartesianProductTest {
     @Test
     @SuppressWarnings("unchecked")
     @ToDo(raisedBy = "Toby",
-          date     = "2012-04-29",
-          message  = "Reinstate type safety.")
+            date     = "2012-04-29",
+            message  = "Reinstate type safety.")
     public void shouldReturnTheCartesianProductOfNSuppliedIterablesAsAnIterableOfIterables() throws Exception {
         // Given
         Iterable<Integer> input1 = iterableWith(1, 2);

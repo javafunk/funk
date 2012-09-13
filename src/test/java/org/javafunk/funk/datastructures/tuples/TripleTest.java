@@ -20,6 +20,8 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class TripleTest {
     @Test
@@ -125,15 +127,15 @@ public class TripleTest {
     @Test
     public void shouldBeIterable() {
         // Given
-        Triple<Integer, String, Boolean> triple1 = tuple(5, "Five", true);
+        Triple<Integer, String, Boolean> triple = tuple(5, "Five", true);
         Collection<Object> expected = collectionBuilderOf(Object.class)
                 .with(5, "Five", true)
                 .build();
 
         // When
-        Boolean isEqual = materialize(triple1).equals(expected);
+        Collection<Object> actual = materialize(triple);
 
         // Then
-        assertThat(isEqual, is(true));
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 }
