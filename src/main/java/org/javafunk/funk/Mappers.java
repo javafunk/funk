@@ -136,7 +136,7 @@ public class Mappers {
         };
     }
 
-    static <T> Mapper<? super Iterable<? extends T>, Iterator<? extends T>> toIterators() {
+    public static <T> Mapper<? super Iterable<? extends T>, Iterator<? extends T>> toIterators() {
         return new Mapper<Iterable<? extends T>, Iterator<? extends T>>() {
             public Iterator<? extends T> map(Iterable<? extends T> iterable) {
                 return iterable.iterator();

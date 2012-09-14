@@ -9,6 +9,7 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.tuples.Pair;
+import org.javafunk.funk.datastructures.tuples.Quadruple;
 import org.javafunk.funk.datastructures.tuples.Triple;
 import org.junit.Test;
 
@@ -131,5 +132,100 @@ public class LazilyZipEnumerateTest {
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldZipThreeIterablesToTheLengthOfTheShortestIterable() {
+        // Given
+        Iterable<String> iterable1 = iterableWith("A", "B", "C", "D");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = iterableWith(true, false);
+        Collection<Triple<String, Integer, Boolean>> expected = collectionWith(tuple("A", 1, true), tuple("B", 2, false));
+
+        // When
+        Collection<Triple<String, Integer, Boolean>> actual = asList(Lazily.zip(iterable1, iterable2, iterable3));
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedThreeZippedIterable() throws Exception {
+        // Given
+        Iterable<String> inputIterable1 = iterableWith("A", "B", "C");
+        Iterable<Integer> inputIterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> inputIterable3 = iterableWith(true, false, true);
+
+        // When
+        Iterable<Triple<String, Integer, Boolean>> outputIterable = Lazily.zip(inputIterable1, inputIterable2, inputIterable3);
+        Iterator<Triple<String, Integer, Boolean>> firstIterator = outputIterable.iterator();
+        Iterator<Triple<String, Integer, Boolean>> secondIterator = outputIterable.iterator();
+
+        // Then
+        assertThat(secondIterator.next(), is(tuple("A", 1, true)));
+        assertThat(secondIterator.next(), is(tuple("B", 2, false)));
+        assertThat(firstIterator.next(), is(tuple("A", 1, true)));
+        assertThat(secondIterator.next(), is(tuple("C", 3, true)));
+        assertThat(firstIterator.next(), is(tuple("B", 2, false)));
+    }
+
+    @Test
+    public void shouldZipFourIterables() throws Exception {
+        // Given
+        Iterable<String> iterable1 = iterableWith("A", "B", "C");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = iterableWith(true, false, true);
+        Iterable<Character> iterable4 = iterableWith('a', 'b', 'c');
+
+        Collection<Quadruple<String, Integer, Boolean, Character>> expected = collectionWith(
+                tuple("A", 1, true, 'a'),
+                tuple("B", 2, false, 'b'),
+                tuple("C", 3, true, 'c'));
+
+        // When
+        Collection<Quadruple<String, Integer, Boolean, Character>> actual =
+                materialize(Lazily.zip(iterable1, iterable2, iterable3, iterable4));
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldZipFourIterablesToTheLengthOfTheShortestIterable() {
+        // Given
+        Iterable<String> iterable1 = iterableWith("A", "B", "C", "D");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = iterableWith(true, false);
+        Iterable<Character> iterable4 = iterableWith('a', 'b', 'c', 'd', 'e', 'f');
+        Collection<Quadruple<String, Integer, Boolean, Character>> expected =
+                collectionWith(tuple("A", 1, true, 'a'), tuple("B", 2, false, 'b'));
+
+        // When
+        Collection<Quadruple<String, Integer, Boolean, Character>> actual = asList(Lazily.zip(iterable1, iterable2, iterable3, iterable4));
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedFourZippedIterable() throws Exception {
+        // Given
+        Iterable<String> inputIterable1 = iterableWith("A", "B", "C");
+        Iterable<Integer> inputIterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> inputIterable3 = iterableWith(true, false, true);
+        Iterable<Character> inputIterable4 = iterableWith('a', 'b', 'c');
+
+        // When
+        Iterable<Quadruple<String, Integer, Boolean, Character>> outputIterable =
+                Lazily.zip(inputIterable1, inputIterable2, inputIterable3, inputIterable4);
+        Iterator<Quadruple<String, Integer, Boolean, Character>> firstIterator = outputIterable.iterator();
+        Iterator<Quadruple<String, Integer, Boolean, Character>> secondIterator = outputIterable.iterator();
+
+        // Then
+        assertThat(secondIterator.next(), is(tuple("A", 1, true, 'a')));
+        assertThat(secondIterator.next(), is(tuple("B", 2, false, 'b')));
+        assertThat(firstIterator.next(), is(tuple("A", 1, true, 'a')));
+        assertThat(secondIterator.next(), is(tuple("C", 3, true, 'c')));
+        assertThat(firstIterator.next(), is(tuple("B", 2, false, 'b')));
     }
 }
