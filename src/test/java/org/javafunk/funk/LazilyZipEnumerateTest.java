@@ -9,6 +9,7 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.tuples.*;
+import org.javafunk.funk.testclasses.Age;
 import org.javafunk.funk.testclasses.Colour;
 import org.javafunk.funk.testclasses.Name;
 import org.junit.Test;
@@ -20,6 +21,7 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.asList;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.*;
+import static org.javafunk.funk.testclasses.Age.age;
 import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Name.name;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
@@ -612,5 +614,107 @@ public class LazilyZipEnumerateTest {
         assertThat(firstIterator.next(), is(tuple("A", 1, true, 'a', 1.2, 1L, name("Adam"), colour("Amber"))));
         assertThat(secondIterator.next(), is(tuple("C", 3, true, 'c', 5.6, 3L, name("Clive"), colour("Cyan"))));
         assertThat(firstIterator.next(), is(tuple("B", 2, false, 'b', 3.4, 2L, name("Barry"), colour("Blue"))));
+    }
+
+    @Test
+    public void shouldZipNineIterables() throws Exception {
+        // Given
+        Iterable<String> iterable1 = iterableWith("A", "B", "C");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = iterableWith(true, false, true);
+        Iterable<Character> iterable4 = iterableWith('a', 'b', 'c');
+        Iterable<Double> iterable5 = iterableWith(1.2, 3.4, 5.6);
+        Iterable<Long> iterable6 = iterableWith(1L, 2L, 3L);
+        Iterable<Name> iterable7 = iterableWith(name("Adam"), name("Barry"), name("Clive"));
+        Iterable<Colour> iterable8 = iterableWith(colour("Amber"), colour("Blue"), colour("Cyan"));
+        Iterable<Age> iterable9 = iterableWith(age(20), age(30), age(40));
+
+        Collection<Nonuple<String, Integer, Boolean, Character, Double, Long, Name, Colour, Age>> expected = collectionWith(
+                tuple("A", 1, true, 'a', 1.2, 1L, name("Adam"), colour("Amber"), age(20)),
+                tuple("B", 2, false, 'b', 3.4, 2L, name("Barry"), colour("Blue"), age(30)),
+                tuple("C", 3, true, 'c', 5.6, 3L, name("Clive"), colour("Cyan"), age(40)));
+
+        // When
+        Collection<Nonuple<String, Integer, Boolean, Character, Double, Long, Name, Colour, Age>> actual = materialize(Lazily.zip(
+                iterable1,
+                iterable2,
+                iterable3,
+                iterable4,
+                iterable5,
+                iterable6,
+                iterable7,
+                iterable8,
+                iterable9));
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldZipNineIterablesToTheLengthOfTheShortestIterable() {
+        // Given
+        Iterable<String> iterable1 = iterableWith("A", "B", "C", "D");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = iterableWith(true, false);
+        Iterable<Character> iterable4 = iterableWith('a', 'b', 'c', 'd', 'e', 'f');
+        Iterable<Double> iterable5 = iterableWith(1.2, 3.4, 5.6);
+        Iterable<Long> iterable6 = iterableWith(1L, 2L, 3L);
+        Iterable<Name> iterable7 = iterableWith(name("Adam"), name("Barry"), name("Clive"));
+        Iterable<Colour> iterable8 = iterableWith(colour("Amber"), colour("Blue"), colour("Cyan"));
+        Iterable<Age> iterable9 = iterableWith(age(20), age(30), age(40));
+        Collection<Nonuple<String, Integer, Boolean, Character, Double, Long, Name, Colour, Age>> expected = collectionWith(
+                tuple("A", 1, true, 'a', 1.2, 1L, name("Adam"), colour("Amber"), age(20)),
+                tuple("B", 2, false, 'b', 3.4, 2L, name("Barry"), colour("Blue"), age(30)));
+
+        // When
+        Collection<Nonuple<String, Integer, Boolean, Character, Double, Long, Name, Colour, Age>> actual = asList(Lazily.zip(
+                iterable1,
+                iterable2,
+                iterable3,
+                iterable4,
+                iterable5,
+                iterable6,
+                iterable7,
+                iterable8,
+                iterable9));
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedNineZippedIterable() throws Exception {
+        // Given
+        Iterable<String> iterable1 = iterableWith("A", "B", "C");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = iterableWith(true, false, true);
+        Iterable<Character> iterable4 = iterableWith('a', 'b', 'c');
+        Iterable<Double> iterable5 = iterableWith(1.2, 3.4, 5.6);
+        Iterable<Long> iterable6 = iterableWith(1L, 2L, 3L);
+        Iterable<Name> iterable7 = iterableWith(name("Adam"), name("Barry"), name("Clive"));
+        Iterable<Colour> iterable8 = iterableWith(colour("Amber"), colour("Blue"), colour("Cyan"));
+        Iterable<Age> iterable9 = iterableWith(age(20), age(30), age(40));
+
+        // When
+        Iterable<Nonuple<String, Integer, Boolean, Character, Double, Long, Name, Colour, Age>> outputIterable = Lazily.zip(
+                iterable1,
+                iterable2,
+                iterable3,
+                iterable4,
+                iterable5,
+                iterable6,
+                iterable7,
+                iterable8,
+                iterable9);
+
+        Iterator<Nonuple<String, Integer, Boolean, Character, Double, Long, Name, Colour, Age>> firstIterator = outputIterable.iterator();
+        Iterator<Nonuple<String, Integer, Boolean, Character, Double, Long, Name, Colour, Age>> secondIterator = outputIterable.iterator();
+
+        // Then
+        assertThat(secondIterator.next(), is(tuple("A", 1, true, 'a', 1.2, 1L, name("Adam"), colour("Amber"), age(20))));
+        assertThat(secondIterator.next(), is(tuple("B", 2, false, 'b', 3.4, 2L, name("Barry"), colour("Blue"), age(30))));
+        assertThat(firstIterator.next(), is(tuple("A", 1, true, 'a', 1.2, 1L, name("Adam"), colour("Amber"), age(20))));
+        assertThat(secondIterator.next(), is(tuple("C", 3, true, 'c', 5.6, 3L, name("Clive"), colour("Cyan"), age(40))));
+        assertThat(firstIterator.next(), is(tuple("B", 2, false, 'b', 3.4, 2L, name("Barry"), colour("Blue"), age(30))));
     }
 }

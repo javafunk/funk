@@ -321,6 +321,19 @@ public class Lazily {
         return map(zip(iterableWith(first, second, third, fourth, fifth, sixth, seventh, eighth)), Mappers.<R, S, T, U, V, W, X, Y>toOctuple());
     }
 
+    public static <R, S, T, U, V, W, X, Y, Z> Iterable<Nonuple<R, S, T, U, V, W, X, Y, Z>> zip(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh,
+            Iterable<Y> eighth,
+            Iterable<Z> ninth) {
+        return map(zip(iterableWith(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth)), Mappers.<R, S, T, U, V, W, X, Y, Z>toNonuple());
+    }
+
     private static Iterable<? extends Iterable<?>> zip(final Iterable<? extends Iterable<?>> iterables) {
         return new Iterable<Iterable<?>>() {
             public Iterator<Iterable<?>> iterator() {
