@@ -8,10 +8,7 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.tuples.Pair;
-import org.javafunk.funk.datastructures.tuples.Quadruple;
-import org.javafunk.funk.datastructures.tuples.Quintuple;
-import org.javafunk.funk.datastructures.tuples.Triple;
+import org.javafunk.funk.datastructures.tuples.*;
 import org.javafunk.funk.functors.*;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.functors.predicates.BinaryPredicate;
@@ -288,6 +285,16 @@ public class Lazily {
             Iterable<U> fourth,
             Iterable<V> fifth) {
         return map(zip(iterableWith(first, second, third, fourth, fifth)), Mappers.<R, S, T, U, V>toQuintuple());
+    }
+
+    public static <R, S, T, U, V, W> Iterable<Sextuple<R, S, T, U, V, W>> zip(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth) {
+        return map(zip(iterableWith(first, second, third, fourth, fifth, sixth)), Mappers.<R, S, T, U, V, W>toSextuple());
     }
 
     private static Iterable<? extends Iterable<?>> zip(final Iterable<? extends Iterable<?>> iterables) {

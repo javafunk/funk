@@ -8,10 +8,7 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.tuples.Pair;
-import org.javafunk.funk.datastructures.tuples.Quadruple;
-import org.javafunk.funk.datastructures.tuples.Quintuple;
-import org.javafunk.funk.datastructures.tuples.Triple;
+import org.javafunk.funk.datastructures.tuples.*;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -103,11 +100,11 @@ public class LazilyZipEnumerateTest {
     @Test
     public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedTwoZippedIterable() throws Exception {
         // Given
-        Iterable<String> inputIterable1 = iterableWith("A", "B", "C");
-        Iterable<Integer> inputIterable2 = iterableWith(1, 2, 3);
+        Iterable<String> iterable1 = iterableWith("A", "B", "C");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
 
         // When
-        Iterable<Pair<String, Integer>> outputIterable = Lazily.zip(inputIterable1, inputIterable2);
+        Iterable<Pair<String, Integer>> outputIterable = Lazily.zip(iterable1, iterable2);
         Iterator<Pair<String, Integer>> firstIterator = outputIterable.iterator();
         Iterator<Pair<String, Integer>> secondIterator = outputIterable.iterator();
 
@@ -153,12 +150,12 @@ public class LazilyZipEnumerateTest {
     @Test
     public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedThreeZippedIterable() throws Exception {
         // Given
-        Iterable<String> inputIterable1 = iterableWith("A", "B", "C");
-        Iterable<Integer> inputIterable2 = iterableWith(1, 2, 3);
-        Iterable<Boolean> inputIterable3 = iterableWith(true, false, true);
+        Iterable<String> iterable1 = iterableWith("A", "B", "C");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = iterableWith(true, false, true);
 
         // When
-        Iterable<Triple<String, Integer, Boolean>> outputIterable = Lazily.zip(inputIterable1, inputIterable2, inputIterable3);
+        Iterable<Triple<String, Integer, Boolean>> outputIterable = Lazily.zip(iterable1, iterable2, iterable3);
         Iterator<Triple<String, Integer, Boolean>> firstIterator = outputIterable.iterator();
         Iterator<Triple<String, Integer, Boolean>> secondIterator = outputIterable.iterator();
 
@@ -211,14 +208,14 @@ public class LazilyZipEnumerateTest {
     @Test
     public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedFourZippedIterable() throws Exception {
         // Given
-        Iterable<String> inputIterable1 = iterableWith("A", "B", "C");
-        Iterable<Integer> inputIterable2 = iterableWith(1, 2, 3);
-        Iterable<Boolean> inputIterable3 = iterableWith(true, false, true);
-        Iterable<Character> inputIterable4 = iterableWith('a', 'b', 'c');
+        Iterable<String> iterable1 = iterableWith("A", "B", "C");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = iterableWith(true, false, true);
+        Iterable<Character> iterable4 = iterableWith('a', 'b', 'c');
 
         // When
         Iterable<Quadruple<String, Integer, Boolean, Character>> outputIterable =
-                Lazily.zip(inputIterable1, inputIterable2, inputIterable3, inputIterable4);
+                Lazily.zip(iterable1, iterable2, iterable3, iterable4);
         Iterator<Quadruple<String, Integer, Boolean, Character>> firstIterator = outputIterable.iterator();
         Iterator<Quadruple<String, Integer, Boolean, Character>> secondIterator = outputIterable.iterator();
 
@@ -276,15 +273,15 @@ public class LazilyZipEnumerateTest {
     @Test
     public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedFiveZippedIterable() throws Exception {
         // Given
-        Iterable<String> inputIterable1 = iterableWith("A", "B", "C");
-        Iterable<Integer> inputIterable2 = iterableWith(1, 2, 3);
-        Iterable<Boolean> inputIterable3 = iterableWith(true, false, true);
-        Iterable<Character> inputIterable4 = iterableWith('a', 'b', 'c');
-        Iterable<Double> inputIterable5 = iterableWith(1.2, 3.4, 5.6);
+        Iterable<String> iterable1 = iterableWith("A", "B", "C");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = iterableWith(true, false, true);
+        Iterable<Character> iterable4 = iterableWith('a', 'b', 'c');
+        Iterable<Double> iterable5 = iterableWith(1.2, 3.4, 5.6);
 
         // When
         Iterable<Quintuple<String, Integer, Boolean, Character, Double>> outputIterable =
-                Lazily.zip(inputIterable1, inputIterable2, inputIterable3, inputIterable4, inputIterable5);
+                Lazily.zip(iterable1, iterable2, iterable3, iterable4, iterable5);
         Iterator<Quintuple<String, Integer, Boolean, Character, Double>> firstIterator = outputIterable.iterator();
         Iterator<Quintuple<String, Integer, Boolean, Character, Double>> secondIterator = outputIterable.iterator();
 
@@ -294,5 +291,74 @@ public class LazilyZipEnumerateTest {
         assertThat(firstIterator.next(), is(tuple("A", 1, true, 'a', 1.2)));
         assertThat(secondIterator.next(), is(tuple("C", 3, true, 'c', 5.6)));
         assertThat(firstIterator.next(), is(tuple("B", 2, false, 'b', 3.4)));
+    }
+
+    @Test
+    public void shouldZipSixIterables() throws Exception {
+        // Given
+        Iterable<String> iterable1 = iterableWith("A", "B", "C");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = iterableWith(true, false, true);
+        Iterable<Character> iterable4 = iterableWith('a', 'b', 'c');
+        Iterable<Double> iterable5 = iterableWith(1.2, 3.4, 5.6);
+        Iterable<Long> iterable6 = iterableWith(1L, 2L, 3L);
+
+        Collection<Sextuple<String, Integer, Boolean, Character, Double, Long>> expected = collectionWith(
+                tuple("A", 1, true, 'a', 1.2, 1L),
+                tuple("B", 2, false, 'b', 3.4, 2L),
+                tuple("C", 3, true, 'c', 5.6, 3L));
+
+        // When
+        Collection<Sextuple<String, Integer, Boolean, Character, Double, Long>> actual =
+                materialize(Lazily.zip(iterable1, iterable2, iterable3, iterable4, iterable5, iterable6));
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldZipSixIterablesToTheLengthOfTheShortestIterable() {
+        // Given
+        Iterable<String> iterable1 = iterableWith("A", "B", "C", "D");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = iterableWith(true, false);
+        Iterable<Character> iterable4 = iterableWith('a', 'b', 'c', 'd', 'e', 'f');
+        Iterable<Double> iterable5 = iterableWith(1.2, 3.4, 5.6);
+        Iterable<Long> iterable6 = iterableWith(1L, 2L, 3L);
+        Collection<Sextuple<String, Integer, Boolean, Character, Double, Long>> expected =
+                collectionWith(
+                        tuple("A", 1, true, 'a', 1.2, 1L),
+                        tuple("B", 2, false, 'b', 3.4, 2L));
+
+        // When
+        Collection<Sextuple<String, Integer, Boolean, Character, Double, Long>> actual =
+                asList(Lazily.zip(iterable1, iterable2, iterable3, iterable4, iterable5, iterable6));
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedSixZippedIterable() throws Exception {
+        // Given
+        Iterable<String> iterable1 = iterableWith("A", "B", "C");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = iterableWith(true, false, true);
+        Iterable<Character> iterable4 = iterableWith('a', 'b', 'c');
+        Iterable<Double> iterable5 = iterableWith(1.2, 3.4, 5.6);
+        Iterable<Long> iterable6 = iterableWith(1L, 2L, 3L);
+
+        // When
+        Iterable<Sextuple<String, Integer, Boolean, Character, Double, Long>> outputIterable =
+                Lazily.zip(iterable1, iterable2, iterable3, iterable4, iterable5, iterable6);
+        Iterator<Sextuple<String, Integer, Boolean, Character, Double, Long>> firstIterator = outputIterable.iterator();
+        Iterator<Sextuple<String, Integer, Boolean, Character, Double, Long>> secondIterator = outputIterable.iterator();
+
+        // Then
+        assertThat(secondIterator.next(), is(tuple("A", 1, true, 'a', 1.2, 1L)));
+        assertThat(secondIterator.next(), is(tuple("B", 2, false, 'b', 3.4, 2L)));
+        assertThat(firstIterator.next(), is(tuple("A", 1, true, 'a', 1.2, 1L)));
+        assertThat(secondIterator.next(), is(tuple("C", 3, true, 'c', 5.6, 3L)));
+        assertThat(firstIterator.next(), is(tuple("B", 2, false, 'b', 3.4, 2L)));
     }
 }
