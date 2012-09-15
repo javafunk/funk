@@ -8,6 +8,7 @@
  */
 package org.javafunk.funk;
 
+import com.sun.javaws.jnl.XMLFormat;
 import org.javafunk.funk.datastructures.tuples.*;
 import org.javafunk.funk.functors.*;
 import org.javafunk.funk.functors.functions.UnaryFunction;
@@ -304,5 +305,16 @@ public class Lazily {
                 return new ZippedIterator(iterators);
             }
         };
+    }
+
+    public static <R, S, T, U, V, W, X> Iterable<Septuple<R, S, T, U, V, W, X>> zip(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh) {
+        return map(zip(iterableWith(first, second, third, fourth, fifth, sixth, seventh)), Mappers.<R, S, T, U, V, W, X>toSeptuple());
     }
 }
