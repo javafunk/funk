@@ -8,9 +8,11 @@
  */
 package org.javafunk.funk;
 
-import com.sun.javaws.jnl.XMLFormat;
 import org.javafunk.funk.datastructures.tuples.*;
-import org.javafunk.funk.functors.*;
+import org.javafunk.funk.functors.Action;
+import org.javafunk.funk.functors.Equivalence;
+import org.javafunk.funk.functors.Indexer;
+import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.functors.predicates.BinaryPredicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;

@@ -9,7 +9,7 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.IntegerRange;
-import org.javafunk.funk.datastructures.tuples.Pair;
+import org.javafunk.funk.datastructures.tuples.*;
 import org.javafunk.funk.functors.*;
 import org.javafunk.funk.functors.functions.BinaryFunction;
 import org.javafunk.funk.functors.functions.UnaryFunction;
@@ -18,12 +18,9 @@ import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.javafunk.funk.functors.procedures.UnaryProcedure;
 import org.javafunk.funk.monads.Option;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.*;
 
 import static java.util.Collections.emptyList;
-import static org.javafunk.funk.Accumulators.*;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Iterators.asIterable;
 import static org.javafunk.funk.Literals.tuple;
@@ -281,9 +278,82 @@ public class Eagerly {
         return map(iterable, mapperUnaryFunction(mapper));
     }
 
-    public static <S, T> Collection<Pair<S, T>> zip(Iterable<S> iterable1, Iterable<T> iterable2) {
-        return materialize(Lazily.zip(iterable1, iterable2));
+    public static <S, T> Collection<Pair<S, T>> zip(
+            Iterable<S> first,
+            Iterable<T> second) {
+        return materialize(Lazily.zip(first, second));
     }
+
+    public static <R, S, T> Collection<Triple<R, S, T>> zip(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third) {
+        return materialize(Lazily.zip(first, second, third));
+    }
+
+    public static <R, S, T, U> Collection<Quadruple<R, S, T, U>> zip(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth) {
+        return materialize(Lazily.zip(first, second, third, fourth));
+    }
+
+    public static <R, S, T, U, V> Collection<Quintuple<R, S, T, U, V>> zip(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth) {
+        return materialize(Lazily.zip(first, second, third, fourth, fifth));
+    }
+
+    public static <R, S, T, U, V, W> Collection<Sextuple<R, S, T, U, V, W>> zip(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth) {
+        return materialize(Lazily.zip(first, second, third, fourth, fifth, sixth));
+    }
+
+    public static <R, S, T, U, V, W, X> Collection<Septuple<R, S, T, U, V, W, X>> zip(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh) {
+        return materialize(Lazily.zip(first, second, third, fourth, fifth, sixth, seventh));
+    }
+
+    public static <R, S, T, U, V, W, X, Y> Collection<Octuple<R, S, T, U, V, W, X, Y>> zip(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh,
+            Iterable<Y> eighth) {
+        return materialize(Lazily.zip(first, second, third, fourth, fifth, sixth, seventh, eighth));
+    }
+
+    public static <R, S, T, U, V, W, X, Y, Z> Collection<Nonuple<R, S, T, U, V, W, X, Y, Z>> zip(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh,
+            Iterable<Y> eighth,
+            Iterable<Z> ninth) {
+        return materialize(Lazily.zip(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth));
+    }
+
 
     public static <T> Collection<Pair<Integer, T>> enumerate(Iterable<T> iterable) {
         return materialize(Lazily.enumerate(iterable));
@@ -1084,7 +1154,7 @@ public class Eagerly {
      * @return A {@code Collection} instance containing the required number of elements
      *         (or less) from the supplied {@code Iterable}.
      * @throws IllegalArgumentException if the required number of elements to take
-     *         is negative.
+     *                                  is negative.
      */
     public static <T> Collection<T> take(Iterable<T> iterable, int numberToTake) {
         return materialize(Lazily.take(iterable, numberToTake));
@@ -1149,7 +1219,7 @@ public class Eagerly {
      *         the required number of elements have been dropped from the supplied
      *         {@code Iterable}.
      * @throws IllegalArgumentException if the required number of elements to drop
-     *         is negative.
+     *                                  is negative.
      */
     public static <T> Collection<T> drop(Iterable<T> iterable, int numberToDrop) {
         return materialize(Lazily.drop(iterable, numberToDrop));
