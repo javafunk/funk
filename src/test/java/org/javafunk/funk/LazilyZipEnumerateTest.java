@@ -717,4 +717,73 @@ public class LazilyZipEnumerateTest {
         assertThat(secondIterator.next(), is(tuple("C", 3, true, 'c', 5.6, 3L, name("Clive"), colour("Cyan"), age(40))));
         assertThat(firstIterator.next(), is(tuple("B", 2, false, 'b', 3.4, 2L, name("Barry"), colour("Blue"), age(30))));
     }
+
+    @Test
+    public void shouldZipIterableOfIterables() throws Exception {
+        // Given
+        Iterable<String> iterable1 = iterableWith("A", "B", "C");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = iterableWith(true, false, true);
+
+        Collection<Iterable<?>> expected = Literals.<Iterable<?>>collectionWith(
+                iterableWith("A", 1, true),
+                iterableWith("B", 2, false),
+                iterableWith("C", 3, true));
+
+        // When
+        Collection<Iterable<?>> actual = materialize(Lazily.zip(
+                iterableWith(
+                        iterable1,
+                        iterable2,
+                        iterable3)));
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldZipIterableOfIterablesToTheLengthOfTheShortestIterable() {
+        // Given
+        Iterable<String> iterable1 = iterableWith("A", "B", "C", "D");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = iterableWith(true, false);
+        Collection<Iterable<?>> expected = Literals.<Iterable<?>>collectionWith(
+                iterableWith("A", 1, true),
+                iterableWith("B", 2, false));
+
+        // When
+        Collection<Iterable<?>> actual = materialize(Lazily.zip(
+                iterableWith(
+                        iterable1,
+                        iterable2,
+                        iterable3)));
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedZippedIterable() throws Exception {
+        // Given
+        Iterable<String> iterable1 = iterableWith("A", "B", "C");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = iterableWith(true, false, true);
+
+        // When
+        Iterable<? extends Iterable<?>> outputIterable = Lazily.zip(
+                iterableWith(
+                        iterable1,
+                        iterable2,
+                        iterable3));
+
+        Iterator<? extends Iterable<?>> firstIterator = outputIterable.iterator();
+        Iterator<? extends Iterable<?>> secondIterator = outputIterable.iterator();
+
+        // Then
+        assertThat(secondIterator.next(), is((Object) iterableWith("A", 1, true)));
+        assertThat(secondIterator.next(), is((Object) iterableWith("B", 2, false)));
+        assertThat(firstIterator.next(), is((Object) iterableWith("A", 1, true)));
+        assertThat(secondIterator.next(), is((Object) iterableWith("C", 3, true)));
+        assertThat(firstIterator.next(), is((Object) iterableWith("B", 2, false)));
+    }
 }

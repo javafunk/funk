@@ -336,7 +336,7 @@ public class Lazily {
         return map(zip(iterableWith(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth)), Mappers.<R, S, T, U, V, W, X, Y, Z>toNonuple());
     }
 
-    private static Iterable<? extends Iterable<?>> zip(final Iterable<? extends Iterable<?>> iterables) {
+    public static Iterable<? extends Iterable<?>> zip(final Iterable<? extends Iterable<?>> iterables) {
         return new Iterable<Iterable<?>>() {
             public Iterator<Iterable<?>> iterator() {
                 final Iterable<? extends Iterator<?>> iterators = Eagerly.map(iterables, toIterators());
