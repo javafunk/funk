@@ -10,6 +10,7 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.datastructures.tuples.Quadruple;
+import org.javafunk.funk.datastructures.tuples.Quintuple;
 import org.javafunk.funk.datastructures.tuples.Triple;
 import org.junit.Test;
 
@@ -227,5 +228,71 @@ public class LazilyZipEnumerateTest {
         assertThat(firstIterator.next(), is(tuple("A", 1, true, 'a')));
         assertThat(secondIterator.next(), is(tuple("C", 3, true, 'c')));
         assertThat(firstIterator.next(), is(tuple("B", 2, false, 'b')));
+    }
+
+    @Test
+    public void shouldZipFiveIterables() throws Exception {
+        // Given
+        Iterable<String> iterable1 = iterableWith("A", "B", "C");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = iterableWith(true, false, true);
+        Iterable<Character> iterable4 = iterableWith('a', 'b', 'c');
+        Iterable<Double> iterable5 = iterableWith(1.2, 3.4, 5.6);
+
+        Collection<Quintuple<String, Integer, Boolean, Character, Double>> expected = collectionWith(
+                tuple("A", 1, true, 'a', 1.2),
+                tuple("B", 2, false, 'b', 3.4),
+                tuple("C", 3, true, 'c', 5.6));
+
+        // When
+        Collection<Quintuple<String, Integer, Boolean, Character, Double>> actual =
+                materialize(Lazily.zip(iterable1, iterable2, iterable3, iterable4, iterable5));
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldZipFiveIterablesToTheLengthOfTheShortestIterable() {
+        // Given
+        Iterable<String> iterable1 = iterableWith("A", "B", "C", "D");
+        Iterable<Integer> iterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> iterable3 = iterableWith(true, false);
+        Iterable<Character> iterable4 = iterableWith('a', 'b', 'c', 'd', 'e', 'f');
+        Iterable<Double> iterable5 = iterableWith(1.2, 3.4, 5.6);
+        Collection<Quintuple<String, Integer, Boolean, Character, Double>> expected =
+                collectionWith(
+                        tuple("A", 1, true, 'a', 1.2),
+                        tuple("B", 2, false, 'b', 3.4));
+
+        // When
+        Collection<Quintuple<String, Integer, Boolean, Character, Double>> actual =
+                asList(Lazily.zip(iterable1, iterable2, iterable3, iterable4, iterable5));
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedFiveZippedIterable() throws Exception {
+        // Given
+        Iterable<String> inputIterable1 = iterableWith("A", "B", "C");
+        Iterable<Integer> inputIterable2 = iterableWith(1, 2, 3);
+        Iterable<Boolean> inputIterable3 = iterableWith(true, false, true);
+        Iterable<Character> inputIterable4 = iterableWith('a', 'b', 'c');
+        Iterable<Double> inputIterable5 = iterableWith(1.2, 3.4, 5.6);
+
+        // When
+        Iterable<Quintuple<String, Integer, Boolean, Character, Double>> outputIterable =
+                Lazily.zip(inputIterable1, inputIterable2, inputIterable3, inputIterable4, inputIterable5);
+        Iterator<Quintuple<String, Integer, Boolean, Character, Double>> firstIterator = outputIterable.iterator();
+        Iterator<Quintuple<String, Integer, Boolean, Character, Double>> secondIterator = outputIterable.iterator();
+
+        // Then
+        assertThat(secondIterator.next(), is(tuple("A", 1, true, 'a', 1.2)));
+        assertThat(secondIterator.next(), is(tuple("B", 2, false, 'b', 3.4)));
+        assertThat(firstIterator.next(), is(tuple("A", 1, true, 'a', 1.2)));
+        assertThat(secondIterator.next(), is(tuple("C", 3, true, 'c', 5.6)));
+        assertThat(firstIterator.next(), is(tuple("B", 2, false, 'b', 3.4)));
     }
 }
