@@ -298,15 +298,6 @@ public class Lazily {
         return map(zip(iterableWith(first, second, third, fourth, fifth, sixth)), Mappers.<R, S, T, U, V, W>toSextuple());
     }
 
-    private static Iterable<? extends Iterable<?>> zip(final Iterable<? extends Iterable<?>> iterables) {
-        return new Iterable<Iterable<?>>() {
-            public Iterator<Iterable<?>> iterator() {
-                final Iterable<? extends Iterator<?>> iterators = Eagerly.map(iterables, toIterators());
-                return new ZippedIterator(iterators);
-            }
-        };
-    }
-
     public static <R, S, T, U, V, W, X> Iterable<Septuple<R, S, T, U, V, W, X>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -316,5 +307,26 @@ public class Lazily {
             Iterable<W> sixth,
             Iterable<X> seventh) {
         return map(zip(iterableWith(first, second, third, fourth, fifth, sixth, seventh)), Mappers.<R, S, T, U, V, W, X>toSeptuple());
+    }
+
+    public static <R, S, T, U, V, W, X, Y> Iterable<Octuple<R, S, T, U, V, W, X, Y>> zip(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh,
+            Iterable<Y> eighth) {
+        return map(zip(iterableWith(first, second, third, fourth, fifth, sixth, seventh, eighth)), Mappers.<R, S, T, U, V, W, X, Y>toOctuple());
+    }
+
+    private static Iterable<? extends Iterable<?>> zip(final Iterable<? extends Iterable<?>> iterables) {
+        return new Iterable<Iterable<?>>() {
+            public Iterator<Iterable<?>> iterator() {
+                final Iterable<? extends Iterator<?>> iterators = Eagerly.map(iterables, toIterators());
+                return new ZippedIterator(iterators);
+            }
+        };
     }
 }
