@@ -354,6 +354,9 @@ public class Eagerly {
         return materialize(Lazily.zip(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth));
     }
 
+    public static Collection<Iterable<?>> zip(Iterable<? extends Iterable<?>> iterables) {
+        return materialize(Lazily.zip(iterables));
+    }
 
     public static <T> Collection<Pair<Integer, T>> enumerate(Iterable<T> iterable) {
         return materialize(Lazily.enumerate(iterable));

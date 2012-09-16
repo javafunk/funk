@@ -240,4 +240,25 @@ public class EagerlyZipEnumerateTest {
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
+
+    @Test
+    public void shouldZipIterableOfIterables() {
+        // Given
+        Iterable<Integer> iterable1 = iterableWith(1, 2, 3);
+        Iterable<String> iterable2 = iterableWith("A", "B");
+        Iterable<Boolean> iterable3 = iterableWith(true, false, true, false);
+        Collection<Iterable<?>> expectedOutput = Literals.<Iterable<?>>collectionWith(
+                iterableWith(1, "A", true),
+                iterableWith(2, "B", false));
+
+        // When
+        Collection<Iterable<?>> actualOutput = Eagerly.zip(
+                iterableWith(
+                        iterable1,
+                        iterable2,
+                        iterable3));
+
+        // Then
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
+    }
 }
