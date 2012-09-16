@@ -221,21 +221,23 @@ public class Lazily {
     }
 
     public static <S, T> Iterable<Pair<S, T>> cartesianProduct(
-            final Iterable<S> first, final Iterable<T> second) {
-        return concat(map(first, new Mapper<S, Iterable<Pair<S, T>>>() {
-            public Iterable<Pair<S, T>> map(S input) {
-                return zip(cycle(iterableWith(input)), second);
-            }
-        }));
+            Iterable<S> first,
+            Iterable<T> second) {
+        return map(cartesianProduct(iterableWith(first, second)), Mappers.<S, T>toPair());
     }
 
     public static <S, T, V> Iterable<Triple<S, T, V>> cartesianProduct(
-            Iterable<S> first, Iterable<T> second, Iterable<V> third) {
+            Iterable<S> first,
+            Iterable<T> second,
+            Iterable<V> third) {
         return map(cartesianProduct(iterableWith(first, second, third)), Mappers.<S, T, V>toTriple());
     }
 
     public static <S, T, U, V> Iterable<Quadruple<S, T, U, V>> cartesianProduct(
-            Iterable<S> first, Iterable<T> second, Iterable<U> third, Iterable<V> fourth) {
+            Iterable<S> first,
+            Iterable<T> second,
+            Iterable<U> third,
+            Iterable<V> fourth) {
         return map(cartesianProduct(iterableWith(first, second, third, fourth)), Mappers.<S, T, U, V>toQuadruple());
     }
 
@@ -245,7 +247,13 @@ public class Lazily {
 
     private static Iterable<? extends Iterable<?>> cartesianProduct(final List<? extends Iterable<?>> iterables) {
         if (iterables.size() == 2) {
-            return cartesianProduct(first(iterables).get(), second(iterables).get());
+            final Iterable<?> first = first(iterables).get();
+            final Iterable<?> second = first(rest(iterables)).get();
+            return concat(map(first, new Mapper<Object, Iterable<? extends Iterable<?>>>() {
+                public Iterable<? extends Iterable<?>> map(Object input) {
+                    return zip(cycle(iterableWith(input)), second);
+                }
+            }));
         }
 
         Iterable<? extends Pair<?, ? extends Iterable<?>>> pairs = cartesianProduct(
