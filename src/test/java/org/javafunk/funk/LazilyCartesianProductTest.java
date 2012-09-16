@@ -9,10 +9,7 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.annotations.ToDo;
-import org.javafunk.funk.datastructures.tuples.Pair;
-import org.javafunk.funk.datastructures.tuples.Quadruple;
-import org.javafunk.funk.datastructures.tuples.Quintuple;
-import org.javafunk.funk.datastructures.tuples.Triple;
+import org.javafunk.funk.datastructures.tuples.*;
 import org.javafunk.funk.functors.Action;
 import org.junit.Assert;
 import org.junit.Test;
@@ -248,6 +245,42 @@ public class LazilyCartesianProductTest {
                         input3,
                         input4,
                         input5));
+
+        // Then
+        assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
+    }
+
+    @Test
+    public void shouldReturnTheCartesianProductOfSixSuppliedIterablesAsAnIterableOfQuintuples() throws Exception {
+        // Given
+        Iterable<Integer> input1 = iterableWith(1);
+        Iterable<String> input2 = iterableWith("a", "b");
+        Iterable<Long> input3 = iterableWith(1L, 2L);
+        Iterable<String> input4 = iterableWith("hi", "bye");
+        Iterable<Boolean> input5 = iterableWith(true);
+        Iterable<Double> input6 = iterableWith(1.1, 2.2);
+
+        Collection<Sextuple<Integer, String, Long, String, Boolean, Double>> expectedCartesianProduct =
+                Literals.<Sextuple<Integer, String, Long, String, Boolean, Double>>collectionBuilder()
+                        .with(tuple(1, "a", 1L, "hi", true, 1.1)).with(tuple(1, "a", 1L, "bye", true, 1.1))
+                        .with(tuple(1, "b", 1L, "hi", true, 1.1)).with(tuple(1, "b", 1L, "bye", true, 1.1))
+                        .with(tuple(1, "a", 2L, "hi", true, 1.1)).with(tuple(1, "a", 2L, "bye", true, 1.1))
+                        .with(tuple(1, "b", 2L, "hi", true, 1.1)).with(tuple(1, "b", 2L, "bye", true, 1.1))
+                        .with(tuple(1, "a", 1L, "hi", true, 2.2)).with(tuple(1, "a", 1L, "bye", true, 2.2))
+                        .with(tuple(1, "b", 1L, "hi", true, 2.2)).with(tuple(1, "b", 1L, "bye", true, 2.2))
+                        .with(tuple(1, "a", 2L, "hi", true, 2.2)).with(tuple(1, "a", 2L, "bye", true, 2.2))
+                        .with(tuple(1, "b", 2L, "hi", true, 2.2)).with(tuple(1, "b", 2L, "bye", true, 2.2))
+                        .build();
+
+        // When
+        Collection<Sextuple<Integer, String, Long, String, Boolean, Double>> actualCartesianProduct =
+                materialize(Lazily.cartesianProduct(
+                        input1,
+                        input2,
+                        input3,
+                        input4,
+                        input5,
+                        input6));
 
         // Then
         assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
