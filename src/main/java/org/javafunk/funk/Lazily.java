@@ -24,7 +24,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import static org.javafunk.funk.Eagerly.first;
-import static org.javafunk.funk.Eagerly.second;
 import static org.javafunk.funk.Iterables.concat;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.Mappers.toIterators;
@@ -220,25 +219,34 @@ public class Lazily {
         };
     }
 
-    public static <S, T> Iterable<Pair<S, T>> cartesianProduct(
-            Iterable<S> first,
-            Iterable<T> second) {
-        return map(cartesianProduct(iterableWith(first, second)), Mappers.<S, T>toPair());
+    public static <R, S> Iterable<Pair<R, S>> cartesianProduct(
+            Iterable<R> first,
+            Iterable<S> second) {
+        return map(cartesianProduct(iterableWith(first, second)), Mappers.<R, S>toPair());
     }
 
-    public static <S, T, V> Iterable<Triple<S, T, V>> cartesianProduct(
-            Iterable<S> first,
-            Iterable<T> second,
-            Iterable<V> third) {
-        return map(cartesianProduct(iterableWith(first, second, third)), Mappers.<S, T, V>toTriple());
+    public static <R, S, T> Iterable<Triple<R, S, T>> cartesianProduct(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third) {
+        return map(cartesianProduct(iterableWith(first, second, third)), Mappers.<R, S, T>toTriple());
     }
 
-    public static <S, T, U, V> Iterable<Quadruple<S, T, U, V>> cartesianProduct(
-            Iterable<S> first,
-            Iterable<T> second,
-            Iterable<U> third,
-            Iterable<V> fourth) {
-        return map(cartesianProduct(iterableWith(first, second, third, fourth)), Mappers.<S, T, U, V>toQuadruple());
+    public static <R, S, T, U> Iterable<Quadruple<R, S, T, U>> cartesianProduct(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth) {
+        return map(cartesianProduct(iterableWith(first, second, third, fourth)), Mappers.<R, S, T, U>toQuadruple());
+    }
+
+    public static <R, S, T, U, V> Iterable<Quintuple<R, S, T, U, V>> cartesianProduct(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth) {
+        return map(cartesianProduct(iterableWith(first, second, third, fourth, fifth)), Mappers.<R, S, T, U, V>toQuintuple());
     }
 
     public static Iterable<? extends Iterable<?>> cartesianProduct(final Iterable<? extends Iterable<?>> iterables) {

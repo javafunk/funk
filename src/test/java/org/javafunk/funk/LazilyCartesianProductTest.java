@@ -11,6 +11,7 @@ package org.javafunk.funk;
 import org.javafunk.funk.annotations.ToDo;
 import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.datastructures.tuples.Quadruple;
+import org.javafunk.funk.datastructures.tuples.Quintuple;
 import org.javafunk.funk.datastructures.tuples.Triple;
 import org.javafunk.funk.functors.Action;
 import org.junit.Assert;
@@ -217,6 +218,36 @@ public class LazilyCartesianProductTest {
         // When
         Collection<Quadruple<Integer, String, Long, String>> actualCartesianProduct = materialize(Lazily.cartesianProduct(
                 input1, input2, input3, input4));
+
+        // Then
+        assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
+    }
+
+    @Test
+    public void shouldReturnTheCartesianProductOfFiveSuppliedIterablesAsAnIterableOfQuintuples() throws Exception {
+        // Given
+        Iterable<Integer> input1 = iterableWith(1);
+        Iterable<String> input2 = iterableWith("a", "b");
+        Iterable<Long> input3 = iterableWith(1L, 2L);
+        Iterable<String> input4 = iterableWith("hi", "bye");
+        Iterable<Boolean> input5 = iterableWith(true);
+
+        Collection<Quintuple<Integer, String, Long, String, Boolean>> expectedCartesianProduct =
+                Literals.<Quintuple<Integer, String, Long, String, Boolean>>collectionBuilder()
+                        .with(tuple(1, "a", 1L, "hi", true)).with(tuple(1, "a", 1L, "bye", true))
+                        .with(tuple(1, "b", 1L, "hi", true)).with(tuple(1, "b", 1L, "bye", true))
+                        .with(tuple(1, "a", 2L, "hi", true)).with(tuple(1, "a", 2L, "bye", true))
+                        .with(tuple(1, "b", 2L, "hi", true)).with(tuple(1, "b", 2L, "bye", true))
+                        .build();
+
+        // When
+        Collection<Quintuple<Integer, String, Long, String, Boolean>> actualCartesianProduct =
+                materialize(Lazily.cartesianProduct(
+                        input1,
+                        input2,
+                        input3,
+                        input4,
+                        input5));
 
         // Then
         assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
