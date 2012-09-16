@@ -8,9 +8,7 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.tuples.Pair;
-import org.javafunk.funk.datastructures.tuples.Quadruple;
-import org.javafunk.funk.datastructures.tuples.Triple;
+import org.javafunk.funk.datastructures.tuples.*;
 import org.javafunk.funk.functors.Mapper;
 
 import java.util.Iterator;
@@ -34,7 +32,7 @@ public class Mappers {
     }
 
     @SuppressWarnings("unchecked")
-    static <S, T, V> Mapper<? super Iterable<?>, Triple<S, T, V>> toTriple() {
+    public static <S, T, V> Mapper<? super Iterable<?>, Triple<S, T, V>> toTriple() {
         return new Mapper<Iterable<?>, Triple<S, T, V>>() {
             public Triple<S, T, V> map(Iterable<?> input) {
                 return tuple(
@@ -46,7 +44,7 @@ public class Mappers {
     }
 
     @SuppressWarnings("unchecked")
-    static <S, T, U, V> Mapper<? super Iterable<?>, Quadruple<S, T, U, V>> toQuadruple() {
+    public static <S, T, U, V> Mapper<? super Iterable<?>, Quadruple<S, T, U, V>> toQuadruple() {
         return new Mapper<Iterable<?>, Quadruple<S, T, U, V>>() {
             public Quadruple<S, T, U, V> map(Iterable<?> iterable) {
                 return tuple(
@@ -54,6 +52,86 @@ public class Mappers {
                         (T) first(rest(iterable)).get(),
                         (U) first(rest(rest(iterable))).get(),
                         (V) first(rest(rest(rest(iterable)))).get());
+            }
+        };
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <R, S, T, U, V> Mapper<? super Iterable<?>, Quintuple<R, S, T, U, V>> toQuintuple() {
+        return new Mapper<Iterable<?>, Quintuple<R, S, T, U, V>>() {
+            @Override public Quintuple<R, S, T, U, V> map(Iterable<?> iterable) {
+                return tuple(
+                        (R) first(iterable).get(),
+                        (S) first(rest(iterable)).get(),
+                        (T) first(rest(rest(iterable))).get(),
+                        (U) first(rest(rest(rest(iterable)))).get(),
+                        (V) first(rest(rest(rest(rest(iterable))))).get());
+            }
+        };
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <R, S, T, U, V, W> Mapper<? super Iterable<?>, Sextuple<R, S, T, U, V, W>> toSextuple() {
+        return new Mapper<Iterable<?>, Sextuple<R, S, T, U, V, W>>() {
+            @Override public Sextuple<R, S, T, U, V, W> map(Iterable<?> iterable) {
+                return tuple(
+                        (R) first(iterable).get(),
+                        (S) first(rest(iterable)).get(),
+                        (T) first(rest(rest(iterable))).get(),
+                        (U) first(rest(rest(rest(iterable)))).get(),
+                        (V) first(rest(rest(rest(rest(iterable))))).get(),
+                        (W) first(rest(rest(rest(rest(rest(iterable)))))).get());
+            }
+        };
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <R, S, T, U, V, W, X> Mapper<? super Iterable<?>, Septuple<R, S, T, U, V, W, X>> toSeptuple() {
+        return new Mapper<Iterable<?>, Septuple<R, S, T, U, V, W, X>>() {
+            @Override public Septuple<R, S, T, U, V, W, X> map(Iterable<?> iterable) {
+                return tuple(
+                        (R) first(iterable).get(),
+                        (S) first(rest(iterable)).get(),
+                        (T) first(rest(rest(iterable))).get(),
+                        (U) first(rest(rest(rest(iterable)))).get(),
+                        (V) first(rest(rest(rest(rest(iterable))))).get(),
+                        (W) first(rest(rest(rest(rest(rest(iterable)))))).get(),
+                        (X) first(rest(rest(rest(rest(rest(rest(iterable))))))).get());
+            }
+        };
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <R, S, T, U, V, W, X, Y> Mapper<? super Iterable<?>, Octuple<R, S, T, U, V, W, X, Y>> toOctuple() {
+        return new Mapper<Iterable<?>, Octuple<R, S, T, U, V, W, X, Y>>() {
+            @Override public Octuple<R, S, T, U, V, W, X, Y> map(Iterable<?> iterable) {
+                return tuple(
+                        (R) first(iterable).get(),
+                        (S) first(rest(iterable)).get(),
+                        (T) first(rest(rest(iterable))).get(),
+                        (U) first(rest(rest(rest(iterable)))).get(),
+                        (V) first(rest(rest(rest(rest(iterable))))).get(),
+                        (W) first(rest(rest(rest(rest(rest(iterable)))))).get(),
+                        (X) first(rest(rest(rest(rest(rest(rest(iterable))))))).get(),
+                        (Y) first(rest(rest(rest(rest(rest(rest(rest(iterable)))))))).get());
+            }
+        };
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <R, S, T, U, V, W, X, Y, Z> Mapper<? super Iterable<?>, Nonuple<R, S, T, U, V, W, X, Y, Z>> toNonuple() {
+        return new Mapper<Iterable<?>, Nonuple<R, S, T, U, V, W, X, Y, Z>>() {
+            @Override public Nonuple<R, S, T, U, V, W, X, Y, Z> map(Iterable<?> iterable) {
+                return tuple(
+                        (R) first(iterable).get(),
+                        (S) first(rest(iterable)).get(),
+                        (T) first(rest(rest(iterable))).get(),
+                        (U) first(rest(rest(rest(iterable)))).get(),
+                        (V) first(rest(rest(rest(rest(iterable))))).get(),
+                        (W) first(rest(rest(rest(rest(rest(iterable)))))).get(),
+                        (X) first(rest(rest(rest(rest(rest(rest(iterable))))))).get(),
+                        (Y) first(rest(rest(rest(rest(rest(rest(rest(iterable)))))))).get(),
+                        (Z) first(rest(rest(rest(rest(rest(rest(rest(rest(iterable))))))))).get());
             }
         };
     }
