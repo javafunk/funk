@@ -11,6 +11,7 @@ package org.javafunk.funk;
 import org.javafunk.funk.annotations.ToDo;
 import org.javafunk.funk.datastructures.tuples.*;
 import org.javafunk.funk.functors.Action;
+import org.javafunk.funk.testclasses.Name;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -24,6 +25,7 @@ import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Lazily.cartesianProduct;
 import static org.javafunk.funk.Lazily.cycle;
 import static org.javafunk.funk.Literals.*;
+import static org.javafunk.funk.testclasses.Name.name;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
@@ -251,7 +253,7 @@ public class LazilyCartesianProductTest {
     }
 
     @Test
-    public void shouldReturnTheCartesianProductOfSixSuppliedIterablesAsAnIterableOfQuintuples() throws Exception {
+    public void shouldReturnTheCartesianProductOfSixSuppliedIterablesAsAnIterableOfSextuples() throws Exception {
         // Given
         Iterable<Integer> input1 = iterableWith(1);
         Iterable<String> input2 = iterableWith("a", "b");
@@ -281,6 +283,44 @@ public class LazilyCartesianProductTest {
                         input4,
                         input5,
                         input6));
+
+        // Then
+        assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
+    }
+
+    @Test
+    public void shouldReturnTheCartesianProductOfSevenSuppliedIterablesAsAnIterableOfSeptuples() throws Exception {
+        // Given
+        Iterable<Integer> input1 = iterableWith(1);
+        Iterable<String> input2 = iterableWith("a", "b");
+        Iterable<Long> input3 = iterableWith(1L, 2L);
+        Iterable<String> input4 = iterableWith("hi", "bye");
+        Iterable<Boolean> input5 = iterableWith(true);
+        Iterable<Double> input6 = iterableWith(1.1, 2.2);
+        Iterable<Name> input7 = iterableWith(name("Adam"));
+
+        Collection<Septuple<Integer, String, Long, String, Boolean, Double, Name>> expectedCartesianProduct =
+                Literals.<Septuple<Integer, String, Long, String, Boolean, Double, Name>>collectionBuilder()
+                        .with(tuple(1, "a", 1L, "hi", true, 1.1, name("Adam"))).with(tuple(1, "a", 1L, "bye", true, 1.1, name("Adam")))
+                        .with(tuple(1, "b", 1L, "hi", true, 1.1, name("Adam"))).with(tuple(1, "b", 1L, "bye", true, 1.1, name("Adam")))
+                        .with(tuple(1, "a", 2L, "hi", true, 1.1, name("Adam"))).with(tuple(1, "a", 2L, "bye", true, 1.1, name("Adam")))
+                        .with(tuple(1, "b", 2L, "hi", true, 1.1, name("Adam"))).with(tuple(1, "b", 2L, "bye", true, 1.1, name("Adam")))
+                        .with(tuple(1, "a", 1L, "hi", true, 2.2, name("Adam"))).with(tuple(1, "a", 1L, "bye", true, 2.2, name("Adam")))
+                        .with(tuple(1, "b", 1L, "hi", true, 2.2, name("Adam"))).with(tuple(1, "b", 1L, "bye", true, 2.2, name("Adam")))
+                        .with(tuple(1, "a", 2L, "hi", true, 2.2, name("Adam"))).with(tuple(1, "a", 2L, "bye", true, 2.2, name("Adam")))
+                        .with(tuple(1, "b", 2L, "hi", true, 2.2, name("Adam"))).with(tuple(1, "b", 2L, "bye", true, 2.2, name("Adam")))
+                        .build();
+
+        // When
+        Collection<Septuple<Integer, String, Long, String, Boolean, Double, Name>> actualCartesianProduct =
+                materialize(Lazily.cartesianProduct(
+                        input1,
+                        input2,
+                        input3,
+                        input4,
+                        input5,
+                        input6,
+                        input7));
 
         // Then
         assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));

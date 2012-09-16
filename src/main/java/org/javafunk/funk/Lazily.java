@@ -259,6 +259,17 @@ public class Lazily {
         return map(cartesianProduct(iterableWith(first, second, third, fourth, fifth, sixth)), Mappers.<R, S, T, U, V, W>toSextuple());
     }
 
+    public static <R, S, T, U, V, W, X> Iterable<Septuple<R, S, T, U, V, W, X>> cartesianProduct(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh) {
+        return map(cartesianProduct(iterableWith(first, second, third, fourth, fifth, sixth, seventh)), Mappers.<R, S, T, U, V, W, X>toSeptuple());
+    }
+
     public static Iterable<? extends Iterable<?>> cartesianProduct(final Iterable<? extends Iterable<?>> iterables) {
         return cartesianProduct(listFrom(iterables));
     }
