@@ -23,6 +23,7 @@ import java.util.*;
 import static java.util.Collections.emptyList;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Iterators.asIterable;
+import static org.javafunk.funk.Literals.collectionFrom;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.functors.adapters.ActionUnaryProcedureAdapter.actionUnaryProcedure;
 import static org.javafunk.funk.functors.adapters.EquivalenceBinaryPredicateAdapter.equivalenceBinaryPredicate;
@@ -354,8 +355,12 @@ public class Eagerly {
         return materialize(Lazily.zip(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth));
     }
 
-    public static Collection<Iterable<?>> zip(Iterable<? extends Iterable<?>> iterables) {
-        return materialize(Lazily.zip(iterables));
+    public static Collection<Collection<?>> zip(Iterable<? extends Iterable<?>> iterables) {
+        return Eagerly.map(Lazily.zip(iterables), new Mapper<Iterable<?>, Collection<?>>() {
+            @Override public Collection<?> map(Iterable<?> iterable) {
+                return collectionFrom(iterable);
+            }
+        });
     }
 
     public static <T> Collection<Pair<Integer, T>> enumerate(Iterable<T> iterable) {
