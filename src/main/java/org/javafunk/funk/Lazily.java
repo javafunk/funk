@@ -296,6 +296,21 @@ public class Lazily {
                 Mappers.<R, S, T, U, V, W, X, Y>toOctuple());
     }
 
+    public static <R, S, T, U, V, W, X, Y, Z> Iterable<Nonuple<R, S, T, U, V, W, X, Y, Z>> cartesianProduct(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh,
+            Iterable<Y> eighth,
+            Iterable<Z> ninth) {
+        return map(
+                cartesianProduct(iterableWith(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth)),
+                Mappers.<R, S, T, U, V, W, X, Y, Z>toNonuple());
+    }
+
     public static Iterable<? extends Iterable<?>> cartesianProduct(final Iterable<? extends Iterable<?>> iterables) {
         return cartesianProduct(listFrom(iterables));
     }

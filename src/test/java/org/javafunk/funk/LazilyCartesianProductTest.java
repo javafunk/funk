@@ -12,6 +12,7 @@ import org.javafunk.funk.annotations.ToDo;
 import org.javafunk.funk.datastructures.tuples.*;
 import org.javafunk.funk.functors.Action;
 import org.javafunk.funk.testclasses.Age;
+import org.javafunk.funk.testclasses.Colour;
 import org.javafunk.funk.testclasses.Name;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,6 +28,7 @@ import static org.javafunk.funk.Lazily.cartesianProduct;
 import static org.javafunk.funk.Lazily.cycle;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.testclasses.Age.age;
+import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Name.name;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
@@ -387,6 +389,72 @@ public class LazilyCartesianProductTest {
                         input6,
                         input7,
                         input8));
+
+        // Then
+        assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
+    }
+
+    @Test
+    public void shouldReturnTheCartesianProductOfNineSuppliedIterablesAsAnIterableOfNonuples() throws Exception {
+        // Given
+        Iterable<Integer> input1 = iterableWith(1);
+        Iterable<String> input2 = iterableWith("a", "b");
+        Iterable<Long> input3 = iterableWith(1L, 2L);
+        Iterable<String> input4 = iterableWith("hi", "bye");
+        Iterable<Boolean> input5 = iterableWith(true);
+        Iterable<Double> input6 = iterableWith(1.1, 2.2);
+        Iterable<Name> input7 = iterableWith(name("Adam"));
+        Iterable<Age> input8 = iterableWith(age(20), age(30));
+        Iterable<Colour> input9 = iterableWith(colour("Azul"));
+
+        Collection<Nonuple<Integer, String, Long, String, Boolean, Double, Name, Age, Colour>> expectedCartesianProduct =
+                Literals.<Nonuple<Integer, String, Long, String, Boolean, Double, Name, Age, Colour>>collectionBuilder()
+                        .with(tuple(1, "a", 1L, "hi",  true, 1.1, name("Adam"), age(20), colour("Azul")))
+                        .with(tuple(1, "a", 1L, "bye", true, 1.1, name("Adam"), age(20), colour("Azul")))
+                        .with(tuple(1, "b", 1L, "hi",  true, 1.1, name("Adam"), age(20), colour("Azul")))
+                        .with(tuple(1, "b", 1L, "bye", true, 1.1, name("Adam"), age(20), colour("Azul")))
+                        .with(tuple(1, "a", 2L, "hi",  true, 1.1, name("Adam"), age(20), colour("Azul")))
+                        .with(tuple(1, "a", 2L, "bye", true, 1.1, name("Adam"), age(20), colour("Azul")))
+                        .with(tuple(1, "b", 2L, "hi",  true, 1.1, name("Adam"), age(20), colour("Azul")))
+                        .with(tuple(1, "b", 2L, "bye", true, 1.1, name("Adam"), age(20), colour("Azul")))
+                        .with(tuple(1, "a", 1L, "hi",  true, 2.2, name("Adam"), age(20), colour("Azul")))
+                        .with(tuple(1, "a", 1L, "bye", true, 2.2, name("Adam"), age(20), colour("Azul")))
+                        .with(tuple(1, "b", 1L, "hi",  true, 2.2, name("Adam"), age(20), colour("Azul")))
+                        .with(tuple(1, "b", 1L, "bye", true, 2.2, name("Adam"), age(20), colour("Azul")))
+                        .with(tuple(1, "a", 2L, "hi",  true, 2.2, name("Adam"), age(20), colour("Azul")))
+                        .with(tuple(1, "a", 2L, "bye", true, 2.2, name("Adam"), age(20), colour("Azul")))
+                        .with(tuple(1, "b", 2L, "hi",  true, 2.2, name("Adam"), age(20), colour("Azul")))
+                        .with(tuple(1, "b", 2L, "bye", true, 2.2, name("Adam"), age(20), colour("Azul")))
+                        .with(tuple(1, "a", 1L, "hi",  true, 1.1, name("Adam"), age(30), colour("Azul")))
+                        .with(tuple(1, "a", 1L, "bye", true, 1.1, name("Adam"), age(30), colour("Azul")))
+                        .with(tuple(1, "b", 1L, "hi",  true, 1.1, name("Adam"), age(30), colour("Azul")))
+                        .with(tuple(1, "b", 1L, "bye", true, 1.1, name("Adam"), age(30), colour("Azul")))
+                        .with(tuple(1, "a", 2L, "hi",  true, 1.1, name("Adam"), age(30), colour("Azul")))
+                        .with(tuple(1, "a", 2L, "bye", true, 1.1, name("Adam"), age(30), colour("Azul")))
+                        .with(tuple(1, "b", 2L, "hi",  true, 1.1, name("Adam"), age(30), colour("Azul")))
+                        .with(tuple(1, "b", 2L, "bye", true, 1.1, name("Adam"), age(30), colour("Azul")))
+                        .with(tuple(1, "a", 1L, "hi",  true, 2.2, name("Adam"), age(30), colour("Azul")))
+                        .with(tuple(1, "a", 1L, "bye", true, 2.2, name("Adam"), age(30), colour("Azul")))
+                        .with(tuple(1, "b", 1L, "hi",  true, 2.2, name("Adam"), age(30), colour("Azul")))
+                        .with(tuple(1, "b", 1L, "bye", true, 2.2, name("Adam"), age(30), colour("Azul")))
+                        .with(tuple(1, "a", 2L, "hi",  true, 2.2, name("Adam"), age(30), colour("Azul")))
+                        .with(tuple(1, "a", 2L, "bye", true, 2.2, name("Adam"), age(30), colour("Azul")))
+                        .with(tuple(1, "b", 2L, "hi",  true, 2.2, name("Adam"), age(30), colour("Azul")))
+                        .with(tuple(1, "b", 2L, "bye", true, 2.2, name("Adam"), age(30), colour("Azul")))
+                        .build();
+
+        // When
+        Collection<Nonuple<Integer, String, Long, String, Boolean, Double, Name, Age, Colour>> actualCartesianProduct =
+                materialize(Lazily.cartesianProduct(
+                        input1,
+                        input2,
+                        input3,
+                        input4,
+                        input5,
+                        input6,
+                        input7,
+                        input8,
+                        input9));
 
         // Then
         assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
