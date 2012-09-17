@@ -222,14 +222,18 @@ public class Lazily {
     public static <R, S> Iterable<Pair<R, S>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second) {
-        return map(cartesianProduct(iterableWith(first, second)), Mappers.<R, S>toPair());
+        return map(
+                cartesianProduct(iterableWith(first, second)),
+                Mappers.<R, S>toPair());
     }
 
     public static <R, S, T> Iterable<Triple<R, S, T>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second,
             Iterable<T> third) {
-        return map(cartesianProduct(iterableWith(first, second, third)), Mappers.<R, S, T>toTriple());
+        return map(
+                cartesianProduct(iterableWith(first, second, third)),
+                Mappers.<R, S, T>toTriple());
     }
 
     public static <R, S, T, U> Iterable<Quadruple<R, S, T, U>> cartesianProduct(
@@ -237,7 +241,9 @@ public class Lazily {
             Iterable<S> second,
             Iterable<T> third,
             Iterable<U> fourth) {
-        return map(cartesianProduct(iterableWith(first, second, third, fourth)), Mappers.<R, S, T, U>toQuadruple());
+        return map(
+                cartesianProduct(iterableWith(first, second, third, fourth)),
+                Mappers.<R, S, T, U>toQuadruple());
     }
 
     public static <R, S, T, U, V> Iterable<Quintuple<R, S, T, U, V>> cartesianProduct(
@@ -246,7 +252,9 @@ public class Lazily {
             Iterable<T> third,
             Iterable<U> fourth,
             Iterable<V> fifth) {
-        return map(cartesianProduct(iterableWith(first, second, third, fourth, fifth)), Mappers.<R, S, T, U, V>toQuintuple());
+        return map(
+                cartesianProduct(iterableWith(first, second, third, fourth, fifth)),
+                Mappers.<R, S, T, U, V>toQuintuple());
     }
 
     public static <R, S, T, U, V, W> Iterable<Sextuple<R, S, T, U, V, W>> cartesianProduct(
@@ -256,7 +264,9 @@ public class Lazily {
             Iterable<U> fourth,
             Iterable<V> fifth,
             Iterable<W> sixth) {
-        return map(cartesianProduct(iterableWith(first, second, third, fourth, fifth, sixth)), Mappers.<R, S, T, U, V, W>toSextuple());
+        return map(
+                cartesianProduct(iterableWith(first, second, third, fourth, fifth, sixth)),
+                Mappers.<R, S, T, U, V, W>toSextuple());
     }
 
     public static <R, S, T, U, V, W, X> Iterable<Septuple<R, S, T, U, V, W, X>> cartesianProduct(
@@ -267,7 +277,23 @@ public class Lazily {
             Iterable<V> fifth,
             Iterable<W> sixth,
             Iterable<X> seventh) {
-        return map(cartesianProduct(iterableWith(first, second, third, fourth, fifth, sixth, seventh)), Mappers.<R, S, T, U, V, W, X>toSeptuple());
+        return map(
+                cartesianProduct(iterableWith(first, second, third, fourth, fifth, sixth, seventh)),
+                Mappers.<R, S, T, U, V, W, X>toSeptuple());
+    }
+
+    public static <R, S, T, U, V, W, X, Y> Iterable<Octuple<R, S, T, U, V, W, X, Y>> cartesianProduct(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh,
+            Iterable<Y> eighth) {
+        return map(
+                cartesianProduct(iterableWith(first, second, third, fourth, fifth, sixth, seventh, eighth)),
+                Mappers.<R, S, T, U, V, W, X, Y>toOctuple());
     }
 
     public static Iterable<? extends Iterable<?>> cartesianProduct(final Iterable<? extends Iterable<?>> iterables) {
