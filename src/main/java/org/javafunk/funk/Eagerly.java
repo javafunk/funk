@@ -363,6 +363,82 @@ public class Eagerly {
         });
     }
 
+    public static <R, S> Collection<Pair<R, S>> cartesianProduct(
+            Iterable<R> first,
+            Iterable<S> second) {
+        return materialize(Lazily.cartesianProduct(first, second));
+    }
+
+    public static <R, S, T> Collection<Triple<R, S, T>> cartesianProduct(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third) {
+        return materialize(Lazily.cartesianProduct(first, second, third));
+    }
+
+    public static <R, S, T, U> Collection<Quadruple<R, S, T, U>> cartesianProduct(
+                Iterable<R> first,
+                Iterable<S> second,
+                Iterable<T> third,
+                Iterable<U> fourth) {
+        return materialize(Lazily.cartesianProduct(first, second, third, fourth));
+    }
+
+    public static <R, S, T, U, V> Collection<Quintuple<R, S, T, U, V>> cartesianProduct(
+                    Iterable<R> first,
+                    Iterable<S> second,
+                    Iterable<T> third,
+                    Iterable<U> fourth,
+                    Iterable<V> fifth) {
+        return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth));
+    }
+
+    public static <R, S, T, U, V, W> Collection<Sextuple<R, S, T, U, V, W>> cartesianProduct(
+                        Iterable<R> first,
+                        Iterable<S> second,
+                        Iterable<T> third,
+                        Iterable<U> fourth,
+                        Iterable<V> fifth,
+                        Iterable<W> sixth) {
+        return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth, sixth));
+    }
+
+    public static <R, S, T, U, V, W, X> Collection<Septuple<R, S, T, U, V, W, X>> cartesianProduct(
+                        Iterable<R> first,
+                        Iterable<S> second,
+                        Iterable<T> third,
+                        Iterable<U> fourth,
+                        Iterable<V> fifth,
+                        Iterable<W> sixth,
+                        Iterable<X> seventh) {
+        return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth, sixth, seventh));
+    }
+
+    public static <R, S, T, U, V, W, X, Y> Collection<Octuple<R, S, T, U, V, W, X, Y>> cartesianProduct(
+                            Iterable<R> first,
+                            Iterable<S> second,
+                            Iterable<T> third,
+                            Iterable<U> fourth,
+                            Iterable<V> fifth,
+                            Iterable<W> sixth,
+                            Iterable<X> seventh,
+                            Iterable<Y> eighth) {
+        return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth, sixth, seventh, eighth));
+    }
+
+    public static <R, S, T, U, V, W, X, Y, Z> Collection<Nonuple<R, S, T, U, V, W, X, Y, Z>> cartesianProduct(
+                            Iterable<R> first,
+                            Iterable<S> second,
+                            Iterable<T> third,
+                            Iterable<U> fourth,
+                            Iterable<V> fifth,
+                            Iterable<W> sixth,
+                            Iterable<X> seventh,
+                            Iterable<Y> eighth,
+                            Iterable<Z> ninth) {
+        return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth));
+    }
+
     public static <T> Collection<Pair<Integer, T>> enumerate(Iterable<T> iterable) {
         return materialize(Lazily.enumerate(iterable));
     }
