@@ -22,11 +22,11 @@ public class Sextuple<R, S, T, U, V, W>
         this.sixth = sixth;
     }
 
-    @Override public W sixth() {
+    @Override public W getSixth() {
         return sixth;
     }
 
     @Override public Iterable<Object> values() {
-        return iterableBuilderFrom(super.values()).with(sixth()).build();
+        return iterableBuilderFrom(super.values()).with(getSixth()).build();
     }
 }

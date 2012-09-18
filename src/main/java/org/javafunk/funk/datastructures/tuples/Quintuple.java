@@ -22,11 +22,11 @@ public class Quintuple<R, S, T, U, V>
         this.fifth = fifth;
     }
 
-    @Override public V fifth() {
+    @Override public V getFifth() {
         return fifth;
     }
 
     @Override public Iterable<Object> values() {
-        return iterableBuilderFrom(super.values()).with(fifth()).build();
+        return iterableBuilderFrom(super.values()).with(getFifth()).build();
     }
 }

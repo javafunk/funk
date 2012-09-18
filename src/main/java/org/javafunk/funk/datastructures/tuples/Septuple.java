@@ -23,11 +23,11 @@ public class Septuple<R, S, T, U, V, W, X>
         this.seventh = seventh;
     }
 
-    @Override public X seventh() {
+    @Override public X getSeventh() {
         return seventh;
     }
 
     @Override public Iterable<Object> values() {
-        return iterableBuilderFrom(super.values()).with(seventh()).build();
+        return iterableBuilderFrom(super.values()).with(getSeventh()).build();
     }
 }

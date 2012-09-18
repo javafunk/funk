@@ -30,7 +30,7 @@ public class TripleTest {
         First<Integer> triple = tuple(5, "Five", true);
 
         // When
-        Integer first = triple.first();
+        Integer first = triple.getFirst();
 
         //Then
         assertThat(first, is(5));
@@ -42,7 +42,7 @@ public class TripleTest {
         Second<String> triple = tuple(5, "Five", true);
 
         // When
-        String second = triple.second();
+        String second = triple.getSecond();
 
         //Then
         assertThat(second, is("Five"));
@@ -54,7 +54,7 @@ public class TripleTest {
         Third<Boolean> triple = tuple(5, "Five", true);
 
         // When
-        Boolean third = triple.third();
+        Boolean third = triple.getThird();
 
         //Then
         assertThat(third, is(true));

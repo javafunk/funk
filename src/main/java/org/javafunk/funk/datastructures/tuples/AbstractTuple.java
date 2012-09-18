@@ -42,7 +42,7 @@ public abstract class AbstractTuple implements Iterable<Object> {
         EqualsBuilder equalsBuilder = new EqualsBuilder();
         Iterable<Pair<Object, Object>> zippedValues = zip(this.values(), ((AbstractTuple) other).values());
         for (Pair<Object, Object> values : zippedValues) {
-            equalsBuilder.append(values.first(), values.second());
+            equalsBuilder.append(values.getFirst(), values.getSecond());
         }
 
         return equalsBuilder.isEquals();

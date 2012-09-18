@@ -31,7 +31,7 @@ public class QuadrupleTest {
         First<Integer> quadruple = tuple(5, "Five", true, 3.6);
 
         // When
-        Integer first = quadruple.first();
+        Integer first = quadruple.getFirst();
 
         //Then
         assertThat(first, is(5));
@@ -43,7 +43,7 @@ public class QuadrupleTest {
         Second<String> quadruple = tuple(5, "Five", true, 3.6);
 
         // When
-        String second = quadruple.second();
+        String second = quadruple.getSecond();
 
         //Then
         assertThat(second, is("Five"));
@@ -55,7 +55,7 @@ public class QuadrupleTest {
         Third<Boolean> quadruple = tuple(5, "Five", true, 3.6);
 
         // When
-        Boolean third = quadruple.third();
+        Boolean third = quadruple.getThird();
 
         //Then
         assertThat(third, is(true));
@@ -67,7 +67,7 @@ public class QuadrupleTest {
         Fourth<Double> quadruple = tuple(5, "Five", true, 3.6);
 
         // When
-        Double fourth = quadruple.fourth();
+        Double fourth = quadruple.getFourth();
 
         //Then
         assertThat(fourth, is(3.6));

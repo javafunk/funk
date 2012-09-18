@@ -18,12 +18,9 @@ import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.javafunk.funk.functors.procedures.UnaryProcedure;
 import org.javafunk.funk.monads.Option;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.*;
 
 import static java.util.Collections.emptyList;
-import static org.javafunk.funk.Accumulators.*;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Iterators.asIterable;
 import static org.javafunk.funk.Literals.tuple;
@@ -1159,7 +1156,7 @@ public class Eagerly {
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
         Pair<Iterable<T>, Iterable<T>> partition = Lazily.partition(iterable, predicate);
-        return tuple(materialize(partition.first()), materialize(partition.second()));
+        return tuple(materialize(partition.getFirst()), materialize(partition.getSecond()));
     }
 
     public static <T> Collection<Collection<T>> batch(Iterable<T> iterable, int batchSize) {

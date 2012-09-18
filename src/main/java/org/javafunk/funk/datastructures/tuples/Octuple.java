@@ -23,11 +23,11 @@ public class Octuple<R, S, T, U, V, W, X, Y>
         this.eighth = eighth;
     }
 
-    @Override public Y eighth() {
+    @Override public Y getEighth() {
         return eighth;
     }
 
     @Override public Iterable<Object> values() {
-        return iterableBuilderFrom(super.values()).with(eighth()).build();
+        return iterableBuilderFrom(super.values()).with(getEighth()).build();
     }
 }

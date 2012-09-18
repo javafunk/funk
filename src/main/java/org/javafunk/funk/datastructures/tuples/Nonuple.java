@@ -22,11 +22,11 @@ public class Nonuple<R, S, T, U, V, W, X, Y, Z>
         this.ninth = ninth;
     }
 
-    @Override public Z ninth() {
+    @Override public Z getNinth() {
         return ninth;
     }
 
     @Override public Iterable<Object> values() {
-        return iterableBuilderFrom(super.values()).with(ninth()).build();
+        return iterableBuilderFrom(super.values()).with(getNinth()).build();
     }
 }

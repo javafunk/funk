@@ -29,7 +29,7 @@ public class SingleTest {
         First<Integer> single = tuple(5);
 
         // When
-        Integer first = single.first();
+        Integer first = single.getFirst();
 
         //Then
         assertThat(first, is(5));
