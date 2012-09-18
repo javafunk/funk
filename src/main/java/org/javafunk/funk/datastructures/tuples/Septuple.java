@@ -27,7 +27,7 @@ public class Septuple<R, S, T, U, V, W, X>
         return seventh;
     }
 
-    @Override public Iterable<Object> values() {
-        return iterableBuilderFrom(super.values()).with(getSeventh()).build();
+    @Override public Iterable<Object> getValues() {
+        return iterableBuilderFrom(super.getValues()).with(getSeventh()).build();
     }
 }

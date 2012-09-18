@@ -25,7 +25,7 @@ public class Single<R>
         return first;
     }
 
-    @Override public Iterable<Object> values() {
+    @Override public Iterable<Object> getValues() {
         return iterableBuilderOf(Object.class).with(first).build();
     }
 }

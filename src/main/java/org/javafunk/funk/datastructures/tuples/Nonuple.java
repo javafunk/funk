@@ -26,7 +26,7 @@ public class Nonuple<R, S, T, U, V, W, X, Y, Z>
         return ninth;
     }
 
-    @Override public Iterable<Object> values() {
-        return iterableBuilderFrom(super.values()).with(getNinth()).build();
+    @Override public Iterable<Object> getValues() {
+        return iterableBuilderFrom(super.getValues()).with(getNinth()).build();
     }
 }

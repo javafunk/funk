@@ -26,7 +26,7 @@ public class Quadruple<R, S, T, U>
         return fourth;
     }
 
-    @Override public Iterable<Object> values() {
-        return iterableBuilderFrom(super.values()).with(getFourth()).build();
+    @Override public Iterable<Object> getValues() {
+        return iterableBuilderFrom(super.getValues()).with(getFourth()).build();
     }
 }

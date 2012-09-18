@@ -26,7 +26,7 @@ public class Quintuple<R, S, T, U, V>
         return fifth;
     }
 
-    @Override public Iterable<Object> values() {
-        return iterableBuilderFrom(super.values()).with(getFifth()).build();
+    @Override public Iterable<Object> getValues() {
+        return iterableBuilderFrom(super.getValues()).with(getFifth()).build();
     }
 }

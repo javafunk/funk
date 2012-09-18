@@ -26,7 +26,7 @@ public class Sextuple<R, S, T, U, V, W>
         return sixth;
     }
 
-    @Override public Iterable<Object> values() {
-        return iterableBuilderFrom(super.values()).with(getSixth()).build();
+    @Override public Iterable<Object> getValues() {
+        return iterableBuilderFrom(super.getValues()).with(getSixth()).build();
     }
 }

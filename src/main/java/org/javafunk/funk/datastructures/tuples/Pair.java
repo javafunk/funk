@@ -26,7 +26,7 @@ public class Pair<R, S>
         return second;
     }
 
-    @Override public Iterable<Object> values() {
-        return iterableBuilderFrom(super.values()).with(getSecond()).build();
+    @Override public Iterable<Object> getValues() {
+        return iterableBuilderFrom(super.getValues()).with(getSecond()).build();
     }
 }

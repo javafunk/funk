@@ -26,7 +26,7 @@ public class Triple<R, S, T>
         return third;
     }
 
-    @Override public Iterable<Object> values() {
-        return iterableBuilderFrom(super.values()).with(getThird()).build();
+    @Override public Iterable<Object> getValues() {
+        return iterableBuilderFrom(super.getValues()).with(getThird()).build();
     }
 }

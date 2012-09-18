@@ -27,7 +27,7 @@ public class Octuple<R, S, T, U, V, W, X, Y>
         return eighth;
     }
 
-    @Override public Iterable<Object> values() {
-        return iterableBuilderFrom(super.values()).with(getEighth()).build();
+    @Override public Iterable<Object> getValues() {
+        return iterableBuilderFrom(super.getValues()).with(getEighth()).build();
     }
 }
