@@ -349,11 +349,11 @@ public class Eagerly {
 
     /**
      * Filters those elements from the input {@code Iterable} of type {@code T}
-     * that satisfy the supplied {@code Predicate} into a {@code Collection}
-     * of elements of type {@code T} . The {@code Predicate} will be provided
+     * that satisfy the supplied {@code UnaryPredicate} into a {@code Collection}
+     * of elements of type {@code T} . The {@code UnaryPredicate} will be provided
      * with each element in the input {@code Iterable} and the element will be
      * retained in the output {@code Collection} if and only if the
-     * {@code Predicate} returns {@code true}. If it returns {@code false},
+     * {@code UnaryPredicate} returns {@code true}. If it returns {@code false},
      * the element will be discarded.
      *
      * <p>For a more complete description of the filter higher order function,
@@ -366,8 +366,8 @@ public class Eagerly {
      *
      * <p>{@code filter} does not discriminate against {@code null} values in the input
      * {@code Iterable}, they are passed to the {@code Predicate} in the same way as
-     * any other value. Similarly, if the {@code Predicate} returns {@code true} when
-     * called with a {@code null} value, the {@code null} value will be retained in
+     * any other value. Similarly, if the {@code UnaryPredicate} returns {@code true}
+     * when called with a {@code null} value, the {@code null} value will be retained in
      * the output {@code Collection}.</p>
      *
      * <h4>Example Usage</h4>
