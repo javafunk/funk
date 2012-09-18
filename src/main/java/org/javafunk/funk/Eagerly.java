@@ -463,6 +463,127 @@ public class Eagerly {
         return materialize(Lazily.filter(iterable, predicate));
     }
 
+    /**
+     * Rejects those elements from the input {@code Iterable} of type {@code T}
+     * that satisfy the supplied {@code Predicate} and returns a {@code Collection}
+     * of type {@code T} containing the remaining elements. The {@code UnaryPredicate}
+     * will be provided with each element in the input {@code Iterable} and the element
+     * will be retained in the output {@code Collection} if and only if the
+     * {@code UnaryPredicate} returns {@code false}. If it returns {@code true},
+     * the element will be discarded.
+     *
+     * <p>Since a {@code Collection} instance is returned, the rejection is performed
+     * eagerly, i.e., the {@code UnaryPredicate} is applied to each element in the input
+     * {@code Iterable} immediately.</p>
+     *
+     * <p>{@code reject} does not discriminate against {@code null} values in the input
+     * {@code Iterable}, they are passed to the {@code UnaryPredicate} in the same way
+     * as any other value. Similarly, if the {@code UnaryPredicate} returns {@code false}
+     * when called with a {@code null} value, the {@code null} value will be retained in
+     * the output {@code Collection}.</p>
+     *
+     * <h4>Example Usage</h4>
+     *
+     * Consider a collection of {@code Pet} objects where a {@code Pet} is defined
+     * by the following interface:
+     * <blockquote>
+     * <pre>
+     *   public interface Pet {
+     *       String getName();
+     *   }
+     * </pre>
+     * </blockquote>
+     * Now, consider {@code Pet} has three implementations, {@code Cat},
+     * {@code Dog} and {@code Fish}, defined by the following classes:
+     * <blockquote>
+     * <pre>
+     *   public class Dog implements Pet {
+     *       private String name;
+     *
+     *       public Dog(String name) {
+     *           this.name = name;
+     *       }
+     *
+     *       &#64;Override
+     *       public String getName() {
+     *           return String.format("Bark, bark, %s, bark", name);
+     *       }
+     *   }
+     *
+     *   public class Cat implements Pet {
+     *       private String name;
+     *
+     *       public Cat(String name) {
+     *           this.name = name;
+     *       }
+     *
+     *       &#64;Override
+     *       public String getName() {
+     *           return String.format("%s, miaow", name);
+     *       }
+     *   }
+     *
+     *   public class Fish implements Pet {
+     *       private String name;
+     *
+     *       public Fish(String name) {
+     *           this.name = name;
+     *       }
+     *
+     *       &#64;Override
+     *       public String getName() {
+     *           return String.format("%s, bubbles, bubbles, bubbles!", name);
+     *       }
+     *   }
+     * </pre>
+     * </blockquote>
+     * Say we have an in memory database of all pets in a pet store:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Pet&gt; pets = Literals.listWith(
+     *           new Fish("Goldie"),
+     *           new Dog("Fido"),
+     *           new Dog("Bones"),
+     *           new Cat("Fluff"),
+     *           new Dog("Graham"),
+     *           new Cat("Ginger"));
+     * </pre>
+     * </blockquote>
+     * A customer comes into the pet store wanting to purchase a new pet.
+     * However, they are allergic to cats and want to know all other
+     * available pets. We can find out this information using {@code reject}:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Pet&gt; nonFelinePets = Eagerly.reject(pets, new Predicate&lt;Pet&gt;() {
+     *       &#64;Override public boolean evaluate(Pet pet) {
+     *           return pet instanceof Cat;
+     *       }
+     *   });
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * <p>The resulting collection is equivalent to the following:</p>
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Pet&gt; names = Literals.collectionWith(
+     *           new Dog("Fido"),
+     *           new Dog("Bones"),
+     *           new Dog("Graham"));
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable  The {@code Iterable} of elements from which elements should be rejected.
+     * @param predicate A {@code UnaryPredicate} which, given an element from the input iterable,
+     *                  returns {@code true} if that element should be discarded and {@code false}
+     *                  if it should be retained.
+     * @param <T>       The type of the elements to be assesses for rejection.
+     * @return A {@code Collection} containing those elements of type {@code T} from the input
+     *         {@code Iterable} that evaluate to {@code false} when passed to the supplied
+     *         {@code UnaryPredicate}.
+     */
     public static <T> Collection<T> reject(
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
