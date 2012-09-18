@@ -14,6 +14,7 @@ import static org.javafunk.funk.testclasses.Age.age;
 import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Name.name;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class EagerlyCartesianProductTest {
     @Test
@@ -281,5 +282,43 @@ public class EagerlyCartesianProductTest {
 
         // Then
         assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
+    }
+
+    @Test
+    public void shouldTakeCartesianProductOfIterableOfIterables() {
+        // Given
+        Iterable<Integer> iterable1 = iterableWith(1, 2, 3);
+        Iterable<String> iterable2 = iterableWith("A", "B");
+        Iterable<Boolean> iterable3 = iterableWith(true, false, true);
+        Collection<Collection<?>> expectedOutput = Literals.<Collection<?>>collectionBuilder()
+                .with(collectionBuilderOf(Object.class).with(1, "A", true).build())
+                .with(collectionBuilderOf(Object.class).with(1, "A", false).build())
+                .with(collectionBuilderOf(Object.class).with(1, "A", true).build())
+                .with(collectionBuilderOf(Object.class).with(1, "B", true).build())
+                .with(collectionBuilderOf(Object.class).with(1, "B", false).build())
+                .with(collectionBuilderOf(Object.class).with(1, "B", true).build())
+                .with(collectionBuilderOf(Object.class).with(2, "A", true).build())
+                .with(collectionBuilderOf(Object.class).with(2, "A", false).build())
+                .with(collectionBuilderOf(Object.class).with(2, "A", true).build())
+                .with(collectionBuilderOf(Object.class).with(2, "B", true).build())
+                .with(collectionBuilderOf(Object.class).with(2, "B", false).build())
+                .with(collectionBuilderOf(Object.class).with(2, "B", true).build())
+                .with(collectionBuilderOf(Object.class).with(3, "A", true).build())
+                .with(collectionBuilderOf(Object.class).with(3, "A", false).build())
+                .with(collectionBuilderOf(Object.class).with(3, "A", true).build())
+                .with(collectionBuilderOf(Object.class).with(3, "B", true).build())
+                .with(collectionBuilderOf(Object.class).with(3, "B", false).build())
+                .with(collectionBuilderOf(Object.class).with(3, "B", true).build())
+                .build();
+
+        // When
+        Collection<Collection<?>> actualOutput = Eagerly.cartesianProduct(
+                iterableWith(
+                        iterable1,
+                        iterable2,
+                        iterable3));
+
+        // Then
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 }

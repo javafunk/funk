@@ -439,6 +439,14 @@ public class Eagerly {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth));
     }
 
+    public static Collection<Collection<?>> cartesianProduct(Iterable<? extends Iterable<?>> iterables) {
+        return Eagerly.map(Lazily.cartesianProduct(iterables), new Mapper<Iterable<?>, Collection<?>>() {
+            @Override public Collection<?> map(Iterable<?> iterable) {
+                return collectionFrom(iterable);
+            }
+        });
+    }
+
     public static <T> Collection<Pair<Integer, T>> enumerate(Iterable<T> iterable) {
         return materialize(Lazily.enumerate(iterable));
     }
