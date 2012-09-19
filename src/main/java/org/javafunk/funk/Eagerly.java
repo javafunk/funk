@@ -21,6 +21,7 @@ import org.javafunk.funk.monads.Option;
 import java.util.*;
 
 import static java.util.Collections.emptyList;
+import static org.javafunk.funk.Checks.returnOrThrowIfNull;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Iterators.asIterable;
 import static org.javafunk.funk.Literals.collectionFrom;
@@ -99,7 +100,7 @@ public class Eagerly {
     public static <T> T max(Iterable<T> iterable, final Comparator<? super T> comparator) {
         return reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMax, T element) {
-                return (element != null && comparator.compare(element, currentMax) > 0) ?
+                return comparator.compare(element, currentMax) > 0 ?
                         element :
                         currentMax;
             }
@@ -107,19 +108,19 @@ public class Eagerly {
     }
 
     public static <T extends Comparable<T>> T max(Iterable<T> iterable) {
-        return reduce(iterable, new Reducer<T, T>() {
+        return returnOrThrowIfNull(reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMax, T element) {
                 return (element != null && element.compareTo(currentMax) > 0) ?
                         element :
                         currentMax;
             }
-        });
+        }), new NoSuchElementException("Maximum value is undefined if all values in the supplied Iterable are null."));
     }
 
     public static <T> T min(Iterable<T> iterable, final Comparator<? super T> comparator) {
         return reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMin, T element) {
-                return (element != null && comparator.compare(element, currentMin) < 0) ?
+                return comparator.compare(element, currentMin) < 0 ?
                         element :
                         currentMin;
             }
@@ -127,13 +128,13 @@ public class Eagerly {
     }
 
     public static <T extends Comparable<T>> T min(Iterable<T> iterable) {
-        return reduce(iterable, new Reducer<T, T>() {
+        return returnOrThrowIfNull(reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMin, T element) {
                 return (element != null && element.compareTo(currentMin) < 0) ?
                         element :
                         currentMin;
             }
-        });
+        }), new NoSuchElementException("Minimum value is undefined if all values in the supplied Iterable are null."));
     }
 
     /**
