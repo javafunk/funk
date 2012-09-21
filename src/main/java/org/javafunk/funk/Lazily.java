@@ -8,10 +8,11 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.tuples.Pair;
-import org.javafunk.funk.datastructures.tuples.Quadruple;
-import org.javafunk.funk.datastructures.tuples.Triple;
-import org.javafunk.funk.functors.*;
+import org.javafunk.funk.datastructures.tuples.*;
+import org.javafunk.funk.functors.Action;
+import org.javafunk.funk.functors.Equivalence;
+import org.javafunk.funk.functors.Indexer;
+import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.functors.predicates.BinaryPredicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
@@ -22,7 +23,6 @@ import org.javafunk.funk.predicates.NotPredicate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import static org.javafunk.funk.Eagerly.first;
 import static org.javafunk.funk.Eagerly.second;
@@ -261,80 +261,87 @@ public class Lazily {
     }
 
     public static <R, S> Iterable<Pair<R, S>> zip(
-            Iterable<R> first, Iterable<S> second) {
+            Iterable<R> first,
+            Iterable<S> second) {
         return map(zip(iterableWith(first, second)), Mappers.<R, S>toPair());
     }
 
     public static <R, S, T> Iterable<Triple<R, S, T>> zip(
-            Iterable<R> first, Iterable<S> second, Iterable<T> third) {
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third) {
         return map(zip(iterableWith(first, second, third)), Mappers.<R, S, T>toTriple());
     }
 
-    private static Iterable<? extends Iterable<?>> zip(final Iterable<? extends Iterable<?>> iterables) {
+    public static <R, S, T, U> Iterable<Quadruple<R, S, T, U>> zip(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth) {
+        return map(zip(iterableWith(first, second, third, fourth)), Mappers.<R, S, T, U>toQuadruple());
+    }
+
+    public static <R, S, T, U, V> Iterable<Quintuple<R, S, T, U, V>> zip(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth) {
+        return map(zip(iterableWith(first, second, third, fourth, fifth)), Mappers.<R, S, T, U, V>toQuintuple());
+    }
+
+    public static <R, S, T, U, V, W> Iterable<Sextuple<R, S, T, U, V, W>> zip(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth) {
+        return map(zip(iterableWith(first, second, third, fourth, fifth, sixth)), Mappers.<R, S, T, U, V, W>toSextuple());
+    }
+
+    public static <R, S, T, U, V, W, X> Iterable<Septuple<R, S, T, U, V, W, X>> zip(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh) {
+        return map(zip(iterableWith(first, second, third, fourth, fifth, sixth, seventh)), Mappers.<R, S, T, U, V, W, X>toSeptuple());
+    }
+
+    public static <R, S, T, U, V, W, X, Y> Iterable<Octuple<R, S, T, U, V, W, X, Y>> zip(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh,
+            Iterable<Y> eighth) {
+        return map(zip(iterableWith(first, second, third, fourth, fifth, sixth, seventh, eighth)), Mappers.<R, S, T, U, V, W, X, Y>toOctuple());
+    }
+
+    public static <R, S, T, U, V, W, X, Y, Z> Iterable<Nonuple<R, S, T, U, V, W, X, Y, Z>> zip(
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh,
+            Iterable<Y> eighth,
+            Iterable<Z> ninth) {
+        return map(zip(iterableWith(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth)), Mappers.<R, S, T, U, V, W, X, Y, Z>toNonuple());
+    }
+
+    public static Iterable<? extends Iterable<?>> zip(final Iterable<? extends Iterable<?>> iterables) {
         return new Iterable<Iterable<?>>() {
             public Iterator<Iterable<?>> iterator() {
                 final Iterable<? extends Iterator<?>> iterators = Eagerly.map(iterables, toIterators());
                 return new ZippedIterator(iterators);
             }
         };
-    }
-
-    private static class ZippedIterator implements Iterator<Iterable<?>> {
-        private final Iterable<? extends Iterator<?>> iterators;
-
-        public ZippedIterator(Iterable<? extends Iterator<?>> iterators) {
-            this.iterators = iterators;
-        }
-
-        public boolean hasNext() {
-            return Eagerly.all(iterators, new Predicate<Iterator<?>>() {
-                public boolean evaluate(Iterator<?> iterator) {
-                    return iterator.hasNext();
-                }
-            });
-        }
-
-        public Iterable<?> next() {
-            if (hasNext()) {
-                return Eagerly.map(iterators, new Mapper<Iterator<?>, Object>() {
-                    public Object map(Iterator<?> iterator) {
-                        return iterator.next();
-                    }
-                });
-            } else {
-                throw new NoSuchElementException();
-            }
-        }
-
-        public void remove() {
-            throw new UnsupportedOperationException();
-        }
-    }
-
-    private static class EachIterator<T> implements Iterator<T> {
-        private Iterator<T> iterator;
-        private UnaryProcedure<? super T> procedure;
-
-        private EachIterator(Iterator<T> iterator, UnaryProcedure<? super T> procedure) {
-            this.iterator = iterator;
-            this.procedure = procedure;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return iterator.hasNext();
-        }
-
-        @Override
-        public T next() {
-            T next = iterator.next();
-            procedure.execute(next);
-            return next;
-        }
-
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException();
-        }
     }
 }

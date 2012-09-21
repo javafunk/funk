@@ -11,10 +11,12 @@ package org.javafunk.funk;
 import org.javafunk.funk.datastructures.tuples.*;
 import org.javafunk.funk.functors.Mapper;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 import static org.javafunk.funk.Eagerly.first;
 import static org.javafunk.funk.Lazily.rest;
+import static org.javafunk.funk.Literals.collectionFrom;
 import static org.javafunk.funk.Literals.tuple;
 
 public class Mappers {
@@ -136,7 +138,7 @@ public class Mappers {
         };
     }
 
-    static <T> Mapper<? super Iterable<? extends T>, Iterator<? extends T>> toIterators() {
+    public static <T> Mapper<? super Iterable<? extends T>, Iterator<? extends T>> toIterators() {
         return new Mapper<Iterable<? extends T>, Iterator<? extends T>>() {
             public Iterator<? extends T> map(Iterable<? extends T> iterable) {
                 return iterable.iterator();
