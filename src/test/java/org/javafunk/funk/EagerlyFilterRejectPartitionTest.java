@@ -81,8 +81,8 @@ public class EagerlyFilterRejectPartitionTest {
                 });
 
         // Then
-        Collection<String> actualMatchingItems = partitionResults.first();
-        Collection<String> actualNonMatchingItems = partitionResults.second();
+        Collection<String> actualMatchingItems = partitionResults.getFirst();
+        Collection<String> actualNonMatchingItems = partitionResults.getSecond();
 
         assertThat(actualMatchingItems, hasOnlyItemsInOrder(expectedMatchingItems));
         assertThat(actualNonMatchingItems, hasOnlyItemsInOrder(expectedNonMatchingItems));

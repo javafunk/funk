@@ -28,7 +28,7 @@ public class QuintupleTest {
         First<Integer> quintuple = tuple(5, "Five", true, 3.6, 23L);
 
         // When
-        Integer first = quintuple.first();
+        Integer first = quintuple.getFirst();
 
         //Then
         assertThat(first, is(5));
@@ -40,7 +40,7 @@ public class QuintupleTest {
         Second<String> quintuple = tuple(5, "Five", true, 3.6, 23L);
 
         // When
-        String second = quintuple.second();
+        String second = quintuple.getSecond();
 
         //Then
         assertThat(second, is("Five"));
@@ -52,7 +52,7 @@ public class QuintupleTest {
         Third<Boolean> quintuple = tuple(5, "Five", true, 3.6, 23L);
 
         // When
-        Boolean third = quintuple.third();
+        Boolean third = quintuple.getThird();
 
         //Then
         assertThat(third, is(true));
@@ -64,7 +64,7 @@ public class QuintupleTest {
         Fourth<Double> quintuple = tuple(5, "Five", true, 3.6, 23L);
 
         // When
-        Double fourth = quintuple.fourth();
+        Double fourth = quintuple.getFourth();
 
         // Then
         assertThat(fourth, is(3.6));
@@ -76,7 +76,7 @@ public class QuintupleTest {
         Fifth<Long> quintuple = tuple(5, "Five", true, 3.6, 23L);
 
         // When
-        Long fifth = quintuple.fifth();
+        Long fifth = quintuple.getFifth();
 
         // Then
         assertThat(fifth, is(23L));

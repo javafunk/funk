@@ -1505,7 +1505,7 @@ public class Literals {
     }
 
     public static <K, V> Map.Entry<K, V> mapEntryFor(Pair<K, V> pair) {
-        return new AbstractMap.SimpleEntry<K, V>(pair.first(), pair.second());
+        return new AbstractMap.SimpleEntry<K, V>(pair.getFirst(), pair.getSecond());
     }
 
     /**

@@ -30,7 +30,7 @@ public class SextupleTest {
         First<Integer> sextuple = tuple(5, "Five", true, 3.6, 23L, name("fred"));
 
         // When
-        Integer first = sextuple.first();
+        Integer first = sextuple.getFirst();
 
         //Then
         assertThat(first, is(5));
@@ -42,7 +42,7 @@ public class SextupleTest {
         Second<String> sextuple = tuple(5, "Five", true, 3.6, 23L, name("fred"));
 
         // When
-        String second = sextuple.second();
+        String second = sextuple.getSecond();
 
         //Then
         assertThat(second, is("Five"));
@@ -54,7 +54,7 @@ public class SextupleTest {
         Third<Boolean> sextuple = tuple(5, "Five", true, 3.6, 23L, name("fred"));
 
         // When
-        Boolean third = sextuple.third();
+        Boolean third = sextuple.getThird();
 
         //Then
         assertThat(third, is(true));
@@ -66,7 +66,7 @@ public class SextupleTest {
         Fourth<Double> sextuple = tuple(5, "Five", true, 3.6, 23L, name("fred"));
 
         // When
-        Double fourth = sextuple.fourth();
+        Double fourth = sextuple.getFourth();
 
         // Then
         assertThat(fourth, is(3.6));
@@ -78,7 +78,7 @@ public class SextupleTest {
         Fifth<Long> sextuple = tuple(5, "Five", true, 3.6, 23L, name("fred"));
 
         // When
-        Long fifth = sextuple.fifth();
+        Long fifth = sextuple.getFifth();
 
         // Then
         assertThat(fifth, is(23L));
@@ -90,7 +90,7 @@ public class SextupleTest {
         Sixth<Name> sextuple = tuple(5, "Five", true, 3.6, 23L, name("fred"));
 
         // When
-        Name sixth = sextuple.sixth();
+        Name sixth = sextuple.getSixth();
 
         // Then
         assertThat(sixth, is(name("fred")));

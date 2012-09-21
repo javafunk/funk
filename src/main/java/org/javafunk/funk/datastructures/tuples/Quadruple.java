@@ -22,11 +22,11 @@ public class Quadruple<R, S, T, U>
         this.fourth = fourth;
     }
 
-    @Override public U fourth() {
+    @Override public U getFourth() {
         return fourth;
     }
 
-    @Override public Iterable<Object> values() {
-        return iterableBuilderFrom(super.values()).with(fourth()).build();
+    @Override public Iterable<Object> getValues() {
+        return iterableBuilderFrom(super.getValues()).with(getFourth()).build();
     }
 }

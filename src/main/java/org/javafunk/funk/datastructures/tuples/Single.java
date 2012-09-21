@@ -21,11 +21,11 @@ public class Single<R>
         this.first = first;
     }
 
-    @Override public R first() {
+    @Override public R getFirst() {
         return first;
     }
 
-    @Override public Iterable<Object> values() {
+    @Override public Iterable<Object> getValues() {
         return iterableBuilderOf(Object.class).with(first).build();
     }
 }

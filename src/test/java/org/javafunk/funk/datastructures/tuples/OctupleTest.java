@@ -34,7 +34,7 @@ public class OctupleTest {
         First<Integer> octuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25));
 
         // When
-        Integer first = octuple.first();
+        Integer first = octuple.getFirst();
 
         //Then
         assertThat(first, is(5));
@@ -46,7 +46,7 @@ public class OctupleTest {
         Second<String> octuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25));
 
         // When
-        String second = octuple.second();
+        String second = octuple.getSecond();
 
         //Then
         assertThat(second, is("Five"));
@@ -58,7 +58,7 @@ public class OctupleTest {
         Third<Boolean> octuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25));
 
         // When
-        Boolean third = octuple.third();
+        Boolean third = octuple.getThird();
 
         //Then
         assertThat(third, is(true));
@@ -70,7 +70,7 @@ public class OctupleTest {
         Fourth<Double> octuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25));
 
         // When
-        Double fourth = octuple.fourth();
+        Double fourth = octuple.getFourth();
 
         // Then
         assertThat(fourth, is(3.6));
@@ -82,7 +82,7 @@ public class OctupleTest {
         Fifth<Long> octuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25));
 
         // When
-        Long fifth = octuple.fifth();
+        Long fifth = octuple.getFifth();
 
         // Then
         assertThat(fifth, is(23L));
@@ -94,7 +94,7 @@ public class OctupleTest {
         Sixth<Name> octuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25));
 
         // When
-        Name sixth = octuple.sixth();
+        Name sixth = octuple.getSixth();
 
         // Then
         assertThat(sixth, is(name("fred")));
@@ -106,7 +106,7 @@ public class OctupleTest {
         Seventh<Colour> octuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25));
 
         // When
-        Colour seventh = octuple.seventh();
+        Colour seventh = octuple.getSeventh();
 
         // Then
         assertThat(seventh, is(colour("blue")));
@@ -118,7 +118,7 @@ public class OctupleTest {
         Eighth<Age> octuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25));
 
         // When
-        Age eighth = octuple.eighth();
+        Age eighth = octuple.getEighth();
 
         // Then
         assertThat(eighth, is(age(25)));

@@ -123,8 +123,8 @@ public class LazilyFilterRejectPartitionTest {
                 });
 
         // Then
-        Collection<Integer> actualMatchingItems = materialize(partitionResults.first());
-        Collection<Integer> actualNonMatchingItems = materialize(partitionResults.second());
+        Collection<Integer> actualMatchingItems = materialize(partitionResults.getFirst());
+        Collection<Integer> actualNonMatchingItems = materialize(partitionResults.getSecond());
 
         assertThat(actualMatchingItems, hasOnlyItemsInOrder(expectedMatchingItems));
         assertThat(actualNonMatchingItems, hasOnlyItemsInOrder(expectedNonMatchingItems));
@@ -146,8 +146,8 @@ public class LazilyFilterRejectPartitionTest {
                         return item % 2 == 0;
                     }
                 });
-        Iterable<Integer> matchingIterable = partitionResult.first();
-        Iterable<Integer> nonMatchingIterable = partitionResult.second();
+        Iterable<Integer> matchingIterable = partitionResult.getFirst();
+        Iterable<Integer> nonMatchingIterable = partitionResult.getSecond();
 
         Iterator<Integer> matchingIterator1 = matchingIterable.iterator();
         Iterator<Integer> matchingIterator2 = matchingIterable.iterator();

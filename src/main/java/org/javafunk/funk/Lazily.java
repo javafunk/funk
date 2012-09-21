@@ -20,7 +20,6 @@ import org.javafunk.funk.functors.procedures.UnaryProcedure;
 import org.javafunk.funk.iterators.*;
 import org.javafunk.funk.predicates.NotPredicate;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -152,7 +151,7 @@ public class Lazily {
     public static <T> Iterable<Boolean> equate(Iterable<T> first, Iterable<T> second, final BinaryPredicate<? super T, ? super T> predicate) {
         return map(zip(first, second), new Mapper<Pair<T, T>, Boolean>() {
             public Boolean map(Pair<T, T> input) {
-                return predicate.evaluate(input.first(), input.second());
+                return predicate.evaluate(input.getFirst(), input.getSecond());
             }
         });
     }
@@ -255,7 +254,7 @@ public class Lazily {
 
         return map(pairs, new Mapper<Pair<?, ? extends Iterable<?>>, Iterable<?>>() {
             public Iterable<?> map(Pair<?, ? extends Iterable<?>> input) {
-                return iterableBuilderWith(input.first()).and(input.second()).build();
+                return iterableBuilderWith(input.getFirst()).and(input.getSecond()).build();
             }
         });
     }

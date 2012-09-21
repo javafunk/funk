@@ -22,11 +22,11 @@ public class Triple<R, S, T>
         this.third = third;
     }
 
-    @Override public T third() {
+    @Override public T getThird() {
         return third;
     }
 
-    @Override public Iterable<Object> values() {
-        return iterableBuilderFrom(super.values()).with(third()).build();
+    @Override public Iterable<Object> getValues() {
+        return iterableBuilderFrom(super.getValues()).with(getThird()).build();
     }
 }
