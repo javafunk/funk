@@ -8,21 +8,29 @@
  */
 package org.javafunk.funk;
 
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multiset;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.javafunk.funk.EagerlyMinMaxTest.NonComparableObject.nonComparableObject;
 import static org.javafunk.funk.Literals.iterable;
 import static org.javafunk.funk.Literals.iterableWith;
+import static org.junit.Assert.fail;
 
 public class EagerlyMinMaxTest {
     @Test
@@ -41,6 +49,29 @@ public class EagerlyMinMaxTest {
     public void shouldThrowNoSuchElementExceptionIfAnEmptyIterableIsSuppliedToMin() throws Exception {
         // Given
         Iterable<Integer> iterable = iterable();
+
+        // When
+        Eagerly.min(iterable);
+
+        // Then a NoSuchElementException is thrown
+    }
+
+    @Test
+    public void shouldSkipNullsInTheSuppliedIterableWhenCalculatingMinimum() throws Exception {
+        // Given
+        Iterable<Integer> iterable = iterableWith(1, 2, null, 3);
+
+        // When
+        Integer minimum = Eagerly.min(iterable);
+
+        // Then
+        assertThat(minimum, is(1));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void shouldThrowNoSuchElementExceptionIfTheSuppliedIterableIsAllNullsWhenCalculatingMinimum() throws Exception {
+        // Given
+        Iterable<Integer> iterable = iterableWith(null, null, null);
 
         // When
         Eagerly.min(iterable);
@@ -75,7 +106,6 @@ public class EagerlyMinMaxTest {
         Iterable<NonComparableObject> iterable = iterable();
 
         // When
-
         Eagerly.min(iterable, new Comparator<NonComparableObject>() {
             @Override public int compare(NonComparableObject first, NonComparableObject second) {
                 return first.length() - second.length();
@@ -83,6 +113,25 @@ public class EagerlyMinMaxTest {
         });
 
         // Then a NoSuchElementException is thrown
+    }
+
+    @Test
+    public void shouldPassNullsToTheSuppliedComparatorWhenCalculatingMinimum() throws Exception {
+        // Given
+        Iterable<NonComparableObject> iterable = iterableWith(nonComparableObject("aaaa"), null, nonComparableObject("aa"));
+        final Multiset<NonComparableObject> passedObjects = HashMultiset.create();
+
+        // When
+        Eagerly.min(iterable, new Comparator<NonComparableObject>() {
+            @Override public int compare(NonComparableObject first, NonComparableObject second) {
+                passedObjects.add(first);
+                passedObjects.add(second);
+                return 0;
+            }
+        });
+
+        // Then
+        assertThat(passedObjects.contains(null), is(true));
     }
 
     @Test
@@ -97,10 +146,33 @@ public class EagerlyMinMaxTest {
         assertThat(actual, is(6));
     }
 
+    @Test
+    public void shouldSkipNullsInTheSuppliedIterableWhenCalculatingMaximum() throws Exception {
+        // Given
+        Iterable<Integer> iterable = iterableWith(1, 2, null, 3);
+
+        // When
+        Integer maximum = Eagerly.max(iterable);
+
+        // Then
+        assertThat(maximum, is(3));
+    }
+
     @Test(expected = NoSuchElementException.class)
     public void shouldThrowNoSuchElementExceptionIfAnEmptyIterableIsSuppliedToMax() throws Exception {
         // Given
         Iterable<Integer> iterable = iterable();
+
+        // When
+        Eagerly.max(iterable);
+
+        // Then a NoSuchElementException is thrown
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void shouldThrowNoSuchElementExceptionIfTheSuppliedIterableIsAllNullsWhenCalculatingMaximum() throws Exception {
+        // Given
+        Iterable<Integer> iterable = iterableWith(null, null, null);
 
         // When
         Eagerly.max(iterable);
@@ -142,6 +214,25 @@ public class EagerlyMinMaxTest {
         });
 
         // Then a NoSuchElementException is thrown
+    }
+
+    @Test
+    public void shouldPassNullsToTheSuppliedComparatorWhenCalculatingMaximum() throws Exception {
+        // Given
+        Iterable<NonComparableObject> iterable = iterableWith(nonComparableObject("aaaa"), null, nonComparableObject("aa"));
+        final Multiset<NonComparableObject> passedObjects = HashMultiset.create();
+
+        // When
+        Eagerly.max(iterable, new Comparator<NonComparableObject>() {
+            @Override public int compare(NonComparableObject first, NonComparableObject second) {
+                passedObjects.add(first);
+                passedObjects.add(second);
+                return 0;
+            }
+        });
+
+        // Then
+        assertThat(passedObjects.contains(null), is(true));
     }
 
     static class NonComparableObject {
