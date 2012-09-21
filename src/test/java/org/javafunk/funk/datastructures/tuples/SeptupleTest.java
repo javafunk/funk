@@ -32,7 +32,7 @@ public class SeptupleTest {
         First<Integer> septuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"));
 
         // When
-        Integer first = septuple.first();
+        Integer first = septuple.getFirst();
 
         //Then
         assertThat(first, is(5));
@@ -44,7 +44,7 @@ public class SeptupleTest {
         Second<String> septuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"));
 
         // When
-        String second = septuple.second();
+        String second = septuple.getSecond();
 
         //Then
         assertThat(second, is("Five"));
@@ -56,7 +56,7 @@ public class SeptupleTest {
         Third<Boolean> septuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"));
 
         // When
-        Boolean third = septuple.third();
+        Boolean third = septuple.getThird();
 
         //Then
         assertThat(third, is(true));
@@ -68,7 +68,7 @@ public class SeptupleTest {
         Fourth<Double> septuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"));
 
         // When
-        Double fourth = septuple.fourth();
+        Double fourth = septuple.getFourth();
 
         // Then
         assertThat(fourth, is(3.6));
@@ -80,7 +80,7 @@ public class SeptupleTest {
         Fifth<Long> septuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"));
 
         // When
-        Long fifth = septuple.fifth();
+        Long fifth = septuple.getFifth();
 
         // Then
         assertThat(fifth, is(23L));
@@ -92,7 +92,7 @@ public class SeptupleTest {
         Sixth<Name> septuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"));
 
         // When
-        Name sixth = septuple.sixth();
+        Name sixth = septuple.getSixth();
 
         // Then
         assertThat(sixth, is(name("fred")));
@@ -104,7 +104,7 @@ public class SeptupleTest {
         Seventh<Colour> septuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"));
 
         // When
-        Colour seventh = septuple.seventh();
+        Colour seventh = septuple.getSeventh();
 
         // Then
         assertThat(seventh, is(colour("blue")));

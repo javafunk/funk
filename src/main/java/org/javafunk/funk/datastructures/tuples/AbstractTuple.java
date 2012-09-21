@@ -18,11 +18,11 @@ import static org.javafunk.funk.Lazily.zip;
 import static org.javafunk.funk.Strings.join;
 
 public abstract class AbstractTuple implements Iterable<Object> {
-    public abstract Iterable<Object> values();
+    public abstract Iterable<Object> getValues();
 
     @Override
     public String toString() {
-        return format("(%s)", join(values(), ", "));
+        return format("(%s)", join(getValues(), ", "));
     }
 
     @Override
@@ -40,9 +40,9 @@ public abstract class AbstractTuple implements Iterable<Object> {
         }
 
         EqualsBuilder equalsBuilder = new EqualsBuilder();
-        Iterable<Pair<Object, Object>> zippedValues = zip(this.values(), ((AbstractTuple) other).values());
+        Iterable<Pair<Object, Object>> zippedValues = zip(this.getValues(), ((AbstractTuple) other).getValues());
         for (Pair<Object, Object> values : zippedValues) {
-            equalsBuilder.append(values.first(), values.second());
+            equalsBuilder.append(values.getFirst(), values.getSecond());
         }
 
         return equalsBuilder.isEquals();
@@ -51,14 +51,14 @@ public abstract class AbstractTuple implements Iterable<Object> {
     @Override
     public int hashCode() {
         HashCodeBuilder hashCodeBuilder = new HashCodeBuilder();
-        for (Object value : values()) {
+        for (Object value : getValues()) {
             hashCodeBuilder.append(value);
         }
         return hashCodeBuilder.toHashCode();
     }
 
     public Iterator<Object> iterator(){
-        return values().iterator();
+        return getValues().iterator();
     }
 
 }

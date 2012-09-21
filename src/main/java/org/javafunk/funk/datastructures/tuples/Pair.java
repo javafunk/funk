@@ -22,11 +22,11 @@ public class Pair<R, S>
         this.second = second;
     }
 
-    @Override public S second() {
+    @Override public S getSecond() {
         return second;
     }
 
-    @Override public Iterable<Object> values() {
-        return iterableBuilderFrom(super.values()).with(second()).build();
+    @Override public Iterable<Object> getValues() {
+        return iterableBuilderFrom(super.getValues()).with(getSecond()).build();
     }
 }

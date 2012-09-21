@@ -1358,7 +1358,7 @@ public class Eagerly {
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
         Pair<Iterable<T>, Iterable<T>> partition = Lazily.partition(iterable, predicate);
-        return tuple(materialize(partition.first()), materialize(partition.second()));
+        return tuple(materialize(partition.getFirst()), materialize(partition.getSecond()));
     }
 
     public static <T> Collection<Collection<T>> batch(Iterable<T> iterable, int batchSize) {

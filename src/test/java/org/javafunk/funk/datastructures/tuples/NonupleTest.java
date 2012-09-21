@@ -36,7 +36,7 @@ public class NonupleTest {
         First<Integer> nonuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"));
 
         // When
-        Integer first = nonuple.first();
+        Integer first = nonuple.getFirst();
 
         //Then
         assertThat(first, is(5));
@@ -48,7 +48,7 @@ public class NonupleTest {
         Second<String> nonuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"));
 
         // When
-        String second = nonuple.second();
+        String second = nonuple.getSecond();
 
         //Then
         assertThat(second, is("Five"));
@@ -60,7 +60,7 @@ public class NonupleTest {
         Third<Boolean> nonuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"));
 
         // When
-        Boolean third = nonuple.third();
+        Boolean third = nonuple.getThird();
 
         //Then
         assertThat(third, is(true));
@@ -72,7 +72,7 @@ public class NonupleTest {
         Fourth<Double> nonuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"));
 
         // When
-        Double fourth = nonuple.fourth();
+        Double fourth = nonuple.getFourth();
 
         // Then
         assertThat(fourth, is(3.6));
@@ -84,7 +84,7 @@ public class NonupleTest {
         Fifth<Long> nonuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"));
 
         // When
-        Long fifth = nonuple.fifth();
+        Long fifth = nonuple.getFifth();
 
         // Then
         assertThat(fifth, is(23L));
@@ -96,7 +96,7 @@ public class NonupleTest {
         Sixth<Name> nonuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"));
 
         // When
-        Name sixth = nonuple.sixth();
+        Name sixth = nonuple.getSixth();
 
         // Then
         assertThat(sixth, is(name("fred")));
@@ -108,7 +108,7 @@ public class NonupleTest {
         Seventh<Colour> nonuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"));
 
         // When
-        Colour seventh = nonuple.seventh();
+        Colour seventh = nonuple.getSeventh();
 
         // Then
         assertThat(seventh, is(colour("blue")));
@@ -120,7 +120,7 @@ public class NonupleTest {
         Eighth<Age> nonuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"));
 
         // When
-        Age eighth = nonuple.eighth();
+        Age eighth = nonuple.getEighth();
 
         // Then
         assertThat(eighth, is(age(25)));
@@ -132,7 +132,7 @@ public class NonupleTest {
         Ninth<Location> nonuple = tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"));
 
         // When
-        Location ninth = nonuple.ninth();
+        Location ninth = nonuple.getNinth();
 
         // Then
         assertThat(ninth, is(location("USA")));

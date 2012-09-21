@@ -29,7 +29,7 @@ public class PairTest {
         First<Integer> pair = tuple(5, "Five");
 
         // When
-        Integer first = pair.first();
+        Integer first = pair.getFirst();
 
         //Then
         assertThat(first, is(5));
@@ -41,7 +41,7 @@ public class PairTest {
         Second<String> pair = tuple(5, "Five");
 
         // When
-        String second = pair.second();
+        String second = pair.getSecond();
 
         // Then
         assertThat(second, is("Five"));
