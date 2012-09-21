@@ -8,6 +8,7 @@
  */
 package org.javafunk.funk;
 
+import org.hamcrest.Matchers;
 import org.javafunk.funk.functors.Predicate;
 import org.junit.Test;
 
@@ -15,6 +16,8 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.javafunk.funk.Literals.iterable;
+import static org.javafunk.funk.Literals.list;
 import static org.javafunk.funk.Literals.listWith;
 
 public class EagerlyAnyAllNoneTest {
@@ -53,6 +56,22 @@ public class EagerlyAnyAllNoneTest {
     }
 
     @Test
+    public void shouldReturnFalseForAnyIfTheSuppliedIterableIsEmpty() throws Exception {
+        // Given
+        Iterable<String> items = iterable();
+
+        // When
+        Boolean result = Eagerly.any(items, new Predicate<String>(){
+            @Override public boolean evaluate(String input) {
+                return input.length() > 5;
+            }
+        });
+
+        // Then
+        assertThat(result, is(false));
+    }
+
+    @Test
     public void shouldReturnTrueIfAllElementsSatisfyThePredicateFunction() {
         // Given
         List<String> items = listWith("dog", "cat", "fish", "budgie");
@@ -70,7 +89,7 @@ public class EagerlyAnyAllNoneTest {
     }
 
     @Test
-    public void shouldReturnFalseIfAnyOfTheElementsDoNotSatisyThePredicateFunction() {
+    public void shouldReturnTrueIfAnyOfTheElementsDoNotSatisfyThePredicateFunction() {
         // Given
         List<String> items = listWith("dog", "cat", "fish", "budgie");
 
@@ -84,6 +103,23 @@ public class EagerlyAnyAllNoneTest {
 
         // Then
         assertThat(result, is(false));
+    }
+
+    @Test
+    public void shouldReturnTrueForAllIfTheSuppliedIterableIsEmpty() {
+        // Given
+        List<String> items = list();
+
+        // When
+        Boolean result = Eagerly.all(items, new Predicate<String>() {
+            @Override
+            public boolean evaluate(String item) {
+                return item.length() > 3;
+            }
+        });
+
+        // Then
+        assertThat(result, is(true));
     }
 
     @Test
@@ -126,5 +162,21 @@ public class EagerlyAnyAllNoneTest {
 
         // Then
         assertThat(result, is(false));
+    }
+
+    @Test
+    public void shouldReturnTrueForNoneIfTheSuppliedIterableIsEmpty() throws Exception {
+        // Given
+        Iterable<String> items = iterable();
+
+        // When
+        Boolean result = Eagerly.none(items, new Predicate<String>() {
+            @Override public boolean evaluate(String input) {
+                return input.length() < 5;
+            }
+        });
+
+        // Then
+        assertThat(result, is(result));
     }
 }
