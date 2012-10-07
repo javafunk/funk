@@ -9,6 +9,7 @@
 package org.javafunk.funk.predicates;
 
 import org.javafunk.funk.functors.Predicate;
+import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -48,5 +49,16 @@ public class NotPredicateFunctionTest {
 
         // Then
         assertThat(result, is(false));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfUnaryPredicateSuppliedToConstructorIsNull() throws Exception {
+        // Given
+        UnaryPredicate<String> predicate = null;
+
+        // When
+        new NotPredicate<String>(predicate);
+
+        // Then a NullPointerException is thrown.
     }
 }

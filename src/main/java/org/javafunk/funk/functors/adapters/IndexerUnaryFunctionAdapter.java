@@ -11,6 +11,8 @@ package org.javafunk.funk.functors.adapters;
 import org.javafunk.funk.functors.Indexer;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class IndexerUnaryFunctionAdapter<S, T> implements UnaryFunction<S, T> {
     public static <S, T> IndexerUnaryFunctionAdapter<S, T> indexerUnaryFunction(Indexer<? super S, T> indexer) {
         return new IndexerUnaryFunctionAdapter<S, T>(indexer);
@@ -18,7 +20,9 @@ public class IndexerUnaryFunctionAdapter<S, T> implements UnaryFunction<S, T> {
 
     private final Indexer<? super S, T> indexer;
 
-    public IndexerUnaryFunctionAdapter(Indexer<? super S, T> indexer) {this.indexer = indexer;}
+    public IndexerUnaryFunctionAdapter(Indexer<? super S, T> indexer) {
+        this.indexer = checkNotNull(indexer);
+    }
 
     @Override public T call(S index) {
         return indexer.index(index);

@@ -8,6 +8,7 @@
  */
 package org.javafunk.funk.functors.adapters;
 
+import org.javafunk.funk.functors.Indexer;
 import org.javafunk.funk.functors.Reducer;
 import org.javafunk.funk.functors.functions.BinaryFunction;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.javafunk.funk.functors.adapters.IndexerUnaryFunctionAdapter.indexerUnaryFunction;
 import static org.javafunk.funk.functors.adapters.ReducerBinaryFunctionAdapter.reducerBinaryFunction;
 import static org.mockito.BDDMockito.given;
 
@@ -38,5 +40,27 @@ public class ReducerBinaryFunctionAdapterTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfReducerSuppliedToReducerBinaryFunctionStaticConstructorIsNull() throws Exception {
+        // Given
+        Reducer<String, Integer> reducer = null;
+
+        // When
+        reducerBinaryFunction(reducer);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfReducerSuppliedToReducerBinaryFunctionConstructorIsNull() throws Exception {
+        // Given
+        Reducer<String, Integer> reducer = null;
+
+        // When
+        new ReducerBinaryFunctionAdapter<String, Integer>(reducer);
+
+        // Then a NullPointerException is thrown.
     }
 }

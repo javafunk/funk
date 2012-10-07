@@ -9,6 +9,7 @@
 package org.javafunk.funk.iterators;
 
 import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -131,10 +132,11 @@ public class MappedIteratorTest {
         Iterator<Integer> delegateIterator = iterableWith(1, null, 2).iterator();
 
         // When
-        MappedIterator<Integer, Integer> iterator = new MappedIterator<Integer, Integer>(delegateIterator,
-                new Mapper<Integer, Integer>() {
+        MappedIterator<Integer, Integer> iterator = new MappedIterator<Integer, Integer>(
+                delegateIterator,
+                new UnaryFunction<Integer, Integer>() {
                     @Override
-                    public Integer map(Integer input) {
+                    public Integer call(Integer input) {
                         return input == null ? null : input * 2;
                     }
                 });
@@ -149,9 +151,21 @@ public class MappedIteratorTest {
         assertThat(iterator.hasNext(), is(false));
     }
 
-    private Mapper<Integer, String> stringValueMapFunction() {
-        return new Mapper<Integer, String>() {
-            public String map(Integer input) {
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfUnaryFunctionSuppliedToConstructorIsNull() throws Exception {
+        // Given
+        Iterator<Integer> input = iterableWith(1, 2, 3).iterator();
+        UnaryFunction<Integer, String> mapper = null;
+
+        // When
+        new MappedIterator<Integer, String>(input, mapper);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    private UnaryFunction<Integer, String> stringValueMapFunction() {
+        return new UnaryFunction<Integer, String>() {
+            public String call(Integer input) {
                 return String.valueOf(input);
             }
         };

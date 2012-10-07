@@ -10,6 +10,7 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.Predicate;
+import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -63,6 +64,18 @@ public class LazilyFilterRejectPartitionTest {
         assertThat(iterator1.next(), is("abc"));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfPredicateSuppliedToFilterIsNull() throws Exception {
+        // Given
+        Iterable<String> inputs = listWith("ac", "ab", "bc", "abc", "bcd", "bad");
+        Predicate<? super String> predicate = null;
+
+        // When
+        Lazily.filter(inputs, predicate);
+
+        // Then a NullPointerException is thrown.
+    }
+
     @Test
     public void shouldOnlyReturnThoseElementsThatDoNotMatchTheSuppliedPredicate() {
         // Given
@@ -101,6 +114,18 @@ public class LazilyFilterRejectPartitionTest {
         assertThat(iterator1.next(), is("gae"));
         assertThat(iterator2.next(), is("bad"));
         assertThat(iterator2.next(), is("gae"));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionWhenNullPredicateSuppliedToReject() throws Exception {
+        // Given
+        Iterable<String> inputs = listWith("ac", "ab", "bc", "abc", "bcd", "bad", "gae");
+        Predicate<? super String> predicate = null;
+
+        // When
+        Lazily.reject(inputs, predicate);
+
+        // Then a NullPointerException is thrown.
     }
 
     @Test
@@ -167,5 +192,17 @@ public class LazilyFilterRejectPartitionTest {
         assertThat(nonMatchingIterator1.next(), is(3));
         assertThat(nonMatchingIterator1.next(), is(5));
         assertThat(nonMatchingIterator2.next(), is(3));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullPredicateSuppliedToPartition() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5, 6, 7, 8);
+        Predicate<? super Integer> predicate = null;
+
+        // When
+        Lazily.partition(input, predicate);
+
+        // Then a NullPointerException is thrown.
     }
 }

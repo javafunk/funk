@@ -11,6 +11,8 @@ package org.javafunk.funk.functors.adapters;
 import org.javafunk.funk.functors.Action;
 import org.javafunk.funk.functors.procedures.UnaryProcedure;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class ActionUnaryProcedureAdapter<T> implements UnaryProcedure<T> {
     public static <T> ActionUnaryProcedureAdapter<T> actionUnaryProcedure(Action<? super T> action) {
         return new ActionUnaryProcedureAdapter<T>(action);
@@ -19,7 +21,7 @@ public class ActionUnaryProcedureAdapter<T> implements UnaryProcedure<T> {
     private final Action<? super T> action;
 
     public ActionUnaryProcedureAdapter(Action<? super T> action) {
-        this.action = action;
+        this.action = checkNotNull(action);
     }
 
     @Override public void execute(T target) {

@@ -253,6 +253,18 @@ public class SetBuilderTest {
         assertThat(actual, is(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfUnaryFunctionSuppliedToBuildIsNull() throws Exception {
+        // Given
+        SetBuilder<Integer> setBuilder = setBuilderWith(1, 2, 3);
+        UnaryFunction<Iterable<Integer>, Set<Integer>> function = null;
+
+        // When
+        setBuilder.build(function);
+
+        // Then a NullPointerException is thrown.
+    }
+
     private static class NoNoArgsConstructorSet<E> extends HashSet<E> {
         public NoNoArgsConstructorSet(Throwable argument) {
             throw new UnsupportedOperationException("should never throw", argument);

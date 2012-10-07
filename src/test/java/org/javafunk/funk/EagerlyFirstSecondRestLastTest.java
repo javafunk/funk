@@ -131,6 +131,18 @@ public class EagerlyFirstSecondRestLastTest {
         assertThat(output, is(Option.<Integer>none()));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfThePredicateSuppliedToFirstIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5);
+        Predicate<Integer> predicate = null;
+
+        // When
+        Eagerly.first(input, predicate);
+
+        // Then a NullPointerException is thrown.
+    }
+
     @Test
     public void shouldReturnTheFirstNElementsFromTheSuppliedIterable() throws Exception {
         // Given
@@ -299,6 +311,19 @@ public class EagerlyFirstSecondRestLastTest {
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfThePredicateSuppliedToFirstNIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5);
+        Predicate<Integer> predicate = null;
+        Integer numberOfElementsRequired = 5;
+
+        // When
+        Eagerly.first(input, numberOfElementsRequired, predicate);
+
+        // Then a NullPointerException is thrown.
+    }
+
     @Test
     public void shouldReturnAnOptionOfTheLastElementFromTheSuppliedIterable() throws Exception {
         // Given
@@ -381,6 +406,18 @@ public class EagerlyFirstSecondRestLastTest {
 
         // Then
         assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfThePredicateSuppliedToLastIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5);
+        Predicate<Integer> predicate = null;
+
+        // When
+        Eagerly.last(input, predicate);
+
+        // Then a NullPointerException is thrown.
     }
 
     @Test
@@ -549,6 +586,19 @@ public class EagerlyFirstSecondRestLastTest {
 
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfThePredicateSuppliedToLastNIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5);
+        Predicate<Integer> predicate = null;
+        Integer numberOfElementsRequired = 5;
+
+        // When
+        Eagerly.first(input, numberOfElementsRequired, predicate);
+
+        // Then a NullPointerException is thrown.
     }
 
     @Test

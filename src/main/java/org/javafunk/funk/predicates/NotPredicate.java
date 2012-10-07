@@ -13,11 +13,13 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.javafunk.funk.functors.Predicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class NotPredicate<T> implements Predicate<T> {
     private UnaryPredicate<? super T> predicate;
 
     public NotPredicate(UnaryPredicate<? super T> predicate) {
-        this.predicate = predicate;
+        this.predicate = checkNotNull(predicate);
     }
 
     @Override

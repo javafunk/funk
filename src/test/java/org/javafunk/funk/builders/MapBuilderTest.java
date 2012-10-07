@@ -408,6 +408,18 @@ public class MapBuilderTest {
         assertThat(actual, is(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfUnaryFunctionSuppliedToBuildIsNull() throws Exception {
+        // Given
+        MapBuilder<String, Integer> mapBuilder = mapBuilderWith("first", 1);
+        UnaryFunction<Iterable<Map.Entry<String, Integer>>, Map<String, Integer>> function = null;
+
+        // When
+        mapBuilder.build(function);
+
+        // Then a NullPointerException is thrown.
+    }
+
     private static class NoNoArgsConstructorMap<K, V> extends HashMap<K, V> {
         public NoNoArgsConstructorMap(Throwable argument) {
             throw new UnsupportedOperationException("should never throw", argument);

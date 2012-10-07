@@ -8,6 +8,7 @@
  */
 package org.javafunk.funk.functors.adapters;
 
+import org.javafunk.funk.functors.Action;
 import org.javafunk.funk.functors.Equivalence;
 import org.javafunk.funk.functors.predicates.BinaryPredicate;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.javafunk.funk.functors.adapters.ActionUnaryProcedureAdapter.actionUnaryProcedure;
 import static org.javafunk.funk.functors.adapters.EquivalenceBinaryPredicateAdapter.equivalenceBinaryPredicate;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -40,5 +42,27 @@ public class EquivalenceBinaryPredicateAdapterTest {
         // Then
         verify(equivalence).equal(firstInput, secondInput);
         assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfEquivalenceSuppliedToEquivalenceBinaryPredicateStaticConstructorIsNull() throws Exception {
+        // Given
+        Equivalence<String> equivalence = null;
+
+        // When
+        equivalenceBinaryPredicate(equivalence);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfEquivalenceSuppliedToEquivalenceBinaryPredicateConstructorIsNull() throws Exception {
+        // Given
+        Equivalence<String> equivalence = null;
+
+        // When
+        new EquivalenceBinaryPredicateAdapter<String>(null);
+
+        // Then a NullPointerException is thrown.
     }
 }

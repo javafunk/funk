@@ -251,6 +251,18 @@ public class ListBuilderTest {
         assertThat(actual instanceof ImmutableList, is(true));
         assertThat(actual, is(expected));
     }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfUnaryFunctionSuppliedToBuildIsNull() throws Exception {
+        // Given
+        ListBuilder<Integer> listBuilder = listBuilderWith(1, 2, 3);
+        UnaryFunction<Iterable<Integer>, List<Integer>> function = null;
+
+        // When
+        listBuilder.build(function);
+
+        // Then a NullPointerException is thrown.
+    }
     
     private static class NoNoArgsConstructorList<E> extends ArrayList<E> {
         public NoNoArgsConstructorList(Throwable argument) {

@@ -10,6 +10,7 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.Predicate;
+import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -43,6 +44,18 @@ public class EagerlyFilterRejectPartitionTest {
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfPredicateSuppliedToFilterIsNull() throws Exception {
+        // Given
+        Iterable<Integer> inputs = iterableWith(1, 2, 3, 4, 5, 6);
+        Predicate<? super Integer> predicate = null;
+
+        // When
+        Eagerly.filter(inputs, predicate);
+
+        // Then a NullPointerException is thrown.
+    }
+
     @Test
     public void shouldOnlyReturnThoseElementsThatDoNotMatchTheSuppliedPredicate() {
         // Given
@@ -63,6 +76,18 @@ public class EagerlyFilterRejectPartitionTest {
 
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfPredicateSuppliedToRejectIsNull() throws Exception {
+        // Given
+        Iterable<Integer> inputs = iterableWith(1, 2, 3, 4, 5, 6);
+        Predicate<? super Integer> predicate = null;
+
+        // When
+        Eagerly.reject(inputs, predicate);
+
+        // Then a NullPointerException is thrown.
     }
 
     @Test
@@ -86,5 +111,17 @@ public class EagerlyFilterRejectPartitionTest {
 
         assertThat(actualMatchingItems, hasOnlyItemsInOrder(expectedMatchingItems));
         assertThat(actualNonMatchingItems, hasOnlyItemsInOrder(expectedNonMatchingItems));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfPredicateSuppliedToPartitionIsNull() throws Exception {
+        // Given
+        Iterable<String> input = iterableWith("a", "b", "c", "d", "e", "f", "g", "h");
+        Predicate<? super String> predicate = null;
+
+        // When
+        Eagerly.partition(input, predicate);
+
+        // Then a NullPointerException is thrown.
     }
 }

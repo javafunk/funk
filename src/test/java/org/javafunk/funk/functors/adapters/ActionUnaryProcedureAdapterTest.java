@@ -34,4 +34,26 @@ public class ActionUnaryProcedureAdapterTest {
         // Then
         verify(action).on(target);
     }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfActionSuppliedToActionUnaryProcedureStaticConstructorIsNull() throws Exception {
+        // Given
+        Action<String> action = null;
+
+        // When
+        actionUnaryProcedure(action);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfActionSuppliedToActionUnaryProcedureConstructorIsNull() throws Exception {
+        // Given
+        Action<String> action = null;
+
+        // When
+        new ActionUnaryProcedureAdapter<String>(action);
+
+        // Then a NullPointerException is thrown.
+    }
 }
