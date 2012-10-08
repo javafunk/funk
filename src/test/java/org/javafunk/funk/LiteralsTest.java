@@ -16,7 +16,6 @@ import org.javafunk.funk.datastructures.tuples.*;
 import org.javafunk.funk.testclasses.*;
 import org.junit.Test;
 
-import javax.xml.stream.util.EventReaderDelegate;
 import java.util.*;
 
 import static java.util.Arrays.asList;
@@ -309,6 +308,29 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, hasOnlyItemsInAnyOrder(expected));
+    }
+
+    @Test public void shouldReturnAnEmptyCollectionOfTheSuppliedConcreteType() throws Exception {
+        // Given
+        Class<? extends Collection> iterableClass = ArrayList.class;
+        Collection<String> expectedIterable = new ArrayList<String>();
+
+        // When
+        Collection<String> actualIterable = collection(iterableClass);
+
+        // Then
+        assertThat(actualIterable, is(equalToIncludingConcreteType(expectedIterable)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionWhenClassSuppliedToCollectionHasNoPublicNoArgsConstructor() {
+        // Given
+        Class<? extends Collection> iterableClass = ImmutableList.class;
+
+        // When
+        collection(iterableClass);
+
+        // Then a IllegalArgumentException is thrown.
     }
 
     @Test public void shouldReturnAnEmptyCollectionWithElementsOfTheSpecifiedType() throws Exception {

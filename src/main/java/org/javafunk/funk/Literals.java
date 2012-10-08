@@ -98,6 +98,10 @@ public class Literals {
         return new CollectionBuilder<E>().build();
     }
 
+    public static <E> Collection<E> collection(Class<? extends Collection> collectionClass) {
+        return new CollectionBuilder<E>().build(collectionClass);
+    }
+
     public static <E> Collection<E> collectionOf(Class<E> elementClass) {
         return new CollectionBuilder<E>().build();
     }
