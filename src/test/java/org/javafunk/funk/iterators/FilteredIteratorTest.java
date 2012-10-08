@@ -236,4 +236,16 @@ public class FilteredIteratorTest {
         assertThat(iterator.next(), is(5));
         assertThat(iterator.hasNext(), is(false));
     }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfPredicateSuppliedToConstructorIsNull() throws Exception {
+        // Given
+        Iterator<Integer> input = iterableWith(1, 2, 3).iterator();
+        Predicate<Integer> predicate = null;
+
+        // When
+        new FilteredIterator<Integer>(input, predicate);
+
+        // Then a NullPointerException is thrown.
+    }
 }

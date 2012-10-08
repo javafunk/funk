@@ -13,13 +13,15 @@ import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class PredicatedIterator<T> extends CachingIterator<T> {
     private Iterator<? extends T> iterator;
     private UnaryPredicate<? super T> predicate;
 
     public PredicatedIterator(Iterator<? extends T> iterator, UnaryPredicate<? super T> predicate) {
         this.iterator = iterator;
-        this.predicate = predicate;
+        this.predicate = checkNotNull(predicate);
     }
 
     @Override

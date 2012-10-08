@@ -32,6 +32,17 @@ public class PredicatesTest {
         assertThat(actual, is(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfPredicateSuppliedtoNotIsNull() throws Exception {
+        // Given
+        Predicate<String> predicate = null;
+
+        // When
+        Predicates.not(predicate);
+
+        // Then a NullPointerException is thrown.
+    }
+
     @Test
     public void shouldReturnTruePredicate() throws Exception {
         // Given

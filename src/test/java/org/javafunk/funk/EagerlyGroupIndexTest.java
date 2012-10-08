@@ -12,9 +12,7 @@ import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.Indexer;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -51,6 +49,18 @@ public class EagerlyGroupIndexTest {
         assertThat(actualOutput, is(expectedOutput));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfTheIndexerSupplierToGroupIsNull() throws Exception {
+        // Given
+        Iterable<String> input = iterableWith("apple", "pear", "lemon", "apricot", "orange", "papaya", "banana");
+        Indexer<String, Integer> indexer = null;
+
+        // When
+        Eagerly.group(input, indexer);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnATwoTupleWithTheIndexFirstAndTheElementSecond() throws Exception {
         // Given
@@ -73,5 +83,17 @@ public class EagerlyGroupIndexTest {
 
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfTheIndexerSupplierToIndexIsNull() throws Exception {
+        // Given
+        Iterable<String> input = iterableWith("apple", "pear", "lemon", "apricot", "orange", "papaya", "banana");
+        Indexer<String, Integer> indexer = null;
+
+        // When
+        Eagerly.index(input, indexer);
+
+        // Then a NullPointerException is thrown
     }
 }

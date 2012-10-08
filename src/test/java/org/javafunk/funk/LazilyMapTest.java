@@ -9,6 +9,7 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -58,5 +59,29 @@ public class LazilyMapTest {
         assertThat(iterator1.next(), is("3"));
         assertThat(iterator2.next(), is("2"));
         assertThat(iterator2.next(), is("3"));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullMapperSuppliedToMap() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(1, 2, 3);
+        Mapper<? super Integer, ? extends String> mapper = null;
+
+        // When
+        Lazily.map(input, mapper);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullUnaryFunctionSuppliedToMap() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(1, 2, 3);
+        UnaryFunction<? super Integer, ? extends String> mapper = null;
+
+        // When
+        Lazily.map(input, mapper);
+
+        // Then a NullPointerException is thrown.
     }
 }

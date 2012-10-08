@@ -15,6 +15,8 @@ import org.javafunk.funk.predicates.InstanceOfPredicate;
 import org.javafunk.funk.predicates.NotPredicate;
 import org.javafunk.funk.predicates.TruePredicate;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class Predicates {
     private Predicates() {}
 
@@ -27,7 +29,7 @@ public class Predicates {
     }
 
     public static <T> Predicate<T> not(UnaryPredicate<? super T> predicate) {
-        return new NotPredicate<T>(predicate);
+        return new NotPredicate<T>(checkNotNull(predicate));
     }
 
     public static <T> InstanceOfPredicate<T> instanceOf(Class<?> testClass) {

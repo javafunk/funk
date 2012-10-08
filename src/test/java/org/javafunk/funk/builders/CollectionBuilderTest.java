@@ -249,6 +249,18 @@ public class CollectionBuilderTest {
         assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfUnaryFunctionSuppliedToBuildIsNull() throws Exception {
+        // Given
+        CollectionBuilder<Integer> collectionBuilder = collectionBuilderWith(1, 2, 3);
+        UnaryFunction<Iterable<Integer>, Collection<Integer>> unaryFunction = null;
+
+        // When
+        collectionBuilder.build(unaryFunction);
+
+        // Then a NullPointerException is thrown.
+    }
+
     private static class NoNoArgsConstructorStack<E> extends Stack<E> {
         public NoNoArgsConstructorStack(Throwable argument) {
             throw new UnsupportedOperationException("should never throw", argument);

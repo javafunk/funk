@@ -2,6 +2,7 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.functors.functions.UnaryFunction;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.String.format;
 
 public class Classes {
@@ -29,6 +30,7 @@ public class Classes {
     public static <T> T uncheckedInstantiate(
             Class<T> classToInstantiate,
             UnaryFunction<? super Exception, ? extends RuntimeException> exceptionHandler) {
+        checkNotNull(exceptionHandler);
         try {
             return classToInstantiate.newInstance();
         } catch (InstantiationException exception) {

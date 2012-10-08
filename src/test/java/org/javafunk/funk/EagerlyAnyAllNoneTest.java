@@ -8,7 +8,6 @@
  */
 package org.javafunk.funk;
 
-import org.hamcrest.Matchers;
 import org.javafunk.funk.functors.Predicate;
 import org.junit.Test;
 
@@ -16,9 +15,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.iterable;
-import static org.javafunk.funk.Literals.list;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.*;
 
 public class EagerlyAnyAllNoneTest {
     @Test
@@ -61,7 +58,7 @@ public class EagerlyAnyAllNoneTest {
         Iterable<String> items = iterable();
 
         // When
-        Boolean result = Eagerly.any(items, new Predicate<String>(){
+        Boolean result = Eagerly.any(items, new Predicate<String>() {
             @Override public boolean evaluate(String input) {
                 return input.length() > 5;
             }
@@ -69,6 +66,18 @@ public class EagerlyAnyAllNoneTest {
 
         // Then
         assertThat(result, is(false));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfPredicateSuppliedToAnyIsNull() throws Exception {
+        // Given
+        Iterable<String> items = iterableWith("a", "b", "c");
+        Predicate<String> predicate = null;
+
+        // When
+        Eagerly.any(items, predicate);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -120,6 +129,18 @@ public class EagerlyAnyAllNoneTest {
 
         // Then
         assertThat(result, is(true));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfPredicateSuppliedToAllIsNull() throws Exception {
+        // Given
+        Iterable<String> items = iterableWith("a", "b", "c");
+        Predicate<String> predicate = null;
+
+        // When
+        Eagerly.all(items, predicate);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -178,5 +199,17 @@ public class EagerlyAnyAllNoneTest {
 
         // Then
         assertThat(result, is(result));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfPredicateSuppliedToNoneIsNull() throws Exception {
+        // Given
+        Iterable<String> items = iterableWith("a", "b", "c");
+        Predicate<String> predicate = null;
+
+        // When
+        Eagerly.none(items, predicate);
+
+        // Then a NullPointerException is thrown
     }
 }

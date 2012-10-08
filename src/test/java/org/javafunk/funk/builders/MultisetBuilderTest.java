@@ -255,6 +255,18 @@ public class MultisetBuilderTest {
         assertThat(actual, is(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfFunctionSuppliedToBuildIsNull() throws Exception {
+        // Given
+        MultisetBuilder<Integer> multisetBuilder = multisetBuilderWith(1, 2, 3);
+        UnaryFunction<Iterable<Integer>, Multiset<Integer>> function = null;
+
+        // When
+        multisetBuilder.build(function);
+
+        // Then a NullPointerException is thrown.
+    }
+
     public static class NoArgsConstructorMultiset<E> extends StubMultiset<E> {
         public NoArgsConstructorMultiset() { }
     }

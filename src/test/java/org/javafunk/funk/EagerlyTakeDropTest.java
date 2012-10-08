@@ -9,6 +9,7 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.functors.Predicate;
+import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -141,6 +142,18 @@ public class EagerlyTakeDropTest {
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfPredicateSuppliedToTakeWhileIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(1, 2, 1, 2, 3);
+        UnaryPredicate<? super Integer> predicate = null;
+
+        // When
+        Eagerly.takeWhile(input, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldTakeElementsUntilTheSuppliedPredicateBecomesTrue() throws Exception {
         // Given
@@ -156,6 +169,18 @@ public class EagerlyTakeDropTest {
 
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfPredicateSuppliedToTakeUntilIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5);
+        UnaryPredicate<? super Integer> predicate = null;
+
+        // When
+        Eagerly.takeUntil(input, predicate);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -176,6 +201,18 @@ public class EagerlyTakeDropTest {
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfPredicateSuppliedToDropWhileIsNull() throws Exception {
+        // Given
+        Iterable<String> input = iterableWith("a", "aa", "aaa", "aaaa");
+        UnaryPredicate<? super String> predicate = null;
+
+        // When
+        Eagerly.dropWhile(input, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldDropElementsUntilTheSuppliedPredicateBecomesTrue() throws Exception {
         // Given
@@ -192,5 +229,17 @@ public class EagerlyTakeDropTest {
 
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfPredicateSuppliedToDropUntilIsNull() throws Exception {
+        // Given
+        Iterable<String> input = iterableWith("a", "aa", "aaa", "aaaa");
+        UnaryPredicate<? super String> predicate = null;
+
+        // When
+        Eagerly.dropUntil(input, predicate);
+
+        // Then a NullPointerException is thrown
     }
 }
