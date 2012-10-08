@@ -181,8 +181,8 @@ public class LiteralsTest {
 
     @Test public void shouldReturnAnEmptyIteratorOfTheSuppliedConcreteType() throws Exception {
         // Given
-        Class<? extends Iterator> iteratorClass = InstantiableIterator.class;
-        Iterator<Integer> expectedIterator = new InstantiableIterator<Integer>();
+        Class<? extends Iterator> iteratorClass = NoArgsConstructorIterator.class;
+        Iterator<Integer> expectedIterator = new NoArgsConstructorIterator<Integer>();
 
         // When
         Iterator<Integer> actualIterator = iterator(iteratorClass);
@@ -194,7 +194,7 @@ public class LiteralsTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentExceptionWhenClassSuppliedToIteratorHasNoPublicNoArgsConstructor() {
         // Given
-        Class<? extends Iterator> iterableClass = UninstantiableIterator.class;
+        Class<? extends Iterator> iterableClass = NoNoArgsConstructorIterator.class;
 
         // When
         iterator(iterableClass);

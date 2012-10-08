@@ -5,10 +5,10 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import java.util.Iterator;
 
-public class UninstantiableIterator<T> implements Iterator<T> {
+public class NoNoArgsConstructorIterator<T> implements Iterator<T> {
     private final String name = "Needed for equality.";
 
-    private UninstantiableIterator() {}
+    private NoNoArgsConstructorIterator() {}
 
     @Override public boolean hasNext() {
         throw new UnsupportedOperationException();

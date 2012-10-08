@@ -5,7 +5,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import java.util.Iterator;
 
-public class InstantiableIterator<T> implements Iterator<T> {
+public class NoArgsConstructorIterator<T> implements Iterator<T> {
     private final String name = "Needed for equality.";
 
     @Override public boolean hasNext() {
