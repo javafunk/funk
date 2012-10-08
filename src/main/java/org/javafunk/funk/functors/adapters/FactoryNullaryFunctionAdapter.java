@@ -11,6 +11,8 @@ package org.javafunk.funk.functors.adapters;
 import org.javafunk.funk.functors.Factory;
 import org.javafunk.funk.functors.functions.NullaryFunction;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class FactoryNullaryFunctionAdapter<T> implements NullaryFunction<T> {
     private final Factory<? extends T> factory;
 
@@ -19,7 +21,7 @@ public class FactoryNullaryFunctionAdapter<T> implements NullaryFunction<T> {
     }
 
     public FactoryNullaryFunctionAdapter(Factory<? extends T> factory) {
-        this.factory = factory;
+        this.factory = checkNotNull(factory);
     }
 
     @Override public T call() {

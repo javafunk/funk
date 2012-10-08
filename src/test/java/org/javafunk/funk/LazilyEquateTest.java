@@ -9,6 +9,8 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.functors.Equivalence;
+import org.javafunk.funk.functors.functions.BinaryFunction;
+import org.javafunk.funk.functors.predicates.BinaryPredicate;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -23,7 +25,7 @@ public class LazilyEquateTest {
         // Given
         Iterable<String> first = iterableWith("Dog", "Cat", "Goldfish");
         Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH");
-        
+
         // When
         Iterable<Boolean> equateResultIterable = Lazily.equate(first, second, new Equivalence<String>() {
             public boolean equal(String first, String second) {
@@ -112,5 +114,31 @@ public class LazilyEquateTest {
         assertThat(iterator1.next(), is(true));
         assertThat(iterator2.next(), is(false));
         assertThat(iterator2.next(), is(true));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfEquivalencePassedToEquateIsNull() throws Exception {
+        // Given
+        Iterable<String> first = iterableWith("Dog", "Cat", "Goldfish");
+        Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH");
+        Equivalence<? super String> equivalence = null;
+
+        // When
+        Lazily.equate(first, second, equivalence);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfBinaryPredicatePassedToEquateIsNull() throws Exception {
+        // Given
+        Iterable<String> first = iterableWith("Dog", "Cat", "Goldfish");
+        Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH");
+        BinaryPredicate<? super String, ? super String> equivalence = null;
+
+        // When
+        Lazily.equate(first, second, equivalence);
+
+        // Then a NullPointerException is thrown.
     }
 }

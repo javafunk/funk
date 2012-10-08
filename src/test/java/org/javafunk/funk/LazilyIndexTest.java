@@ -10,6 +10,7 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.Indexer;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -31,7 +32,7 @@ public class LazilyIndexTest {
                 return item.length();
             }
         });
-        Iterator<Pair<Integer,String>> outputIterator = outputIterable.iterator();
+        Iterator<Pair<Integer, String>> outputIterator = outputIterable.iterator();
 
         // Then
         assertThat(outputIterator.hasNext(), is(true));
@@ -65,5 +66,29 @@ public class LazilyIndexTest {
         assertThat(iterator1.next(), is(tuple(5, "lemon")));
         assertThat(iterator2.next(), is(tuple(4, "pear")));
         assertThat(iterator2.next(), is(tuple(5, "lemon")));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfIndexerPassedToIndexIsNull() throws Exception {
+        // Given
+        Iterable<String> input = iterableWith("apple", "pear", "lemon");
+        Indexer<? super String, ? super Object> indexer = null;
+
+        // When
+        Lazily.index(input, indexer);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfUnaryFunctionPassedToIndexIsNull() throws Exception {
+        // Given
+        Iterable<String> input = iterableWith("apple", "pear", "lemon");
+        UnaryFunction<? super String, ? super Object> indexer = null;
+
+        // When
+        Lazily.index(input, indexer);
+
+        // Then a NullPointerException is thrown.
     }
 }

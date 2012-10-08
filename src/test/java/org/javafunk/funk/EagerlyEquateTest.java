@@ -14,7 +14,6 @@ import org.junit.Test;
 import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
@@ -72,5 +71,18 @@ public class EagerlyEquateTest {
 
         // Then
         assertThat(actualEqualityResult, hasOnlyItemsInOrder(expectedEqualityResult));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfSuppliedEquivalenceIsNull() throws Exception {
+        // Given
+        Iterable<String> first = iterableWith("Dog", "Cat", "Goldfish", "Horse", "Pig");
+        Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH");
+        Equivalence<String> equivalence = null;
+
+        // When
+        Eagerly.equate(first, second, equivalence);
+
+        // Then a NullPointerException should be thrown
     }
 }

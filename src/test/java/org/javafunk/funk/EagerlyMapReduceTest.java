@@ -10,6 +10,8 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.Reducer;
+import org.javafunk.funk.functors.functions.BinaryFunction;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -20,7 +22,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.javafunk.funk.Accumulators.longAdditionAccumulator;
 import static org.javafunk.funk.Literals.*;
-import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class EagerlyMapReduceTest {
@@ -40,6 +41,30 @@ public class EagerlyMapReduceTest {
 
         // Then
         assertThat(actualOutputs, hasOnlyItemsInOrder(expectedOutputs));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfMapperSuppliedToMapIsNull() {
+        // Given
+        Iterable<Integer> inputs = iterableWith(1, 2, 3);
+        Mapper<Integer, String> mapper = null;
+
+        // When
+        Eagerly.map(inputs, mapper);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfUnaryFunctionSuppliedToMapIsNull() {
+        // Given
+        Iterable<Integer> inputs = iterableWith(1, 2, 3);
+        UnaryFunction<Integer, String> unaryFunction = null;
+
+        // When
+        Eagerly.map(inputs, unaryFunction);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -75,6 +100,30 @@ public class EagerlyMapReduceTest {
         assertThat(actual, hasItems(1, 2, 3, 4, 5, 6, 7, 8, 9));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfReducerSuppliedToReduceIsNull() throws Exception {
+        // Given
+        Iterable<Integer> inputs = listWith(1, 2, 3);
+        Reducer<Integer, Integer> reducer = null;
+
+        // When
+        Eagerly.reduce(inputs, reducer);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfBinaryFunctionSuppliedToReduceIsNull() throws Exception {
+        // Given
+        Iterable<Integer> inputs = listWith(1, 2, 3);
+        BinaryFunction<Integer, Integer, Integer> binaryFunction = null;
+
+        // When
+        Eagerly.reduce(inputs, binaryFunction);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReduceToATypeOtherThanThatOfTheInputElementsWithASuppliedInitialValue() {
         // Given
@@ -90,5 +139,29 @@ public class EagerlyMapReduceTest {
 
         // Then
         assertThat(output, is("123"));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfReducerSuppliedToReduceWithInitialValueIsNull() throws Exception {
+        // Given
+        Iterable<Integer> inputs = listWith(1, 2, 3);
+        Reducer<Integer, String> reducer = null;
+
+        // When
+        Eagerly.reduce(inputs, "a", reducer);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfBinaryFunctionSuppliedToReduceWithInitialValueIsNull() throws Exception {
+        // Given
+        Iterable<Integer> inputs = listWith(1, 2, 3);
+        BinaryFunction<String, Integer, String> binaryFunction = null;
+
+        // When
+        Eagerly.reduce(inputs, "a", binaryFunction);
+
+        // Then a NullPointerException is thrown
     }
 }

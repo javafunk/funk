@@ -34,9 +34,25 @@ public class EagerlyTimesEachTest {
         });
 
         // Then
-        for(Target<Object> target : targets) {
+        for (Target<Object> target : targets) {
             verify(target).doSomething();
         }
+    }
+
+    @Test(expected = NullPointerException.class)
+    @SuppressWarnings("unchecked")
+    public void shouldThrowNullPointerExceptionIfTheActionSuppliedToEachIsNull() throws Exception {
+        // Given
+        Iterable<Target<Object>> targets = iterableWith(
+                (Target<Object>) mock(Target.class),
+                (Target<Object>) mock(Target.class),
+                (Target<Object>) mock(Target.class));
+        Action<Target> action = null;
+
+        // When
+        Eagerly.each(targets, action);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -91,8 +107,22 @@ public class EagerlyTimesEachTest {
         // Then an IllegalArgumentException is thrown.
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfTheActionSuppliedToTimesIsNull() throws Exception {
+        // Given
+        Action<Integer> action = null;
+        Integer numberOfTimes = 10;
+
+
+        // When
+        Eagerly.times(numberOfTimes, action);
+
+        // Then a NullPointerException is thrown
+    }
+
     private interface Target<T> {
         void doSomething();
+
         void doSomethingWith(T input);
     }
 }

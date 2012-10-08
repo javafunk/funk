@@ -4,13 +4,15 @@ import org.javafunk.funk.functors.procedures.UnaryProcedure;
 
 import java.util.Iterator;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class EachIterator<T> implements Iterator<T> {
     private Iterator<T> iterator;
     private UnaryProcedure<? super T> procedure;
 
     public EachIterator(Iterator<T> iterator, UnaryProcedure<? super T> procedure) {
         this.iterator = iterator;
-        this.procedure = procedure;
+        this.procedure = checkNotNull(procedure);
     }
 
     @Override

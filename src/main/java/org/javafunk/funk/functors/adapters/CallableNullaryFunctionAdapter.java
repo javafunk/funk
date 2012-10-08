@@ -12,6 +12,8 @@ import org.javafunk.funk.functors.functions.NullaryFunction;
 
 import java.util.concurrent.Callable;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * An adapter to represent a {@code Callable<T>} as a {@code NullaryFunction<T>}.
  *
@@ -44,7 +46,7 @@ public class CallableNullaryFunctionAdapter<T> implements NullaryFunction<T> {
      *                 of {@code NullaryFunction}.
      */
     public CallableNullaryFunctionAdapter(Callable<? extends T> callable) {
-        this.callable = callable;
+        this.callable = checkNotNull(callable);
     }
 
     /**

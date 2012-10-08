@@ -8,6 +8,7 @@
  */
 package org.javafunk.funk.functors.adapters;
 
+import org.javafunk.funk.functors.Action;
 import org.javafunk.funk.functors.Factory;
 import org.javafunk.funk.functors.functions.NullaryFunction;
 import org.junit.Test;
@@ -17,6 +18,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.javafunk.funk.functors.adapters.ActionUnaryProcedureAdapter.actionUnaryProcedure;
+import static org.javafunk.funk.functors.adapters.FactoryNullaryFunctionAdapter.factoryNullaryFunction;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -35,5 +38,27 @@ public class FactoryNullaryFunctionAdapterTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfFactorySuppliedToFactoryNullaryFunctionStaticConstructorIsNull() throws Exception {
+        // Given
+        Factory<String> factory = null;
+
+        // When
+        factoryNullaryFunction(factory);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfFactorySuppliedToFactoryNullaryFunctionConstructorIsNull() throws Exception {
+        // Given
+        Factory<String> factory = null;
+
+        // When
+        new FactoryNullaryFunctionAdapter<String>(factory);
+
+        // Then a NullPointerException is thrown.
     }
 }

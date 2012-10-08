@@ -23,6 +23,7 @@ import org.javafunk.funk.predicates.NotPredicate;
 import java.util.Iterator;
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static org.javafunk.funk.Eagerly.first;
 import static org.javafunk.funk.Iterables.concat;
 import static org.javafunk.funk.Literals.*;
@@ -108,6 +109,7 @@ public class Lazily {
     }
 
     public static <T> Iterable<T> each(final Iterable<T> iterable, final UnaryProcedure<? super T> procedure) {
+        checkNotNull(procedure);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new EachIterator<T>(iterable.iterator(), procedure);
@@ -116,7 +118,7 @@ public class Lazily {
     }
 
     public static <T> Iterable<T> each(final Iterable<T> iterable, final Action<? super T> action) {
-        return each(iterable, actionUnaryProcedure(action));
+        return each(iterable, actionUnaryProcedure(checkNotNull(action)));
     }
 
     public static <T> Iterable<Pair<Integer, T>> enumerate(final Iterable<T> iterable) {
@@ -124,6 +126,7 @@ public class Lazily {
     }
 
     public static <S, T> Iterable<Pair<T, S>> index(Iterable<S> iterable, final UnaryFunction<? super S, T> function) {
+        checkNotNull(function);
         return zip(map(iterable, new Mapper<S, T>() {
             public T map(S input) {
                 return function.call(input);
@@ -132,22 +135,26 @@ public class Lazily {
     }
 
     public static <S, T> Iterable<Pair<T, S>> index(Iterable<S> iterable, final Indexer<? super S, T> indexer) {
+        checkNotNull(indexer);
         return index(iterable, indexerUnaryFunction(indexer));
     }
 
-    public static <S, T> Iterable<T> map(final Iterable<S> iterable, final UnaryFunction<? super S, T> function) {
+    public static <S, T> Iterable<T> map(final Iterable<S> iterable, final UnaryFunction<? super S, T> mapper) {
+        checkNotNull(mapper);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
-                return new MappedIterator<S, T>(iterable.iterator(), function);
+                return new MappedIterator<S, T>(iterable.iterator(), mapper);
             }
         };
     }
 
     public static <S, T> Iterable<T> map(final Iterable<S> iterable, final Mapper<? super S, T> mapper) {
+        checkNotNull(mapper);
         return map(iterable, mapperUnaryFunction(mapper));
     }
 
     public static <T> Iterable<Boolean> equate(Iterable<T> first, Iterable<T> second, final BinaryPredicate<? super T, ? super T> predicate) {
+        checkNotNull(predicate);
         return map(zip(first, second), new Mapper<Pair<T, T>, Boolean>() {
             public Boolean map(Pair<T, T> input) {
                 return predicate.evaluate(input.getFirst(), input.getSecond());
@@ -156,11 +163,11 @@ public class Lazily {
     }
 
     public static <T> Iterable<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equivalence<? super T> equivalence) {
-        return equate(first, second, equivalenceBinaryPredicate(equivalence));
+        return equate(first, second, equivalenceBinaryPredicate(checkNotNull(equivalence)));
     }
 
-
     public static <T> Iterable<T> filter(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
+        checkNotNull(predicate);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new FilteredIterator<T>(iterable.iterator(), predicate);
@@ -169,6 +176,7 @@ public class Lazily {
     }
 
     public static <T> Iterable<T> reject(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
+        checkNotNull(predicate);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new FilteredIterator<T>(iterable.iterator(), new NotPredicate<T>(predicate));
@@ -177,6 +185,7 @@ public class Lazily {
     }
 
     public static <T> Pair<Iterable<T>, Iterable<T>> partition(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
+        checkNotNull(predicate);
         return tuple(filter(iterable, predicate), reject(iterable, predicate));
     }
 

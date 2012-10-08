@@ -9,6 +9,7 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.functors.Action;
+import org.javafunk.funk.functors.procedures.UnaryProcedure;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -39,6 +40,30 @@ public class LazilyEachTest {
             preparedTargetsIterator.next();
             verify(target, times(1)).doSomething();
         }
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionWhenNullActionSuppliedToEach() throws Exception {
+        // Given
+        Iterable<Target> targets = iterableWith(mock(Target.class), mock(Target.class), mock(Target.class));
+        Action<? super Target> action = null;
+
+        // When
+        Lazily.each(targets, action);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionWhenNullUnaryProcedureSuppliedToEach() throws Exception {
+        // Given
+        Iterable<Target> targets = iterableWith(mock(Target.class), mock(Target.class), mock(Target.class));
+        UnaryProcedure<? super Target> action = null;
+
+        // When
+        Lazily.each(targets, action);
+
+        // Then a NullPointerException is thrown.
     }
 
     @Test

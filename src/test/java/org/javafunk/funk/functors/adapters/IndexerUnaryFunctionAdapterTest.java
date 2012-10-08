@@ -8,6 +8,7 @@
  */
 package org.javafunk.funk.functors.adapters;
 
+import org.javafunk.funk.functors.Action;
 import org.javafunk.funk.functors.Indexer;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.javafunk.funk.functors.adapters.ActionUnaryProcedureAdapter.actionUnaryProcedure;
 import static org.javafunk.funk.functors.adapters.IndexerUnaryFunctionAdapter.indexerUnaryFunction;
 import static org.mockito.BDDMockito.given;
 
@@ -37,5 +39,27 @@ public class IndexerUnaryFunctionAdapterTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfIndexerSuppliedToIndexerUnaryFunctionStaticConstructorIsNull() throws Exception {
+        // Given
+        Indexer<String, Integer> indexer = null;
+
+        // When
+        indexerUnaryFunction(indexer);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfIndexerSuppliedToIndexerUnaryFunctionConstructorIsNull() throws Exception {
+        // Given
+        Indexer<String, Integer> indexer = null;
+
+        // When
+        new IndexerUnaryFunctionAdapter<String, Integer>(indexer);
+
+        // Then a NullPointerException is thrown.
     }
 }

@@ -11,6 +11,8 @@ package org.javafunk.funk.functors.adapters;
 import org.javafunk.funk.functors.Equivalence;
 import org.javafunk.funk.functors.predicates.BinaryPredicate;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class EquivalenceBinaryPredicateAdapter<T> implements BinaryPredicate<T, T> {
     public static <T> EquivalenceBinaryPredicateAdapter<T> equivalenceBinaryPredicate(Equivalence<? super T> equivalence) {
         return new EquivalenceBinaryPredicateAdapter<T>(equivalence);
@@ -19,7 +21,7 @@ public class EquivalenceBinaryPredicateAdapter<T> implements BinaryPredicate<T, 
     private final Equivalence<? super T> equivalence;
 
     public EquivalenceBinaryPredicateAdapter(Equivalence<? super T> equivalence) {
-        this.equivalence = equivalence;
+        this.equivalence = checkNotNull(equivalence);
     }
 
     @Override public boolean evaluate(T first, T second) {

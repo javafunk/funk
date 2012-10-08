@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-import static java.lang.String.format;
-
 public class CollectionBuilder<E>
         extends AbstractBuilder<E, CollectionBuilder<E>, Collection<E>>
         implements AbstractBuilder.WithCustomImplementationSupport<E, Collection, Collection<E>> {

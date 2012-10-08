@@ -10,6 +10,7 @@ package org.javafunk.funk.iterators;
 
 import com.sun.org.apache.bcel.internal.generic.ALOAD;
 import org.javafunk.funk.functors.Predicate;
+import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -271,5 +272,17 @@ public class PredicatedIteratorTest {
         }
 
         assertThat(input, is(expectedResult));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfUnaryPredicateSuppliedToConstructorIsNull() throws Exception {
+        // Given
+        Iterator<Integer> input = iterableWith(1, 2, 3).iterator();
+        UnaryPredicate<Integer> predicate = null;
+
+        // When
+        new PredicatedIterator<Integer>(input, predicate);
+
+        // Then a NullPointerException is thrown.
     }
 }
