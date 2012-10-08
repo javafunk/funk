@@ -150,6 +150,10 @@ public class Literals {
         return new ListBuilder<E>().build();
     }
 
+    public static <E> List<E> list(Class<? extends List> listClass) {
+        return new ListBuilder<E>().build(listClass);
+    }
+
     /**
      * Returns an empty mutable {@code List} instance over the type
      * of the supplied {@code Class}.

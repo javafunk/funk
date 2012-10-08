@@ -181,11 +181,11 @@ public class LiteralsTest {
 
     @Test public void shouldReturnAnEmptyIteratorOfTheSuppliedConcreteType() throws Exception {
         // Given
-        Class<? extends Iterator> iterableClass = InstantiableIterator.class;
+        Class<? extends Iterator> iteratorClass = InstantiableIterator.class;
         Iterator<Integer> expectedIterator = new InstantiableIterator<Integer>();
 
         // When
-        Iterator<Integer> actualIterator = iterator(iterableClass);
+        Iterator<Integer> actualIterator = iterator(iteratorClass);
 
         // Then
         assertThat(actualIterator, is(equalToIncludingConcreteType(expectedIterator)));
@@ -312,23 +312,23 @@ public class LiteralsTest {
 
     @Test public void shouldReturnAnEmptyCollectionOfTheSuppliedConcreteType() throws Exception {
         // Given
-        Class<? extends Collection> iterableClass = ArrayList.class;
-        Collection<String> expectedIterable = new ArrayList<String>();
+        Class<? extends Collection> collectionClass = ArrayList.class;
+        Collection<String> expectedCollection = new ArrayList<String>();
 
         // When
-        Collection<String> actualIterable = collection(iterableClass);
+        Collection<String> actualCollection = collection(collectionClass);
 
         // Then
-        assertThat(actualIterable, is(equalToIncludingConcreteType(expectedIterable)));
+        assertThat(actualCollection, is(equalToIncludingConcreteType(expectedCollection)));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentExceptionWhenClassSuppliedToCollectionHasNoPublicNoArgsConstructor() {
         // Given
-        Class<? extends Collection> iterableClass = ImmutableList.class;
+        Class<? extends Collection> collectionClass = ImmutableList.class;
 
         // When
-        collection(iterableClass);
+        collection(collectionClass);
 
         // Then a IllegalArgumentException is thrown.
     }
@@ -439,6 +439,29 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnAnEmptyListOfTheSuppliedConcreteType() throws Exception {
+        // Given
+        Class<? extends List> listClass = ArrayList.class;
+        List<String> expectedList = new ArrayList<String>();
+
+        // When
+        List<String> actualList = list(listClass);
+
+        // Then
+        assertThat(actualList, is(equalToIncludingConcreteType(expectedList)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionWhenClassSuppliedToListHasNoPublicNoArgsConstructor() {
+        // Given
+        Class<? extends List> listClass = ImmutableList.class;
+
+        // When
+        list(listClass);
+
+        // Then a IllegalArgumentException is thrown.
     }
 
     @Test public void shouldReturnAnEmptyListWithElementsOfTheSpecifiedType() throws Exception {
