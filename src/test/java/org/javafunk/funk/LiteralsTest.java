@@ -9,6 +9,7 @@
 package org.javafunk.funk;
 
 import com.google.common.collect.HashMultiset;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multiset;
 import org.javafunk.funk.builders.*;
 import org.javafunk.funk.datastructures.tuples.*;
@@ -29,6 +30,7 @@ import static org.javafunk.funk.testclasses.Cat.cat;
 import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Dog.dog;
 import static org.javafunk.funk.testclasses.Location.location;
+import static org.javafunk.funk.testclasses.Matchers.equalToIncludingConcreteType;
 import static org.javafunk.funk.testclasses.Name.name;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
@@ -44,6 +46,29 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test public void shouldReturnAnEmptyIterableOfTheSuppliedConcreteType() throws Exception {
+        // Given
+        Class<ArrayList> iterableClass = ArrayList.class;
+        Iterable<String> expectedIterable = new ArrayList<String>();
+
+        // When
+        Iterable<String> actualIterable = iterable(iterableClass);
+
+        // Then
+        assertThat(actualIterable, is(equalToIncludingConcreteType(expectedIterable)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionWhenClassSuppliedToIterableHasNoPublicNoArgsConstructor() {
+        // Given
+        Class<ImmutableList> iterableClass = ImmutableList.class;
+
+        // When
+        iterable(iterableClass);
+
+        // Then a IllegalArgumentException is thrown.
     }
 
     @Test public void shouldReturnAnEmptyIterableWithElementsOfTheSpecifiedType() throws Exception {
