@@ -61,6 +61,11 @@ public class Literals {
         return new IteratorBuilder<E>().build();
     }
 
+    @SuppressWarnings("unchecked")
+    public static <E> Iterator<E> iterator(Class<? extends Iterator> iteratorClass) {
+        return uncheckedInstantiate(iteratorClass);
+    }
+
     public static <E> Iterator<E> iteratorOf(Class<E> elementClass) {
         return new IteratorBuilder<E>().build();
     }

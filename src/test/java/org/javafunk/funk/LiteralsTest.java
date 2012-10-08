@@ -16,6 +16,7 @@ import org.javafunk.funk.datastructures.tuples.*;
 import org.javafunk.funk.testclasses.*;
 import org.junit.Test;
 
+import javax.xml.stream.util.EventReaderDelegate;
 import java.util.*;
 
 import static java.util.Arrays.asList;
@@ -50,7 +51,7 @@ public class LiteralsTest {
 
     @Test public void shouldReturnAnEmptyIterableOfTheSuppliedConcreteType() throws Exception {
         // Given
-        Class<ArrayList> iterableClass = ArrayList.class;
+        Class<? extends Iterable> iterableClass = ArrayList.class;
         Iterable<String> expectedIterable = new ArrayList<String>();
 
         // When
@@ -63,7 +64,7 @@ public class LiteralsTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentExceptionWhenClassSuppliedToIterableHasNoPublicNoArgsConstructor() {
         // Given
-        Class<ImmutableList> iterableClass = ImmutableList.class;
+        Class<? extends Iterable> iterableClass = ImmutableList.class;
 
         // When
         iterable(iterableClass);
@@ -177,6 +178,29 @@ public class LiteralsTest {
 
         // Then
         assertThat(Iterators.asList(actual), hasOnlyItemsInOrder(Iterators.asList(expected)));
+    }
+
+    @Test public void shouldReturnAnEmptyIteratorOfTheSuppliedConcreteType() throws Exception {
+        // Given
+        Class<? extends Iterator> iterableClass = InstantiableIterator.class;
+        Iterator<Integer> expectedIterator = new InstantiableIterator<Integer>();
+
+        // When
+        Iterator<Integer> actualIterator = iterator(iterableClass);
+
+        // Then
+        assertThat(actualIterator, is(equalToIncludingConcreteType(expectedIterator)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionWhenClassSuppliedToIteratorHasNoPublicNoArgsConstructor() {
+        // Given
+        Class<? extends Iterator> iterableClass = UninstantiableIterator.class;
+
+        // When
+        iterator(iterableClass);
+
+        // Then a IllegalArgumentException is thrown.
     }
 
     @Test public void shouldReturnAnEmptyIteratorWithElementsOfTheSpecifiedType() throws Exception {
