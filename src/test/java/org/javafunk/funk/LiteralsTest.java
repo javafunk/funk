@@ -751,7 +751,7 @@ public class LiteralsTest {
         Iterable<? extends Pair<Integer, Boolean>> tuples = iterableWith(tuple(1, false), tuple(2, false));
 
         // When
-        Map<Integer, Boolean> actual = mapFromTuples(tuples);
+        Map<Integer, Boolean> actual = mapFromPairs(tuples);
 
         // Then
         assertThat(actual, is(expected));
@@ -783,7 +783,7 @@ public class LiteralsTest {
                 tuple(2, true)};
 
         // When
-        Map<Integer, Boolean> actual = mapFromTuples(tuples);
+        Map<Integer, Boolean> actual = mapFromPairs(tuples);
 
         // Then
         assertThat(actual, is(expected));
@@ -813,7 +813,7 @@ public class LiteralsTest {
         MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>().withKeyValuePairs("five", 5, "ten", 10);
 
         // When
-        MapBuilder<String, Integer> actual = mapBuilderWith("five", 5, "ten", 10);
+        MapBuilder<String, Integer> actual = mapBuilderWithKeyValuePairs("five", 5, "ten", 10);
 
         // Then
         assertThat(actual, is(expected));
@@ -863,7 +863,7 @@ public class LiteralsTest {
                 tuple(5, true), tuple(10, false));
 
         // When
-        MapBuilder<Integer, Boolean> actual = mapBuilderFromTuples(tuples);
+        MapBuilder<Integer, Boolean> actual = mapBuilderFromPairs(tuples);
 
         // Then
         assertThat(actual, is(expected));
@@ -893,7 +893,7 @@ public class LiteralsTest {
         };
 
         // When
-        MapBuilder<Integer, Boolean> actual = mapBuilderFromTuples(tuples);
+        MapBuilder<Integer, Boolean> actual = mapBuilderFromPairs(tuples);
 
         // Then
         assertThat(actual, is(expected));

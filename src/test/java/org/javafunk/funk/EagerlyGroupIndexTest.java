@@ -12,9 +12,7 @@ import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.Indexer;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -34,7 +32,7 @@ public class EagerlyGroupIndexTest {
         Collection<String> sevenLetterFruits = collectionWith("apricot");
 
         Map<Integer, Collection<String>> expectedOutput =
-                mapBuilderWith(4, fourLetterFruits)
+                mapBuilderWithKeyValuePair(4, fourLetterFruits)
                         .andKeyValuePair(5, fiveLetterFruits)
                         .andKeyValuePair(6, sixLetterFruits)
                         .andKeyValuePair(7, sevenLetterFruits)
