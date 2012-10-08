@@ -9,6 +9,7 @@
 package org.javafunk.funk.builders;
 
 import org.javafunk.funk.Classes;
+import org.javafunk.funk.Maps;
 import org.javafunk.funk.Tuples;
 import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.functions.UnaryFunction;
@@ -17,10 +18,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.lang.String.format;
+import static org.javafunk.funk.Iterables.concat;
 import static org.javafunk.funk.Lazily.map;
 import static org.javafunk.funk.Literals.iterableFrom;
 import static org.javafunk.funk.Literals.mapEntryFor;
+import static org.javafunk.funk.Sets.union;
 
 public class MapBuilder<K, V>
         extends AbstractBuilder<Map.Entry<K, V>, MapBuilder<K, V>, Map<K, V>>
@@ -50,12 +52,20 @@ public class MapBuilder<K, V>
         return builderFunction.call(Collections.unmodifiableSet(elements.entrySet()));
     }
 
-    public MapBuilder<K, V> andPairs(Pair<K, V>[] pairs) {
-        return andPairs(iterableFrom(pairs));
+    public MapBuilder<K, V> withEntries(Map.Entry<K, V>[] entries) {
+        return and(entries);
     }
 
-    public MapBuilder<K, V> andPairs(Iterable<? extends Pair<K, V>> pairs) {
-        return and(map(pairs, Tuples.<K, V>toMapEntry()));
+    public MapBuilder<K, V> withEntries(Iterable<? extends Map.Entry<K, V>> entries) {
+        return and(entries);
+    }
+
+    public MapBuilder<K, V> andEntries(Map.Entry<K, V>[] entries) {
+        return and(entries);
+    }
+
+    public MapBuilder<K, V> andEntries(Iterable<? extends Map.Entry<K, V>> entries) {
+        return and(entries);
     }
 
     public MapBuilder<K, V> withPairs(Pair<K, V>[] pairs) {
@@ -66,12 +76,124 @@ public class MapBuilder<K, V>
         return and(map(pairs, Tuples.<K, V>toMapEntry()));
     }
 
+    public MapBuilder<K, V> andPairs(Pair<K, V>[] pairs) {
+        return andPairs(iterableFrom(pairs));
+    }
+
+    public MapBuilder<K, V> andPairs(Iterable<? extends Pair<K, V>> pairs) {
+        return and(map(pairs, Tuples.<K, V>toMapEntry()));
+    }
+
+    public MapBuilder<K, V> withMaps(Map<K, V>[] maps) {
+        return withMaps(iterableFrom(maps));
+    }
+
+    public MapBuilder<K, V> withMaps(Iterable<? extends Map<K, V>> maps) {
+        return andMaps(maps);
+    }
+
+    public MapBuilder<K, V> andMaps(Map<K, V>[] maps) {
+        return andMaps(iterableFrom(maps));
+    }
+
+    public MapBuilder<K, V> andMaps(Iterable<? extends Map<K, V>> maps) {
+        return and(concat(map(maps, Maps.<K, V>toEntrySet())));
+    }
+
     @Override protected void handle(Map.Entry<K, V> element) {
         elements.put(element.getKey(), element.getValue());
     }
 
     @Override protected MapBuilder<K, V> updatedBuilder() {
         return this;
+    }
+
+    public MapBuilder<K, V> withEntry(Map.Entry<K, V> e1) {
+        return and(e1);
+    }
+
+    public MapBuilder<K, V> withEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
+        return and(e1, e2);
+    }
+
+    public MapBuilder<K, V> withEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3) {
+        return and(e1, e2, e3);
+    }
+
+    public MapBuilder<K, V> withEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4) {
+        return and(e1, e2, e3, e4);
+    }
+
+    public MapBuilder<K, V> withEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5) {
+        return and(e1, e2, e3, e4, e5);
+    }
+
+    public MapBuilder<K, V> withEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e7) {
+        return and(e1, e2, e3, e4, e5, e7);
+    }
+
+    public MapBuilder<K, V> withEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7) {
+        return and(e1, e2, e3, e4, e5, e6, e7);
+    }
+
+    public MapBuilder<K, V> withEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8) {
+        return and(e1, e2, e3, e4, e5, e6, e7, e8);
+    }
+
+    public MapBuilder<K, V> withEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9) {
+        return and(e1, e2, e3, e4, e5, e6, e7, e8, e9);
+    }
+
+    public MapBuilder<K, V> withEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10) {
+        return and(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10);
+    }
+
+    public MapBuilder<K, V> withEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10, Map.Entry<K, V>... e11on) {
+        return and(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11on);
+    }
+
+    public MapBuilder<K, V> andEntry(Map.Entry<K, V> e1) {
+        return and(e1);
+    }
+
+    public MapBuilder<K, V> andEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
+        return and(e1, e2);
+    }
+
+    public MapBuilder<K, V> andEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3) {
+        return and(e1, e2, e3);
+    }
+
+    public MapBuilder<K, V> andEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4) {
+        return and(e1, e2, e3, e4);
+    }
+
+    public MapBuilder<K, V> andEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5) {
+        return and(e1, e2, e3, e4, e5);
+    }
+
+    public MapBuilder<K, V> andEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e7) {
+        return and(e1, e2, e3, e4, e5, e7);
+    }
+
+    public MapBuilder<K, V> andEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7) {
+        return and(e1, e2, e3, e4, e5, e6, e7);
+    }
+
+    public MapBuilder<K, V> andEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8) {
+        return and(e1, e2, e3, e4, e5, e6, e7, e8);
+    }
+
+    public MapBuilder<K, V> andEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9) {
+        return and(e1, e2, e3, e4, e5, e6, e7, e8, e9);
+    }
+
+    public MapBuilder<K, V> andEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10) {
+        return and(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10);
+    }
+
+    public MapBuilder<K, V> andEntries(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10, Map.Entry<K, V>... e11on) {
+        return and(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11on);
     }
 
     public MapBuilder<K, V> withKeyValuePair(K k1, V v1) {
@@ -152,6 +274,96 @@ public class MapBuilder<K, V>
 
     public MapBuilder<K, V> andKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9, K k10, V v10) {
         return and(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9), mapEntryFor(k10, v10));
+    }
+
+    public MapBuilder<K, V> withMap(Map<K, V> m1) {
+        return andEntries(m1.entrySet());
+    }
+
+    public MapBuilder<K, V> withMaps(Map<K, V> m1, Map<K, V> m2) {
+        return andEntries(union(m1.entrySet(), m2.entrySet()));
+    }
+
+    public MapBuilder<K, V> withMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet()));
+    }
+
+    public MapBuilder<K, V> withMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet(), m4.entrySet()));
+    }
+
+    public MapBuilder<K, V> withMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet(), m4.entrySet(), m5.entrySet()));
+    }
+
+    public MapBuilder<K, V> withMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet(), m4.entrySet(), m5.entrySet(), m6.entrySet()));
+    }
+
+    public MapBuilder<K, V> withMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet(), m4.entrySet(), m5.entrySet(), m6.entrySet(), m7.entrySet()));
+    }
+
+    public MapBuilder<K, V> withMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet(), m4.entrySet(), m5.entrySet(), m6.entrySet(), m7.entrySet(), m8.entrySet()));
+    }
+
+    public MapBuilder<K, V> withMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet(), m4.entrySet(), m5.entrySet(), m6.entrySet(), m7.entrySet(), m8.entrySet(), m9.entrySet()));
+    }
+
+    public MapBuilder<K, V> withMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9, Map<K, V> m10) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet(), m4.entrySet(), m5.entrySet(), m6.entrySet(), m7.entrySet(), m8.entrySet(), m9.entrySet(), m10.entrySet()));
+    }
+
+    public MapBuilder<K, V> withMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9, Map<K, V> m10, Map<K, V>... m11on) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet(), m4.entrySet(), m5.entrySet(), m6.entrySet(), m7.entrySet(), m8.entrySet(), m9.entrySet(), m10.entrySet()))
+                .andMaps(m11on);
+    }
+
+    public MapBuilder<K, V> andMap(Map<K, V> m1) {
+        return andEntries(m1.entrySet());
+    }
+
+    public MapBuilder<K, V> andMaps(Map<K, V> m1, Map<K, V> m2) {
+        return andEntries(union(m1.entrySet(), m2.entrySet()));
+    }
+
+    public MapBuilder<K, V> andMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet()));
+    }
+
+    public MapBuilder<K, V> andMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet(), m4.entrySet()));
+    }
+
+    public MapBuilder<K, V> andMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet(), m4.entrySet(), m5.entrySet()));
+    }
+
+    public MapBuilder<K, V> andMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet(), m4.entrySet(), m5.entrySet(), m6.entrySet()));
+    }
+
+    public MapBuilder<K, V> andMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet(), m4.entrySet(), m5.entrySet(), m6.entrySet(), m7.entrySet()));
+    }
+
+    public MapBuilder<K, V> andMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet(), m4.entrySet(), m5.entrySet(), m6.entrySet(), m7.entrySet(), m8.entrySet()));
+    }
+
+    public MapBuilder<K, V> andMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet(), m4.entrySet(), m5.entrySet(), m6.entrySet(), m7.entrySet(), m8.entrySet(), m9.entrySet()));
+    }
+
+    public MapBuilder<K, V> andMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9, Map<K, V> m10) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet(), m4.entrySet(), m5.entrySet(), m6.entrySet(), m7.entrySet(), m8.entrySet(), m9.entrySet(), m10.entrySet()));
+    }
+
+    public MapBuilder<K, V> andMaps(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9, Map<K, V> m10, Map<K, V>... m11on) {
+        return andEntries(union(m1.entrySet(), m2.entrySet(), m3.entrySet(), m4.entrySet(), m5.entrySet(), m6.entrySet(), m7.entrySet(), m8.entrySet(), m9.entrySet(), m10.entrySet()))
+                .andMaps(m11on);
     }
 
     public MapBuilder<K, V> withPair(Pair<K, V> p1) {
