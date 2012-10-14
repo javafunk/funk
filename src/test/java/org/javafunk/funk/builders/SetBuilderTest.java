@@ -8,12 +8,15 @@
  */
 package org.javafunk.funk.builders;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.javafunk.funk.functors.functions.UnaryFunction;
+import org.javafunk.funk.testclasses.Name;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,6 +24,8 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.builders.SetBuilder.setBuilder;
+import static org.javafunk.funk.testclasses.Name.name;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 import static org.junit.Assert.fail;
 
 public class SetBuilderTest {
@@ -263,6 +268,44 @@ public class SetBuilderTest {
         setBuilder.build(function);
 
         // Then a NullPointerException is thrown.
+    }
+
+    @Test
+    public void shouldSupplyElementsToSuppliedBuilderInInsertionOrder() throws Exception {
+        // Given
+        final SetBuilder<Name> setBuilder = setBuilderWith(name("Adam"), name("Charles"), name("Amanda"))
+                .and(iterableWith(name("Paul"), name("Sarah")))
+                .and(name("James"));
+        final Iterable<Name> expected = iterableWith(
+                name("Adam"), name("Charles"), name("Amanda"),
+                name("Paul"), name("Sarah"), name("James"));
+
+
+        // When
+        setBuilder.build(new UnaryFunction<Iterable<Name>, Set<Name>>() {
+            @Override public Set<Name> call(Iterable<Name> actual) {
+                // Then
+                assertThat(actual, hasOnlyItemsInOrder(expected));
+                return ImmutableSet.copyOf(actual);
+            }
+        });
+    }
+
+    @Test
+    public void shouldBuildUsingCustomImplementationMaintainingInsertionOrder() throws Exception {
+        // Given
+        SetBuilder<Name> setBuilder = setBuilderWith(name("Adam"), name("Charles"), name("Amanda"))
+                .and(iterableWith(name("Paul"), name("Sarah")))
+                .and(name("James"));
+        Set<Name> expected = new LinkedHashSet<Name>(listWith(
+                name("Adam"), name("Charles"), name("Amanda"),
+                name("Paul"), name("Sarah"), name("James")));
+
+        // When
+        Set<Name> actual = setBuilder.build(LinkedHashSet.class);
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
     private static class NoNoArgsConstructorSet<E> extends HashSet<E> {
