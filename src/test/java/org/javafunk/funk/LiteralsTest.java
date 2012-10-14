@@ -703,6 +703,29 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
+    @Test public void shouldReturnAnEmptySetOfTheSuppliedConcreteType() throws Exception {
+        // Given
+        Class<? extends Set> setClass = HashSet.class;
+        Set<String> expectedSet = new HashSet<String>();
+
+        // When
+        Set<String> actualSet = set(setClass);
+
+        // Then
+        assertThat(actualSet, is(equalToIncludingConcreteType(expectedSet)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionWhenClassSuppliedToSetHasNoPublicNoArgsConstructor() {
+        // Given
+        Class<? extends Set> setClass = NoNoArgsConstructorSet.class;
+
+        // When
+        set(setClass);
+
+        // Then a IllegalArgumentException is thrown.
+    }
+
     @Test public void shouldReturnAnEmptySetWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         Set<Integer> expected = new HashSet<Integer>();

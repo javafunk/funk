@@ -818,6 +818,10 @@ public class Literals {
         return new SetBuilder<E>().build();
     }
 
+    public static <E> Set<E> set(Class<? extends Set> setClass) {
+        return new SetBuilder<E>().build(setClass);
+    }
+
     /**
      * Returns an empty mutable {@code Set} instance over the type
      * of the supplied {@code Class}.
