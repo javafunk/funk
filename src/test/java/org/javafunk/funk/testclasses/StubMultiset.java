@@ -1,12 +1,16 @@
 package org.javafunk.funk.testclasses;
 
 import com.google.common.collect.Multiset;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
 public class StubMultiset<E> implements Multiset<E> {
+    private final String name = "Needed for equality.";
+
     @Override public int count(Object element) { return 0; }
     @Override public int add(E element, int occurrences) { return 0; }
     @Override public int remove(Object element, int occurrences) { return 0; }
@@ -27,4 +31,12 @@ public class StubMultiset<E> implements Multiset<E> {
     @Override public boolean removeAll(Collection<?> c) { return false; }
     @Override public boolean retainAll(Collection<?> c) { return false; }
     @Override public void clear() { }
+
+    public boolean equals(Object other) {
+        return EqualsBuilder.reflectionEquals(this, other);
+    }
+
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
 }
