@@ -1443,6 +1443,10 @@ public class Literals {
         return new MultisetBuilder<E>().build();
     }
 
+    public static <E> Multiset<E> multiset(Class<? extends Multiset> multisetClass) {
+        return new MultisetBuilder<E>().build(multisetClass);
+    }
+
     public static <E> Multiset<E> multisetOf(Class<E> elementClass) {
         return new MultisetBuilder<E>().build();
     }

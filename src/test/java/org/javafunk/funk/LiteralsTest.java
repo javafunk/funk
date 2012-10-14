@@ -572,6 +572,29 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
+    @Test public void shouldReturnAnEmptyMultisetOfTheSuppliedConcreteType() throws Exception {
+        // Given
+        Class<? extends Multiset> multisetClass = NoArgsConstructorMultiset.class;
+        Multiset<String> expectedMultiset = new NoArgsConstructorMultiset<String>();
+
+        // When
+        Multiset<String> actualList = multiset(multisetClass);
+
+        // Then
+        assertThat(actualList, is(equalToIncludingConcreteType(expectedMultiset)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionWhenClassSuppliedToMultisetHasNoPublicNoArgsConstructor() {
+        // Given
+        Class<? extends Multiset> multisetClass = PrivateAccessConstructorMultiset.class;
+
+        // When
+        multiset(multisetClass);
+
+        // Then a IllegalArgumentException is thrown.
+    }
+
     @Test public void shouldReturnAnEmptyMultisetWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         Multiset<Integer> expected = HashMultiset.create();
