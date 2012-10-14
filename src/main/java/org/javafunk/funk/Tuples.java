@@ -8,6 +8,7 @@
  */
 package org.javafunk.funk;
 
+import org.javafunk.funk.behaviours.ordinals.First;
 import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.Mapper;
 
@@ -20,6 +21,18 @@ public class Tuples {
         return new Mapper<Pair<K, V>, Map.Entry<K, V>>() {
             @Override public Map.Entry<K, V> map(Pair<K, V> pair) {
                 return mapEntryFor(pair);
+            }
+        };
+    }
+
+    public static <T> Iterable<T> firsts(Iterable<? extends First<T>> firstables) {
+        return Lazily.map(firstables, Tuples.<T>toFirst());
+    }
+
+    public static <T> Mapper<? super First<T>, T> toFirst() {
+        return new Mapper<First<T>, T>() {
+            @Override public T map(First<T> firstable) {
+                return firstable.getFirst();
             }
         };
     }
