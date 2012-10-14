@@ -578,10 +578,10 @@ public class LiteralsTest {
         Multiset<String> expectedMultiset = new NoArgsConstructorMultiset<String>();
 
         // When
-        Multiset<String> actualList = multiset(multisetClass);
+        Multiset<String> actualMultiset = multiset(multisetClass);
 
         // Then
-        assertThat(actualList, is(equalToIncludingConcreteType(expectedMultiset)));
+        assertThat(actualMultiset, is(equalToIncludingConcreteType(expectedMultiset)));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -832,6 +832,29 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnAnEmptyMapOfTheSuppliedConcreteType() throws Exception {
+        // Given
+        Class<? extends Map> mapClass = HashMap.class;
+        Map<String, String> expectedMultiset = new HashMap<String, String>();
+
+        // When
+        Map<String, String> actualMap = map(mapClass);
+
+        // Then
+        assertThat(actualMap, is(equalToIncludingConcreteType(expectedMultiset)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionWhenClassSuppliedToMapHasNoPublicNoArgsConstructor() {
+        // Given
+        Class<? extends Map> mapClass = NoNoArgsConstructorMap.class;
+
+        // When
+        map(mapClass);
+
+        // Then a IllegalArgumentException is thrown.
     }
 
     @Test public void shouldReturnAnEmptyMapWithElementsOfTheSpecifiedType() throws Exception {

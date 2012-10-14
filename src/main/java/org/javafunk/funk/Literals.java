@@ -1483,6 +1483,10 @@ public class Literals {
         return new MapBuilder<K, V>().build();
     }
 
+    public static <K, V> Map<K, V> map(Class<? extends Map> mapClass) {
+        return new MapBuilder<K, V>().build(mapClass);
+    }
+
     public static <K, V> Map<K, V> mapOf(Class<K> keyClass, Class<V> valueClass) {
         return new MapBuilder<K, V>().build();
     }
