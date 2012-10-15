@@ -11,16 +11,14 @@ package org.javafunk.funk.builders;
 import org.javafunk.funk.Classes;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static java.lang.String.format;
 
 public class SetBuilder<E>
         extends AbstractBuilder<E, SetBuilder<E>, Set<E>>
         implements AbstractBuilder.WithCustomImplementationSupport<E, Set, Set<E>> {
-    private Set<E> elements = new HashSet<E>();
+    private List<E> elements = new ArrayList<E>();
 
     public static <E> SetBuilder<E> setBuilder() {
         return new SetBuilder<E>();
@@ -42,7 +40,7 @@ public class SetBuilder<E>
     }
 
     @Override public Set<E> build(UnaryFunction<? super Iterable<E>, ? extends Set<E>> builderFunction) {
-        return builderFunction.call(Collections.unmodifiableSet(elements));
+        return builderFunction.call(Collections.unmodifiableList(elements));
     }
 
     @Override protected void handle(E element) {
