@@ -892,6 +892,27 @@ public class LiteralsTest {
         assertThat(actualMap, is(expectedMap));
     }
 
+    @Test public void shouldReturnAMapContainingTheSuppliedMaps() throws Exception {
+        // Given
+        Map<Integer, Boolean> expectedMap = new HashMap<Integer, Boolean>();
+        expectedMap.put(1, true);
+        expectedMap.put(2, false);
+        expectedMap.put(3, true);
+
+        Map<Integer, Boolean> firstMap = new HashMap<Integer, Boolean>();
+        firstMap.put(1, true);
+        firstMap.put(2, false);
+
+        Map<Integer, Boolean> secondMap = new HashMap<Integer, Boolean>();
+        secondMap.put(3, true);
+
+        // When
+        Map<Integer, Boolean> actualMap = mapWith(firstMap, secondMap);
+
+        // Then
+        assertThat(actualMap, is(expectedMap));
+    }
+
     @Test public void shouldReturnAMapContainingAllElementsInTheSuppliedIterableOfMapEntryInstances() {
         // Given
         Map<Integer, Boolean> expected = new HashMap<Integer, Boolean>();
@@ -915,6 +936,27 @@ public class LiteralsTest {
 
         // When
         Map<Integer, Boolean> actual = mapFromPairs(tuples);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnAMapContainingAllEntriesFromTheSuppliedIterableOfMapInstances() {
+        // Given
+        Map<String, Integer> firstMap = mapWith(tuple("first", 1), tuple("second", 2));
+        Map<String, Integer> secondMap = mapWith(mapEntryFor("third", 3));
+        Map<String, Integer> thirdMap = mapWith(mapEntryFor("fourth", 4));
+
+        Map<String, Integer> expected = new HashMap<String, Integer>();
+        expected.put("first", 1);
+        expected.put("second", 2);
+        expected.put("third", 3);
+        expected.put("fourth", 4);
+
+        Iterable<? extends Map<String, Integer>> maps = iterableWith(firstMap, secondMap, thirdMap);
+
+        // When
+        Map<String, Integer> actual = mapFromMaps(maps);
 
         // Then
         assertThat(actual, is(expected));
@@ -947,6 +989,27 @@ public class LiteralsTest {
 
         // When
         Map<Integer, Boolean> actual = mapFromPairs(tuples);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnAMapContainingAllEntriesFromTheSuppliedArrayOfMapInstances() {
+        // Given
+        Map<String, Integer> firstMap = mapWith(tuple("first", 1), tuple("second", 2));
+        Map<String, Integer> secondMap = mapWith(mapEntryFor("third", 3));
+        Map<String, Integer> thirdMap = mapWith(mapEntryFor("fourth", 4));
+
+        Map<String, Integer> expected = new HashMap<String, Integer>();
+        expected.put("first", 1);
+        expected.put("second", 2);
+        expected.put("third", 3);
+        expected.put("fourth", 4);
+
+        @SuppressWarnings("unchecked") Map<String, Integer>[] maps = new Map[]{firstMap, secondMap, thirdMap};
+
+        // When
+        Map<String, Integer> actual = mapFromMaps(maps);
 
         // Then
         assertThat(actual, is(expected));
@@ -1006,6 +1069,25 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
+    @Test public void shouldReturnAMapBuilderWithAllEntriesFromTheSuppliedMapInstances() {
+        // Given
+        MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>()
+                .withKeyValuePairs("five", 5, "ten", 10, "fifteen", 15);
+
+        Map<String, Integer> firstMap = new HashMap<String, Integer>();
+        firstMap.put("five", 5);
+        firstMap.put("ten", 10);
+
+        Map<String, Integer> secondMap = new HashMap<String, Integer>();
+        secondMap.put("fifteen", 15);
+
+        // When
+        MapBuilder<String, Integer> actual = mapBuilderWith(firstMap, secondMap);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
     @Test public void shouldReturnAMapBuilderContainingAllMapEntryInstancesInTheSuppliedIterable() {
         // Given
         MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().withKeyValuePairs(5, true, 10, false);
@@ -1027,6 +1109,23 @@ public class LiteralsTest {
 
         // When
         MapBuilder<Integer, Boolean> actual = mapBuilderFromPairs(tuples);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnAMapBuilderContainingAllEntriesFromAllMapInstancesInTheSuppliedIterable() {
+        // Given
+        Map<String, Integer> firstMap = mapWith(tuple("first", 1), tuple("second", 2));
+        Map<String, Integer> secondMap = mapWith(mapEntryFor("third", 3));
+        Map<String, Integer> thirdMap = mapWith(mapEntryFor("fourth", 4));
+
+        Iterable<? extends Map<String, Integer>> maps = iterableWith(firstMap, secondMap, thirdMap);
+
+        MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>().withMaps(firstMap, secondMap, thirdMap);
+
+        // When
+        MapBuilder<String, Integer> actual = mapBuilderFromMaps(maps);
 
         // Then
         assertThat(actual, is(expected));
@@ -1057,6 +1156,22 @@ public class LiteralsTest {
 
         // When
         MapBuilder<Integer, Boolean> actual = mapBuilderFromPairs(tuples);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnAMapBuilderContainingAllEntriesFromAllMapInstancesInTheSuppliedArray() {
+        Map<String, Integer> firstMap = mapWith(tuple("first", 1), tuple("second", 2));
+        Map<String, Integer> secondMap = mapWith(mapEntryFor("third", 3));
+        Map<String, Integer> thirdMap = mapWith(mapEntryFor("fourth", 4));
+
+        @SuppressWarnings("unchecked") Map<String, Integer>[] maps = new Map[]{firstMap, secondMap, thirdMap};
+
+        MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>().withMaps(firstMap, secondMap, thirdMap);
+
+        // When
+        MapBuilder<String, Integer> actual = mapBuilderFromMaps(maps);
 
         // Then
         assertThat(actual, is(expected));
