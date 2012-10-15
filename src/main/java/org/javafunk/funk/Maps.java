@@ -12,9 +12,9 @@ import org.javafunk.funk.functors.Factory;
 import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.NullaryFunction;
 import org.javafunk.funk.functors.functions.UnaryFunction;
-import org.javafunk.funk.functors.procedures.UnaryProcedure;
 
 import java.util.Map;
+import java.util.Set;
 
 import static org.javafunk.funk.functors.adapters.FactoryNullaryFunctionAdapter.factoryNullaryFunction;
 import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
@@ -46,5 +46,13 @@ public class Maps {
                 return factory.call();
             }
         });
+    }
+
+    public static <K, V> Mapper<? super Map<K, V>, Set<Map.Entry<K, V>>> toEntrySet() {
+        return new Mapper<Map<K, V>, Set<Map.Entry<K,V>>>() {
+            @Override public Set<Map.Entry<K, V>> map(Map<K, V> input) {
+                return input.entrySet();
+            }
+        };
     }
 }
