@@ -1507,6 +1507,14 @@ public class Literals {
         return new MapBuilder<K, V>().withPairs(elementArray).build();
     }
 
+    public static <K, V> Map<K, V> mapFromMaps(Iterable<? extends Map<K, V>> elements) {
+        return new MapBuilder<K, V>().withMaps(elements).build();
+    }
+
+    public static <K, V> Map<K, V> mapFromMaps(Map<K, V>[] elementArray) {
+        return new MapBuilder<K, V>().withMaps(elementArray).build();
+    }
+
     public static <K, V> MapBuilder<K, V> mapBuilder() {
         return new MapBuilder<K, V>();
     }
@@ -1529,6 +1537,14 @@ public class Literals {
 
     public static <K, V> MapBuilder<K, V> mapBuilderFromPairs(Pair<K, V>[] entries) {
         return new MapBuilder<K, V>().withPairs(entries);
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderFromMaps(Iterable<? extends Map<K, V>> entries) {
+        return new MapBuilder<K, V>().withMaps(entries);
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderFromMaps(Map<K, V>[] entries) {
+        return new MapBuilder<K, V>().withMaps(entries);
     }
 
     public static <K, V> Map.Entry<K, V> mapEntryFor(K key, V value) {
@@ -2571,19 +2587,33 @@ public class Literals {
         return new Nonuple<R, S, T, U, V, W, X, Y, Z>(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);
     }
 
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e) { return iterableFrom(asList(e)); }
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e) {
+        return iterableFrom(asList(e));
+    }
 
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2) { return iterableFrom(asList(e1, e2)); }
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2) {
+        return iterableFrom(asList(e1, e2));
+    }
 
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3) { return iterableFrom(asList(e1, e2, e3)); }
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3) {
+        return iterableFrom(asList(e1, e2, e3));
+    }
 
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4) { return iterableFrom(asList(e1, e2, e3, e4)); }
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4) {
+        return iterableFrom(asList(e1, e2, e3, e4));
+    }
 
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5) { return iterableFrom(asList(e1, e2, e3, e4, e5)); }
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5) {
+        return iterableFrom(asList(e1, e2, e3, e4, e5));
+    }
 
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6) { return iterableFrom(asList(e1, e2, e3, e4, e5, e6)); }
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return iterableFrom(asList(e1, e2, e3, e4, e5, e6));
+    }
 
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7)); }
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7));
+    }
 
     @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
         return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8));
@@ -2601,19 +2631,33 @@ public class Literals {
         return iterableBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)).build();
     }
 
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e) { return iterableBuilderFrom(iterableWith(e)); }
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e) {
+        return iterableBuilderFrom(iterableWith(e));
+    }
 
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2) { return iterableBuilderFrom(iterableWith(e1, e2)); }
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2) {
+        return iterableBuilderFrom(iterableWith(e1, e2));
+    }
 
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3) { return iterableBuilderFrom(iterableWith(e1, e2, e3)); }
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3));
+    }
 
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4) { return iterableBuilderFrom(iterableWith(e1, e2, e3, e4)); }
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4));
+    }
 
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5) { return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5)); }
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5));
+    }
 
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) { return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
 
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
 
     public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
         return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
@@ -2631,23 +2675,41 @@ public class Literals {
         return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
     }
 
-    public static <E> Iterator<E> iteratorWith(E e) { return iteratorFrom(iterableWith(e)); }
+    public static <E> Iterator<E> iteratorWith(E e) {
+        return iteratorFrom(iterableWith(e));
+    }
 
-    public static <E> Iterator<E> iteratorWith(E e1, E e2) { return iteratorFrom(iterableWith(e1, e2)); }
+    public static <E> Iterator<E> iteratorWith(E e1, E e2) {
+        return iteratorFrom(iterableWith(e1, e2));
+    }
 
-    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3) { return iteratorFrom(iterableWith(e1, e2, e3)); }
+    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3) {
+        return iteratorFrom(iterableWith(e1, e2, e3));
+    }
 
-    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4) { return iteratorFrom(iterableWith(e1, e2, e3, e4)); }
+    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4) {
+        return iteratorFrom(iterableWith(e1, e2, e3, e4));
+    }
 
-    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5) { return iteratorFrom(iterableWith(e1, e2, e3, e4, e5)); }
+    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5) {
+        return iteratorFrom(iterableWith(e1, e2, e3, e4, e5));
+    }
 
-    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6) { return iteratorFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
+    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return iteratorFrom(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
 
-    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return iteratorFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
+    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return iteratorFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
 
-    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return iteratorFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
+    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return iteratorFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
 
-    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return iteratorFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
+    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return iteratorFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
 
     public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
         return iteratorFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
@@ -2657,19 +2719,33 @@ public class Literals {
         return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on).build();
     }
 
-    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e) { return iteratorBuilderFrom(iterableWith(e)); }
+    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e) {
+        return iteratorBuilderFrom(iterableWith(e));
+    }
 
-    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2) { return iteratorBuilderFrom(iterableWith(e1, e2)); }
+    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2) {
+        return iteratorBuilderFrom(iterableWith(e1, e2));
+    }
 
-    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3) { return iteratorBuilderFrom(iterableWith(e1, e2, e3)); }
+    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3) {
+        return iteratorBuilderFrom(iterableWith(e1, e2, e3));
+    }
 
-    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4) { return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4)); }
+    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4) {
+        return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4));
+    }
 
-    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5) { return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5)); }
+    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5) {
+        return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5));
+    }
 
-    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) { return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
+    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
 
-    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
+    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
 
     public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
         return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
@@ -2687,21 +2763,37 @@ public class Literals {
         return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
     }
 
-    public static <E> Collection<E> collectionWith(E e) { return collectionFrom(iterableWith(e)); }
+    public static <E> Collection<E> collectionWith(E e) {
+        return collectionFrom(iterableWith(e));
+    }
 
-    public static <E> Collection<E> collectionWith(E e1, E e2) { return collectionFrom(iterableWith(e1, e2)); }
+    public static <E> Collection<E> collectionWith(E e1, E e2) {
+        return collectionFrom(iterableWith(e1, e2));
+    }
 
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3) { return collectionFrom(iterableWith(e1, e2, e3)); }
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3) {
+        return collectionFrom(iterableWith(e1, e2, e3));
+    }
 
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4) { return collectionFrom(iterableWith(e1, e2, e3, e4)); }
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4) {
+        return collectionFrom(iterableWith(e1, e2, e3, e4));
+    }
 
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5) { return collectionFrom(iterableWith(e1, e2, e3, e4, e5)); }
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5) {
+        return collectionFrom(iterableWith(e1, e2, e3, e4, e5));
+    }
 
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6) { return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
 
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
 
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
 
     public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
         return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
@@ -2715,17 +2807,29 @@ public class Literals {
         return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on).build();
     }
 
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e) { return collectionBuilderFrom(iterableWith(e)); }
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e) {
+        return collectionBuilderFrom(iterableWith(e));
+    }
 
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2) { return collectionBuilderFrom(iterableWith(e1, e2)); }
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2) {
+        return collectionBuilderFrom(iterableWith(e1, e2));
+    }
 
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3) { return collectionBuilderFrom(iterableWith(e1, e2, e3)); }
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3));
+    }
 
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4) { return collectionBuilderFrom(iterableWith(e1, e2, e3, e4)); }
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4));
+    }
 
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5) { return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5)); }
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5));
+    }
 
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) { return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
 
     public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
         return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
@@ -2747,23 +2851,41 @@ public class Literals {
         return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
     }
 
-    public static <E> Multiset<E> multisetWith(E e) { return multisetFrom(iterableWith(e)); }
+    public static <E> Multiset<E> multisetWith(E e) {
+        return multisetFrom(iterableWith(e));
+    }
 
-    public static <E> Multiset<E> multisetWith(E e1, E e2) { return multisetFrom(iterableWith(e1, e2)); }
+    public static <E> Multiset<E> multisetWith(E e1, E e2) {
+        return multisetFrom(iterableWith(e1, e2));
+    }
 
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3) { return multisetFrom(iterableWith(e1, e2, e3)); }
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3) {
+        return multisetFrom(iterableWith(e1, e2, e3));
+    }
 
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4) { return multisetFrom(iterableWith(e1, e2, e3, e4)); }
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4) {
+        return multisetFrom(iterableWith(e1, e2, e3, e4));
+    }
 
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5) { return multisetFrom(iterableWith(e1, e2, e3, e4, e5)); }
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5) {
+        return multisetFrom(iterableWith(e1, e2, e3, e4, e5));
+    }
 
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6) { return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
 
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
 
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
 
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
 
     public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
         return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
@@ -2773,19 +2895,33 @@ public class Literals {
         return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on).build();
     }
 
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e) { return multisetBuilderFrom(iterableWith(e)); }
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e) {
+        return multisetBuilderFrom(iterableWith(e));
+    }
 
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2) { return multisetBuilderFrom(iterableWith(e1, e2)); }
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2) {
+        return multisetBuilderFrom(iterableWith(e1, e2));
+    }
 
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3) { return multisetBuilderFrom(iterableWith(e1, e2, e3)); }
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3));
+    }
 
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4) { return multisetBuilderFrom(iterableWith(e1, e2, e3, e4)); }
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4));
+    }
 
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5) { return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5)); }
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5));
+    }
 
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) { return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
 
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
 
     public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
         return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
@@ -2843,13 +2979,21 @@ public class Literals {
         return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9), mapEntryFor(k10, v10)).build();
     }
 
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1) { return mapFromEntries(iterableWith(e1)); }
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1) {
+        return mapFromEntries(iterableWith(e1));
+    }
 
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2) { return mapFromEntries(iterableWith(e1, e2)); }
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
+        return mapFromEntries(iterableWith(e1, e2));
+    }
 
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3) { return mapFromEntries(iterableWith(e1, e2, e3)); }
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3) {
+        return mapFromEntries(iterableWith(e1, e2, e3));
+    }
 
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4) { return mapFromEntries(iterableWith(e1, e2, e3, e4)); }
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4) {
+        return mapFromEntries(iterableWith(e1, e2, e3, e4));
+    }
 
     public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5) {
         return mapFromEntries(iterableWith(e1, e2, e3, e4, e5));
@@ -2923,9 +3067,57 @@ public class Literals {
         return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).andPairs(e11on).build();
     }
 
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePair(K k1, V v1) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1)); }
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1) {
+        return mapFromMaps(iterableWith(m1));
+    }
 
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2)); }
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2) {
+        return mapFromMaps(iterableWith(m1, m2));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3) {
+        return mapFromMaps(iterableWith(m1, m2, m3));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4) {
+        return mapFromMaps(iterableWith(m1, m2, m3, m4));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5) {
+        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6) {
+        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5, m6));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7) {
+        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8) {
+        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9) {
+        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9, Map<K, V> m10) {
+        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9, Map<K, V> m10, Map<K, V>... m11on) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10)).andMaps(m11on).build();
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePair(K k1, V v1) { 
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1)); 
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2) { 
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2)); 
+    }
 
     public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3) {
         return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3));
@@ -2959,11 +3151,17 @@ public class Literals {
         return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9), mapEntryFor(k10, v10));
     }
 
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1) { return mapBuilderFromEntries(iterableWith(e1)); }
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1) {
+        return mapBuilderFromEntries(iterableWith(e1));
+    }
 
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2) { return mapBuilderFromEntries(iterableWith(e1, e2)); }
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
+        return mapBuilderFromEntries(iterableWith(e1, e2));
+    }
 
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3) { return mapBuilderFromEntries(iterableWith(e1, e2, e3)); }
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3));
+    }
 
     public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4) {
         return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4));
@@ -3039,5 +3237,49 @@ public class Literals {
 
     public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10, Pair<K, V>... e11on) {
         return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).andPairs(e11on);
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1) {
+        return mapBuilderFromMaps(iterableWith(m1));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2) {
+        return mapBuilderFromMaps(iterableWith(m1, m2));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9, Map<K, V> m10) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9, Map<K, V> m10, Map<K, V>... m11on) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10)).andMaps(m11on);
     }
 }
