@@ -1501,11 +1501,11 @@ public class Literals {
     }
 
     public static <K, V> Map.Entry<K, V> mapEntryFor(K key, V value) {
-        return new AbstractMap.SimpleEntry<K, V>(key, value);
+        return new AbstractMap.SimpleImmutableEntry<K, V>(key, value);
     }
 
     public static <K, V> Map.Entry<K, V> mapEntryFor(Pair<K, V> pair) {
-        return new AbstractMap.SimpleEntry<K, V>(pair.getFirst(), pair.getSecond());
+        return mapEntryFor(pair.getFirst(), pair.getSecond());
     }
 
     /**
