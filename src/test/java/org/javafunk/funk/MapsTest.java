@@ -12,7 +12,6 @@ import org.javafunk.funk.functors.Factory;
 import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.NullaryFunction;
 import org.javafunk.funk.functors.functions.UnaryFunction;
-import org.javafunk.funk.functors.procedures.UnaryProcedure;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -26,7 +25,7 @@ public class MapsTest {
     @Test
     public void shouldReturnTheValueFromTheMapIfTheKeyAlreadyExists() {
         // Given
-        Map<Integer, String> input = mapBuilderWith(1, "one")
+        Map<Integer, String> input = Literals.mapBuilderWithKeyValuePair(1, "one")
                 .andKeyValuePair(2, "two")
                 .andKeyValuePair(3, "three")
                 .build();
@@ -45,7 +44,7 @@ public class MapsTest {
     @Test
     public void shouldReturnTheValueReturnedByTheMapperIfTheKeyDoesNotExistInTheMapInGetOrAddUsingUnaryFunction() {
         // Given
-        Map<Integer, String> input = mapBuilderWith(1, "one")
+        Map<Integer, String> input = Literals.mapBuilderWithKeyValuePair(1, "one")
                 .andKeyValuePair(2, "two")
                 .andKeyValuePair(3, "three")
                 .build(HashMap.class);
@@ -64,7 +63,7 @@ public class MapsTest {
     @Test
     public void shouldStoreTheValueReturnedByTheMapperInTheMapIfTheKeyDoesntExist() {
         // Given
-        Map<Integer, String> input = mapBuilderWith(1, "one")
+        Map<Integer, String> input = Literals.mapBuilderWithKeyValuePair(1, "one")
                 .andKeyValuePair(2, "two")
                 .andKeyValuePair(3, "three")
                 .build(HashMap.class);
@@ -83,7 +82,7 @@ public class MapsTest {
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIfMapperSuppliedToGetOrAddIsNull() throws Exception {
         // Given
-        Map<Integer, String> input = mapBuilderWith(1, "one")
+        Map<Integer, String> input = Literals.mapBuilderWithKeyValuePair(1, "one")
                 .andKeyValuePair(2, "two")
                 .andKeyValuePair(3, "three")
                 .build(HashMap.class);
@@ -98,7 +97,7 @@ public class MapsTest {
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIfUnaryFunctionSuppliedToGetOrAddIsNull() throws Exception {
         // Given
-        Map<Integer, String> input = mapBuilderWith(1, "one")
+        Map<Integer, String> input = Literals.mapBuilderWithKeyValuePair(1, "one")
                 .andKeyValuePair(2, "two")
                 .andKeyValuePair(3, "three")
                 .build(HashMap.class);
@@ -113,7 +112,7 @@ public class MapsTest {
     @Test
     public void shouldReturnTheValueReturnedByTheFactoryIfTheKeyDoesNotExistInTheMapInGetOrAddUsingUnaryProcedure() throws Exception {
         // Given
-        Map<Integer, String> input = mapBuilderWith(1, "one")
+        Map<Integer, String> input = Literals.mapBuilderWithKeyValuePair(1, "one")
                 .andKeyValuePair(2, "two")
                 .andKeyValuePair(3, "three")
                 .build(HashMap.class);
@@ -132,7 +131,7 @@ public class MapsTest {
     @Test
     public void shouldReturnTheValueReturnedByTheFactoryIfTheKeyDoesNotExistInTheMapInGetOrAddUsingUnaryFunction() {
         // Given
-        Map<Integer, String> input = mapBuilderWith(1, "one")
+        Map<Integer, String> input = Literals.mapBuilderWithKeyValuePair(1, "one")
                 .andKeyValuePair(2, "two")
                 .andKeyValuePair(3, "three")
                 .build(HashMap.class);
@@ -151,7 +150,7 @@ public class MapsTest {
     @Test
     public void shouldStoreTheValueReturnedByTheFactoryInTheMapIfTheKeyDoesntExist() {
         // Given
-        Map<Integer, String> input = mapBuilderWith(1, "one")
+        Map<Integer, String> input = Literals.mapBuilderWithKeyValuePair(1, "one")
                 .andKeyValuePair(2, "two")
                 .andKeyValuePair(3, "three")
                 .build(HashMap.class);
@@ -170,7 +169,7 @@ public class MapsTest {
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIfFactorySuppliedToGetOrAddIsNull() throws Exception {
         // Given
-        Map<Integer, String> input = mapBuilderWith(1, "one")
+        Map<Integer, String> input = Literals.mapBuilderWithKeyValuePair(1, "one")
                 .andKeyValuePair(2, "two")
                 .andKeyValuePair(3, "three")
                 .build(HashMap.class);
@@ -185,7 +184,7 @@ public class MapsTest {
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIfUnaryProcedureSuppliedToGetOrAddIsNull() throws Exception {
         // Given
-        Map<Integer, String> input = mapBuilderWith(1, "one")
+        Map<Integer, String> input = Literals.mapBuilderWithKeyValuePair(1, "one")
                 .andKeyValuePair(2, "two")
                 .andKeyValuePair(3, "three")
                 .build(HashMap.class);
