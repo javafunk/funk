@@ -2,6 +2,7 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.behaviours.ordinals.First;
 import org.javafunk.funk.behaviours.ordinals.Second;
+import org.javafunk.funk.behaviours.ordinals.Third;
 import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.Mapper;
 import org.junit.Test;
@@ -79,6 +80,36 @@ public class TuplesTest {
 
         // When
         Iterable<Integer> actual = Tuples.seconds(secondables);
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldMapToThirdOfSuppliedThirdable() throws Exception {
+        // Given
+        Third<Boolean> thirdable = tuple("first", 2, true);
+        Boolean expected = true;
+        Mapper<? super Third<Boolean>, Boolean> toThird = Tuples.toThird();
+
+        // When
+        Boolean actual = toThird.map(thirdable);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldGetThirdsFromIterableOfThirdables() throws Exception {
+        // Given
+        Iterable<? extends Third<Boolean>> thirdables = iterableWith(
+                tuple("1", 2, false),
+                tuple(3, 'a', true, 5.4),
+                tuple(6.2, 7, false));
+        Iterable<Boolean> expected = iterableWith(false, true, false);
+
+        // When
+        Iterable<Boolean> actual = Tuples.thirds(thirdables);
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
