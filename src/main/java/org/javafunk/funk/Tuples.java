@@ -49,6 +49,10 @@ public class Tuples {
         return Lazily.map(sixthable, Tuples.<T>toSixth());
     }
 
+    public static <T> Iterable<T> sevenths(Iterable<? extends Seventh<T>> seventhable) {
+        return Lazily.map(seventhable, Tuples.<T>toSeventh());
+    }
+
     public static <T> Mapper<? super First<T>, T> toFirst() {
         return new Mapper<First<T>, T>() {
             @Override public T map(First<T> firstable) {
@@ -93,6 +97,14 @@ public class Tuples {
         return new Mapper<Sixth<T>, T>() {
             @Override public T map(Sixth<T> sixthable) {
                 return sixthable.getSixth();
+            }
+        };
+    }
+
+    public static <T> Mapper<? super Seventh<T>, T> toSeventh() {
+        return new Mapper<Seventh<T>, T>() {
+            @Override public T map(Seventh<T> seventhable) {
+                return seventhable.getSeventh();
             }
         };
     }

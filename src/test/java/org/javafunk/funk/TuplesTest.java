@@ -204,4 +204,34 @@ public class TuplesTest {
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
     }
+
+    @Test
+    public void shouldMapToSeventhOfSuppliedSeventhable() throws Exception {
+        // Given
+        Seventh<Name> seventhable = tuple("first", 2, true, 1.25, '5', 12L, name("Amy"));
+        Name expected = name("Amy");
+        Mapper<? super Seventh<Name>, Name> toSeventh = Tuples.toSeventh();
+
+        // When
+        Name actual = toSeventh.map(seventhable);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldGetSeventhsFromIterableOfSeventhables() throws Exception {
+        // Given
+        Iterable<? extends Seventh<Name>> seventhable = iterableWith(
+                tuple(false, 1.25, "1", 2, 'a', 0L, name("Bill")),
+                tuple(3, 'a', 2.5, 27L, 5.4, 'b', name("Betty")),
+                tuple(6.2, 7, false, 4.75, 'c', 54L, name("Beatrice")));
+        Iterable<Name> expected = iterableWith(name("Bill"), name("Betty"), name("Beatrice"));
+
+        // When
+        Iterable<Name> actual = Tuples.sevenths(seventhable);
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
 }
