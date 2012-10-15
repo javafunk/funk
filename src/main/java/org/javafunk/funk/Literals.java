@@ -15,12 +15,18 @@ import org.javafunk.funk.datastructures.tuples.*;
 import java.util.*;
 
 import static java.util.Arrays.asList;
+import static org.javafunk.funk.Classes.uncheckedInstantiate;
 
 public class Literals {
     private Literals() {}
 
     public static <E> Iterable<E> iterable() {
         return new IterableBuilder<E>().build();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <E> Iterable<E> iterable(Class<? extends Iterable> iterableClass) {
+        return uncheckedInstantiate(iterableClass);
     }
 
     public static <E> Iterable<E> iterableOf(Class<E> elementClass) {
@@ -55,6 +61,11 @@ public class Literals {
         return new IteratorBuilder<E>().build();
     }
 
+    @SuppressWarnings("unchecked")
+    public static <E> Iterator<E> iterator(Class<? extends Iterator> iteratorClass) {
+        return uncheckedInstantiate(iteratorClass);
+    }
+
     public static <E> Iterator<E> iteratorOf(Class<E> elementClass) {
         return new IteratorBuilder<E>().build();
     }
@@ -85,6 +96,10 @@ public class Literals {
 
     public static <E> Collection<E> collection() {
         return new CollectionBuilder<E>().build();
+    }
+
+    public static <E> Collection<E> collection(Class<? extends Collection> collectionClass) {
+        return new CollectionBuilder<E>().build(collectionClass);
     }
 
     public static <E> Collection<E> collectionOf(Class<E> elementClass) {
@@ -133,6 +148,10 @@ public class Literals {
      */
     public static <E> List<E> list() {
         return new ListBuilder<E>().build();
+    }
+
+    public static <E> List<E> list(Class<? extends List> listClass) {
+        return new ListBuilder<E>().build(listClass);
     }
 
     /**
@@ -799,6 +818,10 @@ public class Literals {
         return new SetBuilder<E>().build();
     }
 
+    public static <E> Set<E> set(Class<? extends Set> setClass) {
+        return new SetBuilder<E>().build(setClass);
+    }
+
     /**
      * Returns an empty mutable {@code Set} instance over the type
      * of the supplied {@code Class}.
@@ -1069,7 +1092,7 @@ public class Literals {
      * @param e9    The ninth element from which to construct a {@code Set}.
      * @param e10   The tenth element from which to construct a {@code Set}.
      * @param e11on The remaining elements from which to construct a {@code Set}.
-     * @param <E> The type of the elements contained in the returned {@code Set}.
+     * @param <E>   The type of the elements contained in the returned {@code Set}.
      * @return A {@code Set} instance over type {@code E} containing the supplied elements.
      */
     public static <E> Set<E> setWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E e11on) {
@@ -1424,6 +1447,10 @@ public class Literals {
         return new MultisetBuilder<E>().build();
     }
 
+    public static <E> Multiset<E> multiset(Class<? extends Multiset> multisetClass) {
+        return new MultisetBuilder<E>().build(multisetClass);
+    }
+
     public static <E> Multiset<E> multisetOf(Class<E> elementClass) {
         return new MultisetBuilder<E>().build();
     }
@@ -1454,6 +1481,10 @@ public class Literals {
 
     public static <K, V> Map<K, V> map() {
         return new MapBuilder<K, V>().build();
+    }
+
+    public static <K, V> Map<K, V> map(Class<? extends Map> mapClass) {
+        return new MapBuilder<K, V>().build(mapClass);
     }
 
     public static <K, V> Map<K, V> mapOf(Class<K> keyClass, Class<V> valueClass) {
@@ -2034,12 +2065,12 @@ public class Literals {
      * individual objects, iterables or existing arrays. See {@link ArrayBuilder} for
      * further details.
      *
-     * @param elements An {@code Iterable} containing elements with which the
-     *                 {@code ArrayBuilder} should be initialised.
+     * @param elements     An {@code Iterable} containing elements with which the
+     *                     {@code ArrayBuilder} should be initialised.
      * @param elementClass A {@code Class} representing the type of elements
      *                     contained in this {@code ArrayBuilder} and the type represented
      *                     by the built array.
-     * @param <E>      The type of the elements contained in the {@code ArrayBuilder}.
+     * @param <E>          The type of the elements contained in the {@code ArrayBuilder}.
      * @return An {@code ArrayBuilder} instance over the type {@code E} containing
      *         the elements from the supplied {@code Iterable}.
      */
@@ -2496,7 +2527,7 @@ public class Literals {
      * @param e9    The ninth element to be added to the {@code ArrayBuilder}.
      * @param e10   The tenth element to be added to the {@code ArrayBuilder}.
      * @param e11on The remaining elements to be added to the {@code ArrayBuilder}.
-     * @param <E> The type of the elements contained in the returned {@code ArrayBuilder}.
+     * @param <E>   The type of the elements contained in the returned {@code ArrayBuilder}.
      * @return An {@code ArrayBuilder} instance over type {@code E} containing the supplied
      *         elements.
      */
@@ -2541,168 +2572,472 @@ public class Literals {
     }
 
     @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e) { return iterableFrom(asList(e)); }
+
     @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2) { return iterableFrom(asList(e1, e2)); }
+
     @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3) { return iterableFrom(asList(e1, e2, e3)); }
+
     @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4) { return iterableFrom(asList(e1, e2, e3, e4)); }
+
     @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5) { return iterableFrom(asList(e1, e2, e3, e4, e5)); }
+
     @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6) { return iterableFrom(asList(e1, e2, e3, e4, e5, e6)); }
+
     @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7)); }
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8)); }
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return iterableBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)).build(); }
+
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return iterableBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)).build();
+    }
 
     public static <E> IterableBuilder<E> iterableBuilderWith(E e) { return iterableBuilderFrom(iterableWith(e)); }
+
     public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2) { return iterableBuilderFrom(iterableWith(e1, e2)); }
+
     public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3) { return iterableBuilderFrom(iterableWith(e1, e2, e3)); }
+
     public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4) { return iterableBuilderFrom(iterableWith(e1, e2, e3, e4)); }
+
     public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5) { return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5)); }
+
     public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) { return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
+
     public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on); }
+
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
+    }
 
     public static <E> Iterator<E> iteratorWith(E e) { return iteratorFrom(iterableWith(e)); }
+
     public static <E> Iterator<E> iteratorWith(E e1, E e2) { return iteratorFrom(iterableWith(e1, e2)); }
+
     public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3) { return iteratorFrom(iterableWith(e1, e2, e3)); }
+
     public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4) { return iteratorFrom(iterableWith(e1, e2, e3, e4)); }
+
     public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5) { return iteratorFrom(iterableWith(e1, e2, e3, e4, e5)); }
+
     public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6) { return iteratorFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
+
     public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return iteratorFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
+
     public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return iteratorFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
+
     public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return iteratorFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return iteratorFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on).build(); }
+
+    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return iteratorFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    public static <E> Iterator<E> iteratorWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on).build();
+    }
 
     public static <E> IteratorBuilder<E> iteratorBuilderWith(E e) { return iteratorBuilderFrom(iterableWith(e)); }
+
     public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2) { return iteratorBuilderFrom(iterableWith(e1, e2)); }
+
     public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3) { return iteratorBuilderFrom(iterableWith(e1, e2, e3)); }
+
     public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4) { return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4)); }
+
     public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5) { return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5)); }
+
     public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) { return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
+
     public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
-    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
-    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on); }
+
+    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
+    }
 
     public static <E> Collection<E> collectionWith(E e) { return collectionFrom(iterableWith(e)); }
+
     public static <E> Collection<E> collectionWith(E e1, E e2) { return collectionFrom(iterableWith(e1, e2)); }
+
     public static <E> Collection<E> collectionWith(E e1, E e2, E e3) { return collectionFrom(iterableWith(e1, e2, e3)); }
+
     public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4) { return collectionFrom(iterableWith(e1, e2, e3, e4)); }
+
     public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5) { return collectionFrom(iterableWith(e1, e2, e3, e4, e5)); }
+
     public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6) { return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
+
     public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
+
     public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on).build(); }
+
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on).build();
+    }
 
     public static <E> CollectionBuilder<E> collectionBuilderWith(E e) { return collectionBuilderFrom(iterableWith(e)); }
+
     public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2) { return collectionBuilderFrom(iterableWith(e1, e2)); }
+
     public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3) { return collectionBuilderFrom(iterableWith(e1, e2, e3)); }
+
     public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4) { return collectionBuilderFrom(iterableWith(e1, e2, e3, e4)); }
+
     public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5) { return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5)); }
+
     public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) { return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on); }
+
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
+    }
 
     public static <E> Multiset<E> multisetWith(E e) { return multisetFrom(iterableWith(e)); }
+
     public static <E> Multiset<E> multisetWith(E e1, E e2) { return multisetFrom(iterableWith(e1, e2)); }
+
     public static <E> Multiset<E> multisetWith(E e1, E e2, E e3) { return multisetFrom(iterableWith(e1, e2, e3)); }
+
     public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4) { return multisetFrom(iterableWith(e1, e2, e3, e4)); }
+
     public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5) { return multisetFrom(iterableWith(e1, e2, e3, e4, e5)); }
+
     public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6) { return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
+
     public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
+
     public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
+
     public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on).build(); }
+
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on).build();
+    }
 
     public static <E> MultisetBuilder<E> multisetBuilderWith(E e) { return multisetBuilderFrom(iterableWith(e)); }
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2) { return multisetBuilderFrom(iterableWith(e1, e2)); }
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3) { return multisetBuilderFrom(iterableWith(e1, e2, e3)); }
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4) { return multisetBuilderFrom(iterableWith(e1, e2, e3, e4)); }
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5) { return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5)); }
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) { return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) { return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) { return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) { return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) { return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on); }
 
-    public static <K, V> Map<K, V> mapWithKeyValuePair(K k1, V v1) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1)).build(); }
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2)).build(); }
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3)).build(); }
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4)).build(); }
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5)).build(); }
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6)).build(); }
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7)).build(); }
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8)).build(); }
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9)).build(); }
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9, K k10, V v10) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9), mapEntryFor(k10, v10)).build(); }
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2) { return multisetBuilderFrom(iterableWith(e1, e2)); }
+
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3) { return multisetBuilderFrom(iterableWith(e1, e2, e3)); }
+
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4) { return multisetBuilderFrom(iterableWith(e1, e2, e3, e4)); }
+
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5) { return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5)); }
+
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) { return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6)); }
+
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) { return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
+
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
+    }
+
+    public static <K, V> Map<K, V> mapWithKeyValuePair(K k1, V v1) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1)).build();
+    }
+
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2)).build();
+    }
+
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3)).build();
+    }
+
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4)).build();
+    }
+
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5)).build();
+    }
+
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6)).build();
+    }
+
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7)).build();
+    }
+
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8)).build();
+    }
+
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9)).build();
+    }
+
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9, K k10, V v10) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9), mapEntryFor(k10, v10)).build();
+    }
 
     public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1) { return mapFromEntries(iterableWith(e1)); }
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2) { return mapFromEntries(iterableWith(e1, e2)); }
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3) { return mapFromEntries(iterableWith(e1, e2, e3)); }
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4) { return mapFromEntries(iterableWith(e1, e2, e3, e4)); }
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5) { return mapFromEntries(iterableWith(e1, e2, e3, e4, e5)); }
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6) { return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6)); }
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7) { return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8) { return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9) { return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10) { return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10, Map.Entry<K, V>... e11on) { return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).and(e11on).build(); }
 
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1) { return mapFromPairs(iterableWith(e1)); }
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2) { return mapFromPairs(iterableWith(e1, e2)); }
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3) { return mapFromPairs(iterableWith(e1, e2, e3)); }
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4) { return mapFromPairs(iterableWith(e1, e2, e3, e4)); }
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5) { return mapFromPairs(iterableWith(e1, e2, e3, e4, e5)); }
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6) { return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6)); }
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7) { return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8) { return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9) { return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10) { return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10, Pair<K, V>... e11on) { return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).andPairs(e11on).build(); }
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2) { return mapFromEntries(iterableWith(e1, e2)); }
+
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3) { return mapFromEntries(iterableWith(e1, e2, e3)); }
+
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4) { return mapFromEntries(iterableWith(e1, e2, e3, e4)); }
+
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5) {
+        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6) {
+        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7) {
+        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8) {
+        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9) {
+        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10) {
+        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10, Map.Entry<K, V>... e11on) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).and(e11on).build();
+    }
+
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1) {
+        return mapFromPairs(iterableWith(e1));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2) {
+        return mapFromPairs(iterableWith(e1, e2));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3) {
+        return mapFromPairs(iterableWith(e1, e2, e3));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4) {
+        return mapFromPairs(iterableWith(e1, e2, e3, e4));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5) {
+        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6) {
+        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7) {
+        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8) {
+        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9) {
+        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10) {
+        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10, Pair<K, V>... e11on) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).andPairs(e11on).build();
+    }
 
     public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePair(K k1, V v1) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1)); }
+
     public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9, K k10, V v10) { return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9), mapEntryFor(k10, v10)); }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9, K k10, V v10) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9), mapEntryFor(k10, v10));
+    }
 
     public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1) { return mapBuilderFromEntries(iterableWith(e1)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2) { return mapBuilderFromEntries(iterableWith(e1, e2)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3) { return mapBuilderFromEntries(iterableWith(e1, e2, e3)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4) { return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5) { return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6) { return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7) { return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8) { return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9) { return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10) { return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10, Map.Entry<K, V>... e11on) { return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).and(e11on); }
 
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1) { return mapBuilderFromPairs(iterableWith(e1)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2) { return mapBuilderFromPairs(iterableWith(e1, e2)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3) { return mapBuilderFromPairs(iterableWith(e1, e2, e3)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4) { return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5) { return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6) { return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7) { return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8) { return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9) { return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10) { return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)); }
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10, Pair<K, V>... e11on) { return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).andPairs(e11on); }
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2) { return mapBuilderFromEntries(iterableWith(e1, e2)); }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3) { return mapBuilderFromEntries(iterableWith(e1, e2, e3)); }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10, Map.Entry<K, V>... e11on) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).and(e11on);
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1) {
+        return mapBuilderFromPairs(iterableWith(e1));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2) {
+        return mapBuilderFromPairs(iterableWith(e1, e2));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10, Pair<K, V>... e11on) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).andPairs(e11on);
+    }
 }

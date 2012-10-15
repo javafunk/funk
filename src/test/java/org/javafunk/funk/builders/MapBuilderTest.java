@@ -11,6 +11,7 @@ package org.javafunk.funk.builders;
 import com.google.common.collect.ImmutableMap;
 import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.functions.UnaryFunction;
+import org.javafunk.funk.testclasses.NoNoArgsConstructorMap;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -601,9 +602,4 @@ public class MapBuilderTest {
         // Then a NullPointerException is thrown.
     }
 
-    private static class NoNoArgsConstructorMap<K, V> extends HashMap<K, V> {
-        public NoNoArgsConstructorMap(Throwable argument) {
-            throw new UnsupportedOperationException("should never throw", argument);
-        }
-    }
 }

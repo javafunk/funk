@@ -9,6 +9,7 @@
 package org.javafunk.funk;
 
 import com.google.common.collect.HashMultiset;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multiset;
 import org.javafunk.funk.builders.*;
 import org.javafunk.funk.datastructures.tuples.*;
@@ -29,6 +30,7 @@ import static org.javafunk.funk.testclasses.Cat.cat;
 import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Dog.dog;
 import static org.javafunk.funk.testclasses.Location.location;
+import static org.javafunk.funk.testclasses.Matchers.equalToIncludingConcreteType;
 import static org.javafunk.funk.testclasses.Name.name;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
@@ -44,6 +46,29 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test public void shouldReturnAnEmptyIterableOfTheSuppliedConcreteType() throws Exception {
+        // Given
+        Class<? extends Iterable> iterableClass = ArrayList.class;
+        Iterable<String> expectedIterable = new ArrayList<String>();
+
+        // When
+        Iterable<String> actualIterable = iterable(iterableClass);
+
+        // Then
+        assertThat(actualIterable, is(equalToIncludingConcreteType(expectedIterable)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionWhenClassSuppliedToIterableHasNoPublicNoArgsConstructor() {
+        // Given
+        Class<? extends Iterable> iterableClass = ImmutableList.class;
+
+        // When
+        iterable(iterableClass);
+
+        // Then a IllegalArgumentException is thrown.
     }
 
     @Test public void shouldReturnAnEmptyIterableWithElementsOfTheSpecifiedType() throws Exception {
@@ -154,6 +179,29 @@ public class LiteralsTest {
         assertThat(Iterators.asList(actual), hasOnlyItemsInOrder(Iterators.asList(expected)));
     }
 
+    @Test public void shouldReturnAnEmptyIteratorOfTheSuppliedConcreteType() throws Exception {
+        // Given
+        Class<? extends Iterator> iteratorClass = NoArgsConstructorIterator.class;
+        Iterator<Integer> expectedIterator = new NoArgsConstructorIterator<Integer>();
+
+        // When
+        Iterator<Integer> actualIterator = iterator(iteratorClass);
+
+        // Then
+        assertThat(actualIterator, is(equalToIncludingConcreteType(expectedIterator)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionWhenClassSuppliedToIteratorHasNoPublicNoArgsConstructor() {
+        // Given
+        Class<? extends Iterator> iterableClass = NoNoArgsConstructorIterator.class;
+
+        // When
+        iterator(iterableClass);
+
+        // Then a IllegalArgumentException is thrown.
+    }
+
     @Test public void shouldReturnAnEmptyIteratorWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         Iterator<Integer> expected = new ArrayList<Integer>().iterator();
@@ -260,6 +308,29 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, hasOnlyItemsInAnyOrder(expected));
+    }
+
+    @Test public void shouldReturnAnEmptyCollectionOfTheSuppliedConcreteType() throws Exception {
+        // Given
+        Class<? extends Collection> collectionClass = ArrayList.class;
+        Collection<String> expectedCollection = new ArrayList<String>();
+
+        // When
+        Collection<String> actualCollection = collection(collectionClass);
+
+        // Then
+        assertThat(actualCollection, is(equalToIncludingConcreteType(expectedCollection)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionWhenClassSuppliedToCollectionHasNoPublicNoArgsConstructor() {
+        // Given
+        Class<? extends Collection> collectionClass = ImmutableList.class;
+
+        // When
+        collection(collectionClass);
+
+        // Then a IllegalArgumentException is thrown.
     }
 
     @Test public void shouldReturnAnEmptyCollectionWithElementsOfTheSpecifiedType() throws Exception {
@@ -370,6 +441,29 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
+    @Test public void shouldReturnAnEmptyListOfTheSuppliedConcreteType() throws Exception {
+        // Given
+        Class<? extends List> listClass = ArrayList.class;
+        List<String> expectedList = new ArrayList<String>();
+
+        // When
+        List<String> actualList = list(listClass);
+
+        // Then
+        assertThat(actualList, is(equalToIncludingConcreteType(expectedList)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionWhenClassSuppliedToListHasNoPublicNoArgsConstructor() {
+        // Given
+        Class<? extends List> listClass = ImmutableList.class;
+
+        // When
+        list(listClass);
+
+        // Then a IllegalArgumentException is thrown.
+    }
+
     @Test public void shouldReturnAnEmptyListWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         List<Integer> expected = new ArrayList<Integer>();
@@ -476,6 +570,29 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnAnEmptyMultisetOfTheSuppliedConcreteType() throws Exception {
+        // Given
+        Class<? extends Multiset> multisetClass = NoArgsConstructorMultiset.class;
+        Multiset<String> expectedMultiset = new NoArgsConstructorMultiset<String>();
+
+        // When
+        Multiset<String> actualMultiset = multiset(multisetClass);
+
+        // Then
+        assertThat(actualMultiset, is(equalToIncludingConcreteType(expectedMultiset)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionWhenClassSuppliedToMultisetHasNoPublicNoArgsConstructor() {
+        // Given
+        Class<? extends Multiset> multisetClass = PrivateAccessConstructorMultiset.class;
+
+        // When
+        multiset(multisetClass);
+
+        // Then a IllegalArgumentException is thrown.
     }
 
     @Test public void shouldReturnAnEmptyMultisetWithElementsOfTheSpecifiedType() throws Exception {
@@ -586,6 +703,29 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
+    @Test public void shouldReturnAnEmptySetOfTheSuppliedConcreteType() throws Exception {
+        // Given
+        Class<? extends Set> setClass = HashSet.class;
+        Set<String> expectedSet = new HashSet<String>();
+
+        // When
+        Set<String> actualSet = set(setClass);
+
+        // Then
+        assertThat(actualSet, is(equalToIncludingConcreteType(expectedSet)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionWhenClassSuppliedToSetHasNoPublicNoArgsConstructor() {
+        // Given
+        Class<? extends Set> setClass = NoNoArgsConstructorSet.class;
+
+        // When
+        set(setClass);
+
+        // Then a IllegalArgumentException is thrown.
+    }
+
     @Test public void shouldReturnAnEmptySetWithElementsOfTheSpecifiedType() throws Exception {
         // Given
         Set<Integer> expected = new HashSet<Integer>();
@@ -692,6 +832,29 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test public void shouldReturnAnEmptyMapOfTheSuppliedConcreteType() throws Exception {
+        // Given
+        Class<? extends Map> mapClass = HashMap.class;
+        Map<String, String> expectedMultiset = new HashMap<String, String>();
+
+        // When
+        Map<String, String> actualMap = map(mapClass);
+
+        // Then
+        assertThat(actualMap, is(equalToIncludingConcreteType(expectedMultiset)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionWhenClassSuppliedToMapHasNoPublicNoArgsConstructor() {
+        // Given
+        Class<? extends Map> mapClass = NoNoArgsConstructorMap.class;
+
+        // When
+        map(mapClass);
+
+        // Then a IllegalArgumentException is thrown.
     }
 
     @Test public void shouldReturnAnEmptyMapWithElementsOfTheSpecifiedType() throws Exception {
