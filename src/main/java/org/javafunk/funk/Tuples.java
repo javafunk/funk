@@ -9,6 +9,7 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.behaviours.ordinals.First;
+import org.javafunk.funk.behaviours.ordinals.Fourth;
 import org.javafunk.funk.behaviours.ordinals.Second;
 import org.javafunk.funk.behaviours.ordinals.Third;
 import org.javafunk.funk.datastructures.tuples.Pair;
@@ -39,6 +40,10 @@ public class Tuples {
         return Lazily.map(thirdables, Tuples.<T>toThird());
     }
 
+    public static <T> Iterable<T> fourths(Iterable<? extends Fourth<T>> fourthables) {
+        return Lazily.map(fourthables, Tuples.<T>toFourth());
+    }
+
     public static <T> Mapper<? super First<T>, T> toFirst() {
         return new Mapper<First<T>, T>() {
             @Override public T map(First<T> firstable) {
@@ -59,6 +64,14 @@ public class Tuples {
         return new Mapper<Third<T>, T>() {
             @Override public T map(Third<T> thirdables) {
                 return thirdables.getThird();
+            }
+        };
+    }
+
+    public static <T> Mapper<? super Fourth<T>, T> toFourth() {
+        return new Mapper<Fourth<T>, T>() {
+            @Override public T map(Fourth<T> fourth) {
+                return fourth.getFourth();
             }
         };
     }

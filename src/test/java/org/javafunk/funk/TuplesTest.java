@@ -1,6 +1,7 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.behaviours.ordinals.First;
+import org.javafunk.funk.behaviours.ordinals.Fourth;
 import org.javafunk.funk.behaviours.ordinals.Second;
 import org.javafunk.funk.behaviours.ordinals.Third;
 import org.javafunk.funk.datastructures.tuples.Pair;
@@ -110,6 +111,36 @@ public class TuplesTest {
 
         // When
         Iterable<Boolean> actual = Tuples.thirds(thirdables);
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldMapToFourthOfSuppliedFourthable() throws Exception {
+        // Given
+        Fourth<Double> fourthable = tuple("first", 2, true, 1.25);
+        Double expected = 1.25;
+        Mapper<? super Fourth<Double>, Double> toFourth = Tuples.toFourth();
+
+        // When
+        Double actual = toFourth.map(fourthable);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldGetFourthsFromIterableOfFourthables() throws Exception {
+        // Given
+        Iterable<? extends Fourth<Character>> fourthables = iterableWith(
+                tuple("1", 2, false, 'a'),
+                tuple(3, 'a', 5.4, 'b'),
+                tuple(6.2, 7, false, 'c'));
+        Iterable<Character> expected = iterableWith('a', 'b', 'c');
+
+        // When
+        Iterable<Character> actual = Tuples.fourths(fourthables);
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
