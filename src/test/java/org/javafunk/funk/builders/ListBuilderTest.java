@@ -12,7 +12,9 @@ import com.google.common.collect.ImmutableList;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;

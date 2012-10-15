@@ -9,7 +9,6 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.functors.Equivalence;
-import org.javafunk.funk.functors.functions.BinaryFunction;
 import org.javafunk.funk.functors.predicates.BinaryPredicate;
 import org.junit.Test;
 

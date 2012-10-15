@@ -12,9 +12,6 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 
-import java.util.Collection;
-
-import static java.lang.String.format;
 import static org.javafunk.funk.Literals.iterableWith;
 
 public abstract class AbstractBuilder<E, B extends AbstractBuilder, C> {

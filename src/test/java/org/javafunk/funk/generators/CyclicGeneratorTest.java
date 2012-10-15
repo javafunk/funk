@@ -13,8 +13,6 @@ import org.javafunk.funk.functors.Action;
 import org.javafunk.matchbox.SelfDescribingPredicate;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Eagerly.times;
@@ -22,8 +20,6 @@ import static org.javafunk.funk.Generators.toGeneratable;
 import static org.javafunk.funk.Lazily.batch;
 import static org.javafunk.funk.Lazily.take;
 import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.listBuilderWith;
-import static org.javafunk.funk.Literals.listWith;
 import static org.javafunk.matchbox.Matchers.hasAllElementsSatisfying;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 

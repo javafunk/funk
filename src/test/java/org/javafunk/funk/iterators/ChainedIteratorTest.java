@@ -8,7 +8,6 @@
  */
 package org.javafunk.funk.iterators;
 
-import com.sun.org.apache.bcel.internal.generic.ALOAD;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -20,9 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.javafunk.funk.Iterators.emptyIterator;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.listBuilderWith;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.*;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class ChainedIteratorTest {

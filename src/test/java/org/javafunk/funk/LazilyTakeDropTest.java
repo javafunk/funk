@@ -8,7 +8,6 @@
  */
 package org.javafunk.funk;
 
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.javafunk.funk.functors.Predicate;
 import org.junit.Test;

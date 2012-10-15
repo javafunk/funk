@@ -10,7 +10,6 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.Predicate;
-import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.junit.Test;
 
 import java.util.Collection;

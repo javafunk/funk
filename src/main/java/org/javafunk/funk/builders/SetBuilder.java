@@ -13,8 +13,6 @@ import org.javafunk.funk.functors.functions.UnaryFunction;
 
 import java.util.*;
 
-import static java.lang.String.format;
-
 public class SetBuilder<E>
         extends AbstractBuilder<E, SetBuilder<E>, Set<E>>
         implements AbstractBuilder.WithCustomImplementationSupport<E, Set, Set<E>> {

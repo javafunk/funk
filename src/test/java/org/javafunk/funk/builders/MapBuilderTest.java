@@ -592,7 +592,7 @@ public class MapBuilderTest {
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIfUnaryFunctionSuppliedToBuildIsNull() throws Exception {
         // Given
-        MapBuilder<String, Integer> mapBuilder = mapBuilderWith("first", 1);
+        MapBuilder<String, Integer> mapBuilder = mapBuilderWithKeyValuePair("first", 1);
         UnaryFunction<Iterable<Map.Entry<String, Integer>>, Map<String, Integer>> function = null;
 
         // When
