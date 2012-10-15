@@ -1,9 +1,6 @@
 package org.javafunk.funk;
 
-import org.javafunk.funk.behaviours.ordinals.First;
-import org.javafunk.funk.behaviours.ordinals.Fourth;
-import org.javafunk.funk.behaviours.ordinals.Second;
-import org.javafunk.funk.behaviours.ordinals.Third;
+import org.javafunk.funk.behaviours.ordinals.*;
 import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.Mapper;
 import org.junit.Test;
@@ -141,6 +138,36 @@ public class TuplesTest {
 
         // When
         Iterable<Character> actual = Tuples.fourths(fourthables);
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldMapToFifthOfSuppliedFifthable() throws Exception {
+        // Given
+        Fifth<Character> fifthable = tuple("first", 2, true, 1.25, '5');
+        Character expected = '5';
+        Mapper<? super Fifth<Character>, Character> toFifth = Tuples.toFifth();
+
+        // When
+        Character actual = toFifth.map(fifthable);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldGetFifthsFromIterableOfFifthables() throws Exception {
+        // Given
+        Iterable<? extends Fifth<Double>> fourthables = iterableWith(
+                tuple("1", 2, 'a', false, 1.25),
+                tuple(3, 'a', 5.4, 'b', 2.5),
+                tuple(6.2, 7, false, 'c', 4.75));
+        Iterable<Double> expected = iterableWith(1.25, 2.5, 4.75);
+
+        // When
+        Iterable<Double> actual = Tuples.fifths(fourthables);
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
