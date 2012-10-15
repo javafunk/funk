@@ -43,9 +43,9 @@ public class Sets {
 
     public static <T> Set<T> difference(Iterable<? extends Iterable<? extends T>> iterables) {
         List<Iterable<? extends T>> arguments = listFrom(iterables);
-        if(arguments.isEmpty()){
+        if (arguments.isEmpty()) {
             return new HashSet<T>();
-        }else{
+        } else {
             Set<T> differenceSet = setBuilderFrom(first(arguments).get()).build(HashSet.class);
             differenceSet.removeAll(union(rest(arguments)));
             return differenceSet;
@@ -65,43 +65,64 @@ public class Sets {
         }));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Set<T> union(
             Iterable<? extends T> i1, Iterable<? extends T> i2) {
-        return union(asList(i1, i2));
+        return union(iterableWith(i1, i2));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Set<T> union(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3) {
-        return union(asList(i1, i2, i3));
+        return union(iterableWith(i1, i2, i3));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Set<T> union(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4) {
-        return union(asList(i1, i2, i3, i4));
+        return union(iterableWith(i1, i2, i3, i4));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Set<T> union(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5) {
-        return union(asList(i1, i2, i3, i4, i5));
+        return union(iterableWith(i1, i2, i3, i4, i5));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Set<T> union(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5, Iterable<? extends T> i6) {
-        return union(asList(i1, i2, i3, i4, i5, i6));
+        return union(iterableWith(i1, i2, i3, i4, i5, i6));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Set<T> union(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
-            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
-        return union(iterableBuilderWith(i1, i2, i3, i4, i5, i6).and(asList(i7on)).build());
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7) {
+        return union(iterableWith(i1, i2, i3, i4, i5, i6, i7));
+    }
+
+    public static <T> Set<T> union(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8) {
+        return union(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8));
+    }
+
+    public static <T> Set<T> union(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8,
+            Iterable<? extends T> i9) {
+        return union(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8, i9));
+    }
+
+    public static <T> Set<T> union(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8,
+            Iterable<? extends T> i9, Iterable<? extends T> i10) {
+        return union(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8, i9, i10));
+    }
+
+    public static <T> Set<T> union(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8,
+            Iterable<? extends T> i9, Iterable<? extends T> i10, Iterable<? extends T>... i11on) {
+        return union(iterableBuilderWith(i1, i2, i3, i4, i5, i6, i7, i8, i9, i10).and(i11on).build());
     }
 
     @SuppressWarnings("unchecked")
@@ -163,21 +184,21 @@ public class Sets {
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> difference(
-            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4, 
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5) {
         return difference(asList(i1, i2, i3, i4, i5));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> difference(
-            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4, 
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5, Iterable<? extends T> i6) {
         return difference(asList(i1, i2, i3, i4, i5, i6));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> Set<T> difference(
-            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4, 
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
         return difference(iterableBuilderWith(i1, i2, i3, i4, i5, i6).and(asList(i7on)).build());
     }
