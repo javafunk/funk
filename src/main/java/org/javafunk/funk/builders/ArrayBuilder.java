@@ -1,7 +1,6 @@
 package org.javafunk.funk.builders;
 
 import org.javafunk.funk.Eagerly;
-import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.NullaryFunction;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.monads.Option;

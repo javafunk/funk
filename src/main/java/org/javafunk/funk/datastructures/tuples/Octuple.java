@@ -8,10 +8,9 @@
  */
 package org.javafunk.funk.datastructures.tuples;
 
-import org.javafunk.funk.behaviours.ordinals.*;
+import org.javafunk.funk.behaviours.ordinals.Eighth;
 
 import static org.javafunk.funk.Literals.iterableBuilderFrom;
-import static org.javafunk.funk.Literals.iterableWith;
 
 public class Octuple<R, S, T, U, V, W, X, Y>
         extends Septuple<R, S, T, U, V, W, X>

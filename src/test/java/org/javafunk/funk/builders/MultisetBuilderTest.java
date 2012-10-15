@@ -17,7 +17,6 @@ import org.junit.Test;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.Stack;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;

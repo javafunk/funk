@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.*;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;

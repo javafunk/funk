@@ -10,7 +10,6 @@ package org.javafunk.funk;
 
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.equalTo;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;

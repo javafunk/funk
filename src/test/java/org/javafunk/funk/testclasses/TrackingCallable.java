@@ -1,7 +1,5 @@
 package org.javafunk.funk.testclasses;
 
-import org.javafunk.funk.monads.OptionTest;
-
 import java.util.concurrent.Callable;
 
 public class TrackingCallable<R> implements Callable<R> {
