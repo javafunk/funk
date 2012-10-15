@@ -10,6 +10,7 @@ package org.javafunk.funk.builders;
 
 import com.google.common.collect.ImmutableList;
 import org.javafunk.funk.functors.functions.UnaryFunction;
+import org.javafunk.funk.testclasses.NoNoArgsConstructorList;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -265,10 +266,5 @@ public class ListBuilderTest {
 
         // Then a NullPointerException is thrown.
     }
-    
-    private static class NoNoArgsConstructorList<E> extends ArrayList<E> {
-        public NoNoArgsConstructorList(Throwable argument) {
-            throw new UnsupportedOperationException("should never throw", argument);
-        }
-    }
+
 }
