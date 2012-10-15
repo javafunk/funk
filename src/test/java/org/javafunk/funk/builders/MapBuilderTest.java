@@ -520,8 +520,8 @@ public class MapBuilderTest {
     @Test
     public void shouldBuildAMapOfTheSpecifiedImplementation() throws Exception {
         // Given
-        Map<String, Integer> expected = mapWith("first", 1);
-        MapBuilder<String, Integer> mapBuilder = mapBuilderWith("first", 1);
+        Map<String, Integer> expected = mapWithKeyValuePair("first", 1);
+        MapBuilder<String, Integer> mapBuilder = mapBuilderWithKeyValuePair("first", 1);
 
         // When
         Map<String, Integer> actual = mapBuilder.build(TreeMap.class);
@@ -534,7 +534,7 @@ public class MapBuilderTest {
     @Test
     public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedImplementationDoesNotHaveAnAccessibleConstructor() throws Exception {
         // Given
-        MapBuilder<String, Integer> mapBuilder = mapBuilderWith("first", 1);
+        MapBuilder<String, Integer> mapBuilder = mapBuilderWithKeyValuePair("first", 1);
 
         try {
             // When
@@ -552,7 +552,7 @@ public class MapBuilderTest {
     @Test
     public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedImplementationDoesNotHaveANoArgsConstructor() throws Exception {
         // Given
-        MapBuilder<String, Integer> mapBuilder = mapBuilderWith("first", 1);
+        MapBuilder<String, Integer> mapBuilder = mapBuilderWithKeyValuePair("first", 1);
 
         try {
             // When
@@ -570,8 +570,8 @@ public class MapBuilderTest {
     @Test
     public void shouldPassAccumulatedElementsToTheSuppliedBuilderFunctionAndReturnTheResult() throws Exception {
         // Given
-        MapBuilder<String, Integer> mapBuilder = mapBuilderWith("first", 1);
-        Map<String, Integer> expected = mapWith("first", 1);
+        MapBuilder<String, Integer> mapBuilder = mapBuilderWithKeyValuePair("first", 1);
+        Map<String, Integer> expected = mapWithKeyValuePair("first", 1);
 
         // When
         Map<String, Integer> actual = mapBuilder.build(new UnaryFunction<Iterable<Map.Entry<String, Integer>>, Map<String, Integer>>() {
