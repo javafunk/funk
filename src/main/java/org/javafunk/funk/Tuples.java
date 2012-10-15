@@ -57,6 +57,10 @@ public class Tuples {
         return Lazily.map(eighthables, Tuples.<T>toEighth());
     }
 
+    public static <T> Iterable<T> ninths(Iterable<? extends Ninth<T>> ninthables) {
+        return Lazily.map(ninthables, Tuples.<T>toNinth());
+    }
+
     public static <T> Mapper<? super First<T>, T> toFirst() {
         return new Mapper<First<T>, T>() {
             @Override public T map(First<T> firstable) {
@@ -117,6 +121,14 @@ public class Tuples {
         return new Mapper<Eighth<T>, T>() {
             @Override public T map(Eighth<T> eighthable) {
                 return eighthable.getEighth();
+            }
+        };
+    }
+
+    public static <T> Mapper<? super Ninth<T>, T> toNinth() {
+        return new Mapper<Ninth<T>, T>() {
+            @Override public T map(Ninth<T> ninthable) {
+                return ninthable.getNinth();
             }
         };
     }

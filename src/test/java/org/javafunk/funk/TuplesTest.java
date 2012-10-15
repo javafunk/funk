@@ -266,4 +266,34 @@ public class TuplesTest {
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
     }
+
+    @Test
+    public void shouldMapToNinthOfSuppliedNinthable() throws Exception {
+        // Given
+        Ninth<Short> ninthable = tuple("first", 2, true, 1.25, '5', 12L, name("Amy"), age(24), Short.valueOf("5"));
+        Short expected = Short.valueOf("5");
+        Mapper<? super Ninth<Short>, Short> toNinth = Tuples.toNinth();
+
+        // When
+        Short actual = toNinth.map(ninthable);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldGetNinthsFromIterableOfNinthables() throws Exception {
+        // Given
+        Iterable<? extends Ninth<Short>> ninthables = iterableWith(
+                tuple(false, 1.25, 'a', 0L, name("Bill"), "1", age(50), 2, Short.valueOf("5")),
+                tuple(3, 'a', 2.5, 27L, 5.4, 'b', name("Betty"), age(60), Short.valueOf("10")),
+                tuple(6.2, 7, false, 4.75, 54L, 'c', age(70), name("Beatrice"), Short.valueOf("15")));
+        Iterable<Short> expected = iterableWith(Short.valueOf("5"), Short.valueOf("10"), Short.valueOf("15"));
+
+        // When
+        Iterable<Short> actual = Tuples.ninths(ninthables);
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
 }
