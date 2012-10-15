@@ -1,4 +1,4 @@
-Funk
+Funk [![Build Status](https://secure.travis-ci.org/javafunk/funk.png)](http://travis-ci.org/javafunk/funk)
 ====
 
 Simplifying functional programming in Java.
