@@ -3,6 +3,7 @@ package org.javafunk.funk;
 import org.javafunk.funk.behaviours.ordinals.*;
 import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.testclasses.Name;
 import org.junit.Test;
 
 import java.util.AbstractMap;
@@ -12,6 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.testclasses.Name.name;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class TuplesTest {
@@ -168,6 +170,36 @@ public class TuplesTest {
 
         // When
         Iterable<Double> actual = Tuples.fifths(fourthables);
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldMapToSixthOfSuppliedSixthable() throws Exception {
+        // Given
+        Sixth<Long> sixthable = tuple("first", 2, true, 1.25, '5', 12L);
+        Long expected = 12L;
+        Mapper<? super Sixth<Long>, Long> toSixth = Tuples.toSixth();
+
+        // When
+        Long actual = toSixth.map(sixthable);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldGetSixthsFromIterableOfSixthables() throws Exception {
+        // Given
+        Iterable<? extends Sixth<Long>> sixthable = iterableWith(
+                tuple("1", 2, 'a', false, 1.25, 0L),
+                tuple(3, 'a', 5.4, 'b', 2.5, 27L),
+                tuple(6.2, 7, false, 4.75, 'c', 54L));
+        Iterable<Long> expected = iterableWith(0L, 27L, 54L);
+
+        // When
+        Iterable<Long> actual = Tuples.sixths(sixthable);
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
