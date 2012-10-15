@@ -3,6 +3,7 @@ package org.javafunk.funk;
 import org.javafunk.funk.behaviours.ordinals.*;
 import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.testclasses.Age;
 import org.javafunk.funk.testclasses.Name;
 import org.junit.Test;
 
@@ -13,6 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.testclasses.Age.age;
 import static org.javafunk.funk.testclasses.Name.name;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
@@ -162,14 +164,14 @@ public class TuplesTest {
     @Test
     public void shouldGetFifthsFromIterableOfFifthables() throws Exception {
         // Given
-        Iterable<? extends Fifth<Double>> fourthables = iterableWith(
+        Iterable<? extends Fifth<Double>> fifthables = iterableWith(
                 tuple("1", 2, 'a', false, 1.25),
                 tuple(3, 'a', 5.4, 'b', 2.5),
                 tuple(6.2, 7, false, 'c', 4.75));
         Iterable<Double> expected = iterableWith(1.25, 2.5, 4.75);
 
         // When
-        Iterable<Double> actual = Tuples.fifths(fourthables);
+        Iterable<Double> actual = Tuples.fifths(fifthables);
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
@@ -192,14 +194,14 @@ public class TuplesTest {
     @Test
     public void shouldGetSixthsFromIterableOfSixthables() throws Exception {
         // Given
-        Iterable<? extends Sixth<Long>> sixthable = iterableWith(
+        Iterable<? extends Sixth<Long>> sixthables = iterableWith(
                 tuple("1", 2, 'a', false, 1.25, 0L),
                 tuple(3, 'a', 5.4, 'b', 2.5, 27L),
                 tuple(6.2, 7, false, 4.75, 'c', 54L));
         Iterable<Long> expected = iterableWith(0L, 27L, 54L);
 
         // When
-        Iterable<Long> actual = Tuples.sixths(sixthable);
+        Iterable<Long> actual = Tuples.sixths(sixthables);
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
@@ -222,14 +224,44 @@ public class TuplesTest {
     @Test
     public void shouldGetSeventhsFromIterableOfSeventhables() throws Exception {
         // Given
-        Iterable<? extends Seventh<Name>> seventhable = iterableWith(
+        Iterable<? extends Seventh<Name>> seventhables = iterableWith(
                 tuple(false, 1.25, "1", 2, 'a', 0L, name("Bill")),
                 tuple(3, 'a', 2.5, 27L, 5.4, 'b', name("Betty")),
                 tuple(6.2, 7, false, 4.75, 'c', 54L, name("Beatrice")));
         Iterable<Name> expected = iterableWith(name("Bill"), name("Betty"), name("Beatrice"));
 
         // When
-        Iterable<Name> actual = Tuples.sevenths(seventhable);
+        Iterable<Name> actual = Tuples.sevenths(seventhables);
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldMapToEighthOfSuppliedEighthable() throws Exception {
+        // Given
+        Eighth<Age> eighthable = tuple("first", 2, true, 1.25, '5', 12L, name("Amy"), age(24));
+        Age expected = age(24);
+        Mapper<? super Eighth<Age>, Age> toEighth = Tuples.toEighth();
+
+        // When
+        Age actual = toEighth.map(eighthable);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldGetEighthsFromIterableOfEighthables() throws Exception {
+        // Given
+        Iterable<? extends Eighth<Age>> eighthables = iterableWith(
+                tuple(false, 1.25, 'a', 0L, name("Bill"), "1", 2, age(50)),
+                tuple(3, 'a', 2.5, 27L, 5.4, 'b', name("Betty"), age(60)),
+                tuple(6.2, 7, false, 4.75, 54L, name("Beatrice"), 'c', age(70)));
+        Iterable<Age> expected = iterableWith(age(50), age(60), age(70));
+
+        // When
+        Iterable<Age> actual = Tuples.eighths(eighthables);
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
