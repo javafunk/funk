@@ -8,7 +8,6 @@
  */
 package org.javafunk.funk.functors.adapters;
 
-import org.javafunk.funk.functors.Action;
 import org.javafunk.funk.functors.Factory;
 import org.javafunk.funk.functors.functions.NullaryFunction;
 import org.junit.Test;
@@ -18,7 +17,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.functors.adapters.ActionUnaryProcedureAdapter.actionUnaryProcedure;
 import static org.javafunk.funk.functors.adapters.FactoryNullaryFunctionAdapter.factoryNullaryFunction;
 import static org.mockito.BDDMockito.given;
 

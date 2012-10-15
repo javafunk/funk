@@ -8,20 +8,16 @@
  */
 package org.javafunk.funk;
 
-import com.sun.org.apache.bcel.internal.generic.ALOAD;
 import org.javafunk.funk.behaviours.Generator;
 import org.javafunk.funk.generators.ConstantGenerator;
 import org.javafunk.funk.generators.FiniteGenerator;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Generators.constantGenerator;
 import static org.javafunk.funk.Generators.finiteGenerator;
 import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.listBuilderWith;
 
 public class GeneratorsTest {
     @Test

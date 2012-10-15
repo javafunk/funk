@@ -14,7 +14,8 @@ import com.google.common.collect.Multiset;
 import static java.util.Arrays.asList;
 import static org.javafunk.funk.Eagerly.first;
 import static org.javafunk.funk.Eagerly.rest;
-import static org.javafunk.funk.Literals.*;
+import static org.javafunk.funk.Literals.collectionFrom;
+import static org.javafunk.funk.Literals.iterableBuilderWith;
 
 public class Multisets {
     private Multisets() {}

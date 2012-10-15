@@ -16,8 +16,6 @@ import org.javafunk.funk.functors.functions.UnaryFunction;
 
 import java.util.Collections;
 
-import static java.lang.String.format;
-
 public class MultisetBuilder<E>
         extends AbstractBuilder<E, MultisetBuilder<E>, Multiset<E>>
         implements AbstractBuilder.WithCustomImplementationSupport<E, Multiset, Multiset<E>> {

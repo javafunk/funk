@@ -8,7 +8,6 @@
  */
 package org.javafunk.funk.iterators;
 
-import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
@@ -21,7 +20,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.javafunk.funk.Literals.collectionBuilderWith;
-import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.Literals.iterableWith;
 
 public class MappedIteratorTest {

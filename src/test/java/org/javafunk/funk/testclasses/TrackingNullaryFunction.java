@@ -1,7 +1,6 @@
 package org.javafunk.funk.testclasses;
 
 import org.javafunk.funk.functors.functions.NullaryFunction;
-import org.javafunk.funk.monads.OptionTest;
 
 public class TrackingNullaryFunction<R> implements NullaryFunction<R> {
     private final R result;
