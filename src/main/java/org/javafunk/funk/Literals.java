@@ -131,7 +131,7 @@ public class Literals {
     }
 
     /**
-     * Returns an empty mutable {@code List} instance.
+     * Returns an empty immutable {@code List} instance.
      *
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
@@ -150,12 +150,26 @@ public class Literals {
         return new ListBuilder<E>().build();
     }
 
+    /**
+     * Returns an empty {@code List} instance of the supplied concrete class.
+     *
+     * <p>The supplied class must have a public no-argument constructor, otherwise
+     * an {@code IllegalArgumentException} will be thrown.</p>
+     *
+     * @param listClass The class of the {@code List} implementation to be
+     *                  instantiated.
+     * @param <E> The type of the elements contained in the {@code List}.
+     * @return A {@code List} instance over the type {@code E} of the concrete
+     *         type specified by the supplied {@code Class}.
+     * @throws IllegalArgumentException if the supplied class does not have
+     *         a public no-argument constructor.
+     */
     public static <E> List<E> list(Class<? extends List> listClass) {
         return new ListBuilder<E>().build(listClass);
     }
 
     /**
-     * Returns an empty mutable {@code List} instance over the type
+     * Returns an empty immutable {@code List} instance over the type
      * of the supplied {@code Class}.
      *
      * <p>This form of literal is most suited to inline usage such as when passing an
@@ -187,10 +201,10 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code List} instance over the type {@code E} containing all elements
-     * from the supplied {@code Iterable}. The order of the elements in the resulting
-     * {@code List} is determined by the order in which they are yielded from the
-     * {@code Iterable}.
+     * Returns an immutable {@code List} instance over the type {@code E} containing
+     * all elements from the supplied {@code Iterable}. The order of the elements
+     * in the resulting {@code List} is determined by the order in which they are
+     * yielded from the {@code Iterable}.
      *
      * <p>This form of literal is useful when a number of lazy operations have been
      * performed resulting in an {@code Iterable} where a collection implementing
@@ -217,9 +231,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code List} instance over the type {@code E} containing all elements
-     * from the supplied array. The order of the elements in the resulting {@code List}
-     * is the same as the order of the elements in the array.
+     * Returns an immutable {@code List} instance over the type {@code E} containing all
+     * elements from the supplied array. The order of the elements in the resulting
+     * {@code List} is the same as the order of the elements in the array.
      *
      * <p>For example, the following:
      * <blockquote>
@@ -258,9 +272,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code List} instance over the type {@code E} containing the supplied elements.
-     * The order of the resultant {@code List} is the same as the order of the elements in the
-     * argument list.
+     * Returns an immutable {@code List} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code List} is the same as the order
+     * of the elements in the argument list.
      *
      * @param e1  The first element from which to construct a {@code List}.
      * @param e2  The second element from which to construct a {@code List}.
@@ -272,9 +286,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code List} instance over the type {@code E} containing the supplied elements.
-     * The order of the resultant {@code List} is the same as the order of the elements in the
-     * argument list.
+     * Returns an immutable {@code List} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code List} is the same as the order
+     * of the elements in the argument list.
      *
      * @param e1  The first element from which to construct a {@code List}.
      * @param e2  The second element from which to construct a {@code List}.
@@ -287,9 +301,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code List} instance over the type {@code E} containing the supplied elements.
-     * The order of the resultant {@code List} is the same as the order of the elements in the
-     * argument list.
+     * Returns an immutable {@code List} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code List} is the same as the order
+     * of the elements in the argument list.
      *
      * @param e1  The first element from which to construct a {@code List}.
      * @param e2  The second element from which to construct a {@code List}.
@@ -303,9 +317,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code List} instance over the type {@code E} containing the supplied elements.
-     * The order of the resultant {@code List} is the same as the order of the elements in the
-     * argument list.
+     * Returns an immutable {@code List} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code List} is the same as the order
+     * of the elements in the argument list.
      *
      * @param e1  The first element from which to construct a {@code List}.
      * @param e2  The second element from which to construct a {@code List}.
@@ -320,9 +334,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code List} instance over the type {@code E} containing the supplied elements.
-     * The order of the resultant {@code List} is the same as the order of the elements in the
-     * argument list.
+     * Returns an immutable {@code List} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code List} is the same as the order
+     * of the elements in the argument list.
      *
      * @param e1  The first element from which to construct a {@code List}.
      * @param e2  The second element from which to construct a {@code List}.
@@ -338,9 +352,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code List} instance over the type {@code E} containing the supplied elements.
-     * The order of the resultant {@code List} is the same as the order of the elements in the
-     * argument list.
+     * Returns an immutable {@code List} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code List} is the same as the order
+     * of the elements in the argument list.
      *
      * @param e1  The first element from which to construct a {@code List}.
      * @param e2  The second element from which to construct a {@code List}.
@@ -357,9 +371,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code List} instance over the type {@code E} containing the supplied elements.
-     * The order of the resultant {@code List} is the same as the order of the elements in the
-     * argument list.
+     * Returns an immutable {@code List} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code List} is the same as the order
+     * of the elements in the argument list.
      *
      * @param e1  The first element from which to construct a {@code List}.
      * @param e2  The second element from which to construct a {@code List}.
@@ -377,9 +391,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code List} instance over the type {@code E} containing the supplied elements.
-     * The order of the resultant {@code List} is the same as the order of the elements in the
-     * argument list.
+     * Returns an immutable {@code List} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code List} is the same as the order
+     * of the elements in the argument list.
      *
      * @param e1  The first element from which to construct a {@code List}.
      * @param e2  The second element from which to construct a {@code List}.
@@ -398,9 +412,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code List} instance over the type {@code E} containing the supplied elements.
-     * The order of the resultant {@code List} is the same as the order of the elements in the
-     * argument list.
+     * Returns an immutable {@code List} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code List} is the same as the order of
+     * the elements in the argument list.
      *
      * @param e1  The first element from which to construct a {@code List}.
      * @param e2  The second element from which to construct a {@code List}.
@@ -420,9 +434,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code List} instance over the type {@code E} containing the supplied elements.
-     * The order of the resultant {@code List} is the same as the order of the elements in the
-     * argument list.
+     * Returns an immutable {@code List} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code List} is the same as the order of the
+     * elements in the argument list.
      *
      * <p>Note that this literal uses a generic varargs parameter as the last argument in the
      * argument list and as such will cause unchecked cast warnings. Explicit argument
@@ -799,7 +813,7 @@ public class Literals {
     }
 
     /**
-     * Returns an empty mutable {@code Set} instance.
+     * Returns an empty immutable {@code Set} instance.
      *
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
@@ -818,12 +832,26 @@ public class Literals {
         return new SetBuilder<E>().build();
     }
 
+    /**
+     * Returns an empty {@code Set} instance of the supplied concrete class.
+     *
+     * <p>The supplied class must have a public no-argument constructor, otherwise
+     * an {@code IllegalArgumentException} will be thrown.</p>
+     *
+     * @param setClass The class of the {@code Set} implementation to be
+     *                 instantiated.
+     * @param <E> The type of the elements contained in the {@code Set}.
+     * @return A {@code Set} instance over the type {@code E} of the concrete
+     *         type specified by the supplied {@code Class}.
+     * @throws IllegalArgumentException if the supplied class does not have
+     *         a public no-argument constructor.
+     */
     public static <E> Set<E> set(Class<? extends Set> setClass) {
         return new SetBuilder<E>().build(setClass);
     }
 
     /**
-     * Returns an empty mutable {@code Set} instance over the type
+     * Returns an empty immutable {@code Set} instance over the type
      * of the supplied {@code Class}.
      *
      * <p>This form of literal is most suited to inline usage such as when passing an
@@ -855,9 +883,10 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code Set} instance over the type {@code E} containing all elements
-     * from the supplied {@code Iterable}. Due to the nature of a {@code Set}, any
-     * duplicate elements in the supplied {@code Iterable} will be removed.
+     * Returns an immutable {@code Set} instance over the type {@code E} containing
+     * all elements from the supplied {@code Iterable}. Due to the nature of a
+     * {@code Set}, any duplicate elements in the supplied {@code Iterable} will
+     * be removed.
      *
      * <p>This form of literal is useful when a number of lazy operations have been
      * performed resulting in an {@code Iterable} where a collection implementing
@@ -884,8 +913,8 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code Set} instance over the type {@code E} containing all elements
-     * from the supplied array. Due to the nature of a {@code Set}, any
+     * Returns an immutable {@code Set} instance over the type {@code E} containing
+     * all elements from the supplied array. Due to the nature of a {@code Set}, any
      * duplicate elements in the supplied {@code Iterable} will be removed.
      *
      * <p>For example, the following:
@@ -914,7 +943,8 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code Set} instance over the type {@code E} containing the supplied element.
+     * Returns an immutable {@code Set} instance over the type {@code E} containing the
+     * supplied element.
      *
      * @param e   An element from which to construct a {@code Set}.
      * @param <E> The type of the element contained in the returned {@code Set}.
@@ -925,8 +955,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code Set} instance over the type {@code E} containing the supplied elements.
-     * Due to the nature of a {@code Set}, any supplied duplicate elements will be removed.
+     * Returns an immutable {@code Set} instance over the type {@code E} containing the
+     * supplied elements. Due to the nature of a {@code Set}, any supplied duplicate
+     * elements will be removed.
      *
      * @param e1  The first element from which to construct a {@code Set}.
      * @param e2  The second element from which to construct a {@code Set}.
@@ -938,8 +969,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code Set} instance over the type {@code E} containing the supplied elements.
-     * Due to the nature of a {@code Set}, any supplied duplicate elements will be removed.
+     * Returns an immutable {@code Set} instance over the type {@code E} containing the
+     * supplied elements. Due to the nature of a {@code Set}, any supplied duplicate elements
+     * will be removed.
      *
      * @param e1  The first element from which to construct a {@code Set}.
      * @param e2  The second element from which to construct a {@code Set}.
@@ -952,8 +984,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code Set} instance over the type {@code E} containing the supplied elements.
-     * Due to the nature of a {@code Set}, any supplied duplicate elements will be removed.
+     * Returns an immutable {@code Set} instance over the type {@code E} containing the
+     * supplied elements. Due to the nature of a {@code Set}, any supplied duplicate
+     * elements will be removed.
      *
      * @param e1  The first element from which to construct a {@code Set}.
      * @param e2  The second element from which to construct a {@code Set}.
@@ -967,8 +1000,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code Set} instance over the type {@code E} containing the supplied elements.
-     * Due to the nature of a {@code Set}, any supplied duplicate elements will be removed.
+     * Returns an immutable {@code Set} instance over the type {@code E} containing the
+     * supplied elements. Due to the nature of a {@code Set}, any supplied duplicate
+     * elements will be removed.
      *
      * @param e1  The first element from which to construct a {@code Set}.
      * @param e2  The second element from which to construct a {@code Set}.
@@ -983,8 +1017,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code Set} instance over the type {@code E} containing the supplied elements.
-     * Due to the nature of a {@code Set}, any supplied duplicate elements will be removed.
+     * Returns an immutable {@code Set} instance over the type {@code E} containing the
+     * supplied elements. Due to the nature of a {@code Set}, any supplied duplicate
+     * elements will be removed.
      *
      * @param e1  The first element from which to construct a {@code Set}.
      * @param e2  The second element from which to construct a {@code Set}.
@@ -1000,8 +1035,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code Set} instance over the type {@code E} containing the supplied elements.
-     * Due to the nature of a {@code Set}, any supplied duplicate elements will be removed.
+     * Returns an immutable {@code Set} instance over the type {@code E} containing the
+     * supplied elements. Due to the nature of a {@code Set}, any supplied duplicate
+     * elements will be removed.
      *
      * @param e1  The first element from which to construct a {@code Set}.
      * @param e2  The second element from which to construct a {@code Set}.
@@ -1018,8 +1054,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code Set} instance over the type {@code E} containing the supplied elements.
-     * Due to the nature of a {@code Set}, any supplied duplicate elements will be removed.
+     * Returns an immutable {@code Set} instance over the type {@code E} containing the
+     * supplied elements. Due to the nature of a {@code Set}, any supplied duplicate
+     * elements will be removed.
      *
      * @param e1  The first element from which to construct a {@code Set}.
      * @param e2  The second element from which to construct a {@code Set}.
@@ -1037,8 +1074,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code Set} instance over the type {@code E} containing the supplied elements.
-     * Due to the nature of a {@code Set}, any supplied duplicate elements will be removed.
+     * Returns an immutable {@code Set} instance over the type {@code E} containing the
+     * supplied elements. Due to the nature of a {@code Set}, any supplied duplicate
+     * elements will be removed.
      *
      * @param e1  The first element from which to construct a {@code Set}.
      * @param e2  The second element from which to construct a {@code Set}.
@@ -1057,8 +1095,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code Set} instance over the type {@code E} containing the supplied elements.
-     * Due to the nature of a {@code Set}, any supplied duplicate elements will be removed.
+     * Returns an immutable {@code Set} instance over the type {@code E} containing the
+     * supplied elements. Due to the nature of a {@code Set}, any supplied duplicate
+     * elements will be removed.
      *
      * @param e1  The first element from which to construct a {@code Set}.
      * @param e2  The second element from which to construct a {@code Set}.
@@ -1078,8 +1117,9 @@ public class Literals {
     }
 
     /**
-     * Returns a {@code Set} instance over the type {@code E} containing the supplied elements.
-     * Due to the nature of a {@code Set}, any supplied duplicate elements will be removed.
+     * Returns an immutable {@code Set} instance over the type {@code E} containing the
+     * supplied elements. Due to the nature of a {@code Set}, any supplied duplicate
+     * elements will be removed.
      *
      * @param e1    The first element from which to construct a {@code Set}.
      * @param e2    The second element from which to construct a {@code Set}.
@@ -3111,12 +3151,12 @@ public class Literals {
         return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10)).andMaps(m11on).build();
     }
 
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePair(K k1, V v1) { 
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1)); 
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePair(K k1, V v1) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1));
     }
 
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2) { 
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2)); 
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2));
     }
 
     public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3) {
