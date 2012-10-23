@@ -20,41 +20,693 @@ import static org.javafunk.funk.Classes.uncheckedInstantiate;
 public class Literals {
     private Literals() {}
 
+    /**
+     * Returns an empty immutable {@code Iterable} instance.
+     *
+     * <p>This form of literal is most suited to direct assignment to a variable
+     * since in this case, the type {@code E} is inferred from the variable
+     * declaration. For example:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;String&gt; strings = iterable();
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param <E> The type of the elements contained in the {@code Iterable}.
+     * @return An {@code Iterable} instance over the type {@code E} containing no elements.
+     */
     public static <E> Iterable<E> iterable() {
         return new IterableBuilder<E>().build();
     }
 
+    /**
+     * Returns an empty immutable {@code Iterable} instance of the supplied concrete class.
+     *
+     * <p>The supplied class must have a public no-argument constructor, otherwise
+     * an {@code IllegalArgumentException} will be thrown.</p>
+     *
+     * @param iterableClass The class of the {@code Iterable} implementation to be
+     *                      instantiated.
+     * @param <E>           The type of the elements contained in the {@code Iterable}.
+     * @return An {@code Iterable} instance over the type {@code E} of the concrete
+     *         type specified by the supplied {@code Class}.
+     * @throws IllegalArgumentException if the supplied class does not have
+     *                                  a public no-argument constructor.
+     */
     @SuppressWarnings("unchecked")
     public static <E> Iterable<E> iterable(Class<? extends Iterable> iterableClass) {
         return uncheckedInstantiate(iterableClass);
     }
 
+    /**
+     * Returns an empty immutable {@code Iterable} instance over the type
+     * of the supplied {@code Class}.
+     *
+     * <p>This form of literal is most suited to inline usage such as when passing an
+     * empty iterable as a parameter in a method call since it reads more clearly than
+     * {@link #iterable()}. For example, compare the following:
+     * <blockquote>
+     * <pre>
+     *   public class Account {
+     *       public Account(Money balance, List&lt;Money&gt; transactions) {
+     *           ...
+     *       }
+     *
+     *       ...
+     *   }
+     *
+     *   Account account1 = new Account(new Money(0), Literals.&lt;Money&gt;iterable());
+     *   Account account2 = new Account(new Money(0), iterableOf(Money.class));
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param elementClass A {@code Class} representing the type of elements
+     *                     contained in this {@code Iterable}
+     * @param <E>          The type of the elements contained in the {@code Iterable}.
+     * @return An {@code Iterable} instance over the type {@code E} containing no elements.
+     */
     public static <E> Iterable<E> iterableOf(Class<E> elementClass) {
         return new IterableBuilder<E>().build();
     }
 
+    /**
+     * Returns an immutable {@code Iterable} instance over the type {@code E}
+     * containing all elements from the supplied {@code Iterable}. The order of
+     * the elements in the resulting {@code Iterable} is determined by the order in
+     * which they are yielded from the supplied {@code Iterable}.
+     *
+     * <p>This form of literal is useful when an immutable copy of an {@code Iterable}
+     * is required. For example:
+     * <blockquote>
+     * <pre>
+     *   public class Product {
+     *     public Iterable&lt;Integer&gt; getSizes() {
+     *       return iterableFrom(sizes);
+     *     }
+     *
+     *     ...
+     *   }
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param elements An {@code Iterable} of elements from which an {@code Iterable} should
+     *                 be constructed.
+     * @param <E>      The type of the elements to be contained in the returned
+     *                 {@code Iterable}.
+     * @return An {@code Iterable} over the type {@code E} containing all elements from the
+     *         supplied {@code Iterable} in the order they are yielded.
+     */
     public static <E> Iterable<E> iterableFrom(Iterable<? extends E> elements) {
         return new IterableBuilder<E>().with(elements).build();
     }
 
+    /**
+     * Returns an immutable {@code Iterable} instance over the type {@code E}
+     * containing all elements from the supplied array. The order of the elements
+     * in the resulting {@code Iterable} is the same as the order of the elements
+     * in the array.
+     *
+     * <p>For example, the following:
+     * <blockquote>
+     * <pre>
+     *   String[] strings = new String[]{"one", "two", "three"};
+     *   Iterable&lt;String&gt; iterableOfStrings = Literals.iterableFrom(strings);
+     * </pre>
+     * </blockquote>
+     * is equivalent to:
+     * <blockquote>
+     * <pre>
+     *   Iterable&ltString&gt; iterableOfStrings = Literals.iterableWith("one", "two", "three");
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param elementArray An array of elements from which an {@code Iterable} should be
+     *                     constructed.
+     * @param <E>          The type of the elements to be contained in the returned
+     *                     {@code Iterable}.
+     * @return An {@code Iterable} over the type {@code E} containing all elements from the
+     *         supplied array in the same order as the supplied array.
+     */
     public static <E> Iterable<E> iterableFrom(E[] elementArray) {
         return new IterableBuilder<E>().with(elementArray).build();
     }
 
+    /**
+     * Returns an immutable {@code Iterable} instance over the type {@code E} containing the
+     * supplied element.
+     *
+     * @param e   An element from which to construct an {@code Iterable}.
+     * @param <E> The type of the element contained in the returned {@code Iterable}.
+     * @return An {@code Iterable} instance over type {@code E} containing the supplied element.
+     */
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e) {
+        return iterableFrom(asList(e));
+    }
+
+    /**
+     * Returns an immutable {@code Iterable} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Iterable} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct an {@code Iterable}.
+     * @param e2  The second element from which to construct an {@code Iterable}.
+     * @param <E> The type of the elements contained in the returned {@code Iterable}.
+     * @return An {@code Iterable} instance over type {@code E} containing the supplied elements.
+     */
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2) {
+        return iterableFrom(asList(e1, e2));
+    }
+
+    /**
+     * Returns an immutable {@code Iterable} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Iterable} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct an {@code Iterable}.
+     * @param e2  The second element from which to construct an {@code Iterable}.
+     * @param e3  The third element from which to construct an {@code Iterable}.
+     * @param <E> The type of the elements contained in the returned {@code Iterable}.
+     * @return An {@code Iterable} instance over type {@code E} containing the supplied elements.
+     */
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3) {
+        return iterableFrom(asList(e1, e2, e3));
+    }
+
+    /**
+     * Returns an immutable {@code Iterable} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Iterable} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct an {@code Iterable}.
+     * @param e2  The second element from which to construct an {@code Iterable}.
+     * @param e3  The third element from which to construct an {@code Iterable}.
+     * @param e4  The fourth element from which to construct an {@code Iterable}.
+     * @param <E> The type of the elements contained in the returned {@code Iterable}.
+     * @return An {@code Iterable} instance over type {@code E} containing the supplied elements.
+     */
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4) {
+        return iterableFrom(asList(e1, e2, e3, e4));
+    }
+
+    /**
+     * Returns an immutable {@code Iterable} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Iterable} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct an {@code Iterable}.
+     * @param e2  The second element from which to construct an {@code Iterable}.
+     * @param e3  The third element from which to construct an {@code Iterable}.
+     * @param e4  The fourth element from which to construct an {@code Iterable}.
+     * @param e5  The fifth element from which to construct an {@code Iterable}.
+     * @param <E> The type of the elements contained in the returned {@code Iterable}.
+     * @return An {@code Iterable} instance over type {@code E} containing the supplied elements.
+     */
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5) {
+        return iterableFrom(asList(e1, e2, e3, e4, e5));
+    }
+
+    /**
+     * Returns an immutable {@code Iterable} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Iterable} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct an {@code Iterable}.
+     * @param e2  The second element from which to construct an {@code Iterable}.
+     * @param e3  The third element from which to construct an {@code Iterable}.
+     * @param e4  The fourth element from which to construct an {@code Iterable}.
+     * @param e5  The fifth element from which to construct an {@code Iterable}.
+     * @param e6  The sixth element from which to construct an {@code Iterable}.
+     * @param <E> The type of the elements contained in the returned {@code Iterable}.
+     * @return An {@code Iterable} instance over type {@code E} containing the supplied elements.
+     */
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return iterableFrom(asList(e1, e2, e3, e4, e5, e6));
+    }
+
+    /**
+     * Returns an immutable {@code Iterable} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Iterable} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct an {@code Iterable}.
+     * @param e2  The second element from which to construct an {@code Iterable}.
+     * @param e3  The third element from which to construct an {@code Iterable}.
+     * @param e4  The fourth element from which to construct an {@code Iterable}.
+     * @param e5  The fifth element from which to construct an {@code Iterable}.
+     * @param e6  The sixth element from which to construct an {@code Iterable}.
+     * @param e7  The seventh element from which to construct an {@code Iterable}.
+     * @param <E> The type of the elements contained in the returned {@code Iterable}.
+     * @return An {@code Iterable} instance over type {@code E} containing the supplied elements.
+     */
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    /**
+     * Returns an immutable {@code Iterable} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Iterable} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct an {@code Iterable}.
+     * @param e2  The second element from which to construct an {@code Iterable}.
+     * @param e3  The third element from which to construct an {@code Iterable}.
+     * @param e4  The fourth element from which to construct an {@code Iterable}.
+     * @param e5  The fifth element from which to construct an {@code Iterable}.
+     * @param e6  The sixth element from which to construct an {@code Iterable}.
+     * @param e7  The seventh element from which to construct an {@code Iterable}.
+     * @param e8  The eighth element from which to construct an {@code Iterable}.
+     * @param <E> The type of the elements contained in the returned {@code Iterable}.
+     * @return An {@code Iterable} instance over type {@code E} containing the supplied elements.
+     */
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    /**
+     * Returns an immutable {@code Iterable} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Iterable} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct an {@code Iterable}.
+     * @param e2  The second element from which to construct an {@code Iterable}.
+     * @param e3  The third element from which to construct an {@code Iterable}.
+     * @param e4  The fourth element from which to construct an {@code Iterable}.
+     * @param e5  The fifth element from which to construct an {@code Iterable}.
+     * @param e6  The sixth element from which to construct an {@code Iterable}.
+     * @param e7  The seventh element from which to construct an {@code Iterable}.
+     * @param e8  The eighth element from which to construct an {@code Iterable}.
+     * @param e9  The ninth element from which to construct an {@code Iterable}.
+     * @param <E> The type of the elements contained in the returned {@code Iterable}.
+     * @return An {@code Iterable} instance over type {@code E} containing the supplied elements.
+     */
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    /**
+     * Returns an immutable {@code Iterable} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Iterable} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct an {@code Iterable}.
+     * @param e2  The second element from which to construct an {@code Iterable}.
+     * @param e3  The third element from which to construct an {@code Iterable}.
+     * @param e4  The fourth element from which to construct an {@code Iterable}.
+     * @param e5  The fifth element from which to construct an {@code Iterable}.
+     * @param e6  The sixth element from which to construct an {@code Iterable}.
+     * @param e7  The seventh element from which to construct an {@code Iterable}.
+     * @param e8  The eighth element from which to construct an {@code Iterable}.
+     * @param e9  The ninth element from which to construct an {@code Iterable}.
+     * @param e10 The tenth element from which to construct an {@code Iterable}.
+     * @param <E> The type of the elements contained in the returned {@code Iterable}.
+     * @return An {@code Iterable} instance over type {@code E} containing the supplied elements.
+     */
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    /**
+     * Returns an immutable {@code Iterable} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Iterable} is the same as the order
+     * of the elements in the argument list.
+     *
+     * <p>Note that this literal uses a generic varargs parameter as the last argument in the
+     * argument list and as such will cause unchecked cast warnings. Explicit argument
+     * lists for up to ten arguments have been provided for convenience. In order to avoid
+     * the unchecked cast warnings, an {@link IterableBuilder} can be used instead.</p>
+     *
+     * @param e1    The first element from which to construct an {@code Iterable}.
+     * @param e2    The second element from which to construct an {@code Iterable}.
+     * @param e3    The third element from which to construct an {@code Iterable}.
+     * @param e4    The fourth element from which to construct an {@code Iterable}.
+     * @param e5    The fifth element from which to construct an {@code Iterable}.
+     * @param e6    The sixth element from which to construct an {@code Iterable}.
+     * @param e7    The seventh element from which to construct an {@code Iterable}.
+     * @param e8    The eighth element from which to construct an {@code Iterable}.
+     * @param e9    The ninth element from which to construct an {@code Iterable}.
+     * @param e10   The tenth element from which to construct an {@code Iterable}.
+     * @param e11on The remaining elements from which to construct an {@code Iterable}.
+     * @param <E>   The type of the elements contained in the returned {@code Iterable}.
+     * @return an {@code Iterable} instance over type {@code E} containing the supplied elements.
+     */
+    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return iterableBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)).build();
+    }
+
+    /**
+     * Returns an {@code IterableBuilder} containing no elements.
+     *
+     * <h4>Example Usage:</h4>
+     * An {@code IterableBuilder} can be used to assemble an {@code Iterable} as follows:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; iterable = Literals.&lt;Integer&gt;iterableBuilder()
+     *           .with(1, 2, 3)
+     *           .and(4, 5, 6)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; iterable = Literals.iterableWith(1, 2, 3, 4, 5, 6);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code IterableBuilder} is that the iterable can be built up from
+     * individual objects, arrays or existing iterables. See {@link IterableBuilder} for
+     * further details.
+     *
+     * @param <E> The type of the elements contained in the {@code IterableBuilder}.
+     * @return An {@code IterableBuilder} instance over the type {@code E} containing no elements.
+     */
     public static <E> IterableBuilder<E> iterableBuilder() {
         return new IterableBuilder<E>();
     }
 
+    /**
+     * Returns an {@code IterableBuilder} over the type of the supplied {@code Class}
+     * containing no elements.
+     *
+     * <h4>Example Usage:</h4>
+     * An {@code IterableBuilder} can be used to assemble an {@code Iterable} as follows:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;String&gt; iterable = iterableBuilderOf(String.class)
+     *           .with("first", "second", "third")
+     *           .and(new String[]{"fourth", "fifth"})
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;String&gt; iterable = Literals.iterableWith("first", "second", "third", "fourth", "fifth");
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code IterableBuilder} is that the iterable can be built
+     * up from individual objects, arrays or existing iterables. See {@link IterableBuilder}
+     * for further details.
+     *
+     * @param elementClass A {@code Class} representing the type of elements
+     *                     contained in this {@code IterableBuilder}
+     * @param <E>          The type of the elements contained in the {@code IterableBuilder}.
+     * @return An {@code IterableBuilder} instance over the type {@code E} containing no
+     *         elements.
+     */
     public static <E> IterableBuilder<E> iterableBuilderOf(Class<E> elementClass) {
         return new IterableBuilder<E>();
     }
 
+    /**
+     * Returns an {@code IterableBuilder} over type {@code E} initialised with the elements
+     * contained in the supplied {@code Iterable}.
+     *
+     * <h4>Example Usage:</h4>
+     * An {@code IterableBuilder} can be used to assemble an {@code Iterable} from two existing
+     * {@code Collection} instances as follows:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Character&gt; firstCollection = Literals.collectionWith('a', 'b', 'c');
+     *   Collection&lt;Character&gt; secondCollection = Literals.collectionWith('d', 'e', 'f');
+     *   Iterable&lt;Character&gt; iterable = iterableBuilderFrom(firstCollection)
+     *           .with(secondCollection)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Character&gt; iterable = Literals.iterableWith('a', 'b', 'c', 'd', 'e', 'f');
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code IterableBuilder} is that the iterable can be built up from
+     * individual objects, arrays or existing iterables. See {@link IterableBuilder} for
+     * further details.
+     *
+     * @param elements An {@code Iterable} containing elements with which the
+     *                 {@code IterableBuilder} should be initialised.
+     * @param <E>      The type of the elements contained in the {@code IterableBuilder}.
+     * @return An {@code IterableBuilder} instance over the type {@code E} containing
+     *         the elements from the supplied {@code Iterable}.
+     */
     public static <E> IterableBuilder<E> iterableBuilderFrom(Iterable<? extends E> elements) {
         return new IterableBuilder<E>().with(elements);
     }
 
+    /**
+     * Returns an {@code IterableBuilder} over type {@code E} initialised with the elements
+     * contained in the supplied array.
+     *
+     * <h4>Example Usage:</h4>
+     * An {@code IterableBuilder} can be used to assemble an {@code Iterable} from two existing
+     * arrays as follows:
+     * <blockquote>
+     * <pre>
+     *   Long[] firstArray = new Long[]{1L, 2L, 3L};
+     *   Long[] secondArray = new Long[]{3L, 4L, 5L};
+     *   Iterable&lt;Long&gt; iterable = iterableBuilderFrom(firstArray)
+     *           .with(secondArray)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Long&gt; iterable = Literals.iterableWith(1L, 2L, 3L, 3L, 4L, 5L);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code IterableBuilder} is that the iterable can be built up from
+     * individual objects, arrays or existing iterables. See {@link IterableBuilder} for
+     * further details.
+     *
+     * @param elementArray An array containing elements with which the
+     *                     {@code IterableBuilder} should be initialised.
+     * @param <E>          The type of the elements contained in the {@code IterableBuilder}.
+     * @return An {@code IterableBuilder} instance over the type {@code E} containing
+     *         the elements from the supplied array.
+     */
     public static <E> IterableBuilder<E> iterableBuilderFrom(E[] elementArray) {
         return new IterableBuilder<E>().with(elementArray);
+    }
+
+    /**
+     * Returns an {@code IterableBuilder} instance over the type {@code E} containing
+     * the supplied element.
+     *
+     * @param e   The element to be added to the {@code IterableBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code IterableBuilder}.
+     * @return An {@code IterableBuilder} instance over type {@code E} containing the supplied
+     *         element.
+     */
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e) {
+        return iterableBuilderFrom(iterableWith(e));
+    }
+
+    /**
+     * Returns an {@code IterableBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code IterableBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code IterableBuilder}.
+     * @param e2  The second element to be added to the {@code IterableBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code IterableBuilder}.
+     * @return An {@code IterableBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2) {
+        return iterableBuilderFrom(iterableWith(e1, e2));
+    }
+
+    /**
+     * Returns an {@code IterableBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code IterableBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code IterableBuilder}.
+     * @param e2  The second element to be added to the {@code IterableBuilder}.
+     * @param e3  The third element to be added to the {@code IterableBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code IterableBuilder}.
+     * @return An {@code IterableBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3));
+    }
+
+    /**
+     * Returns an {@code IterableBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code IterableBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code IterableBuilder}.
+     * @param e2  The second element to be added to the {@code IterableBuilder}.
+     * @param e3  The third element to be added to the {@code IterableBuilder}.
+     * @param e4  The fourth element to be added to the {@code IterableBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code IterableBuilder}.
+     * @return An {@code IterableBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4));
+    }
+
+    /**
+     * Returns an {@code IterableBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code IterableBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code IterableBuilder}.
+     * @param e2  The second element to be added to the {@code IterableBuilder}.
+     * @param e3  The third element to be added to the {@code IterableBuilder}.
+     * @param e4  The fourth element to be added to the {@code IterableBuilder}.
+     * @param e5  The fifth element to be added to the {@code IterableBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code IterableBuilder}.
+     * @return An {@code IterableBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5));
+    }
+
+    /**
+     * Returns an {@code IterableBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code IterableBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code IterableBuilder}.
+     * @param e2  The second element to be added to the {@code IterableBuilder}.
+     * @param e3  The third element to be added to the {@code IterableBuilder}.
+     * @param e4  The fourth element to be added to the {@code IterableBuilder}.
+     * @param e5  The fifth element to be added to the {@code IterableBuilder}.
+     * @param e6  The sixth element to be added to the {@code IterableBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code IterableBuilder}.
+     * @return An {@code IterableBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
+
+    /**
+     * Returns an {@code IterableBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code IterableBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code IterableBuilder}.
+     * @param e2  The second element to be added to the {@code IterableBuilder}.
+     * @param e3  The third element to be added to the {@code IterableBuilder}.
+     * @param e4  The fourth element to be added to the {@code IterableBuilder}.
+     * @param e5  The fifth element to be added to the {@code IterableBuilder}.
+     * @param e6  The sixth element to be added to the {@code IterableBuilder}.
+     * @param e7  The seventh element to be added to the {@code IterableBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code IterableBuilder}.
+     * @return An {@code IterableBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    /**
+     * Returns an {@code IterableBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code IterableBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code IterableBuilder}.
+     * @param e2  The second element to be added to the {@code IterableBuilder}.
+     * @param e3  The third element to be added to the {@code IterableBuilder}.
+     * @param e4  The fourth element to be added to the {@code IterableBuilder}.
+     * @param e5  The fifth element to be added to the {@code IterableBuilder}.
+     * @param e6  The sixth element to be added to the {@code IterableBuilder}.
+     * @param e7  The seventh element to be added to the {@code IterableBuilder}.
+     * @param e8  The eighth element to be added to the {@code IterableBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code IterableBuilder}.
+     * @return An {@code IterableBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    /**
+     * Returns an {@code IterableBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code IterableBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code IterableBuilder}.
+     * @param e2  The second element to be added to the {@code IterableBuilder}.
+     * @param e3  The third element to be added to the {@code IterableBuilder}.
+     * @param e4  The fourth element to be added to the {@code IterableBuilder}.
+     * @param e5  The fifth element to be added to the {@code IterableBuilder}.
+     * @param e6  The sixth element to be added to the {@code IterableBuilder}.
+     * @param e7  The seventh element to be added to the {@code IterableBuilder}.
+     * @param e8  The eighth element to be added to the {@code IterableBuilder}.
+     * @param e9  The ninth element to be added to the {@code IterableBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code IterableBuilder}.
+     * @return An {@code IterableBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    /**
+     * Returns an {@code IterableBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code IterableBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code IterableBuilder}.
+     * @param e2  The second element to be added to the {@code IterableBuilder}.
+     * @param e3  The third element to be added to the {@code IterableBuilder}.
+     * @param e4  The fourth element to be added to the {@code IterableBuilder}.
+     * @param e5  The fifth element to be added to the {@code IterableBuilder}.
+     * @param e6  The sixth element to be added to the {@code IterableBuilder}.
+     * @param e7  The seventh element to be added to the {@code IterableBuilder}.
+     * @param e8  The eighth element to be added to the {@code IterableBuilder}.
+     * @param e9  The ninth element to be added to the {@code IterableBuilder}.
+     * @param e10 The tenth element to be added to the {@code IterableBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code IterableBuilder}.
+     * @return An {@code IterableBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    /**
+     * Returns an {@code IterableBuilder} instance over the type {@code E} containing the 
+     * supplied elements. The supplied elements are added to the {@code IterableBuilder} 
+     * instance in the same order as they are defined in the argument list.
+     *
+     * <p>Note that this literal uses a generic varargs parameter as the last argument in the
+     * argument list and as such will cause unchecked cast warnings. Explicit argument
+     * lists for up to ten arguments have been provided for convenience. In order to avoid
+     * the unchecked cast warnings, an {@link IterableBuilder} instance can be used directly with
+     * multiple method calls accumulating the builder contents.</p>
+     *
+     * @param e1    The first element to be added to the {@code IterableBuilder}.
+     * @param e2    The second element to be added to the {@code IterableBuilder}.
+     * @param e3    The third element to be added to the {@code IterableBuilder}.
+     * @param e4    The fourth element to be added to the {@code IterableBuilder}.
+     * @param e5    The fifth element to be added to the {@code IterableBuilder}.
+     * @param e6    The sixth element to be added to the {@code IterableBuilder}.
+     * @param e7    The seventh element to be added to the {@code IterableBuilder}.
+     * @param e8    The eighth element to be added to the {@code IterableBuilder}.
+     * @param e9    The ninth element to be added to the {@code IterableBuilder}.
+     * @param e10   The tenth element to be added to the {@code IterableBuilder}.
+     * @param e11on The remaining elements to be added to the {@code IterableBuilder}. The elements
+     *              will be added to the {@code IterableBuilder} in the order they are defined in the
+     *              argument Iterable.
+     * @param <E>   The type of the elements contained in the returned {@code IterableBuilder}.
+     * @return An {@code IterableBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
     }
 
     public static <E> Iterator<E> iterator() {
@@ -158,11 +810,11 @@ public class Literals {
      *
      * @param listClass The class of the {@code List} implementation to be
      *                  instantiated.
-     * @param <E> The type of the elements contained in the {@code List}.
+     * @param <E>       The type of the elements contained in the {@code List}.
      * @return A {@code List} instance over the type {@code E} of the concrete
      *         type specified by the supplied {@code Class}.
      * @throws IllegalArgumentException if the supplied class does not have
-     *         a public no-argument constructor.
+     *                                  a public no-argument constructor.
      */
     public static <E> List<E> list(Class<? extends List> listClass) {
         return new ListBuilder<E>().build(listClass);
@@ -458,7 +1110,7 @@ public class Literals {
      * @return A {@code List} instance over type {@code E} containing the supplied elements.
      */
     public static <E> List<E> listWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
-        return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)).build();
+        return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on).build();
     }
 
     /**
@@ -591,7 +1243,7 @@ public class Literals {
      *                     {@code ListBuilder} should be initialised.
      * @param <E>          The type of the elements contained in the {@code ListBuilder}.
      * @return A {@code ListBuilder} instance over the type {@code E} containing
-     *         the elements from the supplied {@code Iterable}.
+     *         the elements from the supplied array.
      */
     public static <E> ListBuilder<E> listBuilderFrom(E[] elementArray) {
         return new ListBuilder<E>().with(elementArray);
@@ -809,7 +1461,7 @@ public class Literals {
      *         elements.
      */
     public static <E> ListBuilder<E> listBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
-        return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on));
+        return listBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
     }
 
     /**
@@ -840,11 +1492,11 @@ public class Literals {
      *
      * @param setClass The class of the {@code Set} implementation to be
      *                 instantiated.
-     * @param <E> The type of the elements contained in the {@code Set}.
+     * @param <E>      The type of the elements contained in the {@code Set}.
      * @return A {@code Set} instance over the type {@code E} of the concrete
      *         type specified by the supplied {@code Class}.
      * @throws IllegalArgumentException if the supplied class does not have
-     *         a public no-argument constructor.
+     *                                  a public no-argument constructor.
      */
     public static <E> Set<E> set(Class<? extends Set> setClass) {
         return new SetBuilder<E>().build(setClass);
@@ -1136,7 +1788,7 @@ public class Literals {
      * @return A {@code Set} instance over type {@code E} containing the supplied elements.
      */
     public static <E> Set<E> setWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E e11on) {
-        return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)).build();
+        return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on).build();
     }
 
     /**
@@ -1269,7 +1921,7 @@ public class Literals {
      *                     {@code SetBuilder} should be initialised.
      * @param <E>          The type of the elements contained in the {@code SetBuilder}.
      * @return A {@code SetBuilder} instance over the type {@code E} containing
-     *         the elements from the supplied {@code Iterable}.
+     *         the elements from the supplied array.
      */
     public static <E> SetBuilder<E> setBuilderFrom(E[] elementArray) {
         return new SetBuilder<E>().with(elementArray);
@@ -1480,7 +2132,7 @@ public class Literals {
      *         elements.
      */
     public static <E> SetBuilder<E> setBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E e11on) {
-        return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on));
+        return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
     }
 
     public static <E> Multiset<E> multiset() {
@@ -2166,7 +2818,7 @@ public class Literals {
      *                     should be initialised.
      * @param <E>          The type of the elements contained in the {@code ArrayBuilder}.
      * @return An {@code ArrayBuilder} instance over the type {@code E} containing
-     *         the elements from the supplied {@code Iterable}.
+     *         the elements from the supplied array.
      */
     public static <E> ArrayBuilder<E> arrayBuilderFrom(E[] elementArray) {
         return new ArrayBuilder<E>().with(elementArray);
@@ -2625,94 +3277,6 @@ public class Literals {
 
     public static <R, S, T, U, V, W, X, Y, Z> Nonuple<R, S, T, U, V, W, X, Y, Z> tuple(R first, S second, T third, U fourth, V fifth, W sixth, X seventh, Y eighth, Z ninth) {
         return new Nonuple<R, S, T, U, V, W, X, Y, Z>(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);
-    }
-
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e) {
-        return iterableFrom(asList(e));
-    }
-
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2) {
-        return iterableFrom(asList(e1, e2));
-    }
-
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3) {
-        return iterableFrom(asList(e1, e2, e3));
-    }
-
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4) {
-        return iterableFrom(asList(e1, e2, e3, e4));
-    }
-
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5) {
-        return iterableFrom(asList(e1, e2, e3, e4, e5));
-    }
-
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6) {
-        return iterableFrom(asList(e1, e2, e3, e4, e5, e6));
-    }
-
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
-        return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7));
-    }
-
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
-        return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8));
-    }
-
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
-        return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9));
-    }
-
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
-        return iterableFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
-    }
-
-    @SuppressWarnings("unchecked") public static <E> Iterable<E> iterableWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
-        return iterableBuilderFrom(asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(asList(e11on)).build();
-    }
-
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e) {
-        return iterableBuilderFrom(iterableWith(e));
-    }
-
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2) {
-        return iterableBuilderFrom(iterableWith(e1, e2));
-    }
-
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3) {
-        return iterableBuilderFrom(iterableWith(e1, e2, e3));
-    }
-
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4) {
-        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4));
-    }
-
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5) {
-        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5));
-    }
-
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) {
-        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6));
-    }
-
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
-        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
-    }
-
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
-        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
-    }
-
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
-        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
-    }
-
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
-        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
-    }
-
-    public static <E> IterableBuilder<E> iterableBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
-        return iterableBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
     }
 
     public static <E> Iterator<E> iteratorWith(E e) {
