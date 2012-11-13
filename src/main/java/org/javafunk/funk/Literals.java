@@ -2827,7 +2827,7 @@ public class Literals {
      *
      * @param elementClass A {@code Class} representing the type of elements
      *                     contained in this {@code Set}.
-     * @param <E>          The type of the elements contained in the {@code List}.
+     * @param <E>          The type of the elements contained in the {@code Set}.
      * @return A {@code Set} instance over the type {@code E} containing no elements.
      */
     public static <E> Set<E> setOf(Class<E> elementClass) {
@@ -2879,7 +2879,7 @@ public class Literals {
      * is equivalent to:
      * <blockquote>
      * <pre>
-     *   Set&ltString&gt; listOfStrings = Literals.setWith("one", "two", "three");
+     *   Set&ltString&gt; setOfStrings = Literals.setWith("one", "two", "three");
      * </pre>
      * </blockquote>
      * </p>
@@ -3437,40 +3437,650 @@ public class Literals {
         return setBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
     }
 
+    /**
+     * Returns an empty immutable {@code Multiset} instance.
+     * <p/>
+     * <p>This form of literal is most suited to direct assignment to a variable
+     * since in this case, the type {@code E} is inferred from the variable
+     * declaration. For example:
+     * <blockquote>
+     * <pre>
+     *   Multiset&lt;String&gt; strings = multiset();
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param <E> The type of the elements contained in the {@code Multiset}.
+     * @return A {@code Multiset} instance over the type {@code E} containing no elements.
+     */
     public static <E> Multiset<E> multiset() {
         return new MultisetBuilder<E>().build();
     }
 
+    /**
+     * Returns an empty {@code Multiset} instance of the supplied concrete class.
+     * <p/>
+     * <p>The supplied class must have a public no-argument constructor, otherwise
+     * an {@code IllegalArgumentException} will be thrown.</p>
+     *
+     * @param multisetClass The class of the {@code Multiset} implementation to be
+     *                      instantiated.
+     * @param <E>           The type of the elements contained in the {@code Multiset}.
+     * @return A {@code Multiset} instance over the type {@code E} of the concrete
+     *         type specified by the supplied {@code Class}.
+     * @throws IllegalArgumentException if the supplied class does not have
+     *                                  a public no-argument constructor.
+     */
     public static <E> Multiset<E> multiset(Class<? extends Multiset> multisetClass) {
         return new MultisetBuilder<E>().build(multisetClass);
     }
 
+    /**
+     * Returns an empty immutable {@code Multiset} instance over the type
+     * of the supplied {@code Class}.
+     * <p/>
+     * <p>This form of literal is most suited to inline usage such as when passing an
+     * empty multiset as a parameter in a method call since it reads more clearly than
+     * {@link #multiset()}. For example, compare the following:
+     * <blockquote>
+     * <pre>
+     *   public class WordAnalyser {
+     *       public WordAnalyser(Multiset&lt;Word&gt; words) {
+     *           ...
+     *       }
+     *
+     *       ...
+     *   }
+     *
+     *   new WordAnalyser(Literals.&lt;Word&gt;multiset());
+     *   new WordAnalyser(multisetOf(Word.class));
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param elementClass A {@code Class} representing the type of elements
+     *                     contained in this {@code Multiset}.
+     * @param <E>          The type of the elements contained in the {@code Multiset}.
+     * @return A {@code Multiset} instance over the type {@code E} containing no elements.
+     */
     public static <E> Multiset<E> multisetOf(Class<E> elementClass) {
         return new MultisetBuilder<E>().build();
     }
 
+    /**
+     * Returns an immutable {@code Multiset} instance over the type {@code E} containing
+     * all elements from the supplied {@code Iterable}.
+     * <p/>
+     * <p>This form of literal is useful when an object with {@code Multiset} semantics
+     * is needed but only another form of {@code Iterable} is available. For example:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Jpeg&gt; veryManyImagesWithDuplicates = library.loadAll();
+     *   Multiset&lt;Jpeg&gt; imageMultiset = Literals.multisetFrom(veryManyImagesWithDuplicates);
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param elements A {@code Multiset} of elements from which a {@code Multiset} should be
+     *                 constructed.
+     * @param <E>      The type of the elements to be contained in the returned {@code Multiset}.
+     * @return A {@code Multiset} over the type {@code E} containing all unique elements from the
+     *         supplied {@code Iterable}.
+     */
     public static <E> Multiset<E> multisetFrom(Iterable<? extends E> elements) {
         return new MultisetBuilder<E>().with(elements).build();
     }
 
+    /**
+     * Returns an immutable {@code Multiset} instance over the type {@code E} containing
+     * all elements from the supplied array.
+     * <p/>
+     * <p>For example, the following:
+     * <blockquote>
+     * <pre>
+     *   String[] strings = new String[]{"one", "two", "two", "three"};
+     *   Multiset&lt;String&gt; multisetOfStrings = Literals.multisetFrom(strings);
+     * </pre>
+     * </blockquote>
+     * is equivalent to:
+     * <blockquote>
+     * <pre>
+     *   Multiset&ltString&gt; multisetOfStrings = Literals.multisetWith("one", "two", "three");
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param elementArray An array of elements from which a {@code Multiset} should be
+     *                     constructed.
+     * @param <E>          The type of the elements to be contained in the returned {@code Multiset}.
+     * @return A {@code Multiset} over the type {@code E} containing all unique elements from the
+     *         supplied array.
+     */
     public static <E> Multiset<E> multisetFrom(E[] elementArray) {
         return new MultisetBuilder<E>().with(elementArray).build();
     }
 
+    /**
+     * Returns an immutable {@code Multiset} instance over the type {@code E} containing the
+     * supplied element.
+     *
+     * @param e   An element from which to construct a {@code Multiset}.
+     * @param <E> The type of the element contained in the returned {@code Multiset}.
+     * @return A {@code Multiset} instance over type {@code E} containing the supplied element.
+     */
+    public static <E> Multiset<E> multisetWith(E e) {
+        return multisetFrom(iterableWith(e));
+    }
+
+    /**
+     * Returns an immutable {@code Multiset} instance over the type {@code E} containing the
+     * supplied elements.
+     *
+     * @param e1  The first element from which to construct a {@code Multiset}.
+     * @param e2  The second element from which to construct a {@code Multiset}.
+     * @param <E> The type of the elements contained in the returned {@code Multiset}.
+     * @return A {@code Multiset} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Multiset<E> multisetWith(E e1, E e2) {
+        return multisetFrom(iterableWith(e1, e2));
+    }
+
+    /**
+     * Returns an immutable {@code Multiset} instance over the type {@code E} containing the
+     * supplied elements.
+     *
+     * @param e1  The first element from which to construct a {@code Multiset}.
+     * @param e2  The second element from which to construct a {@code Multiset}.
+     * @param e3  The third element from which to construct a {@code Multiset}.
+     * @param <E> The type of the elements contained in the returned {@code Multiset}.
+     * @return A {@code Multiset} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3) {
+        return multisetFrom(iterableWith(e1, e2, e3));
+    }
+
+    /**
+     * Returns an immutable {@code Multiset} instance over the type {@code E} containing the
+     * supplied elements.
+     *
+     * @param e1  The first element from which to construct a {@code Multiset}.
+     * @param e2  The second element from which to construct a {@code Multiset}.
+     * @param e3  The third element from which to construct a {@code Multiset}.
+     * @param e4  The fourth element from which to construct a {@code Multiset}.
+     * @param <E> The type of the elements contained in the returned {@code Multiset}.
+     * @return A {@code Multiset} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4) {
+        return multisetFrom(iterableWith(e1, e2, e3, e4));
+    }
+
+    /**
+     * Returns an immutable {@code Multiset} instance over the type {@code E} containing the
+     * supplied elements.
+     *
+     * @param e1  The first element from which to construct a {@code Multiset}.
+     * @param e2  The second element from which to construct a {@code Multiset}.
+     * @param e3  The third element from which to construct a {@code Multiset}.
+     * @param e4  The fourth element from which to construct a {@code Multiset}.
+     * @param e5  The fifth element from which to construct a {@code Multiset}.
+     * @param <E> The type of the elements contained in the returned {@code Multiset}.
+     * @return A {@code Multiset} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5) {
+        return multisetFrom(iterableWith(e1, e2, e3, e4, e5));
+    }
+
+    /**
+     * Returns an immutable {@code Multiset} instance over the type {@code E} containing the
+     * supplied elements.
+     *
+     * @param e1  The first element from which to construct a {@code Multiset}.
+     * @param e2  The second element from which to construct a {@code Multiset}.
+     * @param e3  The third element from which to construct a {@code Multiset}.
+     * @param e4  The fourth element from which to construct a {@code Multiset}.
+     * @param e5  The fifth element from which to construct a {@code Multiset}.
+     * @param e6  The sixth element from which to construct a {@code Multiset}.
+     * @param <E> The type of the elements contained in the returned {@code Multiset}.
+     * @return A {@code Multiset} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
+
+    /**
+     * Returns an immutable {@code Multiset} instance over the type {@code E} containing the
+     * supplied elements.
+     *
+     * @param e1  The first element from which to construct a {@code Multiset}.
+     * @param e2  The second element from which to construct a {@code Multiset}.
+     * @param e3  The third element from which to construct a {@code Multiset}.
+     * @param e4  The fourth element from which to construct a {@code Multiset}.
+     * @param e5  The fifth element from which to construct a {@code Multiset}.
+     * @param e6  The sixth element from which to construct a {@code Multiset}.
+     * @param e7  The seventh element from which to construct a {@code Multiset}.
+     * @param <E> The type of the elements contained in the returned {@code Multiset}.
+     * @return A {@code Multiset} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    /**
+     * Returns an immutable {@code Multiset} instance over the type {@code E} containing the
+     * supplied elements.
+     *
+     * @param e1  The first element from which to construct a {@code Multiset}.
+     * @param e2  The second element from which to construct a {@code Multiset}.
+     * @param e3  The third element from which to construct a {@code Multiset}.
+     * @param e4  The fourth element from which to construct a {@code Multiset}.
+     * @param e5  The fifth element from which to construct a {@code Multiset}.
+     * @param e6  The sixth element from which to construct a {@code Multiset}.
+     * @param e7  The seventh element from which to construct a {@code Multiset}.
+     * @param e8  The eighth element from which to construct a {@code Multiset}.
+     * @param <E> The type of the elements contained in the returned {@code Multiset}.
+     * @return A {@code Multiset} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    /**
+     * Returns an immutable {@code Multiset} instance over the type {@code E} containing the
+     * supplied elements.
+     *
+     * @param e1  The first element from which to construct a {@code Multiset}.
+     * @param e2  The second element from which to construct a {@code Multiset}.
+     * @param e3  The third element from which to construct a {@code Multiset}.
+     * @param e4  The fourth element from which to construct a {@code Multiset}.
+     * @param e5  The fifth element from which to construct a {@code Multiset}.
+     * @param e6  The sixth element from which to construct a {@code Multiset}.
+     * @param e7  The seventh element from which to construct a {@code Multiset}.
+     * @param e8  The eighth element from which to construct a {@code Multiset}.
+     * @param e9  The ninth element from which to construct a {@code Multiset}.
+     * @param <E> The type of the elements contained in the returned {@code Multiset}.
+     * @return A {@code Multiset} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    /**
+     * Returns an immutable {@code Multiset} instance over the type {@code E} containing the
+     * supplied elements.
+     *
+     * @param e1  The first element from which to construct a {@code Multiset}.
+     * @param e2  The second element from which to construct a {@code Multiset}.
+     * @param e3  The third element from which to construct a {@code Multiset}.
+     * @param e4  The fourth element from which to construct a {@code Multiset}.
+     * @param e5  The fifth element from which to construct a {@code Multiset}.
+     * @param e6  The sixth element from which to construct a {@code Multiset}.
+     * @param e7  The seventh element from which to construct a {@code Multiset}.
+     * @param e8  The eighth element from which to construct a {@code Multiset}.
+     * @param e9  The ninth element from which to construct a {@code Multiset}.
+     * @param e10 The tenth element from which to construct a {@code Multiset}.
+     * @param <E> The type of the elements contained in the returned {@code Multiset}.
+     * @return A {@code Multiset} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    /**
+     * Returns an immutable {@code Multiset} instance over the type {@code E} containing the
+     * supplied elements.
+     *
+     * @param e1    The first element from which to construct a {@code Multiset}.
+     * @param e2    The second element from which to construct a {@code Multiset}.
+     * @param e3    The third element from which to construct a {@code Multiset}.
+     * @param e4    The fourth element from which to construct a {@code Multiset}.
+     * @param e5    The fifth element from which to construct a {@code Multiset}.
+     * @param e6    The sixth element from which to construct a {@code Multiset}.
+     * @param e7    The seventh element from which to construct a {@code Multiset}.
+     * @param e8    The eighth element from which to construct a {@code Multiset}.
+     * @param e9    The ninth element from which to construct a {@code Multiset}.
+     * @param e10   The tenth element from which to construct a {@code Multiset}.
+     * @param e11on The remaining elements from which to construct a {@code Multiset}.
+     * @param <E>   The type of the elements contained in the returned {@code Multiset}.
+     * @return A {@code Multiset} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on).build();
+    }
+
+    /**
+     * Returns a {@code MultisetBuilder} containing no elements.
+     * <p/>
+     * <h4>Example Usage:</h4>
+     * A {@code MultisetBuilder} can be used to assemble a {@code Multiset} as follows:
+     * <blockquote>
+     * <pre>
+     *   Multiset&lt;Boolean&gt; multiset = Literals.&lt;Boolean&gt;multisetBuilder()
+     *           .with(false, true, true)
+     *           .and(false, true, false)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Multiset&lt;Boolean&gt; multiset = Literals.multisetWith(true, true, true, false, false, false);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code MultisetBuilder} is that the multiset can be built up from
+     * individual objects, arrays or existing iterables. See {@link MultisetBuilder} for
+     * further details.
+     *
+     * @param <E> The type of the elements contained in the {@code MultisetBuilder}.
+     * @return A {@code MultisetBuilder} instance over the type {@code E} containing no elements.
+     */
     public static <E> MultisetBuilder<E> multisetBuilder() {
         return new MultisetBuilder<E>();
     }
 
+    /**
+     * Returns a {@code MultisetBuilder} over the type of the supplied {@code Class}
+     * containing no elements.
+     * <p/>
+     * <h4>Example Usage:</h4>
+     * A {@code MultisetBuilder} can be used to assemble a {@code Multiset} as follows:
+     * <blockquote>
+     * <pre>
+     *   Multiset&lt;Long&gt; multiset = multisetBuilderOf(Long.class)
+     *           .with(1L, 1L, 2L)
+     *           .and(4L, 5L, 5L)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Multiset&lt;Long&gt; multiset = Literals.multisetWith(1L, 1L, 2L, 4L, 5L, 5L);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code MultisetBuilder} is that the multiset can be built up from
+     * individual objects, arrays or existing iterables. See {@link MultisetBuilder} for
+     * further details.
+     *
+     * @param elementClass A {@code Class} representing the type of elements
+     *                     contained in this {@code MultisetBuilder}
+     * @param <E>          The type of the elements contained in the {@code MultisetBuilder}.
+     * @return A {@code MultisetBuilder} instance over the type {@code E} containing no
+     *         elements.
+     */
     public static <E> MultisetBuilder<E> multisetBuilderOf(Class<E> elementClass) {
         return new MultisetBuilder<E>();
     }
 
+    /**
+     * Returns a {@code MultisetBuilder} over type {@code E} initialised with the elements
+     * contained in the supplied {@code Iterable}.
+     * <p/>
+     * <h4>Example Usage:</h4>
+     * A {@code MultisetBuilder} can be used to assemble a {@code Multiset} from two existing
+     * {@code Collection} instances as follows:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; firstCollection = Literals.collectionWith(1, 2, 3);
+     *   Collection&lt;Integer&gt; secondCollection = Literals.collectionWith(3, 4, 5);
+     *   Multiset&lt;Integer&gt; multiset = multisetBuilderFrom(firstCollection)
+     *           .with(secondCollection)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Multiset&lt;Integer&gt; multiset = Literals.multisetWith(1, 2, 3, 4, 5);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code MultisetBuilder} is that the multiset can be built up from
+     * individual objects, arrays or existing iterables. See {@link MultisetBuilder} for
+     * further details.
+     *
+     * @param elements An {@code Iterable} containing elements with which the
+     *                 {@code MultisetBuilder} should be initialised.
+     * @param <E>      The type of the elements contained in the {@code MultisetBuilder}.
+     * @return A {@code MultisetBuilder} instance over the type {@code E} containing
+     *         the elements from the supplied {@code Iterable}.
+     */
     public static <E> MultisetBuilder<E> multisetBuilderFrom(Iterable<? extends E> elements) {
         return new MultisetBuilder<E>().with(elements);
     }
 
+    /**
+     * Returns a {@code MultisetBuilder} over type {@code E} initialised with the elements
+     * contained in the supplied array.
+     * <p/>
+     * <h4>Example Usage:</h4>
+     * A {@code MultisetBuilder} can be used to assemble a {@code Multiset} from two existing
+     * arrays as follows:
+     * <blockquote>
+     * <pre>
+     *   Integer[] firstArray = new Integer[]{1, 2, 3};
+     *   Integer[] secondArray = new Integer[]{3, 4, 5};
+     *   Multiset&lt;Integer&gt; multiset = multisetBuilderFrom(firstArray)
+     *           .with(secondArray)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Multiset&lt;Integer&gt; multiset = Literals.multisetWith(1, 2, 3, 4, 5);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code MultisetBuilder} is that the multiset can be built up from
+     * individual objects, arrays or existing iterables. See {@link MultisetBuilder} for
+     * further details.
+     *
+     * @param elementArray An array containing elements with which the
+     *                     {@code MultisetBuilder} should be initialised.
+     * @param <E>          The type of the elements contained in the {@code MultisetBuilder}.
+     * @return A {@code MultisetBuilder} instance over the type {@code E} containing
+     *         the elements from the supplied array.
+     */
     public static <E> MultisetBuilder<E> multisetBuilderFrom(E[] elementArray) {
         return new MultisetBuilder<E>().with(elementArray);
+    }
+
+    /**
+     * Returns a {@code MultisetBuilder} instance over the type {@code E} containing the supplied
+     * element.
+     *
+     * @param e   The element to be added to the {@code MultisetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code MultisetBuilder}.
+     * @return A {@code MultisetBuilder} instance over type {@code E} containing the supplied
+     *         element.
+     */
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e) {
+        return multisetBuilderFrom(iterableWith(e));
+    }
+
+    /**
+     * Returns a {@code MultisetBuilder} instance over the type {@code E} containing the supplied
+     * elements.
+     *
+     * @param e1  The first element to be added to the {@code MultisetBuilder}.
+     * @param e2  The second element to be added to the {@code MultisetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code MultisetBuilder}.
+     * @return A {@code MultisetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2) {
+        return multisetBuilderFrom(iterableWith(e1, e2));
+    }
+
+    /**
+     * Returns a {@code MultisetBuilder} instance over the type {@code E} containing the supplied
+     * elements.
+     *
+     * @param e1  The first element to be added to the {@code MultisetBuilder}.
+     * @param e2  The second element to be added to the {@code MultisetBuilder}.
+     * @param e3  The third element to be added to the {@code MultisetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code MultisetBuilder}.
+     * @return A {@code MultisetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3));
+    }
+
+    /**
+     * Returns a {@code MultisetBuilder} instance over the type {@code E} containing the supplied
+     * elements.
+     *
+     * @param e1  The first element to be added to the {@code MultisetBuilder}.
+     * @param e2  The second element to be added to the {@code MultisetBuilder}.
+     * @param e3  The third element to be added to the {@code MultisetBuilder}.
+     * @param e4  The fourth element to be added to the {@code MultisetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code MultisetBuilder}.
+     * @return A {@code MultisetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4));
+    }
+
+    /**
+     * Returns a {@code MultisetBuilder} instance over the type {@code E} containing the supplied
+     * elements.
+     *
+     * @param e1  The first element to be added to the {@code MultisetBuilder}.
+     * @param e2  The second element to be added to the {@code MultisetBuilder}.
+     * @param e3  The third element to be added to the {@code MultisetBuilder}.
+     * @param e4  The fourth element to be added to the {@code MultisetBuilder}.
+     * @param e5  The fifth element to be added to the {@code MultisetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code MultisetBuilder}.
+     * @return A {@code MultisetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5));
+    }
+
+    /**
+     * Returns a {@code MultisetBuilder} instance over the type {@code E} containing the supplied
+     * elements.
+     *
+     * @param e1  The first element to be added to the {@code MultisetBuilder}.
+     * @param e2  The second element to be added to the {@code MultisetBuilder}.
+     * @param e3  The third element to be added to the {@code MultisetBuilder}.
+     * @param e4  The fourth element to be added to the {@code MultisetBuilder}.
+     * @param e5  The fifth element to be added to the {@code MultisetBuilder}.
+     * @param e6  The sixth element to be added to the {@code MultisetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code MultisetBuilder}.
+     * @return A {@code MultisetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
+
+    /**
+     * Returns a {@code MultisetBuilder} instance over the type {@code E} containing the supplied
+     * elements.
+     *
+     * @param e1  The first element to be added to the {@code MultisetBuilder}.
+     * @param e2  The second element to be added to the {@code MultisetBuilder}.
+     * @param e3  The third element to be added to the {@code MultisetBuilder}.
+     * @param e4  The fourth element to be added to the {@code MultisetBuilder}.
+     * @param e5  The fifth element to be added to the {@code MultisetBuilder}.
+     * @param e6  The sixth element to be added to the {@code MultisetBuilder}.
+     * @param e7  The seventh element to be added to the {@code MultisetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code MultisetBuilder}.
+     * @return A {@code MultisetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    /**
+     * Returns a {@code MultisetBuilder} instance over the type {@code E} containing the supplied
+     * elements.
+     *
+     * @param e1  The first element to be added to the {@code MultisetBuilder}.
+     * @param e2  The second element to be added to the {@code MultisetBuilder}.
+     * @param e3  The third element to be added to the {@code MultisetBuilder}.
+     * @param e4  The fourth element to be added to the {@code MultisetBuilder}.
+     * @param e5  The fifth element to be added to the {@code MultisetBuilder}.
+     * @param e6  The sixth element to be added to the {@code MultisetBuilder}.
+     * @param e7  The seventh element to be added to the {@code MultisetBuilder}.
+     * @param e8  The eighth element to be added to the {@code MultisetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code MultisetBuilder}.
+     * @return A {@code MultisetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    /**
+     * Returns a {@code MultisetBuilder} instance over the type {@code E} containing the supplied
+     * elements.
+     *
+     * @param e1  The first element to be added to the {@code MultisetBuilder}.
+     * @param e2  The second element to be added to the {@code MultisetBuilder}.
+     * @param e3  The third element to be added to the {@code MultisetBuilder}.
+     * @param e4  The fourth element to be added to the {@code MultisetBuilder}.
+     * @param e5  The fifth element to be added to the {@code MultisetBuilder}.
+     * @param e6  The sixth element to be added to the {@code MultisetBuilder}.
+     * @param e7  The seventh element to be added to the {@code MultisetBuilder}.
+     * @param e8  The eighth element to be added to the {@code MultisetBuilder}.
+     * @param e9  The ninth element to be added to the {@code MultisetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code MultisetBuilder}.
+     * @return A {@code MultisetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    /**
+     * Returns a {@code MultisetBuilder} instance over the type {@code E} containing the supplied
+     * elements.
+     *
+     * @param e1  The first element to be added to the {@code MultisetBuilder}.
+     * @param e2  The second element to be added to the {@code MultisetBuilder}.
+     * @param e3  The third element to be added to the {@code MultisetBuilder}.
+     * @param e4  The fourth element to be added to the {@code MultisetBuilder}.
+     * @param e5  The fifth element to be added to the {@code MultisetBuilder}.
+     * @param e6  The sixth element to be added to the {@code MultisetBuilder}.
+     * @param e7  The seventh element to be added to the {@code MultisetBuilder}.
+     * @param e8  The eighth element to be added to the {@code MultisetBuilder}.
+     * @param e9  The ninth element to be added to the {@code MultisetBuilder}.
+     * @param e10 The tenth element to be added to the {@code MultisetBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code MultisetBuilder}.
+     * @return A {@code MultisetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    /**
+     * Returns a {@code MultisetBuilder} instance over the type {@code E} containing the supplied
+     * elements.
+     *
+     * @param e1    The first element to be added to the {@code MultisetBuilder}.
+     * @param e2    The second element to be added to the {@code MultisetBuilder}.
+     * @param e3    The third element to be added to the {@code MultisetBuilder}.
+     * @param e4    The fourth element to be added to the {@code MultisetBuilder}.
+     * @param e5    The fifth element to be added to the {@code MultisetBuilder}.
+     * @param e6    The sixth element to be added to the {@code MultisetBuilder}.
+     * @param e7    The seventh element to be added to the {@code MultisetBuilder}.
+     * @param e8    The eighth element to be added to the {@code MultisetBuilder}.
+     * @param e9    The ninth element to be added to the {@code MultisetBuilder}.
+     * @param e10   The tenth element to be added to the {@code MultisetBuilder}.
+     * @param e11on The remaining elements to be added to the {@code MultisetBuilder}. The elements
+     *              will be added to the {@code MultisetBuilder} in the order they are defined in the
+     *              variadic argument.
+     * @param <E>   The type of the elements contained in the returned {@code MultisetBuilder}.
+     * @return A {@code MultisetBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
     }
 
     public static <K, V> Map<K, V> map() {
@@ -4581,94 +5191,6 @@ public class Literals {
 
     public static <R, S, T, U, V, W, X, Y, Z> Nonuple<R, S, T, U, V, W, X, Y, Z> tuple(R first, S second, T third, U fourth, V fifth, W sixth, X seventh, Y eighth, Z ninth) {
         return new Nonuple<R, S, T, U, V, W, X, Y, Z>(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);
-    }
-
-    public static <E> Multiset<E> multisetWith(E e) {
-        return multisetFrom(iterableWith(e));
-    }
-
-    public static <E> Multiset<E> multisetWith(E e1, E e2) {
-        return multisetFrom(iterableWith(e1, e2));
-    }
-
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3) {
-        return multisetFrom(iterableWith(e1, e2, e3));
-    }
-
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4) {
-        return multisetFrom(iterableWith(e1, e2, e3, e4));
-    }
-
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5) {
-        return multisetFrom(iterableWith(e1, e2, e3, e4, e5));
-    }
-
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6) {
-        return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6));
-    }
-
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
-        return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
-    }
-
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
-        return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
-    }
-
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
-        return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
-    }
-
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
-        return multisetFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
-    }
-
-    public static <E> Multiset<E> multisetWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
-        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on).build();
-    }
-
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e) {
-        return multisetBuilderFrom(iterableWith(e));
-    }
-
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2) {
-        return multisetBuilderFrom(iterableWith(e1, e2));
-    }
-
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3) {
-        return multisetBuilderFrom(iterableWith(e1, e2, e3));
-    }
-
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4) {
-        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4));
-    }
-
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5) {
-        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5));
-    }
-
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) {
-        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6));
-    }
-
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
-        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
-    }
-
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
-        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
-    }
-
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
-        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
-    }
-
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
-        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
-    }
-
-    public static <E> MultisetBuilder<E> multisetBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
-        return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
     }
 
     public static <K, V> Map<K, V> mapWithKeyValuePair(K k1, V v1) {
