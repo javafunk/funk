@@ -22,7 +22,7 @@ public class Literals {
 
     /**
      * Returns an empty immutable {@code Iterable} instance.
-     *
+     * <p/>
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
      * declaration. For example:
@@ -42,7 +42,7 @@ public class Literals {
 
     /**
      * Returns an empty immutable {@code Iterable} instance of the supplied concrete class.
-     *
+     * <p/>
      * <p>The supplied class must have a public no-argument constructor, otherwise
      * an {@code IllegalArgumentException} will be thrown.</p>
      *
@@ -62,7 +62,7 @@ public class Literals {
     /**
      * Returns an empty immutable {@code Iterable} instance over the type
      * of the supplied {@code Class}.
-     *
+     * <p/>
      * <p>This form of literal is most suited to inline usage such as when passing an
      * empty iterable as a parameter in a method call since it reads more clearly than
      * {@link #iterable()}. For example, compare the following:
@@ -96,7 +96,7 @@ public class Literals {
      * containing all elements from the supplied {@code Iterable}. The order of
      * the elements in the resulting {@code Iterable} is determined by the order in
      * which they are yielded from the supplied {@code Iterable}.
-     *
+     * <p/>
      * <p>This form of literal is useful when an immutable copy of an {@code Iterable}
      * is required. For example:
      * <blockquote>
@@ -128,7 +128,7 @@ public class Literals {
      * containing all elements from the supplied array. The order of the elements
      * in the resulting {@code Iterable} is the same as the order of the elements
      * in the array.
-     *
+     * <p/>
      * <p>For example, the following:
      * <blockquote>
      * <pre>
@@ -333,7 +333,7 @@ public class Literals {
      * Returns an immutable {@code Iterable} instance over the type {@code E} containing the
      * supplied elements. The order of the resultant {@code Iterable} is the same as the order
      * of the elements in the argument list.
-     *
+     * <p/>
      * <p>Note that this literal uses a generic varargs parameter as the last argument in the
      * argument list and as such will cause unchecked cast warnings. Explicit argument
      * lists for up to ten arguments have been provided for convenience. In order to avoid
@@ -359,7 +359,7 @@ public class Literals {
 
     /**
      * Returns an {@code IterableBuilder} containing no elements.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * An {@code IterableBuilder} can be used to assemble an {@code Iterable} as follows:
      * <blockquote>
@@ -390,7 +390,7 @@ public class Literals {
     /**
      * Returns an {@code IterableBuilder} over the type of the supplied {@code Class}
      * containing no elements.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * An {@code IterableBuilder} can be used to assemble an {@code Iterable} as follows:
      * <blockquote>
@@ -424,7 +424,7 @@ public class Literals {
     /**
      * Returns an {@code IterableBuilder} over type {@code E} initialised with the elements
      * contained in the supplied {@code Iterable}.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * An {@code IterableBuilder} can be used to assemble an {@code Iterable} from two existing
      * {@code Collection} instances as follows:
@@ -460,7 +460,7 @@ public class Literals {
     /**
      * Returns an {@code IterableBuilder} over type {@code E} initialised with the elements
      * contained in the supplied array.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * An {@code IterableBuilder} can be used to assemble an {@code Iterable} from two existing
      * arrays as follows:
@@ -681,7 +681,7 @@ public class Literals {
      * Returns an {@code IterableBuilder} instance over the type {@code E} containing the
      * supplied elements. The supplied elements are added to the {@code IterableBuilder}
      * instance in the same order as they are defined in the argument list.
-     *
+     * <p/>
      * <p>Note that this literal uses a generic varargs parameter as the last argument in the
      * argument list and as such will cause unchecked cast warnings. Explicit argument
      * lists for up to ten arguments have been provided for convenience. In order to avoid
@@ -711,7 +711,7 @@ public class Literals {
 
     /**
      * Returns an empty immutable {@code Iterator} instance.
-     *
+     * <p/>
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
      * declaration. For example:
@@ -731,7 +731,7 @@ public class Literals {
 
     /**
      * Returns an empty immutable {@code Iterator} instance of the supplied concrete class.
-     *
+     * <p/>
      * <p>The supplied class must have a public no-argument constructor, otherwise
      * an {@code IllegalArgumentException} will be thrown.</p>
      *
@@ -750,7 +750,7 @@ public class Literals {
     /**
      * Returns an empty immutable {@code Iterator} instance over the type
      * of the supplied {@code Class}.
-     *
+     * <p/>
      * <p>This form of literal is most suited to inline usage such as when passing an
      * empty iterator as a parameter in a method call since it reads more clearly than
      * {@link #iterator()}. For example, compare the following:
@@ -784,7 +784,7 @@ public class Literals {
      * containing all elements from the supplied {@code Iterable}. The order of
      * the elements in the resulting {@code Iterator} is determined by the order in
      * which they are yielded from the supplied {@code Iterable}.
-     *
+     * <p/>
      * <p>This form of literal is useful when an immutable {@code Iterator} from an
      * {@code Iterable} is required. For example:
      * <blockquote>
@@ -818,7 +818,7 @@ public class Literals {
      * containing all elements from the supplied array. The order of the elements
      * in the resulting {@code Iterator} is the same as the order of the elements
      * in the array.
-     *
+     * <p/>
      * <p>For example, the following:
      * <blockquote>
      * <pre>
@@ -1023,7 +1023,7 @@ public class Literals {
      * Returns an immutable {@code Iterator} instance over the type {@code E} containing the
      * supplied elements. The order of the resultant {@code Iterator} is the same as the order
      * of the elements in the argument list.
-     *
+     * <p/>
      * <p>Note that this literal uses a generic varargs parameter as the last argument in the
      * argument list and as such will cause unchecked cast warnings. Explicit argument
      * lists for up to ten arguments have been provided for convenience. In order to avoid
@@ -1049,7 +1049,7 @@ public class Literals {
 
     /**
      * Returns an {@code IteratorBuilder} containing no elements.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * An {@code IteratorBuilder} can be used to assemble an {@code Iterator} as follows:
      * <blockquote>
@@ -1080,7 +1080,7 @@ public class Literals {
     /**
      * Returns an {@code IteratorBuilder} over the type of the supplied {@code Class}
      * containing no elements.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * An {@code IteratorBuilder} can be used to assemble an {@code Iterator} as follows:
      * <blockquote>
@@ -1114,7 +1114,7 @@ public class Literals {
     /**
      * Returns an {@code IteratorBuilder} over type {@code E} initialised with the elements
      * contained in the supplied {@code Iterator}.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * An {@code IteratorBuilder} can be used to assemble an {@code Iterator} from two existing
      * {@code Collection} instances as follows:
@@ -1150,7 +1150,7 @@ public class Literals {
     /**
      * Returns an {@code IteratorBuilder} over type {@code E} initialised with the elements
      * contained in the supplied array.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * An {@code IteratorBuilder} can be used to assemble an {@code Iterator} from two existing
      * arrays as follows:
@@ -1371,7 +1371,7 @@ public class Literals {
      * Returns an {@code IteratorBuilder} instance over the type {@code E} containing the
      * supplied elements. The supplied elements are added to the {@code IteratorBuilder}
      * instance in the same order as they are defined in the argument list.
-     *
+     * <p/>
      * <p>Note that this literal uses a generic varargs parameter as the last argument in the
      * argument list and as such will cause unchecked cast warnings. Explicit argument
      * lists for up to ten arguments have been provided for convenience. In order to avoid
@@ -1398,46 +1398,693 @@ public class Literals {
     public static <E> IteratorBuilder<E> iteratorBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
         return iteratorBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
     }
-    
+
+    /**
+     * Returns an empty immutable {@code Collection} instance.
+     * <p/>
+     * <p>This form of literal is most suited to direct assignment to a variable
+     * since in this case, the type {@code E} is inferred from the variable
+     * declaration. For example:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Long&gt; numbers = collection();
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param <E> The type of the elements contained in the {@code Collection}.
+     * @return A {@code Collection} instance over the type {@code E} containing no elements.
+     */
     public static <E> Collection<E> collection() {
         return new CollectionBuilder<E>().build();
     }
 
+    /**
+     * Returns an empty immutable {@code Collection} instance of the supplied concrete class.
+     * <p/>
+     * <p>The supplied class must have a public no-argument constructor, otherwise
+     * an {@code IllegalArgumentException} will be thrown.</p>
+     *
+     * @param collectionClass The class of the {@code Collection} implementation to be
+     *                        instantiated.
+     * @param <E>             The type of the elements contained in the {@code Collection}.
+     * @return A {@code Collection} instance over the type {@code E} of the concrete
+     *         type specified by the supplied {@code Class}.
+     * @throws IllegalArgumentException if the supplied class does not have
+     *                                  a public no-argument constructor.
+     */
     public static <E> Collection<E> collection(Class<? extends Collection> collectionClass) {
         return new CollectionBuilder<E>().build(collectionClass);
     }
 
+    /**
+     * Returns an empty immutable {@code Collection} instance over the type
+     * of the supplied {@code Class}.
+     * <p/>
+     * <p>This form of literal is most suited to inline usage such as when passing an
+     * empty collection as a parameter in a method call since it reads more clearly than
+     * {@link #collection()}. For example, compare the following:
+     * <blockquote>
+     * <pre>
+     *   public class Tree {
+     *       ...
+     *
+     *       public void addNode(Node node, Collection&lt;Attribute&gt; attributes) {
+     *           ...
+     *       }
+     *   }
+     *
+     *   tree.addNode(new LeafNode(), Literals.&lt;Attribute&gt;collection());
+     *   tree.addNode(new LeafNode(), collectionOf(Attribute.class));
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param elementClass A {@code Class} representing the type of elements
+     *                     contained in this {@code Collection}
+     * @param <E>          The type of the elements contained in the {@code Collection}.
+     * @return A {@code Collection} instance over the type {@code E} containing no elements.
+     */
     public static <E> Collection<E> collectionOf(Class<E> elementClass) {
         return new CollectionBuilder<E>().build();
     }
 
+    /**
+     * Returns an immutable {@code Collection} instance over the type {@code E}
+     * containing all elements from the supplied {@code Iterable}. The order of
+     * the elements in the resulting {@code Collection} is determined by the order in
+     * which they are yielded from the supplied {@code Iterable}.
+     * <p/>
+     * <p>This form of literal is useful when an object conforming to the {@code Collection}
+     * interface is required and only an {@code Iterable} is available. For example:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Word&gt; words = book.getWords();
+     *   statusBar.displayWordCount(collectionFrom(words).size());
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param elements An {@code Iterable} of elements from which a {@code Collection} should
+     *                 be constructed.
+     * @param <E>      The type of the elements to be contained in the returned
+     *                 {@code Collection}.
+     * @return A {@code Collection} over the type {@code E} containing all elements from the
+     *         supplied {@code Iterable} in the order they are yielded.
+     */
     public static <E> Collection<E> collectionFrom(Iterable<? extends E> elements) {
         return new CollectionBuilder<E>().with(elements).build();
     }
 
+    /**
+     * Returns an immutable {@code Collection} instance over the type {@code E}
+     * containing all elements from the supplied array. The order of the elements
+     * in the resulting {@code Collection} is the same as the order of the elements
+     * in the array.
+     * <p/>
+     * <p>For example, the following:
+     * <blockquote>
+     * <pre>
+     *   String[] strings = new String[]{"one", "one", "two", "three"};
+     *   Collection&lt;String&gt; collectionOfStrings = Literals.collectionFrom(strings);
+     * </pre>
+     * </blockquote>
+     * is equivalent to:
+     * <blockquote>
+     * <pre>
+     *   Collection&ltString&gt; collectionOfStrings = Literals.collectionWith("one", "one", "two", "three");
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param elementArray An array of elements from which a {@code Collection} should be
+     *                     constructed.
+     * @param <E>          The type of the elements to be contained in the returned
+     *                     {@code Collection}.
+     * @return A {@code Collection} over the type {@code E} containing all elements from the
+     *         supplied array in the same order as the supplied array.
+     */
     public static <E> Collection<E> collectionFrom(E[] elementArray) {
         return new CollectionBuilder<E>().with(elementArray).build();
     }
 
+    /**
+     * Returns an immutable {@code Collection} instance over the type {@code E} containing the
+     * supplied element.
+     *
+     * @param e   An element from which to construct a {@code Collection}.
+     * @param <E> The type of the element contained in the returned {@code Collection}.
+     * @return A {@code Collection} instance over type {@code E} containing the supplied element.
+     */
+    public static <E> Collection<E> collectionWith(E e) {
+        return collectionFrom(iterableWith(e));
+    }
+
+    /**
+     * Returns an immutable {@code Collection} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Collection} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct a {@code Collection}.
+     * @param e2  The second element from which to construct a {@code Collection}.
+     * @param <E> The type of the elements contained in the returned {@code Collection}.
+     * @return A {@code Collection} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Collection<E> collectionWith(E e1, E e2) {
+        return collectionFrom(iterableWith(e1, e2));
+    }
+
+    /**
+     * Returns an immutable {@code Collection} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Collection} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct a {@code Collection}.
+     * @param e2  The second element from which to construct a {@code Collection}.
+     * @param e3  The third element from which to construct a {@code Collection}.
+     * @param <E> The type of the elements contained in the returned {@code Collection}.
+     * @return A {@code Collection} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3) {
+        return collectionFrom(iterableWith(e1, e2, e3));
+    }
+
+    /**
+     * Returns an immutable {@code Collection} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Collection} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct a {@code Collection}.
+     * @param e2  The second element from which to construct a {@code Collection}.
+     * @param e3  The third element from which to construct a {@code Collection}.
+     * @param e4  The fourth element from which to construct a {@code Collection}.
+     * @param <E> The type of the elements contained in the returned {@code Collection}.
+     * @return A {@code Collection} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4) {
+        return collectionFrom(iterableWith(e1, e2, e3, e4));
+    }
+
+    /**
+     * Returns an immutable {@code Collection} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Collection} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct a {@code Collection}.
+     * @param e2  The second element from which to construct a {@code Collection}.
+     * @param e3  The third element from which to construct a {@code Collection}.
+     * @param e4  The fourth element from which to construct a {@code Collection}.
+     * @param e5  The fifth element from which to construct a {@code Collection}.
+     * @param <E> The type of the elements contained in the returned {@code Collection}.
+     * @return A {@code Collection} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5) {
+        return collectionFrom(iterableWith(e1, e2, e3, e4, e5));
+    }
+
+    /**
+     * Returns an immutable {@code Collection} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Collection} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct a {@code Collection}.
+     * @param e2  The second element from which to construct a {@code Collection}.
+     * @param e3  The third element from which to construct a {@code Collection}.
+     * @param e4  The fourth element from which to construct a {@code Collection}.
+     * @param e5  The fifth element from which to construct a {@code Collection}.
+     * @param e6  The sixth element from which to construct a {@code Collection}.
+     * @param <E> The type of the elements contained in the returned {@code Collection}.
+     * @return A {@code Collection} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
+
+    /**
+     * Returns an immutable {@code Collection} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Collection} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct a {@code Collection}.
+     * @param e2  The second element from which to construct a {@code Collection}.
+     * @param e3  The third element from which to construct a {@code Collection}.
+     * @param e4  The fourth element from which to construct a {@code Collection}.
+     * @param e5  The fifth element from which to construct a {@code Collection}.
+     * @param e6  The sixth element from which to construct a {@code Collection}.
+     * @param e7  The seventh element from which to construct a {@code Collection}.
+     * @param <E> The type of the elements contained in the returned {@code Collection}.
+     * @return A {@code Collection} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    /**
+     * Returns an immutable {@code Collection} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Collection} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct a {@code Collection}.
+     * @param e2  The second element from which to construct a {@code Collection}.
+     * @param e3  The third element from which to construct a {@code Collection}.
+     * @param e4  The fourth element from which to construct a {@code Collection}.
+     * @param e5  The fifth element from which to construct a {@code Collection}.
+     * @param e6  The sixth element from which to construct a {@code Collection}.
+     * @param e7  The seventh element from which to construct a {@code Collection}.
+     * @param e8  The eighth element from which to construct a {@code Collection}.
+     * @param <E> The type of the elements contained in the returned {@code Collection}.
+     * @return A {@code Collection} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    /**
+     * Returns an immutable {@code Collection} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Collection} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct a {@code Collection}.
+     * @param e2  The second element from which to construct a {@code Collection}.
+     * @param e3  The third element from which to construct a {@code Collection}.
+     * @param e4  The fourth element from which to construct a {@code Collection}.
+     * @param e5  The fifth element from which to construct a {@code Collection}.
+     * @param e6  The sixth element from which to construct a {@code Collection}.
+     * @param e7  The seventh element from which to construct a {@code Collection}.
+     * @param e8  The eighth element from which to construct a {@code Collection}.
+     * @param e9  The ninth element from which to construct a {@code Collection}.
+     * @param <E> The type of the elements contained in the returned {@code Collection}.
+     * @return A {@code Collection} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    /**
+     * Returns an immutable {@code Collection} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Collection} is the same as the order
+     * of the elements in the argument list.
+     *
+     * @param e1  The first element from which to construct a {@code Collection}.
+     * @param e2  The second element from which to construct a {@code Collection}.
+     * @param e3  The third element from which to construct a {@code Collection}.
+     * @param e4  The fourth element from which to construct a {@code Collection}.
+     * @param e5  The fifth element from which to construct a {@code Collection}.
+     * @param e6  The sixth element from which to construct a {@code Collection}.
+     * @param e7  The seventh element from which to construct a {@code Collection}.
+     * @param e8  The eighth element from which to construct a {@code Collection}.
+     * @param e9  The ninth element from which to construct a {@code Collection}.
+     * @param e10 The tenth element from which to construct a {@code Collection}.
+     * @param <E> The type of the elements contained in the returned {@code Collection}.
+     * @return A {@code Collection} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    /**
+     * Returns an immutable {@code Collection} instance over the type {@code E} containing the
+     * supplied elements. The order of the resultant {@code Collection} is the same as the order
+     * of the elements in the argument list.
+     * <p/>
+     * <p>Note that this literal uses a generic varargs parameter as the last argument in the
+     * argument list and as such will cause unchecked cast warnings. Explicit argument
+     * lists for up to ten arguments have been provided for convenience. In order to avoid
+     * the unchecked cast warnings, an {@link CollectionBuilder} can be used instead.</p>
+     *
+     * @param e1    The first element from which to construct a {@code Collection}.
+     * @param e2    The second element from which to construct a {@code Collection}.
+     * @param e3    The third element from which to construct a {@code Collection}.
+     * @param e4    The fourth element from which to construct a {@code Collection}.
+     * @param e5    The fifth element from which to construct a {@code Collection}.
+     * @param e6    The sixth element from which to construct a {@code Collection}.
+     * @param e7    The seventh element from which to construct a {@code Collection}.
+     * @param e8    The eighth element from which to construct a {@code Collection}.
+     * @param e9    The ninth element from which to construct a {@code Collection}.
+     * @param e10   The tenth element from which to construct a {@code Collection}.
+     * @param e11on The remaining elements from which to construct a {@code Collection}.
+     * @param <E>   The type of the elements contained in the returned {@code Collection}.
+     * @return a {@code Collection} instance over type {@code E} containing the supplied elements.
+     */
+    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on).build();
+    }
+
+    /**
+     * Returns a {@code CollectionBuilder} containing no elements.
+     * <p/>
+     * <h4>Example Usage:</h4>
+     * A {@code CollectionBuilder} can be used to assemble a {@code Collection} as follows:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Float&gt; collection = Literals.&lt;Float&gt;collectionBuilder()
+     *           .with(1.34F, 2.2F, 3.5F)
+     *           .and(4F, 5.78F, 6.21F)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Float&gt; collection = Literals.collectionWith(1.34F, 2.2F, 3.5F, 4F, 5.78F, 6.21F);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code CollectionBuilder} is that the collection can be built up from
+     * individual objects, arrays or existing iterables. See {@link CollectionBuilder} for
+     * further details.
+     *
+     * @param <E> The type of the elements contained in the {@code CollectionBuilder}.
+     * @return A {@code CollectionBuilder} instance over the type {@code E} containing no elements.
+     */
     public static <E> CollectionBuilder<E> collectionBuilder() {
         return new CollectionBuilder<E>();
     }
 
+    /**
+     * Returns a {@code CollectionBuilder} over the type of the supplied {@code Class}
+     * containing no elements.
+     * <p/>
+     * <h4>Example Usage:</h4>
+     * A {@code CollectionBuilder} can be used to assemble a {@code Collection} as follows:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; collection = collectionBuilderOf(Integer.class)
+     *           .with(new Integer[]{65, 72})
+     *           .and(95, 43, 20)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; collection = Literals.collectionWith(65, 72, 95, 43, 20);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code CollectionBuilder} is that the collection can be built
+     * up from individual objects, arrays or existing iterables. See {@link CollectionBuilder}
+     * for further details.
+     *
+     * @param elementClass A {@code Class} representing the type of elements
+     *                     contained in this {@code CollectionBuilder}
+     * @param <E>          The type of the elements contained in the {@code CollectionBuilder}.
+     * @return A {@code CollectionBuilder} instance over the type {@code E} containing no
+     *         elements.
+     */
     public static <E> CollectionBuilder<E> collectionBuilderOf(Class<E> elementClass) {
         return new CollectionBuilder<E>();
     }
 
+    /**
+     * Returns a {@code CollectionBuilder} over type {@code E} initialised with the elements
+     * contained in the supplied {@code Collection}.
+     * <p/>
+     * <h4>Example Usage:</h4>
+     * A {@code CollectionBuilder} can be used to assemble a {@code Collection} from two existing
+     * {@code List} instances as follows:
+     * <blockquote>
+     * <pre>
+     *   List&lt;String&gt; firstList = Literals.listWith("a", "b", "c");
+     *   List&lt;String&gt; secondList = Literals.listWith("d", "e", "f");
+     *   Collection&lt;String&gt; collection = collectionBuilderFrom(firstList)
+     *           .with(secondList)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;String&gt; collection = Literals.collectionWith("a", "b", "c", "d", "e", "f");
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code CollectionBuilder} is that the collection can be built up from
+     * individual objects, arrays or existing iterables. See {@link CollectionBuilder} for
+     * further details.
+     *
+     * @param elements An {@code Collection} containing elements with which the
+     *                 {@code CollectionBuilder} should be initialised.
+     * @param <E>      The type of the elements contained in the {@code CollectionBuilder}.
+     * @return A {@code CollectionBuilder} instance over the type {@code E} containing
+     *         the elements from the supplied {@code Iterable}.
+     */
     public static <E> CollectionBuilder<E> collectionBuilderFrom(Iterable<? extends E> elements) {
         return new CollectionBuilder<E>().with(elements);
     }
 
+    /**
+     * Returns a {@code CollectionBuilder} over type {@code E} initialised with the elements
+     * contained in the supplied array.
+     * <p/>
+     * <h4>Example Usage:</h4>
+     * A {@code CollectionBuilder} can be used to assemble a {@code Collection} from two existing
+     * arrays as follows:
+     * <blockquote>
+     * <pre>
+     *   Integer[] firstArray = new Integer[]{1, 2, 3};
+     *   Integer[] secondArray = new Long[]{3, 4, 5};
+     *   Collection&lt;Integer&gt; collection = collectionBuilderFrom(firstArray)
+     *           .with(secondArray)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; collection = Literals.collectionWith(1, 2, 3, 3, 4, 5);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code CollectionBuilder} is that the collection can be built up from
+     * individual objects, arrays or existing iterables. See {@link CollectionBuilder} for
+     * further details.
+     *
+     * @param elementArray An array containing elements with which the
+     *                     {@code CollectionBuilder} should be initialised.
+     * @param <E>          The type of the elements contained in the {@code CollectionBuilder}.
+     * @return A {@code CollectionBuilder} instance over the type {@code E} containing
+     *         the elements from the supplied array.
+     */
     public static <E> CollectionBuilder<E> collectionBuilderFrom(E[] elementArray) {
         return new CollectionBuilder<E>().with(elementArray);
     }
 
     /**
-     * Returns an empty immutable {@code List} instance.
+     * Returns a {@code CollectionBuilder} instance over the type {@code E} containing
+     * the supplied element.
      *
+     * @param e   The element to be added to the {@code CollectionBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code CollectionBuilder}.
+     * @return A {@code CollectionBuilder} instance over type {@code E} containing the supplied
+     *         element.
+     */
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e) {
+        return collectionBuilderFrom(iterableWith(e));
+    }
+
+    /**
+     * Returns a {@code CollectionBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code CollectionBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code CollectionBuilder}.
+     * @param e2  The second element to be added to the {@code CollectionBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code CollectionBuilder}.
+     * @return A {@code CollectionBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2) {
+        return collectionBuilderFrom(iterableWith(e1, e2));
+    }
+
+    /**
+     * Returns a {@code CollectionBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code CollectionBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code CollectionBuilder}.
+     * @param e2  The second element to be added to the {@code CollectionBuilder}.
+     * @param e3  The third element to be added to the {@code CollectionBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code CollectionBuilder}.
+     * @return A {@code CollectionBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3));
+    }
+
+    /**
+     * Returns a {@code CollectionBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code CollectionBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code CollectionBuilder}.
+     * @param e2  The second element to be added to the {@code CollectionBuilder}.
+     * @param e3  The third element to be added to the {@code CollectionBuilder}.
+     * @param e4  The fourth element to be added to the {@code CollectionBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code CollectionBuilder}.
+     * @return A {@code CollectionBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4));
+    }
+
+    /**
+     * Returns a {@code CollectionBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code CollectionBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code CollectionBuilder}.
+     * @param e2  The second element to be added to the {@code CollectionBuilder}.
+     * @param e3  The third element to be added to the {@code CollectionBuilder}.
+     * @param e4  The fourth element to be added to the {@code CollectionBuilder}.
+     * @param e5  The fifth element to be added to the {@code CollectionBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code CollectionBuilder}.
+     * @return A {@code CollectionBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5));
+    }
+
+    /**
+     * Returns a {@code CollectionBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code CollectionBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code CollectionBuilder}.
+     * @param e2  The second element to be added to the {@code CollectionBuilder}.
+     * @param e3  The third element to be added to the {@code CollectionBuilder}.
+     * @param e4  The fourth element to be added to the {@code CollectionBuilder}.
+     * @param e5  The fifth element to be added to the {@code CollectionBuilder}.
+     * @param e6  The sixth element to be added to the {@code CollectionBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code CollectionBuilder}.
+     * @return A {@code CollectionBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
+
+    /**
+     * Returns a {@code CollectionBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code CollectionBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code CollectionBuilder}.
+     * @param e2  The second element to be added to the {@code CollectionBuilder}.
+     * @param e3  The third element to be added to the {@code CollectionBuilder}.
+     * @param e4  The fourth element to be added to the {@code CollectionBuilder}.
+     * @param e5  The fifth element to be added to the {@code CollectionBuilder}.
+     * @param e6  The sixth element to be added to the {@code CollectionBuilder}.
+     * @param e7  The seventh element to be added to the {@code CollectionBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code CollectionBuilder}.
+     * @return A {@code CollectionBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    /**
+     * Returns a {@code CollectionBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code CollectionBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code CollectionBuilder}.
+     * @param e2  The second element to be added to the {@code CollectionBuilder}.
+     * @param e3  The third element to be added to the {@code CollectionBuilder}.
+     * @param e4  The fourth element to be added to the {@code CollectionBuilder}.
+     * @param e5  The fifth element to be added to the {@code CollectionBuilder}.
+     * @param e6  The sixth element to be added to the {@code CollectionBuilder}.
+     * @param e7  The seventh element to be added to the {@code CollectionBuilder}.
+     * @param e8  The eighth element to be added to the {@code CollectionBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code CollectionBuilder}.
+     * @return A {@code CollectionBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    /**
+     * Returns a {@code CollectionBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code CollectionBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code CollectionBuilder}.
+     * @param e2  The second element to be added to the {@code CollectionBuilder}.
+     * @param e3  The third element to be added to the {@code CollectionBuilder}.
+     * @param e4  The fourth element to be added to the {@code CollectionBuilder}.
+     * @param e5  The fifth element to be added to the {@code CollectionBuilder}.
+     * @param e6  The sixth element to be added to the {@code CollectionBuilder}.
+     * @param e7  The seventh element to be added to the {@code CollectionBuilder}.
+     * @param e8  The eighth element to be added to the {@code CollectionBuilder}.
+     * @param e9  The ninth element to be added to the {@code CollectionBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code CollectionBuilder}.
+     * @return A {@code CollectionBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    /**
+     * Returns a {@code CollectionBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code CollectionBuilder}
+     * instance in the same order as they are defined in the argument list.
+     *
+     * @param e1  The first element to be added to the {@code CollectionBuilder}.
+     * @param e2  The second element to be added to the {@code CollectionBuilder}.
+     * @param e3  The third element to be added to the {@code CollectionBuilder}.
+     * @param e4  The fourth element to be added to the {@code CollectionBuilder}.
+     * @param e5  The fifth element to be added to the {@code CollectionBuilder}.
+     * @param e6  The sixth element to be added to the {@code CollectionBuilder}.
+     * @param e7  The seventh element to be added to the {@code CollectionBuilder}.
+     * @param e8  The eighth element to be added to the {@code CollectionBuilder}.
+     * @param e9  The ninth element to be added to the {@code CollectionBuilder}.
+     * @param e10 The tenth element to be added to the {@code CollectionBuilder}.
+     * @param <E> The type of the elements contained in the returned {@code CollectionBuilder}.
+     * @return A {@code CollectionBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    /**
+     * Returns a {@code CollectionBuilder} instance over the type {@code E} containing the
+     * supplied elements. The supplied elements are added to the {@code CollectionBuilder}
+     * instance in the same order as they are defined in the argument list.
+     * <p/>
+     * <p>Note that this literal uses a generic varargs parameter as the last argument in the
+     * argument list and as such will cause unchecked cast warnings. Explicit argument
+     * lists for up to ten arguments have been provided for convenience. In order to avoid
+     * the unchecked cast warnings, a {@link CollectionBuilder} instance can be used directly with
+     * multiple method calls accumulating the builder contents.</p>
+     *
+     * @param e1    The first element to be added to the {@code CollectionBuilder}.
+     * @param e2    The second element to be added to the {@code CollectionBuilder}.
+     * @param e3    The third element to be added to the {@code CollectionBuilder}.
+     * @param e4    The fourth element to be added to the {@code CollectionBuilder}.
+     * @param e5    The fifth element to be added to the {@code CollectionBuilder}.
+     * @param e6    The sixth element to be added to the {@code CollectionBuilder}.
+     * @param e7    The seventh element to be added to the {@code CollectionBuilder}.
+     * @param e8    The eighth element to be added to the {@code CollectionBuilder}.
+     * @param e9    The ninth element to be added to the {@code CollectionBuilder}.
+     * @param e10   The tenth element to be added to the {@code CollectionBuilder}.
+     * @param e11on The remaining elements to be added to the {@code CollectionBuilder}. The elements
+     *              will be added to the {@code CollectionBuilder} in the order they are defined in the
+     *              variadic argument.
+     * @param <E>   The type of the elements contained in the returned {@code CollectionBuilder}.
+     * @return An {@code CollectionBuilder} instance over type {@code E} containing the supplied
+     *         elements.
+     */
+    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
+        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
+    }
+
+    /**
+     * Returns an empty immutable {@code List} instance.
+     * <p/>
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
      * declaration. For example:
@@ -1457,7 +2104,7 @@ public class Literals {
 
     /**
      * Returns an empty {@code List} instance of the supplied concrete class.
-     *
+     * <p/>
      * <p>The supplied class must have a public no-argument constructor, otherwise
      * an {@code IllegalArgumentException} will be thrown.</p>
      *
@@ -1476,7 +2123,7 @@ public class Literals {
     /**
      * Returns an empty immutable {@code List} instance over the type
      * of the supplied {@code Class}.
-     *
+     * <p/>
      * <p>This form of literal is most suited to inline usage such as when passing an
      * empty list as a parameter in a method call since it reads more clearly than
      * {@link #list()}. For example, compare the following:
@@ -1510,7 +2157,7 @@ public class Literals {
      * all elements from the supplied {@code Iterable}. The order of the elements
      * in the resulting {@code List} is determined by the order in which they are
      * yielded from the {@code Iterable}.
-     *
+     * <p/>
      * <p>This form of literal is useful when a number of lazy operations have been
      * performed resulting in an {@code Iterable} where a collection implementing
      * the {@code List} contract is required. For example:
@@ -1539,7 +2186,7 @@ public class Literals {
      * Returns an immutable {@code List} instance over the type {@code E} containing all
      * elements from the supplied array. The order of the elements in the resulting
      * {@code List} is the same as the order of the elements in the array.
-     *
+     * <p/>
      * <p>For example, the following:
      * <blockquote>
      * <pre>
@@ -1742,7 +2389,7 @@ public class Literals {
      * Returns an immutable {@code List} instance over the type {@code E} containing the
      * supplied elements. The order of the resultant {@code List} is the same as the order of the
      * elements in the argument list.
-     *
+     * <p/>
      * <p>Note that this literal uses a generic varargs parameter as the last argument in the
      * argument list and as such will cause unchecked cast warnings. Explicit argument
      * lists for up to ten arguments have been provided for convenience. In order to avoid
@@ -1768,7 +2415,7 @@ public class Literals {
 
     /**
      * Returns a {@code ListBuilder} containing no elements.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * A {@code ListBuilder} can be used to assemble a {@code List} as follows:
      * <blockquote>
@@ -1799,7 +2446,7 @@ public class Literals {
     /**
      * Returns a {@code ListBuilder} over the type of the supplied {@code Class}
      * containing no elements.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * A {@code ListBuilder} can be used to assemble a {@code List} as follows:
      * <blockquote>
@@ -1833,7 +2480,7 @@ public class Literals {
     /**
      * Returns a {@code ListBuilder} over type {@code E} initialised with the elements
      * contained in the supplied {@code Iterable}.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * A {@code ListBuilder} can be used to assemble a {@code List} from two existing
      * {@code Collection} instances as follows:
@@ -1869,7 +2516,7 @@ public class Literals {
     /**
      * Returns a {@code ListBuilder} over type {@code E} initialised with the elements
      * contained in the supplied array.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * A {@code ListBuilder} can be used to assemble a {@code List} from two existing
      * arrays as follows:
@@ -2089,7 +2736,7 @@ public class Literals {
      * Returns a {@code ListBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ListBuilder} instance in the same
      * order as they are defined in the argument list.
-     *
+     * <p/>
      * <p>Note that this literal uses a generic varargs parameter as the last argument in the
      * argument list and as such will cause unchecked cast warnings. Explicit argument
      * lists for up to ten arguments have been provided for convenience. In order to avoid
@@ -2119,7 +2766,7 @@ public class Literals {
 
     /**
      * Returns an empty immutable {@code Set} instance.
-     *
+     * <p/>
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
      * declaration. For example:
@@ -2139,7 +2786,7 @@ public class Literals {
 
     /**
      * Returns an empty {@code Set} instance of the supplied concrete class.
-     *
+     * <p/>
      * <p>The supplied class must have a public no-argument constructor, otherwise
      * an {@code IllegalArgumentException} will be thrown.</p>
      *
@@ -2158,7 +2805,7 @@ public class Literals {
     /**
      * Returns an empty immutable {@code Set} instance over the type
      * of the supplied {@code Class}.
-     *
+     * <p/>
      * <p>This form of literal is most suited to inline usage such as when passing an
      * empty set as a parameter in a method call since it reads more clearly than
      * {@link #set()}. For example, compare the following:
@@ -2192,7 +2839,7 @@ public class Literals {
      * all elements from the supplied {@code Iterable}. Due to the nature of a
      * {@code Set}, any duplicate elements in the supplied {@code Iterable} will
      * be removed.
-     *
+     * <p/>
      * <p>This form of literal is useful when a number of lazy operations have been
      * performed resulting in an {@code Iterable} where a collection implementing
      * the {@code Set} contract is required. For example:
@@ -2221,7 +2868,7 @@ public class Literals {
      * Returns an immutable {@code Set} instance over the type {@code E} containing
      * all elements from the supplied array. Due to the nature of a {@code Set}, any
      * duplicate elements in the supplied {@code Iterable} will be removed.
-     *
+     * <p/>
      * <p>For example, the following:
      * <blockquote>
      * <pre>
@@ -2446,7 +3093,7 @@ public class Literals {
 
     /**
      * Returns a {@code SetBuilder} containing no elements.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * A {@code SetBuilder} can be used to assemble a {@code Set} as follows:
      * <blockquote>
@@ -2477,7 +3124,7 @@ public class Literals {
     /**
      * Returns a {@code SetBuilder} over the type of the supplied {@code Class}
      * containing no elements.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * A {@code SetBuilder} can be used to assemble a {@code Set} as follows:
      * <blockquote>
@@ -2511,7 +3158,7 @@ public class Literals {
     /**
      * Returns a {@code SetBuilder} over type {@code E} initialised with the elements
      * contained in the supplied {@code Iterable}.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * A {@code SetBuilder} can be used to assemble a {@code Set} from two existing
      * {@code Collection} instances as follows:
@@ -2547,7 +3194,7 @@ public class Literals {
     /**
      * Returns a {@code SetBuilder} over type {@code E} initialised with the elements
      * contained in the supplied array.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * A {@code SetBuilder} can be used to assemble a {@code Set} from two existing
      * arrays as follows:
@@ -2919,12 +3566,12 @@ public class Literals {
      * from the supplied {@code Iterable}. The order of the elements in the resulting
      * array is determined by the order in which they are yielded from the
      * {@code Iterable}.
-     *
+     * <p/>
      * <p>The supplied {@code Iterable} must contain at least one element so that
      * the type E can be correctly inferred when constructing the array. In the
      * case that the {@code Iterable} is empty, an {@code IllegalArgumentException}
      * will be thrown.</p>
-     *
+     * <p/>
      * <p>The elements in the supplied {@code Iterable} must all be of the same
      * concrete type so that the type E can be inferred deterministically when
      * constructing the array. In the case that the {@code Iterable} contains
@@ -2952,12 +3599,12 @@ public class Literals {
      * from the supplied {@code Iterable}. The order of the elements in the resulting
      * array is determined by the order in which they are yielded from the
      * {@code Iterable}.
-     *
+     * <p/>
      * <p>Unlike {@link #arrayFrom(Iterable)}, this variant accepts empty
      * {@code Iterable}s and {@code Iterable}s containing instances of different
      * concrete types and so should be used in preference of {@link #arrayFrom(Iterable)}
      * if such {@code Iterable}s are expected.</p>
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * Assume that we have the following instances:
      * <blockquote>
@@ -3000,12 +3647,12 @@ public class Literals {
      * Returns an array instance over the type {@code E} containing all elements
      * from the supplied array. The order of the elements in the resulting
      * array is the same as the order of elements in the supplied array.
-     *
+     * <p/>
      * <p>The supplied array must contain at least one element so that the type E
      * can be correctly inferred when constructing the array to return. In the
      * case that the array is empty, an {@code IllegalArgumentException}
      * will be thrown.</p>
-     *
+     * <p/>
      * <p>The elements in the supplied array must all be of the same
      * concrete type so that the type E can be inferred deterministically when
      * constructing the array. In the case that the array contains
@@ -3031,12 +3678,12 @@ public class Literals {
      * Returns an array instance over the type {@code E} containing all elements
      * from the supplied array. The order of the elements in the resulting
      * array is the same as the order of elements in the supplied array.
-     *
+     * <p/>
      * <p>Unlike {@link #arrayFrom(Object[])}, this variant accepts empty
      * arrays and arrays containing instances of different concrete types and
      * so should be used in preference of {@link #arrayFrom(Object[])}
      * if such arrays are expected.</p>
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * Assume that we have the following instances:
      * <blockquote>
@@ -3076,7 +3723,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied element.
-     *
+     * <p/>
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -3091,7 +3738,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     *
+     * <p/>
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -3107,7 +3754,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     *
+     * <p/>
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -3124,7 +3771,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     *
+     * <p/>
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -3142,7 +3789,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     *
+     * <p/>
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -3161,7 +3808,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     *
+     * <p/>
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -3181,7 +3828,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     *
+     * <p/>
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -3202,7 +3849,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     *
+     * <p/>
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -3224,7 +3871,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     *
+     * <p/>
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -3247,7 +3894,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     *
+     * <p/>
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -3271,7 +3918,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     *
+     * <p/>
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -3298,7 +3945,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} containing no elements. When asked to
      * build an array, the element class will be inferred from the added elements
      * which means empty arrays and mixed concrete type arrays cannot be constructed.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * An {@code ArrayBuilder} can be used to assemble an array as follows:
      * <blockquote>
@@ -3331,7 +3978,7 @@ public class Literals {
      * containing no elements. When asked to build an array, the supplied element
      * class will be used allowing empty arrays and mixed concrete type arrays to
      * be constructed.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * An {@code ArrayBuilder} can be used to assemble an array as follows:
      * <blockquote>
@@ -3367,7 +4014,7 @@ public class Literals {
      * contained in the supplied {@code Iterable}. When asked to build an array, the
      * element class will be inferred from the added elements which means empty arrays
      * and mixed concrete type arrays cannot be constructed.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * An {@code ArrayBuilder} can be used to assemble an array from two existing
      * {@code Collection} instances as follows:
@@ -3405,7 +4052,7 @@ public class Literals {
      * initialised with the elements contained in the supplied {@code Iterable}.
      * When asked to build an array, the supplied element class will be used allowing
      * empty arrays and mixed concrete type arrays to be constructed.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * An {@code ArrayBuilder} can be used to assemble an array from two existing
      * {@code Collection} instances as follows:
@@ -3446,7 +4093,7 @@ public class Literals {
      * contained in the supplied array. When asked to build an array, the element class
      * will be inferred from the added elements which means empty arrays and mixed
      * concrete type arrays cannot be constructed.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * An {@code ArrayBuilder} can be used to assemble an array from two existing
      * arrays as follows:
@@ -3484,7 +4131,7 @@ public class Literals {
      * initialised with the elements contained in the supplied array. When asked to
      * build an array, the supplied element class will be used allowing empty arrays
      * and mixed concrete type arrays to be constructed.
-     *
+     * <p/>
      * <h4>Example Usage:</h4>
      * An {@code ArrayBuilder} can be used to assemble an array from two existing
      * arrays as follows:
@@ -3537,7 +4184,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     *
+     * <p/>
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -3569,7 +4216,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     *
+     * <p/>
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -3602,7 +4249,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     *
+     * <p/>
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -3636,7 +4283,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     *
+     * <p/>
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -3671,7 +4318,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     *
+     * <p/>
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -3707,7 +4354,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     *
+     * <p/>
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -3744,7 +4391,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     *
+     * <p/>
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -3782,7 +4429,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     *
+     * <p/>
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -3821,7 +4468,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     *
+     * <p/>
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -3861,7 +4508,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     *
+     * <p/>
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -3934,94 +4581,6 @@ public class Literals {
 
     public static <R, S, T, U, V, W, X, Y, Z> Nonuple<R, S, T, U, V, W, X, Y, Z> tuple(R first, S second, T third, U fourth, V fifth, W sixth, X seventh, Y eighth, Z ninth) {
         return new Nonuple<R, S, T, U, V, W, X, Y, Z>(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);
-    }
-
-    public static <E> Collection<E> collectionWith(E e) {
-        return collectionFrom(iterableWith(e));
-    }
-
-    public static <E> Collection<E> collectionWith(E e1, E e2) {
-        return collectionFrom(iterableWith(e1, e2));
-    }
-
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3) {
-        return collectionFrom(iterableWith(e1, e2, e3));
-    }
-
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4) {
-        return collectionFrom(iterableWith(e1, e2, e3, e4));
-    }
-
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5) {
-        return collectionFrom(iterableWith(e1, e2, e3, e4, e5));
-    }
-
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6) {
-        return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6));
-    }
-
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
-        return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
-    }
-
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
-        return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
-    }
-
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
-        return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
-    }
-
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
-        return collectionFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
-    }
-
-    public static <E> Collection<E> collectionWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
-        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on).build();
-    }
-
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e) {
-        return collectionBuilderFrom(iterableWith(e));
-    }
-
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2) {
-        return collectionBuilderFrom(iterableWith(e1, e2));
-    }
-
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3) {
-        return collectionBuilderFrom(iterableWith(e1, e2, e3));
-    }
-
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4) {
-        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4));
-    }
-
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5) {
-        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5));
-    }
-
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6) {
-        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6));
-    }
-
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
-        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7));
-    }
-
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
-        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
-    }
-
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
-        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
-    }
-
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
-        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
-    }
-
-    public static <E> CollectionBuilder<E> collectionBuilderWith(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10, E... e11on) {
-        return collectionBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
     }
 
     public static <E> Multiset<E> multisetWith(E e) {
