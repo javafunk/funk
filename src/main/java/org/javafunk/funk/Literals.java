@@ -22,7 +22,7 @@ public class Literals {
 
     /**
      * Returns an empty immutable {@code Iterable} instance.
-     * <p/>
+     *
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
      * declaration. For example:
@@ -42,7 +42,7 @@ public class Literals {
 
     /**
      * Returns an empty immutable {@code Iterable} instance of the supplied concrete class.
-     * <p/>
+     *
      * <p>The supplied class must have a public no-argument constructor, otherwise
      * an {@code IllegalArgumentException} will be thrown.</p>
      *
@@ -62,7 +62,7 @@ public class Literals {
     /**
      * Returns an empty immutable {@code Iterable} instance over the type
      * of the supplied {@code Class}.
-     * <p/>
+     *
      * <p>This form of literal is most suited to inline usage such as when passing an
      * empty iterable as a parameter in a method call since it reads more clearly than
      * {@link #iterable()}. For example, compare the following:
@@ -96,7 +96,7 @@ public class Literals {
      * containing all elements from the supplied {@code Iterable}. The order of
      * the elements in the resulting {@code Iterable} is determined by the order in
      * which they are yielded from the supplied {@code Iterable}.
-     * <p/>
+     *
      * <p>This form of literal is useful when an immutable copy of an {@code Iterable}
      * is required. For example:
      * <blockquote>
@@ -128,7 +128,7 @@ public class Literals {
      * containing all elements from the supplied array. The order of the elements
      * in the resulting {@code Iterable} is the same as the order of the elements
      * in the array.
-     * <p/>
+     *
      * <p>For example, the following:
      * <blockquote>
      * <pre>
@@ -333,7 +333,7 @@ public class Literals {
      * Returns an immutable {@code Iterable} instance over the type {@code E} containing the
      * supplied elements. The order of the resultant {@code Iterable} is the same as the order
      * of the elements in the argument list.
-     * <p/>
+     *
      * <p>Note that this literal uses a generic varargs parameter as the last argument in the
      * argument list and as such will cause unchecked cast warnings. Explicit argument
      * lists for up to ten arguments have been provided for convenience. In order to avoid
@@ -359,7 +359,7 @@ public class Literals {
 
     /**
      * Returns an {@code IterableBuilder} containing no elements.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * An {@code IterableBuilder} can be used to assemble an {@code Iterable} as follows:
      * <blockquote>
@@ -390,7 +390,7 @@ public class Literals {
     /**
      * Returns an {@code IterableBuilder} over the type of the supplied {@code Class}
      * containing no elements.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * An {@code IterableBuilder} can be used to assemble an {@code Iterable} as follows:
      * <blockquote>
@@ -424,7 +424,7 @@ public class Literals {
     /**
      * Returns an {@code IterableBuilder} over type {@code E} initialised with the elements
      * contained in the supplied {@code Iterable}.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * An {@code IterableBuilder} can be used to assemble an {@code Iterable} from two existing
      * {@code Collection} instances as follows:
@@ -460,7 +460,7 @@ public class Literals {
     /**
      * Returns an {@code IterableBuilder} over type {@code E} initialised with the elements
      * contained in the supplied array.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * An {@code IterableBuilder} can be used to assemble an {@code Iterable} from two existing
      * arrays as follows:
@@ -681,7 +681,7 @@ public class Literals {
      * Returns an {@code IterableBuilder} instance over the type {@code E} containing the
      * supplied elements. The supplied elements are added to the {@code IterableBuilder}
      * instance in the same order as they are defined in the argument list.
-     * <p/>
+     *
      * <p>Note that this literal uses a generic varargs parameter as the last argument in the
      * argument list and as such will cause unchecked cast warnings. Explicit argument
      * lists for up to ten arguments have been provided for convenience. In order to avoid
@@ -711,7 +711,7 @@ public class Literals {
 
     /**
      * Returns an empty immutable {@code Iterator} instance.
-     * <p/>
+     *
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
      * declaration. For example:
@@ -731,7 +731,7 @@ public class Literals {
 
     /**
      * Returns an empty immutable {@code Iterator} instance of the supplied concrete class.
-     * <p/>
+     *
      * <p>The supplied class must have a public no-argument constructor, otherwise
      * an {@code IllegalArgumentException} will be thrown.</p>
      *
@@ -750,7 +750,7 @@ public class Literals {
     /**
      * Returns an empty immutable {@code Iterator} instance over the type
      * of the supplied {@code Class}.
-     * <p/>
+     *
      * <p>This form of literal is most suited to inline usage such as when passing an
      * empty iterator as a parameter in a method call since it reads more clearly than
      * {@link #iterator()}. For example, compare the following:
@@ -784,7 +784,7 @@ public class Literals {
      * containing all elements from the supplied {@code Iterable}. The order of
      * the elements in the resulting {@code Iterator} is determined by the order in
      * which they are yielded from the supplied {@code Iterable}.
-     * <p/>
+     *
      * <p>This form of literal is useful when an immutable {@code Iterator} from an
      * {@code Iterable} is required. For example:
      * <blockquote>
@@ -818,7 +818,7 @@ public class Literals {
      * containing all elements from the supplied array. The order of the elements
      * in the resulting {@code Iterator} is the same as the order of the elements
      * in the array.
-     * <p/>
+     *
      * <p>For example, the following:
      * <blockquote>
      * <pre>
@@ -1023,7 +1023,7 @@ public class Literals {
      * Returns an immutable {@code Iterator} instance over the type {@code E} containing the
      * supplied elements. The order of the resultant {@code Iterator} is the same as the order
      * of the elements in the argument list.
-     * <p/>
+     *
      * <p>Note that this literal uses a generic varargs parameter as the last argument in the
      * argument list and as such will cause unchecked cast warnings. Explicit argument
      * lists for up to ten arguments have been provided for convenience. In order to avoid
@@ -1049,7 +1049,7 @@ public class Literals {
 
     /**
      * Returns an {@code IteratorBuilder} containing no elements.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * An {@code IteratorBuilder} can be used to assemble an {@code Iterator} as follows:
      * <blockquote>
@@ -1080,7 +1080,7 @@ public class Literals {
     /**
      * Returns an {@code IteratorBuilder} over the type of the supplied {@code Class}
      * containing no elements.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * An {@code IteratorBuilder} can be used to assemble an {@code Iterator} as follows:
      * <blockquote>
@@ -1114,7 +1114,7 @@ public class Literals {
     /**
      * Returns an {@code IteratorBuilder} over type {@code E} initialised with the elements
      * contained in the supplied {@code Iterator}.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * An {@code IteratorBuilder} can be used to assemble an {@code Iterator} from two existing
      * {@code Collection} instances as follows:
@@ -1150,7 +1150,7 @@ public class Literals {
     /**
      * Returns an {@code IteratorBuilder} over type {@code E} initialised with the elements
      * contained in the supplied array.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * An {@code IteratorBuilder} can be used to assemble an {@code Iterator} from two existing
      * arrays as follows:
@@ -1371,7 +1371,7 @@ public class Literals {
      * Returns an {@code IteratorBuilder} instance over the type {@code E} containing the
      * supplied elements. The supplied elements are added to the {@code IteratorBuilder}
      * instance in the same order as they are defined in the argument list.
-     * <p/>
+     *
      * <p>Note that this literal uses a generic varargs parameter as the last argument in the
      * argument list and as such will cause unchecked cast warnings. Explicit argument
      * lists for up to ten arguments have been provided for convenience. In order to avoid
@@ -1401,7 +1401,7 @@ public class Literals {
 
     /**
      * Returns an empty immutable {@code Collection} instance.
-     * <p/>
+     *
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
      * declaration. For example:
@@ -1421,7 +1421,7 @@ public class Literals {
 
     /**
      * Returns an empty immutable {@code Collection} instance of the supplied concrete class.
-     * <p/>
+     *
      * <p>The supplied class must have a public no-argument constructor, otherwise
      * an {@code IllegalArgumentException} will be thrown.</p>
      *
@@ -1440,7 +1440,7 @@ public class Literals {
     /**
      * Returns an empty immutable {@code Collection} instance over the type
      * of the supplied {@code Class}.
-     * <p/>
+     *
      * <p>This form of literal is most suited to inline usage such as when passing an
      * empty collection as a parameter in a method call since it reads more clearly than
      * {@link #collection()}. For example, compare the following:
@@ -1474,7 +1474,7 @@ public class Literals {
      * containing all elements from the supplied {@code Iterable}. The order of
      * the elements in the resulting {@code Collection} is determined by the order in
      * which they are yielded from the supplied {@code Iterable}.
-     * <p/>
+     *
      * <p>This form of literal is useful when an object conforming to the {@code Collection}
      * interface is required and only an {@code Iterable} is available. For example:
      * <blockquote>
@@ -1501,7 +1501,7 @@ public class Literals {
      * containing all elements from the supplied array. The order of the elements
      * in the resulting {@code Collection} is the same as the order of the elements
      * in the array.
-     * <p/>
+     *
      * <p>For example, the following:
      * <blockquote>
      * <pre>
@@ -1706,7 +1706,7 @@ public class Literals {
      * Returns an immutable {@code Collection} instance over the type {@code E} containing the
      * supplied elements. The order of the resultant {@code Collection} is the same as the order
      * of the elements in the argument list.
-     * <p/>
+     *
      * <p>Note that this literal uses a generic varargs parameter as the last argument in the
      * argument list and as such will cause unchecked cast warnings. Explicit argument
      * lists for up to ten arguments have been provided for convenience. In order to avoid
@@ -1732,7 +1732,7 @@ public class Literals {
 
     /**
      * Returns a {@code CollectionBuilder} containing no elements.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * A {@code CollectionBuilder} can be used to assemble a {@code Collection} as follows:
      * <blockquote>
@@ -1763,7 +1763,7 @@ public class Literals {
     /**
      * Returns a {@code CollectionBuilder} over the type of the supplied {@code Class}
      * containing no elements.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * A {@code CollectionBuilder} can be used to assemble a {@code Collection} as follows:
      * <blockquote>
@@ -1797,7 +1797,7 @@ public class Literals {
     /**
      * Returns a {@code CollectionBuilder} over type {@code E} initialised with the elements
      * contained in the supplied {@code Collection}.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * A {@code CollectionBuilder} can be used to assemble a {@code Collection} from two existing
      * {@code List} instances as follows:
@@ -1833,7 +1833,7 @@ public class Literals {
     /**
      * Returns a {@code CollectionBuilder} over type {@code E} initialised with the elements
      * contained in the supplied array.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * A {@code CollectionBuilder} can be used to assemble a {@code Collection} from two existing
      * arrays as follows:
@@ -2054,7 +2054,7 @@ public class Literals {
      * Returns a {@code CollectionBuilder} instance over the type {@code E} containing the
      * supplied elements. The supplied elements are added to the {@code CollectionBuilder}
      * instance in the same order as they are defined in the argument list.
-     * <p/>
+     *
      * <p>Note that this literal uses a generic varargs parameter as the last argument in the
      * argument list and as such will cause unchecked cast warnings. Explicit argument
      * lists for up to ten arguments have been provided for convenience. In order to avoid
@@ -2084,7 +2084,7 @@ public class Literals {
 
     /**
      * Returns an empty immutable {@code List} instance.
-     * <p/>
+     *
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
      * declaration. For example:
@@ -2104,7 +2104,7 @@ public class Literals {
 
     /**
      * Returns an empty {@code List} instance of the supplied concrete class.
-     * <p/>
+     *
      * <p>The supplied class must have a public no-argument constructor, otherwise
      * an {@code IllegalArgumentException} will be thrown.</p>
      *
@@ -2123,7 +2123,7 @@ public class Literals {
     /**
      * Returns an empty immutable {@code List} instance over the type
      * of the supplied {@code Class}.
-     * <p/>
+     *
      * <p>This form of literal is most suited to inline usage such as when passing an
      * empty list as a parameter in a method call since it reads more clearly than
      * {@link #list()}. For example, compare the following:
@@ -2157,7 +2157,7 @@ public class Literals {
      * all elements from the supplied {@code Iterable}. The order of the elements
      * in the resulting {@code List} is determined by the order in which they are
      * yielded from the {@code Iterable}.
-     * <p/>
+     *
      * <p>This form of literal is useful when a number of lazy operations have been
      * performed resulting in an {@code Iterable} where a collection implementing
      * the {@code List} contract is required. For example:
@@ -2186,7 +2186,7 @@ public class Literals {
      * Returns an immutable {@code List} instance over the type {@code E} containing all
      * elements from the supplied array. The order of the elements in the resulting
      * {@code List} is the same as the order of the elements in the array.
-     * <p/>
+     *
      * <p>For example, the following:
      * <blockquote>
      * <pre>
@@ -2389,7 +2389,7 @@ public class Literals {
      * Returns an immutable {@code List} instance over the type {@code E} containing the
      * supplied elements. The order of the resultant {@code List} is the same as the order of the
      * elements in the argument list.
-     * <p/>
+     *
      * <p>Note that this literal uses a generic varargs parameter as the last argument in the
      * argument list and as such will cause unchecked cast warnings. Explicit argument
      * lists for up to ten arguments have been provided for convenience. In order to avoid
@@ -2415,7 +2415,7 @@ public class Literals {
 
     /**
      * Returns a {@code ListBuilder} containing no elements.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * A {@code ListBuilder} can be used to assemble a {@code List} as follows:
      * <blockquote>
@@ -2446,7 +2446,7 @@ public class Literals {
     /**
      * Returns a {@code ListBuilder} over the type of the supplied {@code Class}
      * containing no elements.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * A {@code ListBuilder} can be used to assemble a {@code List} as follows:
      * <blockquote>
@@ -2480,7 +2480,7 @@ public class Literals {
     /**
      * Returns a {@code ListBuilder} over type {@code E} initialised with the elements
      * contained in the supplied {@code Iterable}.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * A {@code ListBuilder} can be used to assemble a {@code List} from two existing
      * {@code Collection} instances as follows:
@@ -2516,7 +2516,7 @@ public class Literals {
     /**
      * Returns a {@code ListBuilder} over type {@code E} initialised with the elements
      * contained in the supplied array.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * A {@code ListBuilder} can be used to assemble a {@code List} from two existing
      * arrays as follows:
@@ -2736,7 +2736,7 @@ public class Literals {
      * Returns a {@code ListBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ListBuilder} instance in the same
      * order as they are defined in the argument list.
-     * <p/>
+     *
      * <p>Note that this literal uses a generic varargs parameter as the last argument in the
      * argument list and as such will cause unchecked cast warnings. Explicit argument
      * lists for up to ten arguments have been provided for convenience. In order to avoid
@@ -2766,7 +2766,7 @@ public class Literals {
 
     /**
      * Returns an empty immutable {@code Set} instance.
-     * <p/>
+     *
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
      * declaration. For example:
@@ -2786,7 +2786,7 @@ public class Literals {
 
     /**
      * Returns an empty {@code Set} instance of the supplied concrete class.
-     * <p/>
+     *
      * <p>The supplied class must have a public no-argument constructor, otherwise
      * an {@code IllegalArgumentException} will be thrown.</p>
      *
@@ -2805,7 +2805,7 @@ public class Literals {
     /**
      * Returns an empty immutable {@code Set} instance over the type
      * of the supplied {@code Class}.
-     * <p/>
+     *
      * <p>This form of literal is most suited to inline usage such as when passing an
      * empty set as a parameter in a method call since it reads more clearly than
      * {@link #set()}. For example, compare the following:
@@ -2839,7 +2839,7 @@ public class Literals {
      * all elements from the supplied {@code Iterable}. Due to the nature of a
      * {@code Set}, any duplicate elements in the supplied {@code Iterable} will
      * be removed.
-     * <p/>
+     *
      * <p>This form of literal is useful when a number of lazy operations have been
      * performed resulting in an {@code Iterable} where a collection implementing
      * the {@code Set} contract is required. For example:
@@ -2868,7 +2868,7 @@ public class Literals {
      * Returns an immutable {@code Set} instance over the type {@code E} containing
      * all elements from the supplied array. Due to the nature of a {@code Set}, any
      * duplicate elements in the supplied {@code Iterable} will be removed.
-     * <p/>
+     *
      * <p>For example, the following:
      * <blockquote>
      * <pre>
@@ -3073,6 +3073,11 @@ public class Literals {
      * supplied elements. Due to the nature of a {@code Set}, any supplied duplicate
      * elements will be removed.
      *
+     * <p>Note that this literal uses a generic varargs parameter as the last argument in the
+     * argument list and as such will cause unchecked cast warnings. Explicit argument
+     * lists for up to ten arguments have been provided for convenience. In order to avoid
+     * the unchecked cast warnings, a {@link SetBuilder} can be used instead.</p>
+     *
      * @param e1    The first element from which to construct a {@code Set}.
      * @param e2    The second element from which to construct a {@code Set}.
      * @param e3    The third element from which to construct a {@code Set}.
@@ -3093,7 +3098,7 @@ public class Literals {
 
     /**
      * Returns a {@code SetBuilder} containing no elements.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * A {@code SetBuilder} can be used to assemble a {@code Set} as follows:
      * <blockquote>
@@ -3124,7 +3129,7 @@ public class Literals {
     /**
      * Returns a {@code SetBuilder} over the type of the supplied {@code Class}
      * containing no elements.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * A {@code SetBuilder} can be used to assemble a {@code Set} as follows:
      * <blockquote>
@@ -3158,7 +3163,7 @@ public class Literals {
     /**
      * Returns a {@code SetBuilder} over type {@code E} initialised with the elements
      * contained in the supplied {@code Iterable}.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * A {@code SetBuilder} can be used to assemble a {@code Set} from two existing
      * {@code Collection} instances as follows:
@@ -3194,7 +3199,7 @@ public class Literals {
     /**
      * Returns a {@code SetBuilder} over type {@code E} initialised with the elements
      * contained in the supplied array.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * A {@code SetBuilder} can be used to assemble a {@code Set} from two existing
      * arrays as follows:
@@ -3439,7 +3444,7 @@ public class Literals {
 
     /**
      * Returns an empty immutable {@code Multiset} instance.
-     * <p/>
+     *
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
      * declaration. For example:
@@ -3459,7 +3464,7 @@ public class Literals {
 
     /**
      * Returns an empty {@code Multiset} instance of the supplied concrete class.
-     * <p/>
+     *
      * <p>The supplied class must have a public no-argument constructor, otherwise
      * an {@code IllegalArgumentException} will be thrown.</p>
      *
@@ -3478,7 +3483,7 @@ public class Literals {
     /**
      * Returns an empty immutable {@code Multiset} instance over the type
      * of the supplied {@code Class}.
-     * <p/>
+     *
      * <p>This form of literal is most suited to inline usage such as when passing an
      * empty multiset as a parameter in a method call since it reads more clearly than
      * {@link #multiset()}. For example, compare the following:
@@ -3510,7 +3515,7 @@ public class Literals {
     /**
      * Returns an immutable {@code Multiset} instance over the type {@code E} containing
      * all elements from the supplied {@code Iterable}.
-     * <p/>
+     *
      * <p>This form of literal is useful when an object with {@code Multiset} semantics
      * is needed but only another form of {@code Iterable} is available. For example:
      * <blockquote>
@@ -3524,7 +3529,7 @@ public class Literals {
      * @param elements A {@code Multiset} of elements from which a {@code Multiset} should be
      *                 constructed.
      * @param <E>      The type of the elements to be contained in the returned {@code Multiset}.
-     * @return A {@code Multiset} over the type {@code E} containing all unique elements from the
+     * @return A {@code Multiset} over the type {@code E} containing all elements from the
      *         supplied {@code Iterable}.
      */
     public static <E> Multiset<E> multisetFrom(Iterable<? extends E> elements) {
@@ -3534,7 +3539,7 @@ public class Literals {
     /**
      * Returns an immutable {@code Multiset} instance over the type {@code E} containing
      * all elements from the supplied array.
-     * <p/>
+     *
      * <p>For example, the following:
      * <blockquote>
      * <pre>
@@ -3553,7 +3558,7 @@ public class Literals {
      * @param elementArray An array of elements from which a {@code Multiset} should be
      *                     constructed.
      * @param <E>          The type of the elements to be contained in the returned {@code Multiset}.
-     * @return A {@code Multiset} over the type {@code E} containing all unique elements from the
+     * @return A {@code Multiset} over the type {@code E} containing all elements from the
      *         supplied array.
      */
     public static <E> Multiset<E> multisetFrom(E[] elementArray) {
@@ -3729,6 +3734,11 @@ public class Literals {
      * Returns an immutable {@code Multiset} instance over the type {@code E} containing the
      * supplied elements.
      *
+     * <p>Note that this literal uses a generic varargs parameter as the last argument in the
+     * argument list and as such will cause unchecked cast warnings. Explicit argument
+     * lists for up to ten arguments have been provided for convenience. In order to avoid
+     * the unchecked cast warnings, a {@link MultisetBuilder} can be used instead.</p>
+     *
      * @param e1    The first element from which to construct a {@code Multiset}.
      * @param e2    The second element from which to construct a {@code Multiset}.
      * @param e3    The third element from which to construct a {@code Multiset}.
@@ -3749,7 +3759,7 @@ public class Literals {
 
     /**
      * Returns a {@code MultisetBuilder} containing no elements.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * A {@code MultisetBuilder} can be used to assemble a {@code Multiset} as follows:
      * <blockquote>
@@ -3780,7 +3790,7 @@ public class Literals {
     /**
      * Returns a {@code MultisetBuilder} over the type of the supplied {@code Class}
      * containing no elements.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * A {@code MultisetBuilder} can be used to assemble a {@code Multiset} as follows:
      * <blockquote>
@@ -3814,7 +3824,7 @@ public class Literals {
     /**
      * Returns a {@code MultisetBuilder} over type {@code E} initialised with the elements
      * contained in the supplied {@code Iterable}.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * A {@code MultisetBuilder} can be used to assemble a {@code Multiset} from two existing
      * {@code Collection} instances as follows:
@@ -3850,7 +3860,7 @@ public class Literals {
     /**
      * Returns a {@code MultisetBuilder} over type {@code E} initialised with the elements
      * contained in the supplied array.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * A {@code MultisetBuilder} can be used to assemble a {@code Multiset} from two existing
      * arrays as follows:
@@ -4083,72 +4093,2618 @@ public class Literals {
         return multisetBuilderFrom(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).with(e11on);
     }
 
+    /**
+     * Returns an empty immutable {@code Map} instance.
+     *
+     * <p>This form of literal is most suited to direct assignment to a variable
+     * since in this case, the types {@code K} and {@code V} are inferred from the
+     * variable declaration. For example:
+     * <blockquote>
+     * <pre>
+     *   Map&lt;String, Integer&gt; mappings = map();
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param <K> The type of the keys in the {@code Map}.
+     * @param <V> The type of the values in the {@code Map}.
+     * @return A {@code Map} with keys of type {@code K} and values of type {@code V}
+     *         containing no elements.
+     */
     public static <K, V> Map<K, V> map() {
         return new MapBuilder<K, V>().build();
     }
 
+    /**
+     * Returns an empty {@code Map} instance of the supplied concrete class.
+     *
+     * <p>The supplied class must have a public no-argument constructor, otherwise
+     * an {@code IllegalArgumentException} will be thrown.</p>
+     *
+     * @param mapClass The class of the {@code Map} implementation to be
+     *                 instantiated.
+     * @param <K>      The type of the keys in the {@code Map}.
+     * @param <V>      The type of the values in the {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} of the concrete type specified by the supplied {@code Class}.
+     * @throws IllegalArgumentException if the supplied class does not have
+     *                                  a public no-argument constructor.
+     */
     public static <K, V> Map<K, V> map(Class<? extends Map> mapClass) {
         return new MapBuilder<K, V>().build(mapClass);
     }
 
+    /**
+     * Returns an empty immutable {@code Map} with keys of the type
+     * of the first supplied {@code Class} and values of the type of
+     * the second supplied {@code Class}.
+     *
+     * <p>This form of literal is most suited to inline usage such as when passing an
+     * empty map as a parameter in a method call since it reads more clearly than
+     * {@link #map()}. For example, compare the following:
+     * <blockquote>
+     * <pre>
+     *   public class Server {
+     *       public Server(Map&lt;String, String&gt; initialisationParameters) {
+     *           ...
+     *       }
+     *
+     *       ...
+     *   }
+     *
+     *   new Server(Literals.&lt;String, String&gt;map());
+     *   new Server(mapOf(String.class, String.class));
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param keyClass   A {@code Class} representing the type of the keys
+     *                   contained in this {@code Map}.
+     * @param valueClass A {@code Class} representing the type of the values
+     *                   contained in this {@code Map}.
+     * @param <K>        The type of the keys in the {@code Map}.
+     * @param <V>        The type of the values in the {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V}.
+     */
     public static <K, V> Map<K, V> mapOf(Class<K> keyClass, Class<V> valueClass) {
         return new MapBuilder<K, V>().build();
     }
 
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing all {@code Map.Entry} instances from the supplied
+     * {@code Iterable}.
+     *
+     * <p>This form of literal is useful for converting an entry set back into a
+     * {@code Map} instance. For example:
+     * <blockquote>
+     * <pre>
+     *   Set&lt;Map.Entry&lt;Key, Value&gt;&gt; storeContents = store.loadKeyValues();
+     *   Map&lt;Key, Value&gt; inMemoryStore = Literals.mapFromEntries(storeContents);
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param elements An {@code Iterable} of {@code Map.Entry} elements from which a
+     *                 {@code Map} should be constructed.
+     * @param <K>      The type of the keys to be in the returned {@code Map}.
+     * @param <V>      The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing all {@code Map.Entry} elements from the supplied
+     *         {@code Iterable}.
+     */
     public static <K, V> Map<K, V> mapFromEntries(Iterable<? extends Map.Entry<K, V>> elements) {
         return new MapBuilder<K, V>().with(elements).build();
     }
 
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing all {@code Map.Entry} instances from the supplied
+     * array.
+     *
+     * <p>For example, the following:
+     * <blockquote>
+     * <pre>
+     *   Map.Entry&lt;String, Integer&gt;[] entries = new Map.Entry[]{
+     *          mapEntryFor("one", 1),
+     *          mapEntryFor("two", 2)};
+     *   Map&lt;String, Integer&gt; naturalNumbers = Literals.mapFromEntries(entries);
+     * </pre>
+     * </blockquote>
+     * is equivalent to:
+     * <blockquote>
+     * <pre>
+     *   Map&ltString, Integer&gt; naturalNumbers = Literals.mapWith(
+     *          tuple("one", 1),
+     *          tuple("two", 2));
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param elementArray An array of {@code Map.Entry} elements from which a
+     *                     {@code Map} should be constructed.
+     * @param <K>          The type of the keys to be in the returned {@code Map}.
+     * @param <V>          The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing all {@code Map.Entry} elements from the supplied
+     *         array.
+     */
     public static <K, V> Map<K, V> mapFromEntries(Map.Entry<K, V>[] elementArray) {
         return new MapBuilder<K, V>().with(elementArray).build();
     }
 
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} with key-value mappings for each {@code Pair} in the supplied
+     * {@code Iterable}.
+     *
+     * <p>This form of literal is useful when it is required to represent an
+     * {@code Iterable} of {@code Pair} instances as a {@code Map}. For example:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Pair&lt;Key, Value&gt;&gt; storeContents = store.loadKeyValues();
+     *   Map&lt;Key, Value&gt; inMemoryStore = Literals.mapFromPairs(storeContents);
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param elements An {@code Iterable} of {@code Pair} instances from which a
+     *                 {@code Map} should be constructed.
+     * @param <K>      The type of the keys to be in the returned {@code Map}.
+     * @param <V>      The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing key-value mappings for each {@code Pair} in the
+     *         supplied {@code Iterable}.
+     */
     public static <K, V> Map<K, V> mapFromPairs(Iterable<? extends Pair<K, V>> elements) {
         return new MapBuilder<K, V>().withPairs(elements).build();
     }
 
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} with key-value mappings for each {@code Pair} in the supplied
+     * array.
+     *
+     * <p>For example, the following:
+     * <blockquote>
+     * <pre>
+     *   Pair&lt;String, Integer&gt;[] pairs = new Pair[]{
+     *          tuple("one", 1),
+     *          tuple("two", 2)};
+     *   Map&lt;String, Integer&gt; naturalNumbers = Literals.mapFromPairs(entries);
+     * </pre>
+     * </blockquote>
+     * is equivalent to:
+     * <blockquote>
+     * <pre>
+     *   Map&ltString, Integer&gt; naturalNumbers = Literals.mapWith(
+     *          mapEntryFor("one", 1),
+     *          mapEntryFor("two", 2));
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param elementArray An array of {@code Pair} instances from which a
+     *                     {@code Map} should be constructed.
+     * @param <K>          The type of the keys to be in the returned {@code Map}.
+     * @param <V>          The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing key-value mappings for each {@code Pair} in the
+     *         supplied {@code Iterable}.
+     */
     public static <K, V> Map<K, V> mapFromPairs(Pair<K, V>[] elementArray) {
         return new MapBuilder<K, V>().withPairs(elementArray).build();
     }
 
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing all entries from all {@code Map} instances in the
+     * supplied {@code Iterable}.
+     *
+     * <p>If later {@code Map} instances in the {@code Iterable} contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value in the returned {@code Map}.
+     * </p>
+     * <p>This form of literal is useful when it is required to collect an
+     * {@code Iterable} of {@code Map} instances into an accumulated {@code Map}.
+     * For example:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Map&lt;Key, Value&gt;&gt; allStoreContents = keyValueStores.loadAll();
+     *   Map&lt;Key, Value&gt; completeInMemoryStore = Literals.mapFromMaps(allStoreContents);
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param elements An {@code Iterable} of {@code Map} instances from which a
+     *                 {@code Map} should be constructed.
+     * @param <K>      The type of the keys to be in the returned {@code Map}.
+     * @param <V>      The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing all entries from all {@code Map} instances in the
+     *         supplied {@code Iterable}.
+     */
     public static <K, V> Map<K, V> mapFromMaps(Iterable<? extends Map<K, V>> elements) {
         return new MapBuilder<K, V>().withMaps(elements).build();
     }
 
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing all entries from all {@code Map} instances in the
+     * array.
+     *
+     * <p>If later {@code Map} instances in the array contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value in the returned {@code Map}.
+     * </p>
+     * <p>For example, the following:
+     * <blockquote>
+     * <pre>
+     *   Map&lt;String, Integer&gt;[] maps = new Map[]{
+     *          mapWithKeyValuePairs("one", 1, "two", 3),
+     *          mapWithKeyValuePairs("two", 2, "three", 3),};
+     *   Map&lt;String, Integer&gt; map = Literals.mapFromMaps(maps);
+     * </pre>
+     * </blockquote>
+     * is equivalent to:
+     * <blockquote>
+     * <pre>
+     *   Map&ltString, Integer&gt; map = Literals.mapWith(
+     *          mapEntryFor("one", 1),
+     *          mapEntryFor("two", 2),
+     *          mapEntryFor("three", 3));
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param elementArray An array of {@code Map} instances from which a
+     *                     {@code Map} should be constructed.
+     * @param <K>          The type of the keys to be in the returned {@code Map}.
+     * @param <V>          The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing all entries from all {@code Map} instances in the
+     *         supplied {@code Iterable}.
+     */
     public static <K, V> Map<K, V> mapFromMaps(Map<K, V>[] elementArray) {
         return new MapBuilder<K, V>().withMaps(elementArray).build();
     }
 
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the entry defined by the supplied {@code Map.Entry}.
+     *
+     * @param e   A {@code Map.Entry} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied {@code Map.Entry}.
+     */
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e) {
+        return mapFromEntries(iterableWith(e));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e2  The second {@code Map.Entry} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
+        return mapFromEntries(iterableWith(e1, e2));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e2  The second {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e3  The third {@code Map.Entry} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3) {
+        return mapFromEntries(iterableWith(e1, e2, e3));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e2  The second {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e3  The third {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e4  The fourth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4) {
+        return mapFromEntries(iterableWith(e1, e2, e3, e4));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e2  The second {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e3  The third {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e4  The fourth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e5  The fifth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5) {
+        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e2  The second {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e3  The third {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e4  The fourth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e5  The fifth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e6  The sixth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6) {
+        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e2  The second {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e3  The third {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e4  The fourth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e5  The fifth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e6  The sixth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e7  The seventh {@code Map.Entry} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7) {
+        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e2  The second {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e3  The third {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e4  The fourth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e5  The fifth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e6  The sixth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e7  The seventh {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e8  The eighth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8) {
+        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e2  The second {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e3  The third {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e4  The fourth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e5  The fifth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e6  The sixth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e7  The seventh {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e8  The eighth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e9  The ninth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9) {
+        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e2  The second {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e3  The third {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e4  The fourth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e5  The fifth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e6  The sixth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e7  The seventh {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e8  The eighth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e9  The ninth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e10 The tenth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10) {
+        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied {@code Map.Entry} instances.
+     *
+     * <p>Note that this literal uses a generic varargs parameter as the last argument in the
+     * argument list and as such will cause unchecked cast warnings. Explicit argument
+     * lists for up to ten arguments have been provided for convenience. In order to avoid
+     * the unchecked cast warnings, a {@link MapBuilder} can be used instead.</p>
+     *
+     * @param e1    The first {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e2    The second {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e3    The third {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e4    The fourth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e5    The fifth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e6    The sixth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e7    The seventh {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e8    The eighth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e9    The ninth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e10   The tenth {@code Map.Entry} from which to construct a {@code Map}.
+     * @param e11on The remaining {@code Map.Entry} instances from which to construct
+     *              a {@code Map}.
+     * @param <K>   The type of the keys to be in the returned {@code Map}.
+     * @param <V>   The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10, Map.Entry<K, V>... e11on) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).and(e11on).build();
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} with a key-value mapping for the supplied {@code Pair}.
+     *
+     * @param e   A {@code Pair} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing a key-value mapping for the supplied {@code Pair}.
+     */
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e) {
+        return mapFromPairs(iterableWith(e));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} with key-value mappings for each of the supplied {@code Pair}
+     * instances.
+     *
+     * @param e1  The first {@code Pair} from which to construct a {@code Map}.
+     * @param e2  The second {@code Pair} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing key-value mappings for each of the supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2) {
+        return mapFromPairs(iterableWith(e1, e2));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} with key-value mappings for each of the supplied {@code Pair}
+     * instances.
+     *
+     * @param e1  The first {@code Pair} from which to construct a {@code Map}.
+     * @param e2  The second {@code Pair} from which to construct a {@code Map}.
+     * @param e3  The third {@code Pair} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing key-value mappings for each of the supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3) {
+        return mapFromPairs(iterableWith(e1, e2, e3));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} with key-value mappings for each of the supplied {@code Pair}
+     * instances.
+     *
+     * @param e1  The first {@code Pair} from which to construct a {@code Map}.
+     * @param e2  The second {@code Pair} from which to construct a {@code Map}.
+     * @param e3  The third {@code Pair} from which to construct a {@code Map}.
+     * @param e4  The fourth {@code Pair} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing key-value mappings for each of the supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4) {
+        return mapFromPairs(iterableWith(e1, e2, e3, e4));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} with key-value mappings for each of the supplied {@code Pair}
+     * instances.
+     *
+     * @param e1  The first {@code Pair} from which to construct a {@code Map}.
+     * @param e2  The second {@code Pair} from which to construct a {@code Map}.
+     * @param e3  The third {@code Pair} from which to construct a {@code Map}.
+     * @param e4  The fourth {@code Pair} from which to construct a {@code Map}.
+     * @param e5  The fifth {@code Pair} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing key-value mappings for each of the supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5) {
+        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} with key-value mappings for each of the supplied {@code Pair}
+     * instances.
+     *
+     * @param e1  The first {@code Pair} from which to construct a {@code Map}.
+     * @param e2  The second {@code Pair} from which to construct a {@code Map}.
+     * @param e3  The third {@code Pair} from which to construct a {@code Map}.
+     * @param e4  The fourth {@code Pair} from which to construct a {@code Map}.
+     * @param e5  The fifth {@code Pair} from which to construct a {@code Map}.
+     * @param e6  The sixth {@code Pair} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing key-value mappings for each of the supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6) {
+        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} with key-value mappings for each of the supplied {@code Pair}
+     * instances.
+     *
+     * @param e1  The first {@code Pair} from which to construct a {@code Map}.
+     * @param e2  The second {@code Pair} from which to construct a {@code Map}.
+     * @param e3  The third {@code Pair} from which to construct a {@code Map}.
+     * @param e4  The fourth {@code Pair} from which to construct a {@code Map}.
+     * @param e5  The fifth {@code Pair} from which to construct a {@code Map}.
+     * @param e6  The sixth {@code Pair} from which to construct a {@code Map}.
+     * @param e7  The seventh {@code Pair} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing key-value mappings for each of the supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7) {
+        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} with key-value mappings for each of the supplied {@code Pair}
+     * instances.
+     *
+     * @param e1  The first {@code Pair} from which to construct a {@code Map}.
+     * @param e2  The second {@code Pair} from which to construct a {@code Map}.
+     * @param e3  The third {@code Pair} from which to construct a {@code Map}.
+     * @param e4  The fourth {@code Pair} from which to construct a {@code Map}.
+     * @param e5  The fifth {@code Pair} from which to construct a {@code Map}.
+     * @param e6  The sixth {@code Pair} from which to construct a {@code Map}.
+     * @param e7  The seventh {@code Pair} from which to construct a {@code Map}.
+     * @param e8  The eighth {@code Pair} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing key-value mappings for each of the supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8) {
+        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} with key-value mappings for each of the supplied {@code Pair}
+     * instances.
+     *
+     * @param e1  The first {@code Pair} from which to construct a {@code Map}.
+     * @param e2  The second {@code Pair} from which to construct a {@code Map}.
+     * @param e3  The third {@code Pair} from which to construct a {@code Map}.
+     * @param e4  The fourth {@code Pair} from which to construct a {@code Map}.
+     * @param e5  The fifth {@code Pair} from which to construct a {@code Map}.
+     * @param e6  The sixth {@code Pair} from which to construct a {@code Map}.
+     * @param e7  The seventh {@code Pair} from which to construct a {@code Map}.
+     * @param e8  The eighth {@code Pair} from which to construct a {@code Map}.
+     * @param e9  The ninth {@code Pair} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing key-value mappings for each of the supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9) {
+        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} with key-value mappings for each of the supplied {@code Pair}
+     * instances.
+     *
+     * @param e1  The first {@code Pair} from which to construct a {@code Map}.
+     * @param e2  The second {@code Pair} from which to construct a {@code Map}.
+     * @param e3  The third {@code Pair} from which to construct a {@code Map}.
+     * @param e4  The fourth {@code Pair} from which to construct a {@code Map}.
+     * @param e5  The fifth {@code Pair} from which to construct a {@code Map}.
+     * @param e6  The sixth {@code Pair} from which to construct a {@code Map}.
+     * @param e7  The seventh {@code Pair} from which to construct a {@code Map}.
+     * @param e8  The eighth {@code Pair} from which to construct a {@code Map}.
+     * @param e9  The ninth {@code Pair} from which to construct a {@code Map}.
+     * @param e10 The tenth {@code Pair} from which to construct a {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing key-value mappings for each of the supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10) {
+        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} with key-value mappings for each of the supplied {@code Pair}
+     * instances.
+     *
+     * <p>Note that this literal uses a generic varargs parameter as the last argument in the
+     * argument list and as such will cause unchecked cast warnings. Explicit argument
+     * lists for up to ten arguments have been provided for convenience. In order to avoid
+     * the unchecked cast warnings, a {@link MapBuilder} can be used instead.</p>
+     *
+     * @param e1    The first {@code Pair} from which to construct a {@code Map}.
+     * @param e2    The second {@code Pair} from which to construct a {@code Map}.
+     * @param e3    The third {@code Pair} from which to construct a {@code Map}.
+     * @param e4    The fourth {@code Pair} from which to construct a {@code Map}.
+     * @param e5    The fifth {@code Pair} from which to construct a {@code Map}.
+     * @param e6    The sixth {@code Pair} from which to construct a {@code Map}.
+     * @param e7    The seventh {@code Pair} from which to construct a {@code Map}.
+     * @param e8    The eighth {@code Pair} from which to construct a {@code Map}.
+     * @param e9    The ninth {@code Pair} from which to construct a {@code Map}.
+     * @param e10   The tenth {@code Pair} from which to construct a {@code Map}.
+     * @param e11on The remaining {@code Pair} instances from which to construct a
+     *              {@code Map}.
+     * @param <K>   The type of the keys to be in the returned {@code Map}.
+     * @param <V>   The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing key-value mappings for each of the supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10, Pair<K, V>... e11on) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).andPairs(e11on).build();
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing all entries from the supplied {@code Map} instance.
+     *
+     * @param m   A {@code Map} from which to construct this {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing all entries from the supplied {@code Map} instance.
+     */
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m) {
+        return mapFromMaps(iterableWith(m));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing all entries from all supplied {@code Map} instances.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value in the returned {@code Map}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} from which to construct this {@code Map}.
+     * @param m2  The second {@code Map} from which to construct this {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing all entries from the all supplied {@code Map}
+     *         instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2) {
+        return mapFromMaps(iterableWith(m1, m2));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing all entries from all supplied {@code Map} instances.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value in the returned {@code Map}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} from which to construct this {@code Map}.
+     * @param m2  The second {@code Map} from which to construct this {@code Map}.
+     * @param m3  The third {@code Map} from which to construct this {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing all entries from the all supplied {@code Map}
+     *         instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3) {
+        return mapFromMaps(iterableWith(m1, m2, m3));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing all entries from all supplied {@code Map} instances.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value in the returned {@code Map}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} from which to construct this {@code Map}.
+     * @param m2  The second {@code Map} from which to construct this {@code Map}.
+     * @param m3  The third {@code Map} from which to construct this {@code Map}.
+     * @param m4  The fourth {@code Map} from which to construct this {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing all entries from the all supplied {@code Map}
+     *         instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4) {
+        return mapFromMaps(iterableWith(m1, m2, m3, m4));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing all entries from all supplied {@code Map} instances.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value in the returned {@code Map}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} from which to construct this {@code Map}.
+     * @param m2  The second {@code Map} from which to construct this {@code Map}.
+     * @param m3  The third {@code Map} from which to construct this {@code Map}.
+     * @param m4  The fourth {@code Map} from which to construct this {@code Map}.
+     * @param m5  The fifth {@code Map} from which to construct this {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing all entries from the all supplied {@code Map}
+     *         instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5) {
+        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing all entries from all supplied {@code Map} instances.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value in the returned {@code Map}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} from which to construct this {@code Map}.
+     * @param m2  The second {@code Map} from which to construct this {@code Map}.
+     * @param m3  The third {@code Map} from which to construct this {@code Map}.
+     * @param m4  The fourth {@code Map} from which to construct this {@code Map}.
+     * @param m5  The fifth {@code Map} from which to construct this {@code Map}.
+     * @param m6  The sixth {@code Map} from which to construct this {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing all entries from the all supplied {@code Map}
+     *         instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6) {
+        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5, m6));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing all entries from all supplied {@code Map} instances.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value in the returned {@code Map}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} from which to construct this {@code Map}.
+     * @param m2  The second {@code Map} from which to construct this {@code Map}.
+     * @param m3  The third {@code Map} from which to construct this {@code Map}.
+     * @param m4  The fourth {@code Map} from which to construct this {@code Map}.
+     * @param m5  The fifth {@code Map} from which to construct this {@code Map}.
+     * @param m6  The sixth {@code Map} from which to construct this {@code Map}.
+     * @param m7  The seventh {@code Map} from which to construct this {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing all entries from the all supplied {@code Map}
+     *         instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7) {
+        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing all entries from all supplied {@code Map} instances.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value in the returned {@code Map}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} from which to construct this {@code Map}.
+     * @param m2  The second {@code Map} from which to construct this {@code Map}.
+     * @param m3  The third {@code Map} from which to construct this {@code Map}.
+     * @param m4  The fourth {@code Map} from which to construct this {@code Map}.
+     * @param m5  The fifth {@code Map} from which to construct this {@code Map}.
+     * @param m6  The sixth {@code Map} from which to construct this {@code Map}.
+     * @param m7  The seventh {@code Map} from which to construct this {@code Map}.
+     * @param m8  The eighth {@code Map} from which to construct this {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing all entries from the all supplied {@code Map}
+     *         instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8) {
+        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing all entries from all supplied {@code Map} instances.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value in the returned {@code Map}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} from which to construct this {@code Map}.
+     * @param m2  The second {@code Map} from which to construct this {@code Map}.
+     * @param m3  The third {@code Map} from which to construct this {@code Map}.
+     * @param m4  The fourth {@code Map} from which to construct this {@code Map}.
+     * @param m5  The fifth {@code Map} from which to construct this {@code Map}.
+     * @param m6  The sixth {@code Map} from which to construct this {@code Map}.
+     * @param m7  The seventh {@code Map} from which to construct this {@code Map}.
+     * @param m8  The eighth {@code Map} from which to construct this {@code Map}.
+     * @param m9  The ninth {@code Map} from which to construct this {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing all entries from the all supplied {@code Map}
+     *         instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9) {
+        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing all entries from all supplied {@code Map} instances.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value in the returned {@code Map}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} from which to construct this {@code Map}.
+     * @param m2  The second {@code Map} from which to construct this {@code Map}.
+     * @param m3  The third {@code Map} from which to construct this {@code Map}.
+     * @param m4  The fourth {@code Map} from which to construct this {@code Map}.
+     * @param m5  The fifth {@code Map} from which to construct this {@code Map}.
+     * @param m6  The sixth {@code Map} from which to construct this {@code Map}.
+     * @param m7  The seventh {@code Map} from which to construct this {@code Map}.
+     * @param m8  The eighth {@code Map} from which to construct this {@code Map}.
+     * @param m9  The ninth {@code Map} from which to construct this {@code Map}.
+     * @param m10 The tenth {@code Map} from which to construct this {@code Map}.
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing all entries from the all supplied {@code Map}
+     *         instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9, Map<K, V> m10) {
+        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10));
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing all entries from all supplied {@code Map} instances.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value in the returned {@code Map}.
+     * </p>
+     *
+     * <p>Note that this literal uses a generic varargs parameter as the last argument in the
+     * argument list and as such will cause unchecked cast warnings. Explicit argument
+     * lists for up to ten arguments have been provided for convenience. In order to avoid
+     * the unchecked cast warnings, a {@link MapBuilder} can be used instead.</p>
+     *
+     * @param m1    The first {@code Map} from which to construct this {@code Map}.
+     * @param m2    The second {@code Map} from which to construct this {@code Map}.
+     * @param m3    The third {@code Map} from which to construct this {@code Map}.
+     * @param m4    The fourth {@code Map} from which to construct this {@code Map}.
+     * @param m5    The fifth {@code Map} from which to construct this {@code Map}.
+     * @param m6    The sixth {@code Map} from which to construct this {@code Map}.
+     * @param m7    The seventh {@code Map} from which to construct this {@code Map}.
+     * @param m8    The eighth {@code Map} from which to construct this {@code Map}.
+     * @param m9    The ninth {@code Map} from which to construct this {@code Map}.
+     * @param m10   The tenth {@code Map} from which to construct this {@code Map}.
+     * @param m11on The remaining {@code Map} instances from which to construct
+     *              this {@code Map}
+     * @param <K>   The type of the keys to be in the returned {@code Map}.
+     * @param <V>   The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing all entries from the all supplied {@code Map}
+     *         instances.
+     */
+    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9, Map<K, V> m10, Map<K, V>... m11on) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10)).andMaps(m11on).build();
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied key mapped to the supplied value.
+     *
+     * @param k1  The key for the first entry from which to construct a {@code Map}.
+     * @param v1  The value for the first entry from which to construct a {@code Map}
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied key mapped to the supplied value.
+     */
+    public static <K, V> Map<K, V> mapWithKeyValuePair(K k1, V v1) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1)).build();
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry from which to construct a {@code Map}.
+     * @param v1  The value for the first entry from which to construct a {@code Map}
+     * @param k2  The key for the second entry from which to construct a {@code Map}.
+     * @param v2  The value for the second entry from which to construct a {@code Map}
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2)).build();
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry from which to construct a {@code Map}.
+     * @param v1  The value for the first entry from which to construct a {@code Map}
+     * @param k2  The key for the second entry from which to construct a {@code Map}.
+     * @param v2  The value for the second entry from which to construct a {@code Map}
+     * @param k3  The key for the third entry from which to construct a {@code Map}.
+     * @param v3  The value for the third entry from which to construct a {@code Map}
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3)).build();
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry from which to construct a {@code Map}.
+     * @param v1  The value for the first entry from which to construct a {@code Map}
+     * @param k2  The key for the second entry from which to construct a {@code Map}.
+     * @param v2  The value for the second entry from which to construct a {@code Map}
+     * @param k3  The key for the third entry from which to construct a {@code Map}.
+     * @param v3  The value for the third entry from which to construct a {@code Map}
+     * @param k4  The key for the fourth entry from which to construct a {@code Map}.
+     * @param v4  The value for the fourth entry from which to construct a {@code Map}
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4)).build();
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry from which to construct a {@code Map}.
+     * @param v1  The value for the first entry from which to construct a {@code Map}
+     * @param k2  The key for the second entry from which to construct a {@code Map}.
+     * @param v2  The value for the second entry from which to construct a {@code Map}
+     * @param k3  The key for the third entry from which to construct a {@code Map}.
+     * @param v3  The value for the third entry from which to construct a {@code Map}
+     * @param k4  The key for the fourth entry from which to construct a {@code Map}.
+     * @param v4  The value for the fourth entry from which to construct a {@code Map}
+     * @param k5  The key for the fifth entry from which to construct a {@code Map}.
+     * @param v5  The value for the fifth entry from which to construct a {@code Map}
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5)).build();
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry from which to construct a {@code Map}.
+     * @param v1  The value for the first entry from which to construct a {@code Map}
+     * @param k2  The key for the second entry from which to construct a {@code Map}.
+     * @param v2  The value for the second entry from which to construct a {@code Map}
+     * @param k3  The key for the third entry from which to construct a {@code Map}.
+     * @param v3  The value for the third entry from which to construct a {@code Map}
+     * @param k4  The key for the fourth entry from which to construct a {@code Map}.
+     * @param v4  The value for the fourth entry from which to construct a {@code Map}
+     * @param k5  The key for the fifth entry from which to construct a {@code Map}.
+     * @param v5  The value for the fifth entry from which to construct a {@code Map}
+     * @param k6  The key for the sixth entry from which to construct a {@code Map}.
+     * @param v6  The value for the sixth entry from which to construct a {@code Map}
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6)).build();
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry from which to construct a {@code Map}.
+     * @param v1  The value for the first entry from which to construct a {@code Map}
+     * @param k2  The key for the second entry from which to construct a {@code Map}.
+     * @param v2  The value for the second entry from which to construct a {@code Map}
+     * @param k3  The key for the third entry from which to construct a {@code Map}.
+     * @param v3  The value for the third entry from which to construct a {@code Map}
+     * @param k4  The key for the fourth entry from which to construct a {@code Map}.
+     * @param v4  The value for the fourth entry from which to construct a {@code Map}
+     * @param k5  The key for the fifth entry from which to construct a {@code Map}.
+     * @param v5  The value for the fifth entry from which to construct a {@code Map}
+     * @param k6  The key for the sixth entry from which to construct a {@code Map}.
+     * @param v6  The value for the sixth entry from which to construct a {@code Map}
+     * @param k7  The key for the seventh entry from which to construct a {@code Map}.
+     * @param v7  The value for the seventh entry from which to construct a {@code Map}
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7)).build();
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry from which to construct a {@code Map}.
+     * @param v1  The value for the first entry from which to construct a {@code Map}
+     * @param k2  The key for the second entry from which to construct a {@code Map}.
+     * @param v2  The value for the second entry from which to construct a {@code Map}
+     * @param k3  The key for the third entry from which to construct a {@code Map}.
+     * @param v3  The value for the third entry from which to construct a {@code Map}
+     * @param k4  The key for the fourth entry from which to construct a {@code Map}.
+     * @param v4  The value for the fourth entry from which to construct a {@code Map}
+     * @param k5  The key for the fifth entry from which to construct a {@code Map}.
+     * @param v5  The value for the fifth entry from which to construct a {@code Map}
+     * @param k6  The key for the sixth entry from which to construct a {@code Map}.
+     * @param v6  The value for the sixth entry from which to construct a {@code Map}
+     * @param k7  The key for the seventh entry from which to construct a {@code Map}.
+     * @param v7  The value for the seventh entry from which to construct a {@code Map}
+     * @param k8  The key for the eighth entry from which to construct a {@code Map}.
+     * @param v8  The value for the eighth entry from which to construct a {@code Map}
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8)).build();
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry from which to construct a {@code Map}.
+     * @param v1  The value for the first entry from which to construct a {@code Map}
+     * @param k2  The key for the second entry from which to construct a {@code Map}.
+     * @param v2  The value for the second entry from which to construct a {@code Map}
+     * @param k3  The key for the third entry from which to construct a {@code Map}.
+     * @param v3  The value for the third entry from which to construct a {@code Map}
+     * @param k4  The key for the fourth entry from which to construct a {@code Map}.
+     * @param v4  The value for the fourth entry from which to construct a {@code Map}
+     * @param k5  The key for the fifth entry from which to construct a {@code Map}.
+     * @param v5  The value for the fifth entry from which to construct a {@code Map}
+     * @param k6  The key for the sixth entry from which to construct a {@code Map}.
+     * @param v6  The value for the sixth entry from which to construct a {@code Map}
+     * @param k7  The key for the seventh entry from which to construct a {@code Map}.
+     * @param v7  The value for the seventh entry from which to construct a {@code Map}
+     * @param k8  The key for the eighth entry from which to construct a {@code Map}.
+     * @param v8  The value for the eighth entry from which to construct a {@code Map}
+     * @param k9  The key for the ninth entry from which to construct a {@code Map}.
+     * @param v9  The value for the ninth entry from which to construct a {@code Map}
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9)).build();
+    }
+
+    /**
+     * Returns an immutable {@code Map} instance with keys of type {@code K} and values
+     * of type {@code V} containing the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry from which to construct a {@code Map}.
+     * @param v1  The value for the first entry from which to construct a {@code Map}
+     * @param k2  The key for the second entry from which to construct a {@code Map}.
+     * @param v2  The value for the second entry from which to construct a {@code Map}
+     * @param k3  The key for the third entry from which to construct a {@code Map}.
+     * @param v3  The value for the third entry from which to construct a {@code Map}
+     * @param k4  The key for the fourth entry from which to construct a {@code Map}.
+     * @param v4  The value for the fourth entry from which to construct a {@code Map}
+     * @param k5  The key for the fifth entry from which to construct a {@code Map}.
+     * @param v5  The value for the fifth entry from which to construct a {@code Map}
+     * @param k6  The key for the sixth entry from which to construct a {@code Map}.
+     * @param v6  The value for the sixth entry from which to construct a {@code Map}
+     * @param k7  The key for the seventh entry from which to construct a {@code Map}.
+     * @param v7  The value for the seventh entry from which to construct a {@code Map}
+     * @param k8  The key for the eighth entry from which to construct a {@code Map}.
+     * @param v8  The value for the eighth entry from which to construct a {@code Map}
+     * @param k9  The key for the ninth entry from which to construct a {@code Map}.
+     * @param v9  The value for the ninth entry from which to construct a {@code Map}
+     * @param k10 The key for the tenth entry from which to construct a {@code Map}.
+     * @param v10 The value for the tenth entry from which to construct a {@code Map}
+     * @param <K> The type of the keys to be in the returned {@code Map}.
+     * @param <V> The type of the values to be in the returned {@code Map}.
+     * @return A {@code Map} instance with keys of type {@code K} and values of type
+     *         {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9, K k10, V v10) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9), mapEntryFor(k10, v10)).build();
+    }
+
+    /**
+     * Returns a {@code MapBuilder} containing no elements.
+     *
+     * <h4>Example Usage:</h4>
+     * A {@code MapBuilder} can be used to assemble a {@code Map} as follows:
+     * <blockquote>
+     * <pre>
+     *   Map&lt;String, Boolean&gt; map = Literals.&lt;String, Boolean&gt;mapBuilder()
+     *           .with(mapEntryFor("feature1", true), mapEntryFor("feature2", false))
+     *           .and(tuple("feature3", true))
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Map&lt;String, Boolean&gt; map = Literals.mapWith("feature1", true, "feature2", false, "feature3", true);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code MapBuilder} is that the map can be built up from
+     * individual objects, arrays or existing iterables. See {@link MapBuilder} for
+     * further details.
+     *
+     * @param <K> The type of the keys contained in the {@code MapBuilder}.
+     * @param <V> The type of the values contained in the {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance for keys of type {@code K} and
+     *         values of type {@code V} containing no elements.
+     */
     public static <K, V> MapBuilder<K, V> mapBuilder() {
         return new MapBuilder<K, V>();
     }
 
+    /**
+     * Returns a {@code MapBuilder} with keys of the type of the first
+     * supplied {@code Class} and values of the type of the second
+     * supplied {@code Class}.
+     *
+     * <h4>Example Usage:</h4>
+     * A {@code MapBuilder} can be used to assemble a {@code Map} as follows:
+     * <blockquote>
+     * <pre>
+     *   Map&lt;String, Boolean&gt; map = mapBuilderOf(String.class, Boolean.class)
+     *           .with(mapEntryFor("feature1", true), mapEntryFor("feature2", false))
+     *           .and(tuple("feature3", true))
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Map&lt;String, Boolean&gt; map = Literals.mapWith("feature1", true, "feature2", false, "feature3", true);
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code MapBuilder} is that the map can be built up from
+     * individual objects, arrays or existing iterables. See {@link MapBuilder} for
+     * further details.
+     *
+     * @param keyClass   A {@code Class} representing the type of the keys
+     *                   contained in this {@code MapBuilder}.
+     * @param valueClass A {@code Class} representing the type of the values
+     *                   contained in this {@code MapBuilder}.
+     * @param <K>        The type of the keys contained in the {@code MapBuilder}.
+     * @param <V>        The type of the values contained in the {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance for keys of type {@code K} and
+     *         values of type {@code V} containing no elements.
+     */
     public static <K, V> MapBuilder<K, V> mapBuilderOf(Class<K> keyClass, Class<V> valueClass) {
         return new MapBuilder<K, V>();
     }
 
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with all {@code Map.Entry} instances from
+     * the supplied {@code Iterable}.
+     *
+     * <h4>Example Usage:</h4>
+     * A {@code MapBuilder} can be used to assemble a {@code Map} from two existing
+     * {@code Collection} instances containing {@code Map.Entry} instances as follows:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Map.Entry&lt;Integer, Long&gt;&gt; firstCollection = Literals.collectionWith(
+     *           mapEntryFor(1, 1L),
+     *           mapEntryFor(2, 2L));
+     *   Collection&lt;Map.Entry&lt;Integer, Long&gt;&gt; secondCollection = Literals.collectionWith(
+     *           mapEntryFor(3, 3L),
+     *           mapEntryFor(4, 4L));
+     *   Map&lt;Integer, Long&gt; map = mapBuilderFromEntries(firstCollection)
+     *           .withEntries(secondCollection)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Map&lt;Integer, Long&gt; map = Literals.mapWith(tuple(1, 1L), tuple(2, 2L), tuple(3, 3L), tuple(4, 4L));
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code MapBuilder} is that the map can be built up from
+     * individual objects, arrays or existing iterables. See {@link MapBuilder} for
+     * further details.
+     *
+     * @param entries An {@code Iterable} of {@code Map.Entry} elements with which a
+     *                {@code MapBuilder} should be initialised.
+     * @param <K>     The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V>     The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of type
+     *         {@code V} containing all {@code Map.Entry} elements from the supplied
+     *         {@code Iterable}.
+     */
     public static <K, V> MapBuilder<K, V> mapBuilderFromEntries(Iterable<? extends Map.Entry<K, V>> entries) {
         return new MapBuilder<K, V>().with(entries);
     }
 
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with all {@code Map.Entry} instances from
+     * the supplied array.
+     *
+     * <h4>Example Usage:</h4>
+     * A {@code MapBuilder} can be used to assemble a {@code Map} from two existing
+     * array instances containing {@code Map.Entry} instances as follows:
+     * <blockquote>
+     * <pre>
+     *   Map.Entry&lt;Integer, Long&gt;[] firstEntryArray = new Map.Entry[]{
+     *           mapEntryFor(1, 1L),
+     *           mapEntryFor(2, 2L)};
+     *   Map.Entry&lt;Integer, Long&gt;[] secondEntryArray = new Map.Entry[]{
+     *           mapEntryFor(3, 3L),
+     *           mapEntryFor(4, 4L)};
+     *   Map&lt;Integer, Long&gt; map = mapBuilderFromEntries(firstEntryArray)
+     *           .withEntries(secondEntryArray)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Map&lt;Integer, Long&gt; map = Literals.mapWith(tuple(1, 1L), tuple(2, 2L), tuple(3, 3L), tuple(4, 4L));
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code MapBuilder} is that the map can be built up from
+     * individual objects, arrays or existing iterables. See {@link MapBuilder} for
+     * further details.
+     *
+     * @param entries An array of {@code Map.Entry} elements with which a
+     *                {@code MapBuilder} should be initialised.
+     * @param <K>     The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V>     The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of type
+     *         {@code V} containing all {@code Map.Entry} elements from the supplied
+     *         array.
+     */
     public static <K, V> MapBuilder<K, V> mapBuilderFromEntries(Map.Entry<K, V>[] entries) {
         return new MapBuilder<K, V>().with(entries);
     }
 
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with key-value mappings for each {@code Pair}
+     * in the supplied {@code Iterable}.
+     *
+     * <h4>Example Usage:</h4>
+     * A {@code MapBuilder} can be used to assemble a {@code Map} from two existing
+     * {@code Collection} instances containing {@code Pair} instances as follows:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Pair&lt;Integer, Long&gt;&gt; firstCollection = Literals.collectionWith(
+     *           tuple(1, 1L),
+     *           tuple(2, 2L));
+     *   Collection&lt;Pair&lt;Integer, Long&gt;&gt; secondCollection = Literals.collectionWith(
+     *           tuple(3, 3L),
+     *           tuple(4, 4L));
+     *   Map&lt;Integer, Long&gt; map = mapBuilderFromPairs(firstCollection)
+     *           .withPairs(secondCollection)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Map&lt;Integer, Long&gt; map = Literals.mapWith(
+     *           mapEntryFor(1, 1L),
+     *           mapEntryFor(2, 2L),
+     *           mapEntryFor(3, 3L),
+     *           mapEntryFor(4, 4L));
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code MapBuilder} is that the map can be built up from
+     * individual objects, arrays or existing iterables. See {@link MapBuilder} for
+     * further details.
+     *
+     * @param entries An {@code Iterable} of {@code Pair} instance with which a
+     *                {@code MapBuilder} should be initialised.
+     * @param <K>     The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V>     The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of type
+     *         {@code V} containing key-value mappings for each {@code Pair} in the
+     *         supplied {@code Iterable}.
+     */
     public static <K, V> MapBuilder<K, V> mapBuilderFromPairs(Iterable<? extends Pair<K, V>> entries) {
         return new MapBuilder<K, V>().withPairs(entries);
     }
 
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with key-value mappings for each {@code Pair}
+     * in the supplied array.
+     *
+     * <h4>Example Usage:</h4>
+     * A {@code MapBuilder} can be used to assemble a {@code Map} from two existing
+     * array instances containing {@code Pair} instances as follows:
+     * <blockquote>
+     * <pre>
+     *   Pair&lt;Integer, Long&gt;[] firstPairArray = new Pair[]{
+     *           tuple(1, 1L),
+     *           tuple(2, 2L)};
+     *   Pair&lt;Integer, Long&gt;[] secondEntryArray = new Pair[]{
+     *           tuple(3, 3L),
+     *           tuple(4, 4L)};
+     *   Map&lt;Integer, Long&gt; map = mapBuilderFromPairs(firstPairArray)
+     *           .withPairs(secondPairArray)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Map&lt;Integer, Long&gt; map = Literals.mapWith(
+     *           mapEntryFor(1, 1L),
+     *           mapEntryFor(2, 2L),
+     *           mapEntryFor(3, 3L),
+     *           mapEntryFor(4, 4L));
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code MapBuilder} is that the map can be built up from
+     * individual objects, arrays or existing iterables. See {@link MapBuilder} for
+     * further details.
+     *
+     * @param entries An array of {@code Pair} instance with which a
+     *                {@code MapBuilder} should be initialised.
+     * @param <K>     The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V>     The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of type
+     *         {@code V} containing key-value mappings for each {@code Pair} in the
+     *         supplied array.
+     */
     public static <K, V> MapBuilder<K, V> mapBuilderFromPairs(Pair<K, V>[] entries) {
         return new MapBuilder<K, V>().withPairs(entries);
     }
 
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with all entries from all {@code Map} instances
+     * in the supplied {@code Iterable}.
+     *
+     * <h4>Example Usage:</h4>
+     * A {@code MapBuilder} can be used to assemble a {@code Multiset} from two existing
+     * {@code Iterable} instances containing {@code Map} instances as follows:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Map&lt;Integer, Long&gt;&gt; firstIterable = iterableWith(
+     *           mapWith(mapEntryFor(1, 1L), mapEntryFor(2, 2L)),
+     *           mapWith(mapEntryFor(3, 3L), mapEntryFor(4, 4L));
+     *   Iterable&lt;Map&lt;Integer, Long&gt;&gt; secondIterable = iterableWith(
+     *           mapWith(mapEntryFor(5, 5L)));
+     *   Map&lt;Integer, Long&gt; map = mapBuilderFromMaps(firstIterable)
+     *           .withMaps(secondIterable)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Map&lt;Integer, Long&gt; map = Literals.mapWith(
+     *           tuple(1, 1L),
+     *           tuple(2, 2L),
+     *           tuple(3, 3L),
+     *           tuple(4, 4L),
+     *           tuple(5, 5L));
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code MapBuilder} is that the map can be built up from
+     * individual objects, arrays or existing iterables. See {@link MapBuilder} for
+     * further details.
+     *
+     * @param entries An {@code Iterable} of {@code Map} instances whose entries should
+     *                be used to initialise a {@code MapBuilder}.
+     * @param <K>     The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V>     The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} initialised with all entries from all {@code Map}
+     *         instances in the supplied {@code Iterable}.
+     */
     public static <K, V> MapBuilder<K, V> mapBuilderFromMaps(Iterable<? extends Map<K, V>> entries) {
         return new MapBuilder<K, V>().withMaps(entries);
     }
 
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with all entries from all {@code Map} instances
+     * in the supplied array.
+     *
+     * <h4>Example Usage:</h4>
+     * A {@code MapBuilder} can be used to assemble a {@code Multiset} from two existing
+     * arrays containing {@code Map} instances as follows:
+     * <blockquote>
+     * <pre>
+     *   Map&lt;Integer, Long&gt;[] firstArray = new Map[]{
+     *           mapWith(mapEntryFor(1, 1L), mapEntryFor(2, 2L)),
+     *           mapWith(mapEntryFor(3, 3L), mapEntryFor(4, 4L)};
+     *   Map&lt;Integer, Long&gt; secondArray = new Map[]{
+     *           mapWith(mapEntryFor(5, 5L))};
+     *   Map&lt;Integer, Long&gt; map = mapBuilderFromMaps(firstArray)
+     *           .withMaps(secondArray)
+     *           .build()
+     * </pre>
+     * </blockquote>
+     * This is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Map&lt;Integer, Long&gt; map = Literals.mapWith(
+     *           tuple(1, 1L),
+     *           tuple(2, 2L),
+     *           tuple(3, 3L),
+     *           tuple(4, 4L),
+     *           tuple(5, 5L));
+     * </pre>
+     * </blockquote>
+     * The advantage of the {@code MapBuilder} is that the map can be built up from
+     * individual objects, arrays or existing iterables. See {@link MapBuilder} for
+     * further details.
+     *
+     * @param entries An array of {@code Map} instances whose entries should
+     *                be used to initialise a {@code MapBuilder}.
+     * @param <K>     The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V>     The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} initialised with all entries from all {@code Map}
+     *         instances in the supplied array.
+     */
     public static <K, V> MapBuilder<K, V> mapBuilderFromMaps(Map<K, V>[] entries) {
         return new MapBuilder<K, V>().withMaps(entries);
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied {@code Map.Entry} instance.
+     *
+     * @param e   The {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied {@code Map.Entry} instance.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e) {
+        return mapBuilderFromEntries(iterableWith(e));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e2  The second {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
+        return mapBuilderFromEntries(iterableWith(e1, e2));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e2  The second {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e3  The third {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e2  The second {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e3  The third {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e4  The fourth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e2  The second {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e3  The third {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e4  The fourth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e5  The fifth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e2  The second {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e3  The third {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e4  The fourth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e5  The fifth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e6  The sixth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e2  The second {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e3  The third {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e4  The fourth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e5  The fifth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e6  The sixth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e7  The seventh {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e2  The second {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e3  The third {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e4  The fourth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e5  The fifth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e6  The sixth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e7  The seventh {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e8  The eighth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e2  The second {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e3  The third {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e4  The fourth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e5  The fifth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e6  The sixth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e7  The seventh {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e8  The eighth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e9  The ninth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied {@code Map.Entry} instances.
+     *
+     * @param e1  The first {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e2  The second {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e3  The third {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e4  The fourth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e5  The fifth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e6  The sixth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e7  The seventh {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e8  The eighth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e9  The ninth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e10 The tenth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied {@code Map.Entry} instances.
+     *
+     * <p>Note that this literal uses a generic varargs parameter as the last argument in the
+     * argument list and as such will cause unchecked cast warnings. Explicit argument
+     * lists for up to ten arguments have been provided for convenience. In order to avoid
+     * the unchecked cast warnings, subsequent method calls on the {@link MapBuilder}
+     * can be used instead.</p>
+     *
+     * @param e1    The first {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e2    The second {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e3    The third {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e4    The fourth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e5    The fifth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e6    The sixth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e7    The seventh {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e8    The eighth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e9    The ninth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e10   The tenth {@code Map.Entry} instance to be added to this {@code MapBuilder}.
+     * @param e11on The remaining {@code Map.Entry} instances to be added to this {@code MapBuilder}.
+     * @param <K>   The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V>   The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied {@code Map.Entry} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10, Map.Entry<K, V>... e11on) {
+        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).and(e11on);
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with a key-value mapping for the supplied
+     * {@code Pair} instance.
+     *
+     * @param e   The {@code Pair} instance with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing a key-value mapping for the supplied
+     *         {@code Pair} instance.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e) {
+        return mapBuilderFromPairs(iterableWith(e));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with key-value mappings for all supplied
+     * {@code Pair} instances.
+     *
+     * @param e1  The first {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e2  The second {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing key-value mappings for all supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2) {
+        return mapBuilderFromPairs(iterableWith(e1, e2));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with key-value mappings for all supplied
+     * {@code Pair} instances.
+     *
+     * @param e1  The first {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e2  The second {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e3  The third {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing key-value mappings for all supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with key-value mappings for all supplied
+     * {@code Pair} instances.
+     *
+     * @param e1  The first {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e2  The second {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e3  The third {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e4  The fourth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing key-value mappings for all supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with key-value mappings for all supplied
+     * {@code Pair} instances.
+     *
+     * @param e1  The first {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e2  The second {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e3  The third {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e4  The fourth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e5  The fifth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing key-value mappings for all supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with key-value mappings for all supplied
+     * {@code Pair} instances.
+     *
+     * @param e1  The first {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e2  The second {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e3  The third {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e4  The fourth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e5  The fifth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e6  The sixth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing key-value mappings for all supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with key-value mappings for all supplied
+     * {@code Pair} instances.
+     *
+     * @param e1  The first {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e2  The second {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e3  The third {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e4  The fourth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e5  The fifth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e6  The sixth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e7  The seventh {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing key-value mappings for all supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with key-value mappings for all supplied
+     * {@code Pair} instances.
+     *
+     * @param e1  The first {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e2  The second {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e3  The third {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e4  The fourth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e5  The fifth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e6  The sixth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e7  The seventh {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e8  The eighth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing key-value mappings for all supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with key-value mappings for all supplied
+     * {@code Pair} instances.
+     *
+     * @param e1  The first {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e2  The second {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e3  The third {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e4  The fourth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e5  The fifth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e6  The sixth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e7  The seventh {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e8  The eighth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e9  The ninth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing key-value mappings for all supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with key-value mappings for all supplied
+     * {@code Pair} instances.
+     *
+     * @param e1  The first {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e2  The second {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e3  The third {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e4  The fourth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e5  The fifth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e6  The sixth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e7  The seventh {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e8  The eighth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e9  The ninth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e10 The tenth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing key-value mappings for all supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with key-value mappings for all supplied
+     * {@code Pair} instances.
+     *
+     * <p>Note that this literal uses a generic varargs parameter as the last argument in the
+     * argument list and as such will cause unchecked cast warnings. Explicit argument
+     * lists for up to ten arguments have been provided for convenience. In order to avoid
+     * the unchecked cast warnings, subsequent method calls on the {@link MapBuilder}
+     * can be used instead.</p>
+     *
+     * @param e1    The first {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e2    The second {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e3    The third {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e4    The fourth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e5    The fifth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e6    The sixth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e7    The seventh {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e8    The eighth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e9    The ninth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e10   The tenth {@code Pair} instance from which to initialize this {@code MapBuilder}.
+     * @param e11on The remaining {@code Pair} instances from which to initialize this
+     *              {@code MapBuilder}.
+     * @param <K>   The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V>   The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing key-value mappings for all supplied
+     *         {@code Pair} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10, Pair<K, V>... e11on) {
+        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).andPairs(e11on);
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with all entries from the supplied
+     * {@code Map} instance.
+     *
+     * @param m   The {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing all entries from the supplied
+     *         {@code Map} instance.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m) {
+        return mapBuilderFromMaps(iterableWith(m));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with all entries from the supplied
+     * {@code Map} instance.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value associated with that key in the
+     * {@code MapBuilder}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m2  The second {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing all entries from all supplied
+     *         {@code Map} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2) {
+        return mapBuilderFromMaps(iterableWith(m1, m2));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with all entries from the supplied
+     * {@code Map} instance.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value associated with that key in the
+     * {@code MapBuilder}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m2  The second {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m3  The third {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing all entries from all supplied
+     *         {@code Map} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with all entries from the supplied
+     * {@code Map} instance.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value associated with that key in the
+     * {@code MapBuilder}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m2  The second {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m3  The third {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m4  The fourth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing all entries from all supplied
+     *         {@code Map} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with all entries from the supplied
+     * {@code Map} instance.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value associated with that key in the
+     * {@code MapBuilder}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m2  The second {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m3  The third {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m4  The fourth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m5  The fifth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing all entries from all supplied
+     *         {@code Map} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with all entries from the supplied
+     * {@code Map} instance.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value associated with that key in the
+     * {@code MapBuilder}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m2  The second {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m3  The third {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m4  The fourth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m5  The fifth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m6  The sixth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing all entries from all supplied
+     *         {@code Map} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with all entries from the supplied
+     * {@code Map} instance.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value associated with that key in the
+     * {@code MapBuilder}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m2  The second {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m3  The third {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m4  The fourth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m5  The fifth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m6  The sixth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m7  The seventh {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing all entries from all supplied
+     *         {@code Map} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with all entries from the supplied
+     * {@code Map} instance.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value associated with that key in the
+     * {@code MapBuilder}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m2  The second {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m3  The third {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m4  The fourth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m5  The fifth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m6  The sixth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m7  The seventh {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m8  The eighth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing all entries from all supplied
+     *         {@code Map} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with all entries from the supplied
+     * {@code Map} instance.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value associated with that key in the
+     * {@code MapBuilder}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m2  The second {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m3  The third {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m4  The fourth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m5  The fifth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m6  The sixth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m7  The seventh {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m8  The eighth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m9  The ninth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing all entries from all supplied
+     *         {@code Map} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with all entries from the supplied
+     * {@code Map} instance.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value associated with that key in the
+     * {@code MapBuilder}.
+     * </p>
+     *
+     * @param m1  The first {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m2  The second {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m3  The third {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m4  The fourth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m5  The fifth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m6  The sixth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m7  The seventh {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m8  The eighth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m9  The ninth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m10 The tenth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing all entries from all supplied
+     *         {@code Map} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9, Map<K, V> m10) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with all entries from the supplied
+     * {@code Map} instance.
+     *
+     * <p>If later {@code Map} instances in the argument list contain any of the same
+     * keys as earlier {@code Map} instances then the value from the last {@code Map}
+     * instance having that key is used as the value associated with that key in the
+     * {@code MapBuilder}.
+     * </p>
+     *
+     * <p>Note that this literal uses a generic varargs parameter as the last argument in the
+     * argument list and as such will cause unchecked cast warnings. Explicit argument
+     * lists for up to ten arguments have been provided for convenience. In order to avoid
+     * the unchecked cast warnings, subsequent method calls on the {@link MapBuilder}
+     * can be used instead.</p>
+     *
+     * @param m1    The first {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m2    The second {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m3    The third {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m4    The fourth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m5    The fifth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m6    The sixth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m7    The seventh {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m8    The eighth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m9    The ninth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m10   The tenth {@code Map} instance with which to initialise this {@code MapBuilder}.
+     * @param m11on The remaining {@code Map} instances with which to initialise this
+     *              {@code MapBuilder}.
+     * @param <K>   The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V>   The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing all entries from all supplied
+     *         {@code Map} instances.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9, Map<K, V> m10, Map<K, V>... m11on) {
+        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10)).andMaps(m11on);
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied key mapped to the supplied
+     * value.
+     *
+     * @param k1  The key for the first entry with which to initialise this {@code MapBuilder}.
+     * @param v1  The value for the first entry with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied key mapped to the supplied value.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePair(K k1, V v1) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry with which to initialise this {@code MapBuilder}.
+     * @param v1  The value for the first entry with which to initialise this {@code MapBuilder}.
+     * @param k2  The key for the second entry with which to initialise this {@code MapBuilder}.
+     * @param v2  The value for the second entry with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry with which to initialise this {@code MapBuilder}.
+     * @param v1  The value for the first entry with which to initialise this {@code MapBuilder}.
+     * @param k2  The key for the second entry with which to initialise this {@code MapBuilder}.
+     * @param v2  The value for the second entry with which to initialise this {@code MapBuilder}.
+     * @param k3  The key for the third entry with which to initialise this {@code MapBuilder}.
+     * @param v3  The value for the third entry with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry with which to initialise this {@code MapBuilder}.
+     * @param v1  The value for the first entry with which to initialise this {@code MapBuilder}.
+     * @param k2  The key for the second entry with which to initialise this {@code MapBuilder}.
+     * @param v2  The value for the second entry with which to initialise this {@code MapBuilder}.
+     * @param k3  The key for the third entry with which to initialise this {@code MapBuilder}.
+     * @param v3  The value for the third entry with which to initialise this {@code MapBuilder}.
+     * @param k4  The key for the fourth entry with which to initialise this {@code MapBuilder}.
+     * @param v4  The value for the fourth entry with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry with which to initialise this {@code MapBuilder}.
+     * @param v1  The value for the first entry with which to initialise this {@code MapBuilder}.
+     * @param k2  The key for the second entry with which to initialise this {@code MapBuilder}.
+     * @param v2  The value for the second entry with which to initialise this {@code MapBuilder}.
+     * @param k3  The key for the third entry with which to initialise this {@code MapBuilder}.
+     * @param v3  The value for the third entry with which to initialise this {@code MapBuilder}.
+     * @param k4  The key for the fourth entry with which to initialise this {@code MapBuilder}.
+     * @param v4  The value for the fourth entry with which to initialise this {@code MapBuilder}.
+     * @param k5  The key for the fifth entry with which to initialise this {@code MapBuilder}.
+     * @param v5  The value for the fifth entry with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry with which to initialise this {@code MapBuilder}.
+     * @param v1  The value for the first entry with which to initialise this {@code MapBuilder}.
+     * @param k2  The key for the second entry with which to initialise this {@code MapBuilder}.
+     * @param v2  The value for the second entry with which to initialise this {@code MapBuilder}.
+     * @param k3  The key for the third entry with which to initialise this {@code MapBuilder}.
+     * @param v3  The value for the third entry with which to initialise this {@code MapBuilder}.
+     * @param k4  The key for the fourth entry with which to initialise this {@code MapBuilder}.
+     * @param v4  The value for the fourth entry with which to initialise this {@code MapBuilder}.
+     * @param k5  The key for the fifth entry with which to initialise this {@code MapBuilder}.
+     * @param v5  The value for the fifth entry with which to initialise this {@code MapBuilder}.
+     * @param k6  The key for the sixth entry with which to initialise this {@code MapBuilder}.
+     * @param v6  The value for the sixth entry with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry with which to initialise this {@code MapBuilder}.
+     * @param v1  The value for the first entry with which to initialise this {@code MapBuilder}.
+     * @param k2  The key for the second entry with which to initialise this {@code MapBuilder}.
+     * @param v2  The value for the second entry with which to initialise this {@code MapBuilder}.
+     * @param k3  The key for the third entry with which to initialise this {@code MapBuilder}.
+     * @param v3  The value for the third entry with which to initialise this {@code MapBuilder}.
+     * @param k4  The key for the fourth entry with which to initialise this {@code MapBuilder}.
+     * @param v4  The value for the fourth entry with which to initialise this {@code MapBuilder}.
+     * @param k5  The key for the fifth entry with which to initialise this {@code MapBuilder}.
+     * @param v5  The value for the fifth entry with which to initialise this {@code MapBuilder}.
+     * @param k6  The key for the sixth entry with which to initialise this {@code MapBuilder}.
+     * @param v6  The value for the sixth entry with which to initialise this {@code MapBuilder}.
+     * @param k7  The key for the seventh entry with which to initialise this {@code MapBuilder}.
+     * @param v7  The value for the seventh entry with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry with which to initialise this {@code MapBuilder}.
+     * @param v1  The value for the first entry with which to initialise this {@code MapBuilder}.
+     * @param k2  The key for the second entry with which to initialise this {@code MapBuilder}.
+     * @param v2  The value for the second entry with which to initialise this {@code MapBuilder}.
+     * @param k3  The key for the third entry with which to initialise this {@code MapBuilder}.
+     * @param v3  The value for the third entry with which to initialise this {@code MapBuilder}.
+     * @param k4  The key for the fourth entry with which to initialise this {@code MapBuilder}.
+     * @param v4  The value for the fourth entry with which to initialise this {@code MapBuilder}.
+     * @param k5  The key for the fifth entry with which to initialise this {@code MapBuilder}.
+     * @param v5  The value for the fifth entry with which to initialise this {@code MapBuilder}.
+     * @param k6  The key for the sixth entry with which to initialise this {@code MapBuilder}.
+     * @param v6  The value for the sixth entry with which to initialise this {@code MapBuilder}.
+     * @param k7  The key for the seventh entry with which to initialise this {@code MapBuilder}.
+     * @param v7  The value for the seventh entry with which to initialise this {@code MapBuilder}.
+     * @param k8  The key for the eighth entry with which to initialise this {@code MapBuilder}.
+     * @param v8  The value for the eighth entry with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry with which to initialise this {@code MapBuilder}.
+     * @param v1  The value for the first entry with which to initialise this {@code MapBuilder}.
+     * @param k2  The key for the second entry with which to initialise this {@code MapBuilder}.
+     * @param v2  The value for the second entry with which to initialise this {@code MapBuilder}.
+     * @param k3  The key for the third entry with which to initialise this {@code MapBuilder}.
+     * @param v3  The value for the third entry with which to initialise this {@code MapBuilder}.
+     * @param k4  The key for the fourth entry with which to initialise this {@code MapBuilder}.
+     * @param v4  The value for the fourth entry with which to initialise this {@code MapBuilder}.
+     * @param k5  The key for the fifth entry with which to initialise this {@code MapBuilder}.
+     * @param v5  The value for the fifth entry with which to initialise this {@code MapBuilder}.
+     * @param k6  The key for the sixth entry with which to initialise this {@code MapBuilder}.
+     * @param v6  The value for the sixth entry with which to initialise this {@code MapBuilder}.
+     * @param k7  The key for the seventh entry with which to initialise this {@code MapBuilder}.
+     * @param v7  The value for the seventh entry with which to initialise this {@code MapBuilder}.
+     * @param k8  The key for the eighth entry with which to initialise this {@code MapBuilder}.
+     * @param v8  The value for the eighth entry with which to initialise this {@code MapBuilder}.
+     * @param k9  The key for the ninth entry with which to initialise this {@code MapBuilder}.
+     * @param v9  The value for the ninth entry with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9));
+    }
+
+    /**
+     * Returns a {@code MapBuilder} with keys of type {@code K} and values
+     * of type {@code V} initialised with the supplied keys mapped to the corresponding
+     * supplied values.
+     *
+     * @param k1  The key for the first entry with which to initialise this {@code MapBuilder}.
+     * @param v1  The value for the first entry with which to initialise this {@code MapBuilder}.
+     * @param k2  The key for the second entry with which to initialise this {@code MapBuilder}.
+     * @param v2  The value for the second entry with which to initialise this {@code MapBuilder}.
+     * @param k3  The key for the third entry with which to initialise this {@code MapBuilder}.
+     * @param v3  The value for the third entry with which to initialise this {@code MapBuilder}.
+     * @param k4  The key for the fourth entry with which to initialise this {@code MapBuilder}.
+     * @param v4  The value for the fourth entry with which to initialise this {@code MapBuilder}.
+     * @param k5  The key for the fifth entry with which to initialise this {@code MapBuilder}.
+     * @param v5  The value for the fifth entry with which to initialise this {@code MapBuilder}.
+     * @param k6  The key for the sixth entry with which to initialise this {@code MapBuilder}.
+     * @param v6  The value for the sixth entry with which to initialise this {@code MapBuilder}.
+     * @param k7  The key for the seventh entry with which to initialise this {@code MapBuilder}.
+     * @param v7  The value for the seventh entry with which to initialise this {@code MapBuilder}.
+     * @param k8  The key for the eighth entry with which to initialise this {@code MapBuilder}.
+     * @param v8  The value for the eighth entry with which to initialise this {@code MapBuilder}.
+     * @param k9  The key for the ninth entry with which to initialise this {@code MapBuilder}.
+     * @param v9  The value for the ninth entry with which to initialise this {@code MapBuilder}.
+     * @param k10 The key for the tenth entry with which to initialise this {@code MapBuilder}.
+     * @param v10 The value for the tenth entry with which to initialise this {@code MapBuilder}.
+     * @param <K> The type of the keys to be in the returned {@code MapBuilder}.
+     * @param <V> The type of the values to be in the returned {@code MapBuilder}.
+     * @return A {@code MapBuilder} instance with keys of type {@code K} and values of
+     *         type {@code V} containing the supplied keys mapped to the corresponding
+     *         supplied values.
+     */
+    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9, K k10, V v10) {
+        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9), mapEntryFor(k10, v10));
     }
 
     public static <K, V> Map.Entry<K, V> mapEntryFor(K key, V value) {
@@ -4176,12 +6732,12 @@ public class Literals {
      * from the supplied {@code Iterable}. The order of the elements in the resulting
      * array is determined by the order in which they are yielded from the
      * {@code Iterable}.
-     * <p/>
+     *
      * <p>The supplied {@code Iterable} must contain at least one element so that
      * the type E can be correctly inferred when constructing the array. In the
      * case that the {@code Iterable} is empty, an {@code IllegalArgumentException}
      * will be thrown.</p>
-     * <p/>
+     *
      * <p>The elements in the supplied {@code Iterable} must all be of the same
      * concrete type so that the type E can be inferred deterministically when
      * constructing the array. In the case that the {@code Iterable} contains
@@ -4209,12 +6765,12 @@ public class Literals {
      * from the supplied {@code Iterable}. The order of the elements in the resulting
      * array is determined by the order in which they are yielded from the
      * {@code Iterable}.
-     * <p/>
+     *
      * <p>Unlike {@link #arrayFrom(Iterable)}, this variant accepts empty
      * {@code Iterable}s and {@code Iterable}s containing instances of different
      * concrete types and so should be used in preference of {@link #arrayFrom(Iterable)}
      * if such {@code Iterable}s are expected.</p>
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * Assume that we have the following instances:
      * <blockquote>
@@ -4257,12 +6813,12 @@ public class Literals {
      * Returns an array instance over the type {@code E} containing all elements
      * from the supplied array. The order of the elements in the resulting
      * array is the same as the order of elements in the supplied array.
-     * <p/>
+     *
      * <p>The supplied array must contain at least one element so that the type E
      * can be correctly inferred when constructing the array to return. In the
      * case that the array is empty, an {@code IllegalArgumentException}
      * will be thrown.</p>
-     * <p/>
+     *
      * <p>The elements in the supplied array must all be of the same
      * concrete type so that the type E can be inferred deterministically when
      * constructing the array. In the case that the array contains
@@ -4288,12 +6844,12 @@ public class Literals {
      * Returns an array instance over the type {@code E} containing all elements
      * from the supplied array. The order of the elements in the resulting
      * array is the same as the order of elements in the supplied array.
-     * <p/>
+     *
      * <p>Unlike {@link #arrayFrom(Object[])}, this variant accepts empty
      * arrays and arrays containing instances of different concrete types and
      * so should be used in preference of {@link #arrayFrom(Object[])}
      * if such arrays are expected.</p>
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * Assume that we have the following instances:
      * <blockquote>
@@ -4333,7 +6889,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied element.
-     * <p/>
+     *
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -4348,7 +6904,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     * <p/>
+     *
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -4364,7 +6920,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     * <p/>
+     *
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -4381,7 +6937,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     * <p/>
+     *
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -4399,7 +6955,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     * <p/>
+     *
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -4418,7 +6974,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     * <p/>
+     *
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -4438,7 +6994,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     * <p/>
+     *
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -4459,7 +7015,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     * <p/>
+     *
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -4481,7 +7037,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     * <p/>
+     *
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -4504,7 +7060,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     * <p/>
+     *
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -4528,7 +7084,7 @@ public class Literals {
 
     /**
      * Returns an array over the type {@code E} containing the supplied elements.
-     * <p/>
+     *
      * <p>The {@code arrayWith} literals are useful in cases such as when an API
      * is written to accept arrays of objects as arguments where a varargs style
      * is more appropriate.</p>
@@ -4555,7 +7111,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} containing no elements. When asked to
      * build an array, the element class will be inferred from the added elements
      * which means empty arrays and mixed concrete type arrays cannot be constructed.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * An {@code ArrayBuilder} can be used to assemble an array as follows:
      * <blockquote>
@@ -4588,7 +7144,7 @@ public class Literals {
      * containing no elements. When asked to build an array, the supplied element
      * class will be used allowing empty arrays and mixed concrete type arrays to
      * be constructed.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * An {@code ArrayBuilder} can be used to assemble an array as follows:
      * <blockquote>
@@ -4624,7 +7180,7 @@ public class Literals {
      * contained in the supplied {@code Iterable}. When asked to build an array, the
      * element class will be inferred from the added elements which means empty arrays
      * and mixed concrete type arrays cannot be constructed.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * An {@code ArrayBuilder} can be used to assemble an array from two existing
      * {@code Collection} instances as follows:
@@ -4662,7 +7218,7 @@ public class Literals {
      * initialised with the elements contained in the supplied {@code Iterable}.
      * When asked to build an array, the supplied element class will be used allowing
      * empty arrays and mixed concrete type arrays to be constructed.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * An {@code ArrayBuilder} can be used to assemble an array from two existing
      * {@code Collection} instances as follows:
@@ -4703,7 +7259,7 @@ public class Literals {
      * contained in the supplied array. When asked to build an array, the element class
      * will be inferred from the added elements which means empty arrays and mixed
      * concrete type arrays cannot be constructed.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * An {@code ArrayBuilder} can be used to assemble an array from two existing
      * arrays as follows:
@@ -4741,7 +7297,7 @@ public class Literals {
      * initialised with the elements contained in the supplied array. When asked to
      * build an array, the supplied element class will be used allowing empty arrays
      * and mixed concrete type arrays to be constructed.
-     * <p/>
+     *
      * <h4>Example Usage:</h4>
      * An {@code ArrayBuilder} can be used to assemble an array from two existing
      * arrays as follows:
@@ -4794,7 +7350,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     * <p/>
+     *
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -4826,7 +7382,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     * <p/>
+     *
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -4859,7 +7415,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     * <p/>
+     *
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -4893,7 +7449,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     * <p/>
+     *
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -4928,7 +7484,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     * <p/>
+     *
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -4964,7 +7520,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     * <p/>
+     *
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -5001,7 +7557,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     * <p/>
+     *
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -5039,7 +7595,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     * <p/>
+     *
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -5078,7 +7634,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     * <p/>
+     *
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -5118,7 +7674,7 @@ public class Literals {
      * Returns an {@code ArrayBuilder} instance over the type {@code E} containing the supplied
      * elements. The supplied elements are added to the {@code ArrayBuilder} instance in the same
      * order as they are defined in the argument list.
-     * <p/>
+     *
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
@@ -5191,349 +7747,5 @@ public class Literals {
 
     public static <R, S, T, U, V, W, X, Y, Z> Nonuple<R, S, T, U, V, W, X, Y, Z> tuple(R first, S second, T third, U fourth, V fifth, W sixth, X seventh, Y eighth, Z ninth) {
         return new Nonuple<R, S, T, U, V, W, X, Y, Z>(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);
-    }
-
-    public static <K, V> Map<K, V> mapWithKeyValuePair(K k1, V v1) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1)).build();
-    }
-
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2)).build();
-    }
-
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3)).build();
-    }
-
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4)).build();
-    }
-
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5)).build();
-    }
-
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6)).build();
-    }
-
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7)).build();
-    }
-
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8)).build();
-    }
-
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9)).build();
-    }
-
-    public static <K, V> Map<K, V> mapWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9, K k10, V v10) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9), mapEntryFor(k10, v10)).build();
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1) {
-        return mapFromEntries(iterableWith(e1));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
-        return mapFromEntries(iterableWith(e1, e2));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3) {
-        return mapFromEntries(iterableWith(e1, e2, e3));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4) {
-        return mapFromEntries(iterableWith(e1, e2, e3, e4));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5) {
-        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6) {
-        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7) {
-        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8) {
-        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9) {
-        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10) {
-        return mapFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10, Map.Entry<K, V>... e11on) {
-        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).and(e11on).build();
-    }
-
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1) {
-        return mapFromPairs(iterableWith(e1));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2) {
-        return mapFromPairs(iterableWith(e1, e2));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3) {
-        return mapFromPairs(iterableWith(e1, e2, e3));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4) {
-        return mapFromPairs(iterableWith(e1, e2, e3, e4));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5) {
-        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6) {
-        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7) {
-        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8) {
-        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9) {
-        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10) {
-        return mapFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10, Pair<K, V>... e11on) {
-        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).andPairs(e11on).build();
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map<K, V> m1) {
-        return mapFromMaps(iterableWith(m1));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2) {
-        return mapFromMaps(iterableWith(m1, m2));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3) {
-        return mapFromMaps(iterableWith(m1, m2, m3));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4) {
-        return mapFromMaps(iterableWith(m1, m2, m3, m4));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5) {
-        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6) {
-        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5, m6));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7) {
-        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8) {
-        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9) {
-        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9, Map<K, V> m10) {
-        return mapFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10));
-    }
-
-    public static <K, V> Map<K, V> mapWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9, Map<K, V> m10, Map<K, V>... m11on) {
-        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10)).andMaps(m11on).build();
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePair(K k1, V v1) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWithKeyValuePairs(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9, K k10, V v10) {
-        return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9), mapEntryFor(k10, v10));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1) {
-        return mapBuilderFromEntries(iterableWith(e1));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
-        return mapBuilderFromEntries(iterableWith(e1, e2));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3) {
-        return mapBuilderFromEntries(iterableWith(e1, e2, e3));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4) {
-        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5) {
-        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6) {
-        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7) {
-        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8) {
-        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9) {
-        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10) {
-        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map.Entry<K, V> e1, Map.Entry<K, V> e2, Map.Entry<K, V> e3, Map.Entry<K, V> e4, Map.Entry<K, V> e5, Map.Entry<K, V> e6, Map.Entry<K, V> e7, Map.Entry<K, V> e8, Map.Entry<K, V> e9, Map.Entry<K, V> e10, Map.Entry<K, V>... e11on) {
-        return mapBuilderFromEntries(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).and(e11on);
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1) {
-        return mapBuilderFromPairs(iterableWith(e1));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2) {
-        return mapBuilderFromPairs(iterableWith(e1, e2));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3) {
-        return mapBuilderFromPairs(iterableWith(e1, e2, e3));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4) {
-        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5) {
-        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6) {
-        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7) {
-        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8) {
-        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9) {
-        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10) {
-        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Pair<K, V> e1, Pair<K, V> e2, Pair<K, V> e3, Pair<K, V> e4, Pair<K, V> e5, Pair<K, V> e6, Pair<K, V> e7, Pair<K, V> e8, Pair<K, V> e9, Pair<K, V> e10, Pair<K, V>... e11on) {
-        return mapBuilderFromPairs(iterableWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10)).andPairs(e11on);
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1) {
-        return mapBuilderFromMaps(iterableWith(m1));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2) {
-        return mapBuilderFromMaps(iterableWith(m1, m2));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3) {
-        return mapBuilderFromMaps(iterableWith(m1, m2, m3));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4) {
-        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5) {
-        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6) {
-        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7) {
-        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8) {
-        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9) {
-        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9, Map<K, V> m10) {
-        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10));
-    }
-
-    public static <K, V> MapBuilder<K, V> mapBuilderWith(Map<K, V> m1, Map<K, V> m2, Map<K, V> m3, Map<K, V> m4, Map<K, V> m5, Map<K, V> m6, Map<K, V> m7, Map<K, V> m8, Map<K, V> m9, Map<K, V> m10, Map<K, V>... m11on) {
-        return mapBuilderFromMaps(iterableWith(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10)).andMaps(m11on);
     }
 }
