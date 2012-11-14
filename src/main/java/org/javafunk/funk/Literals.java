@@ -6707,10 +6707,32 @@ public class Literals {
         return new MapBuilder<K, V>().with(mapEntryFor(k1, v1), mapEntryFor(k2, v2), mapEntryFor(k3, v3), mapEntryFor(k4, v4), mapEntryFor(k5, v5), mapEntryFor(k6, v6), mapEntryFor(k7, v7), mapEntryFor(k8, v8), mapEntryFor(k9, v9), mapEntryFor(k10, v10));
     }
 
+    /**
+     * Returns a {@code Map.Entry} instance over types {@code K} and {@code V} containing
+     * the supplied key and value.
+     *
+     * @param key   The key to be used in the constructed {@code Map.Entry} instance.
+     * @param value The value to be used in the constructed {@code Map.Entry} instance.
+     * @param <K>   The type of the key in the {@code Map.Entry}.
+     * @param <V>   The type of the value in the {@code Map.Entry}.
+     * @return a {@code Map.Entry} instance containing the supplied key and value.
+     */
     public static <K, V> Map.Entry<K, V> mapEntryFor(K key, V value) {
         return new AbstractMap.SimpleImmutableEntry<K, V>(key, value);
     }
 
+    /**
+     * Returns a {@code Map.Entry} instance over types {@code K} and {@code V} with the
+     * first value in the supplied {@code Pair} as the key and the second value in the
+     * supplied {@code Pair} as the value.
+     *
+     * @param pair A {@code pair} representing the key and value to be used in
+     *             the constructed {@code Map.Entry} instance.
+     * @param <K>  The type of the key in the {@code Map.Entry}.
+     * @param <V>  The type of the value in the {@code Map.Entry}.
+     * @return a {@code Map.Entry} instance containing a key-value mapping for the
+     *         supplied {@code Pair} instance.
+     */
     public static <K, V> Map.Entry<K, V> mapEntryFor(Pair<K, V> pair) {
         return mapEntryFor(pair.getFirst(), pair.getSecond());
     }
