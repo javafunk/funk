@@ -7735,38 +7735,173 @@ public class Literals {
         return arrayBuilderFrom(iterableBuilderWith(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10).and(e11on).build());
     }
 
+    /**
+     * Returns a {@code Single} over the specified value.
+     *
+     * @param first The value to be used as the first in the returned {@code Single}.
+     * @param <R>   The type of the first in the returned {@code Single}.
+     * @return A {@code Single} over the type and value of the supplied argument.
+     */
     public static <R> Single<R> tuple(R first) {
         return new Single<R>(first);
     }
 
+    /**
+     * Returns a {@code Pair} over the specified values.
+     *
+     * @param first  The value to be used as the first in the returned {@code Pair}.
+     * @param second The value to be used as the second in the returned {@code Pair}.
+     * @param <R>    The type of the first in the returned {@code Pair}.
+     * @param <S>    The type of the second in the returned {@code Pair}.
+     * @return A {@code Pair} over the types and values of the supplied arguments.
+     */
     public static <R, S> Pair<R, S> tuple(R first, S second) {
         return new Pair<R, S>(first, second);
     }
 
+    /**
+     * Returns a {@code Triple} over the specified values.
+     *
+     * @param first  The value to be used as the first in the returned {@code Triple}.
+     * @param second The value to be used as the second in the returned {@code Triple}.
+     * @param third  The value to be used as the third in the returned {@code Triple}.
+     * @param <R>    The type of the first in the returned {@code Triple}.
+     * @param <S>    The type of the second in the returned {@code Triple}.
+     * @param <T>    The type of the third in the returned {@code Triple}.
+     * @return A {@code Triple} over the types and values of the supplied arguments.
+     */
     public static <R, S, T> Triple<R, S, T> tuple(R first, S second, T third) {
         return new Triple<R, S, T>(first, second, third);
     }
 
+    /**
+     * Returns a {@code Quadruple} over the specified values.
+     *
+     * @param first  The value to be used as the first in the returned {@code Quadruple}.
+     * @param second The value to be used as the second in the returned {@code Quadruple}.
+     * @param third  The value to be used as the third in the returned {@code Quadruple}.
+     * @param fourth The value to be used as the fourth in the returned {@code Quadruple}.
+     * @param <R>    The type of the first in the returned {@code Quadruple}.
+     * @param <S>    The type of the second in the returned {@code Quadruple}.
+     * @param <T>    The type of the third in the returned {@code Quadruple}.
+     * @param <U>    The type of the fourth in the returned {@code Quadruple}.
+     * @return A {@code Quadruple} over the types and values of the supplied arguments.
+     */
     public static <R, S, T, U> Quadruple<R, S, T, U> tuple(R first, S second, T third, U fourth) {
         return new Quadruple<R, S, T, U>(first, second, third, fourth);
     }
 
+    /**
+     * Returns a {@code Quintuple} over the specified values.
+     *
+     * @param first  The value to be used as the first in the returned {@code Quintuple}.
+     * @param second The value to be used as the second in the returned {@code Quintuple}.
+     * @param third  The value to be used as the third in the returned {@code Quintuple}.
+     * @param fourth The value to be used as the fourth in the returned {@code Quintuple}.
+     * @param fifth  The value to be used as the fifth in the returned {@code Quintuple}.
+     * @param <R>    The type of the first in the returned {@code Quintuple}.
+     * @param <S>    The type of the second in the returned {@code Quintuple}.
+     * @param <T>    The type of the third in the returned {@code Quintuple}.
+     * @param <U>    The type of the fourth in the returned {@code Quintuple}.
+     * @param <V>    The type of the fifth in the returned {@code Quintuple}.
+     * @return A {@code Quintuple} over the types and values of the supplied arguments.
+     */
     public static <R, S, T, U, V> Quintuple<R, S, T, U, V> tuple(R first, S second, T third, U fourth, V fifth) {
         return new Quintuple<R, S, T, U, V>(first, second, third, fourth, fifth);
     }
 
+    /**
+     * Returns a {@code Sextuple} over the specified values.
+     *
+     * @param first  The value to be used as the first in the returned {@code Sextuple}.
+     * @param second The value to be used as the second in the returned {@code Sextuple}.
+     * @param third  The value to be used as the third in the returned {@code Sextuple}.
+     * @param fourth The value to be used as the fourth in the returned {@code Sextuple}.
+     * @param fifth  The value to be used as the fifth in the returned {@code Sextuple}.
+     * @param sixth  The value to be used as the sixth in the returned {@code Sextuple}.
+     * @param <R>    The type of the first in the returned {@code Sextuple}.
+     * @param <S>    The type of the second in the returned {@code Sextuple}.
+     * @param <T>    The type of the third in the returned {@code Sextuple}.
+     * @param <U>    The type of the fourth in the returned {@code Sextuple}.
+     * @param <V>    The type of the fifth in the returned {@code Sextuple}.
+     * @param <W>    The type of the sixth in the returned {@code Sextuple}.
+     * @return A {@code Sextuple} over the types and values of the supplied arguments.
+     */
     public static <R, S, T, U, V, W> Sextuple<R, S, T, U, V, W> tuple(R first, S second, T third, U fourth, V fifth, W sixth) {
         return new Sextuple<R, S, T, U, V, W>(first, second, third, fourth, fifth, sixth);
     }
 
+    /**
+     * Returns a {@code Septuple} over the specified values.
+     *
+     * @param first   The value to be used as the first in the returned {@code Septuple}.
+     * @param second  The value to be used as the second in the returned {@code Septuple}.
+     * @param third   The value to be used as the third in the returned {@code Septuple}.
+     * @param fourth  The value to be used as the fourth in the returned {@code Septuple}.
+     * @param fifth   The value to be used as the fifth in the returned {@code Septuple}.
+     * @param sixth   The value to be used as the sixth in the returned {@code Septuple}.
+     * @param seventh The value to be used as the seventh in the returned {@code Septuple}.
+     * @param <R>     The type of the first in the returned {@code Septuple}.
+     * @param <S>     The type of the second in the returned {@code Septuple}.
+     * @param <T>     The type of the third in the returned {@code Septuple}.
+     * @param <U>     The type of the fourth in the returned {@code Septuple}.
+     * @param <V>     The type of the fifth in the returned {@code Septuple}.
+     * @param <W>     The type of the sixth in the returned {@code Septuple}.
+     * @param <X>     The type of the seventh in the returned {@code Septuple}.
+     * @return A {@code Septuple} over the types and values of the supplied arguments.
+     */
     public static <R, S, T, U, V, W, X> Septuple<R, S, T, U, V, W, X> tuple(R first, S second, T third, U fourth, V fifth, W sixth, X seventh) {
         return new Septuple<R, S, T, U, V, W, X>(first, second, third, fourth, fifth, sixth, seventh);
     }
 
+    /**
+     * Returns a {@code Octuple} over the specified values.
+     *
+     * @param first   The value to be used as the first in the returned {@code Octuple}.
+     * @param second  The value to be used as the second in the returned {@code Octuple}.
+     * @param third   The value to be used as the third in the returned {@code Octuple}.
+     * @param fourth  The value to be used as the fourth in the returned {@code Octuple}.
+     * @param fifth   The value to be used as the fifth in the returned {@code Octuple}.
+     * @param sixth   The value to be used as the sixth in the returned {@code Octuple}.
+     * @param seventh The value to be used as the seventh in the returned {@code Octuple}.
+     * @param eighth  The value to be used as the eighth in the returned {@code Octuple}.
+     * @param <R>     The type of the first in the returned {@code Octuple}.
+     * @param <S>     The type of the second in the returned {@code Octuple}.
+     * @param <T>     The type of the third in the returned {@code Octuple}.
+     * @param <U>     The type of the fourth in the returned {@code Octuple}.
+     * @param <V>     The type of the fifth in the returned {@code Octuple}.
+     * @param <W>     The type of the sixth in the returned {@code Octuple}.
+     * @param <X>     The type of the seventh in the returned {@code Octuple}.
+     * @param <Y>     The type of the eighth in the returned {@code Octuple}.
+     * @return A {@code Octuple} over the types and values of the supplied arguments.
+     */
     public static <R, S, T, U, V, W, X, Y> Octuple<R, S, T, U, V, W, X, Y> tuple(R first, S second, T third, U fourth, V fifth, W sixth, X seventh, Y eighth) {
         return new Octuple<R, S, T, U, V, W, X, Y>(first, second, third, fourth, fifth, sixth, seventh, eighth);
     }
 
+    /**
+     * Returns a {@code Nonuple} over the specified values.
+     *
+     * @param first   The value to be used as the first in the returned {@code Nonuple}.
+     * @param second  The value to be used as the second in the returned {@code Nonuple}.
+     * @param third   The value to be used as the third in the returned {@code Nonuple}.
+     * @param fourth  The value to be used as the fourth in the returned {@code Nonuple}.
+     * @param fifth   The value to be used as the fifth in the returned {@code Nonuple}.
+     * @param sixth   The value to be used as the sixth in the returned {@code Nonuple}.
+     * @param seventh The value to be used as the seventh in the returned {@code Nonuple}.
+     * @param eighth  The value to be used as the eighth in the returned {@code Nonuple}.
+     * @param ninth   The value to be used as the ninth in the returned {@code Nonuple}.
+     * @param <R>     The type of the first in the returned {@code Nonuple}.
+     * @param <S>     The type of the second in the returned {@code Nonuple}.
+     * @param <T>     The type of the third in the returned {@code Nonuple}.
+     * @param <U>     The type of the fourth in the returned {@code Nonuple}.
+     * @param <V>     The type of the fifth in the returned {@code Nonuple}.
+     * @param <W>     The type of the sixth in the returned {@code Nonuple}.
+     * @param <X>     The type of the seventh in the returned {@code Nonuple}.
+     * @param <Y>     The type of the eighth in the returned {@code Nonuple}.
+     * @param <Z>     The type of the ninth in the returned {@code Nonuple}.
+     * @return A {@code Nonuple} over the types and values of the supplied arguments.
+     */
     public static <R, S, T, U, V, W, X, Y, Z> Nonuple<R, S, T, U, V, W, X, Y, Z> tuple(R first, S second, T third, U fourth, V fifth, W sixth, X seventh, Y eighth, Z ninth) {
         return new Nonuple<R, S, T, U, V, W, X, Y, Z>(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);
     }
