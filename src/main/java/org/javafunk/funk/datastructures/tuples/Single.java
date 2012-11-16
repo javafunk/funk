@@ -22,7 +22,7 @@ public class Single<R>
                    MappableFirst<R, Single<?>> {
     private R first;
 
-    private static <R> Single<R> single(R first) {
+    public static <R> Single<R> single(R first) {
         return new Single<R>(first);
     }
 

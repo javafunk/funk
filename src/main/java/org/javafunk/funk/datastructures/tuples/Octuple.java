@@ -22,7 +22,7 @@ public class Octuple<R, S, T, U, V, W, X, Y>
                    MappableEighth<Y, Octuple<R, S, T, U, V, W, X, ?>> {
     private final Y eighth;
 
-    private <R, S, T, U, V, W, X, Y> Octuple<R, S, T, U, V, W, X, Y> octuple(
+    public static <R, S, T, U, V, W, X, Y> Octuple<R, S, T, U, V, W, X, Y> octuple(
             R first, S second, T third, U fourth, V fifth, W sixth, X seventh, Y eighth) {
         return new Octuple<R, S, T, U, V, W, X, Y>(first, second, third, fourth, fifth, sixth, seventh, eighth);
     }

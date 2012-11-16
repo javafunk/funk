@@ -22,7 +22,7 @@ public class Quadruple<R, S, T, U>
                    MappableFourth<U, Quadruple<R, S, T, ?>> {
     private U fourth;
 
-    private static <R, S, T, U> Quadruple<R, S, T, U> quadruple(R first, S second, T third, U fourth) {
+    public static <R, S, T, U> Quadruple<R, S, T, U> quadruple(R first, S second, T third, U fourth) {
         return new Quadruple<R, S, T, U>(first, second, third, fourth);
     }
 

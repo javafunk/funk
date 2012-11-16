@@ -21,9 +21,24 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.datastructures.tuples.Pair.pair;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class PairTest {
+    @Test
+    public void shouldConstructAPairWithTheSpecifiedValues() throws Exception {
+        // Given
+        String first = "5";
+        Integer second = 4;
+        Pair<String, Integer> expected = new Pair<String, Integer>(first, second);
+
+        // When
+        Pair<String, Integer> actual = pair(first, second);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
     @Test
     public void shouldReturnTheFirstObject() {
         // Given

@@ -8,7 +8,13 @@
  */
 package org.javafunk.funk.datastructures.tuples;
 
-import org.javafunk.funk.behaviours.ordinals.*;
+import org.javafunk.funk.behaviours.ordinals.Fifth;
+import org.javafunk.funk.behaviours.ordinals.First;
+import org.javafunk.funk.behaviours.ordinals.Fourth;
+import org.javafunk.funk.behaviours.ordinals.Second;
+import org.javafunk.funk.behaviours.ordinals.Seventh;
+import org.javafunk.funk.behaviours.ordinals.Sixth;
+import org.javafunk.funk.behaviours.ordinals.Third;
 import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.testclasses.Colour;
@@ -22,11 +28,34 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.datastructures.tuples.Septuple.septuple;
 import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Name.name;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class SeptupleTest {
+    @Test
+    public void shouldConstructASeptupleWithTheSpecifiedValues() throws Exception {
+        // Given
+        String first = "5";
+        Integer second = 4;
+        Long third = 5L;
+        Character fourth = 'a';
+        Boolean fifth = true;
+        Double sixth = 3.6;
+        Name seventh = name("Anna");
+        Septuple<String, Integer, Long, Character, Boolean, Double, Name> expected =
+                new Septuple<String, Integer, Long, Character, Boolean, Double, Name>(
+                        first, second, third, fourth, fifth, sixth, seventh);
+
+        // When
+        Septuple<String, Integer, Long, Character, Boolean, Double, Name> actual =
+                septuple(first, second, third, fourth, fifth, sixth, seventh);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
     @Test
     public void shouldReturnTheFirstObject() {
         // Given

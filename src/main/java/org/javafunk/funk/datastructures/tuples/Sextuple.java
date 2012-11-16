@@ -22,7 +22,7 @@ public class Sextuple<R, S, T, U, V, W>
                    MappableSixth<W, Sextuple<R, S, T, U, V, ?>> {
     private final W sixth;
 
-    private static <R, S, T, U, V, W> Sextuple<R, S, T, U, V, W> sextuple(R first, S second, T third, U fourth, V fifth, W sixth) {
+    public static <R, S, T, U, V, W> Sextuple<R, S, T, U, V, W> sextuple(R first, S second, T third, U fourth, V fifth, W sixth) {
         return new Sextuple<R, S, T, U, V, W>(first, second, third, fourth, fifth, sixth);
     }
 

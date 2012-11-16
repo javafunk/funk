@@ -22,7 +22,7 @@ public class Nonuple<R, S, T, U, V, W, X, Y, Z>
                    MappableNinth<Z, Nonuple<R, S, T, U, V, W, X, Y, ?>> {
     private final Z ninth;
 
-    private static <R, S, T, U, V, W, X, Y, Z> Nonuple<R, S, T, U, V, W, X, Y, Z> nonuple(
+    public static <R, S, T, U, V, W, X, Y, Z> Nonuple<R, S, T, U, V, W, X, Y, Z> nonuple(
             R first, S second, T third, U fourth, V fifth, W sixth, X seventh, Y eighth, Z ninth) {
         return new Nonuple<R, S, T, U, V, W, X, Y, Z>(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);
     }

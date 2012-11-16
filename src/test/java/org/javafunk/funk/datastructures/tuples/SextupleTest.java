@@ -8,7 +8,12 @@
  */
 package org.javafunk.funk.datastructures.tuples;
 
-import org.javafunk.funk.behaviours.ordinals.*;
+import org.javafunk.funk.behaviours.ordinals.Fifth;
+import org.javafunk.funk.behaviours.ordinals.First;
+import org.javafunk.funk.behaviours.ordinals.Fourth;
+import org.javafunk.funk.behaviours.ordinals.Second;
+import org.javafunk.funk.behaviours.ordinals.Sixth;
+import org.javafunk.funk.behaviours.ordinals.Third;
 import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.testclasses.Name;
@@ -21,10 +26,31 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.datastructures.tuples.Sextuple.sextuple;
 import static org.javafunk.funk.testclasses.Name.name;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class SextupleTest {
+    @Test
+    public void shouldConstructASextupleWithTheSpecifiedValues() throws Exception {
+        // Given
+        String first = "5";
+        Integer second = 4;
+        Long third = 5L;
+        Character fourth = 'a';
+        Boolean fifth = true;
+        Double sixth = 3.6;
+        Sextuple<String, Integer, Long, Character, Boolean, Double> expected =
+                new Sextuple<String, Integer, Long, Character, Boolean, Double>(first, second, third, fourth, fifth, sixth);
+
+        // When
+        Sextuple<String, Integer, Long, Character, Boolean, Double> actual =
+                sextuple(first, second, third, fourth, fifth, sixth);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
     @Test
     public void shouldReturnTheFirstObject() {
         // Given

@@ -21,9 +21,23 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.listBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.datastructures.tuples.Single.single;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class SingleTest {
+    @Test
+    public void shouldConstructASingleWithTheSpecifiedValue() throws Exception {
+        // Given
+        String value = "5";
+        Single<String> expected = new Single<String>(value);
+
+        // When
+        Single<String> actual = single(value);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
     @Test
     public void shouldReturnTheFirstObject() {
         // Given

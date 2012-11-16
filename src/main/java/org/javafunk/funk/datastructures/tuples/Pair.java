@@ -22,7 +22,7 @@ public class Pair<R, S>
                    MappableSecond<S, Pair<R, ?>> {
     private S second;
 
-    private static <R, S> Pair<R, S> pair(R first, S second) {
+    public static <R, S> Pair<R, S> pair(R first, S second) {
         return new Pair<R, S>(first, second);
     }
 

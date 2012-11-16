@@ -22,7 +22,7 @@ public class Triple<R, S, T>
                    MappableThird<T, Triple<R, S, ?>> {
     private T third;
 
-    private static <R, S, T> Triple<R, S, T> triple(R first, S second, T third) {
+    public static <R, S, T> Triple<R, S, T> triple(R first, S second, T third) {
         return new Triple<R, S, T>(first, second, third);
     }
 

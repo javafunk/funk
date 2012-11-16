@@ -23,9 +23,27 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.datastructures.tuples.Quadruple.quadruple;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class QuadrupleTest {
+    @Test
+    public void shouldConstructAQuadrupleWithTheSpecifiedValues() throws Exception {
+        // Given
+        String first = "5";
+        Integer second = 4;
+        Long third = 5L;
+        Character fourth = 'a';
+        Quadruple<String, Integer, Long, Character> expected =
+                new Quadruple<String, Integer, Long, Character>(first, second, third, fourth);
+
+        // When
+        Quadruple<String, Integer, Long, Character> actual = quadruple(first, second, third, fourth);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
     @Test
     public void shouldReturnTheFirstObject() {
         // Given

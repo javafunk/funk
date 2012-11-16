@@ -22,9 +22,25 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.datastructures.tuples.Triple.triple;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class TripleTest {
+    @Test
+    public void shouldConstructATripleWithTheSpecifiedValues() throws Exception {
+        // Given
+        String first = "5";
+        Integer second = 4;
+        Long third = 5L;
+        Triple<String, Integer, Long> expected = new Triple<String, Integer, Long>(first, second, third);
+
+        // When
+        Triple<String, Integer, Long> actual = triple(first, second, third);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
     @Test
     public void shouldReturnTheFirstObject() {
         // Given

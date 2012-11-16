@@ -22,7 +22,7 @@ public class Quintuple<R, S, T, U, V>
                    MappableFifth<V, Quintuple<R, S, T, U, ?>> {
     private final V fifth;
 
-    private static <R, S, T, U, V> Quintuple<R, S, T, U, V> quintuple(R first, S second, T third, U fourth, V fifth) {
+    public static <R, S, T, U, V> Quintuple<R, S, T, U, V> quintuple(R first, S second, T third, U fourth, V fifth) {
         return new Quintuple<R, S, T, U, V>(first, second, third, fourth, fifth);
     }
 

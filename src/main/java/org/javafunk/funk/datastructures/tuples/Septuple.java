@@ -22,7 +22,7 @@ public class Septuple<R, S, T, U, V, W, X>
                    MappableSeventh<X, Septuple<R, S, T, U, V, W, ?>> {
     private final X seventh;
 
-    private <R, S, T, U, V, W, X> Septuple<R, S, T, U, V, W, X> septuple(R first, S second, T third, U fourth, V fifth, W sixth, X seventh) {
+    public static <R, S, T, U, V, W, X> Septuple<R, S, T, U, V, W, X> septuple(R first, S second, T third, U fourth, V fifth, W sixth, X seventh) {
         return new Septuple<R, S, T, U, V, W, X>(first, second, third, fourth, fifth, sixth, seventh);
     }
 
