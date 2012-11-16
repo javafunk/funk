@@ -37,8 +37,8 @@ public class MapBuilderTest {
 
         // When
         Map<String, Integer> actual = mapBuilder
-                .withEntries(mapEntryFor("first", 1), mapEntryFor("second", 2))
-                .withEntry(mapEntryFor("third", 3))
+                .with(mapEntryFor("first", 1), mapEntryFor("second", 2))
+                .with(mapEntryFor("third", 3))
                 .build();
 
         // Then
@@ -57,9 +57,9 @@ public class MapBuilderTest {
 
         // When
         Map<String, Integer> actualMap = mapBuilder
-                .withEntry(mapEntryFor("five", 5))
-                .andEntries(mapEntryFor("ten", 10), mapEntryFor("fifteen", 15))
-                .andEntry(mapEntryFor("twenty", 20))
+                .with(mapEntryFor("five", 5))
+                .and(mapEntryFor("ten", 10), mapEntryFor("fifteen", 15))
+                .and(mapEntryFor("twenty", 20))
                 .build();
 
         // Then
@@ -77,8 +77,8 @@ public class MapBuilderTest {
 
         // When
         Map<String, Integer> actual = mapBuilder
-                .withPair(tuple("first", 1))
-                .withPairs(tuple("second", 2), tuple("third", 3))
+                .with(tuple("first", 1))
+                .with(tuple("second", 2), tuple("third", 3))
                 .build();
 
         // Then
@@ -98,8 +98,8 @@ public class MapBuilderTest {
         // When
         Map<String, Integer> actual = mapBuilder
                 .withKeyValuePair("zeroth", 0)
-                .andPair(tuple("first", 1))
-                .andPairs(tuple("second", 2), tuple("third", 3))
+                .and(tuple("first", 1))
+                .and(tuple("second", 2), tuple("third", 3))
                 .build();
 
         // Then
@@ -165,7 +165,7 @@ public class MapBuilderTest {
 
         // When
         Map<String, Integer> actual = mapBuilder
-                .withMaps(firstMap, secondMap)
+                .with(firstMap, secondMap)
                 .build();
 
         // Then
@@ -192,8 +192,8 @@ public class MapBuilderTest {
 
         // When
         Map<String, Integer> actual = mapBuilder
-                .withPair(tuple("first", 1))
-                .andMaps(firstMap, secondMap)
+                .with(tuple("first", 1))
+                .and(firstMap, secondMap)
                 .build();
 
         // Then
@@ -303,7 +303,7 @@ public class MapBuilderTest {
 
         // When
         Map<String, Integer> actualMap = mapBuilder
-                .withEntries(mapEntryFor("five", 5), mapEntryFor("ten", 10))
+                .with(mapEntryFor("five", 5), mapEntryFor("ten", 10))
                 .andEntries(mapEntryArray)
                 .build();
 
@@ -361,7 +361,7 @@ public class MapBuilderTest {
 
         // When
         Map<String, Integer> actualMap = mapBuilder
-                .withMap(map)
+                .with(map)
                 .andMaps(mapArray)
                 .build();
 
@@ -457,7 +457,7 @@ public class MapBuilderTest {
 
         // When
         Map<String, Integer> actualMap = mapBuilder
-                .withEntries(mapEntryFor("first", 1), mapEntryFor("second", 2))
+                .with(mapEntryFor("first", 1), mapEntryFor("second", 2))
                 .andEntries(someOtherElements)
                 .build();
 
