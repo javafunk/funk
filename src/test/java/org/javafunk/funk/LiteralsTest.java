@@ -1122,7 +1122,7 @@ public class LiteralsTest {
 
         Iterable<? extends Map<String, Integer>> maps = iterableWith(firstMap, secondMap, thirdMap);
 
-        MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>().withMaps(firstMap, secondMap, thirdMap);
+        MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>().with(firstMap, secondMap, thirdMap);
 
         // When
         MapBuilder<String, Integer> actual = mapBuilderFromMaps(maps);
@@ -1168,7 +1168,7 @@ public class LiteralsTest {
 
         @SuppressWarnings("unchecked") Map<String, Integer>[] maps = new Map[]{firstMap, secondMap, thirdMap};
 
-        MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>().withMaps(firstMap, secondMap, thirdMap);
+        MapBuilder<String, Integer> expected = new MapBuilder<String, Integer>().with(firstMap, secondMap, thirdMap);
 
         // When
         MapBuilder<String, Integer> actual = mapBuilderFromMaps(maps);
