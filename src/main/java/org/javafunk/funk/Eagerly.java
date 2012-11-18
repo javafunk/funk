@@ -258,14 +258,13 @@ public class Eagerly {
      * <a href="http://en.wikipedia.org/wiki/Map_(higher-order_function)">
      * map article on Wikipedia</a>.
      *
-     * <p>This override of
-     * {@link #map(Iterable, org.javafunk.funk.functors.functions.UnaryFunction)} is
-     * provided to allow a {@code Mapper} to be used in place of a {@code UnaryFunction}
-     * to enhance readability and better express intent. The contract of the function
+     * <p>This override of {@link #map(Iterable, UnaryFunction)} is provided to allow a
+     * {@code Mapper} to be used in place of a {@code UnaryFunction} to enhance
+     * readability and better express intent. The contract of the function
      * is identical to that of the {@code UnaryFunction} version of {@code map}.</p>
      *
      * <p>For example usage and further documentation, see
-     * {@link #map(Iterable, org.javafunk.funk.functors.functions.UnaryFunction)}.</p>
+     * {@link #map(Iterable, UnaryFunction)}.</p>
      *
      * @param iterable The {@code Iterable} of elements to be mapped.
      * @param mapper   A {@code Mapper} which, given an element from the input iterable,
@@ -274,7 +273,7 @@ public class Eagerly {
      * @param <T>      The type of the output elements, i.e., the mapped elements.
      * @return A {@code Collection} containing each instance of {@code S} from the input
      *         {@code Iterable} mapped to an instance of {@code T}.
-     * @see #map(Iterable, org.javafunk.funk.functors.functions.UnaryFunction)
+     * @see #map(Iterable, UnaryFunction)
      */
     public static <S, T> Collection<T> map(Iterable<S> iterable, Mapper<? super S, T> mapper) {
         return map(iterable, mapperUnaryFunction(mapper));

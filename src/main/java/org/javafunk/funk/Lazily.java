@@ -132,7 +132,7 @@ public class Lazily {
      * <blockquote>
      * <pre>
      *      Iterable&lt;Iterable&lt;Integer&gt;&gt; batches1 = iterableWith(iterableWith(1, 2, 3), iterableWith(4, 5, 6), iterableWith(7));
-     *      Iterable&lt;Iterable&lt;Integer&gt;&gt; batches2 = batch(iterableWith(1, 2, 3, 4, 5, 6, 7), 3);
+     *      Iterable&lt;Iterable&lt;Integer&gt;&gt; batches2 = Lazily.batch(iterableWith(1, 2, 3, 4, 5, 6, 7), 3);
      * </pre>
      * </blockquote>
      * </p>
@@ -170,7 +170,7 @@ public class Lazily {
      * <blockquote>
      * <pre>
      *      Iterable&lt;Team&gt; teams = teamRepository.findByCountyName("Kent"); // assume randomly ordered
-     *      Iterable&lt;Integer&gt; groupNumbers = cycle(iterableWith(1, 2, 3, 4));
+     *      Iterable&lt;Integer&gt; groupNumbers = Lazily.cycle(iterableWith(1, 2, 3, 4));
      *      Iterable&lt;Pair&lt;Team, Integer&gt;&gt; groupAssignments = zip(teams, groupNumbers);
      * </pre>
      * </blockquote>
@@ -272,15 +272,150 @@ public class Lazily {
         return index(iterable, indexerUnaryFunction(indexer));
     }
 
-    public static <S, T> Iterable<T> map(final Iterable<S> iterable, final UnaryFunction<? super S, T> mapper) {
-        checkNotNull(mapper);
+    /**
+     * Lazily maps an {@code Iterable} of elements of type {@code S} into an
+     * {@code Iterable} of elements of type {@code T} using the supplied
+     * {@code UnaryFunction}.
+     *
+     * <p>As the returned {@code Iterable} is iterated, each element from the
+     * input {@code Iterable} will be passed to the supplied {@code UnaryFunction}
+     * and the value returned by the {@code UnaryFunction} will be returned
+     * by the output {@code Iterable} in the input value's place. Thus, the order
+     * in which elements are yielded from the input {@code Iterable} is maintained
+     * in the output {@code Iterable}. For a more mathematical description of the
+     * map higher order function, see the
+     * <a href="http://en.wikipedia.org/wiki/Map_(higher-order_function)">
+     * map article on Wikipedia</a>.
+     *
+     * <p>{@code map} does not discriminate against {@code null} values in the input
+     * {@code Iterable}, they are passed to the function in the same way as any other
+     * value. Similarly, any {@code null} values returned at iteration time are returned
+     * by the output {@code Iterable}. Thus, the input and output {@code Iterable} instances
+     * will always contain the same number of elements.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Consider a collection of {@code Person} objects where a {@code Person} is defined
+     * by the following class:
+     * <blockquote>
+     * <pre>
+     *   public class Person {
+     *       private Name name;
+     *
+     *       public Person(Name name) {
+     *           this.name = name;
+     *       }
+     *
+     *       public Name getName() {
+     *           return name;
+     *       };
+     *
+     *       ...
+     *   }
+     * </pre>
+     * </blockquote>
+     * and a {@code Name} is defined by the following class:
+     * <blockquote>
+     * <pre>
+     *   public class Name {
+     *       private String firstName;
+     *       private String lastName;
+     *
+     *       public Name(String firstName, String lastName) {
+     *           this.firstName = firstName;
+     *           this.lastName = lastName;
+     *       }
+     *
+     *       public String getFirstName() {
+     *           return firstName;
+     *       }
+     *
+     *       public String getLastName() {
+     *           return lastName;
+     *       }
+     *
+     *       ...
+     *   }
+     * </pre>
+     * </blockquote>
+     * Say we have an in memory database of all employees at a company:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Person&gt; people = Literals.listWith(
+     *           new Person(new Name("Julio", "Tilman")),
+     *           new Person(new Name("Roslyn", "Snipe")),
+     *           new Person(new Name("Tameka", "Brickhouse")));
+     * </pre>
+     * </blockquote>
+     * and we need to generate a report of all names, last name first, first name second,
+     * hyphen separated. In order to do this we need to convert, or <em>map</em>, each
+     * {@code Person} instance to the required {@code String}. This can be achieved
+     * as follow:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;String&gt; names = Lazily.map(people, new UnaryFunction&lt;Person, String&gt;() {
+     *       &#64;Override public String call(Person person) {
+     *           return person.getLastName() + "-" + person.getFirstName;
+     *       }
+     *   });
+     * </pre>
+     * </blockquote>
+     * The resulting {@code Iterable} is equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;String&gt; names = Literals.collectionWith(
+     *           "Tilman-Julio",
+     *           "Snipe-Roslyn",
+     *           "Brickhouse-Tameka");
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} of elements to be mapped.
+     * @param function A {@code UnaryFunction} which, given an element from the input iterable,
+     *                 returns that element mapped to a new value potentially of a different type.
+     * @param <S>      The type of the input elements, i.e., the elements to map.
+     * @param <T>      The type of the output elements, i.e., the mapped elements.
+     * @return An {@code Iterable} mapping each instance of {@code S} from the input
+     *         {@code Iterable} to an instance of {@code T} using the supplied {@code UnaryFunction}.
+     */
+    public static <S, T> Iterable<T> map(final Iterable<S> iterable, final UnaryFunction<? super S, T> function) {
+        checkNotNull(function);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
-                return new MappedIterator<S, T>(iterable.iterator(), mapper);
+                return new MappedIterator<S, T>(iterable.iterator(), function);
             }
         };
     }
 
+    /**
+     * Lazily maps an {@code Iterable} of elements of type {@code S} into a {@code Iterable}
+     * of elements of type {@code T} using the supplied {@code Mapper}.
+     *
+     * <p>As the returned {@code Iterable} is iterated, each element from the input
+     * {@code Iterable} will be passed to the supplied {@code Mapper} and the value
+     * returned by the {@code Mapper} will be returned by the output {@code Iterable}
+     * in the input value's place. Thus, the order in which elements are yielded from
+     * the input {@code Iterable} is maintained in the output {@code Iterable}.
+     * For a more mathematical description of the map higher order function, see the
+     * <a href="http://en.wikipedia.org/wiki/Map_(higher-order_function)">
+     * map article on Wikipedia</a>.
+     *
+     * <p>This override of {@link #map(Iterable, UnaryFunction)} is provided to allow a
+     * {@code Mapper} to be used in place of a {@code UnaryFunction} to enhance readability
+     * and better express intent. The contract of the function is identical to that of the
+     * {@code UnaryFunction} version of {@code map}.</p>
+     *
+     * <p>For example usage and further documentation, see {@link #map(Iterable, UnaryFunction)}.</p>
+     *
+     * @param iterable The {@code Iterable} of elements to be mapped.
+     * @param mapper   A {@code Mapper} which, given an element from the input iterable,
+     *                 returns that element mapped to a new value potentially of a different type.
+     * @param <S>      The type of the input elements, i.e., the elements to map.
+     * @param <T>      The type of the output elements, i.e., the mapped elements.
+     * @return An {@code Iterable} mapping each instance of {@code S} from the input
+     *         {@code Iterable} to an instance of {@code T} using the supplied {@code Mapper}.
+     * @see #map(Iterable, UnaryFunction)
+     */
     public static <S, T> Iterable<T> map(final Iterable<S> iterable, final Mapper<? super S, T> mapper) {
         checkNotNull(mapper);
         return map(iterable, mapperUnaryFunction(mapper));
