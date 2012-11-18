@@ -76,8 +76,8 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  * </p>
  *
  * <p>As an example consider the following:
+ * <blockquote>
  * <pre>
- *  <code>
  *      Iterable&lt;BigInteger&gt; naturalNumbers = naturalNumbers.getAll();
  *      Iterable&lt;BigDecimal&gt; doubledNaturals = Lazily.map(naturalNumbers, new Mapper&lt;BigInteger, BigDecimal&gt;() {
  *        &#64;Override public BigDecimal map(BigInteger number) {
@@ -87,8 +87,8 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  *      Iterable&lt;Pair&lt;Integer, BigDecimal&gt;&gt; enumeratedDoubledNaturals = Lazily.enumerate(doubledNaturals);
  *      Iterable&lt;Pair&lt;Integer, BigDecimal&gt;&gt; firstHundredEnumeratedDoubledNaturals = Lazily.take(enumeratedDoubledNaturals, 100);
  *      Map&lt;Integer, BigDecimal&gt; firstHundredDoubledNaturals = Literals.mapFromPairs(firstHundredEnumeratedDoubledNaturals);
- *  </code>
  * </pre>
+ * </blockquote>
  * Here a number of lazy operations are performed and then the final {@code Iterable} is
  * materialised into a {@code Map} instance. The original {@code Iterable} is an
  * infinite sequence of elements however this series of operations will only iterate and
@@ -97,19 +97,19 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  *
  * <p>This example has been written in full but of course, via static imports and method extraction, it can
  * be made more concise as shown in the following:
+ * <blockquote>
  * <pre>
- *  <code>
  *      Map&lt;Integer, BigDecimal&gt; firstHundredDoubledNaturals = mapFromPairs(take(enumerate(map(naturalNumbers.getAll(), toDoubledBigDecimals())), 100);
- *  </code>
  * </pre>
- *  </p>
+ * </blockquote>
+ * </p>
  *
- *  <p>Note that none of the values returned by these functions memoise their contents
- *  upon iteration. Thus, if the input {@code Iterable} instance(s) have expensive side
- *  effects on iteration such as loading from the file system or a database or performing
- *  expensive computations, the laziness of these functions will mean this cost will
- *  be incurred on every iteration. Instead consider materialising either the input
- *  or output values prior to repeated iteration.</p>
+ * <p>Note that none of the values returned by these functions memoise their contents
+ * upon iteration. Thus, if the input {@code Iterable} instance(s) have expensive side
+ * effects on iteration such as loading from the file system or a database or performing
+ * expensive computations, the laziness of these functions will mean this cost will
+ * be incurred on every iteration. Instead consider materialising either the input
+ * or output values prior to repeated iteration.</p>
  *
  * @see Eagerly
  * @since 1.0
@@ -117,6 +117,37 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
 public class Lazily {
     private Lazily() {}
 
+    /**
+     * Returns a lazy {@code Iterable} instance containing batches of elements
+     * of the specified size from the supplied {@code Iterable}.
+     *
+     * <p>In the case that the number of elements in the supplied {@code Iterable}
+     * does not evenly divide by the supplied batch size, the last {@code Iterable}
+     * in the returned {@code Iterable} will contain less than the batch size. If
+     * the supplied batch size is not positive, an {@code IllegalArgumentException}
+     * will be thrown.</p>
+     *
+     * <p>As an example, the following two {@code Iterable} instances
+     * are effectively equivalent:
+     * <blockquote>
+     * <pre>
+     *      Iterable&lt;Iterable&lt;Integer&gt;&gt; batches1 = iterableWith(iterableWith(1, 2, 3), iterableWith(4, 5, 6), iterableWith(7));
+     *      Iterable&lt;Iterable&lt;Integer&gt;&gt; batches2 = batch(iterableWith(1, 2, 3, 4, 5, 6, 7), 3);
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param iterable  The {@code Iterable} to batch into batches of the specified
+     *                  number of elements.
+     * @param batchSize The number of elements required in each batch in the
+     *                  returned {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Iterable} instance of {@code Iterable} instances each
+     *         containing the required number of elements, bar the last which may
+     *         have less dependent on availability.
+     * @throws IllegalArgumentException if the required number of elements to take
+     *                                  is not positive.
+     */
     public static <T> Iterable<Iterable<T>> batch(final Iterable<T> iterable, final int batchSize) {
         if (batchSize <= 0) {
             throw new IllegalArgumentException("Batch size must be greater than zero.");
@@ -127,6 +158,7 @@ public class Lazily {
             }
         };
     }
+
 
     public static <T> Iterable<T> cycle(final Iterable<T> iterable) {
         return new Iterable<T>() {

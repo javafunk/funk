@@ -1446,6 +1446,37 @@ public class Eagerly {
         return tuple(materialize(partition.getFirst()), materialize(partition.getSecond()));
     }
 
+    /**
+     * Returns a collection {@code Collection} instance containing batches of elements
+     * of the specified size from the supplied {@code Iterable}.
+     *
+     * <p>In the case that the number of elements in the supplied {@code Iterable}
+     * does not evenly divide by the supplied batch size, the last {@code Collection}
+     * in the returned {@code Collection} will contain less than the batch size. If
+     * the supplied batch size is not positive, an {@code IllegalArgumentException}
+     * will be thrown.</p>
+     *
+     * <p>As an example, the following two {@code Collection} instances
+     * are effectively equivalent:
+     * <blockquote>
+     * <pre>
+     *      Collection&lt;Collection&lt;Integer&gt;&gt; batches1 = collectionWith(collectionWith(1, 2, 3), collectionWith(4, 5, 6), collectionWith(7));
+     *      Collection&lt;Collection&lt;Integer&gt;&gt; batches2 = batch(collectionWith(1, 2, 3, 4, 5, 6, 7), 3);
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param iterable  The {@code Iterable} to batch into batches of the specified
+     *                  number of elements.
+     * @param batchSize The number of elements required in each batch in the
+     *                  returned {@code Collection}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} instance of {@code Collection} instances each
+     *         containing the required number of elements, bar the last which may
+     *         have less dependent on availability.
+     * @throws IllegalArgumentException if the required number of elements to take
+     *                                  is not positive.
+     */
     public static <T> Collection<Collection<T>> batch(Iterable<T> iterable, int batchSize) {
         Collection<Collection<T>> result = new ArrayList<Collection<T>>();
         Iterable<Iterable<T>> batches = Lazily.batch(iterable, batchSize);
