@@ -8,7 +8,14 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.tuples.*;
+import org.javafunk.funk.datastructures.tuples.Nonuple;
+import org.javafunk.funk.datastructures.tuples.Octuple;
+import org.javafunk.funk.datastructures.tuples.Pair;
+import org.javafunk.funk.datastructures.tuples.Quadruple;
+import org.javafunk.funk.datastructures.tuples.Quintuple;
+import org.javafunk.funk.datastructures.tuples.Septuple;
+import org.javafunk.funk.datastructures.tuples.Sextuple;
+import org.javafunk.funk.datastructures.tuples.Triple;
 import org.javafunk.funk.functors.Action;
 import org.javafunk.funk.functors.Equivalence;
 import org.javafunk.funk.functors.Indexer;
@@ -17,7 +24,15 @@ import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.functors.predicates.BinaryPredicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.javafunk.funk.functors.procedures.UnaryProcedure;
-import org.javafunk.funk.iterators.*;
+import org.javafunk.funk.iterators.BatchedIterator;
+import org.javafunk.funk.iterators.ChainedIterator;
+import org.javafunk.funk.iterators.CyclicIterator;
+import org.javafunk.funk.iterators.EachIterator;
+import org.javafunk.funk.iterators.FilteredIterator;
+import org.javafunk.funk.iterators.MappedIterator;
+import org.javafunk.funk.iterators.PredicatedIterator;
+import org.javafunk.funk.iterators.SubSequenceIterator;
+import org.javafunk.funk.iterators.ZippedIterator;
 import org.javafunk.funk.predicates.NotPredicate;
 
 import java.util.Iterator;
@@ -26,7 +41,10 @@ import java.util.List;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.javafunk.funk.Eagerly.first;
 import static org.javafunk.funk.Iterables.concat;
-import static org.javafunk.funk.Literals.*;
+import static org.javafunk.funk.Literals.iterableBuilderWith;
+import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.funk.Literals.listFrom;
+import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.Mappers.toIterators;
 import static org.javafunk.funk.Sequences.increasing;
 import static org.javafunk.funk.Sequences.integers;
@@ -35,6 +53,67 @@ import static org.javafunk.funk.functors.adapters.EquivalenceBinaryPredicateAdap
 import static org.javafunk.funk.functors.adapters.IndexerUnaryFunctionAdapter.indexerUnaryFunction;
 import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 
+/**
+ * A suite of lazy functions, often higher order, across {@code Iterable} instances.
+ *
+ * <p>Each function defined in this class is lazy, i.e., it does not iterate over the
+ * supplied {@code Iterable} instance(s) itself but instead prepares a return value
+ * that will yield semantically correct results with respect to the function's definition
+ * when the return value or one of its components is iterated. This has a number of benefits:
+ * <ul>
+ * <li>Iteration/realisation of the underlying {@code Iterable} instance(s) are only
+ * performed when required and only as far through the {@code Iterable} as required.</li>
+ * <li>Infinite {@code Iterable} instances can be manipulated while consuming a
+ * finite amount of memory.</li>
+ * <li>Lazy function evaluations can easily be composed into complex calculations
+ * whilst keeping the number of required iterations of the underlying {@code Iterable}
+ * instance(s) to a minimum.</li>
+ * </ul>
+ * Because of this it is generally recommended to use functions from {@code Lazily} over
+ * those in {@code Eagerly} and then to materialize the resulting {@code Iterable}
+ * instance(s) into whatever concrete {@code Iterable} type is required as the last step
+ * in evaluation.
+ * </p>
+ *
+ * <p>As an example consider the following:
+ * <pre>
+ *  <code>
+ *      Iterable&lt;BigInteger&gt; naturalNumbers = naturalNumbers.getAll();
+ *      Iterable&lt;BigDecimal&gt; doubledNaturals = Lazily.map(naturalNumbers, new Mapper&lt;BigInteger, BigDecimal&gt;() {
+ *        &#64;Override public BigDecimal map(BigInteger number) {
+ *          return new BigDecimal(number.multiply(new BigInteger("2")));
+ *        }
+ *      });
+ *      Iterable&lt;Pair&lt;Integer, BigDecimal&gt;&gt; enumeratedDoubledNaturals = Lazily.enumerate(doubledNaturals);
+ *      Iterable&lt;Pair&lt;Integer, BigDecimal&gt;&gt; firstHundredEnumeratedDoubledNaturals = Lazily.take(enumeratedDoubledNaturals, 100);
+ *      Map&lt;Integer, BigDecimal&gt; firstHundredDoubledNaturals = Literals.mapFromPairs(firstHundredEnumeratedDoubledNaturals);
+ *  </code>
+ * </pre>
+ * Here a number of lazy operations are performed and then the final {@code Iterable} is
+ * materialised into a {@code Map} instance. The original {@code Iterable} is an
+ * infinite sequence of elements however this series of operations will only iterate and
+ * map over the first hundred elements.
+ * </p>
+ *
+ * <p>This example has been written in full but of course, via static imports and method extraction, it can
+ * be made more concise as shown in the following:
+ * <pre>
+ *  <code>
+ *      Map&lt;Integer, BigDecimal&gt; firstHundredDoubledNaturals = mapFromPairs(take(enumerate(map(naturalNumbers.getAll(), toDoubledBigDecimals())), 100);
+ *  </code>
+ * </pre>
+ *  </p>
+ *
+ *  <p>Note that none of the values returned by these functions memoise their contents
+ *  upon iteration. Thus, if the input {@code Iterable} instance(s) have expensive side
+ *  effects on iteration such as loading from the file system or a database or performing
+ *  expensive computations, the laziness of these functions will mean this cost will
+ *  be incurred on every iteration. Instead consider materialising either the input
+ *  or output values prior to repeated iteration.</p>
+ *
+ * @see Eagerly
+ * @since 1.0
+ */
 public class Lazily {
     private Lazily() {}
 
