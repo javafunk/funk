@@ -159,7 +159,29 @@ public class Lazily {
         };
     }
 
-
+    /**
+     * Returns an infinite lazy {@code Iterable} which repeatedly cycles through the
+     * elements in the supplied {@code Iterable} in the order in which they are
+     * yielded.
+     *
+     * <p>For example, given an {@code Iterable} of {@code Team} instances,
+     * we can assign each {@code Team} to a group identified by an {@code Integer}
+     * between {@code 1} and {@code 4} as follows:
+     * <blockquote>
+     * <pre>
+     *      Iterable&lt;Team&gt; teams = teamRepository.findByCountyName("Kent"); // assume randomly ordered
+     *      Iterable&lt;Integer&gt; groupNumbers = cycle(iterableWith(1, 2, 3, 4));
+     *      Iterable&lt;Pair&lt;Team, Integer&gt;&gt; groupAssignments = zip(teams, groupNumbers);
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param iterable The {@code Iterable} whose contents should be infinitely
+     *                 cycled.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Iterable} instance containing an infinite number of
+     *         cycles through the supplied {@code Iterable}.
+     */
     public static <T> Iterable<T> cycle(final Iterable<T> iterable) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
