@@ -9,13 +9,42 @@
 package org.javafunk.funk;
 
 import com.google.common.collect.Multiset;
-import org.javafunk.funk.builders.*;
-import org.javafunk.funk.datastructures.tuples.*;
+import org.javafunk.funk.builders.ArrayBuilder;
+import org.javafunk.funk.builders.CollectionBuilder;
+import org.javafunk.funk.builders.IterableBuilder;
+import org.javafunk.funk.builders.IteratorBuilder;
+import org.javafunk.funk.builders.ListBuilder;
+import org.javafunk.funk.builders.MapBuilder;
+import org.javafunk.funk.builders.MultisetBuilder;
+import org.javafunk.funk.builders.SetBuilder;
+import org.javafunk.funk.datastructures.tuples.Nonuple;
+import org.javafunk.funk.datastructures.tuples.Octuple;
+import org.javafunk.funk.datastructures.tuples.Pair;
+import org.javafunk.funk.datastructures.tuples.Quadruple;
+import org.javafunk.funk.datastructures.tuples.Quintuple;
+import org.javafunk.funk.datastructures.tuples.Septuple;
+import org.javafunk.funk.datastructures.tuples.Sextuple;
+import org.javafunk.funk.datastructures.tuples.Single;
+import org.javafunk.funk.datastructures.tuples.Triple;
 
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static java.util.Arrays.asList;
 import static org.javafunk.funk.Classes.uncheckedInstantiate;
+import static org.javafunk.funk.datastructures.tuples.Nonuple.nonuple;
+import static org.javafunk.funk.datastructures.tuples.Octuple.octuple;
+import static org.javafunk.funk.datastructures.tuples.Pair.pair;
+import static org.javafunk.funk.datastructures.tuples.Quadruple.quadruple;
+import static org.javafunk.funk.datastructures.tuples.Quintuple.quintuple;
+import static org.javafunk.funk.datastructures.tuples.Septuple.septuple;
+import static org.javafunk.funk.datastructures.tuples.Sextuple.sextuple;
+import static org.javafunk.funk.datastructures.tuples.Single.single;
+import static org.javafunk.funk.datastructures.tuples.Triple.triple;
 
 public class Literals {
     private Literals() {}
@@ -7743,7 +7772,7 @@ public class Literals {
      * @return A {@code Single} over the type and value of the supplied argument.
      */
     public static <R> Single<R> tuple(R first) {
-        return new Single<R>(first);
+        return single(first);
     }
 
     /**
@@ -7756,7 +7785,7 @@ public class Literals {
      * @return A {@code Pair} over the types and values of the supplied arguments.
      */
     public static <R, S> Pair<R, S> tuple(R first, S second) {
-        return new Pair<R, S>(first, second);
+        return pair(first, second);
     }
 
     /**
@@ -7771,7 +7800,7 @@ public class Literals {
      * @return A {@code Triple} over the types and values of the supplied arguments.
      */
     public static <R, S, T> Triple<R, S, T> tuple(R first, S second, T third) {
-        return new Triple<R, S, T>(first, second, third);
+        return triple(first, second, third);
     }
 
     /**
@@ -7788,7 +7817,7 @@ public class Literals {
      * @return A {@code Quadruple} over the types and values of the supplied arguments.
      */
     public static <R, S, T, U> Quadruple<R, S, T, U> tuple(R first, S second, T third, U fourth) {
-        return new Quadruple<R, S, T, U>(first, second, third, fourth);
+        return quadruple(first, second, third, fourth);
     }
 
     /**
@@ -7807,7 +7836,7 @@ public class Literals {
      * @return A {@code Quintuple} over the types and values of the supplied arguments.
      */
     public static <R, S, T, U, V> Quintuple<R, S, T, U, V> tuple(R first, S second, T third, U fourth, V fifth) {
-        return new Quintuple<R, S, T, U, V>(first, second, third, fourth, fifth);
+        return quintuple(first, second, third, fourth, fifth);
     }
 
     /**
@@ -7828,7 +7857,7 @@ public class Literals {
      * @return A {@code Sextuple} over the types and values of the supplied arguments.
      */
     public static <R, S, T, U, V, W> Sextuple<R, S, T, U, V, W> tuple(R first, S second, T third, U fourth, V fifth, W sixth) {
-        return new Sextuple<R, S, T, U, V, W>(first, second, third, fourth, fifth, sixth);
+        return sextuple(first, second, third, fourth, fifth, sixth);
     }
 
     /**
@@ -7851,7 +7880,7 @@ public class Literals {
      * @return A {@code Septuple} over the types and values of the supplied arguments.
      */
     public static <R, S, T, U, V, W, X> Septuple<R, S, T, U, V, W, X> tuple(R first, S second, T third, U fourth, V fifth, W sixth, X seventh) {
-        return new Septuple<R, S, T, U, V, W, X>(first, second, third, fourth, fifth, sixth, seventh);
+        return septuple(first, second, third, fourth, fifth, sixth, seventh);
     }
 
     /**
@@ -7876,7 +7905,7 @@ public class Literals {
      * @return A {@code Octuple} over the types and values of the supplied arguments.
      */
     public static <R, S, T, U, V, W, X, Y> Octuple<R, S, T, U, V, W, X, Y> tuple(R first, S second, T third, U fourth, V fifth, W sixth, X seventh, Y eighth) {
-        return new Octuple<R, S, T, U, V, W, X, Y>(first, second, third, fourth, fifth, sixth, seventh, eighth);
+        return octuple(first, second, third, fourth, fifth, sixth, seventh, eighth);
     }
 
     /**
@@ -7903,6 +7932,6 @@ public class Literals {
      * @return A {@code Nonuple} over the types and values of the supplied arguments.
      */
     public static <R, S, T, U, V, W, X, Y, Z> Nonuple<R, S, T, U, V, W, X, Y, Z> tuple(R first, S second, T third, U fourth, V fifth, W sixth, X seventh, Y eighth, Z ninth) {
-        return new Nonuple<R, S, T, U, V, W, X, Y, Z>(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);
+        return nonuple(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);
     }
 }

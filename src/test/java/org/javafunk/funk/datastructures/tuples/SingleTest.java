@@ -9,6 +9,8 @@
 package org.javafunk.funk.datastructures.tuples;
 
 import org.javafunk.funk.behaviours.ordinals.First;
+import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -19,9 +21,23 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.listBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.datastructures.tuples.Single.single;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class SingleTest {
+    @Test
+    public void shouldConstructASingleWithTheSpecifiedValue() throws Exception {
+        // Given
+        String value = "5";
+        Single<String> expected = new Single<String>(value);
+
+        // When
+        Single<String> actual = single(value);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
     @Test
     public void shouldReturnTheFirstObject() {
         // Given
@@ -83,5 +99,65 @@ public class SingleTest {
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
+    public void shouldBeMappableWithMapperOnFirstPosition() throws Exception {
+        // Given
+        Single<Integer> single = tuple(5);
+        Mapper<Integer, String> mapper = new Mapper<Integer, String>() {
+            @Override public String map(Integer input) {
+                return String.valueOf(input);
+            }
+        };
+        Single<String> expected = tuple("5");
+
+        // When
+        Single<String> actual = single.mapFirst(mapper);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfMapperSuppliedToMapFirstIsNull() throws Exception {
+        // Given
+        Single<Integer> single = tuple(5);
+        Mapper<Integer, String> mapper = null;
+
+        // When
+        single.mapFirst(mapper);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test
+    public void shouldBeMappableWithUnaryFunctionOnFirstPosition() throws Exception {
+        // Given
+        Single<Integer> single = tuple(5);
+        UnaryFunction<Integer, String> function = new UnaryFunction<Integer, String>() {
+            @Override public String call(Integer input) {
+                return String.valueOf(input);
+            }
+        };
+        Single<String> expected = tuple("5");
+
+        // When
+        Single<String> actual = single.mapFirst(function);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfUnaryPredicateSuppliedToMapFirstIsNull() throws Exception {
+        // Given
+        Single<Integer> single = tuple(5);
+        UnaryFunction<Integer, String> mapper = null;
+
+        // When
+        single.mapFirst(mapper);
+
+        // Then a NullPointerException is thrown
     }
 }
