@@ -308,7 +308,7 @@ public class Lazily {
 
     /**
      * Drops elements from the supplied {@code Iterable} until the supplied {@code UnaryPredicate}
-     * evaluates true for an element and returns an {@code Iterable} containing the remaining
+     * evaluates true for an element and returns an {@code Iterable} effectively containing the remaining
      * elements. On iteration, each element retrieved from the {@code Iterable} is evaluated by the
      * {@code UnaryPredicate} and as soon as an element is found that satisfies the
      * {@code UnaryPredicate}, that element is returned as the first element in the {@code Iterable}
@@ -366,7 +366,7 @@ public class Lazily {
      *   remainingElements.isEmpty(); // => true
      * </pre>
      * </blockquote>
-     * If the input {@code Iterable} contains no elements, an empty {@code Iterable} is returned:
+     * Similarly, if the input {@code Iterable} contains no elements, an empty {@code Iterable} is returned:
      * <blockquote>
      * <pre>
      *   Iterable&lt;Integer&gt; elements = Literals.iterable();
@@ -407,6 +407,92 @@ public class Lazily {
         };
     }
 
+    /**
+     * Drops elements from the supplied {@code Iterable} while the supplied {@code UnaryPredicate}
+     * evaluates true for those elements and returns an {@code Iterable} effectively containing
+     * the remaining elements. On iteration, each element retrieved from the {@code Iterable} is
+     * evaluated by the {@code UnaryPredicate} and as soon as an element is found that does not satisfy the
+     * {@code UnaryPredicate}, that element is returned as the first element in the {@code Iterable}
+     * and subsequent element retrieval will retrieve the remaining elements in the {@code Iterable}.
+     * If the supplied {@code Iterable} is empty, an effectively empty {@code Iterable} is returned.
+     *
+     * <p>Since a lazy {@code Iterable} instance is returned, the element discardal is performed
+     * lazily, i.e., the elements are not discarded from the underlying {@code Iterable}
+     * until it is iterated.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Using {@code dropWhile}, we can drop elements from the {@code Iterable} while those elements
+     * are greater than 2. The following two lines are effectively equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; remainingElements = dropWhile(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   Iterable&lt;Integer&gt; equivalentElements = Literals.iterableWith(2, 1);
+     * </pre>
+     * </blockquote>
+     * If the first element retrieved from the {@code Iterable} on iteration does not satisfy the
+     * supplied {@code UnaryPredicate}, no elements are dropped and the entire inpu {@code Iterable}
+     * is iterated. The following two lines are equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable(2, 1, 4, 5, 3);
+     *   Iterable&lt;Integer&gt; remainingElements = dropWhile(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   Iterable&lt;Integer&gt; equivalentElements = Literals.iterableWith(2, 1, 4, 5, 3);
+     * </pre>
+     * </blockquote>
+     * If all elements retrieved from the {@code Iterable} satisfy the supplied
+     * {@code UnaryPredicate}, all elements are dropped and an effectively empty {@code Iterable} is returned.
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable(4, 5, 6, 7, 8);
+     *   Collection&lt;Integer&gt; remainingElements = dropWhile(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   remainingElements.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     * Similarly, if the input {@code Iterable} contains no elements, an empty {@code Iterable}
+     * is returned:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable();
+     *   Collection&lt;Integer&gt; remainingElements = dropWhile(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   remainingElements.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * @param iterable  The {@code Iterable} from which to drop the first sequence of elements
+     *                  satisfying the supplied {@code UnaryPredicate}.
+     * @param predicate A {@code UnaryPredicate} to evaluate each element against whilst
+     *                  dropping from the supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Iterable} instance with all elements that satisfy the
+     *         supplied {@code UnaryPredicate} dropped on iteration, effectively containing
+     *         all remaining elements .
+     */
     public static <T> Iterable<T> dropWhile(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
