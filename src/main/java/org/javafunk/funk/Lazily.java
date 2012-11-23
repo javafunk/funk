@@ -115,7 +115,8 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  * @since 1.0
  */
 public class Lazily {
-    private Lazily() {}
+    private Lazily() {
+    }
 
     /**
      * Returns a lazy {@code Iterable} instance containing batches of elements
@@ -164,17 +165,20 @@ public class Lazily {
      * elements in the supplied {@code Iterable} in the order in which they are
      * yielded.
      *
-     * <p>For example, given an {@code Iterable} of {@code Team} instances,
-     * we can assign each {@code Team} to a group identified by an {@code Integer}
-     * between {@code 1} and {@code 4} as follows:
+     * <p>For example, given an {@code Iterable} of {@code Team} instances, randomly
+     * ordered, we can assign each {@code Team} to a group identified by an
+     * {@code Integer} between {@code 1} and {@code 4} as follows:
      * <blockquote>
      * <pre>
-     *      Iterable&lt;Team&gt; teams = teamRepository.findByCountyName("Kent"); // assume randomly ordered
-     *      Iterable&lt;Integer&gt; groupNumbers = Lazily.cycle(iterableWith(1, 2, 3, 4));
-     *      Iterable&lt;Pair&lt;Team, Integer&gt;&gt; groupAssignments = zip(teams, groupNumbers);
+     *     Iterable&lt;Team&gt; teams = teamRepository.findByCountyName("Kent");
+     *     Iterable&lt;Integer&gt; groupNumbers = Lazily.cycle(iterableWith(1, 2, 3, 4));
+     *     Iterable&lt;Pair&lt;Team, Integer&gt;&gt; groupAssignments = Lazily.zip(teams, groupNumbers);
      * </pre>
      * </blockquote>
      * </p>
+     *
+     * <p>Note, if the supplied {@code Iterable} is empty, the returned {@code Iterable}
+     * will also be empty.</p>
      *
      * @param iterable The {@code Iterable} whose contents should be infinitely
      *                 cycled.
@@ -190,6 +194,38 @@ public class Lazily {
         };
     }
 
+    /**
+     * Returns a lazy {@code Iterable} which represents a repetition of the elements
+     * in the supplied {@code Iterable} in the order in which they are yielded.
+     *
+     * <p>For example, given an {@code Iterable} of {@code Group} instances and
+     * a randomly ordered {@code Iterable} of many {@code Candidate} instances, we
+     * can calculate candidate assignments so that we form groups of exactly
+     * {@code 5} candidates each as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Candidate&gt; candidates = candidateRepository.getAll();
+     *     Iterable&lt;Group&gt; groups = iterableWith(group(1), group(2), group(3));
+     *     Iterable&lt;Group&gt; groupPositions = repeat(groups, 5);
+     *     Iterable&lt;Pair&lt;Candidate, Group&gt;&gt; groupAssignments = zip(candidates, groupPositions);
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * <p>Note, if zero is specified as the number of times to repeat, an empty
+     * {@code Iterable} will be returned. Similarly, if the supplied {@code Iterable}
+     * is empty, regardless of the number of repeats specified, the returned
+     * {@code Iterable} will be empty.</p>
+     *
+     * @param iterable              The {@code Iterable} whose contents should be repeated the
+     *                              specified number of times.
+     * @param numberOfTimesToRepeat The number of repetitions of the supplied {@code Iterable}
+     *                              required.
+     * @param <T>                   The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Iterable} instance containing the required number of
+     *         repetitions of the supplied {@code Iterable}.
+     * @throws IllegalArgumentException if the specified number of times to repeat is negative.
+     */
     public static <T> Iterable<T> repeat(final Iterable<T> iterable, final int numberOfTimesToRepeat) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {

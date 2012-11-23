@@ -1447,7 +1447,8 @@ public class Eagerly {
 
     /**
      * Returns a collection {@code Collection} instance containing batches of elements
-     * of the specified size from the supplied {@code Iterable}.
+     * of the specified size from the supplied {@code Iterable} in the order that
+     * they are yielded..
      *
      * <p>In the case that the number of elements in the supplied {@code Iterable}
      * does not evenly divide by the supplied batch size, the last {@code Collection}
@@ -1897,6 +1898,38 @@ public class Eagerly {
         return slice(iterable, start, stop, 1);
     }
 
+    /**
+     * Returns a {@code Collection} instance representing a repetition of the elements
+     * in the supplied {@code Iterable} in the order in which they are yielded.
+     *
+     * <p>For example, given an {@code Iterable} of {@code Group} instances and
+     * a randomly ordered {@code Iterable} of many {@code Candidate} instances, we
+     * can calculate candidate assignments so that we form groups of exactly
+     * {@code 5} candidates each as follows:
+     * <blockquote>
+     * <pre>
+     *     Collection&lt;Candidate&gt; candidates = candidateRepository.getAll();
+     *     Collection&lt;Group&gt; groups = collectionWith(group(1), group(2), group(3));
+     *     Collection&lt;Group&gt; groupPositions = Eagerly.repeat(groups, 5);
+     *     Collection&lt;Pair&lt;Candidate, Group&gt;&gt; groupAssignments = Eagerly.zip(candidates, groupPositions);
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * <p>Note, if zero is specified as the number of times to repeat, an empty
+     * {@code Collection} will be returned. Similarly, if the supplied {@code Iterable}
+     * is empty, regardless of the number of repeats specified, the returned
+     * {@code Collection} will be empty.</p>
+     *
+     * @param iterable              The {@code Iterable} whose contents should be repeated the
+     *                              specified number of times.
+     * @param numberOfTimesToRepeat The number of repetitions of the supplied {@code Iterable}
+     *                              required.
+     * @param <T>                   The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} instance containing the required number of
+     *         repetitions of the supplied {@code Iterable}.
+     * @throws IllegalArgumentException if the specified number of times to repeat is negative.
+     */
     public static <T> Collection<T> repeat(
             Iterable<T> iterable,
             int numberOfTimesToRepeat) {
