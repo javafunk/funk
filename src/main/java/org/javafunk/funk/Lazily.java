@@ -234,6 +234,67 @@ public class Lazily {
         };
     }
 
+    /**
+     * Drops the first <em>n</em> elements from the supplied {@code Iterable} where <em>n</em>
+     * is given by the supplied integer value and returns an {@code Iterable} containing
+     * the remaining elements. If the {@code Iterable} is empty, an empty {@code Iterable}
+     * is returned, otherwise, an {@code Iterable} containing the elements that remain after
+     * the first <em>n</em> elements have been discarded is returned.
+     *
+     * <p>In the case that the supplied {@code Iterable} contains less elements than the
+     * required number of elements to drop, all elements are dropped and an effectively empty
+     * {@code Iterable} is returned.</p>
+     *
+     * <p>If the supplied integer value is negative, an {@code IllegalArgumentException} is
+     * thrown.</p>
+     *
+     * <p>Since a lazy {@code Iterable} instance is returned, the element discardal is performed
+     * lazily, i.e., the elements are not discarded from the underlying {@code Iterable}
+     * until it is iterated.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Using {@code drop}, we can drop the first three elements from the {@code Iterable}.
+     * The following two lines are effectively equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; remainingElements = drop(elements, 3);
+     *   Iterable&lt;Integer&gt; equivalentElements = iterableWith(2, 1);
+     * </pre>
+     * </blockquote>
+     * If the input {@code Iterable} does not contain enough elements, we are returned
+     * an empty {@code Iterable}. The following two lines are effectively equivalent:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; remainingElements = drop(elements, 6);
+     *   Iterable&lt;Integer&gt; equivalentElements = iterable();
+     * </pre>
+     * </blockquote>
+     * Similarly, if the input {@code Iterable} contains no elements, an empty
+     * {@code Iterable} is returned:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = iterable();
+     *   Iterable&lt;Integer&gt; remainingElements = drop(elements, 3);
+     *   remainingElements.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which to drop <em>n</em> elements
+     *                 and return the remainder.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Iterable} instance containing the remaining elements with
+     *         the required number of elements dropped from the supplied {@code Iterable}
+     *         on iteration.
+     * @throws IllegalArgumentException if the required number of elements to drop
+     *                                  is negative.
+     */
     public static <T> Iterable<T> drop(final Iterable<T> iterable, final int numberToTake) {
         if (numberToTake < 0) {
             throw new IllegalArgumentException("Cannot drop a negative number of elements.");
