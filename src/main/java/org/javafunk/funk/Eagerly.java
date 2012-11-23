@@ -36,7 +36,8 @@ import static org.javafunk.funk.functors.adapters.ReducerBinaryFunctionAdapter.r
  * @since 1.0
  */
 public class Eagerly {
-    private Eagerly() {}
+    private Eagerly() {
+    }
 
     public static <S, T> T reduce(
             Iterable<? extends S> iterable,
@@ -101,8 +102,8 @@ public class Eagerly {
         return reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMax, T element) {
                 return comparator.compare(element, currentMax) > 0 ?
-                        element :
-                        currentMax;
+                       element :
+                       currentMax;
             }
         });
     }
@@ -111,8 +112,8 @@ public class Eagerly {
         return returnOrThrowIfNull(reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMax, T element) {
                 return (element != null && element.compareTo(currentMax) > 0) ?
-                        element :
-                        currentMax;
+                       element :
+                       currentMax;
             }
         }), new NoSuchElementException("Maximum value is undefined if all values in the supplied Iterable are null."));
     }
@@ -121,8 +122,8 @@ public class Eagerly {
         return reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMin, T element) {
                 return comparator.compare(element, currentMin) < 0 ?
-                        element :
-                        currentMin;
+                       element :
+                       currentMin;
             }
         });
     }
@@ -131,8 +132,8 @@ public class Eagerly {
         return returnOrThrowIfNull(reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMin, T element) {
                 return (element != null && element.compareTo(currentMin) < 0) ?
-                        element :
-                        currentMin;
+                       element :
+                       currentMin;
             }
         }), new NoSuchElementException("Minimum value is undefined if all values in the supplied Iterable are null."));
     }
@@ -377,65 +378,65 @@ public class Eagerly {
     }
 
     public static <R, S, T, U> Collection<Quadruple<R, S, T, U>> cartesianProduct(
-                Iterable<R> first,
-                Iterable<S> second,
-                Iterable<T> third,
-                Iterable<U> fourth) {
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth) {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth));
     }
 
     public static <R, S, T, U, V> Collection<Quintuple<R, S, T, U, V>> cartesianProduct(
-                    Iterable<R> first,
-                    Iterable<S> second,
-                    Iterable<T> third,
-                    Iterable<U> fourth,
-                    Iterable<V> fifth) {
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth) {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth));
     }
 
     public static <R, S, T, U, V, W> Collection<Sextuple<R, S, T, U, V, W>> cartesianProduct(
-                        Iterable<R> first,
-                        Iterable<S> second,
-                        Iterable<T> third,
-                        Iterable<U> fourth,
-                        Iterable<V> fifth,
-                        Iterable<W> sixth) {
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth) {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth, sixth));
     }
 
     public static <R, S, T, U, V, W, X> Collection<Septuple<R, S, T, U, V, W, X>> cartesianProduct(
-                        Iterable<R> first,
-                        Iterable<S> second,
-                        Iterable<T> third,
-                        Iterable<U> fourth,
-                        Iterable<V> fifth,
-                        Iterable<W> sixth,
-                        Iterable<X> seventh) {
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh) {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth, sixth, seventh));
     }
 
     public static <R, S, T, U, V, W, X, Y> Collection<Octuple<R, S, T, U, V, W, X, Y>> cartesianProduct(
-                            Iterable<R> first,
-                            Iterable<S> second,
-                            Iterable<T> third,
-                            Iterable<U> fourth,
-                            Iterable<V> fifth,
-                            Iterable<W> sixth,
-                            Iterable<X> seventh,
-                            Iterable<Y> eighth) {
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh,
+            Iterable<Y> eighth) {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth, sixth, seventh, eighth));
     }
 
     public static <R, S, T, U, V, W, X, Y, Z> Collection<Nonuple<R, S, T, U, V, W, X, Y, Z>> cartesianProduct(
-                            Iterable<R> first,
-                            Iterable<S> second,
-                            Iterable<T> third,
-                            Iterable<U> fourth,
-                            Iterable<V> fifth,
-                            Iterable<W> sixth,
-                            Iterable<X> seventh,
-                            Iterable<Y> eighth,
-                            Iterable<Z> ninth) {
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh,
+            Iterable<Y> eighth,
+            Iterable<Z> ninth) {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth));
     }
 
@@ -497,12 +498,89 @@ public class Eagerly {
         return group(iterable, indexerUnaryFunction(indexer));
     }
 
+    /**
+     * Applies the supplied {@code UnaryProcedure} to each element in the
+     * supplied {@code Iterable}. Each element in the supplied {@code Iterable} is
+     * passed to the {@link UnaryProcedure#execute(Object)} method in the order in
+     * which it is yielded.
+     *
+     * <p>The application of the supplied {@code UnaryProcedure} is eager, i.e.,
+     * the procedure is immediately applied to each element in the
+     * {@code Iterable}.</p>
+     *
+     * <p>Since the function being applied to each element is a procedure
+     * it is inherently impure and thus must have side effects for any perceivable
+     * outcome to be observed.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Consider a {@code UnaryProcedure} that persists {@code Person} instances to a
+     * database:
+     * <blockquote>
+     * <pre>
+     *     public class PersonPersistingProcedure implements UnaryProcedure&lt;Person&gt; {
+     *         private Database database;
+     *         private Logger log;
+     *
+     *         public void execute(Person person) {
+     *             log.info("Persisting {}", person.getName());
+     *             database.store(person);
+     *         }
+     *     }
+     * </pre>
+     * </blockquote>
+     * Given an {@code Iterable} of {@code Person} instances, each person can
+     * be persisted as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Person&gt; people = listWith(
+     *             new Person("James"),
+     *             new Person("Rodrigo"),
+     *             new Person("Jane"));
+     *     Eagerly.each(people, new PersonPersistingProcedure());
+     * </pre>
+     * </blockquote>
+     * Once the {@code each} expression has evaluated, all elements in the people
+     * {@code Iterable} will have been persisted along with a log statement.
+     *
+     * @param targets   The {@code Iterable} whose elements should each have the supplied
+     *                  {@code UnaryProcedure} applied to them.
+     * @param procedure A {@code UnaryProcedure} to apply to each element in the
+     *                  supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     */
     public static <T> void each(
             Iterable<T> targets,
             UnaryProcedure<? super T> procedure) {
         materialize(Lazily.each(targets, procedure));
     }
 
+    /**
+     * Applies the supplied {@code Action} to each element in the supplied
+     * {@code Iterable}. Each element in the supplied {@code Iterable} is
+     * passed to the {@link Action#on(Object)} method in the order in
+     * which it is yielded.
+     *
+     * <p>The application of the supplied {@code Action} is eager, i.e.,
+     * the action is immediately applied to each element in the
+     * {@code Iterable}.</p>
+     *
+     * <p>Since the function being applied to each element is an action
+     * it is inherently impure and thus must have side effects for any perceivable
+     * outcome to be observed.</p>
+     *
+     * <p>This override of {@link #each(Iterable, UnaryProcedure)} is provided to allow an
+     * {@code Action} to be used in place of a {@code UnaryProcedure} to enhance readability
+     * and better express intent. The contract of the function is identical to that of the
+     * {@code UnaryProcedure} version of {@code each}.</p>
+     *
+     * <p>For example usage and further documentation, see {@link #each(Iterable, UnaryProcedure)}.</p>
+     *
+     * @param targets  The {@code Iterable} whose elements should each have the supplied
+     *                 {@code Action} applied to them.
+     * @param action   An {@code Action} to apply to each element in the supplied
+     *                 {@code Iterable}.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     */
     public static <T> void each(
             Iterable<T> targets,
             Action<? super T> action) {

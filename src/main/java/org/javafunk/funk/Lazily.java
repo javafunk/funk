@@ -509,6 +509,90 @@ public class Lazily {
         };
     }
 
+    /**
+     * Lazily applies the supplied {@code UnaryProcedure} to each element in the
+     * supplied {@code Iterable}. As the returned {@code Iterable} is iterated,
+     * each element is first passed to the {@link UnaryProcedure#execute(Object)} method
+     * and then returned.
+     *
+     * <p>Since a lazy {@code Iterable} instance is returned, the application of the
+     * supplied {@code UnaryProcedure} is also lazy, i.e., the procedure is not
+     * applied to each element in the {@code Iterable} until it is iterated.</p>
+     *
+     * <p>Since the function being applied to each element is a procedure
+     * it is inherently impure and thus must have side effects for any perceivable
+     * difference to be observed.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Consider a collection of {@code ApplicationForm} objects where an
+     * {@code ApplicationForm} is defined by the following class:
+     * <blockquote>
+     * <pre>
+     *     public class ApplicationForm {
+     *         private String firstName;
+     *         private String lastName;
+     *         private String dateOfBirth;
+     *
+     *         public ApplicationForm(String firstName, String lastName, String dateOfBirth) {
+     *             this.firstName = firstName;
+     *             this.lastName = lastName;
+     *             this.dateOfBirth = dateOfBirth;
+     *         }
+     *
+     *         public String getFullName() {
+     *             return firstName + lastName;
+     *         };
+     *
+     *         ...
+     *     }
+     * </pre>
+     * </blockquote>
+     * Say we have an in memory repository of all submitted forms
+     * <blockquote>
+     * <pre>
+     *     public class ApplicationFormRepository {
+     *         private final Iterable&lt;ApplicationForm&gt; applicationForms = Literals.listWith(
+     *                 new ApplicationForm("Joe", "Bloggs", "1985-01-14"),
+     *                 new ApplicationForm("Amanda", "James", "1988-08-10"),
+     *                 new ApplicationForm("Misha", "Kumar", "1983-12-28"));
+     *
+     *         ...
+     *     }
+     * </pre>
+     * </blockquote>
+     * and we wish to perform some form of batch processing using that collection.
+     * However, to assist our production support team, we want to log out details
+     * from each {@code ApplicationForm} instance before it is processed. We can
+     * prepare the collection of {@code ApplicationForm} instances with logging
+     * before returning it to the part of the codebase that requires it as follows:
+     * <blockquote>
+     * <pre>
+     *     public class ApplicationFormRepository {
+     *         ...
+     *         private final Logger log = LogFactory.getInstance(this);
+     *
+     *         public Iterable&lt;ApplicationForm&gt; getAll() {
+     *             return Lazily.each(applicationForms, new UnaryProcedure&lt;ApplicationForm&gt;() {
+     *                 &#64;Override public void execute(ApplicationForm applicationForm) {
+     *                     log.info("Currently processing application form for {}", applicationForm.getFullName());
+     *                 }
+     *             }
+     *         }
+     *     }
+     * </pre>
+     * </blockquote>
+     * In this way, whenever the returned {@code Iterable} of {@code ApplicationForm}
+     * instances is iterated, log statements will be generated using a mechanism transparent
+     * to the consumer.
+     *
+     * @param iterable  The {@code Iterable} whose elements should each have the supplied
+     *                  {@code UnaryProcedure} applied to them.
+     * @param procedure A {@code UnaryProcedure} to lazily apply to each element in the
+     *                  supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Iterable} that on iteration will apply the supplied
+     *         {@code UnaryProcedure} to each element before returning it.
+     */
     public static <T> Iterable<T> each(final Iterable<T> iterable, final UnaryProcedure<? super T> procedure) {
         checkNotNull(procedure);
         return new Iterable<T>() {
@@ -518,6 +602,35 @@ public class Lazily {
         };
     }
 
+    /**
+     * Lazily applies the supplied {@code Action} to each element in the
+     * supplied {@code Iterable}. As the returned {@code Iterable} is iterated,
+     * each element is first passed to the {@link Action#on(Object)} method
+     * and then returned.
+     *
+     * <p>Since a lazy {@code Iterable} instance is returned, the application of the
+     * supplied {@code Action} is also lazy, i.e., the action is not
+     * applied to each element in the {@code Iterable} until it is iterated.</p>
+     *
+     * <p>Since the function being applied to each element is an action
+     * it is inherently impure and thus must have side effects for any perceivable
+     * difference to be observed.</p>
+     *
+     * <p>This override of {@link #each(Iterable, UnaryProcedure)} is provided to allow an
+     * {@code Action} to be used in place of a {@code UnaryProcedure} to enhance readability
+     * and better express intent. The contract of the function is identical to that of the
+     * {@code UnaryProcedure} version of {@code each}.</p>
+     *
+     * <p>For example usage and further documentation, see {@link #each(Iterable, UnaryProcedure)}.</p>
+     *
+     * @param iterable The {@code Iterable} whose elements should each have the supplied
+     *                 {@code Action} applied to them.
+     * @param action   An {@code Action} to lazily apply to each element in the
+     *                 supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Iterable} that on iteration will apply the supplied
+     *         {@code Action} to each element before returning it.
+     */
     public static <T> Iterable<T> each(final Iterable<T> iterable, final Action<? super T> action) {
         return each(iterable, actionUnaryProcedure(checkNotNull(action)));
     }
