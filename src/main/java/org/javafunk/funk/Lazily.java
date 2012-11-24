@@ -859,6 +859,115 @@ public class Lazily {
         return equate(first, second, equivalenceBinaryPredicate(checkNotNull(equivalence)));
     }
 
+    /**
+     * Filters and retains those elements from the input {@code Iterable} that
+     * satisfy the supplied {@code UnaryPredicate} on iteration of the returned
+     * {@code Iterable}. On iteration, the {@code UnaryPredicate} will be
+     * provided with each element in the input {@code Iterable} and the element
+     * will be returned if and only if the {@code UnaryPredicate} returns
+     * {@code true}. If it returns {@code false}, the element will be discarded.
+     *
+     * <p>For a more complete description of the filter higher order function,
+     * see the <a href="http://en.wikipedia.org/wiki/Filter_(higher-order_function)">
+     * filter article on Wikipedia</a>.</p>
+     *
+     * <p>Since a lazy {@code Iterable} instance is returned, the filtering is performed
+     * lazily, i.e., the {@code UnaryPredicate} is applied to each element in the input
+     * {@code Iterable} until the returned {@code Iterable} is iterated.</p>
+     *
+     * <p>{@code filter} does not discriminate against {@code null} values in the input
+     * {@code Iterable}, they are passed to the {@code UnaryPredicate} in the same way as
+     * any other value. Similarly, if the {@code UnaryPredicate} returns {@code true}
+     * when called with a {@code null} value upon iteration, the {@code null} value will
+     * be returned.</p>
+     *
+     * <h4>Example Usage</h4>
+     *
+     * Consider a collection of {@code Pet} objects where a {@code Pet} is defined
+     * by the following interface:
+     * <blockquote>
+     * <pre>
+     *   public interface Pet {
+     *       String getName();
+     *   }
+     * </pre>
+     * </blockquote>
+     * Now, consider {@code Pet} has two implementations, {@code Cat} and
+     * {@code Dog}, defined by the following classes:
+     * <blockquote>
+     * <pre>
+     *   public class Dog implements Pet {
+     *       private String name;
+     *
+     *       public Dog(String name) {
+     *           this.name = name;
+     *       }
+     *
+     *       &#64;Override
+     *       public String getName() {
+     *           return String.format("Bark, bark, %s, bark", name);
+     *       }
+     *   }
+     *
+     *   public class Cat implements Pet {
+     *       private String name;
+     *
+     *       public Cat(String name) {
+     *           this.name = name;
+     *       }
+     *
+     *       &#64;Override
+     *       public String getName() {
+     *           return String.format("%s, miaow", name);
+     *       }
+     *   }
+     * </pre>
+     * </blockquote>
+     * Say we have an in memory database of all pets in a neighbourhood:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Pet&gt; pets = Literals.listWith(
+     *           new Dog("Fido"),
+     *           new Dog("Bones"),
+     *           new Cat("Fluff"),
+     *           new Dog("Graham"),
+     *           new Cat("Ginger"));
+     * </pre>
+     * </blockquote>
+     * It's vaccination season for the dogs in the neighbourhood so we need to
+     * get hold of a list of all of them. We can do this using {@code filter}:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Pet&gt; names = filter(pets, new Predicate&lt;Pet&gt;() {
+     *       &#64;Override public boolean evaluate(Pet pet) {
+     *           return pet instanceof Dog;
+     *       }
+     *   });
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * <p>The resulting {@code Iterable} is effectively equivalent to the following:</p>
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Pet&gt; names = Literals.iterableWith(
+     *           new Dog("Fido"),
+     *           new Dog("Bones"),
+     *           new Dog("Graham"));
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable  The {@code Iterable} of elements to be filtered.
+     * @param predicate A {@code UnaryPredicate} which, given an element from the input
+     *                  {@code Iterable} returns {@code true} if that element should be
+     *                  retained and {@code false} if it should be discarded.
+     * @param <T>       The type of the elements to be filtered.
+     * @return An {@code Iterable} effectively containing those elements of type {@code T}
+     *         from the input {@code Iterable} that evaluate to {@code true} when passed to
+     *         the supplied {@code UnaryPredicate}.
+     */
     public static <T> Iterable<T> filter(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
         checkNotNull(predicate);
         return new Iterable<T>() {
