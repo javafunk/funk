@@ -1452,135 +1452,6 @@ public class Eagerly {
     }
 
     /**
-     * Drops the first <em>n</em> elements from the supplied {@code Iterable} where <em>n</em>
-     * is given by the supplied integer value and returns a {@code Collection} containing
-     * the remaining elements. If the {@code Iterable} is empty, an empty {@code Collection}
-     * is returned, otherwise, a {@code Collection} containing the elements that remain after
-     * the first <em>n</em> elements have been discarded is returned.
-     *
-     * <p>In the case that the supplied {@code Iterable} contains less elements than the
-     * required number of elements to drop, all elements are dropped and an empty
-     * {@code Collection} is returned.</p>
-     *
-     * <p>If the supplied integer value is negative, an {@code IllegalArgumentException} is
-     * thrown.</p>
-     *
-     * <p>Since a {@code Collection} instance is returned, the element discardal is performed
-     * eagerly, i.e., the elements are discarded from the underlying {@code Iterable}
-     * immediately.</p>
-     *
-     * <h4>Example Usage:</h4>
-     *
-     * Given an {@code Iterable} of {@code Integer} instances:
-     * <blockquote>
-     * <pre>
-     *   Iterable&lt;Integer&gt; elements = Literals.iterableWith(5, 4, 3, 2, 1);
-     * </pre>
-     * </blockquote>
-     * Using {@code drop}, we can drop the first three elements from the {@code Iterable}.
-     * The following two lines are equivalent in this case:
-     * <blockquote>
-     * <pre>
-     *   Collection&lt;Integer&gt; remainingElements = drop(elements, 3);
-     *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(2, 1);
-     * </pre>
-     * </blockquote>
-     * If the input {@code Iterable} does not contain enough elements, we are returned
-     * an empty {@code Collection}. The following two lines are equivalent:
-     * <blockquote>
-     * <pre>
-     *   Collection&lt;Integer&gt; remainingElements = drop(elements, 6);
-     *   Collection&lt;Integer&gt; equivalentElements = Literals.collection();
-     * </pre>
-     * </blockquote>
-     * Similarly, if the input {@code Iterable} contains no elements, an empty
-     * {@code Collection} is returned:
-     * <blockquote>
-     * <pre>
-     *   Iterable&lt;Integer&gt; elements = Literals.iterable();
-     *   Collection&lt;Integer&gt; remainingElements = drop(elements, 3);
-     *   remainingElements.isEmpty(); // => true
-     * </pre>
-     * </blockquote>
-     *
-     * @param iterable The {@code Iterable} from which to drop <em>n</em> elements
-     *                 and return the remainder.
-     * @param <T>      The type of the elements in the supplied {@code Iterable}.
-     * @return A {@code Collection} instance containing the remaining elements after
-     *         the required number of elements have been dropped from the supplied
-     *         {@code Iterable}.
-     * @throws IllegalArgumentException if the required number of elements to drop
-     *                                  is negative.
-     */
-    public static <T> Collection<T> drop(Iterable<T> iterable, int numberToDrop) {
-        return materialize(Lazily.drop(iterable, numberToDrop));
-    }
-
-    public static <T> Pair<Collection<T>, Collection<T>> partition(
-            Iterable<T> iterable,
-            UnaryPredicate<? super T> predicate) {
-        Pair<Iterable<T>, Iterable<T>> partition = Lazily.partition(iterable, predicate);
-        return tuple(materialize(partition.getFirst()), materialize(partition.getSecond()));
-    }
-
-    /**
-     * Returns a collection {@code Collection} instance containing batches of elements
-     * of the specified size from the supplied {@code Iterable} in the order that
-     * they are yielded..
-     *
-     * <p>In the case that the number of elements in the supplied {@code Iterable}
-     * does not evenly divide by the supplied batch size, the last {@code Collection}
-     * in the returned {@code Collection} will contain less than the batch size. If
-     * the supplied batch size is not positive, an {@code IllegalArgumentException}
-     * will be thrown.</p>
-     *
-     * <p>As an example, the following two {@code Collection} instances
-     * are effectively equivalent:
-     * <blockquote>
-     * <pre>
-     *      Collection&lt;Collection&lt;Integer&gt;&gt; batches1 = collectionWith(collectionWith(1, 2, 3), collectionWith(4, 5, 6), collectionWith(7));
-     *      Collection&lt;Collection&lt;Integer&gt;&gt; batches2 = batch(collectionWith(1, 2, 3, 4, 5, 6, 7), 3);
-     * </pre>
-     * </blockquote>
-     * </p>
-     *
-     * @param iterable  The {@code Iterable} to batch into batches of the specified
-     *                  number of elements.
-     * @param batchSize The number of elements required in each batch in the
-     *                  returned {@code Collection}.
-     * @param <T>       The type of the elements in the supplied {@code Iterable}.
-     * @return A {@code Collection} instance of {@code Collection} instances each
-     *         containing the required number of elements, bar the last which may
-     *         have less dependent on availability.
-     * @throws IllegalArgumentException if the required number of elements to take
-     *                                  is not positive.
-     */
-    public static <T> Collection<Collection<T>> batch(Iterable<T> iterable, int batchSize) {
-        Collection<Collection<T>> result = new ArrayList<Collection<T>>();
-        Iterable<Iterable<T>> batches = Lazily.batch(iterable, batchSize);
-        for (Iterable<T> batch : batches) {
-            result.add(materialize(batch));
-        }
-        return result;
-    }
-
-    public static void times(
-            int numberOfTimes,
-            UnaryProcedure<? super Integer> procedure) {
-        if (numberOfTimes < 0) {
-            throw new IllegalArgumentException(
-                    "The number of times to execute the function cannot be less than zero.");
-        }
-        for (int i = 0; i < numberOfTimes; i++) {
-            procedure.execute(i);
-        }
-    }
-
-    public static void times(int numberOfTimes, Action<? super Integer> action) {
-        times(numberOfTimes, actionUnaryProcedure(action));
-    }
-
-    /**
      * Takes elements from the supplied {@code Iterable} while the supplied {@code UnaryPredicate}
      * evaluates true for those elements and returns them in a {@code Collection}. Each element
      * taken from the {@code Iterable} is evaluated by the {@code UnaryPredicate} and as soon as
@@ -1757,6 +1628,71 @@ public class Eagerly {
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
         return materialize(Lazily.takeUntil(iterable, predicate));
+    }
+
+    /**
+     * Drops the first <em>n</em> elements from the supplied {@code Iterable} where <em>n</em>
+     * is given by the supplied integer value and returns a {@code Collection} containing
+     * the remaining elements. If the {@code Iterable} is empty, an empty {@code Collection}
+     * is returned, otherwise, a {@code Collection} containing the elements that remain after
+     * the first <em>n</em> elements have been discarded is returned.
+     *
+     * <p>In the case that the supplied {@code Iterable} contains less elements than the
+     * required number of elements to drop, all elements are dropped and an empty
+     * {@code Collection} is returned.</p>
+     *
+     * <p>If the supplied integer value is negative, an {@code IllegalArgumentException} is
+     * thrown.</p>
+     *
+     * <p>Since a {@code Collection} instance is returned, the element discardal is performed
+     * eagerly, i.e., the elements are discarded from the underlying {@code Iterable}
+     * immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Using {@code drop}, we can drop the first three elements from the {@code Iterable}.
+     * The following two lines are equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; remainingElements = drop(elements, 3);
+     *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(2, 1);
+     * </pre>
+     * </blockquote>
+     * If the input {@code Iterable} does not contain enough elements, we are returned
+     * an empty {@code Collection}. The following two lines are equivalent:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; remainingElements = drop(elements, 6);
+     *   Collection&lt;Integer&gt; equivalentElements = Literals.collection();
+     * </pre>
+     * </blockquote>
+     * Similarly, if the input {@code Iterable} contains no elements, an empty
+     * {@code Collection} is returned:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable();
+     *   Collection&lt;Integer&gt; remainingElements = drop(elements, 3);
+     *   remainingElements.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which to drop <em>n</em> elements
+     *                 and return the remainder.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} instance containing the remaining elements after
+     *         the required number of elements have been dropped from the supplied
+     *         {@code Iterable}.
+     * @throws IllegalArgumentException if the required number of elements to drop
+     *                                  is negative.
+     */
+    public static <T> Collection<T> drop(Iterable<T> iterable, int numberToDrop) {
+        return materialize(Lazily.drop(iterable, numberToDrop));
     }
 
     /**
@@ -1942,6 +1878,70 @@ public class Eagerly {
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
         return materialize(Lazily.dropUntil(iterable, predicate));
+    }
+
+    public static <T> Pair<Collection<T>, Collection<T>> partition(
+            Iterable<T> iterable,
+            UnaryPredicate<? super T> predicate) {
+        Pair<Iterable<T>, Iterable<T>> partition = Lazily.partition(iterable, predicate);
+        return tuple(materialize(partition.getFirst()), materialize(partition.getSecond()));
+    }
+
+    /**
+     * Returns a collection {@code Collection} instance containing batches of elements
+     * of the specified size from the supplied {@code Iterable} in the order that
+     * they are yielded..
+     *
+     * <p>In the case that the number of elements in the supplied {@code Iterable}
+     * does not evenly divide by the supplied batch size, the last {@code Collection}
+     * in the returned {@code Collection} will contain less than the batch size. If
+     * the supplied batch size is not positive, an {@code IllegalArgumentException}
+     * will be thrown.</p>
+     *
+     * <p>As an example, the following two {@code Collection} instances
+     * are effectively equivalent:
+     * <blockquote>
+     * <pre>
+     *      Collection&lt;Collection&lt;Integer&gt;&gt; batches1 = collectionWith(collectionWith(1, 2, 3), collectionWith(4, 5, 6), collectionWith(7));
+     *      Collection&lt;Collection&lt;Integer&gt;&gt; batches2 = batch(collectionWith(1, 2, 3, 4, 5, 6, 7), 3);
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param iterable  The {@code Iterable} to batch into batches of the specified
+     *                  number of elements.
+     * @param batchSize The number of elements required in each batch in the
+     *                  returned {@code Collection}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} instance of {@code Collection} instances each
+     *         containing the required number of elements, bar the last which may
+     *         have less dependent on availability.
+     * @throws IllegalArgumentException if the required number of elements to take
+     *                                  is not positive.
+     */
+    public static <T> Collection<Collection<T>> batch(Iterable<T> iterable, int batchSize) {
+        Collection<Collection<T>> result = new ArrayList<Collection<T>>();
+        Iterable<Iterable<T>> batches = Lazily.batch(iterable, batchSize);
+        for (Iterable<T> batch : batches) {
+            result.add(materialize(batch));
+        }
+        return result;
+    }
+
+    public static void times(
+            int numberOfTimes,
+            UnaryProcedure<? super Integer> procedure) {
+        if (numberOfTimes < 0) {
+            throw new IllegalArgumentException(
+                    "The number of times to execute the function cannot be less than zero.");
+        }
+        for (int i = 0; i < numberOfTimes; i++) {
+            procedure.execute(i);
+        }
+    }
+
+    public static void times(int numberOfTimes, Action<? super Integer> action) {
+        times(numberOfTimes, actionUnaryProcedure(action));
     }
 
     public static <T> Collection<T> slice(
