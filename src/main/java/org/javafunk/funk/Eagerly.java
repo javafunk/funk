@@ -448,6 +448,38 @@ public class Eagerly {
         });
     }
 
+    /**
+     * Associates each element in the supplied {@code Iterable} with its related index in
+     * that {@code Iterable}. Returns a {@code Collection} of {@code Pair} instances where
+     * the first entry in the {@code Pair} is the index, starting from zero, and the second
+     * element is the element from the supplied {@code Iterable} at that index.
+     *
+     * <p>Since a {@code Collection} instance is returned, the enumeration of the
+     * supplied {@code Iterable} is performed eagerly, i.e., the supplied {@code Iterable}
+     * is iterated immediately with its elements being associated to their index before the
+     * {@code Collection} is returned.</p>
+     *
+     * <p>If the supplied {@code Iterable} is empty, so is the returned {@code Collection}.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Assume we have a collection of {@code Name} instances representing people entered into
+     * a prize draw. We wish to choose a winner at random from that collection. We can do this
+     * as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Name&gt; eligibleEntries = entriesDatabase.loadAll();
+     *     Collection&lt;Pair&lt;Integer, Name&gt;&gt; indexedEntries = enumerate(eligibleEntries);
+     *     Map&lt;Integer, Name&gt; lookupableEntries = Literals.mapFromPairs(indexedEntries);
+     *     Name winner = lookupableEntries.get(Random.nextInt(lookupableEntries.size());
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} to be enumerated by index.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} containing {@code Pair} instances associating
+     *         each element from the supplied {@code Iterable} to its zero based
+     *         index in that {@code Iterable}.
+     */
     public static <T> Collection<Pair<Integer, T>> enumerate(Iterable<T> iterable) {
         return materialize(Lazily.enumerate(iterable));
     }
@@ -575,11 +607,11 @@ public class Eagerly {
      *
      * <p>For example usage and further documentation, see {@link #each(Iterable, UnaryProcedure)}.</p>
      *
-     * @param targets  The {@code Iterable} whose elements should each have the supplied
-     *                 {@code Action} applied to them.
-     * @param action   An {@code Action} to apply to each element in the supplied
-     *                 {@code Iterable}.
-     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @param targets The {@code Iterable} whose elements should each have the supplied
+     *                {@code Action} applied to them.
+     * @param action  An {@code Action} to apply to each element in the supplied
+     *                {@code Iterable}.
+     * @param <T>     The type of the elements in the supplied {@code Iterable}.
      */
     public static <T> void each(
             Iterable<T> targets,

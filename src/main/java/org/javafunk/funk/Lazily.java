@@ -635,6 +635,50 @@ public class Lazily {
         return each(iterable, actionUnaryProcedure(checkNotNull(action)));
     }
 
+    /**
+     * Associates each element in the supplied {@code Iterable} with its related index in
+     * that {@code Iterable}. Returns an {@code Iterable} of {@code Pair} instances where
+     * the first entry in the {@code Pair} is the index, starting from zero, and the second
+     * element is the element from the supplied {@code Iterable} at that index.
+     *
+     * <p>Since a lazy {@code Iterable} instance is returned, the enumeration of the
+     * supplied {@code Iterable} is also lazy, i.e., the supplied {@code Iterable}
+     * is not iterated with its elements being associated with their index until the
+     * returned {@code Iterable} is iterated.</p>
+     *
+     * <p>If the supplied {@code Iterable} is empty, so is the returned {@code Iterable}.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given we have an {@code Iterable} of {@code Customer} instances for an online store
+     * and they are ordered in the order they made purchases. The store owners decide to
+     * run a campaign where every thousandth customer wins a prize. We can model this as
+     * follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Customer&gt; customers = customerStore.getAll();
+     *     Iterable&lt;Pair&lt;Integer, Customer&gt; enumeratedCustomers = enumerate(customers);
+     *     Iterable&lt;Pair&lt;Integer, Customer&gt; prizeWinningEnumeratedCustomers = filter(customers, new Predicate&lt;Pair&lt;Integer, Customer&gt;&gt;() {
+     *         public boolean evaluate(Pair&lt;Integer, Customer&gt; enumeratedCustomer) {
+     *             return (enumeratedCustomer.getFirst() + 1) % 1000 == 0;
+     *         }
+     *     }
+     *     Iterable&lt;Customer&gt; prizedCustomers = map(prizeWinningEnumeratedCustomers, new Mapper&lt;Pair&lt;Integer, Customer&gt;, Customer&gt;() {
+     *         public Customer map(Pair&lt;Integer, Customer&gt; prizeWinningEnumeratedCustomer) {
+     *             return prizeWinningEnumeratedCustomer.getSecond().withPrize();
+     *         }
+     *     }
+     * </pre>
+     * </blockquote>
+     * In this case we added 1 to the index to account for zero based indexing. Note that the
+     * entire calculation of determining the customers eligible for prizes is lazy in this
+     * example.
+     *
+     * @param iterable The {@code Iterable} to be enumerated by index.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Iterable} containing the elements from the supplied
+     *         {@code Iterable} lazily associated to their index in that
+     *         {@code Iterable} using {@code Pair} instances.
+     */
     public static <T> Iterable<Pair<Integer, T>> enumerate(final Iterable<T> iterable) {
         return zip(integers(increasing()), iterable);
     }
