@@ -1167,6 +1167,50 @@ public class Lazily {
         return map(iterable, mapperUnaryFunction(mapper));
     }
 
+    /**
+     * Lazily equates the elements in each of the supplied {@code Iterable} instances
+     * using the supplied {@code BinaryPredicate} in the order in which they are yielded.
+     * On iteration of the returned {@code Iterable}, an element is yielded from each
+     * of the supplied {@code Iterable} instances and passed to the supplied
+     * {@code BinaryPredicate}. The resulting {@code boolean} returned by the
+     * {@code BinaryPredicate} is used as the return value for that iteration. Iteration
+     * ends when one or both of the supplied {@code Iterable} instances is exhausted.
+     *
+     * <p>Since a lazy {@code Iterable} instance is returned, the equation of the
+     * supplied {@code Iterable} instances is also lazy, i.e., the supplied
+     * {@code Iterable} instances are not iterated and their elements are not equated
+     * until the returned {@code Iterable} is iterated.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Consider the situation where we have two very large {@code Iterable} instances
+     * containing {@code Integer}s and we want to assess whether they are equal. In
+     * order to ensure that they are equal we must iterate the entire {@code Iterable}.
+     * In order to be sure they are not, it is enough to find the first pair of
+     * values that are not equal. There is a likelihood this will happen before
+     * the entire {@code Iterable} is traversed. This can be encoded as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Integer&gt; first = firstNumberSource.fetch();
+     *     Iterable&lt;Integer&gt; second = secondNumberSource.fetch();
+     *     Iterable&lt;Boolean&gt; equalityIterable = equate(first, second, new BinaryPredicate&ltInteger, Integer&gt;() {
+     *         &#64;Override public boolean evaluate(Integer first, Integer second) {
+     *             return first.equals(second);
+     *         }
+     *     });
+     *     Option&lt;Boolean&gt; equalityResult = Eagerly.first(equalityIterable, Predicates.equals(false));
+     *     equalityResult.hasValue() // => not equal
+     * </pre>
+     * </blockquote>
+     *
+     * @param first     The first {@code Iterable} of elements to be compared.
+     * @param second    The second {@code Iterable} of elements to be compared.
+     * @param predicate A {@code BinaryPredicate} to be used to equate elements sequentially
+     *                  from the supplied {@code Iterable} instances.
+     * @param <T>       The type of the elements in the supplied {@code Iterables}.
+     * @return An {@code Iterable} effectively containing the {@code boolean} results of
+     *         equating the elements from the supplied {@code Iterable} instances in the
+     *         order in which they are yielded.
+     */
     public static <T> Iterable<Boolean> equate(Iterable<T> first, Iterable<T> second, final BinaryPredicate<? super T, ? super T> predicate) {
         checkNotNull(predicate);
         return map(zip(first, second), new Mapper<Pair<T, T>, Boolean>() {
@@ -1176,6 +1220,37 @@ public class Lazily {
         });
     }
 
+    /**
+     * Lazily equates the elements in each of the supplied {@code Iterable} instances
+     * using the supplied {@code Equivalence} in the order in which they are yielded.
+     * On iteration of the returned {@code Iterable}, an element is yielded from each
+     * of the supplied {@code Iterable} instances and passed to the supplied
+     * {@code Equivalence}. The resulting {@code boolean} returned by the
+     * {@code Equivalence} is used as the return value for that iteration. Iteration
+     * ends when one or both of the supplied {@code Iterable} instances is exhausted.
+     *
+     * <p>Since a lazy {@code Iterable} instance is returned, the equation of the
+     * supplied {@code Iterable} instances is also lazy, i.e., the supplied
+     * {@code Iterable} instances are not iterated and their elements are not equated
+     * until the returned {@code Iterable} is iterated.</p>
+     *
+     * <p>This override of {@link #equate(Iterable, Iterable, BinaryPredicate)} is provided
+     * to allow an {@code Equivalence} to be used in place of a {@code BinaryPredicate} to
+     * enhance readability and better express intent. The contract of the function is
+     * identical to that of the {@code BinaryPredicate} version of {@code equate}.</p>
+     *
+     * <p>For example usage and further documentation, see
+     * {@link #equate(Iterable, Iterable, BinaryPredicate)}.</p>
+     *
+     * @param first       The first {@code Iterable} of elements to be compared.
+     * @param second      The second {@code Iterable} of elements to be compared.
+     * @param equivalence An {@code Equivalence} to be used to equate elements sequentially
+     *                    from the supplied {@code Iterable} instances.
+     * @param <T>         The type of the elements in the supplied {@code Iterables}.
+     * @return An {@code Iterable} effectively containing the {@code boolean} results of
+     *         equating the elements from the supplied {@code Iterable} instances in the
+     *         order in which they are yielded.
+     */
     public static <T> Iterable<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equivalence<? super T> equivalence) {
         return equate(first, second, equivalenceBinaryPredicate(checkNotNull(equivalence)));
     }

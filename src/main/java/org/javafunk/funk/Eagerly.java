@@ -484,6 +484,47 @@ public class Eagerly {
         return materialize(Lazily.enumerate(iterable));
     }
 
+    /**
+     * Equates the elements in each of the supplied {@code Iterable} instances
+     * using the supplied {@code BinaryPredicate} in the order in which they are yielded.
+     * An element is yielded from each of the supplied {@code Iterable} instances and
+     * passed to the supplied {@code BinaryPredicate}. The {@code boolean} returned by the
+     * {@code BinaryPredicate} is used in place of the input elements in the returned
+     * {@code Collection}. The Collection is considered fully populated when
+     * one or both of the {@code Iterable} instances are exhausted. The order of the
+     * {@code boolean} elements in the returned {@code Collection} is equal to the
+     * order in which the equated elements are yielded from the supplied {@code Iterable}s.
+     *
+     * <p>Since a {@code Collection} instance is returned, the equation of the
+     * supplied {@code Iterable} instances is eager, i.e., the supplied {@code Iterable}
+     * instances are iterated and their elements are not equated immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given two {@code Iterable} instances that contain elements that do not implement
+     * equality in the desired way, we can determine equality using an externalised
+     * function as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Message&gt; firstIterable = systemOneMessageQueue.readAll();
+     *     Iterable&lt;Message&gt; secondIterable = systemTwoMessageQueue.readAll();
+     *     Collection&ltBoolean&gt equalityResults = equate(firstIterable, secondIterable, new BinaryPredicate&lt;Message, Message&gt() {
+     *        &#64;Override public boolean evaluate(Message first, Message second) {
+     *            return first.getMessageIdentifier().equals(second.getMessageIdentifier());
+     *        }
+     *     });
+     *     equalityResults.contains(false); // true if not equal
+     * </pre>
+     * </blockquote>
+     *
+     * @param first     The first {@code Iterable} of elements to be compared.
+     * @param second    The second {@code Iterable} of elements to be compared.
+     * @param predicate A {@code BinaryPredicate} to be used to equate elements sequentially
+     *                  from the supplied {@code Iterable} instances.
+     * @param <T>       The type of the elements in the supplied {@code Iterables}.
+     * @return A {@code Collection} containing the {@code boolean} results of equating
+     *         the elements from the supplied {@code Iterable} instances in the
+     *         order in which they are yielded.
+     */
     public static <T> Collection<Boolean> equate(
             Iterable<T> first,
             Iterable<T> second,
@@ -491,6 +532,38 @@ public class Eagerly {
         return materialize(Lazily.equate(first, second, predicate));
     }
 
+    /**
+     * Equates the elements in each of the supplied {@code Iterable} instances
+     * using the supplied {@code BinaryPredicate} in the order in which they are yielded.
+     * An element is yielded from each of the supplied {@code Iterable} instances and
+     * passed to the supplied {@code BinaryPredicate}. The {@code boolean} returned by the
+     * {@code BinaryPredicate} is used in place of the input elements in the returned
+     * {@code Collection}. The Collection is considered fully populated when
+     * one or both of the {@code Iterable} instances are exhausted. The order of the
+     * {@code boolean} elements in the returned {@code Collection} is equal to the
+     * order in which the equated elements are yielded from the supplied {@code Iterable}s.
+     *
+     * <p>Since a {@code Collection} instance is returned, the equation of the
+     * supplied {@code Iterable} instances is eager, i.e., the supplied {@code Iterable}
+     * instances are iterated and their elements are not equated immediately.</p>
+     *
+     * <p>This override of {@link #equate(Iterable, Iterable, BinaryPredicate)} is provided
+     * to allow an {@code Equivalence} to be used in place of a {@code BinaryPredicate} to
+     * enhance readability and better express intent. The contract of the function is
+     * identical to that of the {@code BinaryPredicate} version of {@code equate}.</p>
+     *
+     * <p>For example usage and further documentation, see
+     * {@link #equate(Iterable, Iterable, BinaryPredicate)}.</p>
+     *
+     * @param first       The first {@code Iterable} of elements to be compared.
+     * @param second      The second {@code Iterable} of elements to be compared.
+     * @param equivalence A {@code Equivalence} to be used to equate elements sequentially
+     *                    from the supplied {@code Iterable} instances.
+     * @param <T>         The type of the elements in the supplied {@code Iterables}.
+     * @return A {@code Collection} containing the {@code boolean} results of equating
+     *         the elements from the supplied {@code Iterable} instances in the
+     *         order in which they are yielded.
+     */
     public static <T> Collection<Boolean> equate(
             Iterable<T> first,
             Iterable<T> second,

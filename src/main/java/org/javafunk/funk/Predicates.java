@@ -10,6 +10,7 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.functors.Predicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
+import org.javafunk.funk.predicates.EqualsPredicate;
 import org.javafunk.funk.predicates.FalsePredicate;
 import org.javafunk.funk.predicates.InstanceOfPredicate;
 import org.javafunk.funk.predicates.NotPredicate;
@@ -34,5 +35,9 @@ public class Predicates {
 
     public static <T> InstanceOfPredicate<T> instanceOf(Class<?> testClass) {
         return new InstanceOfPredicate<T>(testClass);
+    }
+
+    public static <T> EqualsPredicate<T> equalTo(T testObject) {
+        return new EqualsPredicate<T>(testObject);
     }
 }
