@@ -941,6 +941,41 @@ public class Lazily {
         return zip(integers(increasing()), iterable);
     }
 
+    /**
+     * Lazily indexes the supplied {@code Iterable} using the supplied {@code UnaryFunction}
+     * on iteration of the returned {@code Iterable}. On iteration, the {@code UnaryFunction}
+     * will be provided with each element in the input {@code Iterable}. The value returned
+     * by the {@code UnaryFunction} will occupy the first slot in the returned {@code Pair}
+     * instance and the element itself will occupy the second slot.
+     *
+     * <p>Since a lazy {@code Iterable} instance is returned, the element indexing is performed
+     * lazily, i.e., no attempt is made to retrieve and index elements from the underlying
+     * {@code Iterable} until it is iterated.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Consider an {@code Iterable} of {@code String} instances representing words from a book.
+     * Each word can be indexed using its length using to the following.
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;String&gt; words = book.getCompleteWordList();
+     *     Iterable&lt;Pair&lt;Integer, String&gt;&gt; wordsIndexedByLength = index(words, new UnaryFunction&ltString, Integer&gt;() {
+     *         &#64;Override public Integer call(String word) {
+     *             return word.length();
+     *         }
+     *     }
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} to be indexed.
+     * @param function The {@code UnaryFunction} to use to index each element.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the index values returned by the supplied
+     *                 indexing function.
+     * @return An {@code Iterable} effectively containing {@code Pair} instances
+     *         representing each element from the supplied {@code Iterable}
+     *         indexed by the value returned by the supplied {@code UnaryFunction}
+     *         when passed that element.
+     */
     public static <S, T> Iterable<Pair<T, S>> index(Iterable<S> iterable, final UnaryFunction<? super S, T> function) {
         checkNotNull(function);
         return zip(map(iterable, new Mapper<S, T>() {
@@ -950,6 +985,34 @@ public class Lazily {
         }), iterable);
     }
 
+    /**
+     * Lazily indexes the supplied {@code Iterable} using the supplied {@code Indexer}
+     * on iteration of the returned {@code Iterable}. On iteration, the {@code Indexer}
+     * will be provided with each element in the input {@code Iterable}. The value returned
+     * by the {@code Indexer} will occupy the first slot in the returned {@code Pair}
+     * instance and the element itself will occupy the second slot.
+     *
+     * <p>Since a lazy {@code Iterable} instance is returned, the element indexing is performed
+     * lazily, i.e., no attempt is made to retrieve and index elements from the underlying
+     * {@code Iterable} until it is iterated.</p>
+     *
+     * <p>This override of {@link #index(Iterable, UnaryFunction)} is provided to allow an
+     * {@code Indexer} to be used in place of a {@code UnaryFunction} to enhance readability
+     * and better express intent. The contract of the function is identical to that of the
+     * {@code UnaryFunction} version of {@code index}.</p>
+     *
+     * <p>For example usage and further documentation, see {@link #index(Iterable, UnaryFunction)}.</p>
+     *
+     * @param iterable The {@code Iterable} to be indexed.
+     * @param indexer  The {@code Indexer} to use to index each element.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the index values returned by the supplied
+     *                 indexing function.
+     * @return An {@code Iterable} effectively containing {@code Pair} instances
+     *         representing each element from the supplied {@code Iterable}
+     *         indexed by the value returned by the supplied {@code Indexer}
+     *         when passed that element.
+     */
     public static <S, T> Iterable<Pair<T, S>> index(Iterable<S> iterable, final Indexer<? super S, T> indexer) {
         checkNotNull(indexer);
         return index(iterable, indexerUnaryFunction(indexer));
@@ -1222,9 +1285,9 @@ public class Lazily {
      *                  {@code Iterable} returns {@code true} if that element should be
      *                  retained and {@code false} if it should be discarded.
      * @param <T>       The type of the elements to be filtered.
-     * @return An {@code Iterable} effectively containing those elements of type {@code T}
-     *         from the input {@code Iterable} that evaluate to {@code true} when passed to
-     *         the supplied {@code UnaryPredicate}.
+     * @return An {@code Iterable} effectively containing those elements from the input
+     *         {@code Iterable} that evaluate to {@code true} when passed to the
+     *         supplied {@code UnaryPredicate}.
      */
     public static <T> Iterable<T> filter(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
         checkNotNull(predicate);
