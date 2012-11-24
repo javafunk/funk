@@ -850,6 +850,65 @@ public class Lazily {
         };
     }
 
+    /**
+     * Takes the first <em>n</em> elements from the supplied {@code Iterable} where <em>n</em>
+     * is given by the supplied integer value and returns them in an {@code Iterable}. If the
+     * {@code Iterable} is empty, an empty {@code Iterable} is returned, otherwise, an
+     * {@code Iterable} effectively containing the first <em>n</em> elements is returned.
+     *
+     * <p>In the case that the supplied {@code Iterable} does not contain enough
+     * elements to satisfy the required number, an {@code Iterable} containing
+     * as many elements as possible is returned.</p>
+     *
+     * <p>If the supplied integer value is negative, an {@code IllegalArgumentException} is
+     * thrown.</p>
+     *
+     * <p>Since a lazy {@code Iterable} instance is returned, the element retrieval is
+     * performed lazily, i.e., the elements are not retrieved from the underlying
+     * {@code Iterable} until it is iterated.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Using {@code take}, we can take the first three elements from the {@code Iterable}.
+     * The following two lines are effectively equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; firstThreeElements = take(elements, 3);
+     *   Iterable&lt;Integer&gt; equivalentElements = Literals.iterableWith(5, 4, 3);
+     * </pre>
+     * </blockquote>
+     * If the input {@code Iterable} does not contain enough elements, we are returned an
+     * {@code Iterable} with as many elements as possible. The following two lines are
+     * effectively equivalent:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; firstSixElements = take(elements, 6);
+     *   Iterable&lt;Integer&gt; equivalentElements = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Similarly, if the input {@code Iterable} contains no elements, an empty
+     * {@code Iterable} is returned:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable();
+     *   Iterable&lt;Integer&gt; firstThreeElements = take(elements, 3);
+     *   firstThreeElements.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which to take <em>n</em> elements.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Iterable} instance effectively containing the required
+     *         number of elements (or less) from the supplied {@code Iterable}.
+     * @throws IllegalArgumentException if the required number of elements to take
+     *                                  is negative.
+     */
     public static <T> Iterable<T> take(final Iterable<T> iterable, final int numberToTake) {
         if (numberToTake < 0) {
             throw new IllegalArgumentException("Cannot take a negative number of elements.");
