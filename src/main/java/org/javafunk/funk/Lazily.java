@@ -920,6 +920,93 @@ public class Lazily {
         };
     }
 
+    /**
+     * Takes elements from the supplied {@code Iterable} while the supplied {@code UnaryPredicate}
+     * evaluates true for those elements and returns an {@code Iterable} effectively containing those
+     * elements that evaluated to {@code true}. On iteration, each element taken from the {@code Iterable}
+     * is evaluated by the {@code UnaryPredicate}. If it satisfies the {@code UnaryPredicate}, it is
+     * returned. If it does not satisfy the {@code UnaryPredicate}, no further elements are taken
+     * and iteration finishes. If the supplied {@code Iterable} is empty, an effectively empty
+     * {@code Iterable} is returned.
+     *
+     * <p>Since a lazy {@code Iterable} instance is returned, the element retrieval is performed
+     * lazily, i.e., no attempt is made to retrieve the sequence of satisfactory elements from the
+     * underlying {@code Iterable} until it is iterated.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Using {@code takeWhile}, we can take elements from the {@code Iterable} while those elements
+     * are greater than 2. The following two lines are equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; firstElementsGreaterThanTwo = takeWhile(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   Iterable&lt;Integer&gt; equivalentElements = Literals.iterableWith(5, 4, 3);
+     * </pre>
+     * </blockquote>
+     * If the first element retrieved from the {@code Iterable} on iteration does not satisfy the
+     * supplied {@code UnaryPredicate}, no elements are taken and the input {@code Iterable}
+     * is not iterated. The following two lines are equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable(2, 1, 4, 5, 6);
+     *   Iterable&lt;Integer&gt; firstElementsGreaterThanTwo = takeWhile(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   firstElementsGreaterThanTwo.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     * If all elements retrieved from the {@code Iterable} satisfy the supplied
+     * {@code Predicate}, all elements are iterated. The following two lines are effectively
+     * equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable(4, 5, 6, 7, 8);
+     *   Iterable&lt;Integer&gt; firstElementsGreaterThanTwo = takeWhile(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   Iterable&lt;Integer&gt; equivalentElements = Literals.iterableWith(4, 5, 6, 7, 8);
+     * </pre>
+     * </blockquote>
+     * If the input {@code Iterable} contains no elements, an empty {@code Iterable} is
+     * returned:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable();
+     *   Iterable&lt;Integer&gt; firstElementsGreaterThanTwo = takeWhile(elements, new Predicate&lt;Integer&gt;() {
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *          return integer > 2;
+     *       }
+     *   });
+     *   firstElementsGreaterThanTwo.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * @param iterable  The {@code Iterable} from which to take the first sequence of elements
+     *                  satisfying the supplied {@code UnaryPredicate}.
+     * @param predicate A {@code UnaryPredicate} to evaluate each element against whilst
+     *                  taking from the supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Iterable} instance containing the sequence of elements
+     *         taken from the supplied {@code Iterable} on iteration up until the supplied
+     *         {@code UnaryPredicate} is no longer satisfied.
+     */
     public static <T> Iterable<T> takeWhile(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
@@ -975,7 +1062,7 @@ public class Lazily {
      * </pre>
      * </blockquote>
      * If no elements retrieved from the {@code Iterable} satisfy the supplied {@code UnaryPredicate}
-     * on iteration, all elements are iterate. The following two lines are effectively equivalent in
+     * on iteration, all elements are iterated. The following two lines are effectively equivalent in
      * this case:
      * <blockquote>
      * <pre>
