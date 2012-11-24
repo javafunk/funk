@@ -841,6 +841,7 @@ public class Eagerly {
      * <blockquote>
      * <pre>
      *   Collection&lt;Pet&gt; names = Literals.collectionWith(
+     *           new Fish("Goldie"),
      *           new Dog("Fido"),
      *           new Dog("Bones"),
      *           new Dog("Graham"));
@@ -851,7 +852,7 @@ public class Eagerly {
      * @param predicate A {@code UnaryPredicate} which, given an element from the input iterable,
      *                  returns {@code true} if that element should be discarded and {@code false}
      *                  if it should be retained.
-     * @param <T>       The type of the elements to be assesses for rejection.
+     * @param <T>       The type of the elements to be assessed for rejection.
      * @return A {@code Collection} containing those elements of type {@code T} from the input
      *         {@code Iterable} that evaluate to {@code false} when passed to the supplied
      *         {@code UnaryPredicate}.
