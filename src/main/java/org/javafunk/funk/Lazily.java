@@ -1816,12 +1816,101 @@ public class Lazily {
         });
     }
 
+    /**
+     * Lazily zips the elements from the two supplied {@code Iterable} instances
+     * into a tuple of size two. On iteration of the returned {@code Iterable},
+     * a {@code Pair} instance is instantiated with an element from the first
+     * supplied {@code Iterable} in the first slot and an element from the
+     * second supplied {@code Iterable} in the second slot. The iteration
+     * is complete when one or both of the supplied {@code Iterable} instances
+     * is exhausted.
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the zipping is also
+     * performed lazily, i.e., none of the supplied {@code Iterable} instances
+     * is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given an {@code Iterable} of {@code Integer} instances representing the
+     * first ten values in the sequence of natural numbers and an {@code Iterable}
+     * of {@code String} instances representing the textual equivalents of those
+     * numbers as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Integer&gt; numbers = Literals.iterableWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+     *     Iterable&lt;String&gt; numberNames = Literals.iterableWith(
+     *             "one", "two", "three", "four", "five",
+     *             "six", "seven", "eight", "nine", "ten",
+     *             "eleven", "twelve");
+     * </pre>
+     * </blockquote>
+     * an {@code Iterable} containing {@code Pair}s with the number associated
+     * to the textual name can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&ltPair&ltInteger, String&gt;&gt; associations = zip(numbers, numberNames);
+     * </pre>
+     * </blockquote>
+     * This is effectively equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Pair&lt;Integer, String&gt;&gt; associations = Literals.iterableWith(
+     *             pair(1, "one"), pair(2, "two"), pair(3, "three"), pair(4, "four"), pair(5, "five"),
+     *             pair(6, "six"), pair(7, "seven"), pair(8, "eight"), pair(9, "nine"), pair(10, "ten"));
+     * </pre>
+     * </blockquote>
+     *
+     * @param first  The first {@code Iterable} from which to construct a zip.
+     * @param second The second {@code Iterable} from which to construct a zip.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @return An {@code Iterable} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S> Iterable<Pair<R, S>> zip(
             Iterable<R> first,
             Iterable<S> second) {
         return map(zip(iterableWith(first, second)), Mappers.<R, S>toPair());
     }
 
+    /**
+     * Lazily zips the elements from the three supplied {@code Iterable} instances
+     * into a tuple of size three. On iteration of the returned {@code Iterable},
+     * a {@code Triple} instance is instantiated with an element from the first
+     * supplied {@code Iterable} in the first slot, an element from the
+     * second supplied {@code Iterable} in the second slot and an element from
+     * the third supplied {@code Iterable} in the third slot. The iteration
+     * is complete when one or more of the supplied {@code Iterable} instances
+     * is exhausted.
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the zipping is also
+     * performed lazily, i.e., none of the supplied {@code Iterable} instances
+     * is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite.</p>
+     *
+     * <p>This overload of {@link #zip} is provided to allow three {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to construct a zip.
+     * @param second The second {@code Iterable} from which to construct a zip.
+     * @param third  The third {@code Iterable} from which to construct a zip.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @return An {@code Iterable} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T> Iterable<Triple<R, S, T>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -1829,6 +1918,41 @@ public class Lazily {
         return map(zip(iterableWith(first, second, third)), Mappers.<R, S, T>toTriple());
     }
 
+    /**
+     * Lazily zips the elements from the four supplied {@code Iterable} instances
+     * into a tuple of size four. On iteration of the returned {@code Iterable},
+     * a {@code Quadruple} instance is instantiated with an element from the first
+     * supplied {@code Iterable} in the first slot, an element from the second
+     * supplied {@code Iterable} in the second slot, an element from the third
+     * supplied {@code Iterable} in the third slot and so on. The iteration
+     * is complete when one or more of the supplied {@code Iterable} instances
+     * is exhausted.
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the zipping is also
+     * performed lazily, i.e., none of the supplied {@code Iterable} instances
+     * is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite.</p>
+     *
+     * <p>This overload of {@link #zip} is provided to allow four {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to construct a zip.
+     * @param second The second {@code Iterable} from which to construct a zip.
+     * @param third  The third {@code Iterable} from which to construct a zip.
+     * @param fourth The fourth {@code Iterable} from which to construct a zip.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @return An {@code Iterable} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U> Iterable<Quadruple<R, S, T, U>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -1837,6 +1961,43 @@ public class Lazily {
         return map(zip(iterableWith(first, second, third, fourth)), Mappers.<R, S, T, U>toQuadruple());
     }
 
+    /**
+     * Lazily zips the elements from the five supplied {@code Iterable} instances
+     * into a tuple of size five. On iteration of the returned {@code Iterable},
+     * a {@code Quintuple} instance is instantiated with an element from the first
+     * supplied {@code Iterable} in the first slot, an element from the second
+     * supplied {@code Iterable} in the second slot, an element from the third
+     * supplied {@code Iterable} in the third slot and so on. The iteration
+     * is complete when one or more of the supplied {@code Iterable} instances
+     * is exhausted.
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the zipping is also
+     * performed lazily, i.e., none of the supplied {@code Iterable} instances
+     * is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite.</p>
+     *
+     * <p>This overload of {@link #zip} is provided to allow five {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to construct a zip.
+     * @param second The second {@code Iterable} from which to construct a zip.
+     * @param third  The third {@code Iterable} from which to construct a zip.
+     * @param fourth The fourth {@code Iterable} from which to construct a zip.
+     * @param fifth  The fifth {@code Iterable} from which to construct a zip.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @param <V>    The type of the elements in the fifth {@code Iterable}.
+     * @return An {@code Iterable} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V> Iterable<Quintuple<R, S, T, U, V>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -1846,6 +2007,45 @@ public class Lazily {
         return map(zip(iterableWith(first, second, third, fourth, fifth)), Mappers.<R, S, T, U, V>toQuintuple());
     }
 
+    /**
+     * Lazily zips the elements from the six supplied {@code Iterable} instances
+     * into a tuple of size six. On iteration of the returned {@code Iterable},
+     * a {@code Quintuple} instance is instantiated with an element from the first
+     * supplied {@code Iterable} in the first slot, an element from the second
+     * supplied {@code Iterable} in the second slot, an element from the third
+     * supplied {@code Iterable} in the third slot and so on. The iteration
+     * is complete when one or more of the supplied {@code Iterable} instances
+     * is exhausted.
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the zipping is also
+     * performed lazily, i.e., none of the supplied {@code Iterable} instances
+     * is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite.</p>
+     *
+     * <p>This overload of {@link #zip} is provided to allow six {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to construct a zip.
+     * @param second The second {@code Iterable} from which to construct a zip.
+     * @param third  The third {@code Iterable} from which to construct a zip.
+     * @param fourth The fourth {@code Iterable} from which to construct a zip.
+     * @param fifth  The fifth {@code Iterable} from which to construct a zip.
+     * @param sixth  The sixth {@code Iterable} from which to construct a zip.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @param <V>    The type of the elements in the fifth {@code Iterable}.
+     * @param <W>    The type of the elements in the sixth {@code Iterable}.
+     * @return An {@code Iterable} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W> Iterable<Sextuple<R, S, T, U, V, W>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -1856,6 +2056,47 @@ public class Lazily {
         return map(zip(iterableWith(first, second, third, fourth, fifth, sixth)), Mappers.<R, S, T, U, V, W>toSextuple());
     }
 
+    /**
+     * Lazily zips the elements from the seven supplied {@code Iterable} instances
+     * into a tuple of size seven. On iteration of the returned {@code Iterable},
+     * a {@code Quintuple} instance is instantiated with an element from the first
+     * supplied {@code Iterable} in the first slot, an element from the second
+     * supplied {@code Iterable} in the second slot, an element from the third
+     * supplied {@code Iterable} in the third slot and so on. The iteration
+     * is complete when one or more of the supplied {@code Iterable} instances
+     * is exhausted.
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the zipping is also
+     * performed lazily, i.e., none of the supplied {@code Iterable} instances
+     * is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite.</p>
+     *
+     * <p>This overload of {@link #zip} is provided to allow seven
+     * {@code Iterable} instances to be zipped. For equivalent example usage for
+     * the two {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to construct a zip.
+     * @param second  The second {@code Iterable} from which to construct a zip.
+     * @param third   The third {@code Iterable} from which to construct a zip.
+     * @param fourth  The fourth {@code Iterable} from which to construct a zip.
+     * @param fifth   The fifth {@code Iterable} from which to construct a zip.
+     * @param sixth   The sixth {@code Iterable} from which to construct a zip.
+     * @param seventh The seventh {@code Iterable} from which to construct a zip.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @return An {@code Iterable} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X> Iterable<Septuple<R, S, T, U, V, W, X>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -1867,6 +2108,49 @@ public class Lazily {
         return map(zip(iterableWith(first, second, third, fourth, fifth, sixth, seventh)), Mappers.<R, S, T, U, V, W, X>toSeptuple());
     }
 
+    /**
+     * Lazily zips the elements from the eight supplied {@code Iterable} instances
+     * into a tuple of size eight. On iteration of the returned {@code Iterable},
+     * a {@code Quintuple} instance is instantiated with an element from the first
+     * supplied {@code Iterable} in the first slot, an element from the second
+     * supplied {@code Iterable} in the second slot, an element from the third
+     * supplied {@code Iterable} in the third slot and so on. The iteration
+     * is complete when one or more of the supplied {@code Iterable} instances
+     * is exhausted.
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the zipping is also
+     * performed lazily, i.e., none of the supplied {@code Iterable} instances
+     * is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite.</p>
+     *
+     * <p>This overload of {@link #zip} is provided to allow eight
+     * {@code Iterable} instances to be zipped. For equivalent example usage for
+     * the two {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to construct a zip.
+     * @param second  The second {@code Iterable} from which to construct a zip.
+     * @param third   The third {@code Iterable} from which to construct a zip.
+     * @param fourth  The fourth {@code Iterable} from which to construct a zip.
+     * @param fifth   The fifth {@code Iterable} from which to construct a zip.
+     * @param sixth   The sixth {@code Iterable} from which to construct a zip.
+     * @param seventh The seventh {@code Iterable} from which to construct a zip.
+     * @param eighth  The eighth {@code Iterable} from which to construct a zip.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @param <Y>     The type of the elements in the eighth {@code Iterable}.
+     * @return An {@code Iterable} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X, Y> Iterable<Octuple<R, S, T, U, V, W, X, Y>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -1879,6 +2163,51 @@ public class Lazily {
         return map(zip(iterableWith(first, second, third, fourth, fifth, sixth, seventh, eighth)), Mappers.<R, S, T, U, V, W, X, Y>toOctuple());
     }
 
+    /**
+     * Lazily zips the elements from the nine supplied {@code Iterable} instances
+     * into a tuple of size nine. On iteration of the returned {@code Iterable},
+     * a {@code Quintuple} instance is instantiated with an element from the first
+     * supplied {@code Iterable} in the first slot, an element from the second
+     * supplied {@code Iterable} in the second slot, an element from the third
+     * supplied {@code Iterable} in the third slot and so on. The iteration
+     * is complete when one or more of the supplied {@code Iterable} instances
+     * is exhausted.
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the zipping is also
+     * performed lazily, i.e., none of the supplied {@code Iterable} instances
+     * is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite.</p>
+     *
+     * <p>This overload of {@link #zip} is provided to allow nine
+     * {@code Iterable} instances to be zipped. For equivalent example usage for
+     * the two {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to construct a zip.
+     * @param second  The second {@code Iterable} from which to construct a zip.
+     * @param third   The third {@code Iterable} from which to construct a zip.
+     * @param fourth  The fourth {@code Iterable} from which to construct a zip.
+     * @param fifth   The fifth {@code Iterable} from which to construct a zip.
+     * @param sixth   The sixth {@code Iterable} from which to construct a zip.
+     * @param seventh The seventh {@code Iterable} from which to construct a zip.
+     * @param eighth  The eighth {@code Iterable} from which to construct a zip.
+     * @param ninth   The ninth {@code Iterable} from which to construct a zip.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @param <Y>     The type of the elements in the eighth {@code Iterable}.
+     * @param <Z>     The type of the elements in the ninth {@code Iterable}.
+     * @return An {@code Iterable} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X, Y, Z> Iterable<Nonuple<R, S, T, U, V, W, X, Y, Z>> zip(
             Iterable<R> first,
             Iterable<S> second,

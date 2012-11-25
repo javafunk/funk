@@ -280,12 +280,93 @@ public class Eagerly {
         return map(iterable, mapperUnaryFunction(mapper));
     }
 
-    public static <S, T> Collection<Pair<S, T>> zip(
-            Iterable<S> first,
-            Iterable<T> second) {
+    /**
+     * Zips the elements from the two supplied {@code Iterable} instances
+     * into a tuple of size two. The returned {@code Iterable} contains
+     * a {@code Pair} instance for each element in the shortest supplied
+     * {@code Iterable} with an element from the first supplied {@code Iterable}
+     * in the first slot and an element from the second supplied {@code Iterable}
+     * in the second slot.
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Pair} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given an {@code Iterable} of {@code Integer} instances representing the
+     * first ten values in the sequence of natural numbers and an {@code Iterable}
+     * of {@code String} instances representing the textual equivalents of those
+     * numbers as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Integer&gt; numbers = Literals.iterableWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+     *     Iterable&lt;String&gt; numberNames = Literals.iterableWith(
+     *             "one", "two", "three", "four", "five",
+     *             "six", "seven", "eight", "nine", "ten",
+     *             "eleven", "twelve");
+     * </pre>
+     * </blockquote>
+     * a {@code Collection} containing {@code Pair}s with the number associated
+     * to the textual name can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *     Collection&ltPair&ltInteger, String&gt;&gt; associations = zip(numbers, numberNames);
+     * </pre>
+     * </blockquote>
+     * This is effectively equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *     Collection&lt;Pair&lt;Integer, String&gt;&gt; associations = Literals.collectionWith(
+     *             pair(1, "one"), pair(2, "two"), pair(3, "three"), pair(4, "four"), pair(5, "five"),
+     *             pair(6, "six"), pair(7, "seven"), pair(8, "eight"), pair(9, "nine"), pair(10, "ten"));
+     * </pre>
+     * </blockquote>
+     *
+     * @param first  The first {@code Iterable} from which to construct a zip.
+     * @param second The second {@code Iterable} from which to construct a zip.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @return A {@code Collection} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
+    public static <R, S> Collection<Pair<R, S>> zip(
+            Iterable<R> first,
+            Iterable<S> second) {
         return materialize(Lazily.zip(first, second));
     }
 
+    /**
+     * Zips the elements from the three supplied {@code Iterable} instances
+     * into a tuple of size three. The returned {@code Iterable} contains
+     * a {@code Triple} instance for each element in the shortest supplied
+     * {@code Iterable} with an element from the first supplied {@code Iterable}
+     * in the first slot, an element from the second supplied {@code Iterable}
+     * in the second slot and an element from the third supplied {@code Iterable}
+     * in the third slot.
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Triple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>This overload of {@link #zip} is provided to allow three {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to construct a zip.
+     * @param second The second {@code Iterable} from which to construct a zip.
+     * @param third  The third {@code Iterable} from which to construct a zip.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @return A {@code Collection} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T> Collection<Triple<R, S, T>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -293,6 +374,37 @@ public class Eagerly {
         return materialize(Lazily.zip(first, second, third));
     }
 
+    /**
+     * Zips the elements from the four supplied {@code Iterable} instances
+     * into a tuple of size four. The returned {@code Iterable} contains
+     * a {@code Quadruple} instance for each element in the shortest supplied
+     * {@code Iterable} with an element from the first supplied {@code Iterable}
+     * in the first slot, an element from the second supplied {@code Iterable}
+     * in the second slot and an element from the third supplied {@code Iterable}
+     * in the third slot and so on.
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Quadruple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>This overload of {@link #zip} is provided to allow four {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to construct a zip.
+     * @param second The second {@code Iterable} from which to construct a zip.
+     * @param third  The third {@code Iterable} from which to construct a zip.
+     * @param fourth The fourth {@code Iterable} from which to construct a zip.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @return A {@code Collection} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U> Collection<Quadruple<R, S, T, U>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -301,6 +413,39 @@ public class Eagerly {
         return materialize(Lazily.zip(first, second, third, fourth));
     }
 
+    /**
+     * Zips the elements from the five supplied {@code Iterable} instances
+     * into a tuple of size five. The returned {@code Iterable} contains
+     * a {@code Quintuple} instance for each element in the shortest supplied
+     * {@code Iterable} with an element from the first supplied {@code Iterable}
+     * in the first slot, an element from the second supplied {@code Iterable}
+     * in the second slot and an element from the third supplied {@code Iterable}
+     * in the third slot and so on.
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Quintuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>This overload of {@link #zip} is provided to allow five {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to construct a zip.
+     * @param second The second {@code Iterable} from which to construct a zip.
+     * @param third  The third {@code Iterable} from which to construct a zip.
+     * @param fourth The fourth {@code Iterable} from which to construct a zip.
+     * @param fifth  The fifth {@code Iterable} from which to construct a zip.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @param <V>    The type of the elements in the fifth {@code Iterable}.
+     * @return A {@code Collection} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V> Collection<Quintuple<R, S, T, U, V>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -310,6 +455,41 @@ public class Eagerly {
         return materialize(Lazily.zip(first, second, third, fourth, fifth));
     }
 
+    /**
+     * Zips the elements from the six supplied {@code Iterable} instances
+     * into a tuple of size six. The returned {@code Iterable} contains
+     * a {@code Sextuple} instance for each element in the shortest supplied
+     * {@code Iterable} with an element from the first supplied {@code Iterable}
+     * in the first slot, an element from the second supplied {@code Iterable}
+     * in the second slot and an element from the third supplied {@code Iterable}
+     * in the third slot and so on.
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Sextuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>This overload of {@link #zip} is provided to allow six {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to construct a zip.
+     * @param second The second {@code Iterable} from which to construct a zip.
+     * @param third  The third {@code Iterable} from which to construct a zip.
+     * @param fourth The fourth {@code Iterable} from which to construct a zip.
+     * @param fifth  The fifth {@code Iterable} from which to construct a zip.
+     * @param sixth  The sixth {@code Iterable} from which to construct a zip.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @param <V>    The type of the elements in the fifth {@code Iterable}.
+     * @param <W>    The type of the elements in the sixth {@code Iterable}.
+     * @return A {@code Collection} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W> Collection<Sextuple<R, S, T, U, V, W>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -320,6 +500,43 @@ public class Eagerly {
         return materialize(Lazily.zip(first, second, third, fourth, fifth, sixth));
     }
 
+    /**
+     * Zips the elements from the seven supplied {@code Iterable} instances
+     * into a tuple of size seven. The returned {@code Iterable} contains
+     * a {@code Septuple} instance for each element in the shortest supplied
+     * {@code Iterable} with an element from the first supplied {@code Iterable}
+     * in the first slot, an element from the second supplied {@code Iterable}
+     * in the second slot and an element from the third supplied {@code Iterable}
+     * in the third slot and so on.
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Septuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>This overload of {@link #zip} is provided to allow seven {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to construct a zip.
+     * @param second  The second {@code Iterable} from which to construct a zip.
+     * @param third   The third {@code Iterable} from which to construct a zip.
+     * @param fourth  The fourth {@code Iterable} from which to construct a zip.
+     * @param fifth   The fifth {@code Iterable} from which to construct a zip.
+     * @param sixth   The sixth {@code Iterable} from which to construct a zip.
+     * @param seventh The seventh {@code Iterable} from which to construct a zip.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @return A {@code Collection} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X> Collection<Septuple<R, S, T, U, V, W, X>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -331,6 +548,45 @@ public class Eagerly {
         return materialize(Lazily.zip(first, second, third, fourth, fifth, sixth, seventh));
     }
 
+    /**
+     * Zips the elements from the eight supplied {@code Iterable} instances
+     * into a tuple of size eight. The returned {@code Iterable} contains
+     * a {@code Octuple} instance for each element in the shortest supplied
+     * {@code Iterable} with an element from the first supplied {@code Iterable}
+     * in the first slot, an element from the second supplied {@code Iterable}
+     * in the second slot and an element from the third supplied {@code Iterable}
+     * in the third slot and so on.
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Octuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>This overload of {@link #zip} is provided to allow eight {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to construct a zip.
+     * @param second  The second {@code Iterable} from which to construct a zip.
+     * @param third   The third {@code Iterable} from which to construct a zip.
+     * @param fourth  The fourth {@code Iterable} from which to construct a zip.
+     * @param fifth   The fifth {@code Iterable} from which to construct a zip.
+     * @param sixth   The sixth {@code Iterable} from which to construct a zip.
+     * @param seventh The seventh {@code Iterable} from which to construct a zip.
+     * @param eighth  The eighth {@code Iterable} from which to construct a zip.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @param <Y>     The type of the elements in the eighth {@code Iterable}.
+     * @return A {@code Collection} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X, Y> Collection<Octuple<R, S, T, U, V, W, X, Y>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -343,6 +599,47 @@ public class Eagerly {
         return materialize(Lazily.zip(first, second, third, fourth, fifth, sixth, seventh, eighth));
     }
 
+    /**
+     * Zips the elements from the nine supplied {@code Iterable} instances
+     * into a tuple of size nine. The returned {@code Iterable} contains
+     * a {@code Nonuple} instance for each element in the shortest supplied
+     * {@code Iterable} with an element from the first supplied {@code Iterable}
+     * in the first slot, an element from the second supplied {@code Iterable}
+     * in the second slot and an element from the third supplied {@code Iterable}
+     * in the third slot and so on.
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Nonuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>This overload of {@link #zip} is provided to allow nine {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to construct a zip.
+     * @param second  The second {@code Iterable} from which to construct a zip.
+     * @param third   The third {@code Iterable} from which to construct a zip.
+     * @param fourth  The fourth {@code Iterable} from which to construct a zip.
+     * @param fifth   The fifth {@code Iterable} from which to construct a zip.
+     * @param sixth   The sixth {@code Iterable} from which to construct a zip.
+     * @param seventh The seventh {@code Iterable} from which to construct a zip.
+     * @param eighth  The eighth {@code Iterable} from which to construct a zip.
+     * @param ninth   The ninth {@code Iterable} from which to construct a zip.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @param <Y>     The type of the elements in the eighth {@code Iterable}.
+     * @param <Z>     The type of the elements in the ninth {@code Iterable}.
+     * @return A {@code Collection} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X, Y, Z> Collection<Nonuple<R, S, T, U, V, W, X, Y, Z>> zip(
             Iterable<R> first,
             Iterable<S> second,
