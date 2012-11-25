@@ -259,7 +259,7 @@ public class Eagerly {
      * <a href="http://en.wikipedia.org/wiki/Map_(higher-order_function)">
      * map article on Wikipedia</a>.
      *
-     * <p>This override of {@link #map(Iterable, UnaryFunction)} is provided to allow a
+     * <p>This overload of {@link #map(Iterable, UnaryFunction)} is provided to allow a
      * {@code Mapper} to be used in place of a {@code UnaryFunction} to enhance
      * readability and better express intent. The contract of the function
      * is identical to that of the {@code UnaryFunction} version of {@code map}.</p>
@@ -547,7 +547,7 @@ public class Eagerly {
      * supplied {@code Iterable} instances is eager, i.e., the supplied {@code Iterable}
      * instances are iterated and their elements are not equated immediately.</p>
      *
-     * <p>This override of {@link #equate(Iterable, Iterable, BinaryPredicate)} is provided
+     * <p>This overload of {@link #equate(Iterable, Iterable, BinaryPredicate)} is provided
      * to allow an {@code Equivalence} to be used in place of a {@code BinaryPredicate} to
      * enhance readability and better express intent. The contract of the function is
      * identical to that of the {@code BinaryPredicate} version of {@code equate}.</p>
@@ -628,7 +628,7 @@ public class Eagerly {
      * eagerly, i.e., elements are retrieved from the underlying {@code Iterable} and indexed
      * immediately.</p>
      *
-     * <p>This override of {@link #index(Iterable, UnaryFunction)} is provided to allow an
+     * <p>This overload of {@link #index(Iterable, UnaryFunction)} is provided to allow an
      * {@code Indexer} to be used in place of a {@code UnaryFunction} to enhance readability
      * and better express intent. The contract of the function is identical to that of the
      * {@code UnaryFunction} version of {@code index}.</p>
@@ -740,7 +740,7 @@ public class Eagerly {
      * it is inherently impure and thus must have side effects for any perceivable
      * outcome to be observed.</p>
      *
-     * <p>This override of {@link #each(Iterable, UnaryProcedure)} is provided to allow an
+     * <p>This overload of {@link #each(Iterable, UnaryProcedure)} is provided to allow an
      * {@code Action} to be used in place of a {@code UnaryProcedure} to enhance readability
      * and better express intent. The contract of the function is identical to that of the
      * {@code UnaryProcedure} version of {@code each}.</p>
@@ -2222,6 +2222,82 @@ public class Eagerly {
         times(numberOfTimes, actionUnaryProcedure(action));
     }
 
+    /**
+     * Slices a sub-sequence from the supplied {@code Iterable} according
+     * to the supplied start index, stop index and step size. The start and stop
+     * indices are both zero based and the step size is one based. The element
+     * at the start index in the supplied {@code Iterable} will be included in the
+     * returned {@code Iterable} whilst the element at the stop index will be
+     * excluded from it. The step size indicates the number of steps to take
+     * between included elements in the returned {@code Iterable}.
+     *
+     * <p>Since a {@code Collection} is returned, the sub-sequence is sliced
+     * eagerly, i.e., the supplied {@code Iterable} is iterated for the
+     * required sub-sequence immediately.</p>
+     *
+     * <p>If the supplied start index is {@code null} or zero, the sub-sequence starts
+     * at the beginning of the supplied {@code Iterable}. If it is negative then the
+     * sub-sequence starts that many elements back from the end of the supplied
+     * {@code Iterable} and will be inclusive of that element.</p>
+     *
+     * <p>If the supplied stop index is {@code null} then the sub-sequence  ends at
+     * the end of the supplied {@code Iterable}. If it is negative then the
+     * sub-sequence ends that many elements back from the end of the supplied
+     * {@code Iterable} and will be exclusive of that element.</p>
+     *
+     * <p>If the supplied step size is {@code null} then a default step size of
+     * one will be assumed. If the supplied step size is zero then an
+     * {@code IllegalArgumentException} is thrown. If the supplied step size
+     * is less than zero, the sub-sequence will be taken in reverse through
+     * the supplied {@code Iterable}.</p>
+     *
+     * <p>If the start and stop indices are equal, an empty {@code Collection}
+     * is returned. If the supplied step size is positive and the start index
+     * is greater than the stop index, an empty {@code Collection} is returned.
+     * Similarly, if the supplied step size is negative and the start index
+     * is less than the stop index, an empty {@code Collection} is returned.</p>
+     *
+     * <p>In the case that the supplied start or stop value is positive and
+     * greater than the number of elements in the supplied {@code Iterable},
+     * the end of the {@code Iterable} will be used for that index. In the case that
+     * the supplied start or stop value is negative and greater than the number
+     * of elements in the supplied {@code Iterable}, the start of the
+     * {@code Iterable} will be used for that index.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given an {@code Iterable} of {@code WeekDay} instances starting at
+     * Sunday:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;WeekDay&gt; weekdays = listWith(
+     *             weekDay("Sunday"),
+     *             weekDay("Monday"),
+     *             weekDay("Tuesday"),
+     *             weekDay("Wednesday"),
+     *             weekDay("Thursday"),
+     *             weekDay("Friday"),
+     *             weekDay("Saturday"),
+     * </pre>
+     * </blockquote>
+     * we can obtain an {@code Iterable} of the working days in reverse
+     * using the following:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;WeekDay&gt; workingDaysReversed = slice(weekdays, -1, 1, -1);
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which to slice a sub-sequence.
+     * @param start    The index from which to start the slicing, inclusive.
+     * @param stop     The index at which to stop the slicing, exclusive.
+     * @param step     The number of steps to take between elements inside the
+     *                 sub-sequence.
+     * @param <T>      The type of the elements contained in the supplied
+     *                 {@code Iterable}
+     * @return A {@code Collection} containing the sub-sequence of elements
+     *         from the supplied {@code Iterable} specified by the supplied
+     *         start and stop indices and the supplied step size.
+     */
     public static <T> Collection<T> slice(
             Iterable<T> iterable,
             Integer start,
@@ -2247,6 +2323,34 @@ public class Eagerly {
         return outputCollection;
     }
 
+    /**
+     * Slices a sub-sequence from the supplied {@code Iterable} according
+     * to the supplied start index, stop index. The start and stop indices
+     * are both zero based. The element at the start index in the supplied
+     * {@code Iterable} will be included in the returned {@code Iterable}
+     * whilst the element at the stop index will be excluded from it.
+     *
+     * <p>Since a {@code Collection} is returned, the sub-sequence is sliced
+     * eagerly, i.e., the supplied {@code Iterable} is iterated for the
+     * required sub-sequence immediately.</p>
+     *
+     * <p>This overload of {@link #slice(Iterable, Integer, Integer, Integer)}
+     * is provided to assist in the common case of a sub-sequence in the
+     * positive direction through the supplied {@code Iterable} with a step size
+     * of one. The contract of the function is identical to that of the
+     * {@code slice} function with a hardcoded step size of one. For example
+     * usage and further documentation, see
+     * {@link #slice(Iterable, Integer, Integer, Integer)}.</p>
+     *
+     * @param iterable The {@code Iterable} from which to slice a sub-sequence.
+     * @param start    The index from which to start the slicing, inclusive.
+     * @param stop     The index at which to stop the slicing, exclusive.
+     * @param <T>      The type of the elements contained in the supplied
+     *                 {@code Iterable}
+     * @return A {@code Collection} containing the sub-sequence of elements
+     *         from the supplied {@code Iterable} specified by the supplied
+     *         start and stop indices.
+     */
     public static <T> Collection<T> slice(
             Iterable<T> iterable,
             Integer start,

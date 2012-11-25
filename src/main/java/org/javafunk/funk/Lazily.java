@@ -874,7 +874,7 @@ public class Lazily {
      * it is inherently impure and thus must have side effects for any perceivable
      * difference to be observed.</p>
      *
-     * <p>This override of {@link #each(Iterable, UnaryProcedure)} is provided to allow an
+     * <p>This overload of {@link #each(Iterable, UnaryProcedure)} is provided to allow an
      * {@code Action} to be used in place of a {@code UnaryProcedure} to enhance readability
      * and better express intent. The contract of the function is identical to that of the
      * {@code UnaryProcedure} version of {@code each}.</p>
@@ -996,7 +996,7 @@ public class Lazily {
      * lazily, i.e., no attempt is made to retrieve and index elements from the underlying
      * {@code Iterable} until it is iterated.</p>
      *
-     * <p>This override of {@link #index(Iterable, UnaryFunction)} is provided to allow an
+     * <p>This overload of {@link #index(Iterable, UnaryFunction)} is provided to allow an
      * {@code Indexer} to be used in place of a {@code UnaryFunction} to enhance readability
      * and better express intent. The contract of the function is identical to that of the
      * {@code UnaryFunction} version of {@code index}.</p>
@@ -1146,7 +1146,7 @@ public class Lazily {
      * <a href="http://en.wikipedia.org/wiki/Map_(higher-order_function)">
      * map article on Wikipedia</a>.
      *
-     * <p>This override of {@link #map(Iterable, UnaryFunction)} is provided to allow a
+     * <p>This overload of {@link #map(Iterable, UnaryFunction)} is provided to allow a
      * {@code Mapper} to be used in place of a {@code UnaryFunction} to enhance readability
      * and better express intent. The contract of the function is identical to that of the
      * {@code UnaryFunction} version of {@code map}.</p>
@@ -1234,7 +1234,7 @@ public class Lazily {
      * {@code Iterable} instances are not iterated and their elements are not equated
      * until the returned {@code Iterable} is iterated.</p>
      *
-     * <p>This override of {@link #equate(Iterable, Iterable, BinaryPredicate)} is provided
+     * <p>This overload of {@link #equate(Iterable, Iterable, BinaryPredicate)} is provided
      * to allow an {@code Equivalence} to be used in place of a {@code BinaryPredicate} to
      * enhance readability and better express intent. The contract of the function is
      * identical to that of the {@code BinaryPredicate} version of {@code equate}.</p>
@@ -1627,6 +1627,69 @@ public class Lazily {
         return slice(iterable, 1, null, 1);
     }
 
+    /**
+     * Lazily slices a sub-sequence from the supplied {@code Iterable} according
+     * to the supplied start index, stop index and step size. The start and stop
+     * indices are both zero based and the step size is one based. The element
+     * at the start index in the supplied {@code Iterable} will be included in the
+     * returned {@code Iterable} whilst the element at the stop index will be
+     * excluded from it. The step size indicates the number of steps to take
+     * between included elements in the returned {@code Iterable}.
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the sub-sequence is sliced
+     * lazily, i.e., the supplied {@code Iterable} is not iterated for the
+     * required sub-sequence until the returned {@code Iterable} is iterated.</p>
+     *
+     * <p>If the supplied start index is {@code null} or zero, the sub-sequence starts
+     * at the beginning of the supplied {@code Iterable}. If it is negative then an
+     * {@code IllegalArgumentException} is thrown.</p>
+     *
+     * <p>If the supplied stop index is {@code null} then the sub-sequence
+     * ends at the end of the supplied {@code Iterable}. If it is negative then an
+     * {@code IllegalArgumentException} is thrown.</p>
+     *
+     * <p>If the supplied step size is {@code null} then a default step size of
+     * one will be assumed. If the supplied step size is less than one then
+     * an {@code IllegalArgumentException} is thrown.</p>
+     *
+     * <p>If the start and stop indices are equal, an effectively empty
+     * {@code Iterable} is returned. If the start index is greater than the
+     * stop index then an {@code IllegalArgumentException} is thrown since
+     * the sub-sequence can only be directed in the forward direction of the
+     * elements in the {@code Iterable}. The slice semantics supported by
+     * {@link Eagerly#slice(Iterable, Integer, Integer, Integer)} allow for
+     * much more flexible sub-sequence slicing due to the eager nature of
+     * the algorithm.</p>
+     *
+     * <p>In the case that the supplied start, stop and step values cannot
+     * be satisfied due to a lack of elements in the supplied
+     * {@code Iterable}, as many elements as possible will be present in the
+     * returned {@code Iterable}. If the start index is greater than the
+     * greatest index of all elements in the {@code Iterable} then an
+     * effectively empty {@code Iterable} is returned.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given an {@code Iterable} of {@code DateTime} instances representing
+     * some part of a year and given that the first {@code DateTime} is known
+     * to be a Friday, we can slice out the first four Sundays as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;DateTime&gt; availableBookingDates = travelCalendar.availableDatesFrom(DateTimes.thisFriday());
+     *     Iterable&lt;DateTime&gt; nextFourAvailableSundays = slice(availableBookingDates, 2, 31, 7);
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which to slice a sub-sequence.
+     * @param start    The index from which to start the slicing, inclusive.
+     * @param stop     The index at which to stop the slicing, exclusive.
+     * @param step     The number of steps to take between elements inside the
+     *                 sub-sequence.
+     * @param <T>      The type of the elements contained in the supplied
+     *                 {@code Iterable}
+     * @return An {@code Iterable} effectively containing the sub-sequence of
+     *         elements from the supplied {@code Iterable} specified by the
+     *         supplied start and stop indices and the supplied step size.
+     */
     public static <T> Iterable<T> slice(final Iterable<T> iterable, final Integer start, final Integer stop, final Integer step) {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
