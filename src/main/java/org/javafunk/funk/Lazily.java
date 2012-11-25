@@ -1825,6 +1825,10 @@ public class Lazily {
      * is complete when one or both of the supplied {@code Iterable} instances
      * is exhausted.
      *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
      * <p>Since a lazy {@code Iterable} is returned, the zipping is also
      * performed lazily, i.e., none of the supplied {@code Iterable} instances
      * is iterated until elements are yielded from the returned
@@ -1888,6 +1892,10 @@ public class Lazily {
      * is complete when one or more of the supplied {@code Iterable} instances
      * is exhausted.
      *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
      * <p>Since a lazy {@code Iterable} is returned, the zipping is also
      * performed lazily, i.e., none of the supplied {@code Iterable} instances
      * is iterated until elements are yielded from the returned
@@ -1898,7 +1906,7 @@ public class Lazily {
      * {@code Iterable} instances are infinite, then the returned
      * {@code Iterable} will also be infinite.</p>
      *
-     * <p>This overload of {@link #zip} is provided to allow three {@code Iterable}
+     * <p>This overload of {@code zip} is provided to allow three {@code Iterable}
      * instances to be zipped. For equivalent example usage for the two
      * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
      *
@@ -1928,6 +1936,10 @@ public class Lazily {
      * is complete when one or more of the supplied {@code Iterable} instances
      * is exhausted.
      *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
      * <p>Since a lazy {@code Iterable} is returned, the zipping is also
      * performed lazily, i.e., none of the supplied {@code Iterable} instances
      * is iterated until elements are yielded from the returned
@@ -1938,7 +1950,7 @@ public class Lazily {
      * {@code Iterable} instances are infinite, then the returned
      * {@code Iterable} will also be infinite.</p>
      *
-     * <p>This overload of {@link #zip} is provided to allow four {@code Iterable}
+     * <p>This overload of {@code zip} is provided to allow four {@code Iterable}
      * instances to be zipped. For equivalent example usage for the two
      * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
      *
@@ -1971,6 +1983,10 @@ public class Lazily {
      * is complete when one or more of the supplied {@code Iterable} instances
      * is exhausted.
      *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
      * <p>Since a lazy {@code Iterable} is returned, the zipping is also
      * performed lazily, i.e., none of the supplied {@code Iterable} instances
      * is iterated until elements are yielded from the returned
@@ -1981,7 +1997,7 @@ public class Lazily {
      * {@code Iterable} instances are infinite, then the returned
      * {@code Iterable} will also be infinite.</p>
      *
-     * <p>This overload of {@link #zip} is provided to allow five {@code Iterable}
+     * <p>This overload of {@code zip} is provided to allow five {@code Iterable}
      * instances to be zipped. For equivalent example usage for the two
      * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
      *
@@ -2017,6 +2033,10 @@ public class Lazily {
      * is complete when one or more of the supplied {@code Iterable} instances
      * is exhausted.
      *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
      * <p>Since a lazy {@code Iterable} is returned, the zipping is also
      * performed lazily, i.e., none of the supplied {@code Iterable} instances
      * is iterated until elements are yielded from the returned
@@ -2027,7 +2047,7 @@ public class Lazily {
      * {@code Iterable} instances are infinite, then the returned
      * {@code Iterable} will also be infinite.</p>
      *
-     * <p>This overload of {@link #zip} is provided to allow six {@code Iterable}
+     * <p>This overload of {@code zip} is provided to allow six {@code Iterable}
      * instances to be zipped. For equivalent example usage for the two
      * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
      *
@@ -2066,6 +2086,10 @@ public class Lazily {
      * is complete when one or more of the supplied {@code Iterable} instances
      * is exhausted.
      *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
      * <p>Since a lazy {@code Iterable} is returned, the zipping is also
      * performed lazily, i.e., none of the supplied {@code Iterable} instances
      * is iterated until elements are yielded from the returned
@@ -2076,7 +2100,7 @@ public class Lazily {
      * {@code Iterable} instances are infinite, then the returned
      * {@code Iterable} will also be infinite.</p>
      *
-     * <p>This overload of {@link #zip} is provided to allow seven
+     * <p>This overload of {@code zip} is provided to allow seven
      * {@code Iterable} instances to be zipped. For equivalent example usage for
      * the two {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
      *
@@ -2118,6 +2142,10 @@ public class Lazily {
      * is complete when one or more of the supplied {@code Iterable} instances
      * is exhausted.
      *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
      * <p>Since a lazy {@code Iterable} is returned, the zipping is also
      * performed lazily, i.e., none of the supplied {@code Iterable} instances
      * is iterated until elements are yielded from the returned
@@ -2128,7 +2156,7 @@ public class Lazily {
      * {@code Iterable} instances are infinite, then the returned
      * {@code Iterable} will also be infinite.</p>
      *
-     * <p>This overload of {@link #zip} is provided to allow eight
+     * <p>This overload of {@code zip} is provided to allow eight
      * {@code Iterable} instances to be zipped. For equivalent example usage for
      * the two {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
      *
@@ -2173,6 +2201,10 @@ public class Lazily {
      * is complete when one or more of the supplied {@code Iterable} instances
      * is exhausted.
      *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
      * <p>Since a lazy {@code Iterable} is returned, the zipping is also
      * performed lazily, i.e., none of the supplied {@code Iterable} instances
      * is iterated until elements are yielded from the returned
@@ -2183,7 +2215,7 @@ public class Lazily {
      * {@code Iterable} instances are infinite, then the returned
      * {@code Iterable} will also be infinite.</p>
      *
-     * <p>This overload of {@link #zip} is provided to allow nine
+     * <p>This overload of {@code zip} is provided to allow nine
      * {@code Iterable} instances to be zipped. For equivalent example usage for
      * the two {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
      *
@@ -2221,6 +2253,67 @@ public class Lazily {
         return map(zip(iterableWith(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth)), Mappers.<R, S, T, U, V, W, X, Y, Z>toNonuple());
     }
 
+    /**
+     * Lazily zips the elements from all {@code Iterable} instances in the supplied
+     * {@code Iterable} into an {@code Iterable} of {@code Iterable}s with each having
+     * as many elements as there were {@code Iterable} instances in the input
+     * {@code Iterable}. On iteration of the returned {@code Iterable}, an
+     * {@code Iterable} is instantiated with an element from the first {@code Iterable}
+     * in the first slot, an element from the second {@code Iterable} in the second
+     * slot and so on. The iteration is complete when any one of the {@code Iterable}
+     * instances in the supplied {@code Iterable} is exhausted. It is understood that
+     * there are an absurd number of references to {@code Iterable} in this definition,
+     * hopefully the example usage will be more descriptive.
+     *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the zipping is also performed
+     * lazily, i.e., none of the {@code Iterable} instances in the supplied
+     * {@code Iterable} instances is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite.</p>
+     *
+     * <p>Note that this overload of {@code zip} does not preserve type information
+     * and so the returned {@code Iterable} will contain {@code Iterable} instances
+     * over the wildcard type {@code ?}. If the number of {@code Iterable} instances
+     * to be zipped is less than ten, use the explicit arities of {@code zip}.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given three {@code Iterable} instances of varying types:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Integer&gt; first = iterableWith(1, 2, 3, 4, 5);
+     *     Iterable&lt;String&gt; second = iterableWith("first", "second", "third");
+     *     Iterable&lt;Boolean&gt; third = iterableWith(false, true, false, true);
+     * </pre>
+     * </blockquote>
+     * we can zip them into an {@code Iterable} of {@code Iterable} instances as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&ltIterable&lt?&gt;&gt; iterables = Literals.&lt;Iterable&lt?&gt;&gt;iterableWith(first, second, third);
+     *     Iterable&lt? extends Iterable&lt;?&gt;&gt; zippedIterables = zip(iterables);
+     * </pre>
+     * </blockquote>
+     * This is effectively equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;? extends Iterable&lt;?&gt;&gt; equivalentIterables = Literals.&ltIterable&lt?&gt;&gt;iterableWith(
+     *             iterableWith(1, "first", false),
+     *             iterableWith(2, "second", true),
+     *             iterableWith(3, "third", false));
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterables An {@code Iterable} of {@code Iterable} instances to be zipped.
+     * @return An {@code Iterable} of {@code Iterable} instances representing the
+     *         zipped contents of the supplied {@code Iterable} of {@code Iterable}s.
+     */
     public static Iterable<? extends Iterable<?>> zip(final Iterable<? extends Iterable<?>> iterables) {
         return new Iterable<Iterable<?>>() {
             public Iterator<Iterable<?>> iterator() {

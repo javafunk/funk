@@ -288,6 +288,10 @@ public class Eagerly {
      * in the first slot and an element from the second supplied {@code Iterable}
      * in the second slot.
      *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     * 
      * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
      * i.e., the supplied {@code Iterable} instances are iterated immediately and
      * the {@code Pair} instances are constructed before this method returns.</p>
@@ -347,6 +351,10 @@ public class Eagerly {
      * in the second slot and an element from the third supplied {@code Iterable}
      * in the third slot.
      *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     * 
      * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
      * i.e., the supplied {@code Iterable} instances are iterated immediately and
      * the {@code Triple} instances are constructed before this method returns.</p>
@@ -354,7 +362,7 @@ public class Eagerly {
      * <p>If any of the supplied {@code Iterable} instances is empty, the
      * returned {@code Collection} is empty.</p>
      *
-     * <p>This overload of {@link #zip} is provided to allow three {@code Iterable}
+     * <p>This overload of {@code zip} is provided to allow three {@code Iterable}
      * instances to be zipped. For equivalent example usage for the two
      * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
      *
@@ -383,6 +391,10 @@ public class Eagerly {
      * in the second slot and an element from the third supplied {@code Iterable}
      * in the third slot and so on.
      *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     * 
      * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
      * i.e., the supplied {@code Iterable} instances are iterated immediately and
      * the {@code Quadruple} instances are constructed before this method returns.</p>
@@ -390,7 +402,7 @@ public class Eagerly {
      * <p>If any of the supplied {@code Iterable} instances is empty, the
      * returned {@code Collection} is empty.</p>
      *
-     * <p>This overload of {@link #zip} is provided to allow four {@code Iterable}
+     * <p>This overload of {@code zip} is provided to allow four {@code Iterable}
      * instances to be zipped. For equivalent example usage for the two
      * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
      *
@@ -422,6 +434,10 @@ public class Eagerly {
      * in the second slot and an element from the third supplied {@code Iterable}
      * in the third slot and so on.
      *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     * 
      * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
      * i.e., the supplied {@code Iterable} instances are iterated immediately and
      * the {@code Quintuple} instances are constructed before this method returns.</p>
@@ -429,7 +445,7 @@ public class Eagerly {
      * <p>If any of the supplied {@code Iterable} instances is empty, the
      * returned {@code Collection} is empty.</p>
      *
-     * <p>This overload of {@link #zip} is provided to allow five {@code Iterable}
+     * <p>This overload of {@code zip} is provided to allow five {@code Iterable}
      * instances to be zipped. For equivalent example usage for the two
      * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
      *
@@ -464,6 +480,10 @@ public class Eagerly {
      * in the second slot and an element from the third supplied {@code Iterable}
      * in the third slot and so on.
      *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     * 
      * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
      * i.e., the supplied {@code Iterable} instances are iterated immediately and
      * the {@code Sextuple} instances are constructed before this method returns.</p>
@@ -471,7 +491,7 @@ public class Eagerly {
      * <p>If any of the supplied {@code Iterable} instances is empty, the
      * returned {@code Collection} is empty.</p>
      *
-     * <p>This overload of {@link #zip} is provided to allow six {@code Iterable}
+     * <p>This overload of {@code zip} is provided to allow six {@code Iterable}
      * instances to be zipped. For equivalent example usage for the two
      * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
      *
@@ -509,6 +529,10 @@ public class Eagerly {
      * in the second slot and an element from the third supplied {@code Iterable}
      * in the third slot and so on.
      *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     * 
      * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
      * i.e., the supplied {@code Iterable} instances are iterated immediately and
      * the {@code Septuple} instances are constructed before this method returns.</p>
@@ -516,7 +540,7 @@ public class Eagerly {
      * <p>If any of the supplied {@code Iterable} instances is empty, the
      * returned {@code Collection} is empty.</p>
      *
-     * <p>This overload of {@link #zip} is provided to allow seven {@code Iterable}
+     * <p>This overload of {@code zip} is provided to allow seven {@code Iterable}
      * instances to be zipped. For equivalent example usage for the two
      * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
      *
@@ -557,6 +581,10 @@ public class Eagerly {
      * in the second slot and an element from the third supplied {@code Iterable}
      * in the third slot and so on.
      *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     * 
      * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
      * i.e., the supplied {@code Iterable} instances are iterated immediately and
      * the {@code Octuple} instances are constructed before this method returns.</p>
@@ -564,7 +592,7 @@ public class Eagerly {
      * <p>If any of the supplied {@code Iterable} instances is empty, the
      * returned {@code Collection} is empty.</p>
      *
-     * <p>This overload of {@link #zip} is provided to allow eight {@code Iterable}
+     * <p>This overload of {@code zip} is provided to allow eight {@code Iterable}
      * instances to be zipped. For equivalent example usage for the two
      * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
      *
@@ -608,6 +636,10 @@ public class Eagerly {
      * in the second slot and an element from the third supplied {@code Iterable}
      * in the third slot and so on.
      *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     * 
      * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
      * i.e., the supplied {@code Iterable} instances are iterated immediately and
      * the {@code Nonuple} instances are constructed before this method returns.</p>
@@ -615,7 +647,7 @@ public class Eagerly {
      * <p>If any of the supplied {@code Iterable} instances is empty, the
      * returned {@code Collection} is empty.</p>
      *
-     * <p>This overload of {@link #zip} is provided to allow nine {@code Iterable}
+     * <p>This overload of {@code zip} is provided to allow nine {@code Iterable}
      * instances to be zipped. For equivalent example usage for the two
      * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
      *
@@ -653,6 +685,61 @@ public class Eagerly {
         return materialize(Lazily.zip(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth));
     }
 
+    /**
+     * Zips the elements from all {@code Iterable} instances in the supplied
+     * {@code Iterable} into a {@code Collection} of {@code Collections}s with each having
+     * as many elements as there were {@code Iterable} instances in the input
+     * {@code Iterable}. The returned {@code Collection} contains a {@code Collection} 
+     * for each element in the shortest supplied {@code Iterable} with an element from 
+     * the first supplied {@code Iterable} in the first slot, an element from the second 
+     * supplied {@code Iterable} in the second slot and so on.
+     *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Collection} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>Note that this overload of {@code zip} does not preserve type information
+     * and so the returned {@code Collection} will contain {@code Collection} instances
+     * over the wildcard type {@code ?}. If the number of {@code Iterable} instances
+     * to be zipped is less than ten, use the explicit arities of {@code zip}.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given three {@code Iterable} instances of varying types:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Integer&gt; first = iterableWith(1, 2, 3, 4, 5);
+     *     Iterable&lt;String&gt; second = iterableWith("first", "second", "third");
+     *     Iterable&lt;Boolean&gt; third = iterableWith(false, true, false, true);
+     * </pre>
+     * </blockquote>
+     * we can zip them into a {@code Collection} of {@code Collection} instances as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&ltIterable&lt?&gt;&gt; iterables = Literals.&lt;Iterable&lt?&gt;&gt;iterableWith(first, second, third);
+     *     Collection&ltCollection&lt;?&gt;&gt; zippedResult = zip(iterables);
+     * </pre>
+     * </blockquote>
+     * This is effectively equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *     Collection&lt;Collection&lt;?&gt;&gt; expectedOutput = Literals.&lt;Collection&lt;?&gt;&gt;collectionWith(
+     *             collectionWith(1, "first", false),
+     *             collectionWith(2, "second", true),
+     *             collectionWith(3, "third", false));
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterables An {@code Iterable} of {@code Iterable} instances to be zipped.
+     * @return A {@code Collection} of {@code Collection} instances representing the
+     *         zipped contents of the supplied {@code Iterable} of {@code Iterable}s.
+     */
     public static Collection<Collection<?>> zip(Iterable<? extends Iterable<?>> iterables) {
         return Eagerly.map(Lazily.zip(iterables), new Mapper<Iterable<?>, Collection<?>>() {
             @Override public Collection<?> map(Iterable<?> iterable) {
