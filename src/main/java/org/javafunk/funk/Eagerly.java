@@ -291,7 +291,7 @@ public class Eagerly {
      * <p>For a more mathematical description of the zip function, see the
      * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
      * zip article on Wikipedia</a>.</p>
-     * 
+     *
      * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
      * i.e., the supplied {@code Iterable} instances are iterated immediately and
      * the {@code Pair} instances are constructed before this method returns.</p>
@@ -354,7 +354,7 @@ public class Eagerly {
      * <p>For a more mathematical description of the zip function, see the
      * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
      * zip article on Wikipedia</a>.</p>
-     * 
+     *
      * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
      * i.e., the supplied {@code Iterable} instances are iterated immediately and
      * the {@code Triple} instances are constructed before this method returns.</p>
@@ -394,7 +394,7 @@ public class Eagerly {
      * <p>For a more mathematical description of the zip function, see the
      * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
      * zip article on Wikipedia</a>.</p>
-     * 
+     *
      * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
      * i.e., the supplied {@code Iterable} instances are iterated immediately and
      * the {@code Quadruple} instances are constructed before this method returns.</p>
@@ -437,7 +437,7 @@ public class Eagerly {
      * <p>For a more mathematical description of the zip function, see the
      * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
      * zip article on Wikipedia</a>.</p>
-     * 
+     *
      * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
      * i.e., the supplied {@code Iterable} instances are iterated immediately and
      * the {@code Quintuple} instances are constructed before this method returns.</p>
@@ -483,7 +483,7 @@ public class Eagerly {
      * <p>For a more mathematical description of the zip function, see the
      * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
      * zip article on Wikipedia</a>.</p>
-     * 
+     *
      * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
      * i.e., the supplied {@code Iterable} instances are iterated immediately and
      * the {@code Sextuple} instances are constructed before this method returns.</p>
@@ -532,7 +532,7 @@ public class Eagerly {
      * <p>For a more mathematical description of the zip function, see the
      * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
      * zip article on Wikipedia</a>.</p>
-     * 
+     *
      * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
      * i.e., the supplied {@code Iterable} instances are iterated immediately and
      * the {@code Septuple} instances are constructed before this method returns.</p>
@@ -584,7 +584,7 @@ public class Eagerly {
      * <p>For a more mathematical description of the zip function, see the
      * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
      * zip article on Wikipedia</a>.</p>
-     * 
+     *
      * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
      * i.e., the supplied {@code Iterable} instances are iterated immediately and
      * the {@code Octuple} instances are constructed before this method returns.</p>
@@ -639,7 +639,7 @@ public class Eagerly {
      * <p>For a more mathematical description of the zip function, see the
      * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
      * zip article on Wikipedia</a>.</p>
-     * 
+     *
      * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
      * i.e., the supplied {@code Iterable} instances are iterated immediately and
      * the {@code Nonuple} instances are constructed before this method returns.</p>
@@ -689,9 +689,9 @@ public class Eagerly {
      * Zips the elements from all {@code Iterable} instances in the supplied
      * {@code Iterable} into a {@code Collection} of {@code Collections}s with each having
      * as many elements as there were {@code Iterable} instances in the input
-     * {@code Iterable}. The returned {@code Collection} contains a {@code Collection} 
-     * for each element in the shortest supplied {@code Iterable} with an element from 
-     * the first supplied {@code Iterable} in the first slot, an element from the second 
+     * {@code Iterable}. The returned {@code Collection} contains a {@code Collection}
+     * for each element in the shortest supplied {@code Iterable} with an element from
+     * the first supplied {@code Iterable} in the first slot, an element from the second
      * supplied {@code Iterable} in the second slot and so on.
      *
      * <p>For a more mathematical description of the zip function, see the
@@ -748,12 +748,102 @@ public class Eagerly {
         });
     }
 
+    /**
+     * Takes the cartesian product of the two supplied {@code Iterable}
+     * instances generating a {@code Collection} of tuples of size two. The
+     * returned {@code Collection} will contain {@code Pair} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable} and the second slot is occupied by an element from
+     * the second supplied {@code Iterable}. The {@code Collection} will
+     * effectively contain a {@code Pair} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Pair} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is also empty.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given an {@code Iterable} of {@code Name} instances and an {@code Iterable}
+     * of {@code Location} instances as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Name&gt; names = Literals.iterableWith(name("Joe"), name("Tim"), name("Laura"));
+     *     Iterable&lt;Location&gt; locations = Literals.iterableWith(location("London"), location("Berlin"));
+     * </pre>
+     * </blockquote>
+     * all possible combinations of names to locations can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *     Collection&lt;Pair&lt;Name, Location&gt;&gt; mappings = cartesianProduct(names, locations);
+     * </pre>
+     * </blockquote>
+     * This is effectively equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *     Collection&lt;Pair&lt;Name, Location&gt;&gt; equivalent = collectionWith(
+     *             tuple(name("Joe"), location("London")), tuple(name("Tim"), location("London")), tuple(name("Laura"), location("London")),
+     *             tuple(name("Joe"), location("Berlin")), tuple(name("Tim"), location("Berlin")), tuple(name("Laura"), location("Berlin")));
+     * </pre>
+     * </blockquote>
+     *
+     * @param first  The first {@code Iterable} from which to form a cartesian product.
+     * @param second The second {@code Iterable} from which to form a cartesian product.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @return A {@code Collection} containing the cartesian product of all elements
+     *         in the supplied {@code Iterable} instances.
+     */
     public static <R, S> Collection<Pair<R, S>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second) {
         return materialize(Lazily.cartesianProduct(first, second));
     }
 
+    /**
+     * Takes the cartesian product of the three supplied {@code Iterable}
+     * instances generating a {@code Collection} of tuples of size three. The
+     * returned {@code Collection} will contain {@code Triple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable} and the third slot is occupied by
+     * an element from the third supplied {@code Iterable}. The {@code Collection}
+     * will effectively contain a {@code Triple} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Triple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is also empty.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for three {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to form a cartesian product.
+     * @param second The second {@code Iterable} from which to form a cartesian product.
+     * @param third  The third {@code Iterable} from which to form a cartesian product.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @return A {@code Collection} containing the cartesian product of all elements
+     *         in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T> Collection<Triple<R, S, T>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second,
@@ -761,6 +851,45 @@ public class Eagerly {
         return materialize(Lazily.cartesianProduct(first, second, third));
     }
 
+    /**
+     * Takes the cartesian product of the four supplied {@code Iterable}
+     * instances generating a {@code Collection} of tuples of size four. The
+     * returned {@code Collection} will contain {@code Quadruple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable} and the third slot is occupied by
+     * an element from the third supplied {@code Iterable}. The {@code Collection}
+     * will effectively contain a {@code Quadruple} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Quadruple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is also empty.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for four {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to form a cartesian product.
+     * @param second The second {@code Iterable} from which to form a cartesian product.
+     * @param third  The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth The fourth {@code Iterable} from which to form a cartesian product.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @return A {@code Collection} containing the cartesian product of all elements
+     *         in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U> Collection<Quadruple<R, S, T, U>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second,
@@ -769,6 +898,47 @@ public class Eagerly {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth));
     }
 
+    /**
+     * Takes the cartesian product of the five supplied {@code Iterable}
+     * instances generating a {@code Collection} of tuples of size five. The
+     * returned {@code Collection} will contain {@code Quintuple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable} and the third slot is occupied by
+     * an element from the third supplied {@code Iterable}. The {@code Collection}
+     * will effectively contain a {@code Quintuple} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Quintuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is also empty.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for five {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to form a cartesian product.
+     * @param second The second {@code Iterable} from which to form a cartesian product.
+     * @param third  The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth The fourth {@code Iterable} from which to form a cartesian product.
+     * @param fifth  The fifth {@code Iterable} from which to form a cartesian product.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @param <V>    The type of the elements in the fifth {@code Iterable}.
+     * @return A {@code Collection} containing the cartesian product of all elements
+     *         in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V> Collection<Quintuple<R, S, T, U, V>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second,
@@ -778,6 +948,49 @@ public class Eagerly {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth));
     }
 
+    /**
+     * Takes the cartesian product of the six supplied {@code Iterable}
+     * instances generating a {@code Collection} of tuples of size six. The
+     * returned {@code Collection} will contain {@code Sextuple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable} and the third slot is occupied by
+     * an element from the third supplied {@code Iterable}. The {@code Collection}
+     * will effectively contain a {@code Sextuple} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Sextuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is also empty.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for six {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to form a cartesian product.
+     * @param second The second {@code Iterable} from which to form a cartesian product.
+     * @param third  The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth The fourth {@code Iterable} from which to form a cartesian product.
+     * @param fifth  The fifth {@code Iterable} from which to form a cartesian product.
+     * @param sixth  The sixth {@code Iterable} from which to form a cartesian product.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @param <V>    The type of the elements in the fifth {@code Iterable}.
+     * @param <W>    The type of the elements in the sixth {@code Iterable}.
+     * @return A {@code Collection} containing the cartesian product of all elements
+     *         in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W> Collection<Sextuple<R, S, T, U, V, W>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second,
@@ -788,6 +1001,51 @@ public class Eagerly {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth, sixth));
     }
 
+    /**
+     * Takes the cartesian product of the seven supplied {@code Iterable}
+     * instances generating a {@code Collection} of tuples of size seven. The
+     * returned {@code Collection} will contain {@code Septuple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable} and the third slot is occupied by
+     * an element from the third supplied {@code Iterable}. The {@code Collection}
+     * will effectively contain a {@code Septuple} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Septuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is also empty.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for seven {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to form a cartesian product.
+     * @param second  The second {@code Iterable} from which to form a cartesian product.
+     * @param third   The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth  The fourth {@code Iterable} from which to form a cartesian product.
+     * @param fifth   The fifth {@code Iterable} from which to form a cartesian product.
+     * @param sixth   The sixth {@code Iterable} from which to form a cartesian product.
+     * @param seventh The seventh {@code Iterable} from which to form a cartesian product.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @return A {@code Collection} containing the cartesian product of all elements
+     *         in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X> Collection<Septuple<R, S, T, U, V, W, X>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second,
@@ -799,6 +1057,53 @@ public class Eagerly {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth, sixth, seventh));
     }
 
+    /**
+     * Takes the cartesian product of the eight supplied {@code Iterable}
+     * instances generating a {@code Collection} of tuples of size eight. The
+     * returned {@code Collection} will contain {@code Octuple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable} and the third slot is occupied by
+     * an element from the third supplied {@code Iterable}. The {@code Collection}
+     * will effectively contain a {@code Octuple} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Octuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is also empty.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for eight {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to form a cartesian product.
+     * @param second  The second {@code Iterable} from which to form a cartesian product.
+     * @param third   The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth  The fourth {@code Iterable} from which to form a cartesian product.
+     * @param fifth   The fifth {@code Iterable} from which to form a cartesian product.
+     * @param sixth   The sixth {@code Iterable} from which to form a cartesian product.
+     * @param seventh The seventh {@code Iterable} from which to form a cartesian product.
+     * @param eighth  The eighth {@code Iterable} from which to form a cartesian product.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @param <Y>     The type of the elements in the eighth {@code Iterable}.
+     * @return A {@code Collection} containing the cartesian product of all elements
+     *         in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X, Y> Collection<Octuple<R, S, T, U, V, W, X, Y>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second,
@@ -811,6 +1116,55 @@ public class Eagerly {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth, sixth, seventh, eighth));
     }
 
+    /**
+     * Takes the cartesian product of the nine supplied {@code Iterable}
+     * instances generating a {@code Collection} of tuples of size nine. The
+     * returned {@code Collection} will contain {@code Nonuple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable} and the third slot is occupied by
+     * an element from the third supplied {@code Iterable}. The {@code Collection}
+     * will effectively contain a {@code Nonuple} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Nonuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is also empty.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for nine {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to form a cartesian product.
+     * @param second  The second {@code Iterable} from which to form a cartesian product.
+     * @param third   The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth  The fourth {@code Iterable} from which to form a cartesian product.
+     * @param fifth   The fifth {@code Iterable} from which to form a cartesian product.
+     * @param sixth   The sixth {@code Iterable} from which to form a cartesian product.
+     * @param seventh The seventh {@code Iterable} from which to form a cartesian product.
+     * @param eighth  The eighth {@code Iterable} from which to form a cartesian product.
+     * @param ninth   The ninth {@code Iterable} from which to form a cartesian product.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @param <Y>     The type of the elements in the eighth {@code Iterable}.
+     * @param <Z>     The type of the elements in the ninth {@code Iterable}.
+     * @return A {@code Collection} containing the cartesian product of all elements
+     *         in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X, Y, Z> Collection<Nonuple<R, S, T, U, V, W, X, Y, Z>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second,

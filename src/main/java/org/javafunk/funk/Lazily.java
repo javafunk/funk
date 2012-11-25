@@ -1698,6 +1698,66 @@ public class Lazily {
         };
     }
 
+    /**
+     * Lazily takes the cartesian product of the two supplied {@code Iterable}
+     * instances generating an {@code Iterable} of tuples of size two. The
+     * returned {@code Iterable} will contain {@code Pair} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable} and the second slot is occupied by an element from
+     * the second supplied {@code Iterable}. The {@code Iterable} will
+     * effectively contain a {@code Pair} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the cartesian product is taken
+     * lazily, i.e., none of the supplied {@code Iterable} instances
+     * is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If any of the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite. Be aware that in the case of
+     * an infinite {@code Iterable}, the current algorithm will lead to
+     * minimal variability in the returned {@code Pair} instances, i.e.,
+     * there is a possibility only one slot of the returned {@code Pair}
+     * instances will ever change.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given an {@code Iterable} of {@code Name} instances and an {@code Iterable}
+     * of {@code Location} instances as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Name&gt; names = Literals.iterableWith(name("Joe"), name("Tim"), name("Laura"));
+     *     Iterable&lt;Location&gt; locations = Literals.iterableWith(location("London"), location("Berlin"));
+     * </pre>
+     * </blockquote>
+     * all possible combinations of names to locations can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Pair&lt;Name, Location&gt;&gt; mappings = cartesianProduct(names, locations);
+     * </pre>
+     * </blockquote>
+     * This is effectively equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Pair&lt;Name, Location&gt;&gt; equivalent = iterableWith(
+     *             tuple(name("Joe"), location("London")), tuple(name("Tim"), location("London")), tuple(name("Laura"), location("London")),
+     *             tuple(name("Joe"), location("Berlin")), tuple(name("Tim"), location("Berlin")), tuple(name("Laura"), location("Berlin")));
+     * </pre>
+     * </blockquote>
+     *
+     * @param first  The first {@code Iterable} from which to form a cartesian product.
+     * @param second The second {@code Iterable} from which to form a cartesian product.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @return An {@code Iterable} effectively containing the cartesian product
+     *         of all elements in the supplied {@code Iterable} instances.
+     */
     public static <R, S> Iterable<Pair<R, S>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second) {
@@ -1706,6 +1766,50 @@ public class Lazily {
                 Mappers.<R, S>toPair());
     }
 
+    /**
+     * Lazily takes the cartesian product of the three supplied {@code Iterable}
+     * instances generating an {@code Iterable} of tuples of size three. The
+     * returned {@code Iterable} will contain {@code Triple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable} and the third slot is occupied
+     * by an element from the third supplied {@code Iterable}. The {@code Iterable}
+     * will effectively contain a {@code Triple} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the cartesian product is taken
+     * lazily, i.e., none of the supplied {@code Iterable} instances
+     * is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If any of the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite. Be aware that in the case of
+     * an infinite {@code Iterable}, the current algorithm will lead to
+     * minimal variability in the returned {@code Triple} instances, i.e.,
+     * there is a possibility only one slot of the returned {@code Triple}
+     * instances will ever change.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for three {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to form a cartesian product.
+     * @param second The second {@code Iterable} from which to form a cartesian product.
+     * @param third  The third {@code Iterable} from which to form a cartesian product.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @return An {@code Iterable} effectively containing the cartesian product
+     *         of all elements in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T> Iterable<Triple<R, S, T>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second,
@@ -1715,6 +1819,52 @@ public class Lazily {
                 Mappers.<R, S, T>toTriple());
     }
 
+    /**
+     * Lazily takes the cartesian product of the four supplied {@code Iterable}
+     * instances generating an {@code Iterable} of tuples of size four. The
+     * returned {@code Iterable} will contain {@code Quadruple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable}, the third slot is occupied
+     * by an element from the third supplied {@code Iterable} and so on. The
+     * {@code Iterable} will effectively contain a {@code Quadruple} for each
+     * possible selection of elements for the slots from each of the corresponding
+     * {@code Iterable} instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the cartesian product is taken
+     * lazily, i.e., none of the supplied {@code Iterable} instances
+     * is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If any of the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite. Be aware that in the case of
+     * an infinite {@code Iterable}, the current algorithm will lead to
+     * minimal variability in the returned {@code Quadruple} instances, i.e.,
+     * there is a possibility only one slot of the returned {@code Quadruple}
+     * instances will ever change.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for four {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to form a cartesian product.
+     * @param second The second {@code Iterable} from which to form a cartesian product.
+     * @param third  The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth The fourth {@code Iterable} from which to form a cartesian product.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @return An {@code Iterable} effectively containing the cartesian product
+     *         of all elements in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U> Iterable<Quadruple<R, S, T, U>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second,
@@ -1725,6 +1875,54 @@ public class Lazily {
                 Mappers.<R, S, T, U>toQuadruple());
     }
 
+    /**
+     * Lazily takes the cartesian product of the five supplied {@code Iterable}
+     * instances generating an {@code Iterable} of tuples of size five. The
+     * returned {@code Iterable} will contain {@code Quintuple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable}, the third slot is occupied
+     * by an element from the third supplied {@code Iterable} and so on. The
+     * {@code Iterable} will effectively contain a {@code Quintuple} for each
+     * possible selection of elements for the slots from each of the corresponding
+     * {@code Iterable} instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the cartesian product is taken
+     * lazily, i.e., none of the supplied {@code Iterable} instances
+     * is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If any of the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite. Be aware that in the case of
+     * an infinite {@code Iterable}, the current algorithm will lead to
+     * minimal variability in the returned {@code Quintuple} instances, i.e.,
+     * there is a possibility only one slot of the returned {@code Quintuple}
+     * instances will ever change.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for five {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to form a cartesian product.
+     * @param second The second {@code Iterable} from which to form a cartesian product.
+     * @param third  The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth The fourth {@code Iterable} from which to form a cartesian product.
+     * @param fifth  The fifth {@code Iterable} from which to form a cartesian product.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @param <V>    The type of the elements in the fifth {@code Iterable}.
+     * @return An {@code Iterable} effectively containing the cartesian product
+     *         of all elements in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V> Iterable<Quintuple<R, S, T, U, V>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second,
@@ -1736,6 +1934,56 @@ public class Lazily {
                 Mappers.<R, S, T, U, V>toQuintuple());
     }
 
+    /**
+     * Lazily takes the cartesian product of the six supplied {@code Iterable}
+     * instances generating an {@code Iterable} of tuples of size six. The
+     * returned {@code Iterable} will contain {@code Sextuple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable}, the third slot is occupied
+     * by an element from the third supplied {@code Iterable} and so on. The
+     * {@code Iterable} will effectively contain a {@code Sextuple} for each
+     * possible selection of elements for the slots from each of the corresponding
+     * {@code Iterable} instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the cartesian product is taken
+     * lazily, i.e., none of the supplied {@code Iterable} instances
+     * is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If any of the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite. Be aware that in the case of
+     * an infinite {@code Iterable}, the current algorithm will lead to
+     * minimal variability in the returned {@code Sextuple} instances, i.e.,
+     * there is a possibility only one slot of the returned {@code Sextuple}
+     * instances will ever change.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for six {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to form a cartesian product.
+     * @param second The second {@code Iterable} from which to form a cartesian product.
+     * @param third  The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth The fourth {@code Iterable} from which to form a cartesian product.
+     * @param fifth  The fifth {@code Iterable} from which to form a cartesian product.
+     * @param sixth  The sixth {@code Iterable} from which to form a cartesian product.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @param <V>    The type of the elements in the fifth {@code Iterable}.
+     * @param <W>    The type of the elements in the sixth {@code Iterable}.
+     * @return An {@code Iterable} effectively containing the cartesian product
+     *         of all elements in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W> Iterable<Sextuple<R, S, T, U, V, W>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second,
@@ -1748,6 +1996,58 @@ public class Lazily {
                 Mappers.<R, S, T, U, V, W>toSextuple());
     }
 
+    /**
+     * Lazily takes the cartesian product of the seven supplied {@code Iterable}
+     * instances generating an {@code Iterable} of tuples of size seven. The
+     * returned {@code Iterable} will contain {@code Septuple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable}, the third slot is occupied
+     * by an element from the third supplied {@code Iterable} and so on. The
+     * {@code Iterable} will effectively contain a {@code Septuple} for each
+     * possible selection of elements for the slots from each of the corresponding
+     * {@code Iterable} instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the cartesian product is taken
+     * lazily, i.e., none of the supplied {@code Iterable} instances
+     * is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If any of the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite. Be aware that in the case of
+     * an infinite {@code Iterable}, the current algorithm will lead to
+     * minimal variability in the returned {@code Septuple} instances, i.e.,
+     * there is a possibility only one slot of the returned {@code Septuple}
+     * instances will ever change.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for seven {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to form a cartesian product.
+     * @param second  The second {@code Iterable} from which to form a cartesian product.
+     * @param third   The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth  The fourth {@code Iterable} from which to form a cartesian product.
+     * @param fifth   The fifth {@code Iterable} from which to form a cartesian product.
+     * @param sixth   The sixth {@code Iterable} from which to form a cartesian product.
+     * @param seventh The seventh {@code Iterable} from which to form a cartesian product.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @return An {@code Iterable} effectively containing the cartesian product
+     *         of all elements in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X> Iterable<Septuple<R, S, T, U, V, W, X>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second,
@@ -1761,6 +2061,60 @@ public class Lazily {
                 Mappers.<R, S, T, U, V, W, X>toSeptuple());
     }
 
+    /**
+     * Lazily takes the cartesian product of the eight supplied {@code Iterable}
+     * instances generating an {@code Iterable} of tuples of size eight. The
+     * returned {@code Iterable} will contain {@code Octuple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable}, the third slot is occupied
+     * by an element from the third supplied {@code Iterable} and so on. The
+     * {@code Iterable} will effectively contain a {@code Octuple} for each
+     * possible selection of elements for the slots from each of the corresponding
+     * {@code Iterable} instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the cartesian product is taken
+     * lazily, i.e., none of the supplied {@code Iterable} instances
+     * is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If any of the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite. Be aware that in the case of
+     * an infinite {@code Iterable}, the current algorithm will lead to
+     * minimal variability in the returned {@code Octuple} instances, i.e.,
+     * there is a possibility only one slot of the returned {@code Octuple}
+     * instances will ever change.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for eight {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to form a cartesian product.
+     * @param second  The second {@code Iterable} from which to form a cartesian product.
+     * @param third   The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth  The fourth {@code Iterable} from which to form a cartesian product.
+     * @param fifth   The fifth {@code Iterable} from which to form a cartesian product.
+     * @param sixth   The sixth {@code Iterable} from which to form a cartesian product.
+     * @param seventh The seventh {@code Iterable} from which to form a cartesian product.
+     * @param eighth  The eighth {@code Iterable} from which to form a cartesian product.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @param <Y>     The type of the elements in the eighth {@code Iterable}.
+     * @return An {@code Iterable} effectively containing the cartesian product
+     *         of all elements in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X, Y> Iterable<Octuple<R, S, T, U, V, W, X, Y>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second,
@@ -1775,6 +2129,62 @@ public class Lazily {
                 Mappers.<R, S, T, U, V, W, X, Y>toOctuple());
     }
 
+    /**
+     * Lazily takes the cartesian product of the nine supplied {@code Iterable}
+     * instances generating an {@code Iterable} of tuples of size nine. The
+     * returned {@code Iterable} will contain {@code Nonuple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable}, the third slot is occupied
+     * by an element from the third supplied {@code Iterable} and so on. The
+     * {@code Iterable} will effectively contain a {@code Nonuple} for each
+     * possible selection of elements for the slots from each of the corresponding
+     * {@code Iterable} instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the cartesian product is taken
+     * lazily, i.e., none of the supplied {@code Iterable} instances
+     * is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If any of the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite. Be aware that in the case of
+     * an infinite {@code Iterable}, the current algorithm will lead to
+     * minimal variability in the returned {@code Nonuple} instances, i.e.,
+     * there is a possibility only one slot of the returned {@code Nonuple}
+     * instances will ever change.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for nine {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to form a cartesian product.
+     * @param second  The second {@code Iterable} from which to form a cartesian product.
+     * @param third   The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth  The fourth {@code Iterable} from which to form a cartesian product.
+     * @param fifth   The fifth {@code Iterable} from which to form a cartesian product.
+     * @param sixth   The sixth {@code Iterable} from which to form a cartesian product.
+     * @param seventh The seventh {@code Iterable} from which to form a cartesian product.
+     * @param eighth  The eighth {@code Iterable} from which to form a cartesian product.
+     * @param ninth   The ninth {@code Iterable} from which to form a cartesian product.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @param <Y>     The type of the elements in the eighth {@code Iterable}.
+     * @param <Z>     The type of the elements in the ninth {@code Iterable}.
+     * @return An {@code Iterable} effectively containing the cartesian product
+     *         of all elements in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X, Y, Z> Iterable<Nonuple<R, S, T, U, V, W, X, Y, Z>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second,
