@@ -2053,6 +2053,74 @@ public class Eagerly {
         return materialize(Lazily.dropUntil(iterable, predicate));
     }
 
+    /**
+     * Partitions the supplied {@code Iterable} into those elements that
+     * satisfy the supplied {@code UnaryPredicate} and those elements that do not
+     * satisfy the supplied {@code UnaryPredicate}. A {@code Pair} containing two
+     * {@code Collection} instances is returned. Those elements that satisfy the
+     * supplied {@code UnaryPredicate} form a {@code Collection} in the first slot
+     * of the {@code Pair} and those that do not satisfy the supplied
+     * {@code UnaryPredicate} form a {@code Collection} in the second slot of the
+     * {@code Pair}. The ordering of the {@code Iterable} instance is maintained
+     * according to the partition in the returned {@code Collection} instances.
+     *
+     * <p>Since a {@code Pair} containing {@code Collection} instances is returned,
+     * the partitioning is performed eagerly, i.e., the {@code UnaryPredicate} is
+     * applied to each element in the input {@code Iterable} immediately.</p>
+     *
+     * <p>If no elements in the supplied {@code Iterable} satisfy the supplied
+     * {@code UnaryPredicate}, the first slot in the returned {@code Pair}
+     * will be occupied by an empty {@code Collection}. Similarly, if all elements
+     * in the supplied {@code Iterable} satisfy the supplied {@code UnaryPredicate},
+     * the second slot in the returned {@code Pair} will be occupied by an
+     * empty {@code Collection}.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given an {@code Iterable} of {@code Account} instances where {@code Account} is
+     * defined as follows:
+     * <blockquote>
+     * <pre>
+     *     public class Account {
+     *         private final BigDecimal balance;
+     *
+     *         public Account(BigDecimal balance) {
+     *             this.balance = balance;
+     *         }
+     *
+     *         public boolean isOverdrawn() {
+     *             return balance < 0;
+     *         }
+     *
+     *         ...
+     *     }
+     * </pre>
+     * </blockquote>
+     * we can divide those that are overdrawn from those that are not using the following:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Account&gt; accounts = accountRepository.getAccounts();
+     *     Pair&lt;Collection&ltAccount&gt;, Collection&lt;Account&gt&gt overdrawnPartition = partition(accounts, new Predicate&ltAccount&gt;() {
+     *        &#64;Override public boolean evaluate(Account account) {
+     *            return account.isOverdrawn();
+     *        }
+     *     });
+     *     Collection&lt;Account&gt; inTheRedAccounts = overdrawnPartition.getFirst();
+     *     Collection&lt;Account&gt; inTheBlackAccounts = overdrawnPartition.getSecond();
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable  An {@code Iterable} of elements to be partitioned based on
+     *                  whether or not they satisfy the supplied {@code UnaryPredicate}.
+     * @param predicate A {@code UnaryPredicate} to be used to evaluate which side of the
+     *                  partition each element in the supplied {@code Iterable} should
+     *                  reside.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Pair} instance which contains those elements from the supplied
+     *         {@code Iterable} which satisfy the supplied {@code UnaryPredicate} in
+     *         the first slot and those elements from the supplied {@code Iterable}
+     *         which do not satisfy the supplied {@code UnaryPredicate} in the second
+     *         slot.
+     */
     public static <T> Pair<Collection<T>, Collection<T>> partition(
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
