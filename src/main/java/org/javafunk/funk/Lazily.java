@@ -1576,6 +1576,53 @@ public class Lazily {
         return tuple(filter(iterable, predicate), reject(iterable, predicate));
     }
 
+    /**
+     * Lazily removes the first element from the supplied {@code Iterable} and
+     * returns all remaining elements in an {@code Iterable}.
+     *
+     * <p>Since a lazy {@code Iterable} instance is returned, the removal of the first
+     * element is performed lazily, i.e., the input {@code Iterable} is not
+     * iterated until the returned {@code Iterable} instance is iterated.</p>
+     *
+     * <p>If the supplied {@code Iterable} contains only one element, the
+     * returned {@code Iterable} will be effectively empty. Similarly, if the
+     * supplied {@code Iterable} is empty, the returned {@code Iterable} will
+     * be empty.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given the following {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Integer&gt; numbers = listWith(1, 2, 3, 4, 5, 6);
+     * </pre>
+     * </blockquote>
+     * we can recursively sum the contents using the following method:
+     * <blockquote>
+     * <pre>
+     *     public static class Mathematics {
+     *         public static Integer sum(Iterable&lt;Integer&gt; numbers) {
+     *             if (!numbers.hasNext()) {
+     *                 return 0;
+     *             }
+     *             return first(numbers).get() + sum(rest(number));
+     *         }
+     *     }
+     *
+     *     ...
+     *
+     *     Integer result = Mathematics.sum(numbers); // => 21
+     * </pre>
+     * </blockquote>
+     * Note that in reality, this would exhaust the stack if the input {@code Iterable}
+     * was large enough and so instead should be replaced by some other form of
+     * iteration.
+     *
+     * @param iterable The {@code Iterable} from which to remove the first element.
+     * @param <T>      The type of the elements in the supplied {@code Iterable};
+     * @return An {@code Iterable} effectively containing all elements from the supplied
+     *         {@code Iterable} but the first in the same order as in the supplied
+     *         {@code Iterable}.
+     */
     public static <T> Iterable<T> rest(final Iterable<T> iterable) {
         return slice(iterable, 1, null, 1);
     }

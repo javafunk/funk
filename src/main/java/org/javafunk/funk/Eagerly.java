@@ -1557,6 +1557,43 @@ public class Eagerly {
         return last(filter(iterable, predicate), numberOfElementsRequired);
     }
 
+    /**
+     * Removes the first element from the supplied {@code Iterable} and
+     * returns all remaining elements in a {@code Collection}. The ordering
+     * of the elements in the retured {@code Collection} will be the same as
+     * the input {@code Iterable}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the removal of the first
+     * element is performed eagerly, i.e., the input {@code Iterable} is iterated
+     * immediately.</p>
+     *
+     * <p>If the supplied {@code Iterable} contains only one element, the
+     * returned {@code Collection} will be empty. Similarly, if the supplied
+     * {@code Iterable} is empty, the returned {@code Collection} will
+     * be empty.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given the following {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Integer&gt; numbers = Literals.listWith(1, 2, 3, 4, 5, 6);
+     * </pre>
+     * </blockquote>
+     * using {@code rest}, we can obtain a collection containing all but the first
+     * element. The following two lines are equivalent:
+     * <blockquote>
+     * <pre>
+     *     Collection&lt;Integer&gt; remainingElements = rest(numbers);
+     *     Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(2, 3, 4, 5, 6);
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which to remove the first element.
+     * @param <T>      The type of the elements in the supplied {@code Iterable};
+     * @return A {@code Collection} containing all elements from the supplied
+     *         {@code Iterable} but the first in the same order as in the supplied
+     *         {@code Iterable}.
+     */
     public static <T> Collection<T> rest(Iterable<T> iterable) {
         return slice(iterable, 1, null);
     }
