@@ -33,7 +33,7 @@ public class PredicatesTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIfPredicateSuppliedtoNotIsNull() throws Exception {
+    public void shouldThrowNullPointerExceptionIfPredicateSuppliedToNotIsNull() throws Exception {
         // Given
         Predicate<String> predicate = null;
 
