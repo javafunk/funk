@@ -8,7 +8,14 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.tuples.*;
+import org.javafunk.funk.datastructures.tuples.Nonuple;
+import org.javafunk.funk.datastructures.tuples.Octuple;
+import org.javafunk.funk.datastructures.tuples.Pair;
+import org.javafunk.funk.datastructures.tuples.Quadruple;
+import org.javafunk.funk.datastructures.tuples.Quintuple;
+import org.javafunk.funk.datastructures.tuples.Septuple;
+import org.javafunk.funk.datastructures.tuples.Sextuple;
+import org.javafunk.funk.datastructures.tuples.Triple;
 import org.javafunk.funk.testclasses.Age;
 import org.javafunk.funk.testclasses.Colour;
 import org.javafunk.funk.testclasses.Name;
@@ -20,7 +27,9 @@ import java.util.Iterator;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.asList;
 import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Literals.*;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.testclasses.Age.age;
 import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Name.name;

@@ -278,7 +278,7 @@ public class EagerlySliceTest {
     }
 
     @Test
-    public void shouldReturnAnEmptyIterableIfSuppliedStartIsPostivelyOutOfRangeAndStepSizeIsPositive() throws Exception {
+    public void shouldReturnAnEmptyIterableIfSuppliedStartIsPositivelyOutOfRangeAndStepSizeIsPositive() throws Exception {
         // Given
         Iterable<String> input = iterableWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
         Collection<String> expectedOutput = Collections.emptyList();

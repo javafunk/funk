@@ -8,8 +8,16 @@
  */
 package org.javafunk.funk;
 
+import org.hamcrest.Matchers;
 import org.javafunk.funk.annotations.ToDo;
-import org.javafunk.funk.datastructures.tuples.*;
+import org.javafunk.funk.datastructures.tuples.Nonuple;
+import org.javafunk.funk.datastructures.tuples.Octuple;
+import org.javafunk.funk.datastructures.tuples.Pair;
+import org.javafunk.funk.datastructures.tuples.Quadruple;
+import org.javafunk.funk.datastructures.tuples.Quintuple;
+import org.javafunk.funk.datastructures.tuples.Septuple;
+import org.javafunk.funk.datastructures.tuples.Sextuple;
+import org.javafunk.funk.datastructures.tuples.Triple;
 import org.javafunk.funk.functors.Action;
 import org.javafunk.funk.testclasses.Age;
 import org.javafunk.funk.testclasses.Colour;
@@ -26,7 +34,10 @@ import static org.javafunk.funk.Eagerly.times;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Lazily.cartesianProduct;
 import static org.javafunk.funk.Lazily.cycle;
-import static org.javafunk.funk.Literals.*;
+import static org.javafunk.funk.Literals.collectionWith;
+import static org.javafunk.funk.Literals.iterable;
+import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.testclasses.Age.age;
 import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Name.name;
@@ -166,6 +177,19 @@ public class LazilyCartesianProductTest {
                 assertThat(iterator.next(), is(tuple(1, "c")));
             }
         });
+    }
+
+    @Test
+    public void shouldReturnEmptyIterableIfAnyOfTheSuppliedIterablesAreEmpty() throws Exception {
+        // Given
+        Iterable<Integer> firstIterable = iterableWith(1, 2, 3);
+        Iterable<String> secondIterable = iterable();
+
+        // When
+        Iterable<Pair<Integer, String>> product = cartesianProduct(firstIterable, secondIterable);
+
+        // Then
+        assertThat(product, is(Matchers.<Pair<Integer, String>>emptyIterable()));
     }
 
     @Test

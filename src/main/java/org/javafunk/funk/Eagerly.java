@@ -36,7 +36,8 @@ import static org.javafunk.funk.functors.adapters.ReducerBinaryFunctionAdapter.r
  * @since 1.0
  */
 public class Eagerly {
-    private Eagerly() {}
+    private Eagerly() {
+    }
 
     public static <S, T> T reduce(
             Iterable<? extends S> iterable,
@@ -101,8 +102,8 @@ public class Eagerly {
         return reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMax, T element) {
                 return comparator.compare(element, currentMax) > 0 ?
-                        element :
-                        currentMax;
+                       element :
+                       currentMax;
             }
         });
     }
@@ -111,8 +112,8 @@ public class Eagerly {
         return returnOrThrowIfNull(reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMax, T element) {
                 return (element != null && element.compareTo(currentMax) > 0) ?
-                        element :
-                        currentMax;
+                       element :
+                       currentMax;
             }
         }), new NoSuchElementException("Maximum value is undefined if all values in the supplied Iterable are null."));
     }
@@ -121,8 +122,8 @@ public class Eagerly {
         return reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMin, T element) {
                 return comparator.compare(element, currentMin) < 0 ?
-                        element :
-                        currentMin;
+                       element :
+                       currentMin;
             }
         });
     }
@@ -131,8 +132,8 @@ public class Eagerly {
         return returnOrThrowIfNull(reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMin, T element) {
                 return (element != null && element.compareTo(currentMin) < 0) ?
-                        element :
-                        currentMin;
+                       element :
+                       currentMin;
             }
         }), new NoSuchElementException("Minimum value is undefined if all values in the supplied Iterable are null."));
     }
@@ -258,14 +259,13 @@ public class Eagerly {
      * <a href="http://en.wikipedia.org/wiki/Map_(higher-order_function)">
      * map article on Wikipedia</a>.
      *
-     * <p>This override of
-     * {@link #map(Iterable, org.javafunk.funk.functors.functions.UnaryFunction)} is
-     * provided to allow a {@code Mapper} to be used in place of a {@code UnaryFunction}
-     * to enhance readability and better express intent. The contract of the function
+     * <p>This overload of {@link #map(Iterable, UnaryFunction)} is provided to allow a
+     * {@code Mapper} to be used in place of a {@code UnaryFunction} to enhance
+     * readability and better express intent. The contract of the function
      * is identical to that of the {@code UnaryFunction} version of {@code map}.</p>
      *
      * <p>For example usage and further documentation, see
-     * {@link #map(Iterable, org.javafunk.funk.functors.functions.UnaryFunction)}.</p>
+     * {@link #map(Iterable, UnaryFunction)}.</p>
      *
      * @param iterable The {@code Iterable} of elements to be mapped.
      * @param mapper   A {@code Mapper} which, given an element from the input iterable,
@@ -274,18 +274,107 @@ public class Eagerly {
      * @param <T>      The type of the output elements, i.e., the mapped elements.
      * @return A {@code Collection} containing each instance of {@code S} from the input
      *         {@code Iterable} mapped to an instance of {@code T}.
-     * @see #map(Iterable, org.javafunk.funk.functors.functions.UnaryFunction)
+     * @see #map(Iterable, UnaryFunction)
      */
     public static <S, T> Collection<T> map(Iterable<S> iterable, Mapper<? super S, T> mapper) {
         return map(iterable, mapperUnaryFunction(mapper));
     }
 
-    public static <S, T> Collection<Pair<S, T>> zip(
-            Iterable<S> first,
-            Iterable<T> second) {
+    /**
+     * Zips the elements from the two supplied {@code Iterable} instances
+     * into a tuple of size two. The returned {@code Iterable} contains
+     * a {@code Pair} instance for each element in the shortest supplied
+     * {@code Iterable} with an element from the first supplied {@code Iterable}
+     * in the first slot and an element from the second supplied {@code Iterable}
+     * in the second slot.
+     *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Pair} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given an {@code Iterable} of {@code Integer} instances representing the
+     * first ten values in the sequence of natural numbers and an {@code Iterable}
+     * of {@code String} instances representing the textual equivalents of those
+     * numbers as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Integer&gt; numbers = Literals.iterableWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+     *     Iterable&lt;String&gt; numberNames = Literals.iterableWith(
+     *             "one", "two", "three", "four", "five",
+     *             "six", "seven", "eight", "nine", "ten",
+     *             "eleven", "twelve");
+     * </pre>
+     * </blockquote>
+     * a {@code Collection} containing {@code Pair}s with the number associated
+     * to the textual name can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *     Collection&ltPair&ltInteger, String&gt;&gt; associations = zip(numbers, numberNames);
+     * </pre>
+     * </blockquote>
+     * This is effectively equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *     Collection&lt;Pair&lt;Integer, String&gt;&gt; associations = Literals.collectionWith(
+     *             pair(1, "one"), pair(2, "two"), pair(3, "three"), pair(4, "four"), pair(5, "five"),
+     *             pair(6, "six"), pair(7, "seven"), pair(8, "eight"), pair(9, "nine"), pair(10, "ten"));
+     * </pre>
+     * </blockquote>
+     *
+     * @param first  The first {@code Iterable} from which to construct a zip.
+     * @param second The second {@code Iterable} from which to construct a zip.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @return A {@code Collection} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
+    public static <R, S> Collection<Pair<R, S>> zip(
+            Iterable<R> first,
+            Iterable<S> second) {
         return materialize(Lazily.zip(first, second));
     }
 
+    /**
+     * Zips the elements from the three supplied {@code Iterable} instances
+     * into a tuple of size three. The returned {@code Iterable} contains
+     * a {@code Triple} instance for each element in the shortest supplied
+     * {@code Iterable} with an element from the first supplied {@code Iterable}
+     * in the first slot, an element from the second supplied {@code Iterable}
+     * in the second slot and an element from the third supplied {@code Iterable}
+     * in the third slot.
+     *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Triple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>This overload of {@code zip} is provided to allow three {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to construct a zip.
+     * @param second The second {@code Iterable} from which to construct a zip.
+     * @param third  The third {@code Iterable} from which to construct a zip.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @return A {@code Collection} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T> Collection<Triple<R, S, T>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -293,6 +382,41 @@ public class Eagerly {
         return materialize(Lazily.zip(first, second, third));
     }
 
+    /**
+     * Zips the elements from the four supplied {@code Iterable} instances
+     * into a tuple of size four. The returned {@code Iterable} contains
+     * a {@code Quadruple} instance for each element in the shortest supplied
+     * {@code Iterable} with an element from the first supplied {@code Iterable}
+     * in the first slot, an element from the second supplied {@code Iterable}
+     * in the second slot and an element from the third supplied {@code Iterable}
+     * in the third slot and so on.
+     *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Quadruple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>This overload of {@code zip} is provided to allow four {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to construct a zip.
+     * @param second The second {@code Iterable} from which to construct a zip.
+     * @param third  The third {@code Iterable} from which to construct a zip.
+     * @param fourth The fourth {@code Iterable} from which to construct a zip.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @return A {@code Collection} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U> Collection<Quadruple<R, S, T, U>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -301,6 +425,43 @@ public class Eagerly {
         return materialize(Lazily.zip(first, second, third, fourth));
     }
 
+    /**
+     * Zips the elements from the five supplied {@code Iterable} instances
+     * into a tuple of size five. The returned {@code Iterable} contains
+     * a {@code Quintuple} instance for each element in the shortest supplied
+     * {@code Iterable} with an element from the first supplied {@code Iterable}
+     * in the first slot, an element from the second supplied {@code Iterable}
+     * in the second slot and an element from the third supplied {@code Iterable}
+     * in the third slot and so on.
+     *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Quintuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>This overload of {@code zip} is provided to allow five {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to construct a zip.
+     * @param second The second {@code Iterable} from which to construct a zip.
+     * @param third  The third {@code Iterable} from which to construct a zip.
+     * @param fourth The fourth {@code Iterable} from which to construct a zip.
+     * @param fifth  The fifth {@code Iterable} from which to construct a zip.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @param <V>    The type of the elements in the fifth {@code Iterable}.
+     * @return A {@code Collection} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V> Collection<Quintuple<R, S, T, U, V>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -310,6 +471,45 @@ public class Eagerly {
         return materialize(Lazily.zip(first, second, third, fourth, fifth));
     }
 
+    /**
+     * Zips the elements from the six supplied {@code Iterable} instances
+     * into a tuple of size six. The returned {@code Iterable} contains
+     * a {@code Sextuple} instance for each element in the shortest supplied
+     * {@code Iterable} with an element from the first supplied {@code Iterable}
+     * in the first slot, an element from the second supplied {@code Iterable}
+     * in the second slot and an element from the third supplied {@code Iterable}
+     * in the third slot and so on.
+     *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Sextuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>This overload of {@code zip} is provided to allow six {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to construct a zip.
+     * @param second The second {@code Iterable} from which to construct a zip.
+     * @param third  The third {@code Iterable} from which to construct a zip.
+     * @param fourth The fourth {@code Iterable} from which to construct a zip.
+     * @param fifth  The fifth {@code Iterable} from which to construct a zip.
+     * @param sixth  The sixth {@code Iterable} from which to construct a zip.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @param <V>    The type of the elements in the fifth {@code Iterable}.
+     * @param <W>    The type of the elements in the sixth {@code Iterable}.
+     * @return A {@code Collection} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W> Collection<Sextuple<R, S, T, U, V, W>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -320,6 +520,47 @@ public class Eagerly {
         return materialize(Lazily.zip(first, second, third, fourth, fifth, sixth));
     }
 
+    /**
+     * Zips the elements from the seven supplied {@code Iterable} instances
+     * into a tuple of size seven. The returned {@code Iterable} contains
+     * a {@code Septuple} instance for each element in the shortest supplied
+     * {@code Iterable} with an element from the first supplied {@code Iterable}
+     * in the first slot, an element from the second supplied {@code Iterable}
+     * in the second slot and an element from the third supplied {@code Iterable}
+     * in the third slot and so on.
+     *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Septuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>This overload of {@code zip} is provided to allow seven {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to construct a zip.
+     * @param second  The second {@code Iterable} from which to construct a zip.
+     * @param third   The third {@code Iterable} from which to construct a zip.
+     * @param fourth  The fourth {@code Iterable} from which to construct a zip.
+     * @param fifth   The fifth {@code Iterable} from which to construct a zip.
+     * @param sixth   The sixth {@code Iterable} from which to construct a zip.
+     * @param seventh The seventh {@code Iterable} from which to construct a zip.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @return A {@code Collection} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X> Collection<Septuple<R, S, T, U, V, W, X>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -331,6 +572,49 @@ public class Eagerly {
         return materialize(Lazily.zip(first, second, third, fourth, fifth, sixth, seventh));
     }
 
+    /**
+     * Zips the elements from the eight supplied {@code Iterable} instances
+     * into a tuple of size eight. The returned {@code Iterable} contains
+     * a {@code Octuple} instance for each element in the shortest supplied
+     * {@code Iterable} with an element from the first supplied {@code Iterable}
+     * in the first slot, an element from the second supplied {@code Iterable}
+     * in the second slot and an element from the third supplied {@code Iterable}
+     * in the third slot and so on.
+     *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Octuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>This overload of {@code zip} is provided to allow eight {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to construct a zip.
+     * @param second  The second {@code Iterable} from which to construct a zip.
+     * @param third   The third {@code Iterable} from which to construct a zip.
+     * @param fourth  The fourth {@code Iterable} from which to construct a zip.
+     * @param fifth   The fifth {@code Iterable} from which to construct a zip.
+     * @param sixth   The sixth {@code Iterable} from which to construct a zip.
+     * @param seventh The seventh {@code Iterable} from which to construct a zip.
+     * @param eighth  The eighth {@code Iterable} from which to construct a zip.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @param <Y>     The type of the elements in the eighth {@code Iterable}.
+     * @return A {@code Collection} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X, Y> Collection<Octuple<R, S, T, U, V, W, X, Y>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -343,6 +627,51 @@ public class Eagerly {
         return materialize(Lazily.zip(first, second, third, fourth, fifth, sixth, seventh, eighth));
     }
 
+    /**
+     * Zips the elements from the nine supplied {@code Iterable} instances
+     * into a tuple of size nine. The returned {@code Iterable} contains
+     * a {@code Nonuple} instance for each element in the shortest supplied
+     * {@code Iterable} with an element from the first supplied {@code Iterable}
+     * in the first slot, an element from the second supplied {@code Iterable}
+     * in the second slot and an element from the third supplied {@code Iterable}
+     * in the third slot and so on.
+     *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Nonuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>This overload of {@code zip} is provided to allow nine {@code Iterable}
+     * instances to be zipped. For equivalent example usage for the two
+     * {@code Iterable} case, see {@link #zip(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to construct a zip.
+     * @param second  The second {@code Iterable} from which to construct a zip.
+     * @param third   The third {@code Iterable} from which to construct a zip.
+     * @param fourth  The fourth {@code Iterable} from which to construct a zip.
+     * @param fifth   The fifth {@code Iterable} from which to construct a zip.
+     * @param sixth   The sixth {@code Iterable} from which to construct a zip.
+     * @param seventh The seventh {@code Iterable} from which to construct a zip.
+     * @param eighth  The eighth {@code Iterable} from which to construct a zip.
+     * @param ninth   The ninth {@code Iterable} from which to construct a zip.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @param <Y>     The type of the elements in the eighth {@code Iterable}.
+     * @param <Z>     The type of the elements in the ninth {@code Iterable}.
+     * @return A {@code Collection} containing tuples representing zipped
+     *         elements from the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X, Y, Z> Collection<Nonuple<R, S, T, U, V, W, X, Y, Z>> zip(
             Iterable<R> first,
             Iterable<S> second,
@@ -356,6 +685,61 @@ public class Eagerly {
         return materialize(Lazily.zip(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth));
     }
 
+    /**
+     * Zips the elements from all {@code Iterable} instances in the supplied
+     * {@code Iterable} into a {@code Collection} of {@code Collections}s with each having
+     * as many elements as there were {@code Iterable} instances in the input
+     * {@code Iterable}. The returned {@code Collection} contains a {@code Collection}
+     * for each element in the shortest supplied {@code Iterable} with an element from
+     * the first supplied {@code Iterable} in the first slot, an element from the second
+     * supplied {@code Iterable} in the second slot and so on.
+     *
+     * <p>For a more mathematical description of the zip function, see the
+     * <a href="http://en.wikipedia.org/wiki/Convolution_(computer_science)">
+     * zip article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the zipping is performed eagerly,
+     * i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Collection} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>Note that this overload of {@code zip} does not preserve type information
+     * and so the returned {@code Collection} will contain {@code Collection} instances
+     * over the wildcard type {@code ?}. If the number of {@code Iterable} instances
+     * to be zipped is less than ten, use the explicit arities of {@code zip}.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given three {@code Iterable} instances of varying types:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Integer&gt; first = iterableWith(1, 2, 3, 4, 5);
+     *     Iterable&lt;String&gt; second = iterableWith("first", "second", "third");
+     *     Iterable&lt;Boolean&gt; third = iterableWith(false, true, false, true);
+     * </pre>
+     * </blockquote>
+     * we can zip them into a {@code Collection} of {@code Collection} instances as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&ltIterable&lt?&gt;&gt; iterables = Literals.&lt;Iterable&lt?&gt;&gt;iterableWith(first, second, third);
+     *     Collection&ltCollection&lt;?&gt;&gt; zippedResult = zip(iterables);
+     * </pre>
+     * </blockquote>
+     * This is effectively equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *     Collection&lt;Collection&lt;?&gt;&gt; expectedOutput = Literals.&lt;Collection&lt;?&gt;&gt;collectionWith(
+     *             collectionWith(1, "first", false),
+     *             collectionWith(2, "second", true),
+     *             collectionWith(3, "third", false));
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterables An {@code Iterable} of {@code Iterable} instances to be zipped.
+     * @return A {@code Collection} of {@code Collection} instances representing the
+     *         zipped contents of the supplied {@code Iterable} of {@code Iterable}s.
+     */
     public static Collection<Collection<?>> zip(Iterable<? extends Iterable<?>> iterables) {
         return Eagerly.map(Lazily.zip(iterables), new Mapper<Iterable<?>, Collection<?>>() {
             @Override public Collection<?> map(Iterable<?> iterable) {
@@ -364,12 +748,102 @@ public class Eagerly {
         });
     }
 
+    /**
+     * Takes the cartesian product of the two supplied {@code Iterable}
+     * instances generating a {@code Collection} of tuples of size two. The
+     * returned {@code Collection} will contain {@code Pair} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable} and the second slot is occupied by an element from
+     * the second supplied {@code Iterable}. The {@code Collection} will
+     * effectively contain a {@code Pair} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Pair} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is also empty.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given an {@code Iterable} of {@code Name} instances and an {@code Iterable}
+     * of {@code Location} instances as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Name&gt; names = Literals.iterableWith(name("Joe"), name("Tim"), name("Laura"));
+     *     Iterable&lt;Location&gt; locations = Literals.iterableWith(location("London"), location("Berlin"));
+     * </pre>
+     * </blockquote>
+     * all possible combinations of names to locations can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *     Collection&lt;Pair&lt;Name, Location&gt;&gt; mappings = cartesianProduct(names, locations);
+     * </pre>
+     * </blockquote>
+     * This is effectively equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *     Collection&lt;Pair&lt;Name, Location&gt;&gt; equivalent = collectionWith(
+     *             tuple(name("Joe"), location("London")), tuple(name("Tim"), location("London")), tuple(name("Laura"), location("London")),
+     *             tuple(name("Joe"), location("Berlin")), tuple(name("Tim"), location("Berlin")), tuple(name("Laura"), location("Berlin")));
+     * </pre>
+     * </blockquote>
+     *
+     * @param first  The first {@code Iterable} from which to form a cartesian product.
+     * @param second The second {@code Iterable} from which to form a cartesian product.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @return A {@code Collection} containing the cartesian product of all elements
+     *         in the supplied {@code Iterable} instances.
+     */
     public static <R, S> Collection<Pair<R, S>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second) {
         return materialize(Lazily.cartesianProduct(first, second));
     }
 
+    /**
+     * Takes the cartesian product of the three supplied {@code Iterable}
+     * instances generating a {@code Collection} of tuples of size three. The
+     * returned {@code Collection} will contain {@code Triple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable} and the third slot is occupied by
+     * an element from the third supplied {@code Iterable}. The {@code Collection}
+     * will effectively contain a {@code Triple} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Triple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is also empty.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for three {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to form a cartesian product.
+     * @param second The second {@code Iterable} from which to form a cartesian product.
+     * @param third  The third {@code Iterable} from which to form a cartesian product.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @return A {@code Collection} containing the cartesian product of all elements
+     *         in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T> Collection<Triple<R, S, T>> cartesianProduct(
             Iterable<R> first,
             Iterable<S> second,
@@ -377,69 +851,397 @@ public class Eagerly {
         return materialize(Lazily.cartesianProduct(first, second, third));
     }
 
+    /**
+     * Takes the cartesian product of the four supplied {@code Iterable}
+     * instances generating a {@code Collection} of tuples of size four. The
+     * returned {@code Collection} will contain {@code Quadruple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable} and the third slot is occupied by
+     * an element from the third supplied {@code Iterable}. The {@code Collection}
+     * will effectively contain a {@code Quadruple} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Quadruple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is also empty.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for four {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to form a cartesian product.
+     * @param second The second {@code Iterable} from which to form a cartesian product.
+     * @param third  The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth The fourth {@code Iterable} from which to form a cartesian product.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @return A {@code Collection} containing the cartesian product of all elements
+     *         in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U> Collection<Quadruple<R, S, T, U>> cartesianProduct(
-                Iterable<R> first,
-                Iterable<S> second,
-                Iterable<T> third,
-                Iterable<U> fourth) {
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth) {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth));
     }
 
+    /**
+     * Takes the cartesian product of the five supplied {@code Iterable}
+     * instances generating a {@code Collection} of tuples of size five. The
+     * returned {@code Collection} will contain {@code Quintuple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable} and the third slot is occupied by
+     * an element from the third supplied {@code Iterable}. The {@code Collection}
+     * will effectively contain a {@code Quintuple} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Quintuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is also empty.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for five {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to form a cartesian product.
+     * @param second The second {@code Iterable} from which to form a cartesian product.
+     * @param third  The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth The fourth {@code Iterable} from which to form a cartesian product.
+     * @param fifth  The fifth {@code Iterable} from which to form a cartesian product.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @param <V>    The type of the elements in the fifth {@code Iterable}.
+     * @return A {@code Collection} containing the cartesian product of all elements
+     *         in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V> Collection<Quintuple<R, S, T, U, V>> cartesianProduct(
-                    Iterable<R> first,
-                    Iterable<S> second,
-                    Iterable<T> third,
-                    Iterable<U> fourth,
-                    Iterable<V> fifth) {
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth) {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth));
     }
 
+    /**
+     * Takes the cartesian product of the six supplied {@code Iterable}
+     * instances generating a {@code Collection} of tuples of size six. The
+     * returned {@code Collection} will contain {@code Sextuple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable} and the third slot is occupied by
+     * an element from the third supplied {@code Iterable}. The {@code Collection}
+     * will effectively contain a {@code Sextuple} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Sextuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is also empty.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for six {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first  The first {@code Iterable} from which to form a cartesian product.
+     * @param second The second {@code Iterable} from which to form a cartesian product.
+     * @param third  The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth The fourth {@code Iterable} from which to form a cartesian product.
+     * @param fifth  The fifth {@code Iterable} from which to form a cartesian product.
+     * @param sixth  The sixth {@code Iterable} from which to form a cartesian product.
+     * @param <R>    The type of the elements in the first {@code Iterable}.
+     * @param <S>    The type of the elements in the second {@code Iterable}.
+     * @param <T>    The type of the elements in the third {@code Iterable}.
+     * @param <U>    The type of the elements in the fourth {@code Iterable}.
+     * @param <V>    The type of the elements in the fifth {@code Iterable}.
+     * @param <W>    The type of the elements in the sixth {@code Iterable}.
+     * @return A {@code Collection} containing the cartesian product of all elements
+     *         in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W> Collection<Sextuple<R, S, T, U, V, W>> cartesianProduct(
-                        Iterable<R> first,
-                        Iterable<S> second,
-                        Iterable<T> third,
-                        Iterable<U> fourth,
-                        Iterable<V> fifth,
-                        Iterable<W> sixth) {
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth) {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth, sixth));
     }
 
+    /**
+     * Takes the cartesian product of the seven supplied {@code Iterable}
+     * instances generating a {@code Collection} of tuples of size seven. The
+     * returned {@code Collection} will contain {@code Septuple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable} and the third slot is occupied by
+     * an element from the third supplied {@code Iterable}. The {@code Collection}
+     * will effectively contain a {@code Septuple} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Septuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is also empty.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for seven {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to form a cartesian product.
+     * @param second  The second {@code Iterable} from which to form a cartesian product.
+     * @param third   The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth  The fourth {@code Iterable} from which to form a cartesian product.
+     * @param fifth   The fifth {@code Iterable} from which to form a cartesian product.
+     * @param sixth   The sixth {@code Iterable} from which to form a cartesian product.
+     * @param seventh The seventh {@code Iterable} from which to form a cartesian product.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @return A {@code Collection} containing the cartesian product of all elements
+     *         in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X> Collection<Septuple<R, S, T, U, V, W, X>> cartesianProduct(
-                        Iterable<R> first,
-                        Iterable<S> second,
-                        Iterable<T> third,
-                        Iterable<U> fourth,
-                        Iterable<V> fifth,
-                        Iterable<W> sixth,
-                        Iterable<X> seventh) {
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh) {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth, sixth, seventh));
     }
 
+    /**
+     * Takes the cartesian product of the eight supplied {@code Iterable}
+     * instances generating a {@code Collection} of tuples of size eight. The
+     * returned {@code Collection} will contain {@code Octuple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable} and the third slot is occupied by
+     * an element from the third supplied {@code Iterable}. The {@code Collection}
+     * will effectively contain a {@code Octuple} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Octuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is also empty.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for eight {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to form a cartesian product.
+     * @param second  The second {@code Iterable} from which to form a cartesian product.
+     * @param third   The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth  The fourth {@code Iterable} from which to form a cartesian product.
+     * @param fifth   The fifth {@code Iterable} from which to form a cartesian product.
+     * @param sixth   The sixth {@code Iterable} from which to form a cartesian product.
+     * @param seventh The seventh {@code Iterable} from which to form a cartesian product.
+     * @param eighth  The eighth {@code Iterable} from which to form a cartesian product.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @param <Y>     The type of the elements in the eighth {@code Iterable}.
+     * @return A {@code Collection} containing the cartesian product of all elements
+     *         in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X, Y> Collection<Octuple<R, S, T, U, V, W, X, Y>> cartesianProduct(
-                            Iterable<R> first,
-                            Iterable<S> second,
-                            Iterable<T> third,
-                            Iterable<U> fourth,
-                            Iterable<V> fifth,
-                            Iterable<W> sixth,
-                            Iterable<X> seventh,
-                            Iterable<Y> eighth) {
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh,
+            Iterable<Y> eighth) {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth, sixth, seventh, eighth));
     }
 
+    /**
+     * Takes the cartesian product of the nine supplied {@code Iterable}
+     * instances generating a {@code Collection} of tuples of size nine. The
+     * returned {@code Collection} will contain {@code Nonuple} instances where
+     * the first slot is occupied by an element from the first supplied
+     * {@code Iterable}, the second slot is occupied by an element from
+     * the second supplied {@code Iterable} and the third slot is occupied by
+     * an element from the third supplied {@code Iterable}. The {@code Collection}
+     * will effectively contain a {@code Nonuple} for each possible selection of
+     * elements for the slots from each of the corresponding {@code Iterable}
+     * instances.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Nonuple} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is also empty.</p>
+     *
+     * <p>This overload of {@code cartesianProduct} is provided to allow the cartesian
+     * product to be taken for nine {@code Iterable} instances. For equivalent example
+     * usage for the two {@code Iterable} case, see
+     * {@link #cartesianProduct(Iterable, Iterable)}.</p>
+     *
+     * @param first   The first {@code Iterable} from which to form a cartesian product.
+     * @param second  The second {@code Iterable} from which to form a cartesian product.
+     * @param third   The third {@code Iterable} from which to form a cartesian product.
+     * @param fourth  The fourth {@code Iterable} from which to form a cartesian product.
+     * @param fifth   The fifth {@code Iterable} from which to form a cartesian product.
+     * @param sixth   The sixth {@code Iterable} from which to form a cartesian product.
+     * @param seventh The seventh {@code Iterable} from which to form a cartesian product.
+     * @param eighth  The eighth {@code Iterable} from which to form a cartesian product.
+     * @param ninth   The ninth {@code Iterable} from which to form a cartesian product.
+     * @param <R>     The type of the elements in the first {@code Iterable}.
+     * @param <S>     The type of the elements in the second {@code Iterable}.
+     * @param <T>     The type of the elements in the third {@code Iterable}.
+     * @param <U>     The type of the elements in the fourth {@code Iterable}.
+     * @param <V>     The type of the elements in the fifth {@code Iterable}.
+     * @param <W>     The type of the elements in the sixth {@code Iterable}.
+     * @param <X>     The type of the elements in the seventh {@code Iterable}.
+     * @param <Y>     The type of the elements in the eighth {@code Iterable}.
+     * @param <Z>     The type of the elements in the ninth {@code Iterable}.
+     * @return A {@code Collection} containing the cartesian product of all elements
+     *         in the supplied {@code Iterable} instances.
+     */
     public static <R, S, T, U, V, W, X, Y, Z> Collection<Nonuple<R, S, T, U, V, W, X, Y, Z>> cartesianProduct(
-                            Iterable<R> first,
-                            Iterable<S> second,
-                            Iterable<T> third,
-                            Iterable<U> fourth,
-                            Iterable<V> fifth,
-                            Iterable<W> sixth,
-                            Iterable<X> seventh,
-                            Iterable<Y> eighth,
-                            Iterable<Z> ninth) {
+            Iterable<R> first,
+            Iterable<S> second,
+            Iterable<T> third,
+            Iterable<U> fourth,
+            Iterable<V> fifth,
+            Iterable<W> sixth,
+            Iterable<X> seventh,
+            Iterable<Y> eighth,
+            Iterable<Z> ninth) {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth));
     }
 
+    /**
+     * Takes the cartesian product of the elements from all {@code Iterable}
+     * instances in the supplied {@code Iterable} instance generating a {@code Collection}
+     * of {@code Collection}s with each having as many elements as there were
+     * {@code Iterable} instances in the input {@code Iterable}. The returned
+     * {@code Collection} will contain {@code Collection} instances where the first position
+     * is occupied by an element from the first {@code Iterable} in the supplied
+     * {@code Iterable}, the second position is occupied by an element from the second
+     * {@code Iterable} in the input {@code Iterable} and so on for each available
+     * {@code Iterable}. The {@code Collection} will effectively contain a
+     * {@code Collection} for each possible selection of elements for the positions from
+     * each of the corresponding {@code Iterable} instances in the supplied {@code Iterable}.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Collection} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>Note that this overload of {@code cartesianProduct} does not preserve type
+     * information and so the returned {@code Iterable} will contain {@code Iterable}
+     * instances over the wildcard type {@code ?}. If the number of {@code Iterable}
+     * instances for which a cartesian product is required is less than ten,
+     * use the explicit arities of {@code cartesianProduct}.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given three {@code Iterable} instances of varying types:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Integer&gt; first = iterableWith(1, 2);
+     *     Iterable&lt;String&gt; second = iterableWith("first", "second", "third");
+     *     Iterable&lt;Boolean&gt; third = iterableWith(false);
+     * </pre>
+     * </blockquote>
+     * we can generate the cartesian product as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&ltIterable&lt?&gt;&gt; iterables = Literals.&lt;Iterable&lt?&gt;&gt;iterableWith(first, second, third);
+     *     Collection&ltCollection&lt;?&gt;&gt; cartesianProduct = cartesianProduct(iterables);
+     * </pre>
+     * </blockquote>
+     * This is effectively equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *     Collection&lt;Collection&lt;?&gt;&gt; equivalentCollections = Literals.&ltCollection&lt?&gt;&gt;collectionWith(
+     *             collectionWith(1, "first", false),
+     *             collectionWith(1, "second", false),
+     *             collectionWith(1, "third", false));
+     *             collectionWith(2, "first", false),
+     *             collectionWith(2, "second", false),
+     *             collectionWith(2, "third", false));
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterables An {@code Iterable} of {@code Iterable} instances for
+     *                  which a cartesian product should be generated.
+     * @return A {@code Collection} of {@code Collection} instances representing the
+     *         cartesian product of the supplied {@code Iterable} of {@code Iterable}s.
+     */
     public static Collection<Collection<?>> cartesianProduct(Iterable<? extends Iterable<?>> iterables) {
         return Eagerly.map(Lazily.cartesianProduct(iterables), new Mapper<Iterable<?>, Collection<?>>() {
             @Override public Collection<?> map(Iterable<?> iterable) {
@@ -448,10 +1250,83 @@ public class Eagerly {
         });
     }
 
+    /**
+     * Associates each element in the supplied {@code Iterable} with its related index in
+     * that {@code Iterable}. Returns a {@code Collection} of {@code Pair} instances where
+     * the first entry in the {@code Pair} is the index, starting from zero, and the second
+     * element is the element from the supplied {@code Iterable} at that index.
+     *
+     * <p>Since a {@code Collection} instance is returned, the enumeration of the
+     * supplied {@code Iterable} is performed eagerly, i.e., the supplied {@code Iterable}
+     * is iterated immediately with its elements being associated to their index before the
+     * {@code Collection} is returned.</p>
+     *
+     * <p>If the supplied {@code Iterable} is empty, so is the returned {@code Collection}.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Assume we have a collection of {@code Name} instances representing people entered into
+     * a prize draw. We wish to choose a winner at random from that collection. We can do this
+     * as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Name&gt; eligibleEntries = entriesDatabase.loadAll();
+     *     Collection&lt;Pair&lt;Integer, Name&gt;&gt; indexedEntries = enumerate(eligibleEntries);
+     *     Map&lt;Integer, Name&gt; lookupableEntries = Literals.mapFromPairs(indexedEntries);
+     *     Name winner = lookupableEntries.get(Random.nextInt(lookupableEntries.size());
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} to be enumerated by index.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} containing {@code Pair} instances associating
+     *         each element from the supplied {@code Iterable} to its zero based
+     *         index in that {@code Iterable}.
+     */
     public static <T> Collection<Pair<Integer, T>> enumerate(Iterable<T> iterable) {
         return materialize(Lazily.enumerate(iterable));
     }
 
+    /**
+     * Equates the elements in each of the supplied {@code Iterable} instances
+     * using the supplied {@code BinaryPredicate} in the order in which they are yielded.
+     * An element is yielded from each of the supplied {@code Iterable} instances and
+     * passed to the supplied {@code BinaryPredicate}. The {@code boolean} returned by the
+     * {@code BinaryPredicate} is used in place of the input elements in the returned
+     * {@code Collection}. The Collection is considered fully populated when
+     * one or both of the {@code Iterable} instances are exhausted. The order of the
+     * {@code boolean} elements in the returned {@code Collection} is equal to the
+     * order in which the equated elements are yielded from the supplied {@code Iterable}s.
+     *
+     * <p>Since a {@code Collection} instance is returned, the equation of the
+     * supplied {@code Iterable} instances is eager, i.e., the supplied {@code Iterable}
+     * instances are iterated and their elements are not equated immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given two {@code Iterable} instances that contain elements that do not implement
+     * equality in the desired way, we can determine equality using an externalised
+     * function as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Message&gt; firstIterable = systemOneMessageQueue.readAll();
+     *     Iterable&lt;Message&gt; secondIterable = systemTwoMessageQueue.readAll();
+     *     Collection&ltBoolean&gt equalityResults = equate(firstIterable, secondIterable, new BinaryPredicate&lt;Message, Message&gt() {
+     *        &#64;Override public boolean evaluate(Message first, Message second) {
+     *            return first.getMessageIdentifier().equals(second.getMessageIdentifier());
+     *        }
+     *     });
+     *     equalityResults.contains(false); // true if not equal
+     * </pre>
+     * </blockquote>
+     *
+     * @param first     The first {@code Iterable} of elements to be compared.
+     * @param second    The second {@code Iterable} of elements to be compared.
+     * @param predicate A {@code BinaryPredicate} to be used to equate elements sequentially
+     *                  from the supplied {@code Iterable} instances.
+     * @param <T>       The type of the elements in the supplied {@code Iterables}.
+     * @return A {@code Collection} containing the {@code boolean} results of equating
+     *         the elements from the supplied {@code Iterable} instances in the
+     *         order in which they are yielded.
+     */
     public static <T> Collection<Boolean> equate(
             Iterable<T> first,
             Iterable<T> second,
@@ -459,6 +1334,38 @@ public class Eagerly {
         return materialize(Lazily.equate(first, second, predicate));
     }
 
+    /**
+     * Equates the elements in each of the supplied {@code Iterable} instances
+     * using the supplied {@code BinaryPredicate} in the order in which they are yielded.
+     * An element is yielded from each of the supplied {@code Iterable} instances and
+     * passed to the supplied {@code BinaryPredicate}. The {@code boolean} returned by the
+     * {@code BinaryPredicate} is used in place of the input elements in the returned
+     * {@code Collection}. The Collection is considered fully populated when
+     * one or both of the {@code Iterable} instances are exhausted. The order of the
+     * {@code boolean} elements in the returned {@code Collection} is equal to the
+     * order in which the equated elements are yielded from the supplied {@code Iterable}s.
+     *
+     * <p>Since a {@code Collection} instance is returned, the equation of the
+     * supplied {@code Iterable} instances is eager, i.e., the supplied {@code Iterable}
+     * instances are iterated and their elements are not equated immediately.</p>
+     *
+     * <p>This overload of {@link #equate(Iterable, Iterable, BinaryPredicate)} is provided
+     * to allow an {@code Equivalence} to be used in place of a {@code BinaryPredicate} to
+     * enhance readability and better express intent. The contract of the function is
+     * identical to that of the {@code BinaryPredicate} version of {@code equate}.</p>
+     *
+     * <p>For example usage and further documentation, see
+     * {@link #equate(Iterable, Iterable, BinaryPredicate)}.</p>
+     *
+     * @param first       The first {@code Iterable} of elements to be compared.
+     * @param second      The second {@code Iterable} of elements to be compared.
+     * @param equivalence A {@code Equivalence} to be used to equate elements sequentially
+     *                    from the supplied {@code Iterable} instances.
+     * @param <T>         The type of the elements in the supplied {@code Iterables}.
+     * @return A {@code Collection} containing the {@code boolean} results of equating
+     *         the elements from the supplied {@code Iterable} instances in the
+     *         order in which they are yielded.
+     */
     public static <T> Collection<Boolean> equate(
             Iterable<T> first,
             Iterable<T> second,
@@ -466,12 +1373,79 @@ public class Eagerly {
         return equate(first, second, equivalenceBinaryPredicate(equivalence));
     }
 
+    /**
+     * Indexes the supplied {@code Iterable} using the supplied {@code UnaryFunction}
+     * and returns a {@code Collection} of {@code Pair} instances representing the
+     * indexed elements. The {@code UnaryFunction} will be provided with each
+     * element in the input {@code Iterable}. The value returned by the
+     * {@code UnaryFunction} will occupy the first slot in the {@code Pair}
+     * instance for that element and the element itself will occupy the second slot.
+     * The returned {@code Collection} contains the indexed elements in the order in
+     * which the elements are yielded from the supplied {@code Iterable}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the element indexing is performed
+     * eagerly, i.e., elements are retrieved from the underlying {@code Iterable} and indexed
+     * immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Consider an {@code Iterable} of {@code String} instances representing words from a book.
+     * Each word can be indexed using its length using to the following.
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;String&gt; words = book.getCompleteWordList();
+     *     Collection&lt;Pair&lt;Integer, String&gt;&gt; wordsIndexedByLength = index(words, new UnaryFunction&ltString, Integer&gt;() {
+     *         &#64;Override public Integer call(String word) {
+     *             return word.length();
+     *         }
+     *     }
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} to be indexed.
+     * @param function The {@code UnaryFunction} to use to index each element.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the index values returned by the supplied
+     *                 indexing function.
+     * @return A {@code Collection} containing {@code Pair} instances representing
+     *         each element from the supplied {@code Iterable} indexed by the value
+     *         returned by the supplied {@code UnaryFunction} when passed that element.
+     */
     public static <S, T> Collection<Pair<T, S>> index(
             Iterable<S> iterable,
             UnaryFunction<? super S, T> function) {
         return materialize(Lazily.index(iterable, function));
     }
 
+    /**
+     * Indexes the supplied {@code Iterable} using the supplied {@code Indexer}
+     * and returns a {@code Collection} of {@code Pair} instances representing the
+     * indexed elements. The {@code Indexer} will be provided with each element
+     * in the input {@code Iterable}. The value returned by the {@code Indexer}
+     * will occupy the first slot in the {@code Pair} instance for that element
+     * and the element itself will occupy the second slot. The returned
+     * {@code Collection} contains the indexed elements in the order in
+     * which the elements are yielded from the supplied {@code Iterable}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the element indexing is performed
+     * eagerly, i.e., elements are retrieved from the underlying {@code Iterable} and indexed
+     * immediately.</p>
+     *
+     * <p>This overload of {@link #index(Iterable, UnaryFunction)} is provided to allow an
+     * {@code Indexer} to be used in place of a {@code UnaryFunction} to enhance readability
+     * and better express intent. The contract of the function is identical to that of the
+     * {@code UnaryFunction} version of {@code index}.</p>
+     *
+     * <p>For example usage and further documentation, see {@link #index(Iterable, UnaryFunction)}.</p>
+     *
+     * @param iterable The {@code Iterable} to be indexed.
+     * @param indexer  The {@code Indexer} to use to index each element.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the index values returned by the supplied
+     *                 indexing function.
+     * @return A {@code Collection} containing {@code Pair} instances representing
+     *         each element from the supplied {@code Iterable} indexed by the value
+     *         returned by the supplied {@code Indexer} when passed that element.
+     */
     public static <S, T> Collection<Pair<T, S>> index(
             Iterable<S> iterable,
             Indexer<? super S, T> indexer) {
@@ -498,12 +1472,89 @@ public class Eagerly {
         return group(iterable, indexerUnaryFunction(indexer));
     }
 
+    /**
+     * Applies the supplied {@code UnaryProcedure} to each element in the
+     * supplied {@code Iterable}. Each element in the supplied {@code Iterable} is
+     * passed to the {@link UnaryProcedure#execute(Object)} method in the order in
+     * which it is yielded.
+     *
+     * <p>The application of the supplied {@code UnaryProcedure} is eager, i.e.,
+     * the procedure is immediately applied to each element in the
+     * {@code Iterable}.</p>
+     *
+     * <p>Since the function being applied to each element is a procedure
+     * it is inherently impure and thus must have side effects for any perceivable
+     * outcome to be observed.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Consider a {@code UnaryProcedure} that persists {@code Person} instances to a
+     * database:
+     * <blockquote>
+     * <pre>
+     *     public class PersonPersistingProcedure implements UnaryProcedure&lt;Person&gt; {
+     *         private Database database;
+     *         private Logger log;
+     *
+     *         public void execute(Person person) {
+     *             log.info("Persisting {}", person.getName());
+     *             database.store(person);
+     *         }
+     *     }
+     * </pre>
+     * </blockquote>
+     * Given an {@code Iterable} of {@code Person} instances, each person can
+     * be persisted as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Person&gt; people = listWith(
+     *             new Person("James"),
+     *             new Person("Rodrigo"),
+     *             new Person("Jane"));
+     *     Eagerly.each(people, new PersonPersistingProcedure());
+     * </pre>
+     * </blockquote>
+     * Once the {@code each} expression has evaluated, all elements in the people
+     * {@code Iterable} will have been persisted along with a log statement.
+     *
+     * @param targets   The {@code Iterable} whose elements should each have the supplied
+     *                  {@code UnaryProcedure} applied to them.
+     * @param procedure A {@code UnaryProcedure} to apply to each element in the
+     *                  supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     */
     public static <T> void each(
             Iterable<T> targets,
             UnaryProcedure<? super T> procedure) {
         materialize(Lazily.each(targets, procedure));
     }
 
+    /**
+     * Applies the supplied {@code Action} to each element in the supplied
+     * {@code Iterable}. Each element in the supplied {@code Iterable} is
+     * passed to the {@link Action#on(Object)} method in the order in
+     * which it is yielded.
+     *
+     * <p>The application of the supplied {@code Action} is eager, i.e.,
+     * the action is immediately applied to each element in the
+     * {@code Iterable}.</p>
+     *
+     * <p>Since the function being applied to each element is an action
+     * it is inherently impure and thus must have side effects for any perceivable
+     * outcome to be observed.</p>
+     *
+     * <p>This overload of {@link #each(Iterable, UnaryProcedure)} is provided to allow an
+     * {@code Action} to be used in place of a {@code UnaryProcedure} to enhance readability
+     * and better express intent. The contract of the function is identical to that of the
+     * {@code UnaryProcedure} version of {@code each}.</p>
+     *
+     * <p>For example usage and further documentation, see {@link #each(Iterable, UnaryProcedure)}.</p>
+     *
+     * @param targets The {@code Iterable} whose elements should each have the supplied
+     *                {@code Action} applied to them.
+     * @param action  An {@code Action} to apply to each element in the supplied
+     *                {@code Iterable}.
+     * @param <T>     The type of the elements in the supplied {@code Iterable}.
+     */
     public static <T> void each(
             Iterable<T> targets,
             Action<? super T> action) {
@@ -732,6 +1783,7 @@ public class Eagerly {
      * <blockquote>
      * <pre>
      *   Collection&lt;Pet&gt; names = Literals.collectionWith(
+     *           new Fish("Goldie"),
      *           new Dog("Fido"),
      *           new Dog("Bones"),
      *           new Dog("Graham"));
@@ -742,7 +1794,7 @@ public class Eagerly {
      * @param predicate A {@code UnaryPredicate} which, given an element from the input iterable,
      *                  returns {@code true} if that element should be discarded and {@code false}
      *                  if it should be retained.
-     * @param <T>       The type of the elements to be assesses for rejection.
+     * @param <T>       The type of the elements to be assessed for rejection.
      * @return A {@code Collection} containing those elements of type {@code T} from the input
      *         {@code Iterable} that evaluate to {@code false} when passed to the supplied
      *         {@code UnaryPredicate}.
@@ -1307,6 +2359,43 @@ public class Eagerly {
         return last(filter(iterable, predicate), numberOfElementsRequired);
     }
 
+    /**
+     * Removes the first element from the supplied {@code Iterable} and
+     * returns all remaining elements in a {@code Collection}. The ordering
+     * of the elements in the retured {@code Collection} will be the same as
+     * the input {@code Iterable}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the removal of the first
+     * element is performed eagerly, i.e., the input {@code Iterable} is iterated
+     * immediately.</p>
+     *
+     * <p>If the supplied {@code Iterable} contains only one element, the
+     * returned {@code Collection} will be empty. Similarly, if the supplied
+     * {@code Iterable} is empty, the returned {@code Collection} will
+     * be empty.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given the following {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Integer&gt; numbers = Literals.listWith(1, 2, 3, 4, 5, 6);
+     * </pre>
+     * </blockquote>
+     * using {@code rest}, we can obtain a collection containing all but the first
+     * element. The following two lines are equivalent:
+     * <blockquote>
+     * <pre>
+     *     Collection&lt;Integer&gt; remainingElements = rest(numbers);
+     *     Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(2, 3, 4, 5, 6);
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which to remove the first element.
+     * @param <T>      The type of the elements in the supplied {@code Iterable};
+     * @return A {@code Collection} containing all elements from the supplied
+     *         {@code Iterable} but the first in the same order as in the supplied
+     *         {@code Iterable}.
+     */
     public static <T> Collection<T> rest(Iterable<T> iterable) {
         return slice(iterable, 1, null);
     }
@@ -1372,103 +2461,6 @@ public class Eagerly {
      */
     public static <T> Collection<T> take(Iterable<T> iterable, int numberToTake) {
         return materialize(Lazily.take(iterable, numberToTake));
-    }
-
-    /**
-     * Drops the first <em>n</em> elements from the supplied {@code Iterable} where <em>n</em>
-     * is given by the supplied integer value and returns a {@code Collection} containing
-     * the remaining elements. If the {@code Iterable} is empty, an empty {@code Collection}
-     * is returned, otherwise, a {@code Collection} containing the elements that remain after
-     * the first <em>n</em> elements have been discarded is returned.
-     *
-     * <p>In the case that the supplied {@code Iterable} contains less elements than the
-     * required number of elements to drop, all elements are dropped and an empty
-     * {@code Collection} is returned.</p>
-     *
-     * <p>If the supplied integer value is negative, an {@code IllegalArgumentException} is
-     * thrown.</p>
-     *
-     * <p>Since a {@code Collection} instance is returned, the element discardal is performed
-     * eagerly, i.e., the elements are discarded from the underlying {@code Iterable}
-     * immediately.</p>
-     *
-     * <h4>Example Usage:</h4>
-     *
-     * Given an {@code Iterable} of {@code Integer} instances:
-     * <blockquote>
-     * <pre>
-     *   Iterable&lt;Integer&gt; elements = Literals.iterableWith(5, 4, 3, 2, 1);
-     * </pre>
-     * </blockquote>
-     * Using {@code drop}, we can drop the first three elements from the {@code Iterable}.
-     * The following two lines are equivalent in this case:
-     * <blockquote>
-     * <pre>
-     *   Collection&lt;Integer&gt; remainingElements = drop(elements, 3);
-     *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(2, 1);
-     * </pre>
-     * </blockquote>
-     * If the input {@code Iterable} does not contain enough elements, we are returned
-     * an empty {@code Collection}. The following two lines are equivalent:
-     * <blockquote>
-     * <pre>
-     *   Collection&lt;Integer&gt; remainingElements = drop(elements, 6);
-     *   Collection&lt;Integer&gt; equivalentElements = Literals.collection();
-     * </pre>
-     * </blockquote>
-     * Similarly, if the input {@code Iterable} contains no elements, an empty
-     * {@code Collection} is returned:
-     * <blockquote>
-     * <pre>
-     *   Iterable&lt;Integer&gt; elements = Literals.iterable();
-     *   Collection&lt;Integer&gt; remainingElements = drop(elements, 3);
-     *   remainingElements.isEmpty(); // => true
-     * </pre>
-     * </blockquote>
-     *
-     * @param iterable The {@code Iterable} from which to drop <em>n</em> elements
-     *                 and return the remainder.
-     * @param <T>      The type of the elements in the supplied {@code Iterable}.
-     * @return A {@code Collection} instance containing the remaining elements after
-     *         the required number of elements have been dropped from the supplied
-     *         {@code Iterable}.
-     * @throws IllegalArgumentException if the required number of elements to drop
-     *                                  is negative.
-     */
-    public static <T> Collection<T> drop(Iterable<T> iterable, int numberToDrop) {
-        return materialize(Lazily.drop(iterable, numberToDrop));
-    }
-
-    public static <T> Pair<Collection<T>, Collection<T>> partition(
-            Iterable<T> iterable,
-            UnaryPredicate<? super T> predicate) {
-        Pair<Iterable<T>, Iterable<T>> partition = Lazily.partition(iterable, predicate);
-        return tuple(materialize(partition.getFirst()), materialize(partition.getSecond()));
-    }
-
-    public static <T> Collection<Collection<T>> batch(Iterable<T> iterable, int batchSize) {
-        Collection<Collection<T>> result = new ArrayList<Collection<T>>();
-        Iterable<Iterable<T>> batches = Lazily.batch(iterable, batchSize);
-        for (Iterable<T> batch : batches) {
-            result.add(materialize(batch));
-        }
-        return result;
-    }
-
-    public static void times(
-            int numberOfTimes,
-            UnaryProcedure<? super Integer> procedure) {
-        if (numberOfTimes < 0) {
-            throw new IllegalArgumentException(
-                    "The number of times to execute the function cannot be less than zero.");
-        }
-        for (int i = 0; i < numberOfTimes; i++) {
-            procedure.execute(i);
-        }
-    }
-
-    public static void times(int numberOfTimes, Action<? super Integer> action) {
-        times(numberOfTimes, actionUnaryProcedure(action));
     }
 
     /**
@@ -1648,6 +2640,71 @@ public class Eagerly {
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
         return materialize(Lazily.takeUntil(iterable, predicate));
+    }
+
+    /**
+     * Drops the first <em>n</em> elements from the supplied {@code Iterable} where <em>n</em>
+     * is given by the supplied integer value and returns a {@code Collection} containing
+     * the remaining elements. If the {@code Iterable} is empty, an empty {@code Collection}
+     * is returned, otherwise, a {@code Collection} containing the elements that remain after
+     * the first <em>n</em> elements have been discarded is returned.
+     *
+     * <p>In the case that the supplied {@code Iterable} contains less elements than the
+     * required number of elements to drop, all elements are dropped and an empty
+     * {@code Collection} is returned.</p>
+     *
+     * <p>If the supplied integer value is negative, an {@code IllegalArgumentException} is
+     * thrown.</p>
+     *
+     * <p>Since a {@code Collection} instance is returned, the element discardal is performed
+     * eagerly, i.e., the elements are discarded from the underlying {@code Iterable}
+     * immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * Using {@code drop}, we can drop the first three elements from the {@code Iterable}.
+     * The following two lines are equivalent in this case:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; remainingElements = drop(elements, 3);
+     *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(2, 1);
+     * </pre>
+     * </blockquote>
+     * If the input {@code Iterable} does not contain enough elements, we are returned
+     * an empty {@code Collection}. The following two lines are equivalent:
+     * <blockquote>
+     * <pre>
+     *   Collection&lt;Integer&gt; remainingElements = drop(elements, 6);
+     *   Collection&lt;Integer&gt; equivalentElements = Literals.collection();
+     * </pre>
+     * </blockquote>
+     * Similarly, if the input {@code Iterable} contains no elements, an empty
+     * {@code Collection} is returned:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; elements = Literals.iterable();
+     *   Collection&lt;Integer&gt; remainingElements = drop(elements, 3);
+     *   remainingElements.isEmpty(); // => true
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which to drop <em>n</em> elements
+     *                 and return the remainder.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} instance containing the remaining elements after
+     *         the required number of elements have been dropped from the supplied
+     *         {@code Iterable}.
+     * @throws IllegalArgumentException if the required number of elements to drop
+     *                                  is negative.
+     */
+    public static <T> Collection<T> drop(Iterable<T> iterable, int numberToDrop) {
+        return materialize(Lazily.drop(iterable, numberToDrop));
     }
 
     /**
@@ -1835,6 +2892,214 @@ public class Eagerly {
         return materialize(Lazily.dropUntil(iterable, predicate));
     }
 
+    /**
+     * Partitions the supplied {@code Iterable} into those elements that
+     * satisfy the supplied {@code UnaryPredicate} and those elements that do not
+     * satisfy the supplied {@code UnaryPredicate}. A {@code Pair} containing two
+     * {@code Collection} instances is returned. Those elements that satisfy the
+     * supplied {@code UnaryPredicate} form a {@code Collection} in the first slot
+     * of the {@code Pair} and those that do not satisfy the supplied
+     * {@code UnaryPredicate} form a {@code Collection} in the second slot of the
+     * {@code Pair}. The ordering of the {@code Iterable} instance is maintained
+     * according to the partition in the returned {@code Collection} instances.
+     *
+     * <p>Since a {@code Pair} containing {@code Collection} instances is returned,
+     * the partitioning is performed eagerly, i.e., the {@code UnaryPredicate} is
+     * applied to each element in the input {@code Iterable} immediately.</p>
+     *
+     * <p>If no elements in the supplied {@code Iterable} satisfy the supplied
+     * {@code UnaryPredicate}, the first slot in the returned {@code Pair}
+     * will be occupied by an empty {@code Collection}. Similarly, if all elements
+     * in the supplied {@code Iterable} satisfy the supplied {@code UnaryPredicate},
+     * the second slot in the returned {@code Pair} will be occupied by an
+     * empty {@code Collection}.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given an {@code Iterable} of {@code Account} instances where {@code Account} is
+     * defined as follows:
+     * <blockquote>
+     * <pre>
+     *     public class Account {
+     *         private final BigDecimal balance;
+     *
+     *         public Account(BigDecimal balance) {
+     *             this.balance = balance;
+     *         }
+     *
+     *         public boolean isOverdrawn() {
+     *             return balance < 0;
+     *         }
+     *
+     *         ...
+     *     }
+     * </pre>
+     * </blockquote>
+     * we can divide those that are overdrawn from those that are not using the following:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Account&gt; accounts = accountRepository.getAccounts();
+     *     Pair&lt;Collection&ltAccount&gt;, Collection&lt;Account&gt&gt overdrawnPartition = partition(accounts, new Predicate&ltAccount&gt;() {
+     *        &#64;Override public boolean evaluate(Account account) {
+     *            return account.isOverdrawn();
+     *        }
+     *     });
+     *     Collection&lt;Account&gt; inTheRedAccounts = overdrawnPartition.getFirst();
+     *     Collection&lt;Account&gt; inTheBlackAccounts = overdrawnPartition.getSecond();
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable  An {@code Iterable} of elements to be partitioned based on
+     *                  whether or not they satisfy the supplied {@code UnaryPredicate}.
+     * @param predicate A {@code UnaryPredicate} to be used to evaluate which side of the
+     *                  partition each element in the supplied {@code Iterable} should
+     *                  reside.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Pair} instance which contains those elements from the supplied
+     *         {@code Iterable} which satisfy the supplied {@code UnaryPredicate} in
+     *         the first slot and those elements from the supplied {@code Iterable}
+     *         which do not satisfy the supplied {@code UnaryPredicate} in the second
+     *         slot.
+     */
+    public static <T> Pair<Collection<T>, Collection<T>> partition(
+            Iterable<T> iterable,
+            UnaryPredicate<? super T> predicate) {
+        Pair<Iterable<T>, Iterable<T>> partition = Lazily.partition(iterable, predicate);
+        return tuple(materialize(partition.getFirst()), materialize(partition.getSecond()));
+    }
+
+    /**
+     * Returns a collection {@code Collection} instance containing batches of elements
+     * of the specified size from the supplied {@code Iterable} in the order that
+     * they are yielded..
+     *
+     * <p>In the case that the number of elements in the supplied {@code Iterable}
+     * does not evenly divide by the supplied batch size, the last {@code Collection}
+     * in the returned {@code Collection} will contain less than the batch size. If
+     * the supplied batch size is not positive, an {@code IllegalArgumentException}
+     * will be thrown.</p>
+     *
+     * <p>As an example, the following two {@code Collection} instances
+     * are effectively equivalent:
+     * <blockquote>
+     * <pre>
+     *      Collection&lt;Collection&lt;Integer&gt;&gt; batches1 = collectionWith(collectionWith(1, 2, 3), collectionWith(4, 5, 6), collectionWith(7));
+     *      Collection&lt;Collection&lt;Integer&gt;&gt; batches2 = batch(collectionWith(1, 2, 3, 4, 5, 6, 7), 3);
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * @param iterable  The {@code Iterable} to batch into batches of the specified
+     *                  number of elements.
+     * @param batchSize The number of elements required in each batch in the
+     *                  returned {@code Collection}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} instance of {@code Collection} instances each
+     *         containing the required number of elements, bar the last which may
+     *         have less dependent on availability.
+     * @throws IllegalArgumentException if the required number of elements to take
+     *                                  is not positive.
+     */
+    public static <T> Collection<Collection<T>> batch(Iterable<T> iterable, int batchSize) {
+        Collection<Collection<T>> result = new ArrayList<Collection<T>>();
+        Iterable<Iterable<T>> batches = Lazily.batch(iterable, batchSize);
+        for (Iterable<T> batch : batches) {
+            result.add(materialize(batch));
+        }
+        return result;
+    }
+
+    public static void times(
+            int numberOfTimes,
+            UnaryProcedure<? super Integer> procedure) {
+        if (numberOfTimes < 0) {
+            throw new IllegalArgumentException(
+                    "The number of times to execute the function cannot be less than zero.");
+        }
+        for (int i = 0; i < numberOfTimes; i++) {
+            procedure.execute(i);
+        }
+    }
+
+    public static void times(int numberOfTimes, Action<? super Integer> action) {
+        times(numberOfTimes, actionUnaryProcedure(action));
+    }
+
+    /**
+     * Slices a sub-sequence from the supplied {@code Iterable} according
+     * to the supplied start index, stop index and step size. The start and stop
+     * indices are both zero based and the step size is one based. The element
+     * at the start index in the supplied {@code Iterable} will be included in the
+     * returned {@code Iterable} whilst the element at the stop index will be
+     * excluded from it. The step size indicates the number of steps to take
+     * between included elements in the returned {@code Iterable}.
+     *
+     * <p>Since a {@code Collection} is returned, the sub-sequence is sliced
+     * eagerly, i.e., the supplied {@code Iterable} is iterated for the
+     * required sub-sequence immediately.</p>
+     *
+     * <p>If the supplied start index is {@code null} or zero, the sub-sequence starts
+     * at the beginning of the supplied {@code Iterable}. If it is negative then the
+     * sub-sequence starts that many elements back from the end of the supplied
+     * {@code Iterable} and will be inclusive of that element.</p>
+     *
+     * <p>If the supplied stop index is {@code null} then the sub-sequence  ends at
+     * the end of the supplied {@code Iterable}. If it is negative then the
+     * sub-sequence ends that many elements back from the end of the supplied
+     * {@code Iterable} and will be exclusive of that element.</p>
+     *
+     * <p>If the supplied step size is {@code null} then a default step size of
+     * one will be assumed. If the supplied step size is zero then an
+     * {@code IllegalArgumentException} is thrown. If the supplied step size
+     * is less than zero, the sub-sequence will be taken in reverse through
+     * the supplied {@code Iterable}.</p>
+     *
+     * <p>If the start and stop indices are equal, an empty {@code Collection}
+     * is returned. If the supplied step size is positive and the start index
+     * is greater than the stop index, an empty {@code Collection} is returned.
+     * Similarly, if the supplied step size is negative and the start index
+     * is less than the stop index, an empty {@code Collection} is returned.</p>
+     *
+     * <p>In the case that the supplied start or stop value is positive and
+     * greater than the number of elements in the supplied {@code Iterable},
+     * the end of the {@code Iterable} will be used for that index. In the case that
+     * the supplied start or stop value is negative and greater than the number
+     * of elements in the supplied {@code Iterable}, the start of the
+     * {@code Iterable} will be used for that index.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given an {@code Iterable} of {@code WeekDay} instances starting at
+     * Sunday:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;WeekDay&gt; weekdays = listWith(
+     *             weekDay("Sunday"),
+     *             weekDay("Monday"),
+     *             weekDay("Tuesday"),
+     *             weekDay("Wednesday"),
+     *             weekDay("Thursday"),
+     *             weekDay("Friday"),
+     *             weekDay("Saturday"),
+     * </pre>
+     * </blockquote>
+     * we can obtain an {@code Iterable} of the working days in reverse
+     * using the following:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;WeekDay&gt; workingDaysReversed = slice(weekdays, -1, 1, -1);
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which to slice a sub-sequence.
+     * @param start    The index from which to start the slicing, inclusive.
+     * @param stop     The index at which to stop the slicing, exclusive.
+     * @param step     The number of steps to take between elements inside the
+     *                 sub-sequence.
+     * @param <T>      The type of the elements contained in the supplied
+     *                 {@code Iterable}
+     * @return A {@code Collection} containing the sub-sequence of elements
+     *         from the supplied {@code Iterable} specified by the supplied
+     *         start and stop indices and the supplied step size.
+     */
     public static <T> Collection<T> slice(
             Iterable<T> iterable,
             Integer start,
@@ -1860,6 +3125,34 @@ public class Eagerly {
         return outputCollection;
     }
 
+    /**
+     * Slices a sub-sequence from the supplied {@code Iterable} according
+     * to the supplied start index, stop index. The start and stop indices
+     * are both zero based. The element at the start index in the supplied
+     * {@code Iterable} will be included in the returned {@code Iterable}
+     * whilst the element at the stop index will be excluded from it.
+     *
+     * <p>Since a {@code Collection} is returned, the sub-sequence is sliced
+     * eagerly, i.e., the supplied {@code Iterable} is iterated for the
+     * required sub-sequence immediately.</p>
+     *
+     * <p>This overload of {@link #slice(Iterable, Integer, Integer, Integer)}
+     * is provided to assist in the common case of a sub-sequence in the
+     * positive direction through the supplied {@code Iterable} with a step size
+     * of one. The contract of the function is identical to that of the
+     * {@code slice} function with a hardcoded step size of one. For example
+     * usage and further documentation, see
+     * {@link #slice(Iterable, Integer, Integer, Integer)}.</p>
+     *
+     * @param iterable The {@code Iterable} from which to slice a sub-sequence.
+     * @param start    The index from which to start the slicing, inclusive.
+     * @param stop     The index at which to stop the slicing, exclusive.
+     * @param <T>      The type of the elements contained in the supplied
+     *                 {@code Iterable}
+     * @return A {@code Collection} containing the sub-sequence of elements
+     *         from the supplied {@code Iterable} specified by the supplied
+     *         start and stop indices.
+     */
     public static <T> Collection<T> slice(
             Iterable<T> iterable,
             Integer start,
@@ -1867,6 +3160,38 @@ public class Eagerly {
         return slice(iterable, start, stop, 1);
     }
 
+    /**
+     * Returns a {@code Collection} instance representing a repetition of the elements
+     * in the supplied {@code Iterable} in the order in which they are yielded.
+     *
+     * <p>For example, given an {@code Iterable} of {@code Group} instances and
+     * a randomly ordered {@code Iterable} of many {@code Candidate} instances, we
+     * can calculate candidate assignments so that we form groups of exactly
+     * {@code 5} candidates each as follows:
+     * <blockquote>
+     * <pre>
+     *     Collection&lt;Candidate&gt; candidates = candidateRepository.getAll();
+     *     Collection&lt;Group&gt; groups = collectionWith(group(1), group(2), group(3));
+     *     Collection&lt;Group&gt; groupPositions = Eagerly.repeat(groups, 5);
+     *     Collection&lt;Pair&lt;Candidate, Group&gt;&gt; groupAssignments = Eagerly.zip(candidates, groupPositions);
+     * </pre>
+     * </blockquote>
+     * </p>
+     *
+     * <p>Note, if zero is specified as the number of times to repeat, an empty
+     * {@code Collection} will be returned. Similarly, if the supplied {@code Iterable}
+     * is empty, regardless of the number of repeats specified, the returned
+     * {@code Collection} will be empty.</p>
+     *
+     * @param iterable              The {@code Iterable} whose contents should be repeated the
+     *                              specified number of times.
+     * @param numberOfTimesToRepeat The number of repetitions of the supplied {@code Iterable}
+     *                              required.
+     * @param <T>                   The type of the elements in the supplied {@code Iterable}.
+     * @return A {@code Collection} instance containing the required number of
+     *         repetitions of the supplied {@code Iterable}.
+     * @throws IllegalArgumentException if the specified number of times to repeat is negative.
+     */
     public static <T> Collection<T> repeat(
             Iterable<T> iterable,
             int numberOfTimesToRepeat) {
