@@ -2200,6 +2200,79 @@ public class Lazily {
                 Mappers.<R, S, T, U, V, W, X, Y, Z>toNonuple());
     }
 
+    /**
+     * Lazily takes the cartesian product of the elements from all {@code Iterable}
+     * instances in the supplied {@code Iterable} instance generating an {@code Iterable}
+     * of {@code Iterable}s with each having as many elements as there were
+     * {@code Iterable} instances in the input {@code Iterable}. The returned
+     * {@code Iterable} will contain {@code Iterable} instances where the first position
+     * is occupied by an element from the first {@code Iterable} in the supplied
+     * {@code Iterable}, the second position is occupied by an element from the second
+     * {@code Iterable} in the input {@code Iterable} and so on for each available
+     * {@code Iterable}. The {@code Iterable} will effectively contain an {@code Iterable}
+     * for each possible selection of elements for the positions from each of the
+     * corresponding {@code Iterable} instances in the supplied {@code Iterable}. It is
+     * understood that there are an absurd number of references to {@code Iterable} in
+     * this definition, hopefully the example usage will be more descriptive.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a lazy {@code Iterable} is returned, the cartesian product is taken
+     * lazily, i.e., none of the supplied {@code Iterable} instances
+     * is iterated until elements are yielded from the returned
+     * {@code Iterable}.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Iterable} is effectively empty. If any of the supplied
+     * {@code Iterable} instances are infinite, then the returned
+     * {@code Iterable} will also be infinite. Be aware that in the case of
+     * an infinite {@code Iterable}, the current algorithm will lead to
+     * minimal variability in the returned {@code Iterable} instances, i.e.,
+     * there is a possibility only one position of the returned {@code Iterable}
+     * instances will ever change.</p>
+     *
+     * <p>Note that this overload of {@code cartesianProduct} does not preserve type
+     * information and so the returned {@code Iterable} will contain {@code Iterable}
+     * instances over the wildcard type {@code ?}. If the number of {@code Iterable}
+     * instances for which a cartesian product is required is less than ten,
+     * use the explicit arities of {@code cartesianProduct}.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given three {@code Iterable} instances of varying types:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Integer&gt; first = iterableWith(1, 2);
+     *     Iterable&lt;String&gt; second = iterableWith("first", "second", "third");
+     *     Iterable&lt;Boolean&gt; third = iterableWith(false);
+     * </pre>
+     * </blockquote>
+     * we can generate the cartesian product as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&ltIterable&lt?&gt;&gt; iterables = Literals.&lt;Iterable&lt?&gt;&gt;iterableWith(first, second, third);
+     *     Iterable&lt? extends Iterable&lt;?&gt;&gt; cartesianProduct = cartesianProduct(iterables);
+     * </pre>
+     * </blockquote>
+     * This is effectively equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;? extends Iterable&lt;?&gt;&gt; equivalentIterables = Literals.&ltIterable&lt?&gt;&gt;iterableWith(
+     *             iterableWith(1, "first", false),
+     *             iterableWith(1, "second", false),
+     *             iterableWith(1, "third", false));
+     *             iterableWith(2, "first", false),
+     *             iterableWith(2, "second", false),
+     *             iterableWith(2, "third", false));
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterables An {@code Iterable} of {@code Iterable} instances for
+     *                  which a cartesian product should be generated.
+     * @return An {@code Iterable} of {@code Iterable} instances representing the
+     *         cartesian product of the supplied {@code Iterable} of {@code Iterable}s.
+     */
     public static Iterable<? extends Iterable<?>> cartesianProduct(final Iterable<? extends Iterable<?>> iterables) {
         return cartesianProduct(listFrom(iterables));
     }

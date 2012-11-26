@@ -1178,6 +1178,70 @@ public class Eagerly {
         return materialize(Lazily.cartesianProduct(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth));
     }
 
+    /**
+     * Takes the cartesian product of the elements from all {@code Iterable}
+     * instances in the supplied {@code Iterable} instance generating a {@code Collection}
+     * of {@code Collection}s with each having as many elements as there were
+     * {@code Iterable} instances in the input {@code Iterable}. The returned
+     * {@code Collection} will contain {@code Collection} instances where the first position
+     * is occupied by an element from the first {@code Iterable} in the supplied
+     * {@code Iterable}, the second position is occupied by an element from the second
+     * {@code Iterable} in the input {@code Iterable} and so on for each available
+     * {@code Iterable}. The {@code Collection} will effectively contain a
+     * {@code Collection} for each possible selection of elements for the positions from
+     * each of the corresponding {@code Iterable} instances in the supplied {@code Iterable}.
+     *
+     * <p>For a more mathematical description of the cartesian product, see the
+     * <a href="http://en.wikipedia.org/wiki/Cartesian_product">
+     * cartesian product article on Wikipedia</a>.</p>
+     *
+     * <p>Since a {@code Collection} is returned, the cartesian product is taken
+     * eagerly, i.e., the supplied {@code Iterable} instances are iterated immediately and
+     * the {@code Collection} instances are constructed before this method returns.</p>
+     *
+     * <p>If any of the supplied {@code Iterable} instances is empty, the
+     * returned {@code Collection} is empty.</p>
+     *
+     * <p>Note that this overload of {@code cartesianProduct} does not preserve type
+     * information and so the returned {@code Iterable} will contain {@code Iterable}
+     * instances over the wildcard type {@code ?}. If the number of {@code Iterable}
+     * instances for which a cartesian product is required is less than ten,
+     * use the explicit arities of {@code cartesianProduct}.</p>
+     *
+     * <h4>Example Usage:</h4>
+     * Given three {@code Iterable} instances of varying types:
+     * <blockquote>
+     * <pre>
+     *     Iterable&lt;Integer&gt; first = iterableWith(1, 2);
+     *     Iterable&lt;String&gt; second = iterableWith("first", "second", "third");
+     *     Iterable&lt;Boolean&gt; third = iterableWith(false);
+     * </pre>
+     * </blockquote>
+     * we can generate the cartesian product as follows:
+     * <blockquote>
+     * <pre>
+     *     Iterable&ltIterable&lt?&gt;&gt; iterables = Literals.&lt;Iterable&lt?&gt;&gt;iterableWith(first, second, third);
+     *     Collection&ltCollection&lt;?&gt;&gt; cartesianProduct = cartesianProduct(iterables);
+     * </pre>
+     * </blockquote>
+     * This is effectively equivalent to the following:
+     * <blockquote>
+     * <pre>
+     *     Collection&lt;Collection&lt;?&gt;&gt; equivalentCollections = Literals.&ltCollection&lt?&gt;&gt;collectionWith(
+     *             collectionWith(1, "first", false),
+     *             collectionWith(1, "second", false),
+     *             collectionWith(1, "third", false));
+     *             collectionWith(2, "first", false),
+     *             collectionWith(2, "second", false),
+     *             collectionWith(2, "third", false));
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterables An {@code Iterable} of {@code Iterable} instances for
+     *                  which a cartesian product should be generated.
+     * @return A {@code Collection} of {@code Collection} instances representing the
+     *         cartesian product of the supplied {@code Iterable} of {@code Iterable}s.
+     */
     public static Collection<Collection<?>> cartesianProduct(Iterable<? extends Iterable<?>> iterables) {
         return Eagerly.map(Lazily.cartesianProduct(iterables), new Mapper<Iterable<?>, Collection<?>>() {
             @Override public Collection<?> map(Iterable<?> iterable) {
