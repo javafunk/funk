@@ -13,8 +13,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.javafunk.funk.functors.Predicate;
 
 /**
- * A {@code Predicate} implementation that returns {@code true}
- * regardless of the object being evaluated.
+ * {@code TruePredicate} is a {@code Predicate} implementation that
+ * returns {@code true} regardless of the object being evaluated.
  *
  * <p>{@code TruePredicate} equality is implemented according
  * to class alone, i.e., two distinct {@code TruePredicate} instances
@@ -23,8 +23,7 @@ import org.javafunk.funk.functors.Predicate;
  * is {@code true} for all types {@code X} and {@code Y} which may
  * not be desired.</p>
  *
- * @param <T> The type of object this {@code TruePredicate}
- *            can evaluate.
+ * @param <T> The type of object this {@code TruePredicate} can evaluate.
  */
 public class TruePredicate<T> implements Predicate<T> {
     /**
@@ -55,8 +54,8 @@ public class TruePredicate<T> implements Predicate<T> {
     }
 
     /**
-     * Two {@code TruePredicate} instances will have always have
-     * equal hash codes.
+     * Two {@code TruePredicate} instances will always have equal
+     * hash codes.
      *
      * @return The hash code of this {@code TruePredicate}.
      */
