@@ -70,7 +70,7 @@ public class OrPredicateTest {
         OrPredicate<Object> orPredicate = new OrPredicate<Object>(Literals.<UnaryPredicate<? super Object>>iterable());
 
         // When
-        boolean result = orPredicate.evaluate(anyObject());
+        boolean result = orPredicate.evaluate(new Object());
 
         // Then
         assertThat(result, is(false));

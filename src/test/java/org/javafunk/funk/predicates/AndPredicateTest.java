@@ -70,7 +70,7 @@ public class AndPredicateTest {
         AndPredicate<Object> andPredicate = new AndPredicate<Object>(Literals.<UnaryPredicate<? super Object>>iterable());
 
         // When
-        boolean result = andPredicate.evaluate(anyObject());
+        boolean result = andPredicate.evaluate(new Object());
 
         // Then
         assertThat(result, is(true));
