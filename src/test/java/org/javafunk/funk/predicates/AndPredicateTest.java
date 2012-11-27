@@ -2,6 +2,7 @@ package org.javafunk.funk.predicates;
 
 import org.javafunk.funk.Literals;
 import org.javafunk.funk.functors.Predicate;
+import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -66,7 +67,7 @@ public class AndPredicateTest {
     @Test
     public void shouldAlwaysReturnTrueIfNoDelegatePredicatesSuppliedAtConstruction() throws Exception {
         // Given
-        AndPredicate<Object> andPredicate = new AndPredicate<Object>(Literals.<Predicate<? super Object>>iterable());
+        AndPredicate<Object> andPredicate = new AndPredicate<Object>(Literals.<UnaryPredicate<? super Object>>iterable());
 
         // When
         boolean result = andPredicate.evaluate(anyObject());

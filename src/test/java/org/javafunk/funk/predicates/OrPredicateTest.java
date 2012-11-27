@@ -2,6 +2,7 @@ package org.javafunk.funk.predicates;
 
 import org.javafunk.funk.Literals;
 import org.javafunk.funk.functors.Predicate;
+import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -66,7 +67,7 @@ public class OrPredicateTest {
     @Test
     public void shouldAlwaysReturnFalseIfNoDelegatePredicatesSuppliedAtConstruction() throws Exception {
         // Given
-        OrPredicate<Object> orPredicate = new OrPredicate<Object>(Literals.<Predicate<? super Object>>iterable());
+        OrPredicate<Object> orPredicate = new OrPredicate<Object>(Literals.<UnaryPredicate<? super Object>>iterable());
 
         // When
         boolean result = orPredicate.evaluate(anyObject());
