@@ -3,6 +3,7 @@
 .idea/vcs.xml
 target/
 build/
+out/
 .gradle/
 gradle.properties
 

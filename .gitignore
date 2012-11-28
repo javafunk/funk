@@ -9,6 +9,7 @@ gradle.properties
 *.iws
 build/
 target/
+out/
 *.DS_Store
 *~
 *.ipr
