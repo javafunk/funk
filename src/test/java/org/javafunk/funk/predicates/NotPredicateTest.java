@@ -14,11 +14,14 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.javafunk.funk.Predicates.alwaysFalse;
+import static org.javafunk.funk.Predicates.alwaysTrue;
+import static org.javafunk.funk.Predicates.not;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class NotPredicateFunctionTest {
+public class NotPredicateTest {
     @Test
     @SuppressWarnings("unchecked")
     public void shouldReturnTrueIfTheSuppliedPredicateReturnsFalse() {
@@ -60,5 +63,44 @@ public class NotPredicateFunctionTest {
         new NotPredicate<String>(predicate);
 
         // Then a NullPointerException is thrown.
+    }
+
+@Test
+    public void shouldBeEqualIfOtherIsANotPredicateAndPredicateSuppliedAtInitialisationIsEqual() throws Exception {
+        // Given
+        Predicate<Object> first = not(alwaysTrue());
+        Predicate<Object> second = not(alwaysTrue());
+
+        // When
+        boolean equal = first.equals(second);
+
+        // Then
+        assertThat(equal, is(true));
+    }
+
+    @Test
+    public void shouldNotBeEqualIfOtherIsANotPredicateButDelegatePredicateSuppliedAtInitialisationIsDifferent() throws Exception {
+        // Given
+        Predicate<Object> first = not(alwaysFalse());
+        Predicate<Object> second = not(alwaysTrue());
+
+        // When
+        boolean equal = first.equals(second);
+
+        // Then
+        assertThat(equal, is(false));
+    }
+
+    @Test
+    public void shouldNotBeEqualIfOtherIsNotANotPredicate() throws Exception {
+        // Given
+        Predicate<Object> first = not(alwaysTrue());
+        Predicate<Object> second = alwaysFalse();
+
+        // When
+        boolean equal = first.equals(second);
+
+        // Then
+        assertThat(equal, is(false));
     }
 }
