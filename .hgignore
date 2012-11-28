@@ -2,6 +2,9 @@
 .idea/tasks.xml
 .idea/vcs.xml
 target/
+build/
+out/
+.gradle/
 
 syntax: glob
 *.DS_Store
