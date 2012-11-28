@@ -39,4 +39,43 @@ public class TruePredicateTest {
         // Then
         assertThat(result, is(true));
     }
+
+    @Test
+    public void shouldBeEqualIfOtherPredicateIsAlsoATruePredicate() throws Exception {
+        // Given
+        Predicate<Object> firstPredicate = new TruePredicate<Object>();
+        Predicate<Object> secondPredicate = new TruePredicate<Object>();
+
+        // When
+        boolean equal = firstPredicate.equals(secondPredicate);
+
+        // Then
+        assertThat(equal, is(true));
+    }
+
+    @Test
+    public void shouldBeEqualIfOtherPredicateIsATruePredicateButTypesAreDifferent() throws Exception {
+        // Given
+        Predicate<String> firstPredicate = new TruePredicate<String>();
+        Predicate<Integer> secondPredicate = new TruePredicate<Integer>();
+
+        // When
+        boolean equal = firstPredicate.equals(secondPredicate);
+
+        // Then
+        assertThat(equal, is(true));
+    }
+
+    @Test
+    public void shouldNotBeEqualIfOtherPredicateIsNotATruePredicate() throws Exception {
+        // Given
+        Predicate<Object> firstPredicate = new TruePredicate<Object>();
+        Predicate<Object> secondPredicate = new FalsePredicate<Object>();
+
+        // When
+        boolean equal = firstPredicate.equals(secondPredicate);
+
+        // Then
+        assertThat(equal, is(false));
+    }
 }

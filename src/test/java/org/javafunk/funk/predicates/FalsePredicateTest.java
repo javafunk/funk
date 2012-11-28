@@ -15,7 +15,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class FalsePredicateTest {
-
     @Test
     public void shouldReturnFalseForNull() {
         // Given
@@ -38,5 +37,44 @@ public class FalsePredicateTest {
 
         // Then
         assertThat(result, is(false));
+    }
+
+    @Test
+    public void shouldBeEqualIfOtherPredicateIsAlsoAFalsePredicate() throws Exception {
+        // Given
+        Predicate<Object> firstPredicate = new FalsePredicate<Object>();
+        Predicate<Object> secondPredicate = new FalsePredicate<Object>();
+
+        // When
+        boolean equal = firstPredicate.equals(secondPredicate);
+
+        // Then
+        assertThat(equal, is(true));
+    }
+
+    @Test
+    public void shouldBeEqualIfOtherPredicateIsAFalsePredicateButTypesAreDifferent() throws Exception {
+        // Given
+        Predicate<String> firstPredicate = new FalsePredicate<String>();
+        Predicate<Integer> secondPredicate = new FalsePredicate<Integer>();
+
+        // When
+        boolean equal = firstPredicate.equals(secondPredicate);
+
+        // Then
+        assertThat(equal, is(true));
+    }
+
+    @Test
+    public void shouldNotBeEqualIfOtherPredicateIsNotAFalsePredicate() throws Exception {
+        // Given
+        Predicate<Object> firstPredicate = new FalsePredicate<Object>();
+        Predicate<Object> secondPredicate = new TruePredicate<Object>();
+
+        // When
+        boolean equal = firstPredicate.equals(secondPredicate);
+
+        // Then
+        assertThat(equal, is(false));
     }
 }
