@@ -32,7 +32,7 @@ public class Predicates {
         return new NotPredicate<T>(checkNotNull(predicate));
     }
 
-    public static <T> InstanceOfPredicate instanceOf(Class<?> testClass) {
-        return new InstanceOfPredicate(testClass);
+    public static <T> InstanceOfPredicate<T> instanceOf(Class<?> testClass) {
+        return new InstanceOfPredicate<T>(testClass);
     }
 }
