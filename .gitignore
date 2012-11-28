@@ -5,6 +5,7 @@
 .idea/dictionaries/*
 .idea/*
 .gradle/
+gradle.properties
 *.iws
 build/
 target/

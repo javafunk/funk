@@ -4,6 +4,7 @@
 target/
 build/
 .gradle/
+gradle.properties
 
 syntax: glob
 *.DS_Store
