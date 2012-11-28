@@ -6,24 +6,10 @@ apply plugin: "maven"
 apply plugin: "signing"
 apply from: "https://launchpad.net/gradle-release/trunk/latest/+download/apply.groovy"
 
-def sonatypeRepositoryUrl = ""
+def sonatypeRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
 def sonatypeUsername = hasProperty("sonatypeUsername") ? sonatypeUsername : ""
 def sonatypePassword = hasProperty("sonatypePassword") ? sonatypePassword : ""
-
-def isDevBuild = false
-def isSnapshotBuild = false
-def isReleaseBuild = false
-
-if (hasProperty("release")) {
-  isReleaseBuild = true
-  sonatypeRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-} else if (hasProperty("snapshot")) {
-  isSnapshotBuild = true
-  version += "-SNAPSHOT"
-  sonatypeRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
-} else {
-  isDevBuild = true
-}
+def isReleaseVersion = hasProperty("version") && !version.endsWith("SNAPSHOT")
 
 repositories {
   mavenCentral()
@@ -74,67 +60,56 @@ artifacts {
   archives sourcesJar
 }
 
-if (isReleaseBuild) {
-  signing {
-    sign configurations.archives
-  }
-} else {
-  task signArchives {
-    // do nothing
-  }
+signing {
+  required { isReleaseVersion && gradle.taskGraph.hasTask("uploadArchives") }
+  sign configurations.archives
 }
 
 uploadArchives {
   repositories {
-    if (isDevBuild) {
-      mavenLocal()
-    } else {
-      mavenDeployer {
-        if (isReleaseBuild) {
-          beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+    mavenDeployer {
+      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+      repository(url: sonatypeRepositoryUrl) {
+        authentication(userName: sonatypeUsername, password: sonatypePassword)
+      }
+
+      pom.project {
+        name 'Funk'
+        description 'Functional utilities for Java'
+        groupId 'org.javafunk.funk'
+        artifactId 'funk'
+        packaging 'jar'
+        url 'http://www.javafunk.org'
+
+        scm {
+          url 'scm:git:https://github.com/javafunk/funk.git'
+          connection 'scm:git:https://github.com/javafunk/funk.git'
+          developerConnection 'http://github.com/javafunk/funk'
         }
 
-        repository(url: sonatypeRepositoryUrl) {
-          authentication(userName: sonatypeUsername, password: sonatypePassword)
+        licenses {
+          license {
+            name 'BSD License'
+            url 'http://www.opensource.org/licenses/bsd-license.php'
+          }
         }
 
-        pom.project {
-          name 'Funk'
-          description 'Functional utilities for Java'
-          groupId 'org.javafunk.funk'
-          artifactId 'funk'
-          packaging 'jar'
-          url 'http://www.javafunk.org'
-
-          scm {
-            url 'scm:git:https://github.com/javafunk/funk.git'
-            connection 'scm:git:https://github.com/javafunk/funk.git'
-            developerConnection 'http://github.com/javafunk/funk'
+        developers {
+          developer {
+            id 'toby'
+            name 'Toby Clemson'
+            email 'tobyclemson@gmail.com'
           }
-
-          licenses {
-            license {
-              name 'BSD License'
-              url 'http://www.opensource.org/licenses/bsd-license.php'
-            }
+          developer {
+            id 'andrew'
+            name 'Andrew Kiellor'
+            email 'akiellor@gmail.com'
           }
-
-          developers {
-            developer {
-              id 'toby'
-              name 'Toby Clemson'
-              email 'tobyclemson@gmail.com'
-            }
-            developer {
-              id 'andrew'
-              name 'Andrew Kiellor'
-              email 'akiellor@gmail.com'
-            }
-            developer {
-              id 'simon'
-              name 'Simon Brunning'
-              email 'simon@brunningonline.net'
-            }
+          developer {
+            id 'simon'
+            name 'Simon Brunning'
+            email 'simon@brunningonline.net'
           }
         }
       }
