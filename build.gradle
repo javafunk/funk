@@ -6,6 +6,25 @@ apply plugin: "maven"
 apply plugin: "signing"
 apply from: "https://launchpad.net/gradle-release/trunk/latest/+download/apply.groovy"
 
+def sonatypeRepositoryUrl = ""
+def sonatypeUsername = hasProperty("sonatypeUsername") ? sonatypeUsername : ""
+def sonatypePassword = hasProperty("sonatypePassword") ? sonatypePassword : ""
+
+def isDevBuild = false
+def isSnapshotBuild = false
+def isReleaseBuild = false
+
+if (hasProperty("release")) {
+  isReleaseBuild = true
+  sonatypeRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+} else if (hasProperty("snapshot")) {
+  isSnapshotBuild = true
+  version += "-SNAPSHOT"
+  sonatypeRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+} else {
+  isDevBuild = true
+}
+
 repositories {
   mavenCentral()
 }
@@ -21,6 +40,20 @@ dependencies {
   testCompile "org.javafunk.matchbox:matchbox:0.1.2"
   testCompile "org.mockito:mockito-core:1.9.0"
   testCompile "junit:junit-dep:4.10"
+}
+
+compileJava {
+  options.fork = true
+  options.forkOptions.memoryMaximumSize = "1024M"
+}
+
+compileTestJava {
+  options.fork = true
+  options.forkOptions.memoryMaximumSize = "1024M"
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '1.2'
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
@@ -41,53 +74,67 @@ artifacts {
   archives sourcesJar
 }
 
-signing {
-  sign configurations.archives
+if (isReleaseBuild) {
+  signing {
+    sign configurations.archives
+  }
+} else {
+  task signArchives {
+    // do nothing
+  }
 }
 
 uploadArchives {
   repositories {
-    mavenDeployer {
-      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-        authentication(userName: sonatypeUsername, password: sonatypePassword)
-      }
-
-      pom.project {
-        name 'Funk'
-        packaging 'jar'
-        description 'Functional utilities for Java'
-        url 'http://www.javafunk.org'
-
-        scm {
-          url 'scm:git:https://github.com/javafunk/funk.git'
-          connection 'scm:git:https://github.com/javafunk/funk.git'
-          developerConnection 'http://github.com/javafunk/funk'
+    if (isDevBuild) {
+      mavenLocal()
+    } else {
+      mavenDeployer {
+        if (isReleaseBuild) {
+          beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
         }
 
-        licenses {
-          license {
-            name 'BSD License'
-            url 'http://www.opensource.org/licenses/bsd-license.php'
-          }
+        repository(url: sonatypeRepositoryUrl) {
+          authentication(userName: sonatypeUsername, password: sonatypePassword)
         }
 
-        developers {
-          developer {
-            id 'toby'
-            name 'Toby Clemson'
-            email 'tobyclemson@gmail.com'
+        pom.project {
+          name 'Funk'
+          description 'Functional utilities for Java'
+          groupId 'org.javafunk.funk'
+          artifactId 'funk'
+          packaging 'jar'
+          url 'http://www.javafunk.org'
+
+          scm {
+            url 'scm:git:https://github.com/javafunk/funk.git'
+            connection 'scm:git:https://github.com/javafunk/funk.git'
+            developerConnection 'http://github.com/javafunk/funk'
           }
-          developer {
-            id 'andrew'
-            name 'Andrew Kiellor'
-            email 'akiellor@gmail.com'
+
+          licenses {
+            license {
+              name 'BSD License'
+              url 'http://www.opensource.org/licenses/bsd-license.php'
+            }
           }
-          developer {
-            id 'simon'
-            name 'Simon Brunning'
-            email 'simon@brunningonline.net'
+
+          developers {
+            developer {
+              id 'toby'
+              name 'Toby Clemson'
+              email 'tobyclemson@gmail.com'
+            }
+            developer {
+              id 'andrew'
+              name 'Andrew Kiellor'
+              email 'akiellor@gmail.com'
+            }
+            developer {
+              id 'simon'
+              name 'Simon Brunning'
+              email 'simon@brunningonline.net'
+            }
           }
         }
       }
