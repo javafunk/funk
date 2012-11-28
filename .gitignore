@@ -4,7 +4,9 @@
 .idea/scopes/scope_settings.xml
 .idea/dictionaries/*
 .idea/*
+.gradle/
 *.iws
+build/
 target/
 *.DS_Store
 *~

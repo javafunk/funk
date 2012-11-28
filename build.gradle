@@ -1,0 +1,19 @@
+apply plugin: "java"
+apply plugin: "idea"
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile "commons-beanutils:commons-beanutils:1.8.3"
+  compile "commons-collections:commons-collections:3.2.1"
+  compile "commons-lang:commons-lang:2.6"
+  compile "org.hamcrest:hamcrest-core:1.2.1"
+  compile "org.hamcrest:hamcrest-library:1.2.1"
+  compile "com.google.guava:guava:11.0.2"
+
+  testCompile "org.javafunk.matchbox:matchbox:0.1.2"
+  testCompile "org.mockito:mockito-core:1.9.0"
+  testCompile "junit:junit-dep:4.10"
+}
