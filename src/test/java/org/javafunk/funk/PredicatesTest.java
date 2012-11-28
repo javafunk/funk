@@ -9,6 +9,7 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.functors.Predicate;
+import org.javafunk.funk.predicates.EqualsPredicate;
 import org.javafunk.funk.predicates.FalsePredicate;
 import org.javafunk.funk.predicates.NotPredicate;
 import org.javafunk.funk.predicates.TruePredicate;
@@ -33,7 +34,7 @@ public class PredicatesTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIfPredicateSuppliedtoNotIsNull() throws Exception {
+    public void shouldThrowNullPointerExceptionIfPredicateSuppliedToNotIsNull() throws Exception {
         // Given
         Predicate<String> predicate = null;
 
@@ -62,6 +63,18 @@ public class PredicatesTest {
 
         // When
         Predicate<String> actual = alwaysFalse();
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnEqualsPredicateOverSuppliedValueAndType() throws Exception {
+        // Given
+        Predicate<String> expected = new EqualsPredicate<String>("Hello");
+
+        // When
+        EqualsPredicate<String> actual = equalTo("Hello");
 
         // Then
         assertThat(actual, is(expected));

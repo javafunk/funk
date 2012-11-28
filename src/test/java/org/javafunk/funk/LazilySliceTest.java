@@ -35,6 +35,19 @@ public class LazilySliceTest {
     }
 
     @Test
+    public void shouldBeInclusiveOfTheStartIndexAndExclusiveOfTheStopIndex() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Collection<Integer> expectedOutput = collectionWith(3, 4, 5, 6, 7);
+
+        // When
+        Collection<Integer> actualOutput = materialize(Lazily.slice(input, 2, 7, 1));
+
+        // Then
+        assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
+    }
+
+    @Test
     public void shouldAllowIteratorToBeCalledMultipleTimesReturningDifferentIterators() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5, 6, 7, 8, 9);

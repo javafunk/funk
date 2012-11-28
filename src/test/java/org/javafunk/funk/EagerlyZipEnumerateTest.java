@@ -247,10 +247,9 @@ public class EagerlyZipEnumerateTest {
         Iterable<Integer> iterable1 = iterableWith(1, 2, 3);
         Iterable<String> iterable2 = iterableWith("A", "B");
         Iterable<Boolean> iterable3 = iterableWith(true, false, true, false);
-        Collection<Collection<?>> expectedOutput = Literals.<Collection<?>>collectionBuilder()
-                .with(collectionBuilderOf(Object.class).with(1, "A", true).build())
-                .with(collectionBuilderOf(Object.class).with(2, "B", false).build())
-                .build();
+        Collection<Collection<?>> expectedOutput = Literals.<Collection<?>>collectionWith(
+                collectionWith(1, "A", true),
+                collectionWith(2, "B", false));
 
         // When
         Collection<Collection<?>> actualOutput = Eagerly.zip(
