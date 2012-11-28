@@ -4,8 +4,11 @@
 .idea/scopes/scope_settings.xml
 .idea/dictionaries/*
 .idea/*
+.gradle/
 *.iws
+build/
 target/
+out/
 *.DS_Store
 *~
 *.ipr
