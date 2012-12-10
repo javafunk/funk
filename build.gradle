@@ -1,71 +1,96 @@
 import org.gradle.api.artifacts.maven.MavenDeployment
+import org.gradle.api.artifacts.maven.MavenPom
+import org.gradle.api.tasks.wrapper.Wrapper
 
-apply plugin: "java"
-apply plugin: "idea"
-apply plugin: "maven"
-apply plugin: "signing"
-apply from: "https://launchpad.net/gradle-release/trunk/latest/+download/apply.groovy"
+allprojects {
+  apply from: "https://launchpadlibrarian.net/117250874/apply.groovy"
+  apply plugin: "maven"
+  apply plugin: "signing"
+  apply plugin: "idea"
 
-def sonatypeRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-def sonatypeUsername = hasProperty("sonatypeUsername") ? sonatypeUsername : ""
-def sonatypePassword = hasProperty("sonatypePassword") ? sonatypePassword : ""
-def isReleaseVersion = hasProperty("version") && !version.endsWith("SNAPSHOT")
+  group = "org.javafunk.funk"
 
-repositories {
-  mavenCentral()
+  ext.isReleaseVersion = rootProject.hasProperty("version") && !rootProject.version.endsWith("SNAPSHOT")
+  ext.sonatypeRepositoryUrl = isReleaseVersion ?
+    "https://oss.sonatype.org/service/local/staging/deploy/maven2/" :
+    "https://oss.sonatype.org/content/repositories/snapshots/"
+  ext.sonatypeUsername = rootProject.hasProperty("sonatypeUsername") ? sonatypeUsername : ""
+  ext.sonatypePassword = rootProject.hasProperty("sonatypePassword") ? sonatypePassword : ""
+
+  repositories {
+    mavenCentral()
+    maven {
+      url 'https://oss.sonatype.org/content/repositories/releases/'
+    }
+  }
 }
 
-dependencies {
-  compile "commons-beanutils:commons-beanutils:1.8.3"
-  compile "commons-collections:commons-collections:3.2.1"
-  compile "commons-lang:commons-lang:2.6"
-  compile "org.hamcrest:hamcrest-core:1.2.1"
-  compile "org.hamcrest:hamcrest-library:1.2.1"
-  compile "com.google.guava:guava:11.0.2"
+subprojects {
+  apply plugin: "java"
 
-  testCompile "org.javafunk.matchbox:matchbox:0.1.2"
-  testCompile "org.mockito:mockito-core:1.9.0"
-  testCompile "junit:junit-dep:4.10"
-}
+  dependencies {
+    testCompile "org.mockito:mockito-core:1.9.0"
+    testCompile "junit:junit-dep:4.10"
+  }
 
-compileJava {
-  options.fork = true
-  options.forkOptions.memoryMaximumSize = "1024M"
-}
+  def compilerOptions = {
+    options.fork = true
+    options.forkOptions.memoryMaximumSize = "1024M"
+  }
 
-compileTestJava {
-  options.fork = true
-  options.forkOptions.memoryMaximumSize = "1024M"
+  compileJava(compilerOptions)
+  compileTestJava(compilerOptions)
+
+  task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+  }
+
+  task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+  }
+
+  artifacts {
+    archives jar
+    archives javadocJar
+    archives sourcesJar
+  }
+
+  signing {
+    required { isReleaseVersion && gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+  }
 }
 
 task wrapper(type: Wrapper) {
   gradleVersion = '1.2'
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-  classifier = 'javadoc'
-  from 'build/docs/javadoc'
+task emptyPom {
+  ext.outputFile = file("$buildDir/poms/pom-default.xml")
+  doLast {
+    outputFile.getParentFile().mkdirs()
+    outputFile.createNewFile()
+  }
 }
 
-task sourcesJar(type: Jar) {
-  classifier = 'sources'
-  from sourceSets.main.allSource
+configurations {
+  archives
+}
+
+artifacts {
+  archives(file: emptyPom.ext.outputFile) {
+    name 'default'
+    type 'pom'
+    builtBy emptyPom
+  }
 }
 
 createReleaseTag.dependsOn uploadArchives
 
-artifacts {
-  archives jar
-  archives javadocJar
-  archives sourcesJar
-}
-
-signing {
-  required { isReleaseVersion && gradle.taskGraph.hasTask("uploadArchives") }
-  sign configurations.archives
-}
-
 uploadArchives {
+  configuration = configurations.archives
   repositories {
     mavenDeployer {
       beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
@@ -74,45 +99,61 @@ uploadArchives {
         authentication(userName: sonatypeUsername, password: sonatypePassword)
       }
 
-      pom.project {
-        name 'Funk'
-        description 'Functional utilities for Java'
-        groupId 'org.javafunk.funk'
-        artifactId 'funk'
-        packaging 'jar'
-        url 'http://www.javafunk.org'
+      pom {
+        project {
+          name 'Funk'
+          description 'Functional utilities for Java'
+          artifactId 'funk'
+          packaging 'pom'
+          url 'http://www.javafunk.org'
 
-        scm {
-          url 'scm:git:https://github.com/javafunk/funk.git'
-          connection 'scm:git:https://github.com/javafunk/funk.git'
-          developerConnection 'http://github.com/javafunk/funk'
-        }
+          modules {
+            module "funk-core"
+          }
 
-        licenses {
-          license {
-            name 'BSD License'
-            url 'http://www.opensource.org/licenses/bsd-license.php'
+          scm {
+            url 'scm:git:https://github.com/javafunk/funk.git'
+            connection 'scm:git:https://github.com/javafunk/funk.git'
+            developerConnection 'http://github.com/javafunk/funk'
           }
-        }
 
-        developers {
-          developer {
-            id 'toby'
-            name 'Toby Clemson'
-            email 'tobyclemson@gmail.com'
+          licenses {
+            license {
+              name 'BSD License'
+              url 'http://www.opensource.org/licenses/bsd-license.php'
+            }
           }
-          developer {
-            id 'andrew'
-            name 'Andrew Kiellor'
-            email 'akiellor@gmail.com'
-          }
-          developer {
-            id 'simon'
-            name 'Simon Brunning'
-            email 'simon@brunningonline.net'
+
+          developers {
+            developer {
+              id 'toby'
+              name 'Toby Clemson'
+              email 'tobyclemson@gmail.com'
+            }
+            developer {
+              id 'andrew'
+              name 'Andrew Kiellor'
+              email 'akiellor@gmail.com'
+            }
+            developer {
+              id 'simon'
+              name 'Simon Brunning'
+              email 'simon@brunningonline.net'
+            }
           }
         }
       }
+    }
+  }
+}
+
+def addAsParentFor(MavenPom pom) {
+  pom.project {
+    parent {
+      artifactId 'funk'
+      groupId rootProject.group
+      version version
+      relativePath '../../../build/poms/pom-default.xml'
     }
   }
 }
