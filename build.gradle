@@ -132,17 +132,6 @@ uploadArchives {
             developerConnection 'http://github.com/javafunk/funk'
           }
 
-          dependencies {
-            configurations.compile.dependencies.all { dep ->
-              owner.dependency {
-                artifactId dep.name
-                groupId dep.group
-                version dep.version
-                scope 'compile'
-              }
-            }
-          }
-
           licenses {
             license {
               name 'BSD License'
@@ -165,6 +154,21 @@ uploadArchives {
               id 'simon'
               name 'Simon Brunning'
               email 'simon@brunningonline.net'
+            }
+          }
+        }
+      }
+
+      pom.whenConfigured { pom ->
+        pom.project {
+          dependencies {
+            rootProject.configurations.compile.dependencies.all { dep ->
+              owner.dependency {
+                artifactId dep.name
+                groupId dep.group
+                version dep.version
+                scope 'compile'
+              }
             }
           }
         }
