@@ -9,14 +9,14 @@ import org.javafunk.funk.monads.Option;
 public class OptionHasNoValueMatcher extends TypeSafeDiagnosingMatcher<Option<?>> {
     @Override protected boolean matchesSafely(Option<?> option, Description mismatchDescription) {
         if (option.hasValue()) {
-            mismatchDescription.appendText("option with value: ").appendValue(option.get());
+            mismatchDescription.appendText("Option with value: ").appendValue(option.get());
             return false;
         }
         return true;
     }
 
     @Override public void describeTo(Description description) {
-        description.appendText("option with no value.");
+        description.appendText("Option with no value.");
     }
 
     @Override public boolean equals(Object other) {

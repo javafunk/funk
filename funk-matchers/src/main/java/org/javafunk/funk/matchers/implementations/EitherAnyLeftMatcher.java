@@ -4,16 +4,16 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
-import org.javafunk.funk.monads.Option;
+import org.javafunk.funk.monads.Either;
 
-public class OptionHasAnyValueMatcher extends TypeSafeDiagnosingMatcher<Option<?>> {
-    @Override protected boolean matchesSafely(Option<?> option, Description mismatchDescription) {
-        mismatchDescription.appendText("Option with no value.");
-        return option.hasValue();
+public class EitherAnyLeftMatcher<S, T> extends TypeSafeDiagnosingMatcher<Either<S, T>> {
+    @Override public void describeTo(Description description) {
+        description.appendText("Either to be Left.");
     }
 
-    @Override public void describeTo(Description description) {
-        description.appendText("Option with value.");
+    @Override protected boolean matchesSafely(Either<S, T> item, Description mismatchDescription) {
+        mismatchDescription.appendText("got Right.");
+        return item.isLeft();
     }
 
     @Override public boolean equals(Object other) {

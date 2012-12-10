@@ -36,7 +36,7 @@ public class OptionMatchersTest {
         Matcher<? super Option<String>> matcher = hasValue();
 
         // Then
-        assertThat(matcher, mismatchesSampleWithMessage(option, "option with no value."));
+        assertThat(matcher, mismatchesSampleWithMessage(option, "Option with no value."));
     }
 
     @Test
@@ -49,7 +49,7 @@ public class OptionMatchersTest {
         matcher.describeTo(description);
 
         // Then
-        assertThat(description.toString(), is("option with value."));
+        assertThat(description.toString(), is("Option with value."));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class OptionMatchersTest {
         Matcher<? super Option<String>> matcher = hasValue("expected value");
 
         // Then
-        assertThat(matcher, mismatchesSampleWithMessage(option, "option with value: \"actual value\""));
+        assertThat(matcher, mismatchesSampleWithMessage(option, "Option with value: \"actual value\""));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class OptionMatchersTest {
         Matcher<? super Option<String>> matcher = hasValue("value");
 
         // Then
-        assertThat(matcher, mismatchesSampleWithMessage(option, "option with no value."));
+        assertThat(matcher, mismatchesSampleWithMessage(option, "Option with no value."));
     }
 
     @Test
@@ -98,7 +98,7 @@ public class OptionMatchersTest {
         matcher.describeTo(description);
 
         // Then
-        assertThat(description.toString(), is("option with value: \"value\""));
+        assertThat(description.toString(), is("Option with value: \"value\""));
     }
 
     @Test
@@ -134,7 +134,7 @@ public class OptionMatchersTest {
         Matcher<? super Option<String>> matcher = hasNoValue();
 
         // Then
-        assertThat(matcher, mismatchesSampleWithMessage(option, "option with value: \"value\""));
+        assertThat(matcher, mismatchesSampleWithMessage(option, "Option with value: \"value\""));
     }
 
     @Test
@@ -147,7 +147,7 @@ public class OptionMatchersTest {
         matcher.describeTo(description);
 
         // Then
-        assertThat(description.toString(), is("option with no value."));
+        assertThat(description.toString(), is("Option with no value."));
     }
 
     @Test

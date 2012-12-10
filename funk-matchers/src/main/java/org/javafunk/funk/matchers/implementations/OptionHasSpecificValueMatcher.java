@@ -17,16 +17,16 @@ public class OptionHasSpecificValueMatcher<T> extends TypeSafeDiagnosingMatcher<
 
     @Override protected boolean matchesSafely(Option<T> item, Description mismatchDescription) {
         if (item.hasNoValue()) {
-            mismatchDescription.appendText("option with no value.");
+            mismatchDescription.appendText("Option with no value.");
             return false;
         }
 
-        mismatchDescription.appendText("option with value: ").appendValue(item.get());
+        mismatchDescription.appendText("Option with value: ").appendValue(item.get());
         return is(value).matches(item.get());
     }
 
     @Override public void describeTo(Description description) {
-        description.appendText("option with value: ").appendValue(value);
+        description.appendText("Option with value: ").appendValue(value);
     }
 
     @Override public boolean equals(Object other) {
