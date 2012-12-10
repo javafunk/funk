@@ -6,6 +6,8 @@ import org.hamcrest.Description;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.javafunk.funk.monads.Either;
 
+import static org.hamcrest.Matchers.is;
+
 public class EitherSpecificRightMatcher<S, T> extends TypeSafeDiagnosingMatcher<Either<S, T>> {
     private T expectedRightValue;
 
@@ -18,10 +20,9 @@ public class EitherSpecificRightMatcher<S, T> extends TypeSafeDiagnosingMatcher<
             mismatchDescription.appendText("got Left with value: ").appendValue(item.getLeft());
             return false;
         }
-        mismatchDescription.appendText("got Right with value: ").appendValue(item.getRight());
 
-        return (expectedRightValue == null && item.getRight() == null) ||
-                (item.getRight() != null && item.getRight().equals(expectedRightValue));
+        mismatchDescription.appendText("got Right with value: ").appendValue(item.getRight());
+        return is(expectedRightValue).matches(item.getRight());
     }
 
     @Override public void describeTo(Description description) {

@@ -65,12 +65,48 @@ public class OptionMatchersTest {
     }
 
     @Test
+    public void shouldMatchWhenHasValueMatcherEvaluatesOptionWithNullValueAndOptionWithNullValueExpected() throws Exception {
+        // Given
+        Option<String> option = Option.some(null);
+
+        // When
+        Matcher<? super Option<String>> matcher = hasValue(null);
+
+        // Then
+        assertThat(matcher, successfullyMatches(option));
+    }
+
+    @Test
     public void shouldMismatchWithMessageWhenHasValueMatcherEvaluatesOptionWithDifferentValue() throws Exception {
         // Given
         Option<String> option = Option.option("actual value");
 
         // When
         Matcher<? super Option<String>> matcher = hasValue("expected value");
+
+        // Then
+        assertThat(matcher, mismatchesSampleWithMessage(option, "Option with value: \"actual value\""));
+    }
+
+    @Test
+    public void shouldMismatchWithMessageWhenHasValueMatcherEvaluatesOptionWithNullValueButAValueIsExpected() throws Exception {
+        // Given
+        Option<String> option = Option.some(null);
+
+        // When
+        Matcher<? super Option<String>> matcher = hasValue("expected value");
+
+        // Then
+        assertThat(matcher, mismatchesSampleWithMessage(option, "Option with value: null"));
+    }
+
+    @Test
+    public void shouldMismatchWithMessageWhenHasValueMatcherEvaluatesOptionWithAValueButNullValueIsExpected() throws Exception {
+        // Given
+        Option<String> option = Option.some("actual value");
+
+        // When
+        Matcher<? super Option<String>> matcher = hasValue(null);
 
         // Then
         assertThat(matcher, mismatchesSampleWithMessage(option, "Option with value: \"actual value\""));
