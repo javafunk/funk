@@ -1,3 +1,4 @@
+rootProject.name = 'funk'
 include(
   "funk-core",
   "funk-matchers"
