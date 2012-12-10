@@ -1,5 +1,6 @@
 import org.gradle.api.artifacts.maven.MavenDeployment
 import org.gradle.api.artifacts.maven.MavenPom
+import org.gradle.api.tasks.wrapper.Wrapper
 
 allprojects {
   apply from: "https://launchpadlibrarian.net/117250874/apply.groovy"
@@ -18,21 +19,27 @@ allprojects {
 
   repositories {
     mavenCentral()
+    maven {
+      url 'https://oss.sonatype.org/content/repositories/releases/'
+    }
   }
 }
 
 subprojects {
   apply plugin: "java"
 
-  compileJava {
+  dependencies {
+    testCompile "org.mockito:mockito-core:1.9.0"
+    testCompile "junit:junit-dep:4.10"
+  }
+
+  def compilerOptions = {
     options.fork = true
     options.forkOptions.memoryMaximumSize = "1024M"
   }
 
-  compileTestJava {
-    options.fork = true
-    options.forkOptions.memoryMaximumSize = "1024M"
-  }
+  compileJava(compilerOptions)
+  compileTestJava(compilerOptions)
 
   task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'

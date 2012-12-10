@@ -1,3 +1,4 @@
 include(
-  "funk-core"
+  "funk-core",
+  "funk-matchers"
 )
