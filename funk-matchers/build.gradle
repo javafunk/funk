@@ -14,9 +14,8 @@ uploadArchives {
     mavenDeployer {
       beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-      repository(url: sonatypeRepositoryUrl) {
-        authentication(userName: sonatypeUsername, password: sonatypePassword)
-      }
+      repository(url: releaseRepositoryUrl, authenticationDetails)
+      snapshotRepository(url: snapshotRepositoryUrl, authenticationDetails)
 
       pom.project {
         name 'Funk Matchers'
@@ -24,7 +23,9 @@ uploadArchives {
         packaging 'jar'
       }
 
-      rootProject.addAsParentFor(pom)
+      pom.whenConfigured { pom ->
+        rootProject.addAsParentFor(pom)
+      }
     }
   }
 }

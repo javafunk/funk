@@ -2,20 +2,28 @@ import org.gradle.api.artifacts.maven.MavenDeployment
 import org.gradle.api.artifacts.maven.MavenPom
 import org.gradle.api.tasks.wrapper.Wrapper
 
+apply from: "https://launchpad.net/gradle-release/trunk/latest/+download/apply.groovy"
+
+release {
+  includeProjectNameInTag = true
+}
+
+def isReleaseVersion() {
+  return !version.endsWith("SNAPSHOT")
+}
+
 allprojects {
-  apply from: "https://launchpadlibrarian.net/117250874/apply.groovy"
   apply plugin: "maven"
   apply plugin: "signing"
   apply plugin: "idea"
 
-  group = "org.javafunk.funk"
+  ext.sonatypeUsername = rootProject.hasProperty("sonatypeUsername") ? rootProject.property("sonatypeUsername") : ""
+  ext.sonatypePassword = rootProject.hasProperty("sonatypePassword") ? rootProject.property("sonatypePassword") : ""
+  ext.authenticationDetails = { authentication(userName: sonatypeUsername, password: sonatypePassword) }
+  ext.releaseRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+  ext.snapshotRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
 
-  ext.isReleaseVersion = rootProject.hasProperty("version") && !rootProject.version.endsWith("SNAPSHOT")
-  ext.sonatypeRepositoryUrl = isReleaseVersion ?
-    "https://oss.sonatype.org/service/local/staging/deploy/maven2/" :
-    "https://oss.sonatype.org/content/repositories/snapshots/"
-  ext.sonatypeUsername = rootProject.hasProperty("sonatypeUsername") ? sonatypeUsername : ""
-  ext.sonatypePassword = rootProject.hasProperty("sonatypePassword") ? sonatypePassword : ""
+  group = "org.javafunk.funk"
 
   repositories {
     mavenCentral()
@@ -51,15 +59,15 @@ subprojects {
     from sourceSets.main.allSource
   }
 
+  signing {
+    required { isReleaseVersion() && gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+  }
+
   artifacts {
     archives jar
     archives javadocJar
     archives sourcesJar
-  }
-
-  signing {
-    required { isReleaseVersion && gradle.taskGraph.hasTask("uploadArchives") }
-    sign configurations.archives
   }
 }
 
@@ -80,14 +88,14 @@ configurations {
 }
 
 artifacts {
-  archives(file: emptyPom.ext.outputFile) {
+  archives(file: emptyPom.outputFile) {
     name 'default'
     type 'pom'
     builtBy emptyPom
   }
 }
 
-createReleaseTag.dependsOn uploadArchives
+createReleaseTag.dependsOn([":uploadArchives", subprojects.collect { it.name + ":uploadArchives"}].flatten().toSet())
 
 uploadArchives {
   configuration = configurations.archives
@@ -95,9 +103,8 @@ uploadArchives {
     mavenDeployer {
       beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-      repository(url: sonatypeRepositoryUrl) {
-        authentication(userName: sonatypeUsername, password: sonatypePassword)
-      }
+      repository(url: releaseRepositoryUrl, authenticationDetails)
+      snapshotRepository(url: snapshotRepositoryUrl, authenticationDetails)
 
       pom {
         project {
@@ -109,6 +116,7 @@ uploadArchives {
 
           modules {
             module "funk-core"
+            module "funk-matchers"
           }
 
           scm {
@@ -152,7 +160,7 @@ def addAsParentFor(MavenPom pom) {
     parent {
       artifactId 'funk'
       groupId rootProject.group
-      version version
+      version rootProject.version
       relativePath '../../../build/poms/pom-default.xml'
     }
   }
