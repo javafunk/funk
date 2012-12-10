@@ -71,6 +71,16 @@ subprojects {
   }
 }
 
+configurations {
+  compile
+  archives
+}
+
+dependencies {
+  compile project(":funk-core")
+  compile project(":funk-matchers")
+}
+
 task wrapper(type: Wrapper) {
   gradleVersion = '1.2'
 }
@@ -81,10 +91,6 @@ task emptyPom {
     outputFile.getParentFile().mkdirs()
     outputFile.createNewFile()
   }
-}
-
-configurations {
-  archives
 }
 
 artifacts {
@@ -115,14 +121,26 @@ uploadArchives {
           url 'http://www.javafunk.org'
 
           modules {
-            module "funk-core"
-            module "funk-matchers"
+            subprojects.each {
+              owner.module(it.name)
+            }
           }
 
           scm {
             url 'scm:git:https://github.com/javafunk/funk.git'
             connection 'scm:git:https://github.com/javafunk/funk.git'
             developerConnection 'http://github.com/javafunk/funk'
+          }
+
+          dependencies {
+            configurations.compile.dependencies.all { dep ->
+              owner.dependency {
+                artifactId dep.name
+                groupId dep.group
+                version dep.version
+                scope 'compile'
+              }
+            }
           }
 
           licenses {
