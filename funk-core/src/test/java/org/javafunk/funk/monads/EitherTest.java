@@ -229,6 +229,125 @@ public class EitherTest {
     }
 
     @Test
+    public void shouldMapLeftValueUsingMapperIfLeft() throws Exception {
+        // Given
+        String errorDescription = "Something isn't quite right";
+        Exception exception = new RuntimeException(errorDescription);
+        Either<Exception, String> either = Either.left(exception);
+        Either<String, String> expected = Either.left(errorDescription);
+
+        // When
+        Either<String, String> actual = either.mapLeft(new Mapper<Exception, String>() {
+            @Override public String map(Exception exception) {
+                return exception.getMessage();
+            }
+        });
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfMappingLeftUsingNullMapperIfLeft() throws Exception {
+        // Given
+        String errorDescription = "Something isn't quite right";
+        Exception exception = new RuntimeException(errorDescription);
+        Either<Exception, String> either = Either.left(exception);
+
+        // When
+        either.mapLeft((Mapper<Exception, String>) null);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test
+    public void shouldPropagateRightValueOfCorrectLeftTypeForMapLeftWithMapper() throws Exception {
+        // Given
+        Either<Exception, String> either = Either.right("Things are working out.");
+        Either<String, String> expected = Either.right("Things are working out.");
+
+        // When
+        Either<String, String> actual = either.mapLeft(new Mapper<Exception, String>() {
+            @Override public String map(Exception exception) {
+                return exception.getMessage();
+            }
+        });
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfMappingLeftUsingNullMapperIfRight() throws Exception {
+        // Given
+        Either<String, String> either = Either.right("Hello");
+
+        // When
+        either.mapLeft((Mapper<String, Integer>) null);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test
+    public void shouldMapLeftValueUsingUnaryFunctionIfLeft() throws Exception {
+        // Given
+        String errorDescription = "Something isn't quite right";
+        Exception exception = new RuntimeException(errorDescription);
+        Either<Exception, String> either = Either.left(exception);
+        Either<String, String> expected = Either.left(errorDescription);
+
+        // When
+        Either<String, String> actual = either.mapLeft(new UnaryFunction<Exception, String>() {
+            @Override public String call(Exception exception) {
+                return exception.getMessage();
+            }
+        });
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfMappingLeftUsingNullUnaryFunctionIfLeft() throws Exception {
+        // Given
+        Exception exception = new RuntimeException("Something isn't quite right");
+        Either<Exception, String> either = Either.left(exception);
+
+        // When
+        either.mapLeft((UnaryFunction<Exception, String>) null);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test
+    public void shouldPropagateRightValueOfCorrectLeftTypeForMapLeftWithUnaryFunction() throws Exception {
+        // Given
+        Either<Exception, String> either = Either.right("Things are looking up");
+        Either<String, String> expected = Either.right("Things are looking up");
+
+        // When
+        Either<String, String> actual = either.mapLeft(new UnaryFunction<Exception, String>() {
+            @Override public String call(Exception exception) {
+                return exception.getMessage();
+            }
+        });
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfMappingLeftUsingNullUnaryFunctionIfRight() throws Exception {
+        // Given
+        Either<String, String> either = Either.right("Hello");
+
+        // When
+        either.mapLeft((UnaryFunction<String, Integer>) null);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test
     public void shouldBeEqualIfBothLeftOverSameValue() throws Exception {
         // Given
         Either<String, Integer> first = Either.left("Hello");

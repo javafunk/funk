@@ -123,6 +123,12 @@ public class Right<L, R> extends Either<L, R> {
         return right(checkNotNull(function).call(value));
     }
 
+    @Override
+    public <S> Either<S, R> mapLeft(UnaryFunction<? super L, ? extends S> function) {
+        checkNotNull(function);
+        return right(value);
+    }
+
     /**
      * Implements value equality for {@code Right} instances. Two {@code Either}s are
      * equal if they both contain the same value in the same slot thus in the case of

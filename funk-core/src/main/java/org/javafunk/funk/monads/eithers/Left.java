@@ -122,6 +122,11 @@ public class Left<L, R> extends Either<L, R> {
         return left(value);
     }
 
+    @Override
+    public <S> Either<S, R> mapLeft(UnaryFunction<? super L, ? extends S> function) {
+        return left(function.call(value));
+    }
+
     /**
      * Implements value equality for {@code Left} instances. Two {@code Either}s are
      * equal if they both contain the same value in the same slot thus in the case of
