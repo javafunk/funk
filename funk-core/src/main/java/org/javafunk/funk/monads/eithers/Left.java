@@ -122,6 +122,28 @@ public class Left<L, R> extends Either<L, R> {
         return left(value);
     }
 
+    /**
+     * A mapping method to map this {@code Either} into an {@code Either}
+     * over a left value of type {@code S} obtained by calling the
+     * supplied {@code UnaryFunction} with the current left value of this
+     * {@code Either}.
+     *
+     * <p>Since, by definition, a {@code Left} represents the presence of a
+     * left value, the supplied mapper will always be called and a {@code Left}
+     * over the value of type {@code S} returned by the mapper will be returned
+     * with the same type {@code R} in the right slot as this {@code Either}.</p>
+     *
+     * <p>If the supplied {@code UnaryFunction} is {@code null}, a
+     * {@code NullPointerException} will be thrown.</p>
+     *
+     * @param function A {@code UnaryFunction} to map the left value of
+     *                 this {@code Either} into a value of type {@code S}.
+     * @param <S>      The type of the left slot of the resulting {@code Either}.
+     * @return A {@code Left} representing a left value of type {@code S}
+     *         obtained by calling the supplied {@code UnaryFunction} with the
+     *         current left value.
+     * @throws NullPointerException if the supplied mapper is {@code null}.
+     */
     @Override
     public <S> Either<S, R> mapLeft(UnaryFunction<? super L, ? extends S> function) {
         return left(function.call(value));
