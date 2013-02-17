@@ -391,4 +391,11 @@ public abstract class Either<L, R> implements Mappable<R, Either<L, ?>> {
      * @throws NullPointerException if the supplied mapper is {@code null}.
      */
     public abstract <S> Either<S, R> mapLeft(UnaryFunction<? super L, ? extends S> function);
+
+    public abstract <S> Either<L, S> mapRight(UnaryFunction<? super R, ? extends S> function);
+
+    public <S> Either<L, S> mapRight(Mapper<? super R, ? extends S> mapper) {
+        checkNotNull(mapper);
+        return mapRight(mapperUnaryFunction(mapper));
+    }
 }
