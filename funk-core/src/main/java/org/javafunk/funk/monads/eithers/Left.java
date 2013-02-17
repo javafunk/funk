@@ -118,8 +118,7 @@ public class Left<L, R> extends Either<L, R> {
      */
     @Override
     public <S> Either<L, S> map(UnaryFunction<? super R, ? extends S> function) {
-        checkNotNull(function);
-        return left(value);
+        return mapRight(function);
     }
 
     /**
@@ -146,8 +145,7 @@ public class Left<L, R> extends Either<L, R> {
      */
     @Override
     public <S> Either<S, R> mapLeft(UnaryFunction<? super L, ? extends S> function) {
-        checkNotNull(function);
-        return left(function.call(value));
+        return left(checkNotNull(function).call(value));
     }
 
     /**
