@@ -29,21 +29,14 @@ import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.javafunk.funk.functors.procedures.UnaryProcedure;
 import org.javafunk.funk.monads.Option;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import static java.util.Collections.emptyList;
 import static org.javafunk.funk.Checks.returnOrThrowIfNull;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Iterators.asIterable;
 import static org.javafunk.funk.Literals.collectionFrom;
+import static org.javafunk.funk.Literals.listFrom;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.functors.adapters.ActionUnaryProcedureAdapter.actionUnaryProcedure;
 import static org.javafunk.funk.functors.adapters.EquivalenceBinaryPredicateAdapter.equivalenceBinaryPredicate;
@@ -3221,6 +3214,34 @@ public class Eagerly {
         return first(Lazily.rest(iterable));
     }
 
+    /**
+     * Returns a reversed instance of the supplied {@code Iterable}
+     *
+     * @param iterable The {@code Iterable} to reverse
+     * @return A {@code Iterable} instance containing the elements of the supplied {@code Iterable} in reverse order.
+     */
+    public static <T> Iterable<T> reverse(final Iterable<T> iterable) {
+        return new Iterable<T>() {
+            public Iterator<T> iterator() {
+                List<T> list = listFrom(iterable);
+                final ListIterator<T> listIterator = list.listIterator(list.size());
+                return new Iterator<T>() {
+                    public boolean hasNext() {
+                        return listIterator.hasPrevious();
+                    }
+                    public T next() {
+                        return listIterator.previous();
+                    }
+                    public void remove() {
+                        listIterator.remove();
+                    }
+                };
+            }
+        };
+
+
+    }
+
     private static class SliceHelper {
         private static int resolveStartIndex(Integer start, Integer numberOfElements) {
             if (start == null || start + numberOfElements < 0) {
@@ -3256,4 +3277,5 @@ public class Eagerly {
             }
         }
     }
+
 }
