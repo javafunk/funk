@@ -9,19 +9,8 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.IntegerRange;
-import org.javafunk.funk.datastructures.tuples.Nonuple;
-import org.javafunk.funk.datastructures.tuples.Octuple;
-import org.javafunk.funk.datastructures.tuples.Pair;
-import org.javafunk.funk.datastructures.tuples.Quadruple;
-import org.javafunk.funk.datastructures.tuples.Quintuple;
-import org.javafunk.funk.datastructures.tuples.Septuple;
-import org.javafunk.funk.datastructures.tuples.Sextuple;
-import org.javafunk.funk.datastructures.tuples.Triple;
-import org.javafunk.funk.functors.Action;
-import org.javafunk.funk.functors.Equivalence;
-import org.javafunk.funk.functors.Indexer;
-import org.javafunk.funk.functors.Mapper;
-import org.javafunk.funk.functors.Reducer;
+import org.javafunk.funk.datastructures.tuples.*;
+import org.javafunk.funk.functors.*;
 import org.javafunk.funk.functors.functions.BinaryFunction;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.functors.predicates.BinaryPredicate;
@@ -29,24 +18,13 @@ import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.javafunk.funk.functors.procedures.UnaryProcedure;
 import org.javafunk.funk.monads.Option;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.ListIterator;
+import java.util.*;
 
 import static java.util.Collections.emptyList;
 import static org.javafunk.funk.Checks.returnOrThrowIfNull;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Iterators.asIterable;
-import static org.javafunk.funk.Literals.collectionFrom;
-import static org.javafunk.funk.Literals.listFrom;
-import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.functors.adapters.ActionUnaryProcedureAdapter.actionUnaryProcedure;
 import static org.javafunk.funk.functors.adapters.EquivalenceBinaryPredicateAdapter.equivalenceBinaryPredicate;
 import static org.javafunk.funk.functors.adapters.IndexerUnaryFunctionAdapter.indexerUnaryFunction;
@@ -3226,11 +3204,23 @@ public class Eagerly {
     /**
      * Returns a reversed instance of the supplied {@code Iterable}
      *
+     * <p>Since a {@code Collection} instance is returned, the enumeration of the
+     * supplied {@code Iterable} is performed eagerly, i.e., the supplied {@code Iterable}
+     * is iterated immediately before the {@code Collection} is returned.</p>
+     *
+     * <p>If the supplied {@code Iterable} is empty, so is the returned {@code Collection}.</p>
+     *
+     * <p>{@code reverse} does not discriminate against {@code null} values in the input
+     * {@code Iterable}, they are passed to the function in the same way as any other
+     * value. Similarly, any {@code null} values returned are retained in the output
+     * {@code Collection}. Thus, the input and output collections will always be of
+     * the same size.</p>
+     *
      * @param iterable The {@code Iterable} to reverse
-     * @return A {@code Iterable} instance containing the elements of the supplied {@code Iterable} in reverse order.
+     * @return A {@code Collection} instance containing the elements of the supplied {@code Iterable} in reverse order.
      */
-    public static <T> Iterable<T> reverse(final Iterable<T> iterable) {
-        return new Iterable<T>() {
+    public static <T> Collection<T> reverse(final Iterable<T> iterable) {
+        return collectionFrom(new Iterable<T>() {
             public Iterator<T> iterator() {
                 List<T> list = listFrom(iterable);
                 final ListIterator<T> listIterator = list.listIterator(list.size());
@@ -3246,9 +3236,7 @@ public class Eagerly {
                     }
                 };
             }
-        };
-
-
+        });
     }
 
     private static class SliceHelper {
