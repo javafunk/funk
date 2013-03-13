@@ -8,7 +8,7 @@ dependencies {
   compile "org.hamcrest:hamcrest-library:1.2.1"
   compile "com.google.guava:guava:11.0.2"
 
-  testCompile "org.javafunk.matchbox:matchbox:0.1.3"
+  testCompile "org.javafunk.matchbox:matchbox:0.1.4"
 }
 
 uploadArchives {
