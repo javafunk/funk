@@ -465,6 +465,234 @@ public class EitherTest {
     }
 
     @Test
+    public void shouldMapLeftAndReTypeRightUsingMappersForMapAllIfLeft() throws Exception {
+        // Given
+        Either<String, Integer> either = Either.left("5");
+        Mapper<String, Integer> leftMapper = new Mapper<String, Integer>() {
+            @Override public Integer map(String string) {
+                return Integer.valueOf(string);
+            }
+        };
+        Mapper<Integer, String> rightMapper = new Mapper<Integer, String>() {
+            @Override public String map(Integer integer) {
+                return String.valueOf(integer);
+            }
+        };
+        Either<Integer, String> expected = Either.left(5);
+
+        // When
+        Either<Integer, String> actual = either.mapAll(leftMapper, rightMapper);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfMappingAllUsingNullLeftMapperIfLeft() throws Exception {
+        // Given
+        Either<String, Integer> either = Either.left("5");
+        Mapper<String, Integer> leftMapper = null;
+        Mapper<Integer, String> rightMapper = new Mapper<Integer, String>() {
+            @Override public String map(Integer integer) {
+                return String.valueOf(integer);
+            }
+        };
+
+        // When
+        either.mapAll(leftMapper, rightMapper);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfMappingAllUsingNullRightMapperIfLeft() throws Exception {
+        // Given
+        Either<String, Integer> either = Either.left("5");
+        Mapper<String, Integer> leftMapper = new Mapper<String, Integer>() {
+            @Override public Integer map(String string) {
+                return Integer.valueOf(string);
+            }
+        };
+        Mapper<Integer, String> rightMapper = null;
+
+        // When
+        either.mapAll(leftMapper, rightMapper);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test
+    public void shouldMapRightAndReTypeLeftUsingMappersForMapAllIfRight() throws Exception {
+        // Given
+        Either<String, Integer> either = Either.right(5);
+        Mapper<String, Integer> leftMapper = new Mapper<String, Integer>() {
+            @Override public Integer map(String string) {
+                return Integer.valueOf(string);
+            }
+        };
+        Mapper<Integer, String> rightMapper = new Mapper<Integer, String>() {
+            @Override public String map(Integer integer) {
+                return String.valueOf(integer);
+            }
+        };
+        Either<Integer, String> expected = Either.right("5");
+
+        // When
+        Either<Integer, String> actual = either.mapAll(leftMapper, rightMapper);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfMappingAllUsingNullLeftMapperIfRight() throws Exception {
+        // Given
+        Either<String, Integer> either = Either.right(5);
+        Mapper<String, Integer> leftMapper = null;
+        Mapper<Integer, String> rightMapper = new Mapper<Integer, String>() {
+            @Override public String map(Integer integer) {
+                return String.valueOf(integer);
+            }
+        };
+
+        // When
+        either.mapAll(leftMapper, rightMapper);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfMappingAllUsingNullRightMapperIfRight() throws Exception {
+        // Given
+        Either<String, Integer> either = Either.right(5);
+        Mapper<String, Integer> leftMapper = new Mapper<String, Integer>() {
+            @Override public Integer map(String string) {
+                return Integer.valueOf(string);
+            }
+        };
+        Mapper<Integer, String> rightMapper = null;
+
+        // When
+        either.mapAll(leftMapper, rightMapper);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test
+    public void shouldMapLeftAndReTypeRightUsingUnaryFunctionForMapAllIfLeft() throws Exception {
+        // Given
+        Either<String, Integer> either = Either.left("5");
+        UnaryFunction<String, Integer> leftMapper = new UnaryFunction<String, Integer>() {
+            @Override public Integer call(String string) {
+                return Integer.valueOf(string);
+            }
+        };
+        UnaryFunction<Integer, String> rightMapper = new UnaryFunction<Integer, String>() {
+            @Override public String call(Integer integer) {
+                return String.valueOf(integer);
+            }
+        };
+        Either<Integer, String> expected = Either.left(5);
+
+        // When
+        Either<Integer, String> actual = either.mapAll(leftMapper, rightMapper);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfMappingAllUsingNullLeftUnaryFunctionIfLeft() throws Exception {
+        // Given
+        Either<String, Integer> either = Either.left("5");
+        UnaryFunction<String, Integer> leftMapper = null;
+        UnaryFunction<Integer, String> rightMapper = new UnaryFunction<Integer, String>() {
+            @Override public String call(Integer integer) {
+                return String.valueOf(integer);
+            }
+        };
+
+        // When
+        either.mapAll(leftMapper, rightMapper);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfMappingAllUsingNullRightUnaryFunctionIfLeft() throws Exception {
+        // Given
+        Either<String, Integer> either = Either.left("5");
+        UnaryFunction<String, Integer> leftMapper = new UnaryFunction<String, Integer>() {
+            @Override public Integer call(String string) {
+                return Integer.valueOf(string);
+            }
+        };
+        UnaryFunction<Integer, String> rightMapper = null;
+
+        // When
+        either.mapAll(leftMapper, rightMapper);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test
+    public void shouldMapRightAndReTypeLeftUsingUnaryFunctionForMapAllIfRight() throws Exception {
+        // Given
+        Either<String, Integer> either = Either.right(5);
+        UnaryFunction<String, Integer> leftMapper = new UnaryFunction<String, Integer>() {
+            @Override public Integer call(String string) {
+                return Integer.valueOf(string);
+            }
+        };
+        UnaryFunction<Integer, String> rightMapper = new UnaryFunction<Integer, String>() {
+            @Override public String call(Integer integer) {
+                return String.valueOf(integer);
+            }
+        };
+        Either<Integer, String> expected = Either.right("5");
+
+        // When
+        Either<Integer, String> actual = either.mapAll(leftMapper, rightMapper);
+
+        // Then
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfMappingAllUsingNullLeftUnaryFunctionIfRight() throws Exception {
+        // Given
+        Either<String, Integer> either = Either.right(5);
+        UnaryFunction <String, Integer> leftMapper = null;
+        UnaryFunction<Integer, String> rightMapper = new UnaryFunction<Integer, String>() {
+            @Override public String call(Integer integer) {
+                return String.valueOf(integer);
+            }
+        };
+
+        // When
+        either.mapAll(leftMapper, rightMapper);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfMappingAllUsingNullRightUnaryFunctionIfRight() throws Exception {
+        // Given
+        Either<String, Integer> either = Either.right(5);
+        UnaryFunction <String, Integer> leftMapper = new UnaryFunction<String, Integer>() {
+            @Override public Integer call(String string) {
+                return Integer.valueOf(string);
+            }
+        };
+        UnaryFunction<Integer, String> rightMapper = null;
+
+        // When
+        either.mapAll(leftMapper, rightMapper);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test
     public void shouldBeEqualIfBothLeftOverSameValue() throws Exception {
         // Given
         Either<String, Integer> first = Either.left("Hello");

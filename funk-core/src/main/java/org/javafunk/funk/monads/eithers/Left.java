@@ -175,6 +175,14 @@ public class Left<L, R> extends Either<L, R> {
         return left(value);
     }
 
+    @Override public <M, S> Either<M, S> mapAll(
+            UnaryFunction<? super L, ? extends M> leftMapper,
+            UnaryFunction<? super R, ? extends S> rightMapper) {
+        checkNotNull(leftMapper);
+        checkNotNull(rightMapper);
+        return left(leftMapper.call(value));
+    }
+
     /**
      * Implements value equality for {@code Left} instances. Two {@code Either}s are
      * equal if they both contain the same value in the same slot thus in the case of
