@@ -8,31 +8,13 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.tuples.Nonuple;
-import org.javafunk.funk.datastructures.tuples.Octuple;
-import org.javafunk.funk.datastructures.tuples.Pair;
-import org.javafunk.funk.datastructures.tuples.Quadruple;
-import org.javafunk.funk.datastructures.tuples.Quintuple;
-import org.javafunk.funk.datastructures.tuples.Septuple;
-import org.javafunk.funk.datastructures.tuples.Sextuple;
-import org.javafunk.funk.datastructures.tuples.Triple;
-import org.javafunk.funk.functors.Action;
-import org.javafunk.funk.functors.Equivalence;
-import org.javafunk.funk.functors.Indexer;
-import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.datastructures.tuples.*;
+import org.javafunk.funk.functors.*;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.functors.predicates.BinaryPredicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.javafunk.funk.functors.procedures.UnaryProcedure;
-import org.javafunk.funk.iterators.BatchedIterator;
-import org.javafunk.funk.iterators.ChainedIterator;
-import org.javafunk.funk.iterators.CyclicIterator;
-import org.javafunk.funk.iterators.EachIterator;
-import org.javafunk.funk.iterators.FilteredIterator;
-import org.javafunk.funk.iterators.MappedIterator;
-import org.javafunk.funk.iterators.PredicatedIterator;
-import org.javafunk.funk.iterators.SubSequenceIterator;
-import org.javafunk.funk.iterators.ZippedIterator;
+import org.javafunk.funk.iterators.*;
 import org.javafunk.funk.predicates.NotPredicate;
 
 import java.util.Iterator;
@@ -41,10 +23,7 @@ import java.util.List;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.javafunk.funk.Eagerly.first;
 import static org.javafunk.funk.Iterables.concat;
-import static org.javafunk.funk.Literals.iterableBuilderWith;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.listFrom;
-import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.Mappers.toIterators;
 import static org.javafunk.funk.Sequences.increasing;
 import static org.javafunk.funk.Sequences.integers;
@@ -52,6 +31,7 @@ import static org.javafunk.funk.functors.adapters.ActionUnaryProcedureAdapter.ac
 import static org.javafunk.funk.functors.adapters.EquivalenceBinaryPredicateAdapter.equivalenceBinaryPredicate;
 import static org.javafunk.funk.functors.adapters.IndexerUnaryFunctionAdapter.indexerUnaryFunction;
 import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
+import static org.javafunk.funk.iterators.ComprehensionIterator.checkContainsNoNulls;
 
 /**
  * A suite of lazy functions, often higher order, across {@code Iterable} instances.
@@ -2804,5 +2784,18 @@ public class Lazily {
                 return new ZippedIterator(iterators);
             }
         };
+    }
+
+    public static <S, T> Iterable<T> comprehension(final Mapper<? super S, T> mapper, final Iterable<S> source, final Iterable<Predicate<S>> predicates) {
+        checkNotNull(mapper);
+        checkContainsNoNulls(predicates);
+        return new Iterable<T>() {
+            public Iterator<T> iterator() {
+                return new ComprehensionIterator<S, T>(mapper, source.iterator(), predicates);
+            }
+        };
+    }
+    public static <S, T> Iterable<T> comprehension(Mapper<? super S, T> mapper, final Iterable<S> source, Predicate<S> predicate) {
+        return comprehension(mapper, source, iterableWith(predicate));
     }
 }
