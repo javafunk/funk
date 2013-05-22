@@ -6,6 +6,7 @@ import org.javafunk.funk.functors.Predicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -15,7 +16,7 @@ public class ComprehensionIterator<S, T> extends CachingIterator<T> {
     private Iterator<? extends S> iterator;
     private Iterable<? extends UnaryPredicate<S>> predicates;
 
-    public  ComprehensionIterator(Mapper<? super S, T> mapper, Iterator<S> iterator, Iterable<? extends UnaryPredicate<S>> predicates) {
+    public  ComprehensionIterator(Mapper<? super S, T> mapper, Iterator<S> iterator, List<? extends UnaryPredicate<S>> predicates) {
         this.mapper = checkNotNull(mapper);
         this.iterator = iterator;
         this.predicates = checkContainsNoNulls(predicates);
@@ -45,7 +46,7 @@ public class ComprehensionIterator<S, T> extends CachingIterator<T> {
         iterator.remove();
     }
 
-    public static <S> Iterable<? extends UnaryPredicate<S>> checkContainsNoNulls(Iterable<? extends UnaryPredicate<S>> predicates) {
+    public static <S> Iterable<? extends UnaryPredicate<S>> checkContainsNoNulls(List<? extends UnaryPredicate<S>> predicates) {
         Boolean anyNulls = Eagerly.any(predicates, new Predicate<UnaryPredicate<S>>() {
             @Override
             public boolean evaluate(UnaryPredicate<S> predicate) {

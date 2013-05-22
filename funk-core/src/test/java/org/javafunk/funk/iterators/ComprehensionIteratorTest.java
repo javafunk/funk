@@ -23,14 +23,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.javafunk.funk.Literals.collectionBuilderWith;
-import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.funk.Literals.listWith;
 import static org.junit.Assert.fail;
 
 public class ComprehensionIteratorTest {
     @Test
     public void shouldOnlyYieldValuesThatPassAllPredicates(){
         Mapper mapper = Mappers.identity();
-        Iterable<String> iterable = iterableWith("no", "nope", "no way", "nem", "you betcha");
+        Iterable<String> iterable = listWith("no", "nope", "no way", "nem", "you betcha");
         Predicate<String> containsO = new Predicate<String>() {
             public boolean evaluate(String item) {
                 return item.contains("o");
@@ -48,7 +48,7 @@ public class ComprehensionIteratorTest {
                 return item.contains("y");
             }
         };
-        ComprehensionIterator<String, String> iterator = new ComprehensionIterator<String, String>(mapper, iterable.iterator(), iterableWith(containsO, containsE, containsY));
+        ComprehensionIterator<String, String> iterator = new ComprehensionIterator<String, String>(mapper, iterable.iterator(), listWith(containsO, containsE, containsY));
 
         assertThat(iterator.findNext(), is("you betcha"));
     }
@@ -63,7 +63,7 @@ public class ComprehensionIteratorTest {
             }
         };
 
-        Iterable<Integer> iterable = iterableWith(-1, -2, 0, 3, 4, 6, 7);
+        Iterable<Integer> iterable = listWith(-1, -2, 0, 3, 4, 6, 7);
 
         Predicate<Integer> evenPredicate = new Predicate<Integer>() {
             @Override
@@ -82,7 +82,7 @@ public class ComprehensionIteratorTest {
 
 
 
-        ComprehensionIterator<Integer, String> iterator = new ComprehensionIterator<Integer, String>(subtractThreeAddYes, iterable.iterator(), iterableWith(evenPredicate, positivePredicate));
+        ComprehensionIterator<Integer, String> iterator = new ComprehensionIterator<Integer, String>(subtractThreeAddYes, iterable.iterator(), listWith(evenPredicate, positivePredicate));
 
         assertThat(iterator.findNext(), is("1: yes"));
         assertThat(iterator.findNext(), is("3: yes"));
@@ -92,7 +92,7 @@ public class ComprehensionIteratorTest {
     public void shouldAllowHasNextToBeCalledMultipleTimesWithoutProgressingTheIterator() {
         // Given
         Mapper<String, String> identity = Mappers.identity();
-        Iterable<String> iterable = iterableWith("passOne", "passTwo", "failOne", "passThree", "failTwo");
+        Iterable<String> iterable = listWith("passOne", "passTwo", "failOne", "passThree", "failTwo");
         Predicate<String> containsP = new Predicate<String>() {
             public boolean evaluate(String item) {
                 return item.contains("p");
@@ -106,7 +106,7 @@ public class ComprehensionIteratorTest {
         };
 
         // When
-        ComprehensionIterator<String, String> iterator = new ComprehensionIterator<String, String>(identity, iterable.iterator(), iterableWith(containsP, containsS));
+        ComprehensionIterator<String, String> iterator = new ComprehensionIterator<String, String>(identity, iterable.iterator(), listWith(containsP, containsS));
 
         // Then
         assertThat(iterator.hasNext(), is(true));
@@ -126,7 +126,7 @@ public class ComprehensionIteratorTest {
     public void shouldAllowNextToBeCalledWithoutHavingCalledHasNext() {
         // Given
         Mapper mapper = Mappers.identity();
-        Iterable<String> iterable = iterableWith("passOne", "passTwo", "failOne", "passThree", "failTwo");
+        Iterable<String> iterable = listWith("passOne", "passTwo", "failOne", "passThree", "failTwo");
         Predicate<String> containsP = new Predicate<String>() {
             public boolean evaluate(String item) {
                 return item.contains("p");
@@ -140,7 +140,7 @@ public class ComprehensionIteratorTest {
         };
 
         // When
-        ComprehensionIterator<String, String> iterator = new ComprehensionIterator<String, String>(mapper, iterable.iterator(), iterableWith(containsP, containsS));
+        ComprehensionIterator<String, String> iterator = new ComprehensionIterator<String, String>(mapper, iterable.iterator(), listWith(containsP, containsS));
 
         // Then
         assertThat(iterator.next(), is("passOne"));
@@ -152,7 +152,7 @@ public class ComprehensionIteratorTest {
     public void shouldThrowNoSuchElementExceptionIfDoesntHaveNext() {
         // Given
         Mapper mapper = Mappers.identity();
-        Iterable<String> iterable = iterableWith("passOne", "passTwo", "failOne", "passThree", "failTwo");
+        Iterable<String> iterable = listWith("passOne", "passTwo", "failOne", "passThree", "failTwo");
         Predicate<String> containsP = new Predicate<String>() {
             public boolean evaluate(String item) {
                 return item.contains("p");
@@ -166,7 +166,7 @@ public class ComprehensionIteratorTest {
         };
 
         // When
-        ComprehensionIterator<String, String> iterator = new ComprehensionIterator<String, String>(mapper, iterable.iterator(), iterableWith(containsP, containsS));
+        ComprehensionIterator<String, String> iterator = new ComprehensionIterator<String, String>(mapper, iterable.iterator(), listWith(containsP, containsS));
         iterator.next();
         iterator.next();
         iterator.next();
@@ -200,7 +200,7 @@ public class ComprehensionIteratorTest {
             }
         };
         ComprehensionIterator<String, String> ComprehensionIterator = new ComprehensionIterator<String, String>(mapper, iterator,
-                iterableWith(containsO, doesNotContainR, doesNotContainF));
+                listWith(containsO, doesNotContainR, doesNotContainF));
 
 
         ComprehensionIterator.next();
@@ -216,7 +216,7 @@ public class ComprehensionIteratorTest {
     public void shouldThrowAnIllegalStateExceptionIfNextHasNotBeenCalledBeforeRemove() throws Exception {
         // Given
         Mapper mapper = Mappers.identity();
-        Iterator<String> iterator = iterableWith("one", "two", "three").iterator();
+        Iterator<String> iterator = listWith("one", "two", "three").iterator();
 
         // When
         Predicate<String> containsO = new Predicate<String>() {
@@ -230,7 +230,7 @@ public class ComprehensionIteratorTest {
             }
         };
         ComprehensionIterator<String, String> ComprehensionIterator = new ComprehensionIterator<String, String>(mapper, iterator,
-                iterableWith(containsO, doesNotContainR));
+                listWith(containsO, doesNotContainR));
 
 
         ComprehensionIterator.hasNext();
@@ -257,7 +257,7 @@ public class ComprehensionIteratorTest {
             }
         };
         ComprehensionIterator<String, String> ComprehensionIterator = new ComprehensionIterator<String, String>(mapper, iterator,
-                iterableWith(containsO, doesNotContainR));
+                listWith(containsO, doesNotContainR));
 
         ComprehensionIterator.next();
         ComprehensionIterator.remove();
@@ -285,7 +285,7 @@ public class ComprehensionIteratorTest {
             }
         };
         ComprehensionIterator<String, String> ComprehensionIterator = new ComprehensionIterator<String, String>(mapper, initialElements.iterator(),
-                iterableWith(containsO, containsN));
+                listWith(containsO, containsN));
 
 
         // Then
@@ -322,7 +322,7 @@ public class ComprehensionIteratorTest {
             }
         };
         ComprehensionIterator<String, String> ComprehensionIterator = new ComprehensionIterator<String, String>(mapper, initialElements.iterator(),
-                iterableWith(containsO, containsN));
+                listWith(containsO, containsN));
 
         // Then
         assertThat(ComprehensionIterator.next(), is("one"));
@@ -349,7 +349,7 @@ public class ComprehensionIteratorTest {
     public void shouldAllowNullValuesInTheIterator() throws Exception {
         // Given
         Mapper mapper = Mappers.identity();
-        Iterator<Integer> delegateIterator = iterableWith(1, null, 10, 5).iterator();
+        Iterator<Integer> delegateIterator = listWith(1, null, 10, 5).iterator();
 
         // When
         Predicate<Integer> isNullOrDivisibleByTen = new Predicate<Integer>() {
@@ -357,7 +357,7 @@ public class ComprehensionIteratorTest {
                 return item == null || item % 10 != 0;
             }
         };
-        ComprehensionIterator<Integer, Integer> iterator = new ComprehensionIterator<Integer, Integer>(mapper, delegateIterator, iterableWith(isNullOrDivisibleByTen));
+        ComprehensionIterator<Integer, Integer> iterator = new ComprehensionIterator<Integer, Integer>(mapper, delegateIterator, listWith(isNullOrDivisibleByTen));
 
         // Then
         assertThat(iterator.hasNext(), is(true));
@@ -373,12 +373,12 @@ public class ComprehensionIteratorTest {
     public void shouldThrowNullPointerExceptionIfAnyPredicatesSuppliedToConstructorAreNull() throws Exception {
         // Given
         Mapper mapper = Mappers.identity();
-        Iterator<Integer> input = iterableWith(1, 2, 3).iterator();
+        Iterator<Integer> input = listWith(1, 2, 3).iterator();
         Predicate<Integer> nullPredicate = null;
         Predicate<Integer> nonNullPredicate = Predicates.alwaysTrue();
 
         // When
-        new ComprehensionIterator<Integer, Integer>(mapper, input, iterableWith(nonNullPredicate,nullPredicate));
+        new ComprehensionIterator<Integer, Integer>(mapper, input, listWith(nonNullPredicate,nullPredicate));
 
         // Then a NullPointerException is thrown.
     }
@@ -386,11 +386,11 @@ public class ComprehensionIteratorTest {
     public void shouldThrowNullPointerExceptionIfMapperSuppliedToConstructorIsNull() throws Exception {
         // Given
         Mapper mapper = null;
-        Iterator<Integer> input = iterableWith(1, 2, 3).iterator();
+        Iterator<Integer> input = listWith(1, 2, 3).iterator();
         Predicate<Integer> nonNullPredicate = Predicates.alwaysTrue();
 
         // When
-        new ComprehensionIterator<Integer, Integer>(mapper, input, iterableWith(nonNullPredicate));
+        new ComprehensionIterator<Integer, Integer>(mapper, input, listWith(nonNullPredicate));
 
         // Then a NullPointerException is thrown.
     }

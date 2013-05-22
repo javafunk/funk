@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.javafunk.funk.Arrays.asList;
 import static org.javafunk.funk.Eagerly.first;
 import static org.javafunk.funk.Iterables.concat;
 import static org.javafunk.funk.Literals.*;
@@ -2786,16 +2787,15 @@ public class Lazily {
         };
     }
 
-    public static <S, T> Iterable<T> comprehension(final Mapper<? super S, T> mapper, final Iterable<S> source, final Iterable<Predicate<S>> predicates) {
+    public static <S, T> Iterable<T> comprehension(final Mapper<? super S, T> mapper, final Iterable<S> source, final Predicate<S>... predicates) {
+        final List<Predicate<S>> predicateList = asList(predicates);
         checkNotNull(mapper);
-        checkContainsNoNulls(predicates);
+        checkContainsNoNulls(predicateList);
+
         return new Iterable<T>() {
             public Iterator<T> iterator() {
-                return new ComprehensionIterator<S, T>(mapper, source.iterator(), predicates);
+                return new ComprehensionIterator<S, T>(mapper, source.iterator(), predicateList);
             }
         };
-    }
-    public static <S, T> Iterable<T> comprehension(Mapper<? super S, T> mapper, final Iterable<S> source, Predicate<S> predicate) {
-        return comprehension(mapper, source, iterableWith(predicate));
     }
 }

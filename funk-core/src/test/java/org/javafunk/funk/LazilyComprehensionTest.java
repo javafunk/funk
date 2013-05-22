@@ -9,7 +9,6 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.Literals.listWith;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
@@ -83,7 +82,7 @@ public class LazilyComprehensionTest {
             }
         };
 
-        Collection<Integer> result = materialize(Lazily.comprehension(mapper, source, collectionWith(oddPredicate, divisibleByThreePredicate)));
+        Collection<Integer> result = materialize(Lazily.comprehension(mapper, source, oddPredicate, divisibleByThreePredicate));
 
         assertThat(result, hasOnlyItemsInOrder(3,9));
     }
@@ -113,7 +112,7 @@ public class LazilyComprehensionTest {
             }
         };
 
-        Collection<String> result = materialize(Lazily.comprehension(toUpperMapper, source, collectionWith(oddPredicate, divisibleByThreePredicate)));
+        Collection<String> result = materialize(Lazily.comprehension(toUpperMapper, source, oddPredicate, divisibleByThreePredicate));
 
         assertThat(result, hasOnlyItemsInOrder("3: Looks good", "9: Looks good"));
     }
