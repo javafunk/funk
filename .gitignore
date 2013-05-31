@@ -13,3 +13,5 @@ out/
 *~
 *.ipr
 *.iml
+gradle/
+gradlew*

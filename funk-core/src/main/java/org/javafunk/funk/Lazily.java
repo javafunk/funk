@@ -8,43 +8,23 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.tuples.Nonuple;
-import org.javafunk.funk.datastructures.tuples.Octuple;
-import org.javafunk.funk.datastructures.tuples.Pair;
-import org.javafunk.funk.datastructures.tuples.Quadruple;
-import org.javafunk.funk.datastructures.tuples.Quintuple;
-import org.javafunk.funk.datastructures.tuples.Septuple;
-import org.javafunk.funk.datastructures.tuples.Sextuple;
-import org.javafunk.funk.datastructures.tuples.Triple;
-import org.javafunk.funk.functors.Action;
-import org.javafunk.funk.functors.Equivalence;
-import org.javafunk.funk.functors.Indexer;
-import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.datastructures.tuples.*;
+import org.javafunk.funk.functors.*;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.functors.predicates.BinaryPredicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.javafunk.funk.functors.procedures.UnaryProcedure;
-import org.javafunk.funk.iterators.BatchedIterator;
-import org.javafunk.funk.iterators.ChainedIterator;
-import org.javafunk.funk.iterators.CyclicIterator;
-import org.javafunk.funk.iterators.EachIterator;
-import org.javafunk.funk.iterators.FilteredIterator;
-import org.javafunk.funk.iterators.MappedIterator;
-import org.javafunk.funk.iterators.PredicatedIterator;
-import org.javafunk.funk.iterators.SubSequenceIterator;
-import org.javafunk.funk.iterators.ZippedIterator;
+import org.javafunk.funk.iterators.*;
 import org.javafunk.funk.predicates.NotPredicate;
 
 import java.util.Iterator;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.javafunk.funk.Arrays.asList;
 import static org.javafunk.funk.Eagerly.first;
 import static org.javafunk.funk.Iterables.concat;
-import static org.javafunk.funk.Literals.iterableBuilderWith;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.listFrom;
-import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.Mappers.toIterators;
 import static org.javafunk.funk.Sequences.increasing;
 import static org.javafunk.funk.Sequences.integers;
@@ -52,6 +32,7 @@ import static org.javafunk.funk.functors.adapters.ActionUnaryProcedureAdapter.ac
 import static org.javafunk.funk.functors.adapters.EquivalenceBinaryPredicateAdapter.equivalenceBinaryPredicate;
 import static org.javafunk.funk.functors.adapters.IndexerUnaryFunctionAdapter.indexerUnaryFunction;
 import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
+import static org.javafunk.funk.iterators.ComprehensionIterator.checkContainsNoNulls;
 
 /**
  * A suite of lazy functions, often higher order, across {@code Iterable} instances.
@@ -2802,6 +2783,37 @@ public class Lazily {
             public Iterator<Iterable<?>> iterator() {
                 final Iterable<? extends Iterator<?>> iterators = Eagerly.map(iterables, toIterators());
                 return new ZippedIterator(iterators);
+            }
+        };
+    }
+    /**
+     * Provides a lazily evaluated, set-builder notation style list comprehension. Returns an {@code Iterable} of the
+     * elements that pass all of the supplied {@code Predicate}s, mapped by the supplied {@code Mapper}.
+     *
+     * <p>Since a lazy {@code Iterable} instance is returned, the element filtering and mapping are performed
+     * lazily, i.e., no attempt is made to retrieve the sequence of resulting elements until the result is iterated.</p>
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Iterable} is effectively empty. If the supplied
+     * {@code Iterable} instance are infinite, then the returned
+     * {@code Iterable} will also be infinite.</p>
+     *
+     * @param mapper A {@code Mapper} output function that produces members of the resultant set from members of the
+     * input set that satisfy the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param predicates The {@code Predicate} functions acting as a filter on members of the input set.
+     * @returns An {@code Iterable} of the resultant set from members of the input set that satisfy the predicate
+     * functions, as mapped by the mapper.
+
+     */
+    public static <S, T> Iterable<T> comprehension(final Mapper<? super S, T> mapper, final Iterable<S> iterable, final Predicate<S>... predicates) {
+        final List<Predicate<S>> predicateList = asList(predicates);
+        checkNotNull(mapper);
+        checkContainsNoNulls(predicateList);
+
+        return new Iterable<T>() {
+            public Iterator<T> iterator() {
+                return new ComprehensionIterator<S, T>(mapper, iterable.iterator(), predicateList);
             }
         };
     }

@@ -3239,6 +3239,27 @@ public class Eagerly {
         });
     }
 
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension. Returns an {@code Collection} of the
+     * elements that pass all of the supplied {@code Predicate}s, mapped by the supplied {@code Mapper}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param mapper A {@code Mapper} output function that produces members of the resultant set from members of the
+     * input set that satisfy the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param predicates The {@code Predicate} functions acting as a filter on members of the input set.
+     * @returns An {@code Collection} of the resultant set from members of the input set that satisfy the predicate
+     * functions, as mapped by the mapper.
+     */
+    public static <S, T> Collection<T> comprehension(final Mapper<? super S, T> mapper, final Iterable<S> iterable, final Predicate<S>... predicates) {
+        return materialize(Lazily.comprehension(mapper, iterable, predicates));
+    }
+
     private static class SliceHelper {
         private static int resolveStartIndex(Integer start, Integer numberOfElements) {
             if (start == null || start + numberOfElements < 0) {
