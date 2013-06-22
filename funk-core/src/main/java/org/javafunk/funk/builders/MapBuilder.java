@@ -16,6 +16,7 @@ import org.javafunk.funk.functors.functions.UnaryFunction;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.javafunk.funk.Iterables.concat;
@@ -27,7 +28,7 @@ import static org.javafunk.funk.Sets.union;
 public class MapBuilder<K, V>
         extends AbstractBuilder<Map.Entry<K, V>, MapBuilder<K, V>, Map<K, V>>
         implements AbstractBuilder.WithCustomImplementationSupport<Map.Entry<K, V>, Map, Map<K, V>> {
-    private Map<K, V> elements = new HashMap<K, V>();
+    private Map<K, V> elements = new LinkedHashMap<K, V>();
 
     public static <K, V> MapBuilder<K, V> mapBuilder() {
         return new MapBuilder<K, V>();
@@ -48,7 +49,7 @@ public class MapBuilder<K, V>
         return map;
     }
 
-    @Override public Map<K, V> build(UnaryFunction<? super Iterable<Map.Entry<K, V>>, ? extends Map<K, V>> builderFunction) {
+    @Override public <T extends Map<K, V>> T build(UnaryFunction<? super Iterable<Map.Entry<K, V>>, ? extends T> builderFunction) {
         return builderFunction.call(Collections.unmodifiableSet(elements.entrySet()));
     }
 

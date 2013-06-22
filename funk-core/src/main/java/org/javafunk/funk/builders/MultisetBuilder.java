@@ -14,12 +14,16 @@ import com.google.common.collect.Multisets;
 import org.javafunk.funk.Classes;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class MultisetBuilder<E>
         extends AbstractBuilder<E, MultisetBuilder<E>, Multiset<E>>
         implements AbstractBuilder.WithCustomImplementationSupport<E, Multiset, Multiset<E>> {
-    private HashMultiset<E> elements = HashMultiset.create();
+    // TODO: Use a sparse multiset that maintains exact insertion ordering for this purpose.
+    // This is not memory efficient.
+    private List<E> elements = new ArrayList<E>();
 
     public static <E> MultisetBuilder<E> multisetBuilder() {
         return new MultisetBuilder<E>();
@@ -40,7 +44,7 @@ public class MultisetBuilder<E>
         return multiset;
     }
 
-    @Override public Multiset<E> build(UnaryFunction<? super Iterable<E>, ? extends Multiset<E>> builderFunction) {
+    @Override public <T extends Multiset<E>> T build(UnaryFunction<? super Iterable<E>, ? extends T> builderFunction) {
         return builderFunction.call(Collections.unmodifiableCollection(elements));
     }
 

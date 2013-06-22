@@ -41,7 +41,7 @@ public class SetBuilder<E>
         return set;
     }
 
-    @Override public Set<E> build(UnaryFunction<? super Iterable<E>, ? extends Set<E>> builderFunction) {
+    @Override public <T extends Set<E>> T build(UnaryFunction<? super Iterable<E>, ? extends T> builderFunction) {
         return builderFunction.call(Collections.unmodifiableList(elements));
     }
 

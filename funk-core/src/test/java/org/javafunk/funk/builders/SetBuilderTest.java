@@ -13,19 +13,13 @@ import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.testclasses.Name;
 import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.listWith;
-import static org.javafunk.funk.Literals.setBuilderWith;
-import static org.javafunk.funk.Literals.setWith;
+import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.builders.SetBuilder.setBuilder;
 import static org.javafunk.funk.testclasses.Name.name;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
@@ -276,11 +270,11 @@ public class SetBuilderTest {
     @Test
     public void shouldSupplyElementsToSuppliedBuilderInInsertionOrder() throws Exception {
         // Given
-        final SetBuilder<Name> setBuilder = setBuilderWith(name("Adam"), name("Charles"), name("Amanda"))
+        final SetBuilder<Name> setBuilder = setBuilderWith(name("James"), name("Adam"), name("Charles"), name("Amanda"))
                 .and(iterableWith(name("Paul"), name("Sarah")))
                 .and(name("James"));
         final Iterable<Name> expected = iterableWith(
-                name("Adam"), name("Charles"), name("Amanda"),
+                name("James"), name("Adam"), name("Charles"), name("Amanda"),
                 name("Paul"), name("Sarah"), name("James"));
 
 
@@ -295,14 +289,37 @@ public class SetBuilderTest {
     }
 
     @Test
+    public void shouldAllowConcreteTypeOfSetToBeReturnedWhenBuildingUsingBuilderFunction() throws Exception {
+        // Given
+        SetBuilder<Integer> setBuilder = setBuilderWith(1, 2, 3)
+                .and(4, 5, 6);
+        TreeSet<Integer> expectedTreeSet = new TreeSet<Integer>();
+        expectedTreeSet.addAll(listWith(1, 2, 3, 4, 5, 6));
+
+        // When
+        TreeSet<Integer> actualTreeSet = setBuilder.build(new UnaryFunction<Iterable<Integer>, TreeSet<Integer>>() {
+            @Override public TreeSet<Integer> call(Iterable<Integer> elements) {
+                TreeSet<Integer> set = new TreeSet<Integer>();
+                for (Integer element : elements) {
+                    set.add(element);
+                }
+                return set;
+            }
+        });
+
+        // Then
+        assertThat(actualTreeSet, is(expectedTreeSet));
+    }
+
+    @Test
     public void shouldBuildUsingCustomImplementationMaintainingInsertionOrder() throws Exception {
         // Given
-        SetBuilder<Name> setBuilder = setBuilderWith(name("Adam"), name("Charles"), name("Amanda"))
+        SetBuilder<Name> setBuilder = setBuilderWith(name("James"), name("Adam"), name("Charles"), name("Amanda"))
                 .and(iterableWith(name("Paul"), name("Sarah")))
                 .and(name("James"));
         Set<Name> expected = new LinkedHashSet<Name>(listWith(
-                name("Adam"), name("Charles"), name("Amanda"),
-                name("Paul"), name("Sarah"), name("James")));
+                name("James"), name("Adam"), name("Charles"),
+                name("Amanda"), name("Paul"), name("Sarah")));
 
         // When
         Set<Name> actual = setBuilder.build(LinkedHashSet.class);
