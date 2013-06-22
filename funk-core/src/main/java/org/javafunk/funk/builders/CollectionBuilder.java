@@ -39,7 +39,7 @@ public class CollectionBuilder<E>
         return collection;
     }
 
-    @Override public Collection<E> build(UnaryFunction<? super Iterable<E>, ? extends Collection<E>> builderFunction) {
+    @Override public <T extends Collection<E>> T build(UnaryFunction<? super Iterable<E>, ? extends T> builderFunction) {
         return builderFunction.call(Collections.unmodifiableCollection(elements));
     }
 

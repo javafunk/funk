@@ -12,18 +12,19 @@ import com.google.common.collect.ConcurrentHashMultiset;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import org.javafunk.funk.functors.functions.UnaryFunction;
+import org.javafunk.funk.testclasses.NaiveMultiset;
 import org.javafunk.funk.testclasses.NoArgsConstructorMultiset;
 import org.javafunk.funk.testclasses.PrivateAccessConstructorMultiset;
 import org.javafunk.funk.testclasses.SomeArgsConstructorMultiset;
 import org.junit.Test;
 
+import java.util.List;
+
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.multisetBuilderWith;
-import static org.javafunk.funk.Literals.multisetWith;
+import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.builders.MultisetBuilder.multisetBuilder;
 import static org.junit.Assert.fail;
 
@@ -202,6 +203,21 @@ public class MultisetBuilderTest {
     }
 
     @Test
+    public void shouldAddElementsToAMultisetOfTheSpecifiedImplementationInTheOrderTheyWereSuppliedToTheBuilder() throws Exception {
+        // Given
+        List<Integer> expectedEntries = listWith(4, 3, 4);
+        MultisetBuilder<Integer> multisetBuilder = multisetBuilderWith(4, 3)
+                .and(4);
+
+        // When
+        NaiveMultiset<Integer> actual = (NaiveMultiset<Integer>) multisetBuilder.build(NaiveMultiset.class);
+
+        // Then
+        List<Integer> actualEntries = listFrom(actual);
+        assertThat(actualEntries, is(expectedEntries));
+    }
+
+    @Test
     public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedImplementationDoesNotHaveAnAccessibleConstructor() throws Exception {
         // Given
         MultisetBuilder<Integer> multisetBuilder = multisetBuilderWith(1, 2, 3);
@@ -252,6 +268,40 @@ public class MultisetBuilderTest {
 
         // Then
         assertThat(actual instanceof ConcurrentHashMultiset, is(true));
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldPassElementsToTheSuppliedBuilderFunctionInTheOrderPassedToTheBuilder() throws Exception {
+        // Given
+        MultisetBuilder<Integer> multisetBuilder = multisetBuilderWith(3, 1, 2, 3);
+        final Iterable<Integer> expectedElements = iterableWith(3, 1, 2, 3);
+
+        // When
+        multisetBuilder.build(new UnaryFunction<Iterable<Integer>, Multiset<Integer>>() {
+            @Override public Multiset<Integer> call(Iterable<Integer> actualElements) {
+                // Then
+                assertThat(listFrom(actualElements), is(listFrom(expectedElements)));
+
+                return null;
+            }
+        });
+    }
+
+    @Test
+    public void shouldAllowConcreteTypeOfMultisetToBeReturnedWhenBuildingUsingBuilderFunction() throws Exception {
+        // Given
+        MultisetBuilder<Integer> multisetBuilder = multisetBuilderWith(1, 2, 3);
+        ConcurrentHashMultiset<Integer> expected = ConcurrentHashMultiset.create(iterableWith(1, 2, 3));
+
+        // When
+        ConcurrentHashMultiset<Integer> actual = multisetBuilder.build(new UnaryFunction<Iterable<Integer>, ConcurrentHashMultiset<Integer>>() {
+            @Override public ConcurrentHashMultiset<Integer> call(Iterable<Integer> elements) {
+                return ConcurrentHashMultiset.create(elements);
+            }
+        });
+
+        // Then
         assertThat(actual, is(expected));
     }
 
