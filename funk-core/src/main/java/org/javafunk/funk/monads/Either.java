@@ -249,8 +249,7 @@ public abstract class Either<L, R> implements Mappable<R, Either<L, ?>> {
      * @throws NullPointerException if the supplied mapper is {@code null}.
      */
     public <S> Either<L, S> map(Mapper<? super R, ? extends S> mapper) {
-        checkNotNull(mapper);
-        return map(mapperUnaryFunction(mapper));
+        return mapRight(mapper);
     }
 
     /**
@@ -286,7 +285,7 @@ public abstract class Either<L, R> implements Mappable<R, Either<L, ?>> {
      *           return listFrom(content.split("\\n\\n"));
      *       }
      *   }
-     *   if(paragraphs.isLeft) {
+     *   if(paragraphs.isLeft()) {
      *       throw new FailedToLoadBookException();
      *   }
      *   return paragraphs.getRight();
@@ -303,4 +302,301 @@ public abstract class Either<L, R> implements Mappable<R, Either<L, ?>> {
      * @throws NullPointerException if the supplied mapper is {@code null}.
      */
     public abstract <S> Either<L, S> map(UnaryFunction<? super R, ? extends S> function);
+
+    /**
+     * A mapping method to map this {@code Either} into an {@code Either}
+     * over a left value of type {@code S} obtained by calling the
+     * supplied {@code Mapper} with the current left value of this
+     * {@code Either}.
+     *
+     * <p>In the case that this {@code Either} represents a right value, an
+     * {@code Either} over the existing right value will be returned with
+     * a left type of {@code S} and the supplied {@code Mapper} will not
+     * be called.</p>
+     *
+     * <p>Currently the supplied {@code Mapper} will be called eagerly
+     * in the case that this {@code Either} represents a left value
+     * although this may become lazy in a future version of Funk.</p>
+     *
+     * <p>If the supplied {@code Mapper} is {@code null}, a
+     * {@code NullPointerException} will be thrown.</p>
+     *
+     * <p>This overload of {@link #mapLeft(UnaryFunction)} is provided to allow a
+     * {@code Mapper} to be used in place of a {@code UnaryFunction} to enhance readability
+     * and better express intent. The contract of the function is identical to that of the
+     * {@code UnaryFunction} version of {@code mapLeft}.</p>
+     *
+     * <p>For example usage and further documentation, see {@link #mapLeft(UnaryFunction)}.</p>
+     *
+     * @param mapper A {@code Mapper} to map the left value of this
+     *               {@code Either} into a value of type {@code S}.
+     * @param <S>    The type of the left value of the resulting {@code Either}.
+     * @return An {@code Either} representing a left value of type {@code S}
+     *         obtained by calling the supplied {@code Mapper} with the
+     *         current left value if this {@code Either} represents a left
+     *         value, otherwise, this {@code Either} with a left type of {@code S}.
+     * @throws NullPointerException if the supplied mapper is {@code null}.
+     */
+    public <S> Either<S, R> mapLeft(Mapper<? super L, ? extends S> mapper) {
+        checkNotNull(mapper);
+        return mapLeft(mapperUnaryFunction(mapper));
+    }
+
+    /**
+     * A mapping method to map this {@code Either} into an {@code Either}
+     * over a left value of type {@code S} obtained by calling the
+     * supplied {@code UnaryFunction} with the current left value of this
+     * {@code Either}.
+     *
+     * <p>In the case that this {@code Either} represents a right value, an
+     * {@code Either} over the existing right value will be returned with
+     * a left type of {@code S} and the supplied {@code UnaryFunction} will
+     * not be called.</p>
+     *
+     * <p>Currently the supplied {@code UnaryFunction} will be called eagerly
+     * in the case that this {@code Either} represents a left value
+     * although this may become lazy in a future version of Funk.</p>
+     *
+     * <p>If the supplied {@code UnaryFunction} is {@code null}, a
+     * {@code NullPointerException} will be thrown.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * <blockquote>
+     * <pre>
+     *   String contentPath = "books/the_cat_in_the_hat.txt";
+     *   Either&lt;Error, String&gt; errorOrContent = loader.load(contentPath);
+     *   Either&lt;String, String&gt; formattedErrorOrContent = errorOrContent.mapLeft(new UnaryFunction&lt;Error, String&gt;(){
+     *       &#64;Override public String call(Error error) {
+     *           return error.getCompleteExplanation();
+     *       }
+     *   }
+     *
+     *   if(formattedErrorOrContent.isLeft()) {
+     *       log.error("Cannot load content at {}", contentPath);
+     *   }
+     *
+     *   return formattedErrorOrContent.isRight() ? formattedErrorOrContent.getRight() : "";
+     * </pre>
+     * </blockquote>
+     *
+     * @param function A {@code UnaryFunction} to map the left value of
+     *                 this {@code Either} into a value of type {@code S}.
+     * @param <S>      The type of the left value of the resulting {@code Either}.
+     * @return An {@code Either} representing a left value of type {@code S}
+     *         obtained by calling the supplied {@code UnaryFunction} with the
+     *         current left value if this {@code Either} represents a left
+     *         value, otherwise, this {@code Either} with a left type of {@code S}.
+     * @throws NullPointerException if the supplied mapper is {@code null}.
+     */
+    public abstract <S> Either<S, R> mapLeft(UnaryFunction<? super L, ? extends S> function);
+
+    /**
+     * A mapping method to map this {@code Either} into an {@code Either}
+     * over a right value of type {@code S} obtained by calling the
+     * supplied {@code Mapper} with the current right value of this
+     * {@code Either}.
+     *
+     * <p>In the case that this {@code Either} represents a left value, an
+     * {@code Either} over the existing left value will be returned with
+     * a right type of {@code S} and the supplied {@code Mapper} will not
+     * be called.</p>
+     *
+     * <p>Currently the supplied {@code Mapper} will be called eagerly
+     * in the case that this {@code Either} represents a right value
+     * although this may become lazy in a future version of Funk.</p>
+     *
+     * <p>If the supplied {@code Mapper} is {@code null}, a
+     * {@code NullPointerException} will be thrown.</p>
+     *
+     * <p>This overload of {@link #mapRight(UnaryFunction)} is provided to allow a
+     * {@code Mapper} to be used in place of a {@code UnaryFunction} to enhance readability
+     * and better express intent. The contract of the function is identical to that of the
+     * {@code UnaryFunction} version of {@code mapRight}.</p>
+     *
+     * <p>For example usage and further documentation, see {@link #mapRight(UnaryFunction)}.</p>
+     *
+     * @param mapper A {@code Mapper} to map the right value of this
+     *               {@code Either} into a value of type {@code S}.
+     * @param <S>    The type of the right value of the resulting {@code Either}.
+     * @return An {@code Either} representing a right value of type {@code S}
+     *         obtained by calling the supplied {@code Mapper} with the
+     *         current right value if this {@code Either} represents a right
+     *         value, otherwise, this {@code Either} with a right type of {@code S}.
+     * @throws NullPointerException if the supplied mapper is {@code null}.
+     */
+    public <S> Either<L, S> mapRight(Mapper<? super R, ? extends S> mapper) {
+        checkNotNull(mapper);
+        return mapRight(mapperUnaryFunction(mapper));
+    }
+
+    /**
+     * A mapping method to map this {@code Either} into an {@code Either}
+     * over a right value of type {@code S} obtained by calling the
+     * supplied {@code UnaryFunction} with the current right value of this
+     * {@code Either}.
+     *
+     * <p>In the case that this {@code Either} represents a left value, an
+     * {@code Either} over the existing left value will be returned with
+     * a right type of {@code S} and the supplied {@code UnaryFunction} will
+     * not be called.</p>
+     *
+     * <p>Currently the supplied {@code UnaryFunction} will be called eagerly
+     * in the case that this {@code Either} represents a right value
+     * although this may become lazy in a future version of Funk.</p>
+     *
+     * <p>If the supplied {@code UnaryFunction} is {@code null}, a
+     * {@code NullPointerException} will be thrown.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * <blockquote>
+     * <pre>
+     *   String contentPath = "books/the_cat_in_the_hat.json";
+     *   Either&lt;Error, String&gt; errorOrContent = loader.load(contentPath);
+     *   Either&lt;Error, JsonNode&gt; errorOrParsedContent = errorOrContent.mapRight(new UnaryFunction&lt;String, JsonNode&gt;(){
+     *       &#64;Override public JsonNode call(String content) {
+     *           return jsonParser.parse(content);
+     *       }
+     *   }
+     *
+     *   if(errorOrParsedContent.isLeft()) {
+     *       log.error("Cannot load content at {}", contentPath);
+     *   }
+     *
+     *   return errorOrJsonContent.isRight() ? errorOrJsonContent.getRight() : JsonNode.EMPTY;
+     * </pre>
+     * </blockquote>
+     *
+     * @param function A {@code UnaryFunction} to map the right value of
+     *                 this {@code Either} into a value of type {@code S}.
+     * @param <S>      The type of the right value of the resulting {@code Either}.
+     * @return An {@code Either} representing a right value of type {@code S}
+     *         obtained by calling the supplied {@code UnaryFunction} with the
+     *         current right value if this {@code Either} represents a right
+     *         value, otherwise, this {@code Either} with a right type of {@code S}.
+     * @throws NullPointerException if the supplied function is {@code null}.
+     */
+    public abstract <S> Either<L, S> mapRight(UnaryFunction<? super R, ? extends S> function);
+
+    /**
+     * A mapping method to map this {@code Either}, regardless of whether it
+     * represents a right value or a left value, using the supplied
+     * {@code Mapper} instances.
+     *
+     * <p>In the case that this {@code Either} represents a left value, the
+     * supplied left mapper will be applied to that value and an {@code Either}
+     * of left type {@code M} over the result and right type {@code S} will be
+     * returned.</p>
+     *
+     * <p>In the case that this {@code Either} represents a right value, the
+     * supplied right mapper will be applied to that value and an {@code Either}
+     * of left type {@code M} and right type {@code S} over the result will be
+     * returned.</p>
+     *
+     * <p>Currently the appropriate {@code Mapper} will be called eagerly
+     * although this may become lazy in a future version of Funk.</p>
+     *
+     * <p>If either of the supplied {@code Mapper}s are {@code null}, a
+     * {@code NullPointerException} will be thrown.</p>
+     *
+     * <p>This overload of {@link #mapAll(UnaryFunction, UnaryFunction)} is
+     * provided to allow {@code Mapper}s to be used in place of {@code UnaryFunction}s to
+     * enhance readability and better express intent. The contract of the function is
+     * identical to that of the {@code UnaryFunction} version of {@code mapAll}.</p>
+     *
+     * <p>For example usage and further documentation, see
+     * {@link #mapAll(UnaryFunction, UnaryFunction)}.</p>
+     *
+     * @param leftMapper  A {@code Mapper} to map the left value of
+     *                    this {@code Either} into a value of type {@code M}
+     *                    in the case that it represents a left value.
+     * @param rightMapper A {@code Mapper} to map the right value of
+     *                    this {@code Either} into a value of type {@code S}
+     *                    in the case that it represents a right value.
+     * @param <M>         The type of the left value of the resulting {@code Either}.
+     * @param <S>         The type of the right value of the resulting {@code Either}.
+     * @return An {@code Either} of left type {@code M} and right type {@code S}
+     *         obtained by applying the supplied left mapper to the contained
+     *         value in the case that this {@code Either} represents a left value
+     *         or by applying the supplied right mapper to the contained value in
+     *         the case that this {@code Either} represents a right value.
+     * @throws NullPointerException if either of the supplied mappers is
+     *                              {@code null}.
+     */
+    public <M, S> Either<M, S> mapAll(
+            Mapper<? super L, ? extends M> leftMapper,
+            Mapper<? super R, ? extends S> rightMapper) {
+        return mapAll(
+                mapperUnaryFunction(checkNotNull(leftMapper)),
+                mapperUnaryFunction(checkNotNull(rightMapper)));
+    }
+
+    /**
+     * A mapping method to map this {@code Either}, regardless of whether it
+     * represents a right value or a left value, using the supplied
+     * {@code UnaryFunction} instances.
+     *
+     * <p>In the case that this {@code Either} represents a left value, the
+     * supplied left mapper will be applied to that value and an {@code Either}
+     * of left type {@code M} over the result and right type {@code S} will be
+     * returned.</p>
+     *
+     * <p>In the case that this {@code Either} represents a right value, the
+     * supplied right mapper will be applied to that value and an {@code Either}
+     * of left type {@code M} and right type {@code S} over the result will be
+     * returned.</p>
+     *
+     * <p>Currently the appropriate {@code UnaryFunction} will be called
+     * eagerly although this may become lazy in a future version of Funk.</p>
+     *
+     * <p>If either of the supplied {@code UnaryFunction}s are {@code null}, a
+     * {@code NullPointerException} will be thrown.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * <blockquote>
+     * <pre>
+     *   String contentPath = "books/the_cat_in_the_hat.json";
+     *   Either&lt;Error, String&gt; errorOrContent = loader.load(contentPath);
+     *   UnaryFunction&lt;Error, Exception&gt; leftMapper = new UnaryFunction&lt;Error, Throwable&gt;() {
+     *       &#64;Override Throwable call(Error error) {
+     *           return new RuntimeException(error.describe);
+     *       }
+     *   }
+     *   UnaryFunction&lt;String, JsonNode&gt; rightMapper = new UnaryFunction&lt;String, JsonNode&gt;() {
+     *       &#64;Override public JsonNode call(String content) {
+     *           return jsonParser.parse(content);
+     *       }
+     *   }
+     *   Either&lt;Throwable, JsonNode&gt; throwableOrParsedContent =
+     *          errorOrContent.mapAll(leftMapper, rightMapper)
+     *
+     *   if(throwableOrParsedContent.isLeft()) {
+     *       throw throwableOrParsedContent.getLeft()
+     *   }
+     *
+     *   return throwableOrJsonContent.isRight() ? throwableOrJsonContent.getRight() : JsonNode.EMPTY;
+     * </pre>
+     * </blockquote>
+     *
+     * @param leftMapper  A {@code UnaryFunction} to map the left value of
+     *                    this {@code Either} into a value of type {@code M}
+     *                    in the case that it represents a left value.
+     * @param rightMapper A {@code UnaryFunction} to map the right value of
+     *                    this {@code Either} into a value of type {@code S}
+     *                    in the case that it represents a right value.
+     * @param <M>         The type of the left value of the resulting {@code Either}.
+     * @param <S>         The type of the right value of the resulting {@code Either}.
+     * @return An {@code Either} of left type {@code M} and right type {@code S}
+     *         obtained by applying the supplied left mapper to the contained
+     *         value in the case that this {@code Either} represents a left value
+     *         or by applying the supplied right mapper to the contained value in
+     *         the case that this {@code Either} represents a right value.
+     * @throws NullPointerException if either of the supplied functions is
+     *                              {@code null}.
+     */
+    public abstract <M, S> Either<M, S> mapAll(
+            UnaryFunction<? super L, ? extends M> leftMapper,
+            UnaryFunction<? super R, ? extends S> rightMapper);
 }

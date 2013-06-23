@@ -2,11 +2,11 @@ import org.gradle.api.artifacts.maven.MavenDeployment
 import org.gradle.api.artifacts.maven.MavenPom
 import org.gradle.api.tasks.wrapper.Wrapper
 
-apply from: "https://launchpad.net/gradle-release/trunk/latest/+download/apply.groovy"
+//apply from: "https://launchpad.net/gradle-release/trunk/latest/+download/apply.groovy"
 
-release {
-  includeProjectNameInTag = true
-}
+//release {
+//  includeProjectNameInTag = true
+//}
 
 def isReleaseVersion() {
   return !version.endsWith("SNAPSHOT")
@@ -101,7 +101,7 @@ artifacts {
   }
 }
 
-createReleaseTag.dependsOn([":uploadArchives", subprojects.collect { it.name + ":uploadArchives"}].flatten().toSet())
+//createReleaseTag.dependsOn([":uploadArchives", subprojects.collect { it.name + ":uploadArchives"}].flatten().toSet())
 
 uploadArchives {
   configuration = configurations.archives
