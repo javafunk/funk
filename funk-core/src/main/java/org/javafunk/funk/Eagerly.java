@@ -3208,16 +3208,17 @@ public class Eagerly {
      * supplied {@code Iterable} is performed eagerly, i.e., the supplied {@code Iterable}
      * is iterated immediately before the {@code Collection} is returned.</p>
      *
-     * <p>If the supplied {@code Iterable} is empty, so is the returned {@code Collection}.</p>
+     * <p>If the supplied {@code Iterable} is empty, so is the returned
+     * {@code Collection}.</p>
      *
      * <p>{@code reverse} does not discriminate against {@code null} values in the input
-     * {@code Iterable}, they are passed to the function in the same way as any other
-     * value. Similarly, any {@code null} values returned are retained in the output
+     * {@code Iterable}, any {@code null} values returned are retained in the output
      * {@code Collection}. Thus, the input and output collections will always be of
      * the same size.</p>
      *
      * @param iterable The {@code Iterable} to reverse
-     * @return A {@code Collection} instance containing the elements of the supplied {@code Iterable} in reverse order.
+     * @return A {@code Collection} instance containing the elements of the supplied
+     *         {@code Iterable} in reverse order.
      */
     public static <T> Collection<T> reverse(final Iterable<T> iterable) {
         return collectionFrom(new Iterable<T>() {
@@ -3240,8 +3241,9 @@ public class Eagerly {
     }
 
     /**
-     * Provides a eagerly evaluated, set-builder notation style list comprehension. Returns an {@code Collection} of the
-     * elements that pass all of the supplied {@code Predicate}s, mapped by the supplied {@code Mapper}.
+     * Provides an eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Collection} of the elements that pass all of the supplied
+     * {@code Predicate}s, mapped by the supplied {@code Mapper}.
      *
      * <p>Since a {@code Collection} instance is returned, the list comprehension
      * is performed eagerly.
@@ -3249,14 +3251,19 @@ public class Eagerly {
      * <p>If the supplied source {@code Iterable} instance is empty, the
      * returned {@code Collection} is empty.
      *
-     * @param mapper A {@code Mapper} output function that produces members of the resultant set from members of the
-     * input set that satisfy the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param predicates The {@code Predicate} functions acting as a filter on members of the input set.
-     * @returns An {@code Collection} of the resultant set from members of the input set that satisfy the predicate
-     * functions, as mapped by the mapper.
+     * @param mapper     A {@code Mapper} output function that produces members of the
+     *                   resultant set from members of the input set that satisfy the
+     *                   predicate functions.
+     * @param iterable   The {@code Iterable} of the input set.
+     * @param predicates The {@code Predicate} functions acting as a filter on members
+     *                   of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapper.
      */
-    public static <S, T> Collection<T> comprehension(final Mapper<? super S, T> mapper, final Iterable<S> iterable, final Predicate<S>... predicates) {
+    public static <S, T> Collection<T> comprehension(
+            final Mapper<? super S, T> mapper,
+            final Iterable<S> iterable,
+            final Predicate<S>... predicates) {
         return materialize(Lazily.comprehension(mapper, iterable, predicates));
     }
 

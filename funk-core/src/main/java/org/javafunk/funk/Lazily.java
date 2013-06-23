@@ -2786,27 +2786,33 @@ public class Lazily {
             }
         };
     }
+
     /**
-     * Provides a lazily evaluated, set-builder notation style list comprehension. Returns an {@code Iterable} of the
-     * elements that pass all of the supplied {@code Predicate}s, mapped by the supplied {@code Mapper}.
+     * Provides a lazily evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass all of the supplied
+     * {@code Predicate}s, mapped by the supplied {@code Mapper}.
      *
-     * <p>Since a lazy {@code Iterable} instance is returned, the element filtering and mapping are performed
-     * lazily, i.e., no attempt is made to retrieve the sequence of resulting elements until the result is iterated.</p>
+     * <p>Since a lazy {@code Iterable} instance is returned, the element filtering
+     * and mapping are performed lazily, i.e., no attempt is made to retrieve the
+     * sequence of resulting elements until the result is iterated.</p>
      *
      * <p>If the supplied source {@code Iterable} instance is empty, the
      * returned {@code Iterable} is effectively empty. If the supplied
-     * {@code Iterable} instance are infinite, then the returned
+     * {@code Iterable} instance is infinite, then the returned
      * {@code Iterable} will also be infinite.</p>
      *
-     * @param mapper A {@code Mapper} output function that produces members of the resultant set from members of the
-     * input set that satisfy the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
+     * @param mapper     A {@code Mapper} output function that produces members of the
+     *                   resultant set from members of the input set that satisfy the
+     *                   predicate functions.
+     * @param iterable   The {@code Iterable} of the input set.
      * @param predicates The {@code Predicate} functions acting as a filter on members of the input set.
-     * @returns An {@code Iterable} of the resultant set from members of the input set that satisfy the predicate
-     * functions, as mapped by the mapper.
-
+     * @return An {@code Iterable} of the resultant set from members of the input set that satisfy the predicate
+     *         functions, as mapped by the mapper.
      */
-    public static <S, T> Iterable<T> comprehension(final Mapper<? super S, T> mapper, final Iterable<S> iterable, final Predicate<S>... predicates) {
+    public static <S, T> Iterable<T> comprehension(
+            final Mapper<? super S, T> mapper,
+            final Iterable<S> iterable,
+            final Predicate<S>... predicates) {
         final List<Predicate<S>> predicateList = asList(predicates);
         checkNotNull(mapper);
         checkContainsNoNulls(predicateList);
