@@ -9,24 +9,19 @@
 package org.javafunk.funk.builders;
 
 import com.google.common.collect.ImmutableMap;
+import org.javafunk.funk.Eagerly;
 import org.javafunk.funk.datastructures.tuples.Pair;
+import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.testclasses.NoNoArgsConstructorMap;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.listWith;
-import static org.javafunk.funk.Literals.mapBuilderWithKeyValuePair;
-import static org.javafunk.funk.Literals.mapEntryFor;
-import static org.javafunk.funk.Literals.mapWithKeyValuePair;
-import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.builders.MapBuilder.mapBuilder;
 import static org.junit.Assert.fail;
 
@@ -538,6 +533,28 @@ public class MapBuilderTest {
     }
 
     @Test
+    public void shouldAddElementsToAMapOfTheSpecifiedImplementationInTheOrderTheyWereSuppliedToTheBuilder() throws Exception {
+        // Given
+        LinkedHashMap<String, Integer> expected = new LinkedHashMap<String, Integer>();
+        expected.put("first", 4);
+        expected.put("second", 3);
+        expected.put("third", 2);
+        expected.put("fourth", 1);
+
+        MapBuilder<String, Integer> mapBuilder = mapBuilderWithKeyValuePairs("first", 4, "second", 3)
+                .andKeyValuePair("third", 2)
+                .andKeyValuePair("fourth", 1);
+
+        // When
+        LinkedHashMap<String, Integer> actual = (LinkedHashMap<String, Integer>) mapBuilder.build(LinkedHashMap.class);
+
+        // Then
+        Iterable<Pair<String, Integer>> expectedEntries = Eagerly.map(expected.entrySet(), toPairs());
+        Iterable<Pair<String, Integer>> actualEntries = Eagerly.map(actual.entrySet(), toPairs());
+        assertThat(actualEntries, is(expectedEntries));
+    }
+
+    @Test
     public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedImplementationDoesNotHaveAnAccessibleConstructor() throws Exception {
         // Given
         MapBuilder<String, Integer> mapBuilder = mapBuilderWithKeyValuePair("first", 1);
@@ -595,6 +612,53 @@ public class MapBuilderTest {
         assertThat(actual, is(expected));
     }
 
+    @Test
+    public void shouldPassElementsToTheSuppliedBuilderFunctionInTheOrderPassedToTheBuilder() throws Exception {
+        // Given
+        MapBuilder<String, Integer> mapBuilder = mapBuilderWithKeyValuePairs("first", 1, "second", 2, "third", 3)
+                .andKeyValuePair("fourth", 4);
+        final Iterable<Pair<String, Integer>> expectedElements = iterableWith(
+                tuple("first", 1), tuple("second", 2), tuple("third", 3), tuple("fourth", 4));
+
+        // When
+        mapBuilder.build(new UnaryFunction<Iterable<Map.Entry<String, Integer>>, Map<String, Integer >>() {
+            @Override public Map<String, Integer> call(Iterable<Map.Entry<String, Integer>> elements) {
+                Iterable<Pair<String, Integer>> actualElements = Eagerly.map(elements, toPairs());
+
+                // Then
+                assertThat(actualElements, is(expectedElements));
+
+                return null;
+            }
+        });
+    }
+
+    @Test
+    public void shouldAllowConcreteTypeOfMapToBeReturnedWhenBuildingUsingBuilderFunction() throws Exception {
+        // Given
+        MapBuilder<String, Integer> mapBuilder = mapBuilderWithKeyValuePairs("first", 1, "second", 2, "third", 3)
+                .andKeyValuePair("fourth", 4);
+        LinkedHashMap<String, Integer> expectedMap = new LinkedHashMap<String, Integer>();
+        expectedMap.put("first", 1);
+        expectedMap.put("second", 2);
+        expectedMap.put("third", 3);
+        expectedMap.put("fourth", 4);
+
+        // When
+        LinkedHashMap<String, Integer> actualMap = mapBuilder.build(new UnaryFunction<Iterable<Map.Entry<String, Integer>>, LinkedHashMap<String, Integer>>() {
+            @Override public LinkedHashMap<String, Integer> call(Iterable<Map.Entry<String, Integer>> elements) {
+                LinkedHashMap<String, Integer> map = new LinkedHashMap<String, Integer>();
+                for (Map.Entry<String, Integer> element : elements) {
+                    map.put(element.getKey(), element.getValue());
+                }
+                return map;
+            }
+        });
+
+        // Then
+        assertThat(actualMap, is(expectedMap));
+    }
+
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIfUnaryFunctionSuppliedToBuildIsNull() throws Exception {
         // Given
@@ -607,4 +671,11 @@ public class MapBuilderTest {
         // Then a NullPointerException is thrown.
     }
 
+    private Mapper<Map.Entry<String, Integer>, Pair<String, Integer>> toPairs() {
+        return new Mapper<Map.Entry<String, Integer>, Pair<String, Integer>>() {
+            @Override public Pair<String, Integer> map(Map.Entry<String, Integer> input) {
+                return tuple(input.getKey(), input.getValue());
+            }
+        };
+    }
 }

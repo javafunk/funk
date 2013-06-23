@@ -53,7 +53,7 @@ public abstract class AbstractBuilder<E, B extends AbstractBuilder, C> {
 
     public static interface WithCustomImplementationSupport<E, S, C extends S> {
         C build(Class<? extends S> implementationClass);
-        C build(UnaryFunction<? super Iterable<E>, ? extends C> builderFunction);
+        <T extends C> T build(UnaryFunction<? super Iterable<E>, ? extends T> builderFunction);
     }
 
     public B with(E e) { return and(iterableWith(e)); }

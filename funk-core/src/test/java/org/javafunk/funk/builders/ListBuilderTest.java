@@ -13,18 +13,15 @@ import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.testclasses.NoNoArgsConstructorList;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.listBuilderWith;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.builders.ListBuilder.listBuilder;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 import static org.junit.Assert.fail;
 
 public class ListBuilderTest {
@@ -204,6 +201,21 @@ public class ListBuilderTest {
     }
 
     @Test
+    public void shouldAddElementsToAListOfTheSpecifiedImplementationInTheOrderTheyWereAddedToTheBuilder() throws Exception {
+        // Given
+        List<Integer> expected = new ArrayList<Integer>(listWith(8, 7, 6, 5, 4));
+        ListBuilder<Integer> listBuilder = listBuilderWith(8, 7)
+                .and(6, 5)
+                .and(4);
+
+        // When
+        List<Integer> actual = listBuilder.build(ArrayList.class);
+
+        // Then
+        assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test
     public void shouldThrowAnIllegalArgumentExceptionIfTheSpecifiedImplementationDoesNotHaveAnAccessibleConstructor() throws Exception {
         // Given
         ListBuilder<Integer> listBuilder = listBuilderWith(1, 2, 3);
@@ -257,6 +269,49 @@ public class ListBuilderTest {
         assertThat(actual, is(expected));
     }
 
+    @Test
+    public void shouldPassElementsToTheSuppliedBuilderFunctionInTheOrderPassedToTheBuilder() throws Exception {
+        // Given
+        ListBuilder<Integer> listBuilder = listBuilderWith(1, 2, 3)
+                .and(4, 5, 6);
+        final List<Integer> expectedElements = listWith(1, 2, 3, 4, 5, 6);
+
+        // When
+        listBuilder.build(new UnaryFunction<Iterable<Integer>, List<Integer>>() {
+            @Override public List<Integer> call(Iterable<Integer> elements) {
+                List<Integer> actualElements = listFrom(elements);
+
+                // Then
+                assertThat(actualElements, hasOnlyItemsInOrder(expectedElements));
+
+                return actualElements;
+            }
+        });
+    }
+
+    @Test
+    public void shouldAllowConcreteTypeOfListToBeReturnedWhenBuildingUsingBuilderFunction() throws Exception {
+        // Given
+        ListBuilder<Integer> listBuilder = listBuilderWith(1, 2, 3)
+                .and(4, 5, 6);
+        Stack<Integer> expectedStack = new Stack<Integer>();
+        expectedStack.addAll(listWith(1, 2, 3, 4, 5, 6));
+
+        // When
+        Stack<Integer> actualStack = listBuilder.build(new UnaryFunction<Iterable<Integer>, Stack<Integer>>() {
+            @Override public Stack<Integer> call(Iterable<Integer> elements) {
+                Stack<Integer> stack = new Stack<Integer>();
+                for (Integer element : elements) {
+                    stack.push(element);
+                }
+                return stack;
+            }
+        });
+
+        // Then
+        assertThat(actualStack, is(expectedStack));
+    }
+
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIfUnaryFunctionSuppliedToBuildIsNull() throws Exception {
         // Given
@@ -268,5 +323,4 @@ public class ListBuilderTest {
 
         // Then a NullPointerException is thrown.
     }
-
 }

@@ -39,7 +39,7 @@ public class ListBuilder<E>
         return list;
     }
 
-    @Override public List<E> build(UnaryFunction<? super Iterable<E>, ? extends List<E>> builderFunction) {
+    @Override public <T extends List<E>> T build(UnaryFunction<? super Iterable<E>, ? extends T> builderFunction) {
         return builderFunction.call(Collections.unmodifiableList(elements));
     }
 
