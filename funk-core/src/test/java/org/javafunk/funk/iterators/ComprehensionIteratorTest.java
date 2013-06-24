@@ -10,8 +10,8 @@ package org.javafunk.funk.iterators;
 
 import org.javafunk.funk.Mappers;
 import org.javafunk.funk.Predicates;
-import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.Predicate;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -24,40 +24,45 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.javafunk.funk.Literals.collectionBuilderWith;
 import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 import static org.junit.Assert.fail;
 
 public class ComprehensionIteratorTest {
     @Test
     public void shouldOnlyYieldValuesThatPassAllPredicates(){
-        Mapper mapper = Mappers.identity();
+        UnaryFunction<? super String, String> mapper = mapperUnaryFunction(Mappers.<String>identity());
         Iterable<String> iterable = listWith("no", "nope", "no way", "nem", "you betcha");
+
         Predicate<String> containsO = new Predicate<String>() {
             public boolean evaluate(String item) {
                 return item.contains("o");
             }
         };
-
         Predicate<String> containsE = new Predicate<String>() {
             public boolean evaluate(String item) {
                 return item.contains("e");
             }
         };
-
         Predicate<String> containsY = new Predicate<String>() {
             public boolean evaluate(String item) {
                 return item.contains("y");
             }
         };
-        ComprehensionIterator<String, String> iterator = new ComprehensionIterator<String, String>(mapper, iterable.iterator(), listWith(containsO, containsE, containsY));
+
+        ComprehensionIterator<String, String> iterator =
+                new ComprehensionIterator<String, String>(
+                        mapper,
+                        iterable.iterator(),
+                        listWith(containsO, containsE, containsY));
 
         assertThat(iterator.findNext(), is("you betcha"));
     }
 
     @Test
     public void shouldOnlyYieldMappedValuesThatPassAllPredicates(){
-        Mapper<Integer, String> subtractThreeAddYes = new Mapper<Integer, String>() {
+        UnaryFunction<Integer, String> subtractThreeAddYes = new UnaryFunction<Integer, String>() {
             @Override
-            public String map(Integer input) {
+            public String call(Integer input) {
                 Integer subtractThree = input - 3;
                 return subtractThree.toString() + ": yes";
             }
@@ -70,8 +75,7 @@ public class ComprehensionIteratorTest {
             public boolean evaluate(Integer firstInput) {
                 return firstInput % 2 == 0;
             }
-        }                                  ;
-
+        };
         Predicate<Integer> positivePredicate = new Predicate<Integer>() {
             @Override
             public boolean evaluate(Integer firstInput) {
@@ -79,10 +83,11 @@ public class ComprehensionIteratorTest {
             }
         };
 
-
-
-
-        ComprehensionIterator<Integer, String> iterator = new ComprehensionIterator<Integer, String>(subtractThreeAddYes, iterable.iterator(), listWith(evenPredicate, positivePredicate));
+        ComprehensionIterator<Integer, String> iterator =
+                new ComprehensionIterator<Integer, String>(
+                        subtractThreeAddYes,
+                        iterable.iterator(),
+                        listWith(evenPredicate, positivePredicate));
 
         assertThat(iterator.findNext(), is("1: yes"));
         assertThat(iterator.findNext(), is("3: yes"));
@@ -91,14 +96,14 @@ public class ComprehensionIteratorTest {
     @Test
     public void shouldAllowHasNextToBeCalledMultipleTimesWithoutProgressingTheIterator() {
         // Given
-        Mapper<String, String> identity = Mappers.identity();
+        UnaryFunction<String, String> identity = mapperUnaryFunction(Mappers.<String>identity());
         Iterable<String> iterable = listWith("passOne", "passTwo", "failOne", "passThree", "failTwo");
+
         Predicate<String> containsP = new Predicate<String>() {
             public boolean evaluate(String item) {
                 return item.contains("p");
             }
         };
-
         Predicate<String> containsS = new Predicate<String>() {
             public boolean evaluate(String item) {
                 return item.contains("s");
@@ -106,7 +111,11 @@ public class ComprehensionIteratorTest {
         };
 
         // When
-        ComprehensionIterator<String, String> iterator = new ComprehensionIterator<String, String>(identity, iterable.iterator(), listWith(containsP, containsS));
+        ComprehensionIterator<String, String> iterator =
+                new ComprehensionIterator<String, String>(
+                        identity,
+                        iterable.iterator(),
+                        listWith(containsP, containsS));
 
         // Then
         assertThat(iterator.hasNext(), is(true));
@@ -125,14 +134,14 @@ public class ComprehensionIteratorTest {
     @Test
     public void shouldAllowNextToBeCalledWithoutHavingCalledHasNext() {
         // Given
-        Mapper mapper = Mappers.identity();
+        UnaryFunction<String, String> mapper = mapperUnaryFunction(Mappers.<String>identity());
         Iterable<String> iterable = listWith("passOne", "passTwo", "failOne", "passThree", "failTwo");
+
         Predicate<String> containsP = new Predicate<String>() {
             public boolean evaluate(String item) {
                 return item.contains("p");
             }
         };
-
         Predicate<String> containsS = new Predicate<String>() {
             public boolean evaluate(String item) {
                 return item.contains("s");
@@ -140,7 +149,11 @@ public class ComprehensionIteratorTest {
         };
 
         // When
-        ComprehensionIterator<String, String> iterator = new ComprehensionIterator<String, String>(mapper, iterable.iterator(), listWith(containsP, containsS));
+        ComprehensionIterator<String, String> iterator =
+                new ComprehensionIterator<String, String>(
+                        mapper,
+                        iterable.iterator(),
+                        listWith(containsP, containsS));
 
         // Then
         assertThat(iterator.next(), is("passOne"));
@@ -151,14 +164,14 @@ public class ComprehensionIteratorTest {
     @Test(expected = NoSuchElementException.class)
     public void shouldThrowNoSuchElementExceptionIfDoesntHaveNext() {
         // Given
-        Mapper mapper = Mappers.identity();
+        UnaryFunction<String, String> mapper = mapperUnaryFunction(Mappers.<String>identity());
         Iterable<String> iterable = listWith("passOne", "passTwo", "failOne", "passThree", "failTwo");
+
         Predicate<String> containsP = new Predicate<String>() {
             public boolean evaluate(String item) {
                 return item.contains("p");
             }
         };
-
         Predicate<String> containsS = new Predicate<String>() {
             public boolean evaluate(String item) {
                 return item.contains("s");
@@ -166,7 +179,12 @@ public class ComprehensionIteratorTest {
         };
 
         // When
-        ComprehensionIterator<String, String> iterator = new ComprehensionIterator<String, String>(mapper, iterable.iterator(), listWith(containsP, containsS));
+        ComprehensionIterator<String, String> iterator =
+                new ComprehensionIterator<String, String>(
+                        mapper,
+                        iterable.iterator(),
+                        listWith(containsP, containsS));
+
         iterator.next();
         iterator.next();
         iterator.next();
@@ -178,7 +196,7 @@ public class ComprehensionIteratorTest {
     @Test
     public void shouldRemoveTheElementFromTheUnderlyingIterator() {
         // Given
-        Mapper mapper = Mappers.identity();
+        UnaryFunction<String, String> mapper = mapperUnaryFunction(Mappers.<String>identity());
         Collection<String> actualList = collectionBuilderWith("one", "two", "three", "four", "five").build(ArrayList.class);
         Collection<String> expectedList = collectionBuilderWith("three", "four", "five").build(ArrayList.class);
         Iterator<String> iterator = actualList.iterator();
@@ -199,6 +217,7 @@ public class ComprehensionIteratorTest {
                 return !item.contains("f");
             }
         };
+
         ComprehensionIterator<String, String> ComprehensionIterator = new ComprehensionIterator<String, String>(mapper, iterator,
                 listWith(containsO, doesNotContainR, doesNotContainF));
 
@@ -215,7 +234,7 @@ public class ComprehensionIteratorTest {
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfNextHasNotBeenCalledBeforeRemove() throws Exception {
         // Given
-        Mapper mapper = Mappers.identity();
+        UnaryFunction<String, String> mapper = mapperUnaryFunction(Mappers.<String>identity());
         Iterator<String> iterator = listWith("one", "two", "three").iterator();
 
         // When
@@ -229,7 +248,10 @@ public class ComprehensionIteratorTest {
                 return !item.contains("r");
             }
         };
-        ComprehensionIterator<String, String> ComprehensionIterator = new ComprehensionIterator<String, String>(mapper, iterator,
+
+        ComprehensionIterator<String, String> ComprehensionIterator = new ComprehensionIterator<String, String>(
+                mapper,
+                iterator,
                 listWith(containsO, doesNotContainR));
 
 
@@ -242,7 +264,7 @@ public class ComprehensionIteratorTest {
     @Test(expected = IllegalStateException.class)
     public void shouldThrowAnIllegalStateExceptionIfRemoveIsCalledMoreThanOnceInARow() throws Exception {
         // Given
-        Mapper mapper = Mappers.identity();
+        UnaryFunction<String, String> mapper = mapperUnaryFunction(Mappers.<String>identity());
         Iterator<String> iterator = collectionBuilderWith("one", "two", "three").build(ArrayList.class).iterator();
 
         // When
@@ -256,7 +278,9 @@ public class ComprehensionIteratorTest {
                 return !item.contains("r");
             }
         };
-        ComprehensionIterator<String, String> ComprehensionIterator = new ComprehensionIterator<String, String>(mapper, iterator,
+        ComprehensionIterator<String, String> ComprehensionIterator = new ComprehensionIterator<String, String>(
+                mapper,
+                iterator,
                 listWith(containsO, doesNotContainR));
 
         ComprehensionIterator.next();
@@ -269,7 +293,7 @@ public class ComprehensionIteratorTest {
     @Test
     public void shouldNotRemoveAnElementThatDoesNotMatchTheSuppliedPredicate() throws Exception {
         // Given
-        Mapper mapper = Mappers.identity();
+        UnaryFunction<String, String> mapper = mapperUnaryFunction(Mappers.<String>identity());
         Collection<String> initialElements = collectionBuilderWith("one", "three").build(ArrayList.class);
         Collection<String> expectedElements = collectionBuilderWith("three").build(ArrayList.class);
 
@@ -284,7 +308,9 @@ public class ComprehensionIteratorTest {
                 return item.contains("n");
             }
         };
-        ComprehensionIterator<String, String> ComprehensionIterator = new ComprehensionIterator<String, String>(mapper, initialElements.iterator(),
+        ComprehensionIterator<String, String> ComprehensionIterator = new ComprehensionIterator<String, String>(
+                mapper,
+                initialElements.iterator(),
                 listWith(containsO, containsN));
 
 
@@ -306,7 +332,7 @@ public class ComprehensionIteratorTest {
     @Test
     public void shouldNotRemoveAnElementThatDoesNotMatchTheSuppliedPredicateEvenIfNextCalled() throws Exception {
         // Given
-        Mapper mapper = Mappers.identity();
+        UnaryFunction<String, String> mapper = mapperUnaryFunction(Mappers.<String>identity());
         Collection<String> initialElements = collectionBuilderWith("one", "three").build(ArrayList.class);
         Collection<String> expectedElements = collectionBuilderWith("three").build(ArrayList.class);
 
@@ -321,7 +347,10 @@ public class ComprehensionIteratorTest {
                 return item.contains("n");
             }
         };
-        ComprehensionIterator<String, String> ComprehensionIterator = new ComprehensionIterator<String, String>(mapper, initialElements.iterator(),
+
+        ComprehensionIterator<String, String> ComprehensionIterator = new ComprehensionIterator<String, String>(
+                mapper,
+                initialElements.iterator(),
                 listWith(containsO, containsN));
 
         // Then
@@ -348,7 +377,7 @@ public class ComprehensionIteratorTest {
     @Test
     public void shouldAllowNullValuesInTheIterator() throws Exception {
         // Given
-        Mapper mapper = Mappers.identity();
+        UnaryFunction<Integer, Integer> mapper = mapperUnaryFunction(Mappers.<Integer>identity());
         Iterator<Integer> delegateIterator = listWith(1, null, 10, 5).iterator();
 
         // When
@@ -357,7 +386,10 @@ public class ComprehensionIteratorTest {
                 return item == null || item % 10 != 0;
             }
         };
-        ComprehensionIterator<Integer, Integer> iterator = new ComprehensionIterator<Integer, Integer>(mapper, delegateIterator, listWith(isNullOrDivisibleByTen));
+        ComprehensionIterator<Integer, Integer> iterator = new ComprehensionIterator<Integer, Integer>(
+                mapper,
+                delegateIterator,
+                listWith(isNullOrDivisibleByTen));
 
         // Then
         assertThat(iterator.hasNext(), is(true));
@@ -372,7 +404,7 @@ public class ComprehensionIteratorTest {
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIfAnyPredicatesSuppliedToConstructorAreNull() throws Exception {
         // Given
-        Mapper mapper = Mappers.identity();
+        UnaryFunction<Integer, Integer> mapper = mapperUnaryFunction(Mappers.<Integer>identity());
         Iterator<Integer> input = listWith(1, 2, 3).iterator();
         Predicate<Integer> nullPredicate = null;
         Predicate<Integer> nonNullPredicate = Predicates.alwaysTrue();
@@ -385,7 +417,7 @@ public class ComprehensionIteratorTest {
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIfMapperSuppliedToConstructorIsNull() throws Exception {
         // Given
-        Mapper mapper = null;
+        UnaryFunction<Integer, Integer> mapper = null;
         Iterator<Integer> input = listWith(1, 2, 3).iterator();
         Predicate<Integer> nonNullPredicate = Predicates.alwaysTrue();
 
