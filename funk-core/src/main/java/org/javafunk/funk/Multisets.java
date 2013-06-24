@@ -11,11 +11,10 @@ package org.javafunk.funk;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 
-import static java.util.Arrays.asList;
 import static org.javafunk.funk.Eagerly.first;
 import static org.javafunk.funk.Eagerly.rest;
 import static org.javafunk.funk.Literals.collectionFrom;
-import static org.javafunk.funk.Literals.iterableBuilderWith;
+import static org.javafunk.funk.Literals.iterableWith;
 
 public class Multisets {
     private Multisets() {}
@@ -62,159 +61,243 @@ public class Multisets {
         return differences;
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> concatenate(
             Iterable<? extends T> i1, Iterable<? extends T> i2) {
-        return concatenate(asList(i1, i2));
+        return concatenate(iterableWith(i1, i2));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> concatenate(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3) {
-        return concatenate(asList(i1, i2, i3));
+        return concatenate(iterableWith(i1, i2, i3));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> concatenate(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4) {
-        return concatenate(asList(i1, i2, i3, i4));
+        return concatenate(iterableWith(i1, i2, i3, i4));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> concatenate(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5) {
-        return concatenate(asList(i1, i2, i3, i4, i5));
+        return concatenate(iterableWith(i1, i2, i3, i4, i5));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> concatenate(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5, Iterable<? extends T> i6) {
-        return concatenate(asList(i1, i2, i3, i4, i5, i6));
+        return concatenate(iterableWith(i1, i2, i3, i4, i5, i6));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> concatenate(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
-            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
-        return concatenate(iterableBuilderWith(i1, i2, i3, i4, i5, i6).and(i7on).build());
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7) {
+        return concatenate(iterableWith(i1, i2, i3, i4, i5, i6, i7));
     }
-    
-    @SuppressWarnings("unchecked")
+
+    public static <T> Multiset<T> concatenate(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8) {
+        return concatenate(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8));
+    }
+
+    public static <T> Multiset<T> concatenate(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8,
+            Iterable<? extends T> i9) {
+        return concatenate(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8, i9));
+    }
+
+    public static <T> Multiset<T> concatenate(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8,
+            Iterable<? extends T> i9, Iterable<? extends T> i10) {
+        return concatenate(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8, i9, i10));
+    }
+
+    public static <T> Multiset<T> concatenate(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8,
+            Iterable<? extends T> i9, Iterable<? extends T> i10, Iterable<? extends T>... i11on) {
+        return concatenate(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11on));
+    }
+
     public static <T> Multiset<T> union(
             Iterable<? extends T> i1, Iterable<? extends T> i2) {
-        return union(asList(i1, i2));
+        return union(iterableWith(i1, i2));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> union(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3) {
-        return union(asList(i1, i2, i3));
+        return union(iterableWith(i1, i2, i3));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> union(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4) {
-        return union(asList(i1, i2, i3, i4));
+        return union(iterableWith(i1, i2, i3, i4));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> union(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5) {
-        return union(asList(i1, i2, i3, i4, i5));
+        return union(iterableWith(i1, i2, i3, i4, i5));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> union(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5, Iterable<? extends T> i6) {
-        return union(asList(i1, i2, i3, i4, i5, i6));
+        return union(iterableWith(i1, i2, i3, i4, i5, i6));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> union(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
-            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
-        return union(iterableBuilderWith(i1, i2, i3, i4, i5, i6).and(i7on).build());
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7) {
+        return union(iterableWith(i1, i2, i3, i4, i5, i6, i7));
     }
 
-    @SuppressWarnings("unchecked")
+    public static <T> Multiset<T> union(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8) {
+        return union(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8));
+    }
+
+    public static <T> Multiset<T> union(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8,
+            Iterable<? extends T> i9) {
+        return union(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8, i9));
+    }
+
+    public static <T> Multiset<T> union(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8,
+            Iterable<? extends T> i9, Iterable<? extends T> i10) {
+        return union(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8, i9, i10));
+    }
+
+    public static <T> Multiset<T> union(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8,
+            Iterable<? extends T> i9, Iterable<? extends T> i10, Iterable<? extends T>... i11on) {
+        return union(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11on));
+    }
+
     public static <T> Multiset<T> intersection(
             Iterable<? extends T> i1, Iterable<? extends T> i2) {
-        return intersection(asList(i1, i2));
+        return intersection(iterableWith(i1, i2));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> intersection(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3) {
-        return intersection(asList(i1, i2, i3));
+        return intersection(iterableWith(i1, i2, i3));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> intersection(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4) {
-        return intersection(asList(i1, i2, i3, i4));
+        return intersection(iterableWith(i1, i2, i3, i4));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> intersection(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5) {
-        return intersection(asList(i1, i2, i3, i4, i5));
+        return intersection(iterableWith(i1, i2, i3, i4, i5));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> intersection(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5, Iterable<? extends T> i6) {
-        return intersection(asList(i1, i2, i3, i4, i5, i6));
+        return intersection(iterableWith(i1, i2, i3, i4, i5, i6));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> intersection(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
-            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
-        return intersection(iterableBuilderWith(i1, i2, i3, i4, i5, i6).and(i7on).build());
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7) {
+        return intersection(iterableWith(i1, i2, i3, i4, i5, i6, i7));
     }
 
-    @SuppressWarnings("unchecked")
+    public static <T> Multiset<T> intersection(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8) {
+        return intersection(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8));
+    }
+
+    public static <T> Multiset<T> intersection(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8,
+            Iterable<? extends T> i9) {
+        return intersection(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8, i9));
+    }
+
+    public static <T> Multiset<T> intersection(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8,
+            Iterable<? extends T> i9, Iterable<? extends T> i10) {
+        return intersection(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8, i9, i10));
+    }
+
+    public static <T> Multiset<T> intersection(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8,
+            Iterable<? extends T> i9, Iterable<? extends T> i10, Iterable<? extends T>... i11on) {
+        return intersection(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11on));
+    }
+
     public static <T> Multiset<T> difference(
             Iterable<? extends T> i1, Iterable<? extends T> i2) {
-        return difference(asList(i1, i2));
+        return difference(iterableWith(i1, i2));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> difference(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3) {
-        return difference(asList(i1, i2, i3));
+        return difference(iterableWith(i1, i2, i3));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> difference(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4) {
-        return difference(asList(i1, i2, i3, i4));
+        return difference(iterableWith(i1, i2, i3, i4));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> difference(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5) {
-        return difference(asList(i1, i2, i3, i4, i5));
+        return difference(iterableWith(i1, i2, i3, i4, i5));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> difference(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
             Iterable<? extends T> i5, Iterable<? extends T> i6) {
-        return difference(asList(i1, i2, i3, i4, i5, i6));
+        return difference(iterableWith(i1, i2, i3, i4, i5, i6));
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> Multiset<T> difference(
             Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
-            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T>... i7on) {
-        return difference(iterableBuilderWith(i1, i2, i3, i4, i5, i6).and(i7on).build());
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7) {
+        return difference(iterableWith(i1, i2, i3, i4, i5, i6, i7));
+    }
+
+    public static <T> Multiset<T> difference(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8) {
+        return difference(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8));
+    }
+
+    public static <T> Multiset<T> difference(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8,
+            Iterable<? extends T> i9) {
+        return difference(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8, i9));
+    }
+
+    public static <T> Multiset<T> difference(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8,
+            Iterable<? extends T> i9, Iterable<? extends T> i10) {
+        return difference(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8, i9, i10));
+    }
+
+    public static <T> Multiset<T> difference(
+            Iterable<? extends T> i1, Iterable<? extends T> i2, Iterable<? extends T> i3, Iterable<? extends T> i4,
+            Iterable<? extends T> i5, Iterable<? extends T> i6, Iterable<? extends T> i7, Iterable<? extends T> i8,
+            Iterable<? extends T> i9, Iterable<? extends T> i10, Iterable<? extends T>... i11on) {
+        return difference(iterableWith(i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11on));
     }
 }
