@@ -51,4 +51,16 @@ public class StringsTest {
         // Then
         assertThat(joinedStrings, is("Goodbye"));
     }
+
+    @Test
+    public void shouldRenderNullsAsEmptyStrings() throws Exception {
+        // Given
+        Collection<String> strings = collectionWith("He", null, "o");
+
+        // When
+        String joinedStrings = join(strings);
+
+        // Then
+        assertThat(joinedStrings, is("Heo"));
+    }
 }
