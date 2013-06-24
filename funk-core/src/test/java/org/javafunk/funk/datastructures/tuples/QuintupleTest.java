@@ -23,6 +23,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionBuilderOf;
+import static org.javafunk.funk.Literals.iterableBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.datastructures.tuples.Quintuple.quintuple;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
@@ -195,6 +196,24 @@ public class QuintupleTest {
 
         // Then
         assertThat(isEqual, is(false));
+    }
+
+    @Test
+    public void shouldNotBeEqualIfNotAQuadruple() throws Exception {
+        // Given
+        Quintuple<Integer, String, Boolean, Double, Long> quintuple =
+                tuple(5, "Five", true, 3.6, 23L);
+        Iterable<Object> iterable = iterableBuilderOf(Object.class)
+                .with(5, "Five", true, 3.6, 23L)
+                .build();
+
+        // When
+        boolean firstDirection = quintuple.equals(iterable);
+        boolean secondDirection = iterable.equals(quintuple);
+
+        // Then
+        assertThat(firstDirection, is(false));
+        assertThat(secondDirection, is(false));
     }
 
     @Test

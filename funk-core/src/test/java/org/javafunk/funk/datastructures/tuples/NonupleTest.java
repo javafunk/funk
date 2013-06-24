@@ -31,6 +31,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionBuilderOf;
+import static org.javafunk.funk.Literals.iterableBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.datastructures.tuples.Nonuple.nonuple;
 import static org.javafunk.funk.testclasses.Age.age;
@@ -333,6 +334,24 @@ public class NonupleTest {
 
         // Then
         assertThat(isEqual, is(false));
+    }
+
+    @Test
+    public void shouldNotBeEqualIfNotAnOctuple() throws Exception {
+        // Given
+        Nonuple<Integer, String, Boolean, Double, Long, Name, Colour, Age, Location> nonuple =
+                tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"));
+        Iterable<Object> iterable = iterableBuilderOf(Object.class)
+                .with(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25), location("USA"))
+                .build();
+
+        // When
+        boolean firstDirection = nonuple.equals(iterable);
+        boolean secondDirection = iterable.equals(nonuple);
+
+        // Then
+        assertThat(firstDirection, is(false));
+        assertThat(secondDirection, is(false));
     }
 
     @Test

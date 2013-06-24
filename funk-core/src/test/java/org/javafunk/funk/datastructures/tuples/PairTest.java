@@ -19,8 +19,7 @@ import java.util.Collection;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Literals.collectionBuilderOf;
-import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.datastructures.tuples.Pair.pair;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
@@ -125,6 +124,21 @@ public class PairTest {
 
         // Then
         assertThat(isEqual, is(false));
+    }
+
+    @Test
+    public void shouldNotBeEqualIfNotAPair() throws Exception {
+        // Given
+        Pair<Integer, String> pair = tuple(5, "five");
+        Iterable<Object> iterable = iterableBuilderOf(Object.class).with(5, "five").build();
+
+        // When
+        boolean firstDirection = pair.equals(iterable);
+        boolean secondDirection = iterable.equals(pair);
+
+        // Then
+        assertThat(firstDirection, is(false));
+        assertThat(secondDirection, is(false));
     }
 
     @Test

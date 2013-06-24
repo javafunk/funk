@@ -25,6 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionBuilderOf;
+import static org.javafunk.funk.Literals.iterableBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.datastructures.tuples.Sextuple.sextuple;
 import static org.javafunk.funk.testclasses.Name.name;
@@ -224,6 +225,24 @@ public class SextupleTest {
 
         // Then
         assertThat(isEqual, is(false));
+    }
+
+    @Test
+    public void shouldNotBeEqualIfNotASextuple() throws Exception {
+        // Given
+        Sextuple<Integer, String, Boolean, Double, Long, Name> sextuple =
+                tuple(5, "Five", true, 3.6, 23L, name("fred"));
+        Iterable<Object> iterable = iterableBuilderOf(Object.class)
+                .with(5, "Five", true, 3.6, 23L, name("fred"))
+                .build();
+
+        // When
+        boolean firstDirection = sextuple.equals(iterable);
+        boolean secondDirection = iterable.equals(sextuple);
+
+        // Then
+        assertThat(firstDirection, is(false));
+        assertThat(secondDirection, is(false));
     }
 
     @Test
