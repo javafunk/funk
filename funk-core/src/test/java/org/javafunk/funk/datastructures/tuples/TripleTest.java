@@ -21,6 +21,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionBuilderOf;
+import static org.javafunk.funk.Literals.iterableBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.datastructures.tuples.Triple.triple;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
@@ -139,6 +140,23 @@ public class TripleTest {
 
         // Then
         assertThat(isEqual, is(false));
+    }
+
+    @Test
+    public void shouldNotBeEqualIfNotATriple() throws Exception {
+        // Given
+        Triple<Integer, String, Boolean> triple = tuple(5, "Five", true);
+        Iterable<Object> iterable = iterableBuilderOf(Object.class)
+                .with(5, "five", true)
+                .build();
+
+        // When
+        boolean firstDirection = triple.equals(iterable);
+        boolean secondDirection = iterable.equals(triple);
+
+        // Then
+        assertThat(firstDirection, is(false));
+        assertThat(secondDirection, is(false));
     }
 
     @Test

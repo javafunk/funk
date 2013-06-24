@@ -27,6 +27,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionBuilderOf;
+import static org.javafunk.funk.Literals.iterableBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.datastructures.tuples.Septuple.septuple;
 import static org.javafunk.funk.testclasses.Colour.colour;
@@ -256,6 +257,24 @@ public class SeptupleTest {
 
         // Then
         assertThat(isEqual, is(false));
+    }
+
+    @Test
+    public void shouldNotBeEqualIfNotASeptuple() throws Exception {
+        // Given
+        Septuple<Integer, String, Boolean, Double, Long, Name, Colour> septuple =
+                tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"));
+        Iterable<Object> iterable = iterableBuilderOf(Object.class)
+                .with(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"))
+                .build();
+
+        // When
+        boolean firstDirection = septuple.equals(iterable);
+        boolean secondDirection = iterable.equals(septuple);
+
+        // Then
+        assertThat(firstDirection, is(false));
+        assertThat(secondDirection, is(false));
     }
 
     @Test
