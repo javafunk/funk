@@ -29,6 +29,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionBuilderOf;
+import static org.javafunk.funk.Literals.iterableBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.datastructures.tuples.Octuple.octuple;
 import static org.javafunk.funk.testclasses.Age.age;
@@ -303,6 +304,24 @@ public class OctupleTest {
 
         // Then
         assertThat(isEqual, is(false));
+    }
+
+    @Test
+    public void shouldNotBeEqualIfNotAnOctuple() throws Exception {
+        // Given
+        Octuple<Integer, String, Boolean, Double, Long, Name, Colour, Age> octuple =
+                tuple(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25));
+        Iterable<Object> iterable = iterableBuilderOf(Object.class)
+                .with(5, "Five", true, 3.6, 23L, name("fred"), colour("blue"), age(25))
+                .build();
+
+        // When
+        boolean firstDirection = octuple.equals(iterable);
+        boolean secondDirection = iterable.equals(octuple);
+
+        // Then
+        assertThat(firstDirection, is(false));
+        assertThat(secondDirection, is(false));
     }
 
     @Test

@@ -19,6 +19,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.Literals.listBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.datastructures.tuples.Single.single;
@@ -86,6 +87,21 @@ public class SingleTest {
 
         // Then
         assertThat(isEqual, is(false));
+    }
+
+    @Test
+    public void shouldNotBeEqualIfNotASingle() throws Exception {
+        // Given
+        Single<Integer> single = tuple(5);
+        Iterable<Integer> iterable = iterableWith(5);
+
+        // When
+        boolean firstDirection = single.equals(iterable);
+        boolean secondDirection = iterable.equals(single);
+
+        // Then
+        assertThat(firstDirection, is(false));
+        assertThat(secondDirection, is(false));
     }
 
     @Test

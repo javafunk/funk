@@ -22,6 +22,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionBuilderOf;
+import static org.javafunk.funk.Literals.iterableBuilderOf;
 import static org.javafunk.funk.Literals.tuple;
 import static org.javafunk.funk.datastructures.tuples.Quadruple.quadruple;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
@@ -167,6 +168,24 @@ public class QuadrupleTest {
 
         // Then
         assertThat(isEqual, is(false));
+    }
+
+    @Test
+    public void shouldNotBeEqualIfNotAQuadruple() throws Exception {
+        // Given
+        Quadruple<Integer, String, Boolean, Double> quadruple =
+                tuple(5, "Five", true, 3.6);
+        Iterable<Object> iterable = iterableBuilderOf(Object.class)
+                .with(5, "Five", true, 3.6)
+                .build();
+
+        // When
+        boolean firstDirection = quadruple.equals(iterable);
+        boolean secondDirection = iterable.equals(quadruple);
+
+        // Then
+        assertThat(firstDirection, is(false));
+        assertThat(secondDirection, is(false));
     }
 
     @Test
