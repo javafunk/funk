@@ -3242,8 +3242,35 @@ public class Eagerly {
 
     /**
      * Provides an eagerly evaluated, set-builder notation style list comprehension.
+     * Returns a {@code Collection} of the elements that pass all of the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param function   An {@code UnaryFunction} output function that produces members
+     *                   of the resultant set from members of the input set that satisfy
+     *                   the predicate functions.
+     * @param iterable   The {@code Iterable} of the input set.
+     * @param predicates The {@code UnaryPredicate} functions acting as a filter on
+     *                   members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapping function.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final UnaryFunction<? super S, T> function,
+            final Iterable<S> iterable,
+            final Iterable<? extends UnaryPredicate<? super S>> predicates) {
+        return materialize(Lazily.comprehension(function, iterable, predicates));
+    }
+
+    /**
+     * Provides an eagerly evaluated, set-builder notation style list comprehension.
      * Returns an {@code Collection} of the elements that pass all of the supplied
-     * {@code Predicate}s, mapped by the supplied {@code Mapper}.
+     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
      *
      * <p>Since a {@code Collection} instance is returned, the list comprehension
      * is performed eagerly.
@@ -3255,16 +3282,997 @@ public class Eagerly {
      *                   resultant set from members of the input set that satisfy the
      *                   predicate functions.
      * @param iterable   The {@code Iterable} of the input set.
-     * @param predicates The {@code Predicate} functions acting as a filter on members
-     *                   of the input set.
+     * @param predicates The {@code UnaryPredicate} functions acting as a filter on
+     *                   members of the input set.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
     public static <S, T> Collection<T> comprehension(
             final Mapper<? super S, T> mapper,
             final Iterable<S> iterable,
-            final Predicate<S>... predicates) {
+            final Iterable<? extends UnaryPredicate<? super S>> predicates) {
         return materialize(Lazily.comprehension(mapper, iterable, predicates));
+    }
+
+    /**
+     * Provides an eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass the supplied
+     * {@code UnaryPredicate}, mapped by the supplied {@code UnaryFunction}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param function An {@code UnaryFunction} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The {@code UnaryPredicate} function acting as a filter on members
+     *                 of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate function, as mapped by the mapping function.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final UnaryFunction<? super S, T> function,
+            final Iterable<S> iterable,
+            final UnaryPredicate<? super S> p1) {
+        return comprehension(function, iterable, iterableWith(p1));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass the supplied
+     * {@code UnaryPredicate}, mapped by the supplied {@code Mapper}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param mapper   A {@code Mapper} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The {@code UnaryPredicate} function acting as a filter on members
+     *                 of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate function, as mapped by the mapper.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final Mapper<? super S, T> mapper,
+            final Iterable<S> iterable,
+            final UnaryPredicate<? super S> p1) {
+        return comprehension(mapperUnaryFunction(mapper), iterable, iterableWith(p1));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass all of the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param function An {@code UnaryFunction} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapping function.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final UnaryFunction<? super S, T> function,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2) {
+        return comprehension(function, iterable, iterableWith(p1, p2));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param mapper   A {@code Mapper} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapper.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final Mapper<? super S, T> mapper,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2) {
+        return comprehension(
+                mapperUnaryFunction(mapper),
+                iterable,
+                iterableWith(p1, p2));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass all of the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param function An {@code UnaryFunction} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapping function.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final UnaryFunction<? super S, T> function,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3) {
+        return comprehension(
+                function,
+                iterable,
+                iterableWith(p1, p2, p3));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param mapper   A {@code Mapper} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapper.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final Mapper<? super S, T> mapper,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3) {
+        return comprehension(
+                mapperUnaryFunction(mapper),
+                iterable,
+                iterableWith(p1, p2, p3));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass all of the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param function An {@code UnaryFunction} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapping function.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final UnaryFunction<? super S, T> function,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3,
+            final UnaryPredicate<S> p4) {
+        return comprehension(
+                function,
+                iterable,
+                iterableWith(p1, p2, p3, p4));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param mapper   A {@code Mapper} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapper.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final Mapper<? super S, T> mapper,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3,
+            final UnaryPredicate<S> p4) {
+        return comprehension(
+                mapperUnaryFunction(mapper),
+                iterable,
+                iterableWith(p1, p2, p3, p4));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass all of the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param function An {@code UnaryFunction} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapping function.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final UnaryFunction<? super S, T> function,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3,
+            final UnaryPredicate<S> p4,
+            final UnaryPredicate<S> p5) {
+        return comprehension(
+                function,
+                iterable,
+                iterableWith(p1, p2, p3, p4, p5));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param mapper   A {@code Mapper} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapper.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final Mapper<? super S, T> mapper,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3,
+            final UnaryPredicate<S> p4,
+            final UnaryPredicate<S> p5) {
+        return comprehension(
+                mapperUnaryFunction(mapper),
+                iterable,
+                iterableWith(p1, p2, p3, p4, p5));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass all of the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param function An {@code UnaryFunction} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapping function.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final UnaryFunction<? super S, T> function,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3,
+            final UnaryPredicate<S> p4,
+            final UnaryPredicate<S> p5,
+            final UnaryPredicate<S> p6) {
+        return comprehension(
+                function,
+                iterable,
+                iterableWith(p1, p2, p3, p4, p5, p6));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param mapper   A {@code Mapper} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapper.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final Mapper<? super S, T> mapper,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3,
+            final UnaryPredicate<S> p4,
+            final UnaryPredicate<S> p5,
+            final UnaryPredicate<S> p6) {
+        return comprehension(
+                mapperUnaryFunction(mapper),
+                iterable,
+                iterableWith(p1, p2, p3, p4, p5, p6));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass all of the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param function An {@code UnaryFunction} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapping function.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final UnaryFunction<? super S, T> function,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3,
+            final UnaryPredicate<S> p4,
+            final UnaryPredicate<S> p5,
+            final UnaryPredicate<S> p6,
+            final UnaryPredicate<S> p7) {
+        return comprehension(
+                function,
+                iterable,
+                iterableWith(p1, p2, p3, p4, p5, p6, p7));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param mapper   A {@code Mapper} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapper.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final Mapper<? super S, T> mapper,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3,
+            final UnaryPredicate<S> p4,
+            final UnaryPredicate<S> p5,
+            final UnaryPredicate<S> p6,
+            final UnaryPredicate<S> p7) {
+        return comprehension(
+                mapperUnaryFunction(mapper),
+                iterable,
+                iterableWith(p1, p2, p3, p4, p5, p6, p7));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass all of the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param function An {@code UnaryFunction} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapping function.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final UnaryFunction<? super S, T> function,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3,
+            final UnaryPredicate<S> p4,
+            final UnaryPredicate<S> p5,
+            final UnaryPredicate<S> p6,
+            final UnaryPredicate<S> p7,
+            final UnaryPredicate<S> p8) {
+        return comprehension(
+                function,
+                iterable,
+                iterableWith(p1, p2, p3, p4, p5, p6, p7, p8));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param mapper   A {@code Mapper} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapper.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final Mapper<? super S, T> mapper,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3,
+            final UnaryPredicate<S> p4,
+            final UnaryPredicate<S> p5,
+            final UnaryPredicate<S> p6,
+            final UnaryPredicate<S> p7,
+            final UnaryPredicate<S> p8) {
+        return comprehension(
+                mapperUnaryFunction(mapper),
+                iterable,
+                iterableWith(p1, p2, p3, p4, p5, p6, p7, p8));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass all of the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param function An {@code UnaryFunction} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p9       The ninth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapping function.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final UnaryFunction<? super S, T> function,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3,
+            final UnaryPredicate<S> p4,
+            final UnaryPredicate<S> p5,
+            final UnaryPredicate<S> p6,
+            final UnaryPredicate<S> p7,
+            final UnaryPredicate<S> p8,
+            final UnaryPredicate<S> p9) {
+        return comprehension(
+                function,
+                iterable,
+                iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param mapper   A {@code Mapper} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p9       The ninth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapper.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final Mapper<? super S, T> mapper,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3,
+            final UnaryPredicate<S> p4,
+            final UnaryPredicate<S> p5,
+            final UnaryPredicate<S> p6,
+            final UnaryPredicate<S> p7,
+            final UnaryPredicate<S> p8,
+            final UnaryPredicate<S> p9) {
+        return comprehension(
+                mapperUnaryFunction(mapper),
+                iterable,
+                iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass all of the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param function An {@code UnaryFunction} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p9       The ninth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p10      The tenth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapping function.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final UnaryFunction<? super S, T> function,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3,
+            final UnaryPredicate<S> p4,
+            final UnaryPredicate<S> p5,
+            final UnaryPredicate<S> p6,
+            final UnaryPredicate<S> p7,
+            final UnaryPredicate<S> p8,
+            final UnaryPredicate<S> p9,
+            final UnaryPredicate<S> p10) {
+        return comprehension(
+                function,
+                iterable,
+                iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param mapper   A {@code Mapper} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p9       The ninth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p10      The tenth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapper.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final Mapper<? super S, T> mapper,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3,
+            final UnaryPredicate<S> p4,
+            final UnaryPredicate<S> p5,
+            final UnaryPredicate<S> p6,
+            final UnaryPredicate<S> p7,
+            final UnaryPredicate<S> p8,
+            final UnaryPredicate<S> p9,
+            final UnaryPredicate<S> p10) {
+        return comprehension(
+                mapperUnaryFunction(mapper),
+                iterable,
+                iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass all of the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param function An {@code UnaryFunction} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p9       The ninth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p10      The tenth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p11on    The remaining {@code UnaryPredicate} functions acting as filters on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapping function.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final UnaryFunction<? super S, T> function,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3,
+            final UnaryPredicate<S> p4,
+            final UnaryPredicate<S> p5,
+            final UnaryPredicate<S> p6,
+            final UnaryPredicate<S> p7,
+            final UnaryPredicate<S> p8,
+            final UnaryPredicate<S> p9,
+            final UnaryPredicate<S> p10,
+            final UnaryPredicate<S>... p11on) {
+        return comprehension(
+                function,
+                iterable,
+                iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11on));
+    }
+
+    /**
+     * Provides a eagerly evaluated, set-builder notation style list comprehension.
+     * Returns an {@code Iterable} of the elements that pass the supplied
+     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the list comprehension
+     * is performed eagerly.
+     *
+     * <p>If the supplied source {@code Iterable} instance is empty, the
+     * returned {@code Collection} is empty.
+     *
+     * @param mapper   A {@code Mapper} output function that produces members
+     *                 of the resultant set from members of the input set that satisfy
+     *                 the predicate functions.
+     * @param iterable The {@code Iterable} of the input set.
+     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p9       The ninth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p10      The tenth {@code UnaryPredicate} function acting as a filter on
+     *                 members of the input set.
+     * @param p11on    The remaining {@code UnaryPredicate} functions acting as filters on
+     *                 members of the input set.
+     * @return A {@code Collection} of the resultant set from members of the input set
+     *         that satisfy the predicate functions, as mapped by the mapper.
+     */
+    public static <S, T> Collection<T> comprehension(
+            final Mapper<? super S, T> mapper,
+            final Iterable<S> iterable,
+            final UnaryPredicate<S> p1,
+            final UnaryPredicate<S> p2,
+            final UnaryPredicate<S> p3,
+            final UnaryPredicate<S> p4,
+            final UnaryPredicate<S> p5,
+            final UnaryPredicate<S> p6,
+            final UnaryPredicate<S> p7,
+            final UnaryPredicate<S> p8,
+            final UnaryPredicate<S> p9,
+            final UnaryPredicate<S> p10,
+            final UnaryPredicate<S>... p11on) {
+        return comprehension(
+                mapperUnaryFunction(mapper),
+                iterable,
+                iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11on));
     }
 
     private static class SliceHelper {

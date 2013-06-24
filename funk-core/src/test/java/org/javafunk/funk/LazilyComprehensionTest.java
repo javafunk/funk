@@ -15,9 +15,9 @@ import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 public class LazilyComprehensionTest {
     @Test
     public void shouldAcceptMapperSourceAndPredicate(){
-        Mapper mapper = Mappers.identity();
+        Mapper<Integer, Integer> mapper = Mappers.identity();
         List<Integer> source = listWith(1,2,3);
-        Predicate predicate = Predicates.alwaysTrue();
+        Predicate<Integer> predicate = Predicates.alwaysTrue();
         Collection<Integer> result = materialize(Lazily.comprehension(mapper, source, predicate));
 
         assertThat(result, hasOnlyItemsInOrder(1,2,3));
@@ -25,7 +25,7 @@ public class LazilyComprehensionTest {
 
     @Test
     public void shouldApplyPredicateToSource(){
-        Mapper mapper = Mappers.identity();
+        Mapper<Integer, Integer> mapper = Mappers.identity();
         List<Integer> source = listWith(1,2,3);
 
         Predicate<Integer> predicate = new Predicate<Integer>() {
