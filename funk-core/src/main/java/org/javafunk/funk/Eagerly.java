@@ -57,15 +57,15 @@ public class Eagerly {
     }
 
     public static <T> T reduce(
-            Iterable<T> iterable,
+            Iterable<? extends T> iterable,
             BinaryFunction<T, ? super T, T> function) {
-        Iterator<T> iterator = iterable.iterator();
+        Iterator<? extends T> iterator = iterable.iterator();
         T firstElement = iterator.next();
-        Iterable<T> restOfElements = asIterable(iterator);
+        Iterable<? extends T> restOfElements = asIterable(iterator);
         return reduce(restOfElements, firstElement, function);
     }
 
-    public static <T> T reduce(Iterable<T> iterable, Reducer<T, T> reducer) {
+    public static <T> T reduce(Iterable<? extends T> iterable, Reducer<? super T, T> reducer) {
         return reduce(iterable, reducerBinaryFunction(reducer));
     }
 
@@ -3197,7 +3197,7 @@ public class Eagerly {
         return materialize(Lazily.repeat(iterable, numberOfTimesToRepeat));
     }
 
-    static <T> Option<T> second(Iterable<? extends T> iterable) {
+    static <T> Option<T> second(Iterable<T> iterable) {
         return first(Lazily.rest(iterable));
     }
 
