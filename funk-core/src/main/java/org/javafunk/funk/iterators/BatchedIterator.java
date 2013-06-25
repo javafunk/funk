@@ -8,6 +8,9 @@
  */
 package org.javafunk.funk.iterators;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -36,8 +39,8 @@ public class BatchedIterator<T> implements Iterator<Iterable<T>> {
     public Iterable<T> next() {
         if (hasNext()) {
             List<T> nextBatch = new ArrayList<T>();
-            for(int i = 0; i < batchSize; i++) {
-                if(iterator.hasNext()) {
+            for (int i = 0; i < batchSize; i++) {
+                if (iterator.hasNext()) {
                     nextBatch.add(iterator.next());
                 }
             }
@@ -50,5 +53,12 @@ public class BatchedIterator<T> implements Iterator<Iterable<T>> {
     @Override
     public void remove() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("batchSize: ", batchSize)
+                .append("iterator", iterator.toString())
+                .toString();
     }
 }
