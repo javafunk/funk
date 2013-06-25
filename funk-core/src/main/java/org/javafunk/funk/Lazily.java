@@ -1191,10 +1191,13 @@ public class Lazily {
      *         equating the elements from the supplied {@code Iterable} instances in the
      *         order in which they are yielded.
      */
-    public static <T> Iterable<Boolean> equate(Iterable<T> first, Iterable<T> second, final BinaryPredicate<? super T, ? super T> predicate) {
+    public static <T> Iterable<Boolean> equate(
+            Iterable<? extends T> first,
+            Iterable<? extends T> second,
+            final BinaryPredicate<? super T, ? super T> predicate) {
         checkNotNull(predicate);
-        return map(zip(first, second), new Mapper<Pair<T, T>, Boolean>() {
-            public Boolean map(Pair<T, T> input) {
+        return map(zip(first, second), new Mapper<Pair<? extends T, ? extends T>, Boolean>() {
+            public Boolean map(Pair<? extends T, ? extends T> input) {
                 return predicate.evaluate(input.getFirst(), input.getSecond());
             }
         });
@@ -1231,7 +1234,10 @@ public class Lazily {
      *         equating the elements from the supplied {@code Iterable} instances in the
      *         order in which they are yielded.
      */
-    public static <T> Iterable<Boolean> equate(Iterable<T> first, Iterable<T> second, final Equivalence<? super T> equivalence) {
+    public static <T> Iterable<Boolean> equate(
+            Iterable<? extends T> first,
+            Iterable<? extends T> second,
+            final Equivalence<? super T> equivalence) {
         return equate(first, second, equivalenceBinaryPredicate(checkNotNull(equivalence)));
     }
 

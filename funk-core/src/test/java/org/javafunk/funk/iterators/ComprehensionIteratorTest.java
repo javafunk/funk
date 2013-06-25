@@ -414,6 +414,7 @@ public class ComprehensionIteratorTest {
 
         // Then a NullPointerException is thrown.
     }
+
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIfMapperSuppliedToConstructorIsNull() throws Exception {
         // Given
