@@ -8,28 +8,29 @@
  */
 package org.javafunk.funk.iterators;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.javafunk.funk.Mappers;
 import org.javafunk.funk.Predicates;
+import org.javafunk.funk.UnaryFunctions;
 import org.javafunk.funk.functors.Predicate;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.*;
 import static org.javafunk.funk.Literals.collectionBuilderWith;
+import static org.javafunk.funk.Literals.iteratorWith;
 import static org.javafunk.funk.Literals.listWith;
 import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ComprehensionIteratorTest {
     @Test
-    public void shouldOnlyYieldValuesThatPassAllPredicates(){
+    public void shouldOnlyYieldValuesThatPassAllPredicates() {
         UnaryFunction<? super String, String> mapper = mapperUnaryFunction(Mappers.<String>identity());
         Iterable<String> iterable = listWith("no", "nope", "no way", "nem", "you betcha");
 
@@ -59,7 +60,7 @@ public class ComprehensionIteratorTest {
     }
 
     @Test
-    public void shouldOnlyYieldMappedValuesThatPassAllPredicates(){
+    public void shouldOnlyYieldMappedValuesThatPassAllPredicates() {
         UnaryFunction<Integer, String> subtractThreeAddYes = new UnaryFunction<Integer, String>() {
             @Override
             public String call(Integer input) {
@@ -410,7 +411,7 @@ public class ComprehensionIteratorTest {
         Predicate<Integer> nonNullPredicate = Predicates.alwaysTrue();
 
         // When
-        new ComprehensionIterator<Integer, Integer>(mapper, input, listWith(nonNullPredicate,nullPredicate));
+        new ComprehensionIterator<Integer, Integer>(mapper, input, listWith(nonNullPredicate, nullPredicate));
 
         // Then a NullPointerException is thrown.
     }
@@ -426,5 +427,68 @@ public class ComprehensionIteratorTest {
         new ComprehensionIterator<Integer, Integer>(mapper, input, listWith(nonNullPredicate));
 
         // Then a NullPointerException is thrown.
+    }
+
+    @Test
+    public void shouldIncludeTheMappingFunctionInTheToStringRepresentation() throws Exception {
+        // Given
+        UnaryFunction<Integer, Integer> mapper = new UnaryFunction<Integer, Integer>() {
+            @Override public Integer call(Integer integer) {
+                throw new NotImplementedException();
+            }
+
+            @Override public String toString() {
+                return "some-mapping-function";
+            }
+        };
+        Iterator<Integer> input = listWith(1, 2, 3).iterator();
+        Predicate<Integer> predicate = Predicates.alwaysTrue();
+
+        ComprehensionIterator<Integer, Integer> iterator =
+                new ComprehensionIterator<Integer, Integer>(mapper, input, listWith(predicate));
+
+        // When
+        String toString = iterator.toString();
+
+        // Then
+        assertThat(toString, containsString("some-mapping-function"));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void shouldIncludeTheIteratorFunctionInTheToStringRepresentation() throws Exception {
+        // Given
+        UnaryFunction<Integer, Integer> mapper = UnaryFunctions.identity();
+        Iterator<Integer> input = (Iterator<Integer>) mock(Iterator.class);
+        Predicate<Integer> predicate = Predicates.alwaysTrue();
+
+        when(input.toString()).thenReturn("the-iterator");
+
+        ComprehensionIterator<Integer, Integer> iterator =
+                new ComprehensionIterator<Integer, Integer>(mapper, input, listWith(predicate));
+
+        // When
+        String toString = iterator.toString();
+
+        // Then
+        assertThat(toString, containsString("the-iterator"));
+    }
+
+    @Test
+    public void shouldIncludeThePredicatesInTheToStringRepresentation() throws Exception {
+        // Given
+        UnaryFunction<Integer, Integer> mapper = UnaryFunctions.identity();
+        Iterator<Integer> input = iteratorWith(1, 2, 3);
+        Predicate<Integer> predicate = Predicates.alwaysTrue();
+        List<Predicate<Integer>> predicates = listWith(predicate);
+
+        ComprehensionIterator<Integer, Integer> iterator =
+                new ComprehensionIterator<Integer, Integer>(mapper, input, predicates);
+
+        // When
+        String toString = iterator.toString();
+
+        // Then
+        assertThat(toString, containsString(predicates.toString()));
     }
 }

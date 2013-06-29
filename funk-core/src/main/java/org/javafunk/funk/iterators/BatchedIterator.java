@@ -57,7 +57,7 @@ public class BatchedIterator<T> implements Iterator<Iterable<T>> {
 
     @Override public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("batchSize: ", batchSize)
+                .append("batchSize", batchSize)
                 .append("iterator", iterator.toString())
                 .toString();
     }
