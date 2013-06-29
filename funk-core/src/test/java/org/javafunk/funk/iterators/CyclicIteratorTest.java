@@ -8,16 +8,18 @@
  */
 package org.javafunk.funk.iterators;
 
+import org.javafunk.funk.Eagerly;
+import org.javafunk.funk.functors.Action;
 import org.junit.Test;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.javafunk.funk.Literals.iterableOf;
-import static org.javafunk.funk.Literals.iterableWith;
+import static org.hamcrest.Matchers.*;
+import static org.javafunk.funk.Literals.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CyclicIteratorTest {
     @Test
@@ -187,5 +189,93 @@ public class CyclicIteratorTest {
         assertThat(iterator.next(), is("a"));
         assertThat(iterator.next(), is("b"));
         assertThat(iterator.next(), is(nullValue()));
+    }
+
+    @Test
+    public void shouldHaveNumberOfRepeatsAsInfiniteInTheToStringRepresentationIfNoneSupplied() throws Exception {
+        // Given
+        Iterator<String> input = iteratorWith("1", "2", "3");
+
+        Iterator<String> iterator = new CyclicIterator<String>(input);
+
+        // When
+        String toString = iterator.toString();
+
+        // Then
+        assertThat(toString, containsString("numberOfTimesToRepeat=infinite"));
+    }
+
+    @Test
+    public void shouldIncludeNumberOfRepeatsInTheToStringRepresentation() throws Exception {
+        // Given
+        Iterator<String> input = iteratorWith("1", "2", "3");
+        Integer numberOfTimesToRepeat = 5;
+
+        Iterator<String> iterator = new CyclicIterator<String>(input, numberOfTimesToRepeat);
+
+        // When
+        String toString = iterator.toString();
+
+        // Then
+        assertThat(toString, containsString("numberOfTimesToRepeat=5"));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void shouldIncludeTheIteratorInTheToStringRepresentation() throws Exception {
+        // Given
+        Iterator<String> input = (Iterator<String>) mock(Iterator.class);
+
+        when(input.toString()).thenReturn("the-iterator");
+
+        Iterator<String> iterator = new CyclicIterator<String>(input);
+
+        // When
+        String toString = iterator.toString();
+
+        // Then
+        assertThat(toString, containsString("the-iterator"));
+    }
+
+    @Test
+    public void shouldIncludeTheNumberOfRepeatsCompletedInTheToStringRepresentation() throws Exception {
+        // Given
+        Iterator<String> input = iteratorWith("1", "2", "3");
+        Integer numberOfTimesToRepeat = 5;
+
+        final Iterator<String> iterator = new CyclicIterator<String>(input, numberOfTimesToRepeat);
+
+        Eagerly.times(10, new Action<Integer>() {
+            @Override public void on(Integer input) {
+                iterator.next();
+            }
+        });
+
+        // When
+        String toString = iterator.toString();
+
+        // Then
+        assertThat(toString, containsString("numberOfRepeatsCompleted=3"));
+    }
+
+    @Test
+    public void shouldIncludeIndexInCurrentRepeatInTheToStringRepresentation() throws Exception {
+        // Given
+        Iterator<String> input = iteratorWith("1", "2", "3");
+        Integer numberOfTimesToRepeat = 5;
+
+        final Iterator<String> iterator = new CyclicIterator<String>(input, numberOfTimesToRepeat);
+
+        Eagerly.times(10, new Action<Integer>() {
+            @Override public void on(Integer input) {
+                iterator.next();
+            }
+        });
+
+        // When
+        String toString = iterator.toString();
+
+        // Then
+        assertThat(toString, containsString("indexInCurrentRepeat=1"));
     }
 }
