@@ -146,6 +146,78 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
+    public void shouldReturnAnOptionOfTheSecondElementInTheSuppliedIterableMatchingTheSuppliedPredicate() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
+
+        // When
+        Option<Integer> output = Eagerly.secondMatching(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer item) {
+                return isEven(item);
+            }
+
+            private boolean isEven(Integer item) {
+                return item % 2 == 0;
+            }
+        });
+
+        // Then
+        assertThat(output, is(some(6)));
+    }
+
+    @Test
+    public void shouldReturnNoneForSecondMatchingIfTheSuppliedIterableIsEmpty() throws Exception {
+        // Given
+        Iterable<Integer> input = new ArrayList<Integer>();
+
+        // When
+        Option<Integer> output = Eagerly.secondMatching(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer item) {
+                return isEven(item);
+            }
+
+            private boolean isEven(Integer item) {
+                return item % 2 == 0;
+            }
+        });
+
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test
+    public void shouldReturnNoneForSecondMatchingIfNoElementsInTheSuppliedIterableMatch() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(1, 3, 5, 7);
+
+        // When
+        Option<Integer> output = Eagerly.secondMatching(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer item) {
+                return isEven(item);
+            }
+
+            private boolean isEven(Integer item) {
+                return item % 2 == 0;
+            }
+        });
+
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfThePredicateSuppliedToSecondMatchingIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5);
+        Predicate<Integer> predicate = null;
+
+        // When
+        Eagerly.secondMatching(input, predicate);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test
     public void shouldReturnTheFirstNElementsFromTheSuppliedIterable() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
