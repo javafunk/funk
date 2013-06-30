@@ -7,4 +7,12 @@ public class Checks {
         }
         return value;
     }
+
+    public static <S, T extends Iterable<S>> T returnOrThrowIfEmpty(
+            T value, RuntimeException exception) {
+        if (!value.iterator().hasNext()) {
+            throw exception;
+        }
+        return value;
+    }
 }
