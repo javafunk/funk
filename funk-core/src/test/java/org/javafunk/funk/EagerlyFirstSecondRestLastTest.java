@@ -79,7 +79,7 @@ public class EagerlyFirstSecondRestLastTest {
         Iterable<Integer> input = iterableWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Option<Integer> output = Eagerly.first(input, new Predicate<Integer>() {
+        Option<Integer> output = Eagerly.firstMatching(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -94,12 +94,12 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldReturnNoneForPredicatedFirstIfTheSuppliedIterableIsEmpty() throws Exception {
+    public void shouldReturnNoneForFirstMatchingIfTheSuppliedIterableIsEmpty() throws Exception {
         // Given
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Option<Integer> output = Eagerly.first(input, new Predicate<Integer>() {
+        Option<Integer> output = Eagerly.firstMatching(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -114,12 +114,12 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldReturnNoneForPredicatedFirstIfNoElementsInTheSuppliedIterableMatch() throws Exception {
+    public void shouldReturnNoneForFirstMatchingIfNoElementsInTheSuppliedIterableMatch() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(1, 3, 5, 7);
 
         // When
-        Option<Integer> output = Eagerly.first(input, new Predicate<Integer>() {
+        Option<Integer> output = Eagerly.firstMatching(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -134,13 +134,13 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIfThePredicateSuppliedToFirstIsNull() throws Exception {
+    public void shouldThrowNullPointerExceptionIfThePredicateSuppliedToFirstMatchingIsNull() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5);
         Predicate<Integer> predicate = null;
 
         // When
-        Eagerly.first(input, predicate);
+        Eagerly.firstMatching(input, predicate);
 
         // Then a NullPointerException is thrown.
     }
@@ -152,58 +152,58 @@ public class EagerlyFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = collectionWith(10, 9, 8, 7);
 
         // When
-        Collection<Integer> actualOutput = Eagerly.first(input, 4);
+        Collection<Integer> actualOutput = Eagerly.firstN(input, 4);
 
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
-    public void shouldReturnAsManyElementsAsPossibleForFirstIfThereAreNotEnoughElementsInTheSuppliedIterable() throws Exception {
+    public void shouldReturnAsManyElementsAsPossibleForFirstNIfThereAreNotEnoughElementsInTheSuppliedIterable() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(3, 2, 1);
         Collection<Integer> expectedOutput = collectionWith(3, 2, 1);
 
         // When
-        Collection<Integer> actualOutput = Eagerly.first(input, 4);
+        Collection<Integer> actualOutput = Eagerly.firstN(input, 4);
 
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
-    public void shouldReturnAnEmptyCollectionForFirstIfTheSuppliedIterableIsEmpty() throws Exception {
+    public void shouldReturnAnEmptyCollectionForFirstNIfTheSuppliedIterableIsEmpty() throws Exception {
         // Given
         Iterable<Integer> input = Collections.emptyList();
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eagerly.first(input, 3);
+        Collection<Integer> actualOutput = Eagerly.firstN(input, 3);
 
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
-    public void shouldReturnAnEmptyCollectionForFirstIfTheNumberOfElementsRequiredIsZero() throws Exception {
+    public void shouldReturnAnEmptyCollectionForFirstNIfTheNumberOfElementsRequiredIsZero() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(3, 2, 1);
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eagerly.first(input, 0);
+        Collection<Integer> actualOutput = Eagerly.firstN(input, 0);
 
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowAnIllegalArgumentExceptionForFirstIfTheNumberOfElementsRequiredIsNegative() throws Exception {
+    public void shouldThrowAnIllegalArgumentExceptionForFirstNIfTheNumberOfElementsRequiredIsNegative() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(3, 2, 1);
 
         // When
-        Eagerly.first(input, -3);
+        Eagerly.firstN(input, -3);
 
         // Then an IllegalArgumentException should be thrown.
     }
@@ -215,7 +215,7 @@ public class EagerlyFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = collectionWith(8, 6);
 
         // When
-        Collection<Integer> actualOutput = Eagerly.first(input, 2, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = Eagerly.firstNMatching(input, 2, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -230,13 +230,13 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldReturnAsManyElementsAsPossibleForPredicatedNFirstIfThereAreNotEnoughMatchingElementsInTheSuppliedIterable() throws Exception {
+    public void shouldReturnAsManyElementsAsPossibleForFirstNMatchingIfThereAreNotEnoughMatchingElementsInTheSuppliedIterable() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(5, 4, 3, 2, 1);
         Collection<Integer> expectedOutput = collectionWith(4, 2);
 
         // When
-        Collection<Integer> actualOutput = Eagerly.first(input, 4, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = Eagerly.firstNMatching(input, 4, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -251,13 +251,13 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldReturnAnEmptyCollectionForPredicatedNFirstIfTheSuppliedIterableIsEmpty() throws Exception {
+    public void shouldReturnAnEmptyCollectionForFirstNMatchingIfTheSuppliedIterableIsEmpty() throws Exception {
         // Given
         Iterable<Integer> input = Collections.emptyList();
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eagerly.first(input, 3, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = Eagerly.firstNMatching(input, 3, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -272,13 +272,13 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldReturnAnEmptyCollectionForPredicatedNFirstIfTheNumberOfElementsRequiredIsZero() throws Exception {
+    public void shouldReturnAnEmptyCollectionForFirstNMatchingIfTheNumberOfElementsRequiredIsZero() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(3, 2, 1);
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eagerly.first(input, 0, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = Eagerly.firstNMatching(input, 0, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -293,13 +293,13 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldReturnAnEmptyCollectionForPredicatedNFirstIfThereAreNoElementsMatchingTheSuppliedPredicate() throws Exception {
+    public void shouldReturnAnEmptyCollectionForFirstNMatchingIfThereAreNoElementsMatchingTheSuppliedPredicate() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(1, 3, 5, 7);
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eagerly.first(input, 2, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = Eagerly.firstNMatching(input, 2, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -314,14 +314,14 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIfThePredicateSuppliedToFirstNIsNull() throws Exception {
+    public void shouldThrowNullPointerExceptionIfThePredicateSuppliedToFirstNMatchingIsNull() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5);
         Predicate<Integer> predicate = null;
         Integer numberOfElementsRequired = 5;
 
         // When
-        Eagerly.first(input, numberOfElementsRequired, predicate);
+        Eagerly.firstNMatching(input, numberOfElementsRequired, predicate);
 
         // Then a NullPointerException is thrown.
     }
@@ -356,7 +356,7 @@ public class EagerlyFirstSecondRestLastTest {
         Iterable<Integer> input = iterableWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
 
         // When
-        Option<Integer> output = Eagerly.last(input, new Predicate<Integer>() {
+        Option<Integer> output = Eagerly.lastMatching(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -371,12 +371,12 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldReturnNoneForPredicatedLastIfTheSuppliedIterableIsEmpty() throws Exception {
+    public void shouldReturnNoneForLastMatchingIfTheSuppliedIterableIsEmpty() throws Exception {
         // Given
         Iterable<Integer> input = new ArrayList<Integer>();
 
         // When
-        Option<Integer> output = Eagerly.last(input, new Predicate<Integer>() {
+        Option<Integer> output = Eagerly.lastMatching(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -391,12 +391,12 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldReturnNoneForPredicatedLastIfNoElementsInTheSuppliedIterableMatch() throws Exception {
+    public void shouldReturnNoneForLastMatchingIfNoElementsInTheSuppliedIterableMatch() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(1, 3, 5, 7);
 
         // When
-        Option<Integer> output = Eagerly.last(input, new Predicate<Integer>() {
+        Option<Integer> output = Eagerly.lastMatching(input, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -411,13 +411,13 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIfThePredicateSuppliedToLastIsNull() throws Exception {
+    public void shouldThrowNullPointerExceptionIfThePredicateSuppliedToLastMatchingIsNull() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5);
         Predicate<Integer> predicate = null;
 
         // When
-        Eagerly.last(input, predicate);
+        Eagerly.lastMatching(input, predicate);
 
         // Then a NullPointerException is thrown.
     }
@@ -429,58 +429,58 @@ public class EagerlyFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = collectionWith(3, 2, 1);
 
         // When
-        Collection<Integer> actualOutput = Eagerly.last(input, 3);
+        Collection<Integer> actualOutput = Eagerly.lastN(input, 3);
 
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
-    public void shouldReturnAsManyElementsAsPossibleForLastIfThereAreNotEnoughElementsInTheSuppliedIterable() throws Exception {
+    public void shouldReturnAsManyElementsAsPossibleForLastNIfThereAreNotEnoughElementsInTheSuppliedIterable() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(3, 2, 1);
         Collection<Integer> expectedOutput = collectionWith(3, 2, 1);
 
         // When
-        Collection<Integer> actualOutput = Eagerly.last(input, 4);
+        Collection<Integer> actualOutput = Eagerly.lastN(input, 4);
 
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
-    public void shouldReturnAnEmptyCollectionForLastIfTheSuppliedIterableIsEmpty() throws Exception {
+    public void shouldReturnAnEmptyCollectionForLastNIfTheSuppliedIterableIsEmpty() throws Exception {
         // Given
         Iterable<Integer> input = Collections.emptyList();
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eagerly.last(input, 3);
+        Collection<Integer> actualOutput = Eagerly.lastN(input, 3);
 
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test
-    public void shouldReturnAnEmptyCollectionForLastIfTheNumberOfElementsRequiredIsZero() throws Exception {
+    public void shouldReturnAnEmptyCollectionForLastNIfTheNumberOfElementsRequiredIsZero() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(3, 2, 1);
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eagerly.last(input, 0);
+        Collection<Integer> actualOutput = Eagerly.lastN(input, 0);
 
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowAnIllegalArgumentExceptionForLastIfTheNumberOfElementsRequiredIsNegative() throws Exception {
+    public void shouldThrowAnIllegalArgumentExceptionForLastNIfTheNumberOfElementsRequiredIsNegative() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(3, 2, 1);
 
         // When
-        Eagerly.last(input, -3);
+        Eagerly.lastN(input, -3);
 
         // Then an IllegalArgumentException should be thrown.
     }
@@ -492,7 +492,7 @@ public class EagerlyFirstSecondRestLastTest {
         Collection<Integer> expectedOutput = collectionWith(6, 4, 2);
 
         // When
-        Collection<Integer> actualOutput = Eagerly.last(input, 3, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = Eagerly.lastNMatching(input, 3, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -507,13 +507,13 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldReturnAsManyElementsAsPossibleForPredicatedNLastIfThereAreNotEnoughMatchingElementsInTheSuppliedIterable() throws Exception {
+    public void shouldReturnAsManyElementsAsPossibleForLastNMatchingIfThereAreNotEnoughMatchingElementsInTheSuppliedIterable() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(5, 4, 3, 2, 1);
         Collection<Integer> expectedOutput = collectionWith(4, 2);
 
         // When
-        Collection<Integer> actualOutput = Eagerly.last(input, 4, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = Eagerly.lastNMatching(input, 4, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -528,13 +528,13 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldReturnAnEmptyCollectionForPredicatedNLastIfTheSuppliedIterableIsEmpty() throws Exception {
+    public void shouldReturnAnEmptyCollectionForLastNMatchingIfTheSuppliedIterableIsEmpty() throws Exception {
         // Given
         Iterable<Integer> input = Collections.emptyList();
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eagerly.last(input, 3, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = Eagerly.lastNMatching(input, 3, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -549,13 +549,13 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldReturnAnEmptyCollectionForPredicatedNLastIfTheNumberOfElementsRequiredIsZero() throws Exception {
+    public void shouldReturnAnEmptyCollectionForLastNMatchingIfTheNumberOfElementsRequiredIsZero() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(3, 2, 1);
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eagerly.last(input, 0, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = Eagerly.lastNMatching(input, 0, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -570,13 +570,13 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
-    public void shouldReturnAnEmptyCollectionForPredicatedNLastIfThereAreNoElementsMatchingTheSuppliedPredicate() throws Exception {
+    public void shouldReturnAnEmptyCollectionForLastNMatchingIfThereAreNoElementsMatchingTheSuppliedPredicate() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(1, 3, 5, 7);
         Collection<Integer> expectedOutput = Collections.emptyList();
 
         // When
-        Collection<Integer> actualOutput = Eagerly.last(input, 2, new Predicate<Integer>() {
+        Collection<Integer> actualOutput = Eagerly.lastNMatching(input, 2, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return isEven(item);
             }
@@ -591,14 +591,14 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIfThePredicateSuppliedToLastNIsNull() throws Exception {
+    public void shouldThrowNullPointerExceptionIfThePredicateSuppliedToLastNMatchingIsNull() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5);
         Predicate<Integer> predicate = null;
         Integer numberOfElementsRequired = 5;
 
         // When
-        Eagerly.first(input, numberOfElementsRequired, predicate);
+        Eagerly.lastNMatching(input, numberOfElementsRequired, predicate);
 
         // Then a NullPointerException is thrown.
     }
