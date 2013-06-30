@@ -2038,8 +2038,8 @@ public class Eagerly {
     /**
      * Returns an {@code Option} over the second element in the supplied {@code Iterable}
      * that satisfies the supplied {@code UnaryPredicate}. If the {@code Iterable} is
-     * empty, {@code None} is returned, otherwise, a {@code Some} is returned over
-     * the second matching value found.
+     * empty or contains one or less matching elements, {@code None} is returned, otherwise,
+     * a {@code Some} is returned over the second matching value found.
      *
      * <p>This method has a return type of {@code Option} rather than returning the
      * second matching value directly since, in the case of an empty {@code Iterable},
@@ -2113,6 +2113,86 @@ public class Eagerly {
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
         return second(filter(iterable, predicate));
+    }
+
+    /**
+     * Returns an {@code Option} over the third element in the supplied {@code Iterable}
+     * that satisfies the supplied {@code UnaryPredicate}. If the {@code Iterable} is
+     * empty or contains two or less matching elements, {@code None} is returned,
+     * otherwise, a {@code Some} is returned over the third matching value found.
+     *
+     * <p>This method has a return type of {@code Option} rather than returning the
+     * third matching value directly since, in the case of an empty {@code Iterable},
+     * an exception would have to be thrown using that approach. Instead, the
+     * {@code Option} can be queried for whether it contains a value or not,
+     * avoiding any exception handling.</p>
+     *
+     * <p>Since an {@code Option} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the third matching element from the
+     * underlying {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterableWith(7, 6, 5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * The third even element in the {@code Iterable} can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *   Option&lt;Integer&gt; valueOption = thirdMatching(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Integer value = valueOption.get(); // => 2
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * <p>Thanks to the {@code Option} returned, we can handle the empty {@code Iterable}
+     * case gracefully:</p>
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable();
+     *   Option&lt;Integer&gt; valueOption = thirdMatching(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Integer value = valueOption.getOrElse(10); // => 10
+     * </pre>
+     * </blockquote>
+     * Similarly, if no elements match the supplied {@code UnaryPredicate}, we are returned
+     * a {@code None}:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable(9, 7, 5, 3, 1);
+     *   Option&lt;Integer&gt; valueOption = thirdMatching(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   valueOption.hasValue(); // => false
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable  The {@code Iterable} to search for the third element matching the
+     *                  supplied {@code UnaryPredicate}.
+     * @param predicate A {@code UnaryPredicate} that must be satisfied by elements in the
+     *                  supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Option} instance representing the third element in the supplied
+     *         {@code Iterable} satisfying the supplied {@code UnaryPredicate}.
+     */
+    public static <T> Option<T> thirdMatching(
+            Iterable<T> iterable,
+            UnaryPredicate<? super T> predicate) {
+        return third(filter(iterable, predicate));
     }
 
     /**
