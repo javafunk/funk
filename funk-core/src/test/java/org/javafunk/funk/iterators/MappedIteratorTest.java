@@ -8,6 +8,7 @@
  */
 package org.javafunk.funk.iterators;
 
+import org.javafunk.funk.UnaryFunctions;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.junit.Test;
 
@@ -17,10 +18,10 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.javafunk.funk.Literals.collectionBuilderWith;
-import static org.javafunk.funk.Literals.iterableWith;
+import static org.hamcrest.Matchers.*;
+import static org.javafunk.funk.Literals.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class MappedIteratorTest {
     @Test
@@ -159,6 +160,45 @@ public class MappedIteratorTest {
         new MappedIterator<Integer, String>(input, mapper);
 
         // Then a NullPointerException is thrown.
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void shouldIncludeIteratorInToStringRepresentation() throws Exception {
+        // Given
+        Iterator<Integer> input = (Iterator<Integer>) mock(Iterator.class);
+        UnaryFunction<Integer, Integer> mapper = UnaryFunctions.identity();
+
+        when(input.toString()).thenReturn("the-iterator");
+
+        MappedIterator<Integer, Integer> iterator =
+                new MappedIterator<Integer, Integer>(input, mapper);
+
+        // When
+        String toString = iterator.toString();
+
+        // Then
+        assertThat(toString, containsString("the-iterator"));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void shouldIncludeMappingFunctionInToStringRepresentation() throws Exception {
+        // Given
+        Iterator<Integer> input = iteratorWith(1, 2 ,3);
+        UnaryFunction<Integer, Integer> mapper =
+                (UnaryFunction<Integer, Integer>) mock(UnaryFunction.class);
+
+        when(mapper.toString()).thenReturn("the-mapping-function");
+
+        MappedIterator<Integer, Integer> iterator =
+                new MappedIterator<Integer, Integer>(input, mapper);
+
+        // When
+        String toString = iterator.toString();
+
+        // Then
+        assertThat(toString, containsString("the-mapping-function"));
     }
 
     private UnaryFunction<Integer, String> stringValueMapFunction() {

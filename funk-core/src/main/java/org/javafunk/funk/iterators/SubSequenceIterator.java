@@ -8,6 +8,8 @@
  */
 package org.javafunk.funk.iterators;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.javafunk.funk.functors.Action;
 
 import java.util.Iterator;
@@ -29,7 +31,7 @@ public class SubSequenceIterator<T> extends CachingIterator<T> {
         this.start = start == null ? 0 : start;
         this.stop = stop == null ? Integer.MAX_VALUE : stop;
         this.step = step == null ? 1 : step;
-        
+
         progressToStart();
     }
 
@@ -57,6 +59,16 @@ public class SubSequenceIterator<T> extends CachingIterator<T> {
         iterator.remove();
     }
 
+    @Override public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("iterator", iterator)
+                .append("start", start)
+                .append("stop", stop)
+                .append("step", step)
+                .append("cursor", cursor)
+                .toString();
+    }
+
     private void validateBounds(Integer start, Integer stop, Integer step) {
         if (start != null && start < 0) {
             throw new IllegalArgumentException("Start must not be less than zero.");
@@ -64,7 +76,7 @@ public class SubSequenceIterator<T> extends CachingIterator<T> {
         if (stop != null && stop < 0) {
             throw new IllegalArgumentException("Stop must not be less than zero.");
         }
-        if (start != null && stop!= null && stop < start) {
+        if (start != null && stop != null && stop < start) {
             throw new IllegalArgumentException("Stop must be greater than start.");
         }
         if (step != null && step < 1) {

@@ -1,5 +1,7 @@
 package org.javafunk.funk.iterators;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.javafunk.funk.Eagerly;
 import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.Predicate;
@@ -36,5 +38,11 @@ public class ZippedIterator implements Iterator<Iterable<?>> {
 
     public void remove() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("iterators", iterators)
+                .toString();
     }
 }

@@ -16,15 +16,20 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.javafunk.funk.Literals.collectionBuilderWith;
 import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.funk.Literals.iteratorWith;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class SubSequenceIteratorTest {
     @Test
-    public void shouldTakeElementsFromTheIteratorBetweenTheSpecifiedStartAndStopWithTheSpecifiedStep() throws Exception {
+    public void shouldTakeElementsFromTheIteratorBetweenTheSpecifiedStartAndStopWithTheSpecifiedStep()
+            throws Exception {
         // Given
         Iterator<String> input = iterableWith("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k").iterator();
 
@@ -382,5 +387,60 @@ public class SubSequenceIteratorTest {
         }
 
         assertThat(input, is(expectedResult));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void shouldIncludeIteratorInToStringRepresentation() throws Exception {
+        // Given
+        Iterator<Integer> input = (Iterator<Integer>) mock(Iterator.class);
+        Integer start = 2, stop = 7, step = 2;
+
+        when(input.toString()).thenReturn("the-iterator");
+
+        SubSequenceIterator<Integer> iterator =
+                new SubSequenceIterator<Integer>(input, start, stop, step);
+
+        // When
+        String toString = iterator.toString();
+
+        // Then
+        assertThat(toString, containsString("the-iterator"));
+    }
+
+    @Test
+    public void shouldIncludeStartStopAndStepInToStringRepresentation() throws Exception {
+        // Given
+        Iterator<Integer> input = iteratorWith(1, 2, 3);
+        Integer start = 2, stop = 7, step = 2;
+
+        SubSequenceIterator<Integer> iterator =
+                new SubSequenceIterator<Integer>(input, start, stop, step);
+
+        // When
+        String toString = iterator.toString();
+
+        // Then
+        assertThat(toString, containsString("start=2"));
+        assertThat(toString, containsString("stop=7"));
+        assertThat(toString, containsString("step=2"));
+    }
+
+    @Test
+    public void shouldIncludeCursorInToStringRepresentation() throws Exception {
+        // Given
+        Iterator<Integer> input = iteratorWith(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Integer start = 2, stop = 7, step = 2;
+
+        SubSequenceIterator<Integer> iterator =
+                new SubSequenceIterator<Integer>(input, start, stop, step);
+
+        Integer val = iterator.next();
+
+        // When
+        String toString = iterator.toString();
+
+        // Then
+        assertThat(toString, containsString("cursor=3"));
     }
 }

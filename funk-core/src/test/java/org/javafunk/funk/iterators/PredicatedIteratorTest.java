@@ -8,6 +8,7 @@
  */
 package org.javafunk.funk.iterators;
 
+import org.javafunk.funk.Predicates;
 import org.javafunk.funk.functors.Predicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.junit.Test;
@@ -18,11 +19,15 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.javafunk.funk.Literals.collectionBuilderWith;
 import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.funk.Literals.iteratorWith;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class PredicatedIteratorTest {
     @Test
@@ -282,5 +287,43 @@ public class PredicatedIteratorTest {
         new PredicatedIterator<Integer>(input, predicate);
 
         // Then a NullPointerException is thrown.
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void shouldIncludeIteratorInToStringRepresentation() throws Exception {
+        // Given
+        Iterator<Integer> input = (Iterator<Integer>) mock(Iterator.class);
+        UnaryPredicate<Integer> predicate = Predicates.alwaysTrue();
+
+        when(input.toString()).thenReturn("the-iterator");
+
+        PredicatedIterator<Integer> iterator =
+                new PredicatedIterator<Integer>(input, predicate);
+
+        // When
+        String toString = iterator.toString();
+
+        // Then
+        assertThat(toString, containsString("the-iterator"));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void shouldIncludePredicateInToStringRepresentation() throws Exception {
+        // Given
+        Iterator<Integer> input = iteratorWith(1, 2, 3);
+        UnaryPredicate<Integer> predicate = (UnaryPredicate<Integer>) mock(UnaryPredicate.class);
+
+        when(predicate.toString()).thenReturn("the-predicate");
+
+        PredicatedIterator<Integer> iterator =
+                new PredicatedIterator<Integer>(input, predicate);
+
+        // When
+        String toString = iterator.toString();
+
+        // Then
+        assertThat(toString, containsString("the-predicate"));
     }
 }

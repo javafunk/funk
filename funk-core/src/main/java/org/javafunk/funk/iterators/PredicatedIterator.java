@@ -8,6 +8,8 @@
  */
 package org.javafunk.funk.iterators;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 
 import java.util.Iterator;
@@ -38,5 +40,12 @@ public class PredicatedIterator<T> extends CachingIterator<T> {
     @Override
     protected void removeLast() {
         iterator.remove();
+    }
+
+    @Override public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("iterator", iterator)
+                .append("predicate", predicate)
+                .toString();
     }
 }

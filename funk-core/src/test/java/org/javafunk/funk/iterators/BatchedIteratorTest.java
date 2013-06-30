@@ -15,13 +15,17 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.collectionWith;
 import static org.javafunk.funk.Literals.iterableWith;
+import static org.javafunk.funk.Literals.iteratorWith;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class BatchedIteratorTest {
     @Test
@@ -234,5 +238,36 @@ public class BatchedIteratorTest {
         assertThat(firstBatchIterator2.next(), is(2));
         assertThat(firstBatchIterator2.next(), is(3));
         assertThat(firstBatchIterator2.hasNext(), is(false));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void shouldIncludeIteratorToStringInToString() throws Exception {
+        // Given
+        Iterator<Integer> input = (Iterator<Integer>) mock(Iterator.class);
+        when(input.toString()).thenReturn("iterator toString");
+
+        Iterator<Iterable<Integer>> batchIterator = new BatchedIterator<Integer>(input, 3);
+
+        // When
+        String toString = batchIterator.toString();
+
+        // Then
+        assertThat(toString, containsString("iterator toString"));
+    }
+
+    @Test
+    public void shouldIncludeBatchSizeInToString() throws Exception {
+        // Given
+        Iterator<Integer> input = iteratorWith(1, 2, 3, 4);
+        Integer batchSize = 10;
+
+        BatchedIterator<Integer> batchedIterator = new BatchedIterator<Integer>(input, batchSize);
+
+        // When
+        String toString = batchedIterator.toString();
+
+        // Then
+        assertThat(toString, containsString("10"));
     }
 }

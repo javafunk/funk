@@ -17,11 +17,11 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.javafunk.funk.Literals.collectionBuilderWith;
-import static org.javafunk.funk.Literals.iterableWith;
+import static org.hamcrest.Matchers.*;
+import static org.javafunk.funk.Literals.*;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class FilteredIteratorTest {
     @Test
@@ -220,7 +220,7 @@ public class FilteredIteratorTest {
         Iterator<Integer> delegateIterator = iterableWith(1, null, 10, 5).iterator();
 
         // When
-        FilteredIterator<Integer> iterator = new FilteredIterator<Integer>(delegateIterator, new Predicate<Integer>(){
+        FilteredIterator<Integer> iterator = new FilteredIterator<Integer>(delegateIterator, new Predicate<Integer>() {
             public boolean evaluate(Integer item) {
                 return item == null || item % 10 != 0;
             }
@@ -246,5 +246,50 @@ public class FilteredIteratorTest {
         new FilteredIterator<Integer>(input, predicate);
 
         // Then a NullPointerException is thrown.
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void shouldIncludeIteratorInToStringRepresentation() throws Exception {
+        // Given
+        Iterator<String> input = (Iterator<String>) mock(Iterator.class);
+        Predicate<String> predicate = new Predicate<String>() {
+            public boolean evaluate(String item) {
+                return item.contains("o");
+            }
+        };
+
+        when(input.toString()).thenReturn("the-iterator");
+
+        FilteredIterator<String> iterator = new FilteredIterator<String>(input, predicate);
+
+        // When
+        String toString = iterator.toString();
+
+        // Then
+        assertThat(toString, containsString("the-iterator"));
+    }
+
+    @Test
+    public void shouldIncludePredicateInToStringRepresentation() throws Exception {
+        // Given
+        Iterator<String> input = iteratorWith("1", "2", "3");
+        Predicate<String> predicate = new Predicate<String>() {
+            public boolean evaluate(String item) {
+                return item.contains("o");
+            }
+
+            @Override public String toString() {
+                return "the-predicate";
+            }
+        };
+
+        FilteredIterator<String> iterator = new FilteredIterator<String>(input, predicate);
+
+        // When
+        String toString = iterator.toString();
+
+        // Then
+        assertThat(toString, containsString("the-predicate"));
     }
 }

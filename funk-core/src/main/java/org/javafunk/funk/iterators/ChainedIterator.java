@@ -8,6 +8,9 @@
  */
 package org.javafunk.funk.iterators;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -55,6 +58,13 @@ public class ChainedIterator<T> implements Iterator<T> {
     @Override
     public void remove() {
         currentIterator.remove();
+    }
+
+    @Override public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("currentIterator", currentIterator)
+                .append("remainingIterators", iteratorsIterator)
+                .toString();
     }
 
     @SuppressWarnings("unchecked")
