@@ -1860,6 +1860,102 @@ public class Eagerly {
     }
 
     /**
+     * Returns an {@code Option} over the second element in the supplied {@code Iterable}.
+     * If the {@code Iterable} is empty, {@code None} is returned, otherwise, a
+     * {@code Some} is returned over the second value found.
+     *
+     * <p>This method has a return type of {@code Option} rather than returning the
+     * second value directly since, in the case of an empty {@code Iterable}, an
+     * exception would have to be thrown using that approach. Instead, the
+     * {@code Option} can be queried for whether it contains a value or not,
+     * avoiding any exception handling.</p>
+     *
+     * <p>Since an {@code Option} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the second element from the underlying
+     * {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * The second element in the {@code Iterable} can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *   Option&lt;Integer&gt; valueOption = second(values);
+     *   Integer value = valueOption.get(); // => 4
+     * </pre>
+     * </blockquote>
+     * Similarly, we can handle the empty {@code Iterable} case gracefully:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable();
+     *   Option&lt;Integer&gt; valueOption = second(values);
+     *   Integer value = valueOption.getOrElse(10); // => 10
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which the second element is required.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Option} instance representing the second element in the supplied
+     *         {@code Iterable}.
+     */
+    public static <T> Option<T> second(Iterable<T> iterable) {
+        return first(Lazily.rest(iterable));
+    }
+
+    /**
+     * Returns an {@code Option} over the third element in the supplied {@code Iterable}.
+     * If the {@code Iterable} is empty, {@code None} is returned, otherwise, a
+     * {@code Some} is returned over the third value found.
+     *
+     * <p>This method has a return type of {@code Option} rather than returning the
+     * third value directly since, in the case of an empty {@code Iterable}, an
+     * exception would have to be thrown using that approach. Instead, the
+     * {@code Option} can be queried for whether it contains a value or not,
+     * avoiding any exception handling.</p>
+     *
+     * <p>Since an {@code Option} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the third element from the underlying
+     * {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * The third element in the {@code Iterable} can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *   Option&lt;Integer&gt; valueOption = third(values);
+     *   Integer value = valueOption.get(); // => 3
+     * </pre>
+     * </blockquote>
+     * Similarly, we can handle the empty {@code Iterable} case gracefully:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable();
+     *   Option&lt;Integer&gt; valueOption = third(values);
+     *   Integer value = valueOption.getOrElse(10); // => 10
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which the third element is required.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Option} instance representing the third element in the supplied
+     *         {@code Iterable}.
+     */
+    public static <T> Option<T> third(Iterable<T> iterable) {
+        return first(Lazily.rest(Lazily.rest(iterable)));
+    }
+
+    /**
      * Returns an {@code Option} over the first element in the supplied {@code Iterable}
      * that satisfies the supplied {@code UnaryPredicate}. If the {@code Iterable} is
      * empty, {@code None} is returned, otherwise, a {@code Some} is returned over
@@ -1886,7 +1982,7 @@ public class Eagerly {
      * The first even element in the {@code Iterable} can be obtained as follows:
      * <blockquote>
      * <pre>
-     *   Option&lt;Integer&gt; valueOption = first(values, new Predicate&lt;Integer&gt;(){
+     *   Option&lt;Integer&gt; valueOption = firstMatching(values, new Predicate&lt;Integer&gt;(){
      *       &#64;Override public boolean evaluate(Integer integer) {
      *           return integer % 2 == 0;
      *       }
@@ -1903,7 +1999,7 @@ public class Eagerly {
      * <blockquote>
      * <pre>
      *   Iterable&lt;Integer&gt; values = Literals.iterable();
-     *   Option&lt;Integer&gt; valueOption = first(values, new Predicate&lt;Integer&gt;(){
+     *   Option&lt;Integer&gt; valueOption = firstMatching(values, new Predicate&lt;Integer&gt;(){
      *       &#64;Override public boolean evaluate(Integer integer) {
      *           return integer % 2 == 0;
      *       }
@@ -1916,7 +2012,7 @@ public class Eagerly {
      * <blockquote>
      * <pre>
      *   Iterable&lt;Integer&gt; values = Literals.iterable(9, 7, 5, 3, 1);
-     *   Option&lt;Integer&gt; valueOption = first(values, new Predicate&lt;Integer&gt;(){
+     *   Option&lt;Integer&gt; valueOption = firstMatching(values, new Predicate&lt;Integer&gt;(){
      *       &#64;Override public boolean evaluate(Integer integer) {
      *           return integer % 2 == 0;
      *       }
@@ -1933,10 +2029,170 @@ public class Eagerly {
      * @return An {@code Option} instance representing the first element in the supplied
      *         {@code Iterable} satisfying the supplied {@code UnaryPredicate}.
      */
-    public static <T> Option<T> first(
+    public static <T> Option<T> firstMatching(
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
         return first(filter(iterable, predicate));
+    }
+
+    /**
+     * Returns an {@code Option} over the second element in the supplied {@code Iterable}
+     * that satisfies the supplied {@code UnaryPredicate}. If the {@code Iterable} is
+     * empty or contains one or less matching elements, {@code None} is returned, otherwise,
+     * a {@code Some} is returned over the second matching value found.
+     *
+     * <p>This method has a return type of {@code Option} rather than returning the
+     * second matching value directly since, in the case of an empty {@code Iterable},
+     * an exception would have to be thrown using that approach. Instead, the
+     * {@code Option} can be queried for whether it contains a value or not,
+     * avoiding any exception handling.</p>
+     *
+     * <p>Since an {@code Option} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the second matching element from the
+     * underlying {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * The second even element in the {@code Iterable} can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *   Option&lt;Integer&gt; valueOption = secondMatching(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Integer value = valueOption.get(); // => 2
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * <p>Thanks to the {@code Option} returned, we can handle the empty {@code Iterable}
+     * case gracefully:</p>
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable();
+     *   Option&lt;Integer&gt; valueOption = secondMatching(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Integer value = valueOption.getOrElse(10); // => 10
+     * </pre>
+     * </blockquote>
+     * Similarly, if no elements match the supplied {@code UnaryPredicate}, we are returned
+     * a {@code None}:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable(9, 7, 5, 3, 1);
+     *   Option&lt;Integer&gt; valueOption = secondMatching(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   valueOption.hasValue(); // => false
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable  The {@code Iterable} to search for the second element matching the
+     *                  supplied {@code UnaryPredicate}.
+     * @param predicate A {@code UnaryPredicate} that must be satisfied by elements in the
+     *                  supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Option} instance representing the second element in the supplied
+     *         {@code Iterable} satisfying the supplied {@code UnaryPredicate}.
+     */
+    public static <T> Option<T> secondMatching(
+            Iterable<T> iterable,
+            UnaryPredicate<? super T> predicate) {
+        return second(filter(iterable, predicate));
+    }
+
+    /**
+     * Returns an {@code Option} over the third element in the supplied {@code Iterable}
+     * that satisfies the supplied {@code UnaryPredicate}. If the {@code Iterable} is
+     * empty or contains two or less matching elements, {@code None} is returned,
+     * otherwise, a {@code Some} is returned over the third matching value found.
+     *
+     * <p>This method has a return type of {@code Option} rather than returning the
+     * third matching value directly since, in the case of an empty {@code Iterable},
+     * an exception would have to be thrown using that approach. Instead, the
+     * {@code Option} can be queried for whether it contains a value or not,
+     * avoiding any exception handling.</p>
+     *
+     * <p>Since an {@code Option} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the third matching element from the
+     * underlying {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterableWith(7, 6, 5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * The third even element in the {@code Iterable} can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *   Option&lt;Integer&gt; valueOption = thirdMatching(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Integer value = valueOption.get(); // => 2
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * <p>Thanks to the {@code Option} returned, we can handle the empty {@code Iterable}
+     * case gracefully:</p>
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable();
+     *   Option&lt;Integer&gt; valueOption = thirdMatching(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Integer value = valueOption.getOrElse(10); // => 10
+     * </pre>
+     * </blockquote>
+     * Similarly, if no elements match the supplied {@code UnaryPredicate}, we are returned
+     * a {@code None}:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable(9, 7, 5, 3, 1);
+     *   Option&lt;Integer&gt; valueOption = thirdMatching(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   valueOption.hasValue(); // => false
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable  The {@code Iterable} to search for the third element matching the
+     *                  supplied {@code UnaryPredicate}.
+     * @param predicate A {@code UnaryPredicate} that must be satisfied by elements in the
+     *                  supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Option} instance representing the third element in the supplied
+     *         {@code Iterable} satisfying the supplied {@code UnaryPredicate}.
+     */
+    public static <T> Option<T> thirdMatching(
+            Iterable<T> iterable,
+            UnaryPredicate<? super T> predicate) {
+        return third(filter(iterable, predicate));
     }
 
     /**
@@ -1961,11 +2217,11 @@ public class Eagerly {
      *   Iterable&lt;Integer&gt; values = Literals.iterableWith(5, 4, 3, 2, 1);
      * </pre>
      * </blockquote>
-     * Using {@code first}, we can obtain the first three elements in the {@code Iterable}.
+     * Using {@code firstN}, we can obtain the first three elements in the {@code Iterable}.
      * The following two lines are equivalent in this case:
      * <blockquote>
      * <pre>
-     *   Collection&lt;Integer&gt; firstThreeValues = first(values, 3);
+     *   Collection&lt;Integer&gt; firstThreeValues = firstN(values, 3);
      *   Collection&lt;Integer&gt; equivalentValues = Literals.collectionWith(5, 4, 3);
      * </pre>
      * </blockquote>
@@ -1974,7 +2230,7 @@ public class Eagerly {
      * equivalent:
      * <blockquote>
      * <pre>
-     *   Collection&lt;Integer&gt; firstSixValues = first(values, 6);
+     *   Collection&lt;Integer&gt; firstSixValues = firstN(values, 6);
      *   Collection&lt;Integer&gt; equivalentValues = Literals.collectionWith(5, 4, 3, 2, 1);
      * </pre>
      * </blockquote>
@@ -1983,7 +2239,7 @@ public class Eagerly {
      * <blockquote>
      * <pre>
      *   Iterable&lt;Integer&gt; values = Literals.iterable();
-     *   Collection&lt;Integer&gt; firstThreeElements = first(values, 3);
+     *   Collection&lt;Integer&gt; firstThreeElements = firstN(values, 3);
      *   firstThreeElements.isEmpty(); // => true
      * </pre>
      * </blockquote>
@@ -1994,7 +2250,7 @@ public class Eagerly {
      * @return A {@code Collection} instance containing the required number of elements
      *         (or less) from the supplied {@code Iterable}.
      */
-    public static <T> Collection<T> first(
+    public static <T> Collection<T> firstN(
             Iterable<T> iterable,
             int numberOfElementsRequired) {
         return take(iterable, numberOfElementsRequired);
@@ -2023,11 +2279,11 @@ public class Eagerly {
      *   Iterable&lt;Integer&gt; values = Literals.iterableWith(8, 7, 6, 5, 4, 3, 2, 1);
      * </pre>
      * </blockquote>
-     * Using {@code first}, we can obtain the first three even elements in the {@code Iterable}.
-     * The following two expressions are equivalent:
+     * Using {@code firstNMatching}, we can obtain the first three even elements in the
+     * {@code Iterable}. The following two expressions are equivalent:
      * <blockquote>
      * <pre>
-     *   Collection&lt;Integer&gt; firstThreeEvens = first(values, 3, new Predicate&lt;Integer&gt;(){
+     *   Collection&lt;Integer&gt; firstThreeEvens = firstNMatching(values, 3, new Predicate&lt;Integer&gt;(){
      *       &#64;Override public boolean evaluate(Integer integer) {
      *           return integer % 2 == 0;
      *       }
@@ -2044,7 +2300,7 @@ public class Eagerly {
      * many matching elements as possible. The following two lines are equivalent:</p>
      * <blockquote>
      * <pre>
-     *   Collection&lt;Integer&gt; firstFiveEvens = first(values, 5, new Predicate&lt;Integer&gt;(){
+     *   Collection&lt;Integer&gt; firstFiveEvens = firstNMatching(values, 5, new Predicate&lt;Integer&gt;(){
      *       &#64;Override public boolean evaluate(Integer integer) {
      *           return integer % 2 == 0;
      *       }
@@ -2057,7 +2313,7 @@ public class Eagerly {
      * <blockquote>
      * <pre>
      *   Iterable&lt;Integer&gt; values = Literals.iterable(9, 7, 5, 3, 1);
-     *   Collection&lt;Integer&gt; firstThreeEvens = first(values, 3, new Predicate&lt;Integer&gt;(){
+     *   Collection&lt;Integer&gt; firstThreeEvens = firstNMatching(values, 3, new Predicate&lt;Integer&gt;(){
      *       &#64;Override public boolean evaluate(Integer integer) {
      *           return integer % 2 == 0;
      *       }
@@ -2075,11 +2331,11 @@ public class Eagerly {
      *         (or less) from the supplied {@code Iterable} matching the supplied
      *         {@code UnaryPredicate}.
      */
-    public static <T> Collection<T> first(
+    public static <T> Collection<T> firstNMatching(
             Iterable<T> iterable,
             int numberOfElementsRequired,
             UnaryPredicate<? super T> predicate) {
-        return first(filter(iterable, predicate), numberOfElementsRequired);
+        return firstN(filter(iterable, predicate), numberOfElementsRequired);
     }
 
     /**
@@ -2131,6 +2387,104 @@ public class Eagerly {
     }
 
     /**
+     * Returns an {@code Option} over the second to last element in the supplied
+     * {@code Iterable}. If the {@code Iterable} is empty or contains only one element,
+     * {@code None} is returned, otherwise, a {@code Some} is returned over the
+     * second to last element yielded by the {@code Iterable}.
+     *
+     * <p>This method has a return type of {@code Option} rather than returning the
+     * second to last value directly since, in the case of an empty {@code Iterable},
+     * an exception would have to be thrown using that approach. Instead, the
+     * {@code Option} can be queried for whether it contains a value or not,
+     * avoiding any exception handling.</p>
+     *
+     * <p>Since an {@code Option} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the second to last element from the
+     * underlying {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code String} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;String&gt; values = Literals.iterableWith("first", "middle", "last");
+     * </pre>
+     * </blockquote>
+     * The second to last element in the {@code Iterable} can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *   Option&lt;String&gt; valueOption = secondLast(values);
+     *   String value = valueOption.get(); // => "middle"
+     * </pre>
+     * </blockquote>
+     * Similarly, we can handle the empty {@code Iterable} case gracefully:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;String&gt; values = Literals.iterable();
+     *   Option&lt;String&gt; valueOption = secondLast(values);
+     *   String value = valueOption.getOrElse("some string"); // => "some string"
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which the second to last element is required.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Option} instance representing the second to last element in the
+     *         supplied {@code Iterable}.
+     */
+    public static <T> Option<T> secondLast(Iterable<T> iterable) {
+        return first(slice(iterable, -2, -1));
+    }
+
+    /**
+     * Returns an {@code Option} over the third to last element in the supplied
+     * {@code Iterable}. If the {@code Iterable} is empty or contains two or less
+     * elements, {@code None} is returned, otherwise, a {@code Some} is returned
+     * over the third to last element yielded by the {@code Iterable}.
+     *
+     * <p>This method has a return type of {@code Option} rather than returning the
+     * third to last value directly since, in the case of an empty {@code Iterable},
+     * an exception would have to be thrown using that approach. Instead, the
+     * {@code Option} can be queried for whether it contains a value or not,
+     * avoiding any exception handling.</p>
+     *
+     * <p>Since an {@code Option} instance is returned, the element retrieval is
+     * performed eagerly, i.e., an attempt is made to retrieve the third to last
+     * element from the underlying {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code String} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;String&gt; values = Literals.iterableWith("first", "middle", "last");
+     * </pre>
+     * </blockquote>
+     * The third to last element in the {@code Iterable} can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *   Option&lt;String&gt; valueOption = thirdLast(values);
+     *   String value = valueOption.get(); // => "middle"
+     * </pre>
+     * </blockquote>
+     * Similarly, we can handle the empty {@code Iterable} case gracefully:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;String&gt; values = Literals.iterable();
+     *   Option&lt;String&gt; valueOption = thirdLast(values);
+     *   String value = valueOption.getOrElse("some string"); // => "some string"
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which the third to last element is required.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Option} instance representing the third to last element in the
+     *         supplied {@code Iterable}.
+     */
+    public static <T> Option<T> thirdLast(Iterable<T> iterable) {
+            return first(slice(iterable, -3, -2));
+    }
+
+    /**
      * Returns an {@code Option} over the last element in the supplied {@code Iterable}
      * that satisfies the supplied {@code UnaryPredicate}. If the {@code Iterable} is
      * empty, {@code None} is returned, otherwise, a {@code Some} is returned over
@@ -2157,7 +2511,7 @@ public class Eagerly {
      * The last even element in the {@code Iterable} can be obtained as follows:
      * <blockquote>
      * <pre>
-     *   Option&lt;Integer&gt; valueOption = last(values, new Predicate&lt;Integer&gt;(){
+     *   Option&lt;Integer&gt; valueOption = lastMatching(values, new Predicate&lt;Integer&gt;(){
      *       &#64;Override public boolean evaluate(Integer integer) {
      *           return integer % 2 == 0;
      *       }
@@ -2174,7 +2528,7 @@ public class Eagerly {
      * <blockquote>
      * <pre>
      *   Iterable&lt;Integer&gt; values = Literals.iterable();
-     *   Option&lt;Integer&gt; valueOption = last(values, new Predicate&lt;Integer&gt;(){
+     *   Option&lt;Integer&gt; valueOption = lastMatching(values, new Predicate&lt;Integer&gt;(){
      *       &#64;Override public boolean evaluate(Integer integer) {
      *           return integer % 2 == 0;
      *       }
@@ -2187,7 +2541,7 @@ public class Eagerly {
      * <blockquote>
      * <pre>
      *   Iterable&lt;Integer&gt; values = Literals.iterable(9, 7, 5, 3, 1);
-     *   Option&lt;Integer&gt; valueOption = last(values, new Predicate&lt;Integer&gt;(){
+     *   Option&lt;Integer&gt; valueOption = lastMatching(values, new Predicate&lt;Integer&gt;(){
      *       &#64;Override public boolean evaluate(Integer integer) {
      *           return integer % 2 == 0;
      *       }
@@ -2204,10 +2558,172 @@ public class Eagerly {
      * @return An {@code Option} instance representing the last element in the supplied
      *         {@code Iterable} satisfying the supplied {@code UnaryPredicate}.
      */
-    public static <T> Option<T> last(
+    public static <T> Option<T> lastMatching(
             Iterable<T> iterable,
             UnaryPredicate<? super T> predicate) {
         return last(filter(iterable, predicate));
+    }
+
+    /**
+     * Returns an {@code Option} over the second to last element in the supplied
+     * {@code Iterable} that satisfies the supplied {@code UnaryPredicate}. If the
+     * {@code Iterable} is empty or contains only one matching element,
+     * {@code None} is returned, otherwise, a {@code Some} is returned over the
+     * second to last matching value found.
+     *
+     * <p>This method has a return type of {@code Option} rather than returning the
+     * second to last matching value directly since, in the case of an empty
+     * {@code Iterable}, an exception would have to be thrown using that approach.
+     * Instead, the {@code Option} can be queried for whether it contains a value or
+     * not, avoiding any exception handling.</p>
+     *
+     * <p>Since an {@code Option} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the second last matching element from
+     * the underlying {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * The second to last even element in the {@code Iterable} can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *   Option&lt;Integer&gt; valueOption = secondLastMatching(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Integer value = valueOption.get(); // => 2
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * <p>Thanks to the {@code Option} returned, we can handle the empty {@code Iterable}
+     * case gracefully:</p>
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable();
+     *   Option&lt;Integer&gt; valueOption = secondLastMatching(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Integer value = valueOption.getOrElse(10); // => 10
+     * </pre>
+     * </blockquote>
+     * Similarly, if no elements match the supplied {@code UnaryPredicate}, we are returned
+     * a {@code None}:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable(9, 7, 5, 3, 1);
+     *   Option&lt;Integer&gt; valueOption = secondLastMatching(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   valueOption.hasValue(); // => false
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable  The {@code Iterable} to search for elements matching the supplied
+     *                  {@code UnaryPredicate}.
+     * @param predicate A {@code UnaryPredicate} that must be satisfied by elements in the
+     *                  supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Option} instance representing the second to last element in the supplied
+     *         {@code Iterable} satisfying the supplied {@code UnaryPredicate}.
+     */
+    public static <T> Option<T> secondLastMatching(
+            Iterable<T> iterable,
+            UnaryPredicate<? super T> predicate) {
+        return secondLast(filter(iterable, predicate));
+    }
+
+    /**
+     * Returns an {@code Option} over the third to last element in the supplied
+     * {@code Iterable} that satisfies the supplied {@code UnaryPredicate}. If the
+     * {@code Iterable} is empty or contains two or less matching elements,
+     * {@code None} is returned, otherwise, a {@code Some} is returned over the
+     * third to last matching value found.
+     *
+     * <p>This method has a return type of {@code Option} rather than returning the
+     * third to last matching value directly since, in the case of an empty
+     * {@code Iterable}, an exception would have to be thrown using that approach.
+     * Instead, the {@code Option} can be queried for whether it contains a value or
+     * not, avoiding any exception handling.</p>
+     *
+     * <p>Since an {@code Option} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the third last matching element from
+     * the underlying {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * The third to last even element in the {@code Iterable} can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *   Option&lt;Integer&gt; valueOption = thirdLastMatching(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Integer value = valueOption.get(); // => 2
+     * </pre>
+     * </blockquote>
+     * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
+     * is equivalent to the {@code UnaryPredicate} interface and exists to simplify the
+     * eighty percent case with predicates.
+     *
+     * <p>Thanks to the {@code Option} returned, we can handle the empty {@code Iterable}
+     * case gracefully:</p>
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable();
+     *   Option&lt;Integer&gt; valueOption = thirdLastMatching(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   Integer value = valueOption.getOrElse(10); // => 10
+     * </pre>
+     * </blockquote>
+     * Similarly, if no elements match the supplied {@code UnaryPredicate}, we are returned
+     * a {@code None}:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable(9, 7, 5, 3, 1);
+     *   Option&lt;Integer&gt; valueOption = thirdLastMatching(values, new Predicate&lt;Integer&gt;(){
+     *       &#64;Override public boolean evaluate(Integer integer) {
+     *           return integer % 2 == 0;
+     *       }
+     *   });
+     *   valueOption.hasValue(); // => false
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable  The {@code Iterable} to search for elements matching the supplied
+     *                  {@code UnaryPredicate}.
+     * @param predicate A {@code UnaryPredicate} that must be satisfied by elements in the
+     *                  supplied {@code Iterable}.
+     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Option} instance representing the third to last element in the supplied
+     *         {@code Iterable} satisfying the supplied {@code UnaryPredicate}.
+     */
+    public static <T> Option<T> thirdLastMatching(
+            Iterable<T> iterable,
+            UnaryPredicate<? super T> predicate) {
+        return thirdLast(filter(iterable, predicate));
     }
 
     /**
@@ -2232,11 +2748,11 @@ public class Eagerly {
      *   Iterable&lt;Integer&gt; values = Literals.iterableWith(5, 4, 3, 2, 1);
      * </pre>
      * </blockquote>
-     * Using {@code last}, we can obtain the last three elements in the {@code Iterable}.
+     * Using {@code lastN}, we can obtain the last three elements in the {@code Iterable}.
      * The following two lines are equivalent in this case:
      * <blockquote>
      * <pre>
-     *   Collection&lt;Integer&gt; lastThreeValues = last(values, 3);
+     *   Collection&lt;Integer&gt; lastThreeValues = lastN(values, 3);
      *   Collection&lt;Integer&gt; equivalentValues = Literals.collectionWith(3, 2, 1);
      * </pre>
      * </blockquote>
@@ -2245,7 +2761,7 @@ public class Eagerly {
      * equivalent:
      * <blockquote>
      * <pre>
-     *   Collection&lt;Integer&gt; lastSixValues = last(values, 6);
+     *   Collection&lt;Integer&gt; lastSixValues = lastN(values, 6);
      *   Collection&lt;Integer&gt; equivalentValues = Literals.collectionWith(5, 4, 3, 2, 1);
      * </pre>
      * </blockquote>
@@ -2254,7 +2770,7 @@ public class Eagerly {
      * <blockquote>
      * <pre>
      *   Iterable&lt;Integer&gt; values = Literals.iterable();
-     *   Collection&lt;Integer&gt; lastThreeElements = last(values, 3);
+     *   Collection&lt;Integer&gt; lastThreeElements = lastN(values, 3);
      *   lastThreeElements.isEmpty(); // => true
      * </pre>
      * </blockquote>
@@ -2265,7 +2781,7 @@ public class Eagerly {
      * @return A {@code Collection} instance containing the required number of elements
      *         (or less) from the supplied {@code Iterable}.
      */
-    public static <T> Collection<T> last(
+    public static <T> Collection<T> lastN(
             Iterable<T> iterable,
             int numberOfElementsRequired) {
         if (numberOfElementsRequired < 0) {
@@ -2301,11 +2817,11 @@ public class Eagerly {
      *   Iterable&lt;Integer&gt; values = Literals.iterableWith(8, 7, 6, 5, 4, 3, 2, 1);
      * </pre>
      * </blockquote>
-     * Using {@code last}, we can obtain the last three even elements in the {@code Iterable}.
+     * Using {@code lastNMatching}, we can obtain the last three even elements in the {@code Iterable}.
      * The following two expressions are equivalent:
      * <blockquote>
      * <pre>
-     *   Collection&lt;Integer&gt; lastThreeEvens = last(values, 3, new Predicate&lt;Integer&gt;(){
+     *   Collection&lt;Integer&gt; lastThreeEvens = lastNMatching(values, 3, new Predicate&lt;Integer&gt;(){
      *       &#64;Override public boolean evaluate(Integer integer) {
      *           return integer % 2 == 0;
      *       }
@@ -2322,7 +2838,7 @@ public class Eagerly {
      * many matching elements as possible. The following two lines are equivalent:</p>
      * <blockquote>
      * <pre>
-     *   Collection&lt;Integer&gt; lastFiveEvens = last(values, 5, new Predicate&lt;Integer&gt;(){
+     *   Collection&lt;Integer&gt; lastFiveEvens = lastNMatching(values, 5, new Predicate&lt;Integer&gt;(){
      *       &#64;Override public boolean evaluate(Integer integer) {
      *           return integer % 2 == 0;
      *       }
@@ -2335,7 +2851,7 @@ public class Eagerly {
      * <blockquote>
      * <pre>
      *   Iterable&lt;Integer&gt; values = Literals.iterable(9, 7, 5, 3, 1);
-     *   Collection&lt;Integer&gt; lastThreeEvens = last(values, 3, new Predicate&lt;Integer&gt;(){
+     *   Collection&lt;Integer&gt; lastThreeEvens = lastNMatching(values, 3, new Predicate&lt;Integer&gt;(){
      *       &#64;Override public boolean evaluate(Integer integer) {
      *           return integer % 2 == 0;
      *       }
@@ -2353,11 +2869,11 @@ public class Eagerly {
      *         (or less) from the supplied {@code Iterable} matching the supplied
      *         {@code UnaryPredicate}.
      */
-    public static <T> Collection<T> last(
+    public static <T> Collection<T> lastNMatching(
             Iterable<T> iterable,
             int numberOfElementsRequired,
             UnaryPredicate<? super T> predicate) {
-        return last(filter(iterable, predicate), numberOfElementsRequired);
+        return lastN(filter(iterable, predicate), numberOfElementsRequired);
     }
 
     /**
@@ -3197,10 +3713,6 @@ public class Eagerly {
             Iterable<T> iterable,
             int numberOfTimesToRepeat) {
         return materialize(Lazily.repeat(iterable, numberOfTimesToRepeat));
-    }
-
-    static <T> Option<T> second(Iterable<T> iterable) {
-        return first(Lazily.rest(iterable));
     }
 
     /**
