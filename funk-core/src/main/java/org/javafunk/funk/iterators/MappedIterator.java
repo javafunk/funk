@@ -8,6 +8,8 @@
  */
 package org.javafunk.funk.iterators;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 
 import java.util.Iterator;
@@ -33,5 +35,12 @@ public class MappedIterator<S, T> implements Iterator<T> {
 
     public void remove() {
         iterator.remove();
+    }
+
+    @Override public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("iterator", iterator)
+                .append("mappingFunction", function)
+                .toString();
     }
 }

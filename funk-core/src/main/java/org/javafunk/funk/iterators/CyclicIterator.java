@@ -8,6 +8,9 @@
  */
 package org.javafunk.funk.iterators;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -35,10 +38,10 @@ public class CyclicIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        if (shouldContinueCyclingInfinitely()) { return true;  }
-        if (shouldNotCycleAtAll())             { return false; }
-        if (iteratorContainsMoreElements())    { return true;  }
-        if (!elementsAreCached())              { return false; }
+        if (shouldContinueCyclingInfinitely()) { return true; }
+        if (shouldNotCycleAtAll()) { return false; }
+        if (iteratorContainsMoreElements()) { return true; }
+        if (!elementsAreCached()) { return false; }
         return hasRepeatsRemaining();
     }
 
@@ -68,6 +71,15 @@ public class CyclicIterator<T> implements Iterator<T> {
     @Override
     public void remove() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("iterator", iterator)
+                .append("numberOfTimesToRepeat", numberOfTimesToRepeat == null ? "infinite" : numberOfTimesToRepeat)
+                .append("numberOfRepeatsCompleted", repeats)
+                .append("indexInCurrentRepeat", index)
+                .toString();
     }
 
     private boolean shouldCycleInfinitely() {

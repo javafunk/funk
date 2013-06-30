@@ -65,7 +65,9 @@ public class Eagerly {
         return reduce(restOfElements, firstElement, function);
     }
 
-    public static <T> T reduce(Iterable<? extends T> iterable, Reducer<? super T, T> reducer) {
+    public static <T> T reduce(
+            Iterable<? extends T> iterable,
+            Reducer<? super T, T> reducer) {
         return reduce(iterable, reducerBinaryFunction(reducer));
     }
 

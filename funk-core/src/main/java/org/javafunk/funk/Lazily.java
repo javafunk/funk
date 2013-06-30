@@ -2819,13 +2819,12 @@ public class Lazily {
             final UnaryFunction<? super S, T> function,
             final Iterable<S> iterable,
             final Iterable<? extends UnaryPredicate<? super S>> predicates) {
-        final List<UnaryPredicate<? super S>> predicateList = listFrom(predicates);
         checkNotNull(function);
-        checkContainsNoNulls(predicateList);
+        checkContainsNoNulls(predicates);
 
         return new Iterable<T>() {
             public Iterator<T> iterator() {
-                return new ComprehensionIterator<S, T>(function, iterable.iterator(), predicateList);
+                return new ComprehensionIterator<S, T>(function, iterable.iterator(), predicates);
             }
         };
     }

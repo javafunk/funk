@@ -16,13 +16,15 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.javafunk.funk.Iterators.emptyIterator;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.listBuilderWith;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.*;
+import static org.javafunk.funk.Literals.iteratorWith;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ChainedIteratorTest {
     @Test
@@ -174,5 +176,23 @@ public class ChainedIteratorTest {
         assertThat(chainedIterator.next(), is(1));
         assertThat(chainedIterator.next(), is(nullValue()));
         assertThat(chainedIterator.next(), is(2));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void shouldIncludeTheCurrentIteratorInTheToString() throws Exception {
+        // Given
+        Iterator<Integer> firstIterator = (Iterator<Integer>) mock(Iterator.class);
+        Iterator<Integer> secondIterator = iteratorWith(2);
+
+        when(firstIterator.toString()).thenReturn("first iterator toString");
+
+        Iterator<Integer> chainedIterator = new ChainedIterator<Integer>(firstIterator, secondIterator);
+
+        // When
+        String toString = chainedIterator.toString();
+
+        // Then
+        assertThat(toString, containsString("first iterator toString"));
     }
 }

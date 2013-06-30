@@ -1,5 +1,7 @@
 package org.javafunk.funk.iterators;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.javafunk.funk.functors.procedures.UnaryProcedure;
 
 import java.util.Iterator;
@@ -30,5 +32,12 @@ public class EachIterator<T> implements Iterator<T> {
     @Override
     public void remove() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("iterator", iterator)
+                .append("procedure", procedure)
+                .toString();
     }
 }
