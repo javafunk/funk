@@ -1908,6 +1908,54 @@ public class Eagerly {
     }
 
     /**
+     * Returns an {@code Option} over the third element in the supplied {@code Iterable}.
+     * If the {@code Iterable} is empty, {@code None} is returned, otherwise, a
+     * {@code Some} is returned over the third value found.
+     *
+     * <p>This method has a return type of {@code Option} rather than returning the
+     * third value directly since, in the case of an empty {@code Iterable}, an
+     * exception would have to be thrown using that approach. Instead, the
+     * {@code Option} can be queried for whether it contains a value or not,
+     * avoiding any exception handling.</p>
+     *
+     * <p>Since an {@code Option} instance is returned, the element retrieval is performed
+     * eagerly, i.e., an attempt is made to retrieve the third element from the underlying
+     * {@code Iterable} immediately.</p>
+     *
+     * <h4>Example Usage:</h4>
+     *
+     * Given an {@code Iterable} of {@code Integer} instances:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterableWith(5, 4, 3, 2, 1);
+     * </pre>
+     * </blockquote>
+     * The third element in the {@code Iterable} can be obtained as follows:
+     * <blockquote>
+     * <pre>
+     *   Option&lt;Integer&gt; valueOption = third(values);
+     *   Integer value = valueOption.get(); // => 3
+     * </pre>
+     * </blockquote>
+     * Similarly, we can handle the empty {@code Iterable} case gracefully:
+     * <blockquote>
+     * <pre>
+     *   Iterable&lt;Integer&gt; values = Literals.iterable();
+     *   Option&lt;Integer&gt; valueOption = third(values);
+     *   Integer value = valueOption.getOrElse(10); // => 10
+     * </pre>
+     * </blockquote>
+     *
+     * @param iterable The {@code Iterable} from which the third element is required.
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Option} instance representing the third element in the supplied
+     *         {@code Iterable}.
+     */
+    public static <T> Option<T> third(Iterable<T> iterable) {
+        return first(Lazily.rest(Lazily.rest(iterable)));
+    }
+
+    /**
      * Returns an {@code Option} over the first element in the supplied {@code Iterable}
      * that satisfies the supplied {@code UnaryPredicate}. If the {@code Iterable} is
      * empty, {@code None} is returned, otherwise, a {@code Some} is returned over

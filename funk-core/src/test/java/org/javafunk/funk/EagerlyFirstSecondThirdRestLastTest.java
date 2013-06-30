@@ -24,7 +24,7 @@ import static org.javafunk.funk.Literals.listWith;
 import static org.javafunk.funk.monads.Option.some;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
-public class EagerlyFirstSecondRestLastTest {
+public class EagerlyFirstSecondThirdRestLastTest {
     @Test
     public void shouldReturnAnOptionOfTheFirstElementFromTheSuppliedIterable() throws Exception {
         // Given
@@ -80,6 +80,54 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Option<Integer> output = Eagerly.second(input);
+
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test
+    public void shouldReturnAnOptionOfTheThirdElementFromTheSuppliedIterable() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(10, 9, 8, 7);
+
+        // When
+        Option<Integer> output = Eagerly.third(input);
+
+        // Then
+        assertThat(output, is(some(8)));
+    }
+
+    @Test
+    public void shouldReturnNoneForThirdIfTheSuppliedIterableIsEmpty() throws Exception {
+        // Given
+        Iterable<Integer> input = new ArrayList<Integer>();
+
+        // When
+        Option<Integer> output = Eagerly.third(input);
+
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test
+    public void shouldReturnNoneForThirdIfTheSuppliedIterableContainsOnlyOneElement() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1);
+
+        // When
+        Option<Integer> output = Eagerly.third(input);
+
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test
+    public void shouldReturnNoneForThirdIfTheSuppliedIterableContainsOnlyTwoElements() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1, 2);
+
+        // When
+        Option<Integer> output = Eagerly.third(input);
 
         // Then
         assertThat(output, is(Option.<Integer>none()));
