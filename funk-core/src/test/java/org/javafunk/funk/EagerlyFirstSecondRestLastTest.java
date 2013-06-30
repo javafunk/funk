@@ -543,6 +543,98 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
+    public void shouldReturnAnOptionOfTheSecondLastElementInTheSuppliedIterableMatchingTheSuppliedPredicate() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
+
+        // When
+        Option<Integer> output = Eagerly.secondLastMatching(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer item) {
+                return isEven(item);
+            }
+
+            private boolean isEven(Integer item) {
+                return item % 2 == 0;
+            }
+        });
+
+        // Then
+        assertThat(output, is(some(4)));
+    }
+
+    @Test
+    public void shouldReturnNoneForSecondLastMatchingIfTheSuppliedIterableIsEmpty() throws Exception {
+        // Given
+        Iterable<Integer> input = new ArrayList<Integer>();
+
+        // When
+        Option<Integer> output = Eagerly.secondLastMatching(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer item) {
+                return isEven(item);
+            }
+
+            private boolean isEven(Integer item) {
+                return item % 2 == 0;
+            }
+        });
+
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test
+    public void shouldReturnNoneForSecondLastMatchingIfNoElementsInTheSuppliedIterableMatch() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(1, 3, 5, 7);
+
+        // When
+        Option<Integer> output = Eagerly.secondLastMatching(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer item) {
+                return isEven(item);
+            }
+
+            private boolean isEven(Integer item) {
+                return item % 2 == 0;
+            }
+        });
+
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test
+    public void shouldReturnNoneForSecondLastMatchingIfOnlyOneElementInTheSuppliedIterableMatches() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(1, 3, 5, 6, 7);
+
+        // When
+        Option<Integer> output = Eagerly.secondLastMatching(input, new Predicate<Integer>() {
+            public boolean evaluate(Integer item) {
+                return isEven(item);
+            }
+
+            private boolean isEven(Integer item) {
+                return item % 2 == 0;
+            }
+        });
+
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfThePredicateSuppliedToSecondLastMatchingIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5);
+        Predicate<Integer> predicate = null;
+
+        // When
+        Eagerly.secondLastMatching(input, predicate);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test
     public void shouldReturnTheLastNElementsFromTheSuppliedIterable() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
