@@ -74,6 +74,18 @@ public class EagerlyFirstSecondRestLastTest {
     }
 
     @Test
+    public void shouldReturnNoneForSecondIfTheSuppliedIterableContainsOnlyOneElement() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1);
+
+        // When
+        Option<Integer> output = Eagerly.second(input);
+
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test
     public void shouldReturnAnOptionOfTheFirstElementInTheSuppliedIterableMatchingTheSuppliedPredicate() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
@@ -417,6 +429,42 @@ public class EagerlyFirstSecondRestLastTest {
 
         // When
         Option<Integer> output = Eagerly.last(input);
+
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test
+    public void shouldReturnAnOptionOfTheSecondLastElementFromTheSuppliedIterable() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+
+        // When
+        Option<Integer> output = Eagerly.secondLast(input);
+
+        // Then
+        assertThat(output, is(some(2)));
+    }
+
+    @Test
+    public void shouldReturnNoneForSecondLastIfTheSuppliedIterableIsEmpty() throws Exception {
+        // Given
+        Iterable<Integer> input = new ArrayList<Integer>();
+
+        // When
+        Option<Integer> output = Eagerly.secondLast(input);
+
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test
+    public void shouldReturnNoneForSecondLastIfTheSuppliedIterableContainsOnlyOneElement() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1);
+
+        // When
+        Option<Integer> output = Eagerly.secondLast(input);
 
         // Then
         assertThat(output, is(Option.<Integer>none()));
