@@ -611,6 +611,42 @@ public class EagerlyFirstSecondThirdRestLastTest {
     }
 
     @Test
+    public void shouldReturnAnOptionOfTheThirdLastElementFromTheSuppliedIterable() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+
+        // When
+        Option<Integer> output = Eagerly.thirdLast(input);
+
+        // Then
+        assertThat(output, is(some(3)));
+    }
+
+    @Test
+    public void shouldReturnNoneForThirdLastIfTheSuppliedIterableIsEmpty() throws Exception {
+        // Given
+        Iterable<Integer> input = new ArrayList<Integer>();
+
+        // When
+        Option<Integer> output = Eagerly.thirdLast(input);
+
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test
+    public void shouldReturnNoneForThirdLastIfTheSuppliedIterableContainsOnlyTwoElements() throws Exception {
+        // Given
+        Iterable<Integer> input = listWith(1);
+
+        // When
+        Option<Integer> output = Eagerly.thirdLast(input);
+
+        // Then
+        assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test
     public void shouldReturnAnOptionOfTheLastElementInTheSuppliedIterableMatchingTheSuppliedPredicate() throws Exception {
         // Given
         Iterable<Integer> input = iterableWith(9, 8, 7, 6, 5, 4, 3, 2, 1);
