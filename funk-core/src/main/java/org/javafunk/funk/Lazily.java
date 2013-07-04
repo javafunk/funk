@@ -1106,6 +1106,7 @@ public class Lazily {
      */
     public static <S, T> Iterable<T> map(final Iterable<S> iterable, final UnaryFunction<? super S, T> function) {
         checkNotNull(function);
+        checkNotNull(iterable);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new MappedIterator<S, T>(iterable.iterator(), function);
