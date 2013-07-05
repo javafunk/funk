@@ -833,6 +833,7 @@ public class Lazily {
      */
     public static <T> Iterable<T> each(final Iterable<T> iterable, final UnaryProcedure<? super T> procedure) {
         checkNotNull(procedure);
+        checkNotNull(iterable);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new EachIterator<T>(iterable.iterator(), procedure);
