@@ -18,40 +18,51 @@ import static org.junit.Assert.assertThat;
 public class LazilyRestTest {
     @Test
     public void shouldReturnTheRestOfTheIterable(){
-        //given
+        // Given
         Iterable<String> iterable = iterableWith("a", "b", "c", "d");
         Iterable<String> expectedRest = iterableWith("b", "c", "d");
 
-        //when
+        // When
         Iterable<String> rest = Lazily.rest(iterable);
         
-        //then
+        // Then
         assertThat(materialize(rest), hasOnlyItemsInOrder(expectedRest));
     }
 
     @Test
     public void shouldReturnEmptyIterableForAnIterableWithOneElement(){
-        //given
+        // Given
         Iterable<String> iterable = iterableWith("a");
         Iterable<String> expectedRest = Iterables.empty();
 
-        //when
+        // When
         Iterable<String> rest = Lazily.rest(iterable);
 
-        //then
+        // Then
         assertThat(materialize(rest), hasOnlyItemsInOrder(expectedRest));
     }
 
     @Test
     public void shouldReturnEmptyIterableForAnEmptyIterable(){
-        //given
+        // Given
         Iterable<String> iterable = Iterables.empty();
         Iterable<String> expectedRest = Iterables.empty();
 
-        //when
+        // When
         Iterable<String> rest = Lazily.rest(iterable);
 
-        //then
+        // Then
         assertThat(materialize(rest), hasOnlyItemsInOrder(expectedRest));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfAnEmptyIterableIsPassedToRest() throws Exception {
+        // Given
+        Iterable<String> iterable = null;
+
+        // When
+        Lazily.rest(iterable);
+
+        // Then a NullPointerException is thrown
     }
 }

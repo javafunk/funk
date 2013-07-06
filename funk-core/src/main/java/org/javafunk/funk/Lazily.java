@@ -1679,6 +1679,7 @@ public class Lazily {
      *         supplied start and stop indices and the supplied step size.
      */
     public static <T> Iterable<T> slice(final Iterable<T> iterable, final Integer start, final Integer stop, final Integer step) {
+        checkNotNull(iterable);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new SubSequenceIterator<T>(iterable.iterator(), start, stop, step);
