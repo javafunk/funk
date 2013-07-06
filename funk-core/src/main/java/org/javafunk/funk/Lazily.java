@@ -130,9 +130,8 @@ public class Lazily {
      *                                  is not positive.
      */
     public static <T> Iterable<Iterable<T>> batch(final Iterable<T> iterable, final int batchSize) {
-        if (batchSize <= 0) {
-            throw new IllegalArgumentException("Batch size must be greater than zero.");
-        }
+        checkNotNull(iterable);
+        if (batchSize <= 0) throw new IllegalArgumentException("Batch size must be greater than zero.");
         return new Iterable<Iterable<T>>() {
             public Iterator<Iterable<T>> iterator() {
                 return new BatchedIterator<T>(iterable.iterator(), batchSize);
