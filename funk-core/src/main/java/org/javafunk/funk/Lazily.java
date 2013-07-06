@@ -1197,6 +1197,8 @@ public class Lazily {
             Iterable<? extends T> second,
             final BinaryPredicate<? super T, ? super T> predicate) {
         checkNotNull(predicate);
+        checkNotNull(first);
+        checkNotNull(second);
         return map(zip(first, second), new Mapper<Pair<? extends T, ? extends T>, Boolean>() {
             public Boolean map(Pair<? extends T, ? extends T> input) {
                 return predicate.evaluate(input.getFirst(), input.getSecond());
