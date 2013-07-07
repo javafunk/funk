@@ -273,9 +273,8 @@ public class Lazily {
      *                                  is negative.
      */
     public static <T> Iterable<T> take(final Iterable<T> iterable, final int numberToTake) {
-        if (numberToTake < 0) {
-            throw new IllegalArgumentException("Cannot take a negative number of elements.");
-        }
+        checkNotNull(iterable);
+        if (numberToTake < 0) throw new IllegalArgumentException("Cannot take a negative number of elements.");
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new SubSequenceIterator<T>(iterable.iterator(), null, numberToTake);
@@ -371,6 +370,8 @@ public class Lazily {
      *         {@code UnaryPredicate} is no longer satisfied.
      */
     public static <T> Iterable<T> takeWhile(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
+        checkNotNull(iterable);
+        checkNotNull(predicate);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new PredicatedIterator<T>(iterable.iterator(), predicate);
@@ -464,6 +465,8 @@ public class Lazily {
      *         {@code UnaryPredicate} is satisfied.
      */
     public static <T> Iterable<T> takeUntil(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
+        checkNotNull(iterable);
+        checkNotNull(predicate);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new PredicatedIterator<T>(iterable.iterator(), new NotPredicate<T>(predicate));
@@ -533,9 +536,8 @@ public class Lazily {
      *                                  is negative.
      */
     public static <T> Iterable<T> drop(final Iterable<T> iterable, final int numberToTake) {
-        if (numberToTake < 0) {
-            throw new IllegalArgumentException("Cannot drop a negative number of elements.");
-        }
+        checkNotNull(iterable);
+        if (numberToTake < 0) throw new IllegalArgumentException("Cannot drop a negative number of elements.");
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new SubSequenceIterator<T>(iterable.iterator(), numberToTake, null);
@@ -630,6 +632,8 @@ public class Lazily {
      *         all remaining elements .
      */
     public static <T> Iterable<T> dropWhile(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
+        checkNotNull(iterable);
+        checkNotNull(predicate);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 Iterator<T> iterator = iterable.iterator();
@@ -731,6 +735,8 @@ public class Lazily {
      *         all remaining elements .
      */
     public static <T> Iterable<T> dropUntil(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
+        checkNotNull(iterable);
+        checkNotNull(predicate);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 Iterator<? extends T> iterator = iterable.iterator();
