@@ -31,7 +31,7 @@ import static org.javafunk.funk.functors.adapters.ActionUnaryProcedureAdapter.ac
 import static org.javafunk.funk.functors.adapters.EquivalenceBinaryPredicateAdapter.equivalenceBinaryPredicate;
 import static org.javafunk.funk.functors.adapters.IndexerUnaryFunctionAdapter.indexerUnaryFunction;
 import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
-import static org.javafunk.funk.iterators.ComprehensionIterator.checkContainsNoNulls;
+import static org.javafunk.funk.Checks.returnOrThrowIfContainsNull;
 
 /**
  * A suite of lazy functions, often higher order, across {@code Iterable} instances.
@@ -2273,6 +2273,8 @@ public class Lazily {
      *         cartesian product of the supplied {@code Iterable} of {@code Iterable}s.
      */
     public static Iterable<? extends Iterable<?>> cartesianProduct(final Iterable<? extends Iterable<?>> iterables) {
+        checkNotNull(iterables);
+        returnOrThrowIfContainsNull(iterables);
         return cartesianProduct(listFrom(iterables));
     }
 
@@ -2836,7 +2838,7 @@ public class Lazily {
             final Iterable<? extends UnaryPredicate<? super S>> predicates) {
         checkNotNull(function);
         checkNotNull(iterable);
-        checkContainsNoNulls(predicates);
+        returnOrThrowIfContainsNull(predicates);
 
         return new Iterable<T>() {
             public Iterator<T> iterator() {

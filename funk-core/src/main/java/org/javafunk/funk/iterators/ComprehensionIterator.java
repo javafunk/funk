@@ -3,7 +3,6 @@ package org.javafunk.funk.iterators;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.javafunk.funk.Eagerly;
-import org.javafunk.funk.Predicates;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 
@@ -11,6 +10,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.javafunk.funk.Checks.returnOrThrowIfContainsNull;
 
 public class ComprehensionIterator<S, T> extends CachingIterator<T> {
     private UnaryFunction<? super S, T> mapper;
@@ -23,7 +23,7 @@ public class ComprehensionIterator<S, T> extends CachingIterator<T> {
             Iterable<? extends UnaryPredicate<? super S>> predicates) {
         this.mapper = checkNotNull(mapper);
         this.iterator = iterator;
-        this.predicates = checkContainsNoNulls(predicates);
+        this.predicates = returnOrThrowIfContainsNull(predicates);
     }
 
     @Override
@@ -57,11 +57,5 @@ public class ComprehensionIterator<S, T> extends CachingIterator<T> {
                 .append("iterator", iterator)
                 .append("predicates", predicates)
                 .toString();
-    }
-
-    public static <S> Iterable<? extends UnaryPredicate<? super S>> checkContainsNoNulls(
-            Iterable<? extends UnaryPredicate<? super S>> predicates) {
-        if (Eagerly.any(predicates, Predicates.equalTo(null))) throw new NullPointerException();
-        return predicates;
     }
 }
