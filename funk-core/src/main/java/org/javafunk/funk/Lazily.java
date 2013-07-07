@@ -1364,6 +1364,7 @@ public class Lazily {
      */
     public static <T> Iterable<T> filter(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
         checkNotNull(predicate);
+        checkNotNull(iterable);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new FilteredIterator<T>(iterable.iterator(), predicate);
@@ -1494,6 +1495,7 @@ public class Lazily {
      */
     public static <T> Iterable<T> reject(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
         checkNotNull(predicate);
+        checkNotNull(iterable);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new FilteredIterator<T>(iterable.iterator(), new NotPredicate<T>(predicate));
@@ -1571,6 +1573,7 @@ public class Lazily {
      */
     public static <T> Pair<Iterable<T>, Iterable<T>> partition(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
         checkNotNull(predicate);
+        checkNotNull(iterable);
         return tuple(filter(iterable, predicate), reject(iterable, predicate));
     }
 
