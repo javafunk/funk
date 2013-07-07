@@ -1,5 +1,6 @@
 package org.javafunk.funk.predicates;
 
+import com.google.common.base.Objects;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.javafunk.funk.functors.Predicate;
@@ -40,7 +41,7 @@ public class EqualsPredicate<T> implements Predicate<T> {
      *         that object's {@code equals} method.
      */
     @Override public boolean evaluate(T other) {
-        return controlObject.equals(other);
+        return Objects.equal(controlObject, other);
     }
 
     @Override public boolean equals(Object other) {

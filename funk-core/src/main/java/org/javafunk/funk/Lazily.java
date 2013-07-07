@@ -926,6 +926,7 @@ public class Lazily {
      *         {@code Iterable} using {@code Pair} instances.
      */
     public static <T> Iterable<Pair<Integer, T>> enumerate(final Iterable<T> iterable) {
+        checkNotNull(iterable);
         return zip(integers(increasing()), iterable);
     }
 
@@ -2796,6 +2797,8 @@ public class Lazily {
      *         zipped contents of the supplied {@code Iterable} of {@code Iterable}s.
      */
     public static Iterable<? extends Iterable<?>> zip(final Iterable<? extends Iterable<?>> iterables) {
+        checkNotNull(iterables);
+        if (Eagerly.any(iterables, Predicates.equalTo(null))) throw new NullPointerException();
         return new Iterable<Iterable<?>>() {
             public Iterator<Iterable<?>> iterator() {
                 final Iterable<? extends Iterator<?>> iterators = Eagerly.map(iterables, toIterators());
