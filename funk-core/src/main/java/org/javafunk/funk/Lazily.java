@@ -2835,6 +2835,7 @@ public class Lazily {
             final Iterable<S> iterable,
             final Iterable<? extends UnaryPredicate<? super S>> predicates) {
         checkNotNull(function);
+        checkNotNull(iterable);
         checkContainsNoNulls(predicates);
 
         return new Iterable<T>() {

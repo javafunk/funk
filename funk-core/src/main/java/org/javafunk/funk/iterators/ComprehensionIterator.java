@@ -3,7 +3,7 @@ package org.javafunk.funk.iterators;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.javafunk.funk.Eagerly;
-import org.javafunk.funk.functors.Predicate;
+import org.javafunk.funk.Predicates;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 
@@ -61,13 +61,7 @@ public class ComprehensionIterator<S, T> extends CachingIterator<T> {
 
     public static <S> Iterable<? extends UnaryPredicate<? super S>> checkContainsNoNulls(
             Iterable<? extends UnaryPredicate<? super S>> predicates) {
-        Boolean anyNulls = Eagerly.any(predicates, new Predicate<UnaryPredicate<? super S>>() {
-            @Override
-            public boolean evaluate(UnaryPredicate<? super S> predicate) {
-                return predicate == null;
-            }
-        });
-        if (anyNulls) {throw new NullPointerException();}
+        if (Eagerly.any(predicates, Predicates.equalTo(null))) throw new NullPointerException();
         return predicates;
     }
 }
