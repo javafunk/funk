@@ -166,6 +166,7 @@ public class Lazily {
      *         cycles through the supplied {@code Iterable}.
      */
     public static <T> Iterable<T> cycle(final Iterable<T> iterable) {
+        checkNotNull(iterable);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new CyclicIterator<T>(iterable.iterator());
@@ -206,6 +207,7 @@ public class Lazily {
      * @throws IllegalArgumentException if the specified number of times to repeat is negative.
      */
     public static <T> Iterable<T> repeat(final Iterable<T> iterable, final int numberOfTimesToRepeat) {
+        checkNotNull(iterable);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new CyclicIterator<T>(iterable.iterator(), numberOfTimesToRepeat);
