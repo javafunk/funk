@@ -84,4 +84,28 @@ public class LazilyMapTest {
 
         // Then a NullPointerException is thrown.
     }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullIterableSuppliedToMapperMap() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        Mapper<Integer, Integer> mapper = Mappers.identity();
+
+        // When
+        Lazily.map(input, mapper);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullIterableSuppliedToUnaryFunctionMap() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        UnaryFunction<Integer, Integer> mapper = UnaryFunctions.identity();
+
+        // When
+        Lazily.map(input, mapper);
+
+        // Then a NullPointerException is thrown.
+    }
 }

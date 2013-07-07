@@ -50,6 +50,18 @@ public class LazilyBatchTest {
         // Then an IllegalArgumentException is thrown.
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfIterablePassedToBatchIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        Integer batchSize = 4;
+
+        // When
+        Lazily.batch(input, batchSize);
+
+        // Then a NullPointerException is thrown.
+    }
+
     @Test
     public void shouldAllowIteratorToBeCalledMultipleTimesReturningDifferentIterators() throws Exception {
         // Given

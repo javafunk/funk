@@ -53,6 +53,17 @@ public class LazilyCycleRepeatTest {
         assertThat(iterator1.next(), is("Red"));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullIterablePassedToCycle() throws Exception {
+        // Given
+        Iterable<String> input = null;
+
+        // When
+        Lazily.cycle(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldRepeatTheSuppliedIterableTheSpecifiedNumberOfTimes() throws Exception {
         // Given
@@ -91,5 +102,16 @@ public class LazilyCycleRepeatTest {
         assertThat(iterator1.next(), is("Black"));
         assertThat(iterator2.next(), is("White"));
         assertThat(iterator2.next(), is("Black"));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullIterablePassedToRepeat() throws Exception {
+        // Given
+        Iterable<String> input = null;
+
+        // When
+        Lazily.repeat(input, 3);
+
+        // Then a NullPointerException is thrown
     }
 }

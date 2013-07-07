@@ -65,4 +65,15 @@ public class LazilySliceTest {
         assertThat(iterator2.next(), is(5));
         assertThat(iterator2.next(), is(7));
     }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullIterablePassedToSlice() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        Lazily.slice(input, 2, 7, 1);
+
+        // Then a NullPointerException is thrown
+    }
 }

@@ -72,6 +72,17 @@ public class LazilyZipEnumerateTest {
         assertThat(iterator1.next(), is(tuple(2, "C")));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfIterablePassedToEnumerateIsNull() throws Exception {
+        // Given
+        Iterable<String> input = null;
+
+        // When
+        Lazily.enumerate(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldZipTwoIterables() {
         // Given
@@ -794,5 +805,30 @@ public class LazilyZipEnumerateTest {
         assertThat(firstIterator.next(), is((Object) iterableWith("A", 1, true)));
         assertThat(secondIterator.next(), is((Object) iterableWith("C", 3, true)));
         assertThat(firstIterator.next(), is((Object) iterableWith("B", 2, false)));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfTheIterablePassedToVariableLengthZipIsNull() throws Exception {
+        // Given
+        Iterable<? extends Iterable<?>> input = null;
+
+        // When
+        Lazily.zip(input);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfAnyOfTheIterablesToZipIsNull() throws Exception {
+        // Given
+        Iterable<String> iterable1 = iterableWith("A", "B", "C");
+        Iterable<Integer> iterable2 = null;
+        Iterable<Boolean> iterable3 = iterableWith(true, false, true);
+        Iterable<? extends Iterable<?>> input = iterableWith(iterable1, iterable2, iterable3);
+
+        // When
+        Lazily.zip(input);
+
+        // Then a NullPointerException is thrown
     }
 }

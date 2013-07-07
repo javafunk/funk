@@ -40,7 +40,8 @@ public class LazilyTakeDropTest {
     }
 
     @Test
-    public void shouldReturnAnIterableContainingAllAvailableElementsWhenNumberRequiredIsGreaterThanNumberAvailable() throws Exception {
+    public void shouldReturnAnIterableContainingAllAvailableElementsWhenNumberRequiredIsGreaterThanNumberAvailable()
+            throws Exception {
         // Given
         List<Integer> fibonaccis = listWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
         Collection<Integer> expectedOutput = collectionWith(1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
@@ -77,6 +78,18 @@ public class LazilyTakeDropTest {
         // Then an IllegalArgumentException is thrown.
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfTheIterablePassedToTakeIsNull() throws Exception {
+        // Given
+        List<Integer> input = null;
+        Integer numberToTake = 3;
+
+        // When
+        Lazily.take(input, numberToTake);
+
+        // Then a NullPointerException is thrown.
+    }
+
     @Test
     public void shouldReturnDistinctIteratorsEachTimeIteratorIsCalledOnTheReturnedTakeIterable() throws Exception {
         // Given
@@ -111,7 +124,8 @@ public class LazilyTakeDropTest {
     }
 
     @Test
-    public void shouldReturnAnIterableWithAllElementsDroppedIfTheNumberToDropIsGreaterThanOrEqualToTheNumberAvailable() throws Exception {
+    public void shouldReturnAnIterableWithAllElementsDroppedIfTheNumberToDropIsGreaterThanOrEqualToTheNumberAvailable()
+            throws Exception {
         // Given
         List<Integer> fiveFibonaccis = listWith(1, 1, 2, 3, 5);
         Collection<Integer> expectedOutput = collection();
@@ -147,6 +161,18 @@ public class LazilyTakeDropTest {
         Lazily.drop(fibonaccis, numberToDrop);
 
         // Then an IllegalArgumentException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfTheIterablePassedToDropIsNull() throws Exception {
+        // Given
+        List<Integer> fibonaccis = null;
+        Integer numberToDrop = 5;
+
+        // When
+        Lazily.drop(fibonaccis, numberToDrop);
+
+        // Then a NullPointerException is thrown.
     }
 
     @Test
@@ -209,6 +235,34 @@ public class LazilyTakeDropTest {
         assertThat(iterator1.next(), is(4));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullPredicatePassedToTakeWhile() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(8, 7, 6, 5, 4, 3, 2, 1);
+        Predicate<Integer> predicate = null;
+
+        // When
+        Lazily.takeWhile(input, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullIterablePassedToTakeWhile() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        Predicate<Integer> predicate = new Predicate<Integer>() {
+            public boolean evaluate(Integer input) {
+                return input < 5;
+            }
+        };
+
+        // When
+        Lazily.takeWhile(input, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldTakeElementsFromTheIterableUntilTheSuppliedPredicateIsTrue() {
         // Given
@@ -247,6 +301,34 @@ public class LazilyTakeDropTest {
         assertThat(iterator1.next(), is(6));
         assertThat(iterator2.next(), is(7));
         assertThat(iterator1.next(), is(5));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullPredicatePassedToTakeUntil() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(8, 7, 6, 5, 4, 3, 2, 1);
+        Predicate<Integer> predicate = null;
+
+        // When
+        Lazily.takeUntil(input, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullIterablePassedToTakeUntil() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        Predicate<Integer> predicate = new Predicate<Integer>() {
+            public boolean evaluate(Integer input) {
+                return input < 5;
+            }
+        };
+
+        // When
+        Lazily.takeUntil(input, predicate);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -289,6 +371,34 @@ public class LazilyTakeDropTest {
         assertThat(iterator1.next(), is(1));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullPredicatePassedToDropWhile() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(8, 7, 6, 5, 4, 3, 2, 1);
+        Predicate<Integer> predicate = null;
+
+        // When
+        Lazily.dropWhile(input, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullIterablePassedToDropWhile() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        Predicate<Integer> predicate = new Predicate<Integer>() {
+            public boolean evaluate(Integer input) {
+                return input < 5;
+            }
+        };
+
+        // When
+        Lazily.dropWhile(input, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldDropElementsFromTheIterableUntilTheSuppliedPredicateIsTrue() throws Exception {
         // Given
@@ -327,5 +437,33 @@ public class LazilyTakeDropTest {
         assertThat(iterator1.next(), is(2));
         assertThat(iterator2.next(), is(3));
         assertThat(iterator1.next(), is(1));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullPredicatePassedToDropUntil() throws Exception {
+        // Given
+        Iterable<Integer> input = iterableWith(8, 7, 6, 5, 4, 3, 2, 1);
+        Predicate<Integer> predicate = null;
+
+        // When
+        Lazily.dropUntil(input, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullIterablePassedToDropUntil() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        Predicate<Integer> predicate = new Predicate<Integer>() {
+            public boolean evaluate(Integer input) {
+                return input < 5;
+            }
+        };
+
+        // When
+        Lazily.dropUntil(input, predicate);
+
+        // Then a NullPointerException is thrown
     }
 }
