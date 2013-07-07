@@ -5,29 +5,32 @@ import org.javafunk.funk.functors.Predicate;
 import org.junit.Test;
 
 import java.util.Collection;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class LazilyComprehensionTest {
     @Test
-    public void shouldAcceptMapperSourceAndPredicate(){
+    public void shouldAcceptMapperSourceAndPredicate() {
+        // Given
         Mapper<Integer, Integer> mapper = Mappers.identity();
-        List<Integer> source = listWith(1,2,3);
+        Iterable<Integer> source = iterableWith(1, 2, 3);
         Predicate<Integer> predicate = Predicates.alwaysTrue();
+
+        // When
         Collection<Integer> result = materialize(Lazily.comprehension(mapper, source, predicate));
 
-        assertThat(result, hasOnlyItemsInOrder(1,2,3));
+        // Then
+        assertThat(result, hasOnlyItemsInOrder(1, 2, 3));
     }
 
     @Test
-    public void shouldApplyPredicateToSource(){
+    public void shouldApplyPredicateToSource() {
+        // Given
         Mapper<Integer, Integer> mapper = Mappers.identity();
-        List<Integer> source = listWith(1,2,3);
-
+        Iterable<Integer> source = iterableWith(1, 2, 3);
         Predicate<Integer> predicate = new Predicate<Integer>() {
             @Override
             public boolean evaluate(Integer firstInput) {
@@ -35,21 +38,23 @@ public class LazilyComprehensionTest {
             }
         };
 
+        // When
         Collection<Integer> result = materialize(Lazily.comprehension(mapper, source, predicate));
 
-        assertThat(result, hasOnlyItemsInOrder(1,3));
+        // Then
+        assertThat(result, hasOnlyItemsInOrder(1, 3));
     }
+
     @Test
-    public void shouldApplyMapperToPredicatedSource(){
+    public void shouldApplyMapperToPredicatedSource() {
+        // Given
         Mapper<Integer, Integer> mapper = new Mapper<Integer, Integer>() {
             @Override
             public Integer map(Integer input) {
                 return input * 2;
             }
         };
-
-        List<Integer> source = listWith(1,2,3);
-
+        Iterable<Integer> source = iterableWith(1, 2, 3);
         Predicate<Integer> predicate = new Predicate<Integer>() {
             @Override
             public boolean evaluate(Integer firstInput) {
@@ -57,24 +62,24 @@ public class LazilyComprehensionTest {
             }
         };
 
+        // When
         Collection<Integer> result = materialize(Lazily.comprehension(mapper, source, predicate));
 
-        assertThat(result, hasOnlyItemsInOrder(2,6));
+        // Then
+        assertThat(result, hasOnlyItemsInOrder(2, 6));
     }
 
     @Test
-    public void shouldApplyManyPredicatesToSource(){
+    public void shouldApplyManyPredicatesToSource() {
+        // Given
         Mapper<Integer, Integer> mapper = Mappers.identity();
-
-        List<Integer> source = listWith(3,4,5,6,7,8,9);
-
+        Iterable<Integer> source = iterableWith(3, 4, 5, 6, 7, 8, 9);
         Predicate<Integer> oddPredicate = new Predicate<Integer>() {
             @Override
             public boolean evaluate(Integer firstInput) {
                 return firstInput % 2 != 0;
             }
         };
-
         Predicate<Integer> divisibleByThreePredicate = new Predicate<Integer>() {
             @Override
             public boolean evaluate(Integer firstInput) {
@@ -82,29 +87,29 @@ public class LazilyComprehensionTest {
             }
         };
 
+        // When
         Collection<Integer> result = materialize(Lazily.comprehension(mapper, source, oddPredicate, divisibleByThreePredicate));
 
-        assertThat(result, hasOnlyItemsInOrder(3,9));
+        // Then
+        assertThat(result, hasOnlyItemsInOrder(3, 9));
     }
 
     @Test
-    public void shouldApplyManyPredicatesAndMapSource(){
+    public void shouldApplyManyPredicatesAndMapSource() {
+        // Given
         Mapper<Integer, String> toUpperMapper = new Mapper<Integer, String>() {
             @Override
             public String map(Integer input) {
                 return input.toString() + ": Looks good";
             }
         };
-
-        List<Integer> source = listWith(3,4,5,6,7,8,9);
-
+        Iterable<Integer> source = iterableWith(3, 4, 5, 6, 7, 8, 9);
         Predicate<Integer> oddPredicate = new Predicate<Integer>() {
             @Override
             public boolean evaluate(Integer firstInput) {
                 return firstInput % 2 != 0;
             }
         };
-
         Predicate<Integer> divisibleByThreePredicate = new Predicate<Integer>() {
             @Override
             public boolean evaluate(Integer firstInput) {
@@ -112,16 +117,64 @@ public class LazilyComprehensionTest {
             }
         };
 
+        // When
         Collection<String> result = materialize(Lazily.comprehension(toUpperMapper, source, oddPredicate, divisibleByThreePredicate));
 
+        // Then
         assertThat(result, hasOnlyItemsInOrder("3: Looks good", "9: Looks good"));
     }
 
     @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerIfSuppliedMapperIsNull(){
+    public void shouldThrowNullPointerExceptionIfSuppliedIterableIsNull() throws Exception {
+        // Given
+        Mapper<Integer, Integer> mapper = new Mapper<Integer, Integer>() {
+            @Override
+            public Integer map(Integer input) {
+                return input * 2;
+            }
+        };
+        Iterable<Integer> source = null;
+        Predicate<Integer> predicate = new Predicate<Integer>() {
+            @Override
+            public boolean evaluate(Integer firstInput) {
+                return firstInput % 2 != 0;
+            }
+        };
+
+        // When
+        Lazily.comprehension(mapper, source, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfAnySuppliedPredicateIsNull() throws Exception {
+        // Given
+        Mapper<Integer, Integer> mapper = new Mapper<Integer, Integer>() {
+            @Override
+            public Integer map(Integer input) {
+                return input * 2;
+            }
+        };
+        Iterable<Integer> source = null;
+        Predicate<Integer> firstPredicate = new Predicate<Integer>() {
+            @Override
+            public boolean evaluate(Integer firstInput) {
+                return firstInput % 2 != 0;
+            }
+        };
+        Predicate<Integer> secondPredicate = null;
+        // When
+        Lazily.comprehension(mapper, source, firstPredicate, secondPredicate);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerIfSuppliedMapperIsNull() {
         // Given
         Mapper<String, String> mapper = null;
-        Iterable<String> inputs = listWith("ac", "ab", "bc", "abc", "bcd", "bad");
+        Iterable<String> inputs = iterableWith("ac", "ab", "bc", "abc", "bcd", "bad");
         Predicate<String> nonNullPredicate = Predicates.alwaysTrue();
 
         // When

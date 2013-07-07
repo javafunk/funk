@@ -77,6 +77,18 @@ public class LazilyFilterRejectPartitionTest {
         // Then a NullPointerException is thrown.
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfIterableSuppliedToFilterIsNull() throws Exception {
+        // Given
+        Iterable<String> inputs = null;
+        Predicate<? super String> predicate = Predicates.alwaysTrue();
+
+        // When
+        Lazily.filter(inputs, predicate);
+
+        // Then a NullPointerException is thrown.
+    }
+
     @Test
     public void shouldOnlyReturnThoseElementsThatDoNotMatchTheSuppliedPredicate() {
         // Given
@@ -122,6 +134,18 @@ public class LazilyFilterRejectPartitionTest {
         // Given
         Iterable<String> inputs = listWith("ac", "ab", "bc", "abc", "bcd", "bad", "gae");
         Predicate<? super String> predicate = null;
+
+        // When
+        Lazily.reject(inputs, predicate);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionWhenNullIterableSuppliedToReject() throws Exception {
+        // Given
+        Iterable<String> inputs = null;
+        Predicate<? super String> predicate = Predicates.alwaysFalse();
 
         // When
         Lazily.reject(inputs, predicate);
@@ -200,6 +224,18 @@ public class LazilyFilterRejectPartitionTest {
         // Given
         Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5, 6, 7, 8);
         Predicate<? super Integer> predicate = null;
+
+        // When
+        Lazily.partition(input, predicate);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullIterableSuppliedToPartition() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        Predicate<? super Integer> predicate = Predicates.alwaysTrue();
 
         // When
         Lazily.partition(input, predicate);

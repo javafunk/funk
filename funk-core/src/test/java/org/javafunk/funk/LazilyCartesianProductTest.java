@@ -509,4 +509,28 @@ public class LazilyCartesianProductTest {
         // Then
         assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
     }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfAnyIterablePassedToCartesianProductIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input1 = iterableWith(1, 2);
+        Iterable<String> input2 = iterableWith("a", "b", "c");
+        Iterable<Long> input3 = null;
+
+        // When
+        Lazily.cartesianProduct(input1, input2, input3);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfIterableOfIterablesPassedToCartesianProductIsNull() throws Exception {
+        // Given
+        Iterable<Iterable<Integer>> iterables = null;
+
+        // When
+        Lazily.cartesianProduct(iterables);
+
+        // Then a NullPointerException is thrown.
+    }
 }

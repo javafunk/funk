@@ -6,6 +6,7 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.testclasses.Name.name;
+import static org.junit.Assert.fail;
 
 public class EqualsPredicateTest {
     @Test
@@ -48,6 +49,38 @@ public class EqualsPredicateTest {
 
         // Then
         assertThat(second.getObjectEqualsWasCalledWith(), is((Object) null));
+    }
+
+    @Test
+    public void shouldNotThrowNullPointerExceptionIfControlObjectIsNull() throws Exception {
+        // Given
+        Object first = null;
+        Object second = new Object();
+        EqualsPredicate<Object> predicate = new EqualsPredicate<Object>(first);
+
+        try {
+            // When
+            predicate.evaluate(second);
+        } catch(NullPointerException exception) {
+            // Then
+            fail("Expected no NullPointerException to be thrown but one was.");
+        }
+    }
+
+    @Test
+    public void shouldNotThrowNullPointerExceptionIfTestObjectIsNull() throws Exception {
+        // Given
+        Object first = new Object();
+        Object second = null;
+        EqualsPredicate<Object> predicate = new EqualsPredicate<Object>(first);
+
+        try {
+            // When
+            predicate.evaluate(second);
+        } catch(NullPointerException exception) {
+            // Then
+            fail("Expected no NullPointerException to be thrown but one was.");
+        }
     }
 
     private static class ObjectWithEqualsCapture {

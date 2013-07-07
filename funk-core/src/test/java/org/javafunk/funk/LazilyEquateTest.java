@@ -20,7 +20,8 @@ import static org.javafunk.funk.Literals.iterableWith;
 
 public class LazilyEquateTest {
     @Test
-    public void shouldReturnAnIterableContainingTheResultOfEquatingEachElementInTheSuppliedIterables() throws Exception {
+    public void shouldReturnAnIterableContainingTheResultOfEquatingEachElementInTheSuppliedIterables()
+            throws Exception {
         // Given
         Iterable<String> first = iterableWith("Dog", "Cat", "Goldfish");
         Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH");
@@ -134,6 +135,74 @@ public class LazilyEquateTest {
         Iterable<String> first = iterableWith("Dog", "Cat", "Goldfish");
         Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH");
         BinaryPredicate<? super String, ? super String> equivalence = null;
+
+        // When
+        Lazily.equate(first, second, equivalence);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfFirstIterablePassedToEquivalenceEquateIsNull() throws Exception {
+        // Given
+        Iterable<String> first = null;
+        Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH");
+        Equivalence<? super String> equivalence = new Equivalence<String>() {
+            public boolean equal(String first, String second) {
+                return first.compareToIgnoreCase(second) == 0;
+            }
+        };
+
+        // When
+        Lazily.equate(first, second, equivalence);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfFirstIterablePassedToBinaryPredicateEquateIsNull() throws Exception {
+        // Given
+        Iterable<String> first = null;
+        Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH");
+        BinaryPredicate<? super String, ? super String> equivalence = new BinaryPredicate<String, String>() {
+            @Override public boolean evaluate(String first, String second) {
+                return first.compareToIgnoreCase(second) == 0;
+            }
+        };
+
+        // When
+        Lazily.equate(first, second, equivalence);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfSecondIterablePassedToEquivalenceEquateIsNull() throws Exception {
+        // Given
+        Iterable<String> first = iterableWith("Dog", "Cat", "Goldfish");
+        Iterable<String> second = null;
+        Equivalence<? super String> equivalence = new Equivalence<String>() {
+            public boolean equal(String first, String second) {
+                return first.compareToIgnoreCase(second) == 0;
+            }
+        };
+
+        // When
+        Lazily.equate(first, second, equivalence);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfSecondIterablePassedToBinaryPredicateEquateIsNull() throws Exception {
+        // Given
+        Iterable<String> first = iterableWith("Dog", "Cat", "Goldfish");
+        Iterable<String> second = null;
+        BinaryPredicate<? super String, ? super String> equivalence = new BinaryPredicate<String, String>() {
+            @Override public boolean evaluate(String first, String second) {
+                return first.compareToIgnoreCase(second) == 0;
+            }
+        };
 
         // When
         Lazily.equate(first, second, equivalence);

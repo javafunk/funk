@@ -91,4 +91,32 @@ public class LazilyIndexTest {
 
         // Then a NullPointerException is thrown.
     }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullIterablePassedToUnaryFunctionIndex() throws Exception {
+        // Given
+        Iterable<String> input = null;
+        UnaryFunction<String, String> indexer = UnaryFunctions.identity();
+
+        // When
+        Lazily.index(input, indexer);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullIterablePassedToIndexerIndex() throws Exception {
+        // Given
+        Iterable<String> input = null;
+        Indexer<String, Integer> indexer = new Indexer<String, Integer>() {
+            @Override public Integer index(String item) {
+                return item.length();
+            }
+        };
+
+        // When
+        Lazily.index(input, indexer);
+
+        // Then a NullPointerException is thrown.
+    }
 }

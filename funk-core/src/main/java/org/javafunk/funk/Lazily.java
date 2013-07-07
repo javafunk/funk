@@ -31,7 +31,7 @@ import static org.javafunk.funk.functors.adapters.ActionUnaryProcedureAdapter.ac
 import static org.javafunk.funk.functors.adapters.EquivalenceBinaryPredicateAdapter.equivalenceBinaryPredicate;
 import static org.javafunk.funk.functors.adapters.IndexerUnaryFunctionAdapter.indexerUnaryFunction;
 import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
-import static org.javafunk.funk.iterators.ComprehensionIterator.checkContainsNoNulls;
+import static org.javafunk.funk.Checks.returnOrThrowIfContainsNull;
 
 /**
  * A suite of lazy functions, often higher order, across {@code Iterable} instances.
@@ -130,9 +130,8 @@ public class Lazily {
      *                                  is not positive.
      */
     public static <T> Iterable<Iterable<T>> batch(final Iterable<T> iterable, final int batchSize) {
-        if (batchSize <= 0) {
-            throw new IllegalArgumentException("Batch size must be greater than zero.");
-        }
+        checkNotNull(iterable);
+        if (batchSize <= 0) throw new IllegalArgumentException("Batch size must be greater than zero.");
         return new Iterable<Iterable<T>>() {
             public Iterator<Iterable<T>> iterator() {
                 return new BatchedIterator<T>(iterable.iterator(), batchSize);
@@ -167,6 +166,7 @@ public class Lazily {
      *         cycles through the supplied {@code Iterable}.
      */
     public static <T> Iterable<T> cycle(final Iterable<T> iterable) {
+        checkNotNull(iterable);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new CyclicIterator<T>(iterable.iterator());
@@ -207,6 +207,7 @@ public class Lazily {
      * @throws IllegalArgumentException if the specified number of times to repeat is negative.
      */
     public static <T> Iterable<T> repeat(final Iterable<T> iterable, final int numberOfTimesToRepeat) {
+        checkNotNull(iterable);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new CyclicIterator<T>(iterable.iterator(), numberOfTimesToRepeat);
@@ -274,9 +275,8 @@ public class Lazily {
      *                                  is negative.
      */
     public static <T> Iterable<T> take(final Iterable<T> iterable, final int numberToTake) {
-        if (numberToTake < 0) {
-            throw new IllegalArgumentException("Cannot take a negative number of elements.");
-        }
+        checkNotNull(iterable);
+        if (numberToTake < 0) throw new IllegalArgumentException("Cannot take a negative number of elements.");
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new SubSequenceIterator<T>(iterable.iterator(), null, numberToTake);
@@ -372,6 +372,8 @@ public class Lazily {
      *         {@code UnaryPredicate} is no longer satisfied.
      */
     public static <T> Iterable<T> takeWhile(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
+        checkNotNull(iterable);
+        checkNotNull(predicate);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new PredicatedIterator<T>(iterable.iterator(), predicate);
@@ -465,6 +467,8 @@ public class Lazily {
      *         {@code UnaryPredicate} is satisfied.
      */
     public static <T> Iterable<T> takeUntil(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
+        checkNotNull(iterable);
+        checkNotNull(predicate);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new PredicatedIterator<T>(iterable.iterator(), new NotPredicate<T>(predicate));
@@ -534,9 +538,8 @@ public class Lazily {
      *                                  is negative.
      */
     public static <T> Iterable<T> drop(final Iterable<T> iterable, final int numberToTake) {
-        if (numberToTake < 0) {
-            throw new IllegalArgumentException("Cannot drop a negative number of elements.");
-        }
+        checkNotNull(iterable);
+        if (numberToTake < 0) throw new IllegalArgumentException("Cannot drop a negative number of elements.");
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new SubSequenceIterator<T>(iterable.iterator(), numberToTake, null);
@@ -631,6 +634,8 @@ public class Lazily {
      *         all remaining elements .
      */
     public static <T> Iterable<T> dropWhile(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
+        checkNotNull(iterable);
+        checkNotNull(predicate);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 Iterator<T> iterator = iterable.iterator();
@@ -732,6 +737,8 @@ public class Lazily {
      *         all remaining elements .
      */
     public static <T> Iterable<T> dropUntil(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
+        checkNotNull(iterable);
+        checkNotNull(predicate);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 Iterator<? extends T> iterator = iterable.iterator();
@@ -833,6 +840,7 @@ public class Lazily {
      */
     public static <T> Iterable<T> each(final Iterable<T> iterable, final UnaryProcedure<? super T> procedure) {
         checkNotNull(procedure);
+        checkNotNull(iterable);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new EachIterator<T>(iterable.iterator(), procedure);
@@ -918,6 +926,7 @@ public class Lazily {
      *         {@code Iterable} using {@code Pair} instances.
      */
     public static <T> Iterable<Pair<Integer, T>> enumerate(final Iterable<T> iterable) {
+        checkNotNull(iterable);
         return zip(integers(increasing()), iterable);
     }
 
@@ -1106,6 +1115,7 @@ public class Lazily {
      */
     public static <S, T> Iterable<T> map(final Iterable<S> iterable, final UnaryFunction<? super S, T> function) {
         checkNotNull(function);
+        checkNotNull(iterable);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new MappedIterator<S, T>(iterable.iterator(), function);
@@ -1196,6 +1206,8 @@ public class Lazily {
             Iterable<? extends T> second,
             final BinaryPredicate<? super T, ? super T> predicate) {
         checkNotNull(predicate);
+        checkNotNull(first);
+        checkNotNull(second);
         return map(zip(first, second), new Mapper<Pair<? extends T, ? extends T>, Boolean>() {
             public Boolean map(Pair<? extends T, ? extends T> input) {
                 return predicate.evaluate(input.getFirst(), input.getSecond());
@@ -1352,6 +1364,7 @@ public class Lazily {
      */
     public static <T> Iterable<T> filter(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
         checkNotNull(predicate);
+        checkNotNull(iterable);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new FilteredIterator<T>(iterable.iterator(), predicate);
@@ -1482,6 +1495,7 @@ public class Lazily {
      */
     public static <T> Iterable<T> reject(final Iterable<T> iterable, final UnaryPredicate<? super T> predicate) {
         checkNotNull(predicate);
+        checkNotNull(iterable);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new FilteredIterator<T>(iterable.iterator(), new NotPredicate<T>(predicate));
@@ -1559,6 +1573,7 @@ public class Lazily {
      */
     public static <T> Pair<Iterable<T>, Iterable<T>> partition(Iterable<T> iterable, UnaryPredicate<? super T> predicate) {
         checkNotNull(predicate);
+        checkNotNull(iterable);
         return tuple(filter(iterable, predicate), reject(iterable, predicate));
     }
 
@@ -1677,6 +1692,7 @@ public class Lazily {
      *         supplied start and stop indices and the supplied step size.
      */
     public static <T> Iterable<T> slice(final Iterable<T> iterable, final Integer start, final Integer stop, final Integer step) {
+        checkNotNull(iterable);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new SubSequenceIterator<T>(iterable.iterator(), start, stop, step);
@@ -2260,6 +2276,8 @@ public class Lazily {
      *         cartesian product of the supplied {@code Iterable} of {@code Iterable}s.
      */
     public static Iterable<? extends Iterable<?>> cartesianProduct(final Iterable<? extends Iterable<?>> iterables) {
+        checkNotNull(iterables);
+        returnOrThrowIfContainsNull(iterables);
         return cartesianProduct(listFrom(iterables));
     }
 
@@ -2784,6 +2802,8 @@ public class Lazily {
      *         zipped contents of the supplied {@code Iterable} of {@code Iterable}s.
      */
     public static Iterable<? extends Iterable<?>> zip(final Iterable<? extends Iterable<?>> iterables) {
+        checkNotNull(iterables);
+        if (Eagerly.any(iterables, Predicates.equalTo(null))) throw new NullPointerException();
         return new Iterable<Iterable<?>>() {
             public Iterator<Iterable<?>> iterator() {
                 final Iterable<? extends Iterator<?>> iterators = Eagerly.map(iterables, toIterators());
@@ -2820,7 +2840,8 @@ public class Lazily {
             final Iterable<S> iterable,
             final Iterable<? extends UnaryPredicate<? super S>> predicates) {
         checkNotNull(function);
-        checkContainsNoNulls(predicates);
+        checkNotNull(iterable);
+        returnOrThrowIfContainsNull(predicates);
 
         return new Iterable<T>() {
             public Iterator<T> iterator() {

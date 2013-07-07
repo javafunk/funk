@@ -8,6 +8,7 @@
  */
 package org.javafunk.funk;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.javafunk.funk.functors.Action;
 import org.javafunk.funk.functors.procedures.UnaryProcedure;
 import org.junit.Test;
@@ -62,6 +63,38 @@ public class LazilyEachTest {
         // Given
         Iterable<Target> targets = iterableWith(mock(Target.class), mock(Target.class), mock(Target.class));
         UnaryProcedure<? super Target> action = null;
+
+        // When
+        Lazily.each(targets, action);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionWhenNullIterablePassedToUnaryProcedureEach() throws Exception {
+        // Given
+        Iterable<Target> targets = null;
+        UnaryProcedure<? super Target> action = new UnaryProcedure<Target>() {
+            @Override public void execute(Target target) {
+                throw new NotImplementedException();
+            }
+        };
+
+        // When
+        Lazily.each(targets, action);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionWhenNullIterablePassedToActionEach() throws Exception {
+        // Given
+        Iterable<Target> targets = null;
+        Action<? super Target> action = new Action<Target>() {
+            @Override public void on(Target input) {
+                throw new NotImplementedException();
+            }
+        };
 
         // When
         Lazily.each(targets, action);
