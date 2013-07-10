@@ -406,4 +406,15 @@ public class EagerlySliceTest {
         // Then
         assertThat(actualCompleteSlice, hasOnlyItemsInOrder(expectedCompleteSlice));
     }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfIterablePassedToSliceIsNull() throws Exception {
+        // Given
+        Iterable<String> input = null;
+
+        // When
+        Eagerly.slice(input, 0, 3);
+
+        // Then a NullPointerException is thrown.
+    }
 }

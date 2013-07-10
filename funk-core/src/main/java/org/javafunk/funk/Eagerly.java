@@ -20,6 +20,7 @@ import org.javafunk.funk.monads.Option;
 
 import java.util.*;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.Collections.emptyList;
 import static org.javafunk.funk.Checks.returnOrThrowIfNull;
 import static org.javafunk.funk.Iterables.materialize;
@@ -3622,7 +3623,7 @@ public class Eagerly {
             Integer start,
             Integer stop,
             Integer step) {
-        List<? extends T> inputCollection = Iterables.asList(iterable);
+        List<? extends T> inputCollection = Iterables.asList(checkNotNull(iterable));
 
         if (inputCollection.size() == 0) {
             return Collections.emptyList();
