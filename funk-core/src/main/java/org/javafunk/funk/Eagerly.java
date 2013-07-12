@@ -3736,6 +3736,7 @@ public class Eagerly {
      *         {@code Iterable} in reverse order.
      */
     public static <T> Collection<T> reverse(final Iterable<T> iterable) {
+
         return collectionFrom(new Iterable<T>() {
             public Iterator<T> iterator() {
                 List<T> list = listFrom(iterable);
