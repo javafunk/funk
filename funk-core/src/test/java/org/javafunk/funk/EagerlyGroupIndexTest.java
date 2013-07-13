@@ -17,10 +17,7 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.collectionWith;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.mapBuilderWithKeyValuePair;
-import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.Literals.*;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class EagerlyGroupIndexTest {
@@ -64,6 +61,22 @@ public class EagerlyGroupIndexTest {
         // Then a NullPointerException is thrown
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToGroupIsNull() throws Exception {
+        // Given
+        Iterable<String> input = null;
+        Indexer<String, Integer> indexer = new Indexer<String, Integer>() {
+            @Override public Integer index(String item) {
+                return item.length();
+            }
+        };
+
+        // When
+        Eagerly.group(input, indexer);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnATwoTupleWithTheIndexFirstAndTheElementSecond() throws Exception {
         // Given
@@ -93,6 +106,22 @@ public class EagerlyGroupIndexTest {
         // Given
         Iterable<String> input = iterableWith("apple", "pear", "lemon", "apricot", "orange", "papaya", "banana");
         Indexer<String, Integer> indexer = null;
+
+        // When
+        Eagerly.index(input, indexer);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToIndexIsNull() throws Exception {
+        // Given
+        Iterable<String> input = null;
+        Indexer<String, Integer> indexer = new Indexer<String, Integer>() {
+            @Override public Integer index(String item) {
+                return item.length();
+            }
+        };
 
         // When
         Eagerly.index(input, indexer);
