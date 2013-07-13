@@ -13,9 +13,7 @@ import org.junit.Test;
 
 import static org.javafunk.funk.Literals.iterableWith;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class EagerlyTimesEachTest {
     @Test
@@ -50,6 +48,22 @@ public class EagerlyTimesEachTest {
                 (Target<Object>) mock(Target.class),
                 (Target<Object>) mock(Target.class));
         Action<Target> action = null;
+
+        // When
+        Eagerly.each(targets, action);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfTheIterablePassedToEachIsNull() throws Exception {
+        // Given
+        Iterable<Integer> targets = null;
+        Action<Integer> action = new Action<Integer>() {
+            @Override public void on(Integer input) {
+                System.out.println(input);
+            }
+        };
 
         // When
         Eagerly.each(targets, action);
@@ -124,7 +138,6 @@ public class EagerlyTimesEachTest {
 
     private interface Target<T> {
         void doSomething();
-
         void doSomethingWith(T input);
     }
 }
