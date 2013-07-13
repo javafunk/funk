@@ -54,6 +54,18 @@ public class EagerlyFilterRejectPartitionTest {
         // Then a NullPointerException is thrown.
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToFilterIsNull() throws Exception {
+        // Given
+        Iterable<Integer> inputs = null;
+        Predicate<Integer> predicate = Predicates.alwaysTrue();
+
+        // When
+        Eagerly.filter(inputs, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldOnlyReturnThoseElementsThatDoNotMatchTheSuppliedPredicate() {
         // Given
@@ -86,6 +98,18 @@ public class EagerlyFilterRejectPartitionTest {
         Eagerly.reject(inputs, predicate);
 
         // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToRejectIsNull() throws Exception {
+        // Given
+        Iterable<Integer> inputs = null;
+        Predicate<Integer> predicate = Predicates.alwaysTrue();
+
+        // When
+        Eagerly.reject(inputs, predicate);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -121,5 +145,17 @@ public class EagerlyFilterRejectPartitionTest {
         Eagerly.partition(input, predicate);
 
         // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToPartitionIsNull() throws Exception {
+        // Given
+        Iterable<String> input = null;
+        Predicate<Object> predicate = Predicates.alwaysTrue();
+
+        // When
+        Eagerly.partition(input, predicate);
+
+        // Then a NullPointerException is thrown
     }
 }
