@@ -38,6 +38,17 @@ public class ChecksTest {
         }
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterableSuppliedToEmptyCheckIsNull() throws Exception {
+        // Given
+        Iterable<String> input = null;
+
+        // When
+        Checks.returnOrThrowIfEmpty(input, new RuntimeException());
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnIfContainsNoNullsCheckIsSuppliedEmptyIterable() throws Exception {
         // Given
@@ -48,5 +59,16 @@ public class ChecksTest {
 
         // Then
         assertThat(output, is(input));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterableSuppliedToContainsNoNullsCheckIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        Checks.returnOrThrowIfContainsNull(input);
+
+        // Then a NullPointerException is thrown
     }
 }
