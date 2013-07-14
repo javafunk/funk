@@ -238,7 +238,7 @@ public class EagerlyCartesianProductTest {
         assertThat(actualCartesianProduct, hasOnlyItemsInAnyOrder(expectedCartesianProduct));
     }
 
-@Test
+    @Test
     public void shouldReturnTheCartesianProductOfNineIterablesAsACollectionOfNonuples() throws Exception {
         // Given
         Iterable<Integer> input1 = iterableWith(1, 2);
@@ -330,5 +330,16 @@ public class EagerlyCartesianProductTest {
 
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToCartesianProductIsNull() throws Exception {
+        // Given
+        Iterable<? extends Iterable<?>> input = null;
+
+        // When
+        Eagerly.cartesianProduct(input);
+
+        // Then a NullPointerException is thrown
     }
 }

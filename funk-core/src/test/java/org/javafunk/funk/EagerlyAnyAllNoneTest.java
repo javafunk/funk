@@ -83,6 +83,18 @@ public class EagerlyAnyAllNoneTest {
         // Then a NullPointerException is thrown
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToAnyIsNull() throws Exception {
+        // Given
+        Iterable<String> input = null;
+        Predicate<String> predicate = Predicates.alwaysTrue();
+
+        // When
+        Eagerly.any(input, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnTrueIfAllElementsSatisfyThePredicateFunction() {
         // Given
@@ -142,6 +154,18 @@ public class EagerlyAnyAllNoneTest {
 
         // When
         Eagerly.all(items, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToAllIsNull() throws Exception {
+        // Given
+        Iterable<String> input = null;
+        Predicate<String> predicate = Predicates.alwaysTrue();
+
+        // When
+        Eagerly.all(input, predicate);
 
         // Then a NullPointerException is thrown
     }
@@ -212,6 +236,18 @@ public class EagerlyAnyAllNoneTest {
 
         // When
         Eagerly.none(items, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToNoneIsNull() throws Exception {
+        // Given
+        Iterable<String> input = null;
+        Predicate<String> predicate = Predicates.alwaysTrue();
+
+        // When
+        Eagerly.none(input, predicate);
 
         // Then a NullPointerException is thrown
     }

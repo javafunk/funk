@@ -73,6 +73,17 @@ public class EagerlyMinMaxTest {
         // Then a NoSuchElementException is thrown
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfIterablePassedToMinIsNull() throws Exception {
+        // Given
+        Iterable<Integer> iterable = null;
+
+        // When
+        Eagerly.min(iterable);
+
+        // Then a NullPointerException is thrown.
+    }
+
     @Test
     public void shouldReturnTheMinimumValueAccordingToTheSuppliedComparator() throws Exception {
         // Given
@@ -114,6 +125,22 @@ public class EagerlyMinMaxTest {
         // Given
         Iterable<NonComparableObject> iterable = iterableWith(nonComparableObject("a"), nonComparableObject("aa"));
         Comparator<? super NonComparableObject> comparator = null;
+
+        // When
+        Eagerly.min(iterable, comparator);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfIterableSuppliedToMinWithComparatorIsNull() throws Exception {
+        // Given
+        Iterable<NonComparableObject> iterable = null;
+        Comparator<? super NonComparableObject> comparator = new Comparator<NonComparableObject>() {
+            @Override public int compare(NonComparableObject first, NonComparableObject second) {
+                return first.length() - second.length();
+            }
+        };
 
         // When
         Eagerly.min(iterable, comparator);
@@ -186,6 +213,17 @@ public class EagerlyMinMaxTest {
         // Then a NoSuchElementException is thrown
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNoSuchElementExceptionIfIterablePassedToMaxIsNull() throws Exception {
+        // Given
+        Iterable<Integer> iterable = null;
+
+        // When
+        Eagerly.max(iterable);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnTheMaximumValueAccordingToTheSuppliedComparator() throws Exception {
         // Given
@@ -227,6 +265,22 @@ public class EagerlyMinMaxTest {
         // Given
         Iterable<NonComparableObject> iterable = iterableWith(nonComparableObject("a"), nonComparableObject("aa"));
         Comparator<? super NonComparableObject> comparator = null;
+
+        // When
+        Eagerly.max(iterable, comparator);
+
+        // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfIterableSuppliedToMaxWithComparatorIsNull() throws Exception {
+        // Given
+        Iterable<NonComparableObject> iterable = null;
+        Comparator<? super NonComparableObject> comparator = new Comparator<NonComparableObject>() {
+            public int compare(NonComparableObject first, NonComparableObject second) {
+                return first.length() - second.length();
+            }
+        };
 
         // When
         Eagerly.max(iterable, comparator);

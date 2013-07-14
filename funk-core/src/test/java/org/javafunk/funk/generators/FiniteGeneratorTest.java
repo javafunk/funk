@@ -109,4 +109,15 @@ public class FiniteGeneratorTest {
         // Then
         assertThat(equal, is(false));
     }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterableSuppliedAtConstructionTimeIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        new FiniteGenerator<Integer>(input);
+
+        // Then a NullPointerException is thrown
+    }
 }

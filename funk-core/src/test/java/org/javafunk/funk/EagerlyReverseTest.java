@@ -69,4 +69,15 @@ public class EagerlyReverseTest {
         // Then
         assertTrue(actual.isEmpty());
     }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfIterablePassedToReverseIsNull() throws Exception {
+        // Given
+        Iterable<String> iterable = null;
+
+        // When
+        Eagerly.reverse(iterable);
+
+        // Then a NullPointerException is thrown
+    }
 }

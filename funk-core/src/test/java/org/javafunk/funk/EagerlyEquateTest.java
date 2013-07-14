@@ -9,6 +9,7 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.functors.Equivalence;
+import org.javafunk.funk.functors.predicates.BinaryPredicate;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -79,6 +80,74 @@ public class EagerlyEquateTest {
         Iterable<String> first = iterableWith("Dog", "Cat", "Goldfish", "Horse", "Pig");
         Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH");
         Equivalence<String> equivalence = null;
+
+        // When
+        Eagerly.equate(first, second, equivalence);
+
+        // Then a NullPointerException should be thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfTheFirstIterableSuppliedToEquivalenceEquateIsNull() throws Exception {
+        // Given
+        Iterable<String> first = null;
+        Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH");
+        Equivalence<String> equivalence = new Equivalence<String>() {
+            public boolean equal(String first, String second) {
+                return first.compareToIgnoreCase(second) == 0;
+            }
+        };
+
+        // When
+        Eagerly.equate(first, second, equivalence);
+
+        // Then a NullPointerException should be thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfTheSecondIterableSuppliedToEquivalenceEquateIsNull() throws Exception {
+        // Given
+        Iterable<String> first = iterableWith("DOG", "BAT", "GOLDFISH");
+        Iterable<String> second = null;
+        Equivalence<String> equivalence = new Equivalence<String>() {
+            public boolean equal(String first, String second) {
+                return first.compareToIgnoreCase(second) == 0;
+            }
+        };
+
+        // When
+        Eagerly.equate(first, second, equivalence);
+
+        // Then a NullPointerException should be thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfTheFirstIterableSuppliedToBinaryPredicateEquateIsNull() throws Exception {
+        // Given
+        Iterable<String> first = null;
+        Iterable<String> second = iterableWith("DOG", "BAT", "GOLDFISH");
+        BinaryPredicate<String, String> equivalence = new BinaryPredicate<String, String>() {
+            @Override public boolean evaluate(String first, String second) {
+                return first.compareToIgnoreCase(second) == 0;
+            }
+        };
+
+        // When
+        Eagerly.equate(first, second, equivalence);
+
+        // Then a NullPointerException should be thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfTheSecondIterableSuppliedToBinaryPredicateEquateIsNull() throws Exception {
+        // Given
+        Iterable<String> first = iterableWith("DOG", "BAT", "GOLDFISH");
+        Iterable<String> second = null;
+        BinaryPredicate<String, String> equivalence = new BinaryPredicate<String, String>() {
+            @Override public boolean evaluate(String first, String second) {
+                return first.compareToIgnoreCase(second) == 0;
+            }
+        };
 
         // When
         Eagerly.equate(first, second, equivalence);

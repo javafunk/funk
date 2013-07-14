@@ -13,7 +13,7 @@ public class EachIterator<T> implements Iterator<T> {
     private UnaryProcedure<? super T> procedure;
 
     public EachIterator(Iterator<T> iterator, UnaryProcedure<? super T> procedure) {
-        this.iterator = iterator;
+        this.iterator = checkNotNull(iterator);
         this.procedure = checkNotNull(procedure);
     }
 

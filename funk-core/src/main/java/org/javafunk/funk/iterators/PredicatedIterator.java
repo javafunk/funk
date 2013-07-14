@@ -22,7 +22,7 @@ public class PredicatedIterator<T> extends CachingIterator<T> {
     private UnaryPredicate<? super T> predicate;
 
     public PredicatedIterator(Iterator<? extends T> iterator, UnaryPredicate<? super T> predicate) {
-        this.iterator = iterator;
+        this.iterator = checkNotNull(iterator);
         this.predicate = checkNotNull(predicate);
     }
 

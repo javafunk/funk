@@ -49,6 +49,17 @@ public class EagerlyFirstSecondThirdRestLastTest {
         assertThat(output, is(Option.<Integer>none()));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToFirstIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        Eagerly.first(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnAnOptionOfTheSecondElementFromTheSuppliedIterable() throws Exception {
         // Given
@@ -83,6 +94,17 @@ public class EagerlyFirstSecondThirdRestLastTest {
 
         // Then
         assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToSecondIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        Eagerly.second(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -131,6 +153,17 @@ public class EagerlyFirstSecondThirdRestLastTest {
 
         // Then
         assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToThirdIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        Eagerly.third(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -205,6 +238,18 @@ public class EagerlyFirstSecondThirdRestLastTest {
         // Then a NullPointerException is thrown.
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToFirstMatchingIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        Predicate<Object> predicate = Predicates.alwaysTrue();
+
+        // When
+        Eagerly.firstMatching(input, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnAnOptionOfTheSecondElementInTheSuppliedIterableMatchingTheSuppliedPredicate() throws Exception {
         // Given
@@ -275,6 +320,18 @@ public class EagerlyFirstSecondThirdRestLastTest {
         Eagerly.secondMatching(input, predicate);
 
         // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToSecondMatchingIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        Predicate<Object> predicate = Predicates.alwaysTrue();
+
+        // When
+        Eagerly.secondMatching(input, predicate);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -369,6 +426,18 @@ public class EagerlyFirstSecondThirdRestLastTest {
         // Then a NullPointerException is thrown.
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToThirdMatchingIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        Predicate<Object> predicate = Predicates.alwaysTrue();
+
+        // When
+        Eagerly.thirdMatching(input, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnTheFirstNElementsFromTheSuppliedIterable() throws Exception {
         // Given
@@ -430,6 +499,17 @@ public class EagerlyFirstSecondThirdRestLastTest {
         Eagerly.firstN(input, -3);
 
         // Then an IllegalArgumentException should be thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToFirstNIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        Eagerly.firstN(input, 3);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -550,6 +630,19 @@ public class EagerlyFirstSecondThirdRestLastTest {
         // Then a NullPointerException is thrown.
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToFirstNMatchingIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        Predicate<Object> predicate = Predicates.alwaysTrue();
+        Integer numberRequired = 3;
+
+        // When
+        Eagerly.firstNMatching(input, numberRequired, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnAnOptionOfTheLastElementFromTheSuppliedIterable() throws Exception {
         // Given
@@ -572,6 +665,17 @@ public class EagerlyFirstSecondThirdRestLastTest {
 
         // Then
         assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToLastIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        Eagerly.last(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -610,6 +714,17 @@ public class EagerlyFirstSecondThirdRestLastTest {
         assertThat(output, is(Option.<Integer>none()));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToSecondLastIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        Eagerly.secondLast(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnAnOptionOfTheThirdLastElementFromTheSuppliedIterable() throws Exception {
         // Given
@@ -644,6 +759,17 @@ public class EagerlyFirstSecondThirdRestLastTest {
 
         // Then
         assertThat(output, is(Option.<Integer>none()));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToThirdLastIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        Eagerly.thirdLast(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -716,6 +842,18 @@ public class EagerlyFirstSecondThirdRestLastTest {
         Eagerly.lastMatching(input, predicate);
 
         // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToLastMatchingIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        Predicate<Object> predicate = Predicates.alwaysTrue();
+
+        // When
+        Eagerly.lastMatching(input, predicate);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -810,6 +948,18 @@ public class EagerlyFirstSecondThirdRestLastTest {
         // Then a NullPointerException is thrown.
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToSecondLastMatchingIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        Predicate<Object> predicate = Predicates.alwaysTrue();
+
+        // When
+        Eagerly.secondLastMatching(input, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnAnOptionOfTheThirdLastElementInTheSuppliedIterableMatchingTheSuppliedPredicate() throws Exception {
         // Given
@@ -902,6 +1052,18 @@ public class EagerlyFirstSecondThirdRestLastTest {
         // Then a NullPointerException is thrown.
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToThirdLastMatchingIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        Predicate<Object> predicate = Predicates.alwaysTrue();
+
+        // When
+        Eagerly.thirdLastMatching(input, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnTheLastNElementsFromTheSuppliedIterable() throws Exception {
         // Given
@@ -963,6 +1125,17 @@ public class EagerlyFirstSecondThirdRestLastTest {
         Eagerly.lastN(input, -3);
 
         // Then an IllegalArgumentException should be thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToLastNIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        Eagerly.lastN(input, 3);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -1083,6 +1256,19 @@ public class EagerlyFirstSecondThirdRestLastTest {
         // Then a NullPointerException is thrown.
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToLastNMatchingIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        Predicate<Object> predicate = Predicates.alwaysTrue();
+        Integer numberOfElementsRequired = 3;
+
+        // When
+        Eagerly.lastNMatching(input, numberOfElementsRequired, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnAllButFirstElementForRestIfIterableHasMoreThanOneElement() throws Exception {
         // Given
@@ -1120,5 +1306,16 @@ public class EagerlyFirstSecondThirdRestLastTest {
 
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToRestIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        Eagerly.rest(input);
+
+        // Then a NullPointerException is thrown
     }
 }

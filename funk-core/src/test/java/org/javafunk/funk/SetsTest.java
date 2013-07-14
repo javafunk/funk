@@ -78,6 +78,17 @@ public class SetsTest {
         assertThat(actualMenagerie, is(expectedMenagerie));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToUnionIsNull() throws Exception {
+        // Given
+        Iterable<? extends Iterable<?>> input = null;
+
+        // When
+        Sets.union(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnTheSetIntersectionOfTheSuppliedIterables() throws Exception {
         // Given
@@ -107,6 +118,17 @@ public class SetsTest {
 
         // Then
         assertThat(actualIntersectionSet, is(expectedIntersectionSet));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToIntersectionIsNull() throws Exception {
+        // Given
+        Iterable<? extends Iterable<?>> input = null;
+
+        // When
+        Sets.intersection(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -166,6 +188,17 @@ public class SetsTest {
         assertThat(actualDifferenceSet, is(expectedDifferenceSet));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToDifferenceIsNull() throws Exception {
+        // Given
+        Iterable<? extends Iterable<?>> input = null;
+
+        // When
+        Sets.difference(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnTheSetSymmetricDifferenceOfAllSuppliedIterables() throws Exception {
         // Given
@@ -195,5 +228,16 @@ public class SetsTest {
 
         // Then
         assertThat(actualSymmetricDifferenceSet, is(expectedSymmetricDifferenceSet));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToSymmetricDifferenceIsNull() throws Exception {
+        // Given
+        Iterable<? extends Iterable<?>> input = null;
+
+        // When
+        Sets.symmetricDifference(input);
+
+        // Then a NullPointerException is thrown
     }
 }

@@ -216,6 +216,17 @@ public class LiteralsTest {
         assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToIterableFromIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        iterableFrom(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test public void shouldReturnAnEmptyIterableBuilder() throws Exception {
         // Given
         IterableBuilder<Integer> expected = new IterableBuilder<Integer>();
@@ -268,6 +279,17 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToIterableBuilderFromIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        iterableBuilderFrom(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test public void shouldReturnAnEmptyIterator() throws Exception {
@@ -347,6 +369,17 @@ public class LiteralsTest {
         assertThat(Iterators.asList(actual), hasOnlyItemsInOrder(Iterators.asList(expected)));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToIteratorFromIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        iteratorFrom(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test public void shouldReturnAnEmptyIteratorBuilder() throws Exception {
         // Given
         IteratorBuilder<Integer> expected = new IteratorBuilder<Integer>();
@@ -399,6 +432,17 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToIteratorBuilderFromIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        iteratorBuilderFrom(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test public void shouldReturnAnEmptyCollection() throws Exception {
@@ -478,6 +522,17 @@ public class LiteralsTest {
         assertThat(actual, hasOnlyItemsInAnyOrder(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToCollectionFromIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        collectionFrom(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test public void shouldReturnAnEmptyCollectionBuilder() throws Exception {
         // Given
         CollectionBuilder<Integer> expected = new CollectionBuilder<Integer>();
@@ -530,6 +585,17 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToCollectionBuilderFromIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        collectionBuilderFrom(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test public void shouldReturnAnEmptyList() throws Exception {
@@ -609,6 +675,17 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToListFromIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        listFrom(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test public void shouldReturnAnEmptyListBuilder() throws Exception {
         // Given
         ListBuilder<Integer> expected = new ListBuilder<Integer>();
@@ -661,6 +738,17 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToListBuilderFromIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        listBuilderFrom(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test public void shouldReturnAnEmptyMultiset() throws Exception {
@@ -740,6 +828,17 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToMultisetFromIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        multisetFrom(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test public void shouldReturnAnEmptyMultisetBuilder() throws Exception {
         // Given
         MultisetBuilder<Integer> expected = new MultisetBuilder<Integer>();
@@ -792,6 +891,17 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToMultisetBuilderFromIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        multisetBuilderFrom(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test public void shouldReturnAnEmptySet() throws Exception {
@@ -871,6 +981,17 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToSetFromIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        setFrom(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test public void shouldReturnAnEmptySetBuilder() throws Exception {
         // Given
         SetBuilder<Integer> expected = new SetBuilder<Integer>();
@@ -923,6 +1044,17 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToSetBuilderFromIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        setBuilderFrom(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test public void shouldReturnAnEmptyMap() throws Exception {
@@ -1029,6 +1161,17 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToMapFromEntriesIsNull() throws Exception {
+        // Given
+        Iterable<Map.Entry<String, String>> input = null;
+
+        // When
+        mapFromEntries(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test public void shouldReturnAMapContainingAllElementsInTheSuppliedIterableOfTupleInstances() {
         // Given
         Map<Integer, Boolean> expected = new HashMap<Integer, Boolean>();
@@ -1041,6 +1184,17 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToMapFromPairsIsNull() throws Exception {
+        // Given
+        Iterable<Pair<String, Integer>> input = null;
+
+        // When
+        mapFromPairs(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test public void shouldReturnAMapContainingAllEntriesFromTheSuppliedIterableOfMapInstances() {
@@ -1062,6 +1216,17 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToMapFromMapsIsNull() throws Exception {
+        // Given
+        Iterable<Map<String, String>> input = null;
+
+        // When
+        mapFromMaps(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test public void shouldReturnAMapContainingAllElementsInTheSuppliedArrayOfMapEntryInstances() {
@@ -1203,6 +1368,17 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToMapBuilderFromEntriesIsNull() throws Exception {
+        // Given
+        Iterable<Map.Entry<String, String>> input = null;
+
+        // When
+        mapBuilderFromEntries(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test public void shouldReturnAMapBuilderContainingAllTupleInstancesInTheSuppliedIterable() {
         // Given
         MapBuilder<Integer, Boolean> expected = new MapBuilder<Integer, Boolean>().withKeyValuePairs(5, true, 10, false);
@@ -1214,6 +1390,17 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToMapBuilderFromPairsIsNull() throws Exception {
+        // Given
+        Iterable<Pair<String, String>> input = null;
+
+        // When
+        mapBuilderFromPairs(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test public void shouldReturnAMapBuilderContainingAllEntriesFromAllMapInstancesInTheSuppliedIterable() {
@@ -1231,6 +1418,17 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToMapBuilderFromMapsIsNull() throws Exception {
+        // Given
+        Iterable<Map<String, String>> input = null;
+
+        // When
+        mapBuilderFromMaps(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test public void shouldReturnAMapBuilderContainingAllMapEntryInstancesInTheSuppliedArray() {
@@ -1373,6 +1571,17 @@ public class LiteralsTest {
         }
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToArrayFromIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        arrayFrom(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test public void shouldReturnAnArrayContainingAllElementsInTheSuppliedIterableOfTheSuppliedType() throws Exception {
         // Given
         Dog animal1 = dog(colour("Brown"), name("Fido"));
@@ -1448,6 +1657,17 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToArrayFromWithClassIsNull() throws Exception {
+        // Given
+        Iterable<Animal> input = null;
+
+        // When
+        arrayFrom(input, Animal.class);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test public void shouldReturnAnEmptyArrayBuilder() throws Exception {
         // Given
         ArrayBuilder<Integer> expected = new ArrayBuilder<Integer>();
@@ -1490,6 +1710,17 @@ public class LiteralsTest {
         assertThat(actual, is(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToArrayBuilderFromIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        arrayBuilderFrom(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test public void shouldReturnAnArrayBuilderOverTheSpecifiedElementTypeContainingAllElementsInTheSuppliedIterable() throws Exception {
         // Given
         ArrayBuilder<Integer> expected = new ArrayBuilder<Integer>(Integer.class).with(5, 10, 15);
@@ -1500,6 +1731,17 @@ public class LiteralsTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToArrayBuilderFromWithClassIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        arrayBuilderFrom(input, Integer.class);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test public void shouldReturnAnArrayBuilderContainingAllElementsInTheSuppliedArray() {

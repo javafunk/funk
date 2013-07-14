@@ -17,18 +17,20 @@ import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.javafunk.funk.Iterables.asList;
-import static org.javafunk.funk.Iterables.asMultiset;
-import static org.javafunk.funk.Iterables.asSet;
-import static org.javafunk.funk.Iterables.materialize;
-import static org.javafunk.funk.Literals.collectionWith;
-import static org.javafunk.funk.Literals.listWith;
-import static org.javafunk.funk.Literals.multisetWith;
-import static org.javafunk.funk.Literals.setWith;
+import static org.javafunk.funk.Iterables.*;
+import static org.javafunk.funk.Literals.*;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 
 public class IterablesTest {
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToConcatIsNull() throws Exception {
+        // When
+        concat(null);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldConvertTheSuppliedIterableToAList() {
         // Given
@@ -40,6 +42,14 @@ public class IterablesTest {
 
         // Then
         assertThat(actualList, hasOnlyItemsInOrder(expectedList));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToAsListIsNull() throws Exception {
+        // When
+        asList(null);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -55,6 +65,14 @@ public class IterablesTest {
         assertThat(actualCollection, hasOnlyItemsInOrder(expectedCollection));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToMaterializeIsNull() throws Exception {
+        // When
+        materialize(null);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldConvertTheSuppliedIterableToASet() throws Exception {
         // Given
@@ -68,6 +86,14 @@ public class IterablesTest {
         assertThat(actualSet, hasOnlyItemsInAnyOrder(expectedSet));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToAsSetIsNull() throws Exception {
+        // When
+        asSet(null);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldConvertTheSuppliedIterableToAMultiset() throws Exception {
         // Given
@@ -79,6 +105,14 @@ public class IterablesTest {
 
         // Then
         assertThat(actualMultiset, hasOnlyItemsInAnyOrder(expectedMultiset));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToAsMultisetIsNull() throws Exception {
+        // When
+        asMultiset(null);
+
+        // Then a NullPointerException is thrown
     }
 
     private static <T> Iterable<T> basicIterableOver(final T... elements) {

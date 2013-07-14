@@ -76,6 +76,17 @@ public class CyclicIteratorTest {
         // Then an IllegalArgumentException is be thrown
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIteratorSuppliedAtConstructionTimeIsNull() throws Exception {
+        // Given
+        Iterator<Integer> input = null;
+
+        // When
+        new CyclicIterator<Integer>(input, 3);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnFalseForHasNextIfANumberOfRepeatsOfZeroIsSpecified() throws Exception {
         // Given

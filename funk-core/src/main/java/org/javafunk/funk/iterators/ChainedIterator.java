@@ -14,17 +14,17 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static java.util.Arrays.asList;
-import static org.javafunk.funk.Literals.iterableBuilderWith;
+import static org.javafunk.funk.Literals.iteratorBuilderWith;
+import static org.javafunk.funk.Literals.iteratorWith;
 
 public class ChainedIterator<T> implements Iterator<T> {
     private Iterator<? extends Iterator<? extends T>> iteratorsIterator;
     private Iterator<? extends T> currentIterator;
 
-    public ChainedIterator(Iterable<? extends Iterator<? extends T>> iteratorCollection) {
-        iteratorsIterator = iteratorCollection.iterator();
-        if (iteratorsIterator.hasNext()) {
-            currentIterator = iteratorsIterator.next();
+    public ChainedIterator(Iterator<? extends Iterator<? extends T>> iteratorsIterator) {
+        this.iteratorsIterator = iteratorsIterator;
+        if (this.iteratorsIterator.hasNext()) {
+            currentIterator = this.iteratorsIterator.next();
         }
     }
 
@@ -67,47 +67,36 @@ public class ChainedIterator<T> implements Iterator<T> {
                 .toString();
     }
 
-    @SuppressWarnings("unchecked")
-    public ChainedIterator(Iterator<? extends T> i) {
-        this(asList(i));
-    }
-
-    @SuppressWarnings("unchecked")
     public ChainedIterator(
             Iterator<? extends T> i1, Iterator<? extends T> i2) {
-        this(asList(i1, i2));
+        this(iteratorWith(i1, i2));
     }
 
-    @SuppressWarnings("unchecked")
     public ChainedIterator(
             Iterator<? extends T> i1, Iterator<? extends T> i2, Iterator<? extends T> i3) {
-        this(asList(i1, i2, i3));
+        this(iteratorWith(i1, i2, i3));
     }
 
-    @SuppressWarnings("unchecked")
     public ChainedIterator(
             Iterator<? extends T> i1, Iterator<? extends T> i2, Iterator<? extends T> i3, Iterator<? extends T> i4) {
-        this(asList(i1, i2, i3, i4));
+        this(iteratorWith(i1, i2, i3, i4));
     }
 
-    @SuppressWarnings("unchecked")
     public ChainedIterator(
             Iterator<? extends T> i1, Iterator<? extends T> i2, Iterator<? extends T> i3, Iterator<? extends T> i4,
             Iterator<? extends T> i5) {
-        this(asList(i1, i2, i3, i4, i5));
+        this(iteratorWith(i1, i2, i3, i4, i5));
     }
 
-    @SuppressWarnings("unchecked")
     public ChainedIterator(
             Iterator<? extends T> i1, Iterator<? extends T> i2, Iterator<? extends T> i3, Iterator<? extends T> i4,
             Iterator<? extends T> i5, Iterator<? extends T> i6) {
-        this(asList(i1, i2, i3, i4, i5, i6));
+        this(iteratorWith(i1, i2, i3, i4, i5, i6));
     }
 
-    @SuppressWarnings("unchecked")
     public ChainedIterator(
             Iterator<? extends T> i1, Iterator<? extends T> i2, Iterator<? extends T> i3, Iterator<? extends T> i4,
             Iterator<? extends T> i5, Iterator<? extends T> i6, Iterator<? extends T>... i7on) {
-        this(iterableBuilderWith(i1, i2, i3, i4, i5, i6).and(i7on).build());
+        this(iteratorBuilderWith(i1, i2, i3, i4, i5, i6).and(i7on).build());
     }
 }
