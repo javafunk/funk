@@ -31,6 +31,18 @@ public class StringsTest {
         assertThat(joinedStrings, is("First, Second, Third"));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToJoinWithSeparatorIsNull() throws Exception {
+        // Given
+        Iterable<String> input = null;
+        String separator = ".";
+
+        // When
+        join(input, separator);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldJoinAllStringsInTheCollectionWithNoSeparator() {
         // Given
@@ -41,6 +53,17 @@ public class StringsTest {
 
         // Then
         assertThat(joinedStrings, is("Hello"));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToJoinIsNull() throws Exception {
+        // Given
+        Iterable<String> input = null;
+
+        // When
+        join(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
