@@ -79,6 +79,17 @@ public class MultisetsTest {
         assertThat(actualMenagerie, is(expectedMenagerie));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToConcatenateIsNull() throws Exception {
+        // Given
+        Iterable<? extends Iterable<?>> input = null;
+
+        // When
+        Multisets.concatenate(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnTheMultisetUnionOfAllIterablesInTheSuppliedIterable() throws Exception {
         // Given
@@ -132,6 +143,17 @@ public class MultisetsTest {
         assertThat(actualMenagerie, is(expectedMenagerie));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToUnionIsNull() throws Exception {
+        // Given
+        Iterable<? extends Iterable<?>> input = null;
+
+        // When
+        Multisets.union(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnTheMultisetIntersectionOfTheSuppliedIterables() throws Exception {
         // Given
@@ -163,6 +185,17 @@ public class MultisetsTest {
         // Then
         assertThat(actualIntersectionMultiset, is(expectedIntersectionMultiset));
     }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToIntersectionIsNull() throws Exception {
+        // Given
+        Iterable<? extends Iterable<?>> input = null;
+
+        // When
+        Multisets.intersection(input);
+
+        // Then a NullPointerException is thrown
+    }
     
     @Test
     public void shouldReturnTheMultisetDifferenceOfAllIterablesInTheSuppliedIterable() {
@@ -192,5 +225,16 @@ public class MultisetsTest {
 
         // Then
         assertThat(actualDifference, is(expectedDifference));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToDifferenceIsNull() throws Exception {
+        // Given
+        Iterable<? extends Iterable<?>> input = null;
+
+        // When
+        Multisets.difference(input);
+
+        // Then a NullPointerException is thrown
     }
 }
