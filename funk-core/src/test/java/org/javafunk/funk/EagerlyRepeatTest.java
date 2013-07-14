@@ -30,4 +30,15 @@ public class EagerlyRepeatTest {
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
     }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfIterablePassedToRepeatIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+
+        // When
+        Eagerly.repeat(input, 3);
+
+        // Then a NullPointerException is thrown.
+    }
 }

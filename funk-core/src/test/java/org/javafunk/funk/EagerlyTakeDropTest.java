@@ -75,6 +75,18 @@ public class EagerlyTakeDropTest {
         // Then an IllegalArgumentException is thrown
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToTakeIsNull() throws Exception {
+        // Given
+        Iterable<String> input = null;
+        Integer numberToTake = 5;
+
+        // When
+        Eagerly.take(input, numberToTake);
+
+        // Then a NullPointerException is thrown.
+    }
+
     @Test
     public void shouldDropTheSpecifiedNumberOfElements() {
         // Given
@@ -127,6 +139,18 @@ public class EagerlyTakeDropTest {
         // Then an IllegalArgumentException is thrown
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfTheIterablePassedToDropIsNull() throws Exception {
+        // Given
+        Iterable<String> input = null;
+        Integer numberToDrop = 3;
+
+        // When
+        Eagerly.drop(input, numberToDrop);
+
+        // Then a NullPointerException is thrown.
+    }
+
     @Test
     public void shouldTakeElementsWhileTheSuppliedPredicateIsTrue() throws Exception {
         // Given
@@ -156,6 +180,22 @@ public class EagerlyTakeDropTest {
         // Then a NullPointerException is thrown
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToTakeWhileIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        UnaryPredicate<? super Integer> predicate = new Predicate<Integer>() {
+            public boolean evaluate(Integer item) {
+                return item < 3;
+            }
+        };
+
+        // When
+        Eagerly.takeWhile(input, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldTakeElementsUntilTheSuppliedPredicateBecomesTrue() throws Exception {
         // Given
@@ -178,6 +218,22 @@ public class EagerlyTakeDropTest {
         // Given
         Iterable<Integer> input = iterableWith(1, 2, 3, 4, 5);
         UnaryPredicate<? super Integer> predicate = null;
+
+        // When
+        Eagerly.takeUntil(input, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfTheIterableSuppliedToTakeUntilIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        UnaryPredicate<? super Integer> predicate = new Predicate<Integer>() {
+            public boolean evaluate(Integer item) {
+                return item > 3;
+            }
+        };
 
         // When
         Eagerly.takeUntil(input, predicate);
@@ -215,6 +271,23 @@ public class EagerlyTakeDropTest {
         // Then a NullPointerException is thrown
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfTheIterablePassedToDropWhileIsNull() throws Exception {
+        // Given
+        Iterable<String> input = null;
+        UnaryPredicate<? super String> predicate = new Predicate<String>() {
+            @Override
+            public boolean evaluate(String item) {
+                return item.length() < 3;
+            }
+        };
+
+        // When
+        Eagerly.dropWhile(input, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldDropElementsUntilTheSuppliedPredicateBecomesTrue() throws Exception {
         // Given
@@ -238,6 +311,23 @@ public class EagerlyTakeDropTest {
         // Given
         Iterable<String> input = iterableWith("a", "aa", "aaa", "aaaa");
         UnaryPredicate<? super String> predicate = null;
+
+        // When
+        Eagerly.dropUntil(input, predicate);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToDropUntilIsNull() throws Exception {
+        // Given
+        Iterable<String> input = null;
+        UnaryPredicate<? super String> predicate = new Predicate<String>() {
+            @Override
+            public boolean evaluate(String item) {
+                return item.contains("b");
+            }
+        };
 
         // When
         Eagerly.dropUntil(input, predicate);

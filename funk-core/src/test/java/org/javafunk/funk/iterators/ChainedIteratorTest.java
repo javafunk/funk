@@ -16,12 +16,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.*;
 import static org.javafunk.funk.Iterators.emptyIterator;
 import static org.javafunk.funk.Literals.*;
-import static org.javafunk.funk.Literals.iteratorWith;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -194,5 +191,16 @@ public class ChainedIteratorTest {
 
         // Then
         assertThat(toString, containsString("first iterator toString"));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIteratorSuppliedAtConstructionTimeIsNull() throws Exception {
+        // Given
+        Iterator<? extends Iterator<Integer>> input = null;
+
+        // When
+        new ChainedIterator<Integer>(input);
+
+        // Then a NullPointerException is thrown
     }
 }

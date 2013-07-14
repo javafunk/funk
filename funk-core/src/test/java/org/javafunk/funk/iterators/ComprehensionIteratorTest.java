@@ -20,9 +20,7 @@ import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.javafunk.funk.Literals.collectionBuilderWith;
-import static org.javafunk.funk.Literals.iteratorWith;
-import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
@@ -490,5 +488,18 @@ public class ComprehensionIteratorTest {
 
         // Then
         assertThat(toString, containsString(predicates.toString()));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfSourceIteratorPassedAtConstructionTimeIsNull() throws Exception {
+        // Given
+        UnaryFunction<Integer, Integer> function = UnaryFunctions.identity();
+        Iterator<Integer> iterator = null;
+        Predicate<Object> predicate = Predicates.alwaysTrue();
+
+        // When
+        new ComprehensionIterator<Integer, Integer>(function, iterator, iterableWith(predicate));
+
+        // Then a NullPointerException is thrown
     }
 }

@@ -14,11 +14,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import static org.javafunk.funk.Literals.collectionFrom;
-import static org.javafunk.funk.Literals.iterable;
-import static org.javafunk.funk.Literals.listFrom;
-import static org.javafunk.funk.Literals.multisetFrom;
-import static org.javafunk.funk.Literals.setFrom;
+import static org.javafunk.funk.Literals.*;
 
 public class Iterables {
     private Iterables() {}

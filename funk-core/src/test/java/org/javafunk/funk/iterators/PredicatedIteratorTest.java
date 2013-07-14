@@ -19,12 +19,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.javafunk.funk.Literals.collectionBuilderWith;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.iteratorWith;
+import static org.hamcrest.Matchers.*;
+import static org.javafunk.funk.Literals.*;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -287,6 +283,18 @@ public class PredicatedIteratorTest {
         new PredicatedIterator<Integer>(input, predicate);
 
         // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIteratorSuppliedToConstructorIsNull() throws Exception {
+        // Given
+        Iterator<Integer> input = null;
+        Predicate<Integer> predicate = Predicates.alwaysTrue();
+
+        // When
+        new PredicatedIterator<Integer>(input, predicate);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test

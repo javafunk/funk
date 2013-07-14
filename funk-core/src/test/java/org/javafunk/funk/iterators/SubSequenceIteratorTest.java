@@ -132,6 +132,18 @@ public class SubSequenceIteratorTest {
         // Then an IllegalArgumentException should be thrown
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIteratorSuppliedAtConstructionTimeIsNull() throws Exception {
+        // Given
+        Iterator<Integer> input = null;
+        Integer start = 0, stop = 4, step = 2;
+
+        // When
+        new SubSequenceIterator<Integer>(input, start, stop, step);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldDefaultToZeroForStartIfNullSupplied() throws Exception {
         // Given

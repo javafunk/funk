@@ -8,14 +8,7 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.datastructures.tuples.Nonuple;
-import org.javafunk.funk.datastructures.tuples.Octuple;
-import org.javafunk.funk.datastructures.tuples.Pair;
-import org.javafunk.funk.datastructures.tuples.Quadruple;
-import org.javafunk.funk.datastructures.tuples.Quintuple;
-import org.javafunk.funk.datastructures.tuples.Septuple;
-import org.javafunk.funk.datastructures.tuples.Sextuple;
-import org.javafunk.funk.datastructures.tuples.Triple;
+import org.javafunk.funk.datastructures.tuples.*;
 import org.javafunk.funk.testclasses.Age;
 import org.javafunk.funk.testclasses.Colour;
 import org.javafunk.funk.testclasses.Name;
@@ -25,9 +18,7 @@ import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.collectionWith;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.testclasses.Age.age;
 import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Name.name;
@@ -48,6 +39,17 @@ public class EagerlyZipEnumerateTest {
 
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToEnumerateIsNull() throws Exception {
+        // Given
+        Iterable<String> input = null;
+
+        // When
+        Eagerly.enumerate(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -269,5 +271,29 @@ public class EagerlyZipEnumerateTest {
 
         // Then
         assertThat(actualOutput, hasOnlyItemsInOrder(expectedOutput));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToZipIsNull() throws Exception {
+        // Given
+        Iterable<Iterable<?>> input = null;
+
+        // When
+        Eagerly.zip(input);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfAnyOfTheIterablesPassedToZipIsNull() throws Exception {
+        // Given
+        Iterable<Integer> first = iterableWith(1, 2, 3);
+        Iterable<String> second = null;
+        Iterable<? extends Iterable<?>> input = iterableWith(first, second);
+
+        // When
+        Eagerly.zip(input);
+
+        // Then a NullPointerException is thrown
     }
 }

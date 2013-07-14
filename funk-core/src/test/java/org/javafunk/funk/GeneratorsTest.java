@@ -43,4 +43,12 @@ public class GeneratorsTest {
         // Then
         assertThat(actualGenerator, is(expectedGenerator));
     }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterableUsedToConstructFiniteGeneratorIsNull() throws Exception {
+        // When
+        finiteGenerator(null);
+
+        // Then a NullPointerException is thrown
+    }
 }

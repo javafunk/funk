@@ -16,6 +16,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class CyclicIterator<T> implements Iterator<T> {
     private Iterator<? extends T> iterator;
     private Integer numberOfTimesToRepeat;
@@ -31,7 +33,7 @@ public class CyclicIterator<T> implements Iterator<T> {
         if (numberOfTimesToRepeat < 0) {
             throw new IllegalArgumentException("Number of times to repeat cannot be negative");
         }
-        this.iterator = iterator;
+        this.iterator = checkNotNull(iterator);
         this.numberOfTimesToRepeat = numberOfTimesToRepeat;
         this.repeats = 1;
     }

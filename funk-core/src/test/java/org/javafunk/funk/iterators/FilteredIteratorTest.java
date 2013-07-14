@@ -8,6 +8,7 @@
  */
 package org.javafunk.funk.iterators;
 
+import org.javafunk.funk.Predicates;
 import org.javafunk.funk.functors.Predicate;
 import org.junit.Test;
 
@@ -246,6 +247,18 @@ public class FilteredIteratorTest {
         new FilteredIterator<Integer>(input, predicate);
 
         // Then a NullPointerException is thrown.
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIteratorSuppliedAtConstructionTimeIsNull() throws Exception {
+        // Given
+        Iterator<Integer> input = null;
+        Predicate<Integer> predicate = Predicates.alwaysTrue();
+
+        // When
+        new FilteredIterator<Integer>(input, predicate);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test

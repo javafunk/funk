@@ -9,11 +9,14 @@ import org.javafunk.funk.functors.Predicate;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static org.javafunk.funk.Checks.returnOrThrowIfContainsNull;
+
 public class ZippedIterator implements Iterator<Iterable<?>> {
     private final Iterable<? extends Iterator<?>> iterators;
 
     public ZippedIterator(Iterable<? extends Iterator<?>> iterators) {
-        this.iterators = iterators;
+        this.iterators = returnOrThrowIfContainsNull(checkNotNull(iterators));
     }
 
     public boolean hasNext() {

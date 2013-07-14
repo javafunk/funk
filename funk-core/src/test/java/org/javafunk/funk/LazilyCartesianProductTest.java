@@ -10,19 +10,13 @@ package org.javafunk.funk;
 
 import org.hamcrest.Matchers;
 import org.javafunk.funk.annotations.ToDo;
-import org.javafunk.funk.datastructures.tuples.Nonuple;
-import org.javafunk.funk.datastructures.tuples.Octuple;
-import org.javafunk.funk.datastructures.tuples.Pair;
-import org.javafunk.funk.datastructures.tuples.Quadruple;
-import org.javafunk.funk.datastructures.tuples.Quintuple;
-import org.javafunk.funk.datastructures.tuples.Septuple;
-import org.javafunk.funk.datastructures.tuples.Sextuple;
-import org.javafunk.funk.datastructures.tuples.Triple;
+import org.javafunk.funk.datastructures.tuples.*;
 import org.javafunk.funk.functors.Action;
 import org.javafunk.funk.testclasses.Age;
 import org.javafunk.funk.testclasses.Colour;
 import org.javafunk.funk.testclasses.Name;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -34,10 +28,7 @@ import static org.javafunk.funk.Eagerly.times;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Lazily.cartesianProduct;
 import static org.javafunk.funk.Lazily.cycle;
-import static org.javafunk.funk.Literals.collectionWith;
-import static org.javafunk.funk.Literals.iterable;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.funk.Literals.tuple;
+import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.testclasses.Age.age;
 import static org.javafunk.funk.testclasses.Colour.colour;
 import static org.javafunk.funk.testclasses.Name.name;
@@ -155,6 +146,7 @@ public class LazilyCartesianProductTest {
     }
 
     @Test
+    @Ignore
     @ToDo(raisedBy = "Toby",
             date = "2012-04-28",
             message = "There must be a better way to test this...")

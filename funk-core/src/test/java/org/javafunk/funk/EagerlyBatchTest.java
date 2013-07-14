@@ -58,4 +58,16 @@ public class EagerlyBatchTest {
 
         // Then an IllegalArgumentException is thrown.
     }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfTheIterablePassedToBatchIsNull() throws Exception {
+        // Given
+        Iterable<Integer> input = null;
+        Integer batchSize = 2;
+
+        // When
+        Eagerly.batch(input, batchSize);
+
+        // Then a NullPointerException is thrown.
+    }
 }

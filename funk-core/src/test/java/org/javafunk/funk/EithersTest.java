@@ -36,6 +36,17 @@ public class EithersTest {
         assertThat(materialize(rights), hasOnlyItemsInAnyOrder(3, 4));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterableSuppliedToRightsIsNull() throws Exception {
+        // Given
+        Iterable<Either<String, Integer>> input = null;
+
+        // When
+        Eithers.rights(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldCollapseIterableOfEithersOntoTheirLefts() throws Exception {
         // Given
@@ -50,6 +61,17 @@ public class EithersTest {
 
         // Then
         assertThat(materialize(lefts), hasOnlyItemsInAnyOrder("first", "second"));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterableSuppliedToLeftsIsNull() throws Exception {
+        // Given
+        Iterable<Either<String, Integer>> input = null;
+
+        // When
+        Eithers.lefts(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test

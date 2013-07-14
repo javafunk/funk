@@ -40,6 +40,14 @@ public class IteratorsTest {
         assertThat(iterable.iterator(), is(iterator));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToAsIterableIsNull() throws Exception {
+        // When
+        asIterable(null);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnAnIteratorContainingNoElements() {
         // When
@@ -62,6 +70,14 @@ public class IteratorsTest {
         assertThat(actualList, is(expectedList));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToAsListIsNull() throws Exception {
+        // When
+        asList(null);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldConvertTheSuppliedIteratorToASet() {
         // Given
@@ -75,6 +91,14 @@ public class IteratorsTest {
         assertThat(actualSet, is(expectedSet));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToAsSetIsNull() throws Exception {
+        // When
+        asSet(null);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldConvertTheSuppliedIteratorToAMultiset() {
         // Given
@@ -86,5 +110,13 @@ public class IteratorsTest {
 
         // Then
         assertThat(actualMultiset, is(expectedMultiset));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToAsMultisetIsNull() throws Exception {
+        // When
+        asMultiset(null);
+
+        // Then a NullPointerException is thrown
     }
 }

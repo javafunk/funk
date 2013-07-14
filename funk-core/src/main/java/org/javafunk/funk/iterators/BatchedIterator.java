@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.Collections.unmodifiableList;
 
 public class BatchedIterator<T> implements Iterator<Iterable<T>> {
@@ -23,7 +24,7 @@ public class BatchedIterator<T> implements Iterator<Iterable<T>> {
     private int batchSize;
 
     public BatchedIterator(Iterator<? extends T> iterator, int batchSize) {
-        this.iterator = iterator;
+        this.iterator = checkNotNull(iterator);
         if (batchSize <= 0) {
             throw new IllegalArgumentException("Batch size must be greater than zero.");
         }
