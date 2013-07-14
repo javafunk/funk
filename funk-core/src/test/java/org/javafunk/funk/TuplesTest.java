@@ -68,6 +68,17 @@ public class TuplesTest {
         assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToFirstsIsNull() throws Exception {
+        // Given
+        Iterable<? extends First<Integer>> input = null;
+
+        // When
+        Tuples.firsts(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldMapToSecondOfSuppliedSecondable() throws Exception {
         // Given
@@ -93,6 +104,17 @@ public class TuplesTest {
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToSecondsIsNull() throws Exception {
+        // Given
+        Iterable<? extends Second<Integer>> input = null;
+
+        // When
+        Tuples.seconds(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -125,6 +147,17 @@ public class TuplesTest {
         assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToThirdsIsNull() throws Exception {
+        // Given
+        Iterable<? extends Third<Integer>> input = null;
+
+        // When
+        Tuples.thirds(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldMapToFourthOfSuppliedFourthable() throws Exception {
         // Given
@@ -153,6 +186,17 @@ public class TuplesTest {
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToFourthsIsNull() throws Exception {
+        // Given
+        Iterable<? extends Fourth<Integer>> input = null;
+
+        // When
+        Tuples.fourths(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -185,6 +229,17 @@ public class TuplesTest {
         assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToFifthsIsNull() throws Exception {
+        // Given
+        Iterable<? extends Fifth<Integer>> input = null;
+
+        // When
+        Tuples.fifths(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldMapToSixthOfSuppliedSixthable() throws Exception {
         // Given
@@ -213,6 +268,17 @@ public class TuplesTest {
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToSixthsIsNull() throws Exception {
+        // Given
+        Iterable<? extends Sixth<Integer>> input = null;
+
+        // When
+        Tuples.sixths(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
@@ -245,6 +311,17 @@ public class TuplesTest {
         assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToSeventhsIsNull() throws Exception {
+        // Given
+        Iterable<? extends Seventh<Integer>> input = null;
+
+        // When
+        Tuples.sevenths(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldMapToEighthOfSuppliedEighthable() throws Exception {
         // Given
@@ -275,6 +352,17 @@ public class TuplesTest {
         assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToEighthsIsNull() throws Exception {
+        // Given
+        Iterable<? extends Eighth<Integer>> input = null;
+
+        // When
+        Tuples.eighths(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldMapToNinthOfSuppliedNinthable() throws Exception {
         // Given
@@ -303,5 +391,16 @@ public class TuplesTest {
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToNinthsIsNull() throws Exception {
+        // Given
+        Iterable<? extends Ninth<Integer>> input = null;
+
+        // When
+        Tuples.ninths(input);
+
+        // Then a NullPointerException is thrown
     }
 }
