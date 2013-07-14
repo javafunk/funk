@@ -31,18 +31,6 @@ public class IterablesTest {
         // Then a NullPointerException is thrown
     }
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowANullPointerExceptionIfAnyOfTheIterablesPassedToConcatIsNull() throws Exception {
-        // Given
-        Iterable<Integer> first = iterableWith(1, 2, 3);
-        Iterable<Integer> second = null;
-
-        // When
-        concat(iterableWith(first, second));
-
-        // Then a NullPointerException is thrown
-    }
-
     @Test
     public void shouldConvertTheSuppliedIterableToAList() {
         // Given
