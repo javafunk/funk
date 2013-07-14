@@ -24,6 +24,17 @@ public class OptionsTest {
         assertThat(actual, hasOnlyItemsInOrder(expected));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToSomesIsNull() throws Exception {
+        // Given
+        Iterable<Option<Integer>> input = null;
+
+        // When
+        Options.somes(input);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldReturnAllNonesFromTheSuppliedIterable() throws Exception {
         // Given
@@ -35,6 +46,17 @@ public class OptionsTest {
 
         // Then
         assertThat(actual, hasOnlyItemsInOrder(expected));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIterablePassedToNoneIsNull() throws Exception {
+        // Given
+        Iterable<Option<Integer>> input = null;
+
+        // When
+        Options.nones(input);
+
+        // Then a NullPointerException is thrown
     }
 
     @Test
