@@ -15,6 +15,7 @@ import org.javafunk.funk.functors.Action;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static org.javafunk.funk.Eagerly.times;
 
 public class SubSequenceIterator<T> extends CachingIterator<T> {
@@ -27,7 +28,7 @@ public class SubSequenceIterator<T> extends CachingIterator<T> {
     public SubSequenceIterator(Iterator<? extends T> iterator, Integer start, Integer stop, Integer step) {
         validateBounds(start, stop, step);
 
-        this.iterator = iterator;
+        this.iterator = checkNotNull(iterator);
         this.start = start == null ? 0 : start;
         this.stop = stop == null ? Integer.MAX_VALUE : stop;
         this.step = step == null ? 1 : step;

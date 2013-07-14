@@ -71,6 +71,18 @@ public class BatchedIteratorTest {
         // Then an IllegalArgumentException is thrown
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfTheIteratorSuppliedAtConstructionTimeIsNull() throws Exception {
+        // Given
+        Iterator<String> input = null;
+        Integer batchSize = 3;
+
+        // When
+        new BatchedIterator<String>(input, batchSize);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     public void shouldAllowLaterIterablesToBeTraversedBeforeEarlierOnes() {
         // Given

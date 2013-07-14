@@ -21,7 +21,7 @@ public class MappedIterator<S, T> implements Iterator<T> {
     private UnaryFunction<? super S, ? extends T> function;
 
     public MappedIterator(Iterator<? extends S> iterator, UnaryFunction<? super S, ? extends T> mapper) {
-        this.iterator = iterator;
+        this.iterator = checkNotNull(iterator);
         this.function = checkNotNull(mapper);
     }
 

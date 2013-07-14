@@ -22,7 +22,7 @@ public class ComprehensionIterator<S, T> extends CachingIterator<T> {
             Iterator<S> iterator,
             Iterable<? extends UnaryPredicate<? super S>> predicates) {
         this.mapper = checkNotNull(mapper);
-        this.iterator = iterator;
+        this.iterator = checkNotNull(iterator);
         this.predicates = returnOrThrowIfContainsNull(predicates);
     }
 

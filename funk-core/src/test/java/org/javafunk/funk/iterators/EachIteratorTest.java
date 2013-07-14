@@ -69,4 +69,20 @@ public class EachIteratorTest {
         // Then
         assertThat(toString, containsString("the-procedure"));
     }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIteratorSuppliedAtConstructionTimeIsNull() throws Exception {
+        // Given
+        Iterator<Integer> input = null;
+        UnaryProcedure<Integer> action = new UnaryProcedure<Integer>(){
+            @Override public void execute(Integer input) {
+                System.out.println(input);
+            }
+        };
+
+        // When
+        new EachIterator<Integer>(input, action);
+
+        // Then a NullPointerException is thrown
+    }
 }

@@ -162,6 +162,18 @@ public class MappedIteratorTest {
         // Then a NullPointerException is thrown.
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowANullPointerExceptionIfIteratorSuppliedAtConstructionTimeIsNull() throws Exception {
+        // Given
+        Iterator<Integer> input = null;
+        UnaryFunction<Integer, Integer> mapper = UnaryFunctions.identity();
+
+        // When
+        new MappedIterator<Integer, Integer>(input, mapper);
+
+        // Then a NullPointerException is thrown
+    }
+
     @Test
     @SuppressWarnings("unchecked")
     public void shouldIncludeIteratorInToStringRepresentation() throws Exception {

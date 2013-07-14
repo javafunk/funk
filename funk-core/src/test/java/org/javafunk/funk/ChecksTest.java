@@ -37,4 +37,16 @@ public class ChecksTest {
             assertThat(exception.getMessage(), is("Oops"));
         }
     }
+
+    @Test
+    public void shouldReturnIfContainsNoNullsCheckIsSuppliedEmptyIterable() throws Exception {
+        // Given
+        Iterable<Integer> input = iterable();
+
+        // When
+        Iterable<Integer> output = Checks.returnOrThrowIfContainsNull(input);
+
+        // Then
+        assertThat(output, is(input));
+    }
 }
