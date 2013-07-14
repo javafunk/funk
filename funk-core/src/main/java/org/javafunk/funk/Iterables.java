@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import static org.javafunk.funk.Checks.returnOrThrowIfContainsNull;
 import static org.javafunk.funk.Literals.collectionFrom;
 import static org.javafunk.funk.Literals.iterable;
 import static org.javafunk.funk.Literals.listFrom;
@@ -24,7 +25,8 @@ public class Iterables {
     private Iterables() {}
 
     public static <T> Iterable<T> concat(Iterable<? extends Iterable<? extends T>> iterables) {
-        return com.google.common.collect.Iterables.concat(iterables);
+        return com.google.common.collect.Iterables.concat(
+                returnOrThrowIfContainsNull(iterables));
     }
 
     public static <T> List<T> asList(Iterable<? extends T> iterable) {

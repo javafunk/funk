@@ -19,6 +19,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class Iterators {
     private Iterators() {}
 
@@ -54,7 +56,7 @@ public class Iterators {
         private Iterator<T> iterator;
 
         public IteratorAsIterable(Iterator<T> iterator) {
-            this.iterator = iterator;
+            this.iterator = checkNotNull(iterator);
         }
 
         public Iterator<T> iterator() {
