@@ -2,13 +2,13 @@ package org.javafunk.funk.testclasses;
 
 import com.google.common.collect.LinkedHashMultiset;
 import com.google.common.collect.Multiset;
+import org.apache.commons.lang.NotImplementedException;
 import org.javafunk.funk.Eagerly;
 import org.javafunk.funk.Lazily;
 import org.javafunk.funk.Predicates;
 import org.javafunk.funk.datastructures.tuples.Pair;
 import org.javafunk.funk.functors.Action;
 import org.javafunk.funk.functors.Predicate;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
 
