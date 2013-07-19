@@ -1,8 +1,6 @@
 import org.gradle.api.artifacts.maven.MavenDeployment
 
 dependencies {
-  compile "commons-beanutils:commons-beanutils:1.8.3"
-  compile "commons-collections:commons-collections:3.2.1"
   compile "commons-lang:commons-lang:2.6"
   compile "org.hamcrest:hamcrest-core:1.2.1"
   compile "org.hamcrest:hamcrest-library:1.2.1"
