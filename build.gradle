@@ -79,6 +79,7 @@ configurations {
 dependencies {
   compile project(":funk-core")
   compile project(":funk-matchers")
+  compile project(":funk-jackson")
 }
 
 task wrapper(type: Wrapper) {

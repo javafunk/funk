@@ -1,0 +1,31 @@
+import org.gradle.api.artifacts.maven.MavenDeployment
+
+dependencies {
+  compile project(':funk-core')
+
+  compile 'com.fasterxml.jackson.core:jackson-databind:2.3.3'
+
+  testCompile project(':funk-matchers')
+  testCompile "org.javafunk.matchbox:matchbox:0.1.4"
+}
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+      repository(url: releaseRepositoryUrl, authenticationDetails)
+      snapshotRepository(url: snapshotRepositoryUrl, authenticationDetails)
+
+      pom.project {
+        name 'Funk Jackson'
+        description 'Functional utilities for Java: jackson mappers for types in core APIs'
+        packaging 'jar'
+      }
+
+      pom.whenConfigured { pom ->
+        rootProject.addAsParentFor(pom)
+      }
+    }
+  }
+}

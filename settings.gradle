@@ -1,5 +1,6 @@
 rootProject.name = 'funk'
 include(
   "funk-core",
-  "funk-matchers"
+  "funk-matchers",
+  "funk-jackson"
 )
