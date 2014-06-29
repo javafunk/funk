@@ -12,11 +12,11 @@ package org.javafunk.funk.jackson.monad;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.javafunk.funk.jackson.FunkModule;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -65,6 +65,19 @@ public class OptionSerializerTest {
     }
 
     @Test
+    public void shouldSerializeNoneInsideAnObject() throws Exception {
+        // Given
+        OptionData data = new OptionData();
+        data.myString = none();
+
+        // When
+        String value = objectMapper.writeValueAsString(data);
+
+        // Then
+        assertThat(value, is("{\"myString\":null}"));
+    }
+
+    @Test
     public void shouldSerializeComplexObject() throws Exception {
         // Given
         OptionData data = new OptionData();
@@ -91,12 +104,11 @@ public class OptionSerializerTest {
     }
 
     @Test
-    @Ignore("This is currently failing, need to do more investigation to find out why")
-    public void shouldTreatNoneAsNullAndExcludeWhenIncludeNonNullIsSet() throws Exception {
+    public void shouldTreatNoneAsNullAndExcludeWhenIncludeNonEmptyIsSet() throws Exception {
         // Given
         ObjectMapper objectMapper = new ObjectMapper()
                 .registerModule(new FunkModule())
-                .setSerializationInclusion(NON_NULL);
+                .setSerializationInclusion(NON_EMPTY);
 
         OptionData data = new OptionData();
         data.myString = none();
