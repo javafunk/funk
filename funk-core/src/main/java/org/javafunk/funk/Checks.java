@@ -4,6 +4,8 @@ import static org.javafunk.funk.Eagerly.any;
 import static org.javafunk.funk.Predicates.equalTo;
 
 public class Checks {
+    private static final NullPointerException NULL_POINTER_EXCEPTION = new NullPointerException();;
+
     public static <T> T returnOrThrowIfNull(T value, RuntimeException exception) {
         return orThrowIf(value, value == null, exception);
     }
@@ -20,8 +22,7 @@ public class Checks {
         return orThrowIf(
                 iterable,
                 any(iterable, equalTo(null)),
-                new NullPointerException()
-        );
+                NULL_POINTER_EXCEPTION);
     }
 
     private static <T> T orThrowIf(T value, boolean condition, RuntimeException exception) {
