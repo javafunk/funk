@@ -54,13 +54,12 @@ public class Literals {
      *
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
-     * declaration. For example:
+     * declaration. For example:</p>
      * <blockquote>
      * <pre>
      *   Iterable&lt;String&gt; strings = iterable();
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param <E> The type of the elements contained in the {@code Iterable}.
      * @return An {@code Iterable} instance over the type {@code E} containing no elements.
@@ -94,7 +93,7 @@ public class Literals {
      *
      * <p>This form of literal is most suited to inline usage such as when passing an
      * empty iterable as a parameter in a method call since it reads more clearly than
-     * {@link #iterable()}. For example, compare the following:
+     * {@link #iterable()}. For example, compare the following:</p>
      * <blockquote>
      * <pre>
      *   public class Account {
@@ -109,7 +108,6 @@ public class Literals {
      *   Account account2 = new Account(new Money(0), iterableOf(Money.class));
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elementClass A {@code Class} representing the type of elements
      *                     contained in this {@code Iterable}
@@ -127,7 +125,7 @@ public class Literals {
      * which they are yielded from the supplied {@code Iterable}.
      *
      * <p>This form of literal is useful when an immutable copy of an {@code Iterable}
-     * is required. For example:
+     * is required. For example:</p>
      * <blockquote>
      * <pre>
      *   public class Product {
@@ -139,7 +137,6 @@ public class Literals {
      *   }
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elements An {@code Iterable} of elements from which an {@code Iterable} should
      *                 be constructed.
@@ -158,20 +155,19 @@ public class Literals {
      * in the resulting {@code Iterable} is the same as the order of the elements
      * in the array.
      *
-     * <p>For example, the following:
+     * <p>For example, the following:</p>
      * <blockquote>
      * <pre>
      *   String[] strings = new String[]{"one", "two", "three"};
      *   Iterable&lt;String&gt; iterableOfStrings = Literals.iterableFrom(strings);
      * </pre>
      * </blockquote>
-     * is equivalent to:
+     * <p>is equivalent to:</p>
      * <blockquote>
      * <pre>
-     *   Iterable&ltString&gt; iterableOfStrings = Literals.iterableWith("one", "two", "three");
+     *   Iterable&lt;String&gt; iterableOfStrings = Literals.iterableWith("one", "two", "three");
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elementArray An array of elements from which an {@code Iterable} should be
      *                     constructed.
@@ -389,7 +385,7 @@ public class Literals {
     /**
      * Returns an {@code IterableBuilder} containing no elements.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * An {@code IterableBuilder} can be used to assemble an {@code Iterable} as follows:
      * <blockquote>
      * <pre>
@@ -420,7 +416,7 @@ public class Literals {
      * Returns an {@code IterableBuilder} over the type of the supplied {@code Class}
      * containing no elements.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * An {@code IterableBuilder} can be used to assemble an {@code Iterable} as follows:
      * <blockquote>
      * <pre>
@@ -454,7 +450,7 @@ public class Literals {
      * Returns an {@code IterableBuilder} over type {@code E} initialised with the elements
      * contained in the supplied {@code Iterable}.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * An {@code IterableBuilder} can be used to assemble an {@code Iterable} from two existing
      * {@code Collection} instances as follows:
      * <blockquote>
@@ -490,7 +486,7 @@ public class Literals {
      * Returns an {@code IterableBuilder} over type {@code E} initialised with the elements
      * contained in the supplied array.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * An {@code IterableBuilder} can be used to assemble an {@code Iterable} from two existing
      * arrays as follows:
      * <blockquote>
@@ -743,13 +739,12 @@ public class Literals {
      *
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
-     * declaration. For example:
+     * declaration. For example:</p>
      * <blockquote>
      * <pre>
      *   Iterator&lt;String&gt; strings = iterator();
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param <E> The type of the elements contained in the {@code Iterator}.
      * @return An {@code Iterator} instance over the type {@code E} containing no elements.
@@ -782,7 +777,7 @@ public class Literals {
      *
      * <p>This form of literal is most suited to inline usage such as when passing an
      * empty iterator as a parameter in a method call since it reads more clearly than
-     * {@link #iterator()}. For example, compare the following:
+     * {@link #iterator()}. For example, compare the following:</p>
      * <blockquote>
      * <pre>
      *   public class Iterators {
@@ -797,7 +792,6 @@ public class Literals {
      *   Iterator&lt;Character&gt; bufferedIterator2 = Iterators.buffer(iterableOf(Character.class));
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elementClass A {@code Class} representing the type of elements
      *                     contained in this {@code Iterator}
@@ -815,11 +809,11 @@ public class Literals {
      * which they are yielded from the supplied {@code Iterable}.
      *
      * <p>This form of literal is useful when an immutable {@code Iterator} from an
-     * {@code Iterable} is required. For example:
+     * {@code Iterable} is required. For example:</p>
      * <blockquote>
      * <pre>
      *   public class DataStructure&lt;T&gt; implements Iterable&lt;T&gt; {
-     *     private final Iterable&ltT&gt backingStore;
+     *     private final Iterable&lt;T&gt; backingStore;
      *
      *     public Iterator&lt;T&gt; iterator() {
      *       return iteratorFrom(backingStore);
@@ -829,7 +823,6 @@ public class Literals {
      *   }
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elements An {@code Iterable} of elements from which an {@code Iterator} should
      *                 be constructed.
@@ -848,20 +841,19 @@ public class Literals {
      * in the resulting {@code Iterator} is the same as the order of the elements
      * in the array.
      *
-     * <p>For example, the following:
+     * <p>For example, the following:</p>
      * <blockquote>
      * <pre>
      *   String[] strings = new String[]{"one", "two", "three"};
      *   Iterator&lt;String&gt; iteratorOfStrings = Literals.iteratorFrom(strings);
      * </pre>
      * </blockquote>
-     * is equivalent to:
+     * <p>is equivalent to:</p>
      * <blockquote>
      * <pre>
-     *   Iterator&ltString&gt; iteratorOfStrings = Literals.iteratorWith("one", "two", "three");
+     *   Iterator&lt;String&gt; iteratorOfStrings = Literals.iteratorWith("one", "two", "three");
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elementArray An array of elements from which an {@code Iterator} should be
      *                     constructed.
@@ -1079,7 +1071,7 @@ public class Literals {
     /**
      * Returns an {@code IteratorBuilder} containing no elements.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * An {@code IteratorBuilder} can be used to assemble an {@code Iterator} as follows:
      * <blockquote>
      * <pre>
@@ -1110,7 +1102,7 @@ public class Literals {
      * Returns an {@code IteratorBuilder} over the type of the supplied {@code Class}
      * containing no elements.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * An {@code IteratorBuilder} can be used to assemble an {@code Iterator} as follows:
      * <blockquote>
      * <pre>
@@ -1144,7 +1136,7 @@ public class Literals {
      * Returns an {@code IteratorBuilder} over type {@code E} initialised with the elements
      * contained in the supplied {@code Iterator}.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * An {@code IteratorBuilder} can be used to assemble an {@code Iterator} from two existing
      * {@code Collection} instances as follows:
      * <blockquote>
@@ -1180,7 +1172,7 @@ public class Literals {
      * Returns an {@code IteratorBuilder} over type {@code E} initialised with the elements
      * contained in the supplied array.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * An {@code IteratorBuilder} can be used to assemble an {@code Iterator} from two existing
      * arrays as follows:
      * <blockquote>
@@ -1433,13 +1425,12 @@ public class Literals {
      *
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
-     * declaration. For example:
+     * declaration. For example:</p>
      * <blockquote>
      * <pre>
      *   Collection&lt;Long&gt; numbers = collection();
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param <E> The type of the elements contained in the {@code Collection}.
      * @return A {@code Collection} instance over the type {@code E} containing no elements.
@@ -1472,7 +1463,7 @@ public class Literals {
      *
      * <p>This form of literal is most suited to inline usage such as when passing an
      * empty collection as a parameter in a method call since it reads more clearly than
-     * {@link #collection()}. For example, compare the following:
+     * {@link #collection()}. For example, compare the following:</p>
      * <blockquote>
      * <pre>
      *   public class Tree {
@@ -1487,7 +1478,6 @@ public class Literals {
      *   tree.addNode(new LeafNode(), collectionOf(Attribute.class));
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elementClass A {@code Class} representing the type of elements
      *                     contained in this {@code Collection}
@@ -1505,14 +1495,13 @@ public class Literals {
      * which they are yielded from the supplied {@code Iterable}.
      *
      * <p>This form of literal is useful when an object conforming to the {@code Collection}
-     * interface is required and only an {@code Iterable} is available. For example:
+     * interface is required and only an {@code Iterable} is available. For example:</p>
      * <blockquote>
      * <pre>
      *   Iterable&lt;Word&gt; words = book.getWords();
      *   statusBar.displayWordCount(collectionFrom(words).size());
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elements An {@code Iterable} of elements from which a {@code Collection} should
      *                 be constructed.
@@ -1531,20 +1520,19 @@ public class Literals {
      * in the resulting {@code Collection} is the same as the order of the elements
      * in the array.
      *
-     * <p>For example, the following:
+     * <p>For example, the following:</p>
      * <blockquote>
      * <pre>
      *   String[] strings = new String[]{"one", "one", "two", "three"};
      *   Collection&lt;String&gt; collectionOfStrings = Literals.collectionFrom(strings);
      * </pre>
      * </blockquote>
-     * is equivalent to:
+     * <p>is equivalent to:</p>
      * <blockquote>
      * <pre>
-     *   Collection&ltString&gt; collectionOfStrings = Literals.collectionWith("one", "one", "two", "three");
+     *   Collection&lt;String&gt; collectionOfStrings = Literals.collectionWith("one", "one", "two", "three");
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elementArray An array of elements from which a {@code Collection} should be
      *                     constructed.
@@ -1762,7 +1750,7 @@ public class Literals {
     /**
      * Returns a {@code CollectionBuilder} containing no elements.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code CollectionBuilder} can be used to assemble a {@code Collection} as follows:
      * <blockquote>
      * <pre>
@@ -1793,7 +1781,7 @@ public class Literals {
      * Returns a {@code CollectionBuilder} over the type of the supplied {@code Class}
      * containing no elements.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code CollectionBuilder} can be used to assemble a {@code Collection} as follows:
      * <blockquote>
      * <pre>
@@ -1827,7 +1815,7 @@ public class Literals {
      * Returns a {@code CollectionBuilder} over type {@code E} initialised with the elements
      * contained in the supplied {@code Collection}.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code CollectionBuilder} can be used to assemble a {@code Collection} from two existing
      * {@code List} instances as follows:
      * <blockquote>
@@ -1863,7 +1851,7 @@ public class Literals {
      * Returns a {@code CollectionBuilder} over type {@code E} initialised with the elements
      * contained in the supplied array.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code CollectionBuilder} can be used to assemble a {@code Collection} from two existing
      * arrays as follows:
      * <blockquote>
@@ -2116,13 +2104,12 @@ public class Literals {
      *
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
-     * declaration. For example:
+     * declaration. For example:</p>
      * <blockquote>
      * <pre>
      *   List&lt;String&gt; strings = list();
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param <E> The type of the elements contained in the {@code List}.
      * @return A {@code List} instance over the type {@code E} containing no elements.
@@ -2155,7 +2142,7 @@ public class Literals {
      *
      * <p>This form of literal is most suited to inline usage such as when passing an
      * empty list as a parameter in a method call since it reads more clearly than
-     * {@link #list()}. For example, compare the following:
+     * {@link #list()}. For example, compare the following:</p>
      * <blockquote>
      * <pre>
      *   public class Calculation {
@@ -2170,7 +2157,6 @@ public class Literals {
      *   Calculation sum2 = new Calculation(Type.SUM, listOf(Integer.class));
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elementClass A {@code Class} representing the type of elements
      *                     contained in this {@code List}
@@ -2189,7 +2175,7 @@ public class Literals {
      *
      * <p>This form of literal is useful when a number of lazy operations have been
      * performed resulting in an {@code Iterable} where a collection implementing
-     * the {@code List} contract is required. For example:
+     * the {@code List} contract is required. For example:</p>
      * <blockquote>
      * <pre>
      *   List&lt;Person&gt; people = Literals.listWith(firstPerson, secondPerson, thirdPerson);
@@ -2199,7 +2185,6 @@ public class Literals {
      *   List&lt;StreetName&gt; listOfAvenues = Literals.listFrom(avenueStreetNames);
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elements An {@code Iterable} of elements from which a {@code List} should be
      *                 constructed.
@@ -2216,20 +2201,19 @@ public class Literals {
      * elements from the supplied array. The order of the elements in the resulting
      * {@code List} is the same as the order of the elements in the array.
      *
-     * <p>For example, the following:
+     * <p>For example, the following:</p>
      * <blockquote>
      * <pre>
      *   String[] strings = new String[]{"one", "two", "three"};
      *   List&lt;String&gt; listOfStrings = Literals.listFrom(strings);
      * </pre>
      * </blockquote>
-     * is equivalent to:
+     * <p>is equivalent to:</p>
      * <blockquote>
      * <pre>
-     *   List&ltString&gt; listOfStrings = Literals.listWith("one", "two", "three");
+     *   List&lt;String&gt; listOfStrings = Literals.listWith("one", "two", "three");
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elementArray An array of elements from which a {@code List} should be
      *                     constructed.
@@ -2445,7 +2429,7 @@ public class Literals {
     /**
      * Returns a {@code ListBuilder} containing no elements.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code ListBuilder} can be used to assemble a {@code List} as follows:
      * <blockquote>
      * <pre>
@@ -2476,7 +2460,7 @@ public class Literals {
      * Returns a {@code ListBuilder} over the type of the supplied {@code Class}
      * containing no elements.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code ListBuilder} can be used to assemble a {@code List} as follows:
      * <blockquote>
      * <pre>
@@ -2510,7 +2494,7 @@ public class Literals {
      * Returns a {@code ListBuilder} over type {@code E} initialised with the elements
      * contained in the supplied {@code Iterable}.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code ListBuilder} can be used to assemble a {@code List} from two existing
      * {@code Collection} instances as follows:
      * <blockquote>
@@ -2546,7 +2530,7 @@ public class Literals {
      * Returns a {@code ListBuilder} over type {@code E} initialised with the elements
      * contained in the supplied array.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code ListBuilder} can be used to assemble a {@code List} from two existing
      * arrays as follows:
      * <blockquote>
@@ -2798,13 +2782,12 @@ public class Literals {
      *
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
-     * declaration. For example:
+     * declaration. For example:</p>
      * <blockquote>
      * <pre>
      *   Set&lt;String&gt; strings = set();
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param <E> The type of the elements contained in the {@code Set}.
      * @return A {@code Set} instance over the type {@code E} containing no elements.
@@ -2837,7 +2820,7 @@ public class Literals {
      *
      * <p>This form of literal is most suited to inline usage such as when passing an
      * empty set as a parameter in a method call since it reads more clearly than
-     * {@link #set()}. For example, compare the following:
+     * {@link #set()}. For example, compare the following:</p>
      * <blockquote>
      * <pre>
      *   public class OrderRepository {
@@ -2852,7 +2835,6 @@ public class Literals {
      *   orderRepository.save(customer, setOf(LineItem.class));
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elementClass A {@code Class} representing the type of elements
      *                     contained in this {@code Set}.
@@ -2871,7 +2853,7 @@ public class Literals {
      *
      * <p>This form of literal is useful when a number of lazy operations have been
      * performed resulting in an {@code Iterable} where a collection implementing
-     * the {@code Set} contract is required. For example:
+     * the {@code Set} contract is required. For example:</p>
      * <blockquote>
      * <pre>
      *   Set&lt;Person&gt; people = Literals.setWith(firstPerson, secondPerson, thirdPerson);
@@ -2881,7 +2863,6 @@ public class Literals {
      *   Set&lt;StreetName&gt; relevantAvenues = Literals.setFrom(avenueStreetNames);
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elements An {@code Iterable} of elements from which a {@code Set} should be
      *                 constructed.
@@ -2898,20 +2879,19 @@ public class Literals {
      * all elements from the supplied array. Due to the nature of a {@code Set}, any
      * duplicate elements in the supplied {@code Iterable} will be removed.
      *
-     * <p>For example, the following:
+     * <p>For example, the following:</p>
      * <blockquote>
      * <pre>
      *   String[] strings = new String[]{"one", "two", "two", "three"};
      *   Set&lt;String&gt; setOfStrings = Literals.setFrom(strings);
      * </pre>
      * </blockquote>
-     * is equivalent to:
+     * <p>is equivalent to:</p>
      * <blockquote>
      * <pre>
-     *   Set&ltString&gt; setOfStrings = Literals.setWith("one", "two", "three");
+     *   Set&lt;String&gt; setOfStrings = Literals.setWith("one", "two", "three");
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elementArray An array of elements from which a {@code Set} should be
      *                     constructed.
@@ -3128,7 +3108,7 @@ public class Literals {
     /**
      * Returns a {@code SetBuilder} containing no elements.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code SetBuilder} can be used to assemble a {@code Set} as follows:
      * <blockquote>
      * <pre>
@@ -3159,7 +3139,7 @@ public class Literals {
      * Returns a {@code SetBuilder} over the type of the supplied {@code Class}
      * containing no elements.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code SetBuilder} can be used to assemble a {@code Set} as follows:
      * <blockquote>
      * <pre>
@@ -3193,7 +3173,7 @@ public class Literals {
      * Returns a {@code SetBuilder} over type {@code E} initialised with the elements
      * contained in the supplied {@code Iterable}.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code SetBuilder} can be used to assemble a {@code Set} from two existing
      * {@code Collection} instances as follows:
      * <blockquote>
@@ -3229,7 +3209,7 @@ public class Literals {
      * Returns a {@code SetBuilder} over type {@code E} initialised with the elements
      * contained in the supplied array.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code SetBuilder} can be used to assemble a {@code Set} from two existing
      * arrays as follows:
      * <blockquote>
@@ -3476,13 +3456,12 @@ public class Literals {
      *
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the type {@code E} is inferred from the variable
-     * declaration. For example:
+     * declaration. For example:</p>
      * <blockquote>
      * <pre>
      *   Multiset&lt;String&gt; strings = multiset();
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param <E> The type of the elements contained in the {@code Multiset}.
      * @return A {@code Multiset} instance over the type {@code E} containing no elements.
@@ -3515,7 +3494,7 @@ public class Literals {
      *
      * <p>This form of literal is most suited to inline usage such as when passing an
      * empty multiset as a parameter in a method call since it reads more clearly than
-     * {@link #multiset()}. For example, compare the following:
+     * {@link #multiset()}. For example, compare the following:</p>
      * <blockquote>
      * <pre>
      *   public class WordAnalyser {
@@ -3530,7 +3509,6 @@ public class Literals {
      *   new WordAnalyser(multisetOf(Word.class));
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elementClass A {@code Class} representing the type of elements
      *                     contained in this {@code Multiset}.
@@ -3546,14 +3524,13 @@ public class Literals {
      * all elements from the supplied {@code Iterable}.
      *
      * <p>This form of literal is useful when an object with {@code Multiset} semantics
-     * is needed but only another form of {@code Iterable} is available. For example:
+     * is needed but only another form of {@code Iterable} is available. For example:</p>
      * <blockquote>
      * <pre>
      *   Iterable&lt;Jpeg&gt; veryManyImagesWithDuplicates = library.loadAll();
      *   Multiset&lt;Jpeg&gt; imageMultiset = Literals.multisetFrom(veryManyImagesWithDuplicates);
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elements A {@code Multiset} of elements from which a {@code Multiset} should be
      *                 constructed.
@@ -3569,20 +3546,19 @@ public class Literals {
      * Returns an immutable {@code Multiset} instance over the type {@code E} containing
      * all elements from the supplied array.
      *
-     * <p>For example, the following:
+     * <p>For example, the following:</p>
      * <blockquote>
      * <pre>
      *   String[] strings = new String[]{"one", "two", "two", "three"};
      *   Multiset&lt;String&gt; multisetOfStrings = Literals.multisetFrom(strings);
      * </pre>
      * </blockquote>
-     * is equivalent to:
+     * <p>is equivalent to:</p>
      * <blockquote>
      * <pre>
-     *   Multiset&ltString&gt; multisetOfStrings = Literals.multisetWith("one", "two", "three");
+     *   Multiset&lt;String&gt; multisetOfStrings = Literals.multisetWith("one", "two", "three");
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elementArray An array of elements from which a {@code Multiset} should be
      *                     constructed.
@@ -3789,7 +3765,7 @@ public class Literals {
     /**
      * Returns a {@code MultisetBuilder} containing no elements.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code MultisetBuilder} can be used to assemble a {@code Multiset} as follows:
      * <blockquote>
      * <pre>
@@ -3820,7 +3796,7 @@ public class Literals {
      * Returns a {@code MultisetBuilder} over the type of the supplied {@code Class}
      * containing no elements.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code MultisetBuilder} can be used to assemble a {@code Multiset} as follows:
      * <blockquote>
      * <pre>
@@ -3854,7 +3830,7 @@ public class Literals {
      * Returns a {@code MultisetBuilder} over type {@code E} initialised with the elements
      * contained in the supplied {@code Iterable}.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code MultisetBuilder} can be used to assemble a {@code Multiset} from two existing
      * {@code Collection} instances as follows:
      * <blockquote>
@@ -3890,7 +3866,7 @@ public class Literals {
      * Returns a {@code MultisetBuilder} over type {@code E} initialised with the elements
      * contained in the supplied array.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code MultisetBuilder} can be used to assemble a {@code Multiset} from two existing
      * arrays as follows:
      * <blockquote>
@@ -4127,13 +4103,12 @@ public class Literals {
      *
      * <p>This form of literal is most suited to direct assignment to a variable
      * since in this case, the types {@code K} and {@code V} are inferred from the
-     * variable declaration. For example:
+     * variable declaration. For example:</p>
      * <blockquote>
      * <pre>
      *   Map&lt;String, Integer&gt; mappings = map();
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param <K> The type of the keys in the {@code Map}.
      * @param <V> The type of the values in the {@code Map}.
@@ -4170,7 +4145,7 @@ public class Literals {
      *
      * <p>This form of literal is most suited to inline usage such as when passing an
      * empty map as a parameter in a method call since it reads more clearly than
-     * {@link #map()}. For example, compare the following:
+     * {@link #map()}. For example, compare the following:</p>
      * <blockquote>
      * <pre>
      *   public class Server {
@@ -4185,7 +4160,6 @@ public class Literals {
      *   new Server(mapOf(String.class, String.class));
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param keyClass   A {@code Class} representing the type of the keys
      *                   contained in this {@code Map}.
@@ -4206,14 +4180,13 @@ public class Literals {
      * {@code Iterable}.
      *
      * <p>This form of literal is useful for converting an entry set back into a
-     * {@code Map} instance. For example:
+     * {@code Map} instance. For example:</p>
      * <blockquote>
      * <pre>
      *   Set&lt;Map.Entry&lt;Key, Value&gt;&gt; storeContents = store.loadKeyValues();
      *   Map&lt;Key, Value&gt; inMemoryStore = Literals.mapFromEntries(storeContents);
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elements An {@code Iterable} of {@code Map.Entry} elements from which a
      *                 {@code Map} should be constructed.
@@ -4232,7 +4205,7 @@ public class Literals {
      * of type {@code V} containing all {@code Map.Entry} instances from the supplied
      * array.
      *
-     * <p>For example, the following:
+     * <p>For example, the following:</p>
      * <blockquote>
      * <pre>
      *   Map.Entry&lt;String, Integer&gt;[] entries = new Map.Entry[]{
@@ -4241,15 +4214,14 @@ public class Literals {
      *   Map&lt;String, Integer&gt; naturalNumbers = Literals.mapFromEntries(entries);
      * </pre>
      * </blockquote>
-     * is equivalent to:
+     * <p>is equivalent to:</p>
      * <blockquote>
      * <pre>
-     *   Map&ltString, Integer&gt; naturalNumbers = Literals.mapWith(
+     *   Map&lt;String, Integer&gt; naturalNumbers = Literals.mapWith(
      *          tuple("one", 1),
      *          tuple("two", 2));
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elementArray An array of {@code Map.Entry} elements from which a
      *                     {@code Map} should be constructed.
@@ -4269,14 +4241,13 @@ public class Literals {
      * {@code Iterable}.
      *
      * <p>This form of literal is useful when it is required to represent an
-     * {@code Iterable} of {@code Pair} instances as a {@code Map}. For example:
+     * {@code Iterable} of {@code Pair} instances as a {@code Map}. For example:</p>
      * <blockquote>
      * <pre>
      *   Iterable&lt;Pair&lt;Key, Value&gt;&gt; storeContents = store.loadKeyValues();
      *   Map&lt;Key, Value&gt; inMemoryStore = Literals.mapFromPairs(storeContents);
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elements An {@code Iterable} of {@code Pair} instances from which a
      *                 {@code Map} should be constructed.
@@ -4295,7 +4266,7 @@ public class Literals {
      * of type {@code V} with key-value mappings for each {@code Pair} in the supplied
      * array.
      *
-     * <p>For example, the following:
+     * <p>For example, the following:</p>
      * <blockquote>
      * <pre>
      *   Pair&lt;String, Integer&gt;[] pairs = new Pair[]{
@@ -4304,15 +4275,14 @@ public class Literals {
      *   Map&lt;String, Integer&gt; naturalNumbers = Literals.mapFromPairs(entries);
      * </pre>
      * </blockquote>
-     * is equivalent to:
+     * <p>is equivalent to:</p>
      * <blockquote>
      * <pre>
-     *   Map&ltString, Integer&gt; naturalNumbers = Literals.mapWith(
+     *   Map&lt;String, Integer&gt; naturalNumbers = Literals.mapWith(
      *          mapEntryFor("one", 1),
      *          mapEntryFor("two", 2));
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elementArray An array of {@code Pair} instances from which a
      *                     {@code Map} should be constructed.
@@ -4337,14 +4307,13 @@ public class Literals {
      * </p>
      * <p>This form of literal is useful when it is required to collect an
      * {@code Iterable} of {@code Map} instances into an accumulated {@code Map}.
-     * For example:
+     * For example:</p>
      * <blockquote>
      * <pre>
      *   Iterable&lt;Map&lt;Key, Value&gt;&gt; allStoreContents = keyValueStores.loadAll();
      *   Map&lt;Key, Value&gt; completeInMemoryStore = Literals.mapFromMaps(allStoreContents);
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elements An {@code Iterable} of {@code Map} instances from which a
      *                 {@code Map} should be constructed.
@@ -4367,7 +4336,7 @@ public class Literals {
      * keys as earlier {@code Map} instances then the value from the last {@code Map}
      * instance having that key is used as the value in the returned {@code Map}.
      * </p>
-     * <p>For example, the following:
+     * <p>For example, the following:</p>
      * <blockquote>
      * <pre>
      *   Map&lt;String, Integer&gt;[] maps = new Map[]{
@@ -4376,16 +4345,15 @@ public class Literals {
      *   Map&lt;String, Integer&gt; map = Literals.mapFromMaps(maps);
      * </pre>
      * </blockquote>
-     * is equivalent to:
+     * <p>is equivalent to:</p>
      * <blockquote>
      * <pre>
-     *   Map&ltString, Integer&gt; map = Literals.mapWith(
+     *   Map&lt;String, Integer&gt; map = Literals.mapWith(
      *          mapEntryFor("one", 1),
      *          mapEntryFor("two", 2),
      *          mapEntryFor("three", 3));
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param elementArray An array of {@code Map} instances from which a
      *                     {@code Map} should be constructed.
@@ -5385,7 +5353,7 @@ public class Literals {
     /**
      * Returns a {@code MapBuilder} containing no elements.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code MapBuilder} can be used to assemble a {@code Map} as follows:
      * <blockquote>
      * <pre>
@@ -5419,7 +5387,7 @@ public class Literals {
      * supplied {@code Class} and values of the type of the second
      * supplied {@code Class}.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code MapBuilder} can be used to assemble a {@code Map} as follows:
      * <blockquote>
      * <pre>
@@ -5457,7 +5425,7 @@ public class Literals {
      * of type {@code V} initialised with all {@code Map.Entry} instances from
      * the supplied {@code Iterable}.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code MapBuilder} can be used to assemble a {@code Map} from two existing
      * {@code Collection} instances containing {@code Map.Entry} instances as follows:
      * <blockquote>
@@ -5500,7 +5468,7 @@ public class Literals {
      * of type {@code V} initialised with all {@code Map.Entry} instances from
      * the supplied array.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code MapBuilder} can be used to assemble a {@code Map} from two existing
      * array instances containing {@code Map.Entry} instances as follows:
      * <blockquote>
@@ -5543,7 +5511,7 @@ public class Literals {
      * of type {@code V} initialised with key-value mappings for each {@code Pair}
      * in the supplied {@code Iterable}.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code MapBuilder} can be used to assemble a {@code Map} from two existing
      * {@code Collection} instances containing {@code Pair} instances as follows:
      * <blockquote>
@@ -5590,7 +5558,7 @@ public class Literals {
      * of type {@code V} initialised with key-value mappings for each {@code Pair}
      * in the supplied array.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code MapBuilder} can be used to assemble a {@code Map} from two existing
      * array instances containing {@code Pair} instances as follows:
      * <blockquote>
@@ -5637,7 +5605,7 @@ public class Literals {
      * of type {@code V} initialised with all entries from all {@code Map} instances
      * in the supplied {@code Iterable}.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code MapBuilder} can be used to assemble a {@code Multiset} from two existing
      * {@code Iterable} instances containing {@code Map} instances as follows:
      * <blockquote>
@@ -5684,7 +5652,7 @@ public class Literals {
      * of type {@code V} initialised with all entries from all {@code Map} instances
      * in the supplied array.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * A {@code MapBuilder} can be used to assemble a {@code Multiset} from two existing
      * arrays containing {@code Map} instances as follows:
      * <blockquote>
@@ -6769,8 +6737,10 @@ public class Literals {
     /**
      * Returns an empty array instance over the type {@code E}.
      *
-     * @param <E> The type of the elements that would be contained by this array
-     *            if it contained any.
+     * @param elementClass The class of the elements that would be contained by this
+     *                     array if it contained any.
+     * @param <E>          The type of the elements that would be contained by this array
+     *                     if it contained any.
      * @return An array instance over the type {@code E} containing no elements.
      */
     @SuppressWarnings("unchecked")
@@ -6822,7 +6792,7 @@ public class Literals {
      * concrete types and so should be used in preference of {@link #arrayFrom(Iterable)}
      * if such {@code Iterable}s are expected.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Assume that we have the following instances:
      * <blockquote>
      * <pre>
@@ -6836,7 +6806,7 @@ public class Literals {
      * {@code IllegalArgumentException} will be thrown:
      * <blockquote>
      * <pre>
-     *   Employee[] employeeArray = Literals.arrayFrom(employees); // => IllegalArgumentException
+     *   Employee[] employeeArray = Literals.arrayFrom(employees); // =&gt; IllegalArgumentException
      * </pre>
      * </blockquote>
      * However using this variant, we obtain an array of {@code Employee} instances. The following
@@ -6901,7 +6871,7 @@ public class Literals {
      * so should be used in preference of {@link #arrayFrom(Object[])}
      * if such arrays are expected.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Assume that we have the following instances:
      * <blockquote>
      * <pre>
@@ -6915,7 +6885,7 @@ public class Literals {
      * {@code IllegalArgumentException} will be thrown:
      * <blockquote>
      * <pre>
-     *   Employee[] employeeArray = Literals.arrayFrom(employees); // => IllegalArgumentException
+     *   Employee[] employeeArray = Literals.arrayFrom(employees); // =&gt; IllegalArgumentException
      * </pre>
      * </blockquote>
      * However using this variant, we obtain an array of {@code Employee} instances. The following
@@ -7163,7 +7133,7 @@ public class Literals {
      * build an array, the element class will be inferred from the added elements
      * which means empty arrays and mixed concrete type arrays cannot be constructed.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * An {@code ArrayBuilder} can be used to assemble an array as follows:
      * <blockquote>
      * <pre>
@@ -7196,7 +7166,7 @@ public class Literals {
      * class will be used allowing empty arrays and mixed concrete type arrays to
      * be constructed.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * An {@code ArrayBuilder} can be used to assemble an array as follows:
      * <blockquote>
      * <pre>
@@ -7232,7 +7202,7 @@ public class Literals {
      * element class will be inferred from the added elements which means empty arrays
      * and mixed concrete type arrays cannot be constructed.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * An {@code ArrayBuilder} can be used to assemble an array from two existing
      * {@code Collection} instances as follows:
      * <blockquote>
@@ -7270,7 +7240,7 @@ public class Literals {
      * When asked to build an array, the supplied element class will be used allowing
      * empty arrays and mixed concrete type arrays to be constructed.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * An {@code ArrayBuilder} can be used to assemble an array from two existing
      * {@code Collection} instances as follows:
      * <blockquote>
@@ -7311,7 +7281,7 @@ public class Literals {
      * will be inferred from the added elements which means empty arrays and mixed
      * concrete type arrays cannot be constructed.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * An {@code ArrayBuilder} can be used to assemble an array from two existing
      * arrays as follows:
      * <blockquote>
@@ -7349,7 +7319,7 @@ public class Literals {
      * build an array, the supplied element class will be used allowing empty arrays
      * and mixed concrete type arrays to be constructed.
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * An {@code ArrayBuilder} can be used to assemble an array from two existing
      * arrays as follows:
      * <blockquote>
@@ -7405,7 +7375,7 @@ public class Literals {
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
-     * in the class of the elements to be contained in the resulting array. For example:
+     * in the class of the elements to be contained in the resulting array. For example:</p>
      * <blockquote>
      * <pre>
      *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
@@ -7417,7 +7387,6 @@ public class Literals {
      *          .build();
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param e1  The first element to be added to the {@code ArrayBuilder}.
      * @param e2  The second element to be added to the {@code ArrayBuilder}.
@@ -7437,7 +7406,7 @@ public class Literals {
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
-     * in the class of the elements to be contained in the resulting array. For example:
+     * in the class of the elements to be contained in the resulting array. For example:</p>
      * <blockquote>
      * <pre>
      *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
@@ -7449,7 +7418,6 @@ public class Literals {
      *          .build();
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param e1  The first element to be added to the {@code ArrayBuilder}.
      * @param e2  The second element to be added to the {@code ArrayBuilder}.
@@ -7470,7 +7438,7 @@ public class Literals {
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
-     * in the class of the elements to be contained in the resulting array. For example:
+     * in the class of the elements to be contained in the resulting array. For example:</p>
      * <blockquote>
      * <pre>
      *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
@@ -7482,7 +7450,6 @@ public class Literals {
      *          .build();
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param e1  The first element to be added to the {@code ArrayBuilder}.
      * @param e2  The second element to be added to the {@code ArrayBuilder}.
@@ -7504,7 +7471,7 @@ public class Literals {
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
-     * in the class of the elements to be contained in the resulting array. For example:
+     * in the class of the elements to be contained in the resulting array. For example:</p>
      * <blockquote>
      * <pre>
      *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
@@ -7516,7 +7483,6 @@ public class Literals {
      *          .build();
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param e1  The first element to be added to the {@code ArrayBuilder}.
      * @param e2  The second element to be added to the {@code ArrayBuilder}.
@@ -7539,7 +7505,7 @@ public class Literals {
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
-     * in the class of the elements to be contained in the resulting array. For example:
+     * in the class of the elements to be contained in the resulting array. For example:</p>
      * <blockquote>
      * <pre>
      *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
@@ -7551,7 +7517,6 @@ public class Literals {
      *          .build();
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param e1  The first element to be added to the {@code ArrayBuilder}.
      * @param e2  The second element to be added to the {@code ArrayBuilder}.
@@ -7575,7 +7540,7 @@ public class Literals {
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
-     * in the class of the elements to be contained in the resulting array. For example:
+     * in the class of the elements to be contained in the resulting array. For example:</p>
      * <blockquote>
      * <pre>
      *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
@@ -7587,7 +7552,6 @@ public class Literals {
      *          .build();
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param e1  The first element to be added to the {@code ArrayBuilder}.
      * @param e2  The second element to be added to the {@code ArrayBuilder}.
@@ -7612,7 +7576,7 @@ public class Literals {
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
-     * in the class of the elements to be contained in the resulting array. For example:
+     * in the class of the elements to be contained in the resulting array. For example:</p>
      * <blockquote>
      * <pre>
      *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
@@ -7624,7 +7588,6 @@ public class Literals {
      *          .build();
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param e1  The first element to be added to the {@code ArrayBuilder}.
      * @param e2  The second element to be added to the {@code ArrayBuilder}.
@@ -7650,7 +7613,7 @@ public class Literals {
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
-     * in the class of the elements to be contained in the resulting array. For example:
+     * in the class of the elements to be contained in the resulting array. For example:</p>
      * <blockquote>
      * <pre>
      *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
@@ -7662,7 +7625,6 @@ public class Literals {
      *          .build();
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param e1  The first element to be added to the {@code ArrayBuilder}.
      * @param e2  The second element to be added to the {@code ArrayBuilder}.
@@ -7689,7 +7651,7 @@ public class Literals {
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
-     * in the class of the elements to be contained in the resulting array. For example:
+     * in the class of the elements to be contained in the resulting array. For example:</p>
      * <blockquote>
      * <pre>
      *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
@@ -7701,7 +7663,6 @@ public class Literals {
      *          .build();
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param e1  The first element to be added to the {@code ArrayBuilder}.
      * @param e2  The second element to be added to the {@code ArrayBuilder}.
@@ -7729,7 +7690,7 @@ public class Literals {
      * <p>Note that due to type erasure, the supplied elements must all be of the same concrete
      * type otherwise the array cannot be instantiated. If an array needs to be constructed
      * from elements of different concrete types, use an {@code ArrayBuilder} directly, passing
-     * in the class of the elements to be contained in the resulting array. For example:
+     * in the class of the elements to be contained in the resulting array. For example:</p>
      * <blockquote>
      * <pre>
      *   PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Designer", "John");
@@ -7741,7 +7702,6 @@ public class Literals {
      *          .build();
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param e1    The first element to be added to the {@code ArrayBuilder}.
      * @param e2    The second element to be added to the {@code ArrayBuilder}.

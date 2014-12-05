@@ -47,14 +47,14 @@ public class None<T> extends Option<T> {
      *
      * <p>This overloaded version of {@link #none()} is provided so that
      * the generic type resolution works correctly when the factory is
-     * used inline. For example, compare the following:
+     * used inline. For example, compare the following:</p>
      * <blockquote>
      * <pre>
      *   someObject.methodTakingOption(Option.none(Integer.class));
      *   someObject.methodTakingOption(Option.&lt;Integer&gt;none();
      * </pre>
      * </blockquote>
-     * the benefit being that the first call to none can be statically imported
+     * <p>the benefit being that the first call to none can be statically imported
      * whilst the second cannot.</p>
      *
      * @param typeClass The class of the type {@code T} for which this {@code None}

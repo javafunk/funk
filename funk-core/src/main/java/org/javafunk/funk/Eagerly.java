@@ -160,7 +160,7 @@ public class Eagerly {
      * {@code Collection}. Thus, the input and output collections will always be of
      * the same size.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Consider a collection of {@code Person} objects where a {@code Person} is defined
      * by the following class:
@@ -301,7 +301,7 @@ public class Eagerly {
      * <p>If any of the supplied {@code Iterable} instances is empty, the
      * returned {@code Collection} is empty.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Given an {@code Iterable} of {@code Integer} instances representing the
      * first ten values in the sequence of natural numbers and an {@code Iterable}
      * of {@code String} instances representing the textual equivalents of those
@@ -319,7 +319,7 @@ public class Eagerly {
      * to the textual name can be obtained as follows:
      * <blockquote>
      * <pre>
-     *     Collection&ltPair&ltInteger, String&gt;&gt; associations = zip(numbers, numberNames);
+     *     Collection&lt;Pair&lt;Integer, String&gt;&gt; associations = zip(numbers, numberNames);
      * </pre>
      * </blockquote>
      * This is effectively equivalent to the following:
@@ -712,7 +712,7 @@ public class Eagerly {
      * over the wildcard type {@code ?}. If the number of {@code Iterable} instances
      * to be zipped is less than ten, use the explicit arities of {@code zip}.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Given three {@code Iterable} instances of varying types:
      * <blockquote>
      * <pre>
@@ -724,8 +724,8 @@ public class Eagerly {
      * we can zip them into a {@code Collection} of {@code Collection} instances as follows:
      * <blockquote>
      * <pre>
-     *     Iterable&ltIterable&lt?&gt;&gt; iterables = Literals.&lt;Iterable&lt?&gt;&gt;iterableWith(first, second, third);
-     *     Collection&ltCollection&lt;?&gt;&gt; zippedResult = zip(iterables);
+     *     Iterable&lt;Iterable&lt;?&gt;&gt; iterables = Literals.&lt;Iterable&lt;?&gt;&gt;iterableWith(first, second, third);
+     *     Collection&lt;Collection&lt;?&gt;&gt; zippedResult = zip(iterables);
      * </pre>
      * </blockquote>
      * This is effectively equivalent to the following:
@@ -772,7 +772,7 @@ public class Eagerly {
      * <p>If any of the supplied {@code Iterable} instances is empty, the
      * returned {@code Collection} is also empty.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Given an {@code Iterable} of {@code Name} instances and an {@code Iterable}
      * of {@code Location} instances as follows:
      * <blockquote>
@@ -1210,7 +1210,7 @@ public class Eagerly {
      * instances for which a cartesian product is required is less than ten,
      * use the explicit arities of {@code cartesianProduct}.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Given three {@code Iterable} instances of varying types:
      * <blockquote>
      * <pre>
@@ -1222,14 +1222,14 @@ public class Eagerly {
      * we can generate the cartesian product as follows:
      * <blockquote>
      * <pre>
-     *     Iterable&ltIterable&lt?&gt;&gt; iterables = Literals.&lt;Iterable&lt?&gt;&gt;iterableWith(first, second, third);
-     *     Collection&ltCollection&lt;?&gt;&gt; cartesianProduct = cartesianProduct(iterables);
+     *     Iterable&lt;Iterable&lt;?&gt;&gt; iterables = Literals.&lt;Iterable&lt;?&gt;&gt;iterableWith(first, second, third);
+     *     Collection&lt;Collection&lt;?&gt;&gt; cartesianProduct = cartesianProduct(iterables);
      * </pre>
      * </blockquote>
      * This is effectively equivalent to the following:
      * <blockquote>
      * <pre>
-     *     Collection&lt;Collection&lt;?&gt;&gt; equivalentCollections = Literals.&ltCollection&lt?&gt;&gt;collectionWith(
+     *     Collection&lt;Collection&lt;?&gt;&gt; equivalentCollections = Literals.&lt;Collection&lt;?&gt;&gt;collectionWith(
      *             collectionWith(1, "first", false),
      *             collectionWith(1, "second", false),
      *             collectionWith(1, "third", false));
@@ -1265,7 +1265,7 @@ public class Eagerly {
      *
      * <p>If the supplied {@code Iterable} is empty, so is the returned {@code Collection}.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Assume we have a collection of {@code Name} instances representing people entered into
      * a prize draw. We wish to choose a winner at random from that collection. We can do this
      * as follows:
@@ -1303,7 +1303,7 @@ public class Eagerly {
      * supplied {@code Iterable} instances is eager, i.e., the supplied {@code Iterable}
      * instances are iterated and their elements are not equated immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Given two {@code Iterable} instances that contain elements that do not implement
      * equality in the desired way, we can determine equality using an externalised
      * function as follows:
@@ -1311,7 +1311,7 @@ public class Eagerly {
      * <pre>
      *     Iterable&lt;Message&gt; firstIterable = systemOneMessageQueue.readAll();
      *     Iterable&lt;Message&gt; secondIterable = systemTwoMessageQueue.readAll();
-     *     Collection&ltBoolean&gt equalityResults = equate(firstIterable, secondIterable, new BinaryPredicate&lt;Message, Message&gt() {
+     *     Collection&lt;Boolean&gt; equalityResults = equate(firstIterable, secondIterable, new BinaryPredicate&lt;Message, Message&gt;() {
      *        &#64;Override public boolean evaluate(Message first, Message second) {
      *            return first.getMessageIdentifier().equals(second.getMessageIdentifier());
      *        }
@@ -1389,13 +1389,13 @@ public class Eagerly {
      * eagerly, i.e., elements are retrieved from the underlying {@code Iterable} and indexed
      * immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Consider an {@code Iterable} of {@code String} instances representing words from a book.
      * Each word can be indexed using its length using to the following.
      * <blockquote>
      * <pre>
      *     Iterable&lt;String&gt; words = book.getCompleteWordList();
-     *     Collection&lt;Pair&lt;Integer, String&gt;&gt; wordsIndexedByLength = index(words, new UnaryFunction&ltString, Integer&gt;() {
+     *     Collection&lt;Pair&lt;Integer, String&gt;&gt; wordsIndexedByLength = index(words, new UnaryFunction&lt;String, Integer&gt;() {
      *         &#64;Override public Integer call(String word) {
      *             return word.length();
      *         }
@@ -1488,7 +1488,7 @@ public class Eagerly {
      * it is inherently impure and thus must have side effects for any perceivable
      * outcome to be observed.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Consider a {@code UnaryProcedure} that persists {@code Person} instances to a
      * database:
      * <blockquote>
@@ -1586,7 +1586,7 @@ public class Eagerly {
      * when called with a {@code null} value, the {@code null} value will be retained in
      * the output {@code Collection}.</p>
      *
-     * <h4>Example Usage</h4>
+     * <h3>Example Usage</h3>
      *
      * Consider a collection of {@code Pet} objects where a {@code Pet} is defined
      * by the following interface:
@@ -1698,7 +1698,7 @@ public class Eagerly {
      * when called with a {@code null} value, the {@code null} value will be retained in
      * the output {@code Collection}.</p>
      *
-     * <h4>Example Usage</h4>
+     * <h3>Example Usage</h3>
      *
      * Consider a collection of {@code Pet} objects where a {@code Pet} is defined
      * by the following interface:
@@ -1822,7 +1822,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve the first element from the underlying
      * {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -1834,7 +1834,7 @@ public class Eagerly {
      * <blockquote>
      * <pre>
      *   Option&lt;Integer&gt; valueOption = first(values);
-     *   Integer value = valueOption.get(); // => 5
+     *   Integer value = valueOption.get(); // =&gt; 5
      * </pre>
      * </blockquote>
      * Similarly, we can handle the empty {@code Iterable} case gracefully:
@@ -1842,7 +1842,7 @@ public class Eagerly {
      * <pre>
      *   Iterable&lt;Integer&gt; values = Literals.iterable();
      *   Option&lt;Integer&gt; valueOption = first(values);
-     *   Integer value = valueOption.getOrElse(10); // => 10
+     *   Integer value = valueOption.getOrElse(10); // =&gt; 10
      * </pre>
      * </blockquote>
      *
@@ -1875,7 +1875,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve the second element from the underlying
      * {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -1887,7 +1887,7 @@ public class Eagerly {
      * <blockquote>
      * <pre>
      *   Option&lt;Integer&gt; valueOption = second(values);
-     *   Integer value = valueOption.get(); // => 4
+     *   Integer value = valueOption.get(); // =&gt; 4
      * </pre>
      * </blockquote>
      * Similarly, we can handle the empty {@code Iterable} case gracefully:
@@ -1895,7 +1895,7 @@ public class Eagerly {
      * <pre>
      *   Iterable&lt;Integer&gt; values = Literals.iterable();
      *   Option&lt;Integer&gt; valueOption = second(values);
-     *   Integer value = valueOption.getOrElse(10); // => 10
+     *   Integer value = valueOption.getOrElse(10); // =&gt; 10
      * </pre>
      * </blockquote>
      *
@@ -1923,7 +1923,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve the third element from the underlying
      * {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -1935,7 +1935,7 @@ public class Eagerly {
      * <blockquote>
      * <pre>
      *   Option&lt;Integer&gt; valueOption = third(values);
-     *   Integer value = valueOption.get(); // => 3
+     *   Integer value = valueOption.get(); // =&gt; 3
      * </pre>
      * </blockquote>
      * Similarly, we can handle the empty {@code Iterable} case gracefully:
@@ -1943,7 +1943,7 @@ public class Eagerly {
      * <pre>
      *   Iterable&lt;Integer&gt; values = Literals.iterable();
      *   Option&lt;Integer&gt; valueOption = third(values);
-     *   Integer value = valueOption.getOrElse(10); // => 10
+     *   Integer value = valueOption.getOrElse(10); // =&gt; 10
      * </pre>
      * </blockquote>
      *
@@ -1972,7 +1972,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve the first matching element from the
      * underlying {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -1988,7 +1988,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   Integer value = valueOption.get(); // => 4
+     *   Integer value = valueOption.get(); // =&gt; 4
      * </pre>
      * </blockquote>
      * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
@@ -2005,7 +2005,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   Integer value = valueOption.getOrElse(10); // => 10
+     *   Integer value = valueOption.getOrElse(10); // =&gt; 10
      * </pre>
      * </blockquote>
      * Similarly, if no elements match the supplied {@code UnaryPredicate}, we are returned
@@ -2018,7 +2018,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   valueOption.hasValue(); // => false
+     *   valueOption.hasValue(); // =&gt; false
      * </pre>
      * </blockquote>
      *
@@ -2052,7 +2052,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve the second matching element from the
      * underlying {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -2068,7 +2068,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   Integer value = valueOption.get(); // => 2
+     *   Integer value = valueOption.get(); // =&gt; 2
      * </pre>
      * </blockquote>
      * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
@@ -2085,7 +2085,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   Integer value = valueOption.getOrElse(10); // => 10
+     *   Integer value = valueOption.getOrElse(10); // =&gt; 10
      * </pre>
      * </blockquote>
      * Similarly, if no elements match the supplied {@code UnaryPredicate}, we are returned
@@ -2098,7 +2098,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   valueOption.hasValue(); // => false
+     *   valueOption.hasValue(); // =&gt; false
      * </pre>
      * </blockquote>
      *
@@ -2132,7 +2132,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve the third matching element from the
      * underlying {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -2148,7 +2148,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   Integer value = valueOption.get(); // => 2
+     *   Integer value = valueOption.get(); // =&gt; 2
      * </pre>
      * </blockquote>
      * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
@@ -2165,7 +2165,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   Integer value = valueOption.getOrElse(10); // => 10
+     *   Integer value = valueOption.getOrElse(10); // =&gt; 10
      * </pre>
      * </blockquote>
      * Similarly, if no elements match the supplied {@code UnaryPredicate}, we are returned
@@ -2178,7 +2178,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   valueOption.hasValue(); // => false
+     *   valueOption.hasValue(); // =&gt; false
      * </pre>
      * </blockquote>
      *
@@ -2210,7 +2210,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve the elements from the underlying
      * {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -2241,13 +2241,14 @@ public class Eagerly {
      * <pre>
      *   Iterable&lt;Integer&gt; values = Literals.iterable();
      *   Collection&lt;Integer&gt; firstThreeElements = firstN(values, 3);
-     *   firstThreeElements.isEmpty(); // => true
+     *   firstThreeElements.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      *
-     * @param iterable The {@code Iterable} from which the first <em>n</em> elements
-     *                 should be taken.
-     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @param iterable                 The {@code Iterable} from which the first <em>n</em> elements
+     *                                 should be taken.
+     * @param <T>                      The type of the elements in the supplied {@code Iterable}.
+     * @param numberOfElementsRequired The maximum number of elements that should be taken.
      * @return A {@code Collection} instance containing the required number of elements
      *         (or less) from the supplied {@code Iterable}.
      */
@@ -2272,7 +2273,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve matching elements from the underlying
      * {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -2319,15 +2320,16 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   firstThreeEvens.isEmpty(); // => true
+     *   firstThreeEvens.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      *
-     * @param iterable  The {@code Iterable} to search for elements matching the supplied
-     *                  {@code UnaryPredicate}.
-     * @param predicate A {@code UnaryPredicate} that must be satisfied by elements in the
-     *                  supplied {@code Iterable}.
-     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @param iterable                 The {@code Iterable} to search for elements matching the supplied
+     *                                 {@code UnaryPredicate}.
+     * @param numberOfElementsRequired The maximum number of elements that should be taken.
+     * @param predicate                A {@code UnaryPredicate} that must be satisfied by elements in the
+     *                                 supplied {@code Iterable}.
+     * @param <T>                      The type of the elements in the supplied {@code Iterable}.
      * @return A {@code Collection} instance containing the required number of elements
      *         (or less) from the supplied {@code Iterable} matching the supplied
      *         {@code UnaryPredicate}.
@@ -2354,7 +2356,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve the last element from the underlying
      * {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code String} instances:
      * <blockquote>
@@ -2366,7 +2368,7 @@ public class Eagerly {
      * <blockquote>
      * <pre>
      *   Option&lt;String&gt; valueOption = last(values);
-     *   String value = valueOption.get(); // => "last"
+     *   String value = valueOption.get(); // =&gt; "last"
      * </pre>
      * </blockquote>
      * Similarly, we can handle the empty {@code Iterable} case gracefully:
@@ -2374,7 +2376,7 @@ public class Eagerly {
      * <pre>
      *   Iterable&lt;String&gt; values = Literals.iterable();
      *   Option&lt;String&gt; valueOption = last(values);
-     *   String value = valueOption.getOrElse("some string"); // => "some string"
+     *   String value = valueOption.getOrElse("some string"); // =&gt; "some string"
      * </pre>
      * </blockquote>
      *
@@ -2403,7 +2405,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve the second to last element from the
      * underlying {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code String} instances:
      * <blockquote>
@@ -2415,7 +2417,7 @@ public class Eagerly {
      * <blockquote>
      * <pre>
      *   Option&lt;String&gt; valueOption = secondLast(values);
-     *   String value = valueOption.get(); // => "middle"
+     *   String value = valueOption.get(); // =&gt; "middle"
      * </pre>
      * </blockquote>
      * Similarly, we can handle the empty {@code Iterable} case gracefully:
@@ -2423,7 +2425,7 @@ public class Eagerly {
      * <pre>
      *   Iterable&lt;String&gt; values = Literals.iterable();
      *   Option&lt;String&gt; valueOption = secondLast(values);
-     *   String value = valueOption.getOrElse("some string"); // => "some string"
+     *   String value = valueOption.getOrElse("some string"); // =&gt; "some string"
      * </pre>
      * </blockquote>
      *
@@ -2452,7 +2454,7 @@ public class Eagerly {
      * performed eagerly, i.e., an attempt is made to retrieve the third to last
      * element from the underlying {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code String} instances:
      * <blockquote>
@@ -2464,7 +2466,7 @@ public class Eagerly {
      * <blockquote>
      * <pre>
      *   Option&lt;String&gt; valueOption = thirdLast(values);
-     *   String value = valueOption.get(); // => "middle"
+     *   String value = valueOption.get(); // =&gt; "middle"
      * </pre>
      * </blockquote>
      * Similarly, we can handle the empty {@code Iterable} case gracefully:
@@ -2472,7 +2474,7 @@ public class Eagerly {
      * <pre>
      *   Iterable&lt;String&gt; values = Literals.iterable();
      *   Option&lt;String&gt; valueOption = thirdLast(values);
-     *   String value = valueOption.getOrElse("some string"); // => "some string"
+     *   String value = valueOption.getOrElse("some string"); // =&gt; "some string"
      * </pre>
      * </blockquote>
      *
@@ -2501,7 +2503,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve the last matching element from the
      * underlying {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -2517,7 +2519,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   Integer value = valueOption.get(); // => 2
+     *   Integer value = valueOption.get(); // =&gt; 2
      * </pre>
      * </blockquote>
      * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
@@ -2534,7 +2536,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   Integer value = valueOption.getOrElse(10); // => 10
+     *   Integer value = valueOption.getOrElse(10); // =&gt; 10
      * </pre>
      * </blockquote>
      * Similarly, if no elements match the supplied {@code UnaryPredicate}, we are returned
@@ -2547,7 +2549,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   valueOption.hasValue(); // => false
+     *   valueOption.hasValue(); // =&gt; false
      * </pre>
      * </blockquote>
      *
@@ -2582,7 +2584,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve the second last matching element from
      * the underlying {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -2598,7 +2600,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   Integer value = valueOption.get(); // => 2
+     *   Integer value = valueOption.get(); // =&gt; 2
      * </pre>
      * </blockquote>
      * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
@@ -2615,7 +2617,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   Integer value = valueOption.getOrElse(10); // => 10
+     *   Integer value = valueOption.getOrElse(10); // =&gt; 10
      * </pre>
      * </blockquote>
      * Similarly, if no elements match the supplied {@code UnaryPredicate}, we are returned
@@ -2628,7 +2630,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   valueOption.hasValue(); // => false
+     *   valueOption.hasValue(); // =&gt; false
      * </pre>
      * </blockquote>
      *
@@ -2663,7 +2665,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve the third last matching element from
      * the underlying {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -2679,7 +2681,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   Integer value = valueOption.get(); // => 2
+     *   Integer value = valueOption.get(); // =&gt; 2
      * </pre>
      * </blockquote>
      * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
@@ -2696,7 +2698,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   Integer value = valueOption.getOrElse(10); // => 10
+     *   Integer value = valueOption.getOrElse(10); // =&gt; 10
      * </pre>
      * </blockquote>
      * Similarly, if no elements match the supplied {@code UnaryPredicate}, we are returned
@@ -2709,7 +2711,7 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   valueOption.hasValue(); // => false
+     *   valueOption.hasValue(); // =&gt; false
      * </pre>
      * </blockquote>
      *
@@ -2741,7 +2743,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve the elements from the underlying
      * {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -2772,13 +2774,14 @@ public class Eagerly {
      * <pre>
      *   Iterable&lt;Integer&gt; values = Literals.iterable();
      *   Collection&lt;Integer&gt; lastThreeElements = lastN(values, 3);
-     *   lastThreeElements.isEmpty(); // => true
+     *   lastThreeElements.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      *
-     * @param iterable The {@code Iterable} from which the last <em>n</em> elements
-     *                 should be taken.
-     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @param iterable                 The {@code Iterable} from which the last <em>n</em> elements
+     *                                 should be taken.
+     * @param <T>                      The type of the elements in the supplied {@code Iterable}.
+     * @param numberOfElementsRequired The maximum number of elements that should be taken.
      * @return A {@code Collection} instance containing the required number of elements
      *         (or less) from the supplied {@code Iterable}.
      */
@@ -2810,7 +2813,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve matching elements from the underlying
      * {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -2857,15 +2860,16 @@ public class Eagerly {
      *           return integer % 2 == 0;
      *       }
      *   });
-     *   lastThreeEvens.isEmpty(); // => true
+     *   lastThreeEvens.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      *
-     * @param iterable  The {@code Iterable} to search for elements matching the supplied
-     *                  {@code UnaryPredicate}.
-     * @param predicate A {@code UnaryPredicate} that must be satisfied by elements in the
-     *                  supplied {@code Iterable}.
-     * @param <T>       The type of the elements in the supplied {@code Iterable}.
+     * @param iterable                 The {@code Iterable} to search for elements matching the supplied
+     *                                 {@code UnaryPredicate}.
+     * @param numberOfElementsRequired The maximum number of elements that should be taken.
+     * @param predicate                A {@code UnaryPredicate} that must be satisfied by elements in the
+     *                                 supplied {@code Iterable}.
+     * @param <T>                      The type of the elements in the supplied {@code Iterable}.
      * @return A {@code Collection} instance containing the required number of elements
      *         (or less) from the supplied {@code Iterable} matching the supplied
      *         {@code UnaryPredicate}.
@@ -2892,7 +2896,7 @@ public class Eagerly {
      * {@code Iterable} is empty, the returned {@code Collection} will
      * be empty.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Given the following {@code Iterable} of {@code Integer} instances:
      * <blockquote>
      * <pre>
@@ -2935,7 +2939,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve the elements from the underlying
      * {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -2966,12 +2970,13 @@ public class Eagerly {
      * <pre>
      *   Iterable&lt;Integer&gt; elements = Literals.iterable();
      *   Collection&lt;Integer&gt; firstThreeElements = take(elements, 3);
-     *   firstThreeElements.isEmpty(); // => true
+     *   firstThreeElements.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      *
-     * @param iterable The {@code Iterable} from which to take <em>n</em> elements.
-     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @param iterable     The {@code Iterable} from which to take <em>n</em> elements.
+     * @param numberToTake The number of elements that should be taken.
+     * @param <T>          The type of the elements in the supplied {@code Iterable}.
      * @return A {@code Collection} instance containing the required number of elements
      *         (or less) from the supplied {@code Iterable}.
      * @throws IllegalArgumentException if the required number of elements to take
@@ -2993,7 +2998,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve the sequence of satisfactory elements from the
      * underlying {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -3007,7 +3012,7 @@ public class Eagerly {
      * <pre>
      *   Collection&lt;Integer&gt; firstElementsGreaterThanTwo = takeWhile(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
      *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(5, 4, 3);
@@ -3020,10 +3025,10 @@ public class Eagerly {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable(2, 1, 4, 5, 6);
      *   Collection&lt;Integer&gt; firstElementsGreaterThanTwo = takeWhile(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
-     *   firstElementsGreaterThanTwo.isEmpty(); // => true
+     *   firstElementsGreaterThanTwo.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      * If no elements retrieved from the {@code Iterable} fail to satisfy the supplied
@@ -3034,7 +3039,7 @@ public class Eagerly {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable(4, 5, 6, 7, 8);
      *   Collection&lt;Integer&gt; firstElementsGreaterThanTwo = takeWhile(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
      *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(4, 5, 6, 7, 8);
@@ -3046,10 +3051,10 @@ public class Eagerly {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable();
      *   Collection&lt;Integer&gt; firstElementsGreaterThanTwo = takeWhile(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
-     *   firstElementsGreaterThanTwo.isEmpty(); // => true
+     *   firstElementsGreaterThanTwo.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
@@ -3082,7 +3087,7 @@ public class Eagerly {
      * eagerly, i.e., an attempt is made to retrieve the sequence of elements not satisfying the
      * {@code UnaryPredicate} from the underlying {@code Iterable} immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -3096,7 +3101,7 @@ public class Eagerly {
      * <pre>
      *   Collection&lt;Integer&gt; firstElementsNotGreaterThanTwo = takeUntil(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
      *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(1, 2);
@@ -3109,10 +3114,10 @@ public class Eagerly {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable(4, 5, 6, 7, 8);
      *   Collection&lt;Integer&gt; firstElementsNotGreaterThanTwo = takeUntil(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
-     *   firstElementsNotGreaterThanTwo.isEmpty(); // => true
+     *   firstElementsNotGreaterThanTwo.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      * If no elements retrieved from the {@code Iterable} satisfy the supplied {@code Predicate},
@@ -3123,7 +3128,7 @@ public class Eagerly {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable(-1, 0, 1, 2);
      *   Collection&lt;Integer&gt; firstElementsNotGreaterThanTwo = takeUntil(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
      *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(-1, 0, 1, 2);
@@ -3135,10 +3140,10 @@ public class Eagerly {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable();
      *   Collection&lt;Integer&gt; firstElementsNotGreaterThanTwo = takeUntil(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
-     *   firstElementsNotGreaterThanTwo.isEmpty(); // => true
+     *   firstElementsNotGreaterThanTwo.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
@@ -3178,7 +3183,7 @@ public class Eagerly {
      * eagerly, i.e., the elements are discarded from the underlying {@code Iterable}
      * immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -3208,13 +3213,14 @@ public class Eagerly {
      * <pre>
      *   Iterable&lt;Integer&gt; elements = Literals.iterable();
      *   Collection&lt;Integer&gt; remainingElements = drop(elements, 3);
-     *   remainingElements.isEmpty(); // => true
+     *   remainingElements.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      *
-     * @param iterable The {@code Iterable} from which to drop <em>n</em> elements
-     *                 and return the remainder.
-     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @param iterable     The {@code Iterable} from which to drop <em>n</em> elements
+     *                     and return the remainder.
+     * @param numberToDrop The maximum number of elements to drop.
+     * @param <T>          The type of the elements in the supplied {@code Iterable}.
      * @return A {@code Collection} instance containing the remaining elements after
      *         the required number of elements have been dropped from the supplied
      *         {@code Iterable}.
@@ -3238,7 +3244,7 @@ public class Eagerly {
      * eagerly, i.e., the elements are discarded from the underlying {@code Iterable}
      * immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -3252,7 +3258,7 @@ public class Eagerly {
      * <pre>
      *   Collection&lt;Integer&gt; remainingElements = dropWhile(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
      *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(2, 1);
@@ -3267,7 +3273,7 @@ public class Eagerly {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable(2, 1, 4, 5, 3);
      *   Collection&lt;Integer&gt; remainingElements = dropWhile(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
      *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(2, 1, 4, 5, 3);
@@ -3280,10 +3286,10 @@ public class Eagerly {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable(4, 5, 6, 7, 8);
      *   Collection&lt;Integer&gt; remainingElements = dropWhile(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
-     *   remainingElements.isEmpty(); // => true
+     *   remainingElements.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      * Similarly, if the input {@code Iterable} contains no elements, an empty {@code Collection}
@@ -3293,10 +3299,10 @@ public class Eagerly {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable();
      *   Collection&lt;Integer&gt; remainingElements = dropWhile(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
-     *   remainingElements.isEmpty(); // => true
+     *   remainingElements.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
@@ -3331,7 +3337,7 @@ public class Eagerly {
      * eagerly, i.e., the elements are discarded from the underlying {@code Iterable}
      * immediately.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -3345,7 +3351,7 @@ public class Eagerly {
      * <pre>
      *   Collection&lt;Integer&gt; remainingElements = dropUntil(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
      *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(3, 4, 5);
@@ -3360,7 +3366,7 @@ public class Eagerly {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable(4, 5, 6, 7, 8);
      *   Collection&lt;Integer&gt; remainingElements = dropUntil(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
      *   Collection&lt;Integer&gt; equivalentElements = Literals.collectionWith(4, 5, 6, 7, 8);
@@ -3373,10 +3379,10 @@ public class Eagerly {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable(-1, 0, 1, 2);
      *   Collection&lt;Integer&gt; remainingElements = dropUntil(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
-     *   remainingElements.isEmpty(); // => true
+     *   remainingElements.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      * If the input {@code Iterable} contains no elements, an empty {@code Collection} is returned:
@@ -3385,10 +3391,10 @@ public class Eagerly {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable();
      *   Collection&lt;Integer&gt; remainingElements = dropUntil(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
-     *   remainingElements.isEmpty(); // => true
+     *   remainingElements.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
@@ -3432,7 +3438,7 @@ public class Eagerly {
      * the second slot in the returned {@code Pair} will be occupied by an
      * empty {@code Collection}.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Given an {@code Iterable} of {@code Account} instances where {@code Account} is
      * defined as follows:
      * <blockquote>
@@ -3445,7 +3451,7 @@ public class Eagerly {
      *         }
      *
      *         public boolean isOverdrawn() {
-     *             return balance < 0;
+     *             return balance &lt; 0;
      *         }
      *
      *         ...
@@ -3456,7 +3462,7 @@ public class Eagerly {
      * <blockquote>
      * <pre>
      *     Iterable&lt;Account&gt; accounts = accountRepository.getAccounts();
-     *     Pair&lt;Collection&ltAccount&gt;, Collection&lt;Account&gt&gt overdrawnPartition = partition(accounts, new Predicate&ltAccount&gt;() {
+     *     Pair&lt;Collection&lt;Account&gt;, Collection&lt;Account&gt;&gt; overdrawnPartition = partition(accounts, new Predicate&lt;Account&gt;() {
      *        &#64;Override public boolean evaluate(Account account) {
      *            return account.isOverdrawn();
      *        }
@@ -3497,14 +3503,13 @@ public class Eagerly {
      * will be thrown.</p>
      *
      * <p>As an example, the following two {@code Collection} instances
-     * are effectively equivalent:
+     * are effectively equivalent:</p>
      * <blockquote>
      * <pre>
      *      Collection&lt;Collection&lt;Integer&gt;&gt; batches1 = collectionWith(collectionWith(1, 2, 3), collectionWith(4, 5, 6), collectionWith(7));
      *      Collection&lt;Collection&lt;Integer&gt;&gt; batches2 = batch(collectionWith(1, 2, 3, 4, 5, 6, 7), 3);
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param iterable  The {@code Iterable} to batch into batches of the specified
      *                  number of elements.
@@ -3584,7 +3589,7 @@ public class Eagerly {
      * of elements in the supplied {@code Iterable}, the start of the
      * {@code Iterable} will be used for that index.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Given an {@code Iterable} of {@code WeekDay} instances starting at
      * Sunday:
      * <blockquote>
@@ -3685,7 +3690,7 @@ public class Eagerly {
      * <p>For example, given an {@code Iterable} of {@code Group} instances and
      * a randomly ordered {@code Iterable} of many {@code Candidate} instances, we
      * can calculate candidate assignments so that we form groups of exactly
-     * {@code 5} candidates each as follows:
+     * {@code 5} candidates each as follows:</p>
      * <blockquote>
      * <pre>
      *     Collection&lt;Candidate&gt; candidates = candidateRepository.getAll();
@@ -3694,7 +3699,6 @@ public class Eagerly {
      *     Collection&lt;Pair&lt;Candidate, Group&gt;&gt; groupAssignments = Eagerly.zip(candidates, groupPositions);
      * </pre>
      * </blockquote>
-     * </p>
      *
      * <p>Note, if zero is specified as the number of times to repeat, an empty
      * {@code Collection} will be returned. Similarly, if the supplied {@code Iterable}
@@ -3732,11 +3736,11 @@ public class Eagerly {
      * the same size.</p>
      *
      * @param iterable The {@code Iterable} to reverse
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
      * @return A {@code Collection} instance containing the elements of the supplied
      *         {@code Iterable} in reverse order.
      */
     public static <T> Collection<T> reverse(final Iterable<T> iterable) {
-
         return collectionFrom(new Iterable<T>() {
             public Iterator<T> iterator() {
                 List<T> list = listFrom(iterable);
@@ -3773,6 +3777,8 @@ public class Eagerly {
      * @param iterable   The {@code Iterable} of the input set.
      * @param predicates The {@code UnaryPredicate} functions acting as a filter on
      *                   members of the input set.
+     * @param <S>        The type of the elements in the supplied {@code Iterable}.
+     * @param <T>        The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -3800,6 +3806,8 @@ public class Eagerly {
      * @param iterable   The {@code Iterable} of the input set.
      * @param predicates The {@code UnaryPredicate} functions acting as a filter on
      *                   members of the input set.
+     * @param <S>        The type of the elements in the supplied {@code Iterable}.
+     * @param <T>        The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -3827,6 +3835,8 @@ public class Eagerly {
      * @param iterable The {@code Iterable} of the input set.
      * @param p1       The {@code UnaryPredicate} function acting as a filter on members
      *                 of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate function, as mapped by the mapping function.
      */
@@ -3854,6 +3864,8 @@ public class Eagerly {
      * @param iterable The {@code Iterable} of the input set.
      * @param p1       The {@code UnaryPredicate} function acting as a filter on members
      *                 of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate function, as mapped by the mapper.
      */
@@ -3883,6 +3895,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p2       The second {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -3913,6 +3927,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p2       The second {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -3948,6 +3964,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p3       The third {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -3984,6 +4002,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p3       The third {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -4022,6 +4042,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -4061,6 +4083,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -4102,6 +4126,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -4144,6 +4170,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -4188,6 +4216,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -4233,6 +4263,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -4280,6 +4312,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -4328,6 +4362,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -4378,6 +4414,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -4429,6 +4467,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -4482,6 +4522,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p9       The ninth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -4536,6 +4578,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p9       The ninth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -4592,6 +4636,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p10      The tenth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -4649,6 +4695,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p10      The tenth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -4708,6 +4756,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p11on    The remaining {@code UnaryPredicate} functions acting as filters on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -4768,6 +4818,8 @@ public class Eagerly {
      *                 members of the input set.
      * @param p11on    The remaining {@code UnaryPredicate} functions acting as filters on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return A {@code Collection} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */

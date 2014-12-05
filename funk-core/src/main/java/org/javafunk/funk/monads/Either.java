@@ -45,7 +45,7 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  * <p>An {@code Either} is immutable but translation and mapping methods are planned
  * for a future release.</p>
  *
- * <h4>Example Usage</h4>
+ * <h3>Example Usage</h3>
  *
  * Consider a service for fetching an XML feed from a remote system with the following
  * interface:
@@ -74,7 +74,7 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  * <blockquote>
  * <pre>
  *   Either&lt;ErrorReport, XmlFeed&gt; xmlFetchEither = xmlFeedService.fetchFor(Dates.today());
- *   Either&lt;ErrorReport, XmlNode&gt; xmlNodeEither = xmlFetchEither.map(new Mapper&lt;XmlFeed, XmlNode&gt;>(){
+ *   Either&lt;ErrorReport, XmlNode&gt; xmlNodeEither = xmlFetchEither.map(new Mapper&lt;XmlFeed, XmlNode&gt;(){
  *       &#64;Override public XmlNode map(XmlFeed feed) {
  *           return feed.getNode("postcode");
  *       }
@@ -222,7 +222,7 @@ public abstract class Either<L, R> implements Mappable<R, Either<L, ?>> {
      * <p>If the supplied {@code Mapper} is {@code null}, a
      * {@code NullPointerException} will be thrown.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * <blockquote>
      * <pre>
@@ -275,7 +275,7 @@ public abstract class Either<L, R> implements Mappable<R, Either<L, ?>> {
      * <p>If the supplied {@code UnaryFunction} is {@code null}, a
      * {@code NullPointerException} will be thrown.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * <blockquote>
      * <pre>
@@ -360,7 +360,7 @@ public abstract class Either<L, R> implements Mappable<R, Either<L, ?>> {
      * <p>If the supplied {@code UnaryFunction} is {@code null}, a
      * {@code NullPointerException} will be thrown.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * <blockquote>
      * <pre>
@@ -448,7 +448,7 @@ public abstract class Either<L, R> implements Mappable<R, Either<L, ?>> {
      * <p>If the supplied {@code UnaryFunction} is {@code null}, a
      * {@code NullPointerException} will be thrown.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * <blockquote>
      * <pre>
@@ -553,7 +553,7 @@ public abstract class Either<L, R> implements Mappable<R, Either<L, ?>> {
      * <p>If either of the supplied {@code UnaryFunction}s are {@code null}, a
      * {@code NullPointerException} will be thrown.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * <blockquote>
      * <pre>

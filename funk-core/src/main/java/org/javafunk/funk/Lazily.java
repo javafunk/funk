@@ -39,7 +39,7 @@ import static org.javafunk.funk.Checks.returnOrThrowIfContainsNull;
  * <p>Each function defined in this class is lazy, i.e., it does not iterate over the
  * supplied {@code Iterable} instance(s) itself but instead prepares a return value
  * that will yield semantically correct results with respect to the function's definition
- * when the return value or one of its components is iterated. This has a number of benefits:
+ * when the return value or one of its components is iterated. This has a number of benefits:</p>
  * <ul>
  * <li>Iteration/realisation of the underlying {@code Iterable} instance(s) are only
  * performed when required and only as far through the {@code Iterable} as required.</li>
@@ -49,13 +49,12 @@ import static org.javafunk.funk.Checks.returnOrThrowIfContainsNull;
  * whilst keeping the number of required iterations of the underlying {@code Iterable}
  * instance(s) to a minimum.</li>
  * </ul>
- * Because of this it is generally recommended to use functions from {@code Lazily} over
+ * <p>Because of this it is generally recommended to use functions from {@code Lazily} over
  * those in {@code Eagerly} and then to materialize the resulting {@code Iterable}
  * instance(s) into whatever concrete {@code Iterable} type is required as the last step
- * in evaluation.
- * </p>
+ * in evaluation.</p>
  *
- * <p>As an example consider the following:
+ * <p>As an example consider the following:</p>
  * <blockquote>
  * <pre>
  *      Iterable&lt;BigInteger&gt; naturalNumbers = naturalNumbers.getAll();
@@ -69,20 +68,18 @@ import static org.javafunk.funk.Checks.returnOrThrowIfContainsNull;
  *      Map&lt;Integer, BigDecimal&gt; firstHundredDoubledNaturals = Literals.mapFromPairs(firstHundredEnumeratedDoubledNaturals);
  * </pre>
  * </blockquote>
- * Here a number of lazy operations are performed and then the final {@code Iterable} is
+ * <p>Here a number of lazy operations are performed and then the final {@code Iterable} is
  * materialised into a {@code Map} instance. The original {@code Iterable} is an
  * infinite sequence of elements however this series of operations will only iterate and
- * map over the first hundred elements.
- * </p>
+ * map over the first hundred elements.</p>
  *
  * <p>This example has been written in full but of course, via static imports and method extraction, it can
- * be made more concise as shown in the following:
+ * be made more concise as shown in the following:</p>
  * <blockquote>
  * <pre>
  *      Map&lt;Integer, BigDecimal&gt; firstHundredDoubledNaturals = mapFromPairs(take(enumerate(map(naturalNumbers.getAll(), toDoubledBigDecimals())), 100);
  * </pre>
  * </blockquote>
- * </p>
  *
  * <p>Note that none of the values returned by these functions memoise their contents
  * upon iteration. Thus, if the input {@code Iterable} instance(s) have expensive side
@@ -109,14 +106,13 @@ public class Lazily {
      * will be thrown.</p>
      *
      * <p>As an example, the following two {@code Iterable} instances
-     * are effectively equivalent:
+     * are effectively equivalent:</p>
      * <blockquote>
      * <pre>
      *      Iterable&lt;Iterable&lt;Integer&gt;&gt; batches1 = iterableWith(iterableWith(1, 2, 3), iterableWith(4, 5, 6), iterableWith(7));
      *      Iterable&lt;Iterable&lt;Integer&gt;&gt; batches2 = Lazily.batch(iterableWith(1, 2, 3, 4, 5, 6, 7), 3);
      * </pre>
      * </blockquote>
-     * </p>
      *
      * @param iterable  The {@code Iterable} to batch into batches of the specified
      *                  number of elements.
@@ -146,7 +142,7 @@ public class Lazily {
      *
      * <p>For example, given an {@code Iterable} of {@code Team} instances, randomly
      * ordered, we can assign each {@code Team} to a group identified by an
-     * {@code Integer} between {@code 1} and {@code 4} as follows:
+     * {@code Integer} between {@code 1} and {@code 4} as follows:</p>
      * <blockquote>
      * <pre>
      *     Iterable&lt;Team&gt; teams = teamRepository.findByCountyName("Kent");
@@ -154,7 +150,6 @@ public class Lazily {
      *     Iterable&lt;Pair&lt;Team, Integer&gt;&gt; groupAssignments = Lazily.zip(teams, groupNumbers);
      * </pre>
      * </blockquote>
-     * </p>
      *
      * <p>Note, if the supplied {@code Iterable} is empty, the returned {@code Iterable}
      * will also be empty.</p>
@@ -181,7 +176,7 @@ public class Lazily {
      * <p>For example, given an {@code Iterable} of {@code Group} instances and
      * a randomly ordered {@code Iterable} of many {@code Candidate} instances, we
      * can calculate candidate assignments so that we form groups of exactly
-     * {@code 5} candidates each as follows:
+     * {@code 5} candidates each as follows:</p>
      * <blockquote>
      * <pre>
      *     Iterable&lt;Candidate&gt; candidates = candidateRepository.getAll();
@@ -190,7 +185,6 @@ public class Lazily {
      *     Iterable&lt;Pair&lt;Candidate, Group&gt;&gt; groupAssignments = zip(candidates, groupPositions);
      * </pre>
      * </blockquote>
-     * </p>
      *
      * <p>Note, if zero is specified as the number of times to repeat, an empty
      * {@code Iterable} will be returned. Similarly, if the supplied {@code Iterable}
@@ -232,7 +226,7 @@ public class Lazily {
      * performed lazily, i.e., the elements are not retrieved from the underlying
      * {@code Iterable} until it is iterated.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -263,12 +257,13 @@ public class Lazily {
      * <pre>
      *   Iterable&lt;Integer&gt; elements = Literals.iterable();
      *   Iterable&lt;Integer&gt; firstThreeElements = take(elements, 3);
-     *   firstThreeElements.isEmpty(); // => true
+     *   firstThreeElements.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      *
-     * @param iterable The {@code Iterable} from which to take <em>n</em> elements.
-     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @param iterable     The {@code Iterable} from which to take <em>n</em> elements.
+     * @param numberToTake The maximum number of elements to take.
+     * @param <T>          The type of the elements in the supplied {@code Iterable}.
      * @return An {@code Iterable} instance effectively containing the required
      *         number of elements (or less) from the supplied {@code Iterable}.
      * @throws IllegalArgumentException if the required number of elements to take
@@ -297,7 +292,7 @@ public class Lazily {
      * lazily, i.e., no attempt is made to retrieve the sequence of satisfactory elements from the
      * underlying {@code Iterable} until it is iterated.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -311,7 +306,7 @@ public class Lazily {
      * <pre>
      *   Iterable&lt;Integer&gt; firstElementsGreaterThanTwo = takeWhile(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
      *   Iterable&lt;Integer&gt; equivalentElements = Literals.iterableWith(5, 4, 3);
@@ -325,10 +320,10 @@ public class Lazily {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable(2, 1, 4, 5, 6);
      *   Iterable&lt;Integer&gt; firstElementsGreaterThanTwo = takeWhile(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
-     *   firstElementsGreaterThanTwo.isEmpty(); // => true
+     *   firstElementsGreaterThanTwo.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      * If all elements retrieved from the {@code Iterable} satisfy the supplied
@@ -339,7 +334,7 @@ public class Lazily {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable(4, 5, 6, 7, 8);
      *   Iterable&lt;Integer&gt; firstElementsGreaterThanTwo = takeWhile(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
      *   Iterable&lt;Integer&gt; equivalentElements = Literals.iterableWith(4, 5, 6, 7, 8);
@@ -352,10 +347,10 @@ public class Lazily {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable();
      *   Iterable&lt;Integer&gt; firstElementsGreaterThanTwo = takeWhile(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
-     *   firstElementsGreaterThanTwo.isEmpty(); // => true
+     *   firstElementsGreaterThanTwo.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
@@ -394,7 +389,7 @@ public class Lazily {
      * lazily, i.e., no attempt is made to retrieve the sequence of elements not satisfying the
      * {@code UnaryPredicate} from the underlying {@code Iterable} until it is iterated.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -408,7 +403,7 @@ public class Lazily {
      * <pre>
      *   Iterable&lt;Integer&gt; firstElementsNotGreaterThanTwo = takeUntil(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
      *   Iterable&lt;Integer&gt; equivalentElements = Literals.iterableWith(1, 2);
@@ -421,10 +416,10 @@ public class Lazily {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable(4, 5, 6, 7, 8);
      *   Iterable&lt;Integer&gt; firstElementsNotGreaterThanTwo = takeUntil(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
-     *   firstElementsNotGreaterThanTwo.isEmpty(); // => true
+     *   firstElementsNotGreaterThanTwo.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      * If no elements retrieved from the {@code Iterable} satisfy the supplied {@code UnaryPredicate}
@@ -435,7 +430,7 @@ public class Lazily {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable(-1, 0, 1, 2);
      *   Iterable&lt;Integer&gt; firstElementsNotGreaterThanTwo = takeUntil(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
      *   Iterable&lt;Integer&gt; equivalentElements = Literals.collectionWith(-1, 0, 1, 2);
@@ -447,10 +442,10 @@ public class Lazily {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable();
      *   Collection&lt;Integer&gt; firstElementsNotGreaterThanTwo = takeUntil(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
-     *   firstElementsNotGreaterThanTwo.isEmpty(); // => true
+     *   firstElementsNotGreaterThanTwo.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
@@ -494,7 +489,7 @@ public class Lazily {
      * lazily, i.e., the elements are not discarded from the underlying {@code Iterable}
      * until it is iterated.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -524,13 +519,14 @@ public class Lazily {
      * <pre>
      *   Iterable&lt;Integer&gt; elements = iterable();
      *   Iterable&lt;Integer&gt; remainingElements = drop(elements, 3);
-     *   remainingElements.isEmpty(); // => true
+     *   remainingElements.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      *
-     * @param iterable The {@code Iterable} from which to drop <em>n</em> elements
-     *                 and return the remainder.
-     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @param iterable     The {@code Iterable} from which to drop <em>n</em> elements
+     *                     and return the remainder.
+     * @param numberToTake The maximum number of elements to take.
+     * @param <T>          The type of the elements in the supplied {@code Iterable}.
      * @return An {@code Iterable} instance with the required number of elements
      *         dropped from the supplied {@code Iterable} on iteration, effectively
      *         containing the remaining elements .
@@ -560,7 +556,7 @@ public class Lazily {
      * lazily, i.e., the elements are not discarded from the underlying {@code Iterable}
      * until it is iterated.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -574,7 +570,7 @@ public class Lazily {
      * <pre>
      *   Iterable&lt;Integer&gt; remainingElements = dropWhile(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
      *   Iterable&lt;Integer&gt; equivalentElements = Literals.iterableWith(2, 1);
@@ -588,7 +584,7 @@ public class Lazily {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable(2, 1, 4, 5, 3);
      *   Iterable&lt;Integer&gt; remainingElements = dropWhile(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
      *   Iterable&lt;Integer&gt; equivalentElements = Literals.iterableWith(2, 1, 4, 5, 3);
@@ -601,10 +597,10 @@ public class Lazily {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable(4, 5, 6, 7, 8);
      *   Collection&lt;Integer&gt; remainingElements = dropWhile(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
-     *   remainingElements.isEmpty(); // => true
+     *   remainingElements.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      * Similarly, if the input {@code Iterable} contains no elements, an empty {@code Iterable}
@@ -614,10 +610,10 @@ public class Lazily {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable();
      *   Collection&lt;Integer&gt; remainingElements = dropWhile(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
-     *   remainingElements.isEmpty(); // => true
+     *   remainingElements.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
@@ -664,7 +660,7 @@ public class Lazily {
      * lazily, i.e., the elements are not discarded from the underlying {@code Iterable}
      * until it is iterated.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Given an {@code Iterable} of {@code Integer} instances:
      * <blockquote>
@@ -678,7 +674,7 @@ public class Lazily {
      * <pre>
      *   Iterable&lt;Integer&gt; remainingElements = dropUntil(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
      *   Iterable&lt;Integer&gt; equivalentElements = Literals.iterableWith(3, 4, 5);
@@ -692,7 +688,7 @@ public class Lazily {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable(4, 5, 6, 7, 8);
      *   Iterable&lt;Integer&gt; remainingElements = dropUntil(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
      *   Iterable&lt;Integer&gt; equivalentElements = Literals.iterableWith(4, 5, 6, 7, 8);
@@ -705,10 +701,10 @@ public class Lazily {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable(-1, 0, 1, 2);
      *   Iterable&lt;Integer&gt; remainingElements = dropUntil(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
-     *   remainingElements.isEmpty(); // => true
+     *   remainingElements.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      * Similarly, if the input {@code Iterable} contains no elements, an empty {@code Iterable} is returned:
@@ -717,10 +713,10 @@ public class Lazily {
      *   Iterable&lt;Integer&gt; elements = Literals.iterable();
      *   Iterable&lt;Integer&gt; remainingElements = dropUntil(elements, new Predicate&lt;Integer&gt;() {
      *       &#64;Override public boolean evaluate(Integer integer) {
-     *          return integer > 2;
+     *          return integer &gt; 2;
      *       }
      *   });
-     *   remainingElements.isEmpty(); // => true
+     *   remainingElements.isEmpty(); // =&gt; true
      * </pre>
      * </blockquote>
      * Note, we used an anonymous {@code Predicate} instance. The {@code Predicate} interface
@@ -768,7 +764,7 @@ public class Lazily {
      * it is inherently impure and thus must have side effects for any perceivable
      * difference to be observed.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Consider a collection of {@code ApplicationForm} objects where an
      * {@code ApplicationForm} is defined by the following class:
      * <blockquote>
@@ -894,7 +890,7 @@ public class Lazily {
      *
      * <p>If the supplied {@code Iterable} is empty, so is the returned {@code Iterable}.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Given we have an {@code Iterable} of {@code Customer} instances for an online store
      * and they are ordered in the order they made purchases. The store owners decide to
      * run a campaign where every thousandth customer wins a prize. We can model this as
@@ -941,13 +937,13 @@ public class Lazily {
      * lazily, i.e., no attempt is made to retrieve and index elements from the underlying
      * {@code Iterable} until it is iterated.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Consider an {@code Iterable} of {@code String} instances representing words from a book.
      * Each word can be indexed using its length using to the following.
      * <blockquote>
      * <pre>
      *     Iterable&lt;String&gt; words = book.getCompleteWordList();
-     *     Iterable&lt;Pair&lt;Integer, String&gt;&gt; wordsIndexedByLength = index(words, new UnaryFunction&ltString, Integer&gt;() {
+     *     Iterable&lt;Pair&lt;Integer, String&gt;&gt; wordsIndexedByLength = index(words, new UnaryFunction&lt;String, Integer&gt;() {
      *         &#64;Override public Integer call(String word) {
      *             return word.length();
      *         }
@@ -1028,7 +1024,7 @@ public class Lazily {
      * by the output {@code Iterable}. Thus, the input and output {@code Iterable} instances
      * will always contain the same number of elements.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * Consider a collection of {@code Person} objects where a {@code Person} is defined
      * by the following class:
@@ -1171,7 +1167,7 @@ public class Lazily {
      * {@code Iterable} instances are not iterated and their elements are not equated
      * until the returned {@code Iterable} is iterated.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Consider the situation where we have two very large {@code Iterable} instances
      * containing {@code Integer}s and we want to assess whether they are equal. In
      * order to ensure that they are equal we must iterate the entire {@code Iterable}.
@@ -1182,13 +1178,13 @@ public class Lazily {
      * <pre>
      *     Iterable&lt;Integer&gt; first = firstNumberSource.fetch();
      *     Iterable&lt;Integer&gt; second = secondNumberSource.fetch();
-     *     Iterable&lt;Boolean&gt; equalityIterable = equate(first, second, new BinaryPredicate&ltInteger, Integer&gt;() {
+     *     Iterable&lt;Boolean&gt; equalityIterable = equate(first, second, new BinaryPredicate&lt;Integer, Integer&gt;() {
      *         &#64;Override public boolean evaluate(Integer first, Integer second) {
      *             return first.equals(second);
      *         }
      *     });
      *     Option&lt;Boolean&gt; equalityResult = Eagerly.first(equalityIterable, Predicates.equals(false));
-     *     equalityResult.hasValue() // => not equal
+     *     equalityResult.hasValue() // =&gt; not equal
      * </pre>
      * </blockquote>
      *
@@ -1275,7 +1271,7 @@ public class Lazily {
      * when called with a {@code null} value upon iteration, the {@code null} value will
      * be returned.</p>
      *
-     * <h4>Example Usage</h4>
+     * <h3>Example Usage</h3>
      *
      * Consider a collection of {@code Pet} objects where a {@code Pet} is defined
      * by the following interface:
@@ -1390,7 +1386,7 @@ public class Lazily {
      * when called with a {@code null} value upon iteration, the {@code null} value will
      * be returned.</p>
      *
-     * <h4>Example Usage</h4>
+     * <h3>Example Usage</h3>
      *
      * Consider a collection of {@code Pet} objects where a {@code Pet} is defined
      * by the following interface:
@@ -1525,7 +1521,7 @@ public class Lazily {
      * {@code UnaryPredicate}, the second slot in the returned {@code Pair} will be
      * occupied by an empty {@code Iterable}.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Given an {@code Iterable} of {@code Account} instances where {@code Account} is
      * defined as follows:
      * <blockquote>
@@ -1538,7 +1534,7 @@ public class Lazily {
      *         }
      *
      *         public boolean isOverdrawn() {
-     *             return balance < 0;
+     *             return balance @lt; 0;
      *         }
      *
      *         ...
@@ -1549,7 +1545,7 @@ public class Lazily {
      * <blockquote>
      * <pre>
      *     Iterable&lt;Account&gt; accounts = accountRepository.getAccounts();
-     *     Pair&lt;Iterable&ltAccount&gt;, Iterable&lt;Account&gt&gt overdrawnPartition = partition(accounts, new Predicate&ltAccount&gt;() {
+     *     Pair&lt;Iterable&lt;Account&gt;, Iterable&lt;Account&gt;&gt; overdrawnPartition = partition(accounts, new Predicate&lt;Account&gt;() {
      *        &#64;Override public boolean evaluate(Account account) {
      *            return account.isOverdrawn();
      *        }
@@ -1590,7 +1586,7 @@ public class Lazily {
      * supplied {@code Iterable} is empty, the returned {@code Iterable} will
      * be empty.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Given the following {@code Iterable} of {@code Integer} instances:
      * <blockquote>
      * <pre>
@@ -1611,7 +1607,7 @@ public class Lazily {
      *
      *     ...
      *
-     *     Integer result = Mathematics.sum(numbers); // => 21
+     *     Integer result = Mathematics.sum(numbers); // =&gt; 21
      * </pre>
      * </blockquote>
      * Note that in reality, this would exhaust the stack if the input {@code Iterable}
@@ -1669,7 +1665,7 @@ public class Lazily {
      * greatest index of all elements in the {@code Iterable} then an
      * effectively empty {@code Iterable} is returned.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Given an {@code Iterable} of {@code DateTime} instances representing
      * some part of a year and given that the first {@code DateTime} is known
      * to be a Friday, we can slice out the first four Sundays as follows:
@@ -1729,7 +1725,7 @@ public class Lazily {
      * there is a possibility only one slot of the returned {@code Pair}
      * instances will ever change.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Given an {@code Iterable} of {@code Name} instances and an {@code Iterable}
      * of {@code Location} instances as follows:
      * <blockquote>
@@ -2241,7 +2237,7 @@ public class Lazily {
      * instances for which a cartesian product is required is less than ten,
      * use the explicit arities of {@code cartesianProduct}.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Given three {@code Iterable} instances of varying types:
      * <blockquote>
      * <pre>
@@ -2253,14 +2249,14 @@ public class Lazily {
      * we can generate the cartesian product as follows:
      * <blockquote>
      * <pre>
-     *     Iterable&ltIterable&lt?&gt;&gt; iterables = Literals.&lt;Iterable&lt?&gt;&gt;iterableWith(first, second, third);
-     *     Iterable&lt? extends Iterable&lt;?&gt;&gt; cartesianProduct = cartesianProduct(iterables);
+     *     Iterable&lt;Iterable&lt;?&gt;&gt; iterables = Literals.&lt;Iterable&lt;?&gt;&gt;iterableWith(first, second, third);
+     *     Iterable&lt;? extends Iterable&lt;?&gt;&gt; cartesianProduct = cartesianProduct(iterables);
      * </pre>
      * </blockquote>
      * This is effectively equivalent to the following:
      * <blockquote>
      * <pre>
-     *     Iterable&lt;? extends Iterable&lt;?&gt;&gt; equivalentIterables = Literals.&ltIterable&lt?&gt;&gt;iterableWith(
+     *     Iterable&lt;? extends Iterable&lt;?&gt;&gt; equivalentIterables = Literals.&lt;Iterable&lt;?&gt;&gt;iterableWith(
      *             iterableWith(1, "first", false),
      *             iterableWith(1, "second", false),
      *             iterableWith(1, "third", false));
@@ -2326,7 +2322,7 @@ public class Lazily {
      * {@code Iterable} instances are infinite, then the returned
      * {@code Iterable} will also be infinite.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Given an {@code Iterable} of {@code Integer} instances representing the
      * first ten values in the sequence of natural numbers and an {@code Iterable}
      * of {@code String} instances representing the textual equivalents of those
@@ -2344,7 +2340,7 @@ public class Lazily {
      * to the textual name can be obtained as follows:
      * <blockquote>
      * <pre>
-     *     Iterable&ltPair&ltInteger, String&gt;&gt; associations = zip(numbers, numberNames);
+     *     Iterable&lt;Pair&lt;Integer, String&gt;&gt; associations = zip(numbers, numberNames);
      * </pre>
      * </blockquote>
      * This is effectively equivalent to the following:
@@ -2771,7 +2767,7 @@ public class Lazily {
      * over the wildcard type {@code ?}. If the number of {@code Iterable} instances
      * to be zipped is less than ten, use the explicit arities of {@code zip}.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      * Given three {@code Iterable} instances of varying types:
      * <blockquote>
      * <pre>
@@ -2783,14 +2779,14 @@ public class Lazily {
      * we can zip them into an {@code Iterable} of {@code Iterable} instances as follows:
      * <blockquote>
      * <pre>
-     *     Iterable&ltIterable&lt?&gt;&gt; iterables = Literals.&lt;Iterable&lt?&gt;&gt;iterableWith(first, second, third);
-     *     Iterable&lt? extends Iterable&lt;?&gt;&gt; zippedIterables = zip(iterables);
+     *     Iterable&lt;Iterable&lt;?&gt;&gt; iterables = Literals.&lt;Iterable&lt;?&gt;&gt;iterableWith(first, second, third);
+     *     Iterable&lt;? extends Iterable&lt;?&gt;&gt; zippedIterables = zip(iterables);
      * </pre>
      * </blockquote>
      * This is effectively equivalent to the following:
      * <blockquote>
      * <pre>
-     *     Iterable&lt;? extends Iterable&lt;?&gt;&gt; equivalentIterables = Literals.&ltIterable&lt?&gt;&gt;iterableWith(
+     *     Iterable&lt;? extends Iterable&lt;?&gt;&gt; equivalentIterables = Literals.&lt;Iterable&lt;?&gt;&gt;iterableWith(
      *             iterableWith(1, "first", false),
      *             iterableWith(2, "second", true),
      *             iterableWith(3, "third", false));
@@ -2832,6 +2828,8 @@ public class Lazily {
      * @param iterable   The {@code Iterable} of the input set.
      * @param predicates An {@code Iterable} containing the {@code UnaryPredicate}
      *                   functions acting as a filter on members of the input set.
+     * @param <S>        The type of the elements in the supplied {@code Iterable}.
+     * @param <T>        The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -2870,6 +2868,8 @@ public class Lazily {
      * @param iterable   The {@code Iterable} of the input set.
      * @param predicates An {@code Iterable} containing the {@code UnaryPredicate}
      *                   functions acting as a filter on members of the input set.
+     * @param <S>        The type of the elements in the supplied {@code Iterable}.
+     * @param <T>        The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -2900,6 +2900,8 @@ public class Lazily {
      * @param iterable The {@code Iterable} of the input set.
      * @param p1       The {@code UnaryPredicate} function acting as a filter on members
      *                 of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate function, as mapped by the mapping function.
      */
@@ -2933,6 +2935,8 @@ public class Lazily {
      * @param iterable The {@code Iterable} of the input set.
      * @param p1       The {@code UnaryPredicate} function acting as a filter on members
      *                 of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate function, as mapped by the mapper.
      */
@@ -2968,6 +2972,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p2       The second {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -3004,6 +3010,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p2       The second {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -3042,6 +3050,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p3       The third {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -3081,6 +3091,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p3       The third {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -3122,6 +3134,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -3164,6 +3178,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -3208,6 +3224,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -3253,6 +3271,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -3300,6 +3320,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -3348,6 +3370,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -3398,6 +3422,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -3449,6 +3475,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -3502,6 +3530,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -3556,6 +3586,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -3612,6 +3644,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p9       The ninth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -3669,6 +3703,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p9       The ninth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -3728,6 +3764,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p10      The tenth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -3788,6 +3826,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p10      The tenth {@code UnaryPredicate} function acting as a filter on
      *                 members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */
@@ -3850,6 +3890,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p11on    The remaining {@code UnaryPredicate} functions acting as filters
      *                 on members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapping function.
      */
@@ -3913,6 +3955,8 @@ public class Lazily {
      *                 members of the input set.
      * @param p11on    The remaining {@code UnaryPredicate} functions acting as filters
      *                 on members of the input set.
+     * @param <S>      The type of the elements in the supplied {@code Iterable}.
+     * @param <T>      The type of the elements in the returned {@code Iterable}.
      * @return An {@code Iterable} of the resultant set from members of the input set
      *         that satisfy the predicate functions, as mapped by the mapper.
      */

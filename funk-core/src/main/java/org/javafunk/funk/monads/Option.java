@@ -43,7 +43,7 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  * <p>An {@code Option} is immutable, however the provided translation and mapping methods
  * allow the contained value to be transformed as necessary.</p>
  *
- * <h4>Example Usage</h4>
+ * <h3>Example Usage</h3>
  *
  * A {@code null} safe option can be created as follows:
  * <blockquote>
@@ -54,17 +54,17 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  * We can query the option to find out if it has a value:
  * <blockquote>
  * <pre>
- *   option.hasValue();   // => true
- *   option.hasNoValue(); // => false
+ *   option.hasValue();   // =&gt; true
+ *   option.hasNoValue(); // =&gt; false
  * </pre>
  * </blockquote>
  * The value of the option can be retrieved:
  * <blockquote>
  * <pre>
- *   option.get();                              // => "Hello"
- *   option.getOrNull();                        // => "Hello"
- *   option.getOrElse("Goodbye");               // => "Hello"
- *   option.getOrThrow(new MannersException()); // => "Hello"
+ *   option.get();                              // =&gt; "Hello"
+ *   option.getOrNull();                        // =&gt; "Hello"
+ *   option.getOrElse("Goodbye");               // =&gt; "Hello"
+ *   option.getOrThrow(new MannersException()); // =&gt; "Hello"
  * </pre>
  * </blockquote>
  * or mapped into something else:
@@ -75,7 +75,7 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  *           return input.length();
  *       }
  *   });
- *   option.get(); // => 5
+ *   option.get(); // =&gt; 5
  *
  *   option.flatMap(new Mapper&lt;String, Option&lt;Integer&gt;&gt;() {
  *       &#64;Override public Integer map(String input) {
@@ -86,8 +86,8 @@ import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.map
  *           return Option.none();
  *       }
  *   });
- *   option.get();        // => throws NoSuchElementException
- *   option.getOrElse(0); // => 0
+ *   option.get();        // =&gt; throws NoSuchElementException
+ *   option.getOrElse(0); // =&gt; 0
  * </pre>
  * </blockquote>
  * See the
@@ -120,14 +120,14 @@ public abstract class Option<T>
      *
      * <p>This overloaded version of {@link #none()} is provided so that
      * the generic type resolution works correctly when the factory is
-     * used inline. For example, compare the following:
+     * used inline. For example, compare the following:</p>
      * <blockquote>
      * <pre>
      *   someObject.methodTakingOption(Option.none(Integer.class));
      *   someObject.methodTakingOption(Option.&lt;Integer&gt;none();
      * </pre>
      * </blockquote>
-     * the benefit being that the first call to none can be statically imported
+     * <p>the benefit being that the first call to none can be statically imported
      * whilst the second cannot.</p>
      *
      * @param typeClass The class of the type {@code T} that this option contains.
@@ -145,17 +145,17 @@ public abstract class Option<T>
      * <p>Note that {@code null} is not explicitly forbidden in an {@code Option}
      * to be consistent with the rest of Funk which allows {@code null}s as
      * valid values. In order to have {@code null} coerced into {@code None<T>},
-     * use {@link #option(Object)}. For example, consider the following:
+     * use {@link #option(Object)}. For example, consider the following:</p>
      * <blockquote>
      * <pre>
      *   Option&lt;String&gt; nullNotAllowed = Option.option(null);
-     *   nullNotAllowed.get(); // => NoSuchElementException
+     *   nullNotAllowed.get(); // =&gt; NoSuchElementException
      *
      *   Option&lt;String&gt; nullAllowed = Option.some(null);
-     *   nullAllowed.get(); // => null
+     *   nullAllowed.get(); // =&gt; null
      * </pre>
      * </blockquote>
-     * Thus, it is important to ensure the correct factory method is used for the
+     * <p>Thus, it is important to ensure the correct factory method is used for the
      * desired behaviour.</p>
      *
      * @param value The value of the resulting {@code Option}.
@@ -172,17 +172,17 @@ public abstract class Option<T>
      *
      * <p>Note that this method will coerce {@code null} into {@code None<T>}.
      * Compare this with {@link #some(Object)} which allows {@code null} as a value.
-     * As an example, consider the following:
+     * As an example, consider the following:</p>
      * <blockquote>
      * <pre>
      *   Option&lt;String&gt; nullAllowed = Option.some(null);
-     *   nullAllowed.get(); // => null
+     *   nullAllowed.get(); // =&gt; null
      *
      *   Option&lt;String&gt; nullNotAllowed = Option.option(null);
-     *   nullNotAllowed.get(); // => NoSuchElementException
+     *   nullNotAllowed.get(); // =&gt; NoSuchElementException
      * </pre>
      * </blockquote>
-     * Thus, it is important to ensure the correct factory method is used for the
+     * <p>Thus, it is important to ensure the correct factory method is used for the
      * desired behaviour.</p>
      *
      * @param value The value of the resulting {@code Option}.
@@ -424,7 +424,7 @@ public abstract class Option<T>
      * <p>If the supplied function is {@code null}, a {@code NullPointerException}
      * will be thrown.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * <blockquote>
      * <pre>
@@ -434,8 +434,8 @@ public abstract class Option<T>
      *          return "Flop";
      *      }
      *   });
-     *   firstResult.hasValue(); // => true
-     *   firstResult.get();      // => "Flop"
+     *   firstResult.hasValue(); // =&gt; true
+     *   firstResult.get();      // =&gt; "Flop"
      *
      *   Option&lt;String&gt; none = Option.none();
      *   Option&lt;Integer&gt; secondResult = none.map(new UnaryFunction&lt;String, Integer&gt;() {
@@ -443,8 +443,8 @@ public abstract class Option<T>
      *          throw new ShouldNotGetCalledException();
      *      }
      *   });
-     *   secondResult.hasValue();   // => false
-     *   secondResult.getOrElse(0); // => 0
+     *   secondResult.hasValue();   // =&gt; false
+     *   secondResult.getOrElse(0); // =&gt; 0
      * </pre>
      * </blockquote>
      *
@@ -476,7 +476,7 @@ public abstract class Option<T>
      * <p>If the supplied mapper is {@code null}, a {@code NullPointerException}
      * will be thrown.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * <blockquote>
      * <pre>
@@ -486,8 +486,8 @@ public abstract class Option<T>
      *          return "Flop";
      *      }
      *   });
-     *   firstResult.hasValue(); // => true
-     *   firstResult.get();      // => "Flop"
+     *   firstResult.hasValue(); // =&gt; true
+     *   firstResult.get();      // =&gt; "Flop"
      *
      *   Option&lt;String&gt; none = Option.none();
      *   Option&lt;Integer&gt; secondResult = none.map(new Mapper&lt;String, Integer&gt;() {
@@ -495,8 +495,8 @@ public abstract class Option<T>
      *          throw new ShouldNotGetCalledException();
      *      }
      *   });
-     *   secondResult.hasValue();   // => false
-     *   secondResult.getOrElse(0); // => 0
+     *   secondResult.hasValue();   // =&gt; false
+     *   secondResult.getOrElse(0); // =&gt; 0
      * </pre>
      * </blockquote>
      *
@@ -528,7 +528,7 @@ public abstract class Option<T>
      * <p>If the supplied function is {@code null}, a {@code NullPointerException}
      * will be thrown.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * <blockquote>
      * <pre>
@@ -538,7 +538,7 @@ public abstract class Option<T>
      *          return Option.option(repository.find(name));
      *      }
      *   });
-     *   firstResult.hasValue(); // => dependent on result of repository.find(name)
+     *   firstResult.hasValue(); // =&gt; dependent on result of repository.find(name)
      *
      *   Option&lt;String&gt; none = Option.none();
      *   Option&lt;Person&gt; secondResult = none.map(new UnaryFunction&lt;String, Option&lt;Person&gt;&gt;() {
@@ -546,8 +546,8 @@ public abstract class Option<T>
      *          throw new ShouldNotGetCalledException();
      *      }
      *   });
-     *   secondResult.hasValue();   // => false
-     *   secondResult.getOrNull();  // => null
+     *   secondResult.hasValue();   // =&gt; false
+     *   secondResult.getOrNull();  // =&gt; null
      * </pre>
      * </blockquote>
      *
@@ -576,7 +576,7 @@ public abstract class Option<T>
      * <p>If the supplied mapper is {@code null}, a {@code NullPointerException}
      * will be thrown.</p>
      *
-     * <h4>Example Usage:</h4>
+     * <h3>Example Usage:</h3>
      *
      * <blockquote>
      * <pre>
@@ -586,7 +586,7 @@ public abstract class Option<T>
      *          return Option.option(repository.find(name));
      *      }
      *   });
-     *   firstResult.hasValue(); // => dependent on result of repository.find(name)
+     *   firstResult.hasValue(); // =&gt; dependent on result of repository.find(name)
      *
      *   Option&lt;String&gt; none = Option.none();
      *   Option&lt;Person&gt; secondResult = none.map(new Mapper&lt;String, Option&lt;Person&gt;&gt;() {
@@ -594,8 +594,8 @@ public abstract class Option<T>
      *          throw new ShouldNotGetCalledException();
      *      }
      *   });
-     *   secondResult.hasValue();   // => false
-     *   secondResult.getOrNull();  // => null
+     *   secondResult.hasValue();   // =&gt; false
+     *   secondResult.getOrNull();  // =&gt; null
      * </pre>
      * </blockquote>
      *
