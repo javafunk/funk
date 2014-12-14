@@ -23,6 +23,7 @@ import java.util.*;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.Collections.emptyList;
 import static org.javafunk.funk.Checks.returnOrThrowIfNull;
+import static org.javafunk.funk.Exceptions.noSuchElementFactory;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Iterators.asIterable;
 import static org.javafunk.funk.Literals.*;
@@ -117,7 +118,7 @@ public class Eagerly {
                        element :
                        currentMax;
             }
-        }), new NoSuchElementException("Maximum value is undefined if all values in the supplied Iterable are null."));
+        }), noSuchElementFactory("Maximum value is undefined if all values in the supplied Iterable are null."));
     }
 
     public static <T> T min(Iterable<T> iterable, final Comparator<? super T> comparator) {
@@ -137,7 +138,7 @@ public class Eagerly {
                        element :
                        currentMin;
             }
-        }), new NoSuchElementException("Minimum value is undefined if all values in the supplied Iterable are null."));
+        }), noSuchElementFactory("Minimum value is undefined if all values in the supplied Iterable are null."));
     }
 
     /**

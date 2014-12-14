@@ -6,6 +6,8 @@ import static junit.framework.Assert.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
+import static org.javafunk.funk.Exceptions.illegalArgumentFactory;
+import static org.javafunk.funk.Exceptions.runtimeFactory;
 import static org.javafunk.funk.Literals.iterable;
 import static org.javafunk.funk.Literals.iterableWith;
 
@@ -16,7 +18,7 @@ public class ChecksTest {
         Iterable<String> input = iterableWith("one", "two");
 
         // When
-        Iterable<String> output = Checks.returnOrThrowIfEmpty(input, new RuntimeException("Oops"));
+        Iterable<String> output = Checks.returnOrThrowIfEmpty(input, runtimeFactory("Oops"));
 
         // Then
         assertThat(output, is(input));
@@ -29,7 +31,7 @@ public class ChecksTest {
 
         try {
             // When
-            Checks.returnOrThrowIfEmpty(input, new IllegalArgumentException("Oops"));
+            Checks.returnOrThrowIfEmpty(input, illegalArgumentFactory("Oops"));
             fail("Expected the supplied exception to be thrown.");
         } catch (Throwable exception) {
             // Then
@@ -44,7 +46,7 @@ public class ChecksTest {
         Iterable<String> input = null;
 
         // When
-        Checks.returnOrThrowIfEmpty(input, new RuntimeException());
+        Checks.returnOrThrowIfEmpty(input, runtimeFactory());
 
         // Then a NullPointerException is thrown
     }

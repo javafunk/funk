@@ -17,6 +17,8 @@ import java.util.Map;
 
 import static java.lang.String.format;
 import static org.javafunk.funk.Accumulators.*;
+import static org.javafunk.funk.Exceptions.arithmeticFactory;
+import static org.javafunk.funk.Exceptions.nullPointerFactory;
 import static org.javafunk.funk.monads.Option.none;
 import static org.javafunk.funk.monads.Option.option;
 
@@ -182,11 +184,11 @@ public class Numbers {
             Map<Class<?>, Reducer<?, ?>> reducerMap,
             String operation) {
         Checks.returnOrThrowIfNull(iterable,
-                new NullPointerException(format("Cannot %s a null collection.", operation)));
+                nullPointerFactory(format("Cannot %s a null collection.", operation)));
         Checks.returnOrThrowIfNull(numberClass,
-                new NullPointerException(format("Cannot %s when a null number class is provided.", operation)));
+                nullPointerFactory(format("Cannot %s when a null number class is provided.", operation)));
         Checks.returnOrThrowIfEmpty(iterable,
-                new ArithmeticException(format("Cannot %s a collection containing no numbers.", operation)));
+                arithmeticFactory(format("Cannot %s a collection containing no numbers.", operation)));
 
         if (reducerMap.containsKey(numberClass)) {
             return (T) Eagerly.reduce(iterable, (Reducer<Object, Object>) reducerMap.get(numberClass));

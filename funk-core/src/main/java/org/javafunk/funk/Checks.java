@@ -1,36 +1,37 @@
 package org.javafunk.funk;
 
+import org.javafunk.funk.functors.functions.NullaryFunction;
+
 import static org.javafunk.funk.Eagerly.any;
+import static org.javafunk.funk.Exceptions.nullPointerFactory;
 import static org.javafunk.funk.Predicates.equalTo;
 
 public class Checks {
-    private static final NullPointerException NULL_POINTER_EXCEPTION = new NullPointerException();;
-
-    public static <T> T returnOrThrowIfNull(T value, RuntimeException exception) {
-        return orThrowIf(value, value == null, exception);
+    public static <T> T returnOrThrowIfNull(T value, NullaryFunction<? extends RuntimeException> exceptionFactory) {
+        return orThrowIf(value, value == null, exceptionFactory);
     }
 
     public static <S, T extends Iterable<S>> T returnOrThrowIfEmpty(
-            T value, RuntimeException exception) {
+            T value, NullaryFunction<? extends RuntimeException> exceptionFactory) {
         return orThrowIf(
                 value,
                 !value.iterator().hasNext(),
-                exception);
+                exceptionFactory);
     }
 
     public static <S, T extends Iterable<S>> T returnOrThrowIfContainsNull(T iterable) {
         return orThrowIf(
                 iterable,
                 any(iterable, equalTo(null)),
-                NULL_POINTER_EXCEPTION);
+                nullPointerFactory());
     }
 
-    private static <T> T orThrowIf(T value, boolean condition, RuntimeException exception) {
-        throwIf(condition, exception);
+    private static <T> T orThrowIf(T value, boolean condition, NullaryFunction<? extends RuntimeException> exceptionFactory) {
+        throwIf(condition, exceptionFactory);
         return value;
     }
 
-    private static void throwIf(boolean condition, RuntimeException exception) {
-        if (condition) throw exception;
+    private static void throwIf(boolean condition, NullaryFunction<? extends RuntimeException> exceptionFactory) {
+        if (condition) throw exceptionFactory.call();
     }
 }
