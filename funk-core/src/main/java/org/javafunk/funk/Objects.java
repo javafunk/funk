@@ -8,6 +8,7 @@
  */
 package org.javafunk.funk;
 
+import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 
 public class Objects {
@@ -31,6 +32,14 @@ public class Objects {
         return new UnaryPredicate<Object>() {
             @Override public boolean evaluate(Object input) {
                 return isNotNull(input);
+            }
+        };
+    }
+
+    public static Mapper<Object, String> toStringValue() {
+        return new Mapper<Object, String>() {
+            @Override public String map(Object input) {
+                return input.toString();
             }
         };
     }

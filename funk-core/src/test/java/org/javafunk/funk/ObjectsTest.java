@@ -54,4 +54,31 @@ public class ObjectsTest {
     public void returnsPredicateWhichEvaluatesFalseWhenPassedNull() {
         assertThat(whereNotNull().evaluate(null), is(false));
     }
+
+    @Test
+    public void returnsMapperToStringValue() {
+        // Given
+        Object value = new Object() {
+            @Override public String toString() {
+                return "some custom toString";
+            }
+        };
+
+        // When
+        String result = Objects.toStringValue().map(value);
+
+        // Then
+        assertThat(result, is("some custom toString"));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void throwsNullPointerExceptionWhenNullPassedToToStringValue() {
+        // Given
+        Object value = null;
+
+        // When
+        Objects.toStringValue().map(value);
+
+        // Then a NullPointerException is thrown
+    }
 }
