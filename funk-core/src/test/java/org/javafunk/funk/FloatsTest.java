@@ -69,9 +69,4 @@ public class FloatsTest {
     public void throwsNullPointerExceptionWhenMapperFromBigDecimalToFloatPassedNull() {
         fromBigDecimalToFloat().map(null);
     }
-
-    @Test
-    public void returnsMapperFromFloatToStringValue() {
-        assertThat(toStringValue().map(1234F), is("1234.0"));
-    }
 }

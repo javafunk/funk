@@ -8,7 +8,10 @@
  */
 package org.javafunk.funk;
 
+import org.javafunk.funk.functors.Mapper;
 import org.junit.Test;
+
+import java.math.BigDecimal;
 
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Objects.*;
@@ -78,6 +81,30 @@ public class ObjectsTest {
 
         // When
         Objects.toStringValue().map(value);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test
+    public void returnsConcreteTypeToStringValueMapper() {
+        // Given
+        Integer value = 123;
+        Mapper<Integer, String> mapper = Objects.toStringValueFor(Integer.class);
+
+        // When
+        String result = mapper.map(value);
+
+        // Then
+        assertThat(result, is("123"));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void throwsNullPointerExceptionWhenNullPassedToConcreteToStringValue() {
+        // Given
+        BigDecimal value = null;
+
+        // When
+        Objects.toStringValueFor(BigDecimal.class).map(value);
 
         // Then a NullPointerException is thrown
     }

@@ -53,12 +53,4 @@ public class Floats {
             }
         };
     }
-
-    public static Mapper<Float, String> toStringValue() {
-        return new Mapper<Float, String>() {
-            @Override public String map(Float input) {
-                return input.toString();
-            }
-        };
-    }
 }

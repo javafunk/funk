@@ -147,9 +147,4 @@ public class LongsTest {
     public void returnsNoneIfBigDecimalCannotBeConvertedUsingToLongOrNull() {
         assertThat(toLongOrNull((BigDecimal) null), is(nullValue()));
     }
-
-    @Test
-    public void returnsMapperFromLongToStringValue() {
-        assertThat(toStringValue().map(1234L), is("1234"));
-    }
 }

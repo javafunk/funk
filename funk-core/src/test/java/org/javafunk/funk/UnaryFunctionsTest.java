@@ -19,11 +19,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.BigDecimals.fromStringToBigDecimal;
 import static org.javafunk.funk.BigIntegers.fromFloatToBigInteger;
-import static org.javafunk.funk.BigIntegers.toStringValue;
 import static org.javafunk.funk.Doubles.fromIntegerToDouble;
 import static org.javafunk.funk.Floats.fromDoubleToFloat;
 import static org.javafunk.funk.Integers.fromLongToInteger;
 import static org.javafunk.funk.Longs.fromBigDecimalToLong;
+import static org.javafunk.funk.Objects.toStringValueFor;
 import static org.javafunk.funk.UnaryFunctions.chain;
 import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 
@@ -144,7 +144,7 @@ public class UnaryFunctionsTest {
         UnaryFunction<Double, Float> fifth = mapperUnaryFunction(fromDoubleToFloat());
         UnaryFunction<Float, BigInteger> sixth = mapperUnaryFunction(fromFloatToBigInteger());
         UnaryFunction<BigInteger, BigInteger> seventh = mapperUnaryFunction(toDoubledBigInteger());
-        UnaryFunction<BigInteger, String> eighth = mapperUnaryFunction(toStringValue());
+        UnaryFunction<BigInteger, String> eighth = mapperUnaryFunction(toStringValueFor(BigInteger.class));
 
         UnaryFunction<String, String> chained = UnaryFunctions.chain(
                 first, second, third, fourth, fifth, sixth, seventh, eighth);
@@ -166,7 +166,7 @@ public class UnaryFunctionsTest {
         UnaryFunction<Double, Float> fifth = mapperUnaryFunction(fromDoubleToFloat());
         UnaryFunction<Float, BigInteger> sixth = mapperUnaryFunction(fromFloatToBigInteger());
         UnaryFunction<BigInteger, BigInteger> seventh = mapperUnaryFunction(toDoubledBigInteger());
-        UnaryFunction<BigInteger, String> eighth = mapperUnaryFunction(toStringValue());
+        UnaryFunction<BigInteger, String> eighth = mapperUnaryFunction(toStringValueFor(BigInteger.class));
         UnaryFunction<String, Integer> ninth = mapperUnaryFunction(toLength());
 
         UnaryFunction<String, Integer> chained = UnaryFunctions.chain(

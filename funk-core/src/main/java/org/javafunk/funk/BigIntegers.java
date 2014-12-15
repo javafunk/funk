@@ -53,12 +53,4 @@ public class BigIntegers {
             }
         };
     }
-
-    public static Mapper<BigInteger, String> toStringValue() {
-        return new Mapper<BigInteger, String>() {
-            @Override public String map(BigInteger input) {
-                return input.toString();
-            }
-        };
-    }
 }

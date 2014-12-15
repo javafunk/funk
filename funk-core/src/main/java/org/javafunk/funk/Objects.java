@@ -43,4 +43,12 @@ public class Objects {
             }
         };
     }
+
+    public static <T> Mapper<T, String> toStringValueFor(@SuppressWarnings("unused") Class<T> targetClass) {
+        return new Mapper<T, String>() {
+            @Override public String map(T input) {
+                return input.toString();
+            }
+        };
+    }
 }

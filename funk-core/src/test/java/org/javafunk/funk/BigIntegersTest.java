@@ -69,9 +69,4 @@ public class BigIntegersTest {
     public void throwsNullPointerExceptionWhenMapperFromBigDecimalToBigIntegerPassedNull() {
         fromBigDecimalToBigInteger().map(null);
     }
-
-    @Test
-    public void returnsMapperFromBigIntegerToStringValue() {
-        assertThat(toStringValue().map(new BigInteger("1234")), is("1234"));
-    }
 }

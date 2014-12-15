@@ -70,9 +70,4 @@ public class DoublesTest {
     public void throwsNullPointerExceptionWhenMapperFromBigDecimalToDoublePassedNull() {
         fromBigDecimalToDouble().map(null);
     }
-
-    @Test
-    public void returnsMapperFromDoubleToStringValue() {
-        assertThat(toStringValue().map(1234D), is("1234"));
-    }
 }

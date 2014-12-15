@@ -107,12 +107,4 @@ public class Longs {
             }
         };
     }
-
-    public static Mapper<Long, String> toStringValue() {
-        return new Mapper<Long, String>() {
-            @Override public String map(Long input) {
-                return input.toString();
-            }
-        };
-    }
 }

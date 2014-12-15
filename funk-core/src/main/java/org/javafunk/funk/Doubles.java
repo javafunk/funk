@@ -53,12 +53,4 @@ public class Doubles {
             }
         };
     }
-
-    public static Mapper<Double, String> toStringValue() {
-        return new Mapper<Double, String>() {
-            @Override public String map(Double input) {
-                return input.toString();
-            }
-        };
-    }
 }
