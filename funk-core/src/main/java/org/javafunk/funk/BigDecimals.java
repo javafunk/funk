@@ -11,22 +11,15 @@ package org.javafunk.funk;
 import org.javafunk.funk.functors.Mapper;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 
 public class BigDecimals {
     private BigDecimals() {}
 
-    public static Mapper<Long, BigDecimal> fromLongToBigDecimal() {
-        return new Mapper<Long, BigDecimal>() {
-            @Override public BigDecimal map(Long input) {
-                return new BigDecimal(input);
-            }
-        };
-    }
-
-    public static Mapper<Double, BigDecimal> fromDoubleToBigDecimal() {
-        return new Mapper<Double, BigDecimal>() {
-            @Override public BigDecimal map(Double input) {
+    public static Mapper<String, BigDecimal> fromStringToBigDecimal() {
+        return new Mapper<String, BigDecimal>() {
+            @Override public BigDecimal map(String input) {
                 return new BigDecimal(input);
             }
         };
@@ -40,9 +33,25 @@ public class BigDecimals {
         };
     }
 
-    public static Mapper<String, BigDecimal> fromStringToBigDecimal() {
-        return new Mapper<String, BigDecimal>() {
-            @Override public BigDecimal map(String input) {
+    public static Mapper<Long, BigDecimal> fromLongToBigDecimal() {
+        return new Mapper<Long, BigDecimal>() {
+            @Override public BigDecimal map(Long input) {
+                return new BigDecimal(input);
+            }
+        };
+    }
+
+    public static Mapper<BigInteger, BigDecimal> fromBigIntegerToBigDecimal() {
+        return new Mapper<BigInteger, BigDecimal>() {
+            @Override public BigDecimal map(BigInteger input) {
+                return new BigDecimal(input);
+            }
+        };
+    }
+
+    public static Mapper<Double, BigDecimal> fromDoubleToBigDecimal() {
+        return new Mapper<Double, BigDecimal>() {
+            @Override public BigDecimal map(Double input) {
                 return new BigDecimal(input);
             }
         };

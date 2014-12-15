@@ -11,21 +11,22 @@ package org.javafunk.funk;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 
 import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.BigDecimals.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class BigDecimalsTest {
     @Test
-    public void returnsMapperFromLongToBigDecimal() {
-        assertThat(fromLongToBigDecimal().map(123L), is(new BigDecimal("123")));
+    public void returnsMapperFromStringToBigDecimal() {
+        assertThat(fromStringToBigDecimal().map("123.45"), is(new BigDecimal("123.45")));
     }
 
-    @Test
-    public void returnsMapperFromDoubleToBigDecimal() {
-        assertThat(fromDoubleToBigDecimal().map(123.45D).setScale(2, RoundingMode.DOWN), is(new BigDecimal("123.45")));
+    @Test(expected = NullPointerException.class)
+    public void throwsNullPointerExceptionWhenMapperFromStringToBigDecimalPassedNull() {
+        fromStringToBigDecimal().map(null);
     }
 
     @Test
@@ -33,9 +34,39 @@ public class BigDecimalsTest {
         assertThat(fromIntegerToBigDecimal().map(123), is(new BigDecimal("123")));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void throwsNullPointerExceptionWhenMapperFromIntegerToBigDecimalPassedNull() {
+        fromIntegerToBigDecimal().map(null);
+    }
+
     @Test
-    public void returnsMapperFromStringToBigDecimal() {
-        assertThat(fromStringToBigDecimal().map("123.45"), is(new BigDecimal("123.45")));
+    public void returnsMapperFromLongToBigDecimal() {
+        assertThat(fromLongToBigDecimal().map(123L), is(new BigDecimal("123")));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void throwsNullPointerExceptionWhenMapperFromLongToBigDecimalPassedNull() {
+        fromLongToBigDecimal().map(null);
+    }
+
+    @Test
+    public void returnsMapperFromBigIntegerToBigDecimal() {
+        assertThat(fromBigIntegerToBigDecimal().map(new BigInteger("123")), is(new BigDecimal("123")));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void throwsNullPointerExceptionWhenMapperFromBigIntegerToBigDecimalPassedNull() {
+        fromBigIntegerToBigDecimal().map(null);
+    }
+
+    @Test
+    public void returnsMapperFromDoubleToBigDecimal() {
+        assertThat(fromDoubleToBigDecimal().map(123.45D).setScale(2, RoundingMode.DOWN), is(new BigDecimal("123.45")));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void throwsNullPointerExceptionWhenMapperFromDoubleToBigDecimalPassedNull() {
+        fromDoubleToBigDecimal().map(null);
     }
 
     @Test
