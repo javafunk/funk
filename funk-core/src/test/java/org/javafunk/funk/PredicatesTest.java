@@ -77,7 +77,7 @@ public class PredicatesTest {
         Predicate<String> expected = new EqualsPredicate<String>("Hello");
 
         // When
-        EqualsPredicate<String> actual = equalTo("Hello");
+        Predicate<String> actual = equalTo("Hello");
 
         // Then
         assertThat(actual, is(expected));

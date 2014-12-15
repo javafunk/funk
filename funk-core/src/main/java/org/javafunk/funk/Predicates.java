@@ -25,19 +25,29 @@ public class Predicates {
         return new TruePredicate<T>();
     }
 
+    public static <T> Predicate<T> alwaysTrue(
+            @SuppressWarnings("unused") Class<T> klass) {
+        return alwaysTrue();
+    }
+
     public static <T> Predicate<T> alwaysFalse() {
         return new FalsePredicate<T>();
+    }
+
+    public static <T> Predicate<T> alwaysFalse(
+            @SuppressWarnings("unused") Class<T> klass) {
+        return alwaysFalse();
     }
 
     public static <T> Predicate<T> not(UnaryPredicate<? super T> predicate) {
         return new NotPredicate<T>(checkNotNull(predicate));
     }
 
-    public static <T> InstanceOfPredicate<T> instanceOf(Class<?> testClass) {
+    public static <T> Predicate<T> instanceOf(Class<?> testClass) {
         return new InstanceOfPredicate<T>(testClass);
     }
 
-    public static <T> EqualsPredicate<T> equalTo(T testObject) {
+    public static <T> Predicate<T> equalTo(T testObject) {
         return new EqualsPredicate<T>(testObject);
     }
 }
