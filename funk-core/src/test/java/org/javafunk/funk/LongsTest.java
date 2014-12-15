@@ -6,7 +6,10 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.javafunk.funk.Longs.*;
+import static org.javafunk.funk.monads.Option.none;
+import static org.javafunk.funk.monads.Option.option;
 import static org.junit.Assert.*;
 
 public class LongsTest {
@@ -68,5 +71,85 @@ public class LongsTest {
     @Test(expected = NullPointerException.class)
     public void throwsNullPointerExceptionWhenMapperFromBigDecimalToLongPassedNull() {
         fromBigDecimalToLong().map(null);
+    }
+
+    @Test
+    public void returnsMapperFromStringToPossibleLong() {
+        assertThat(fromStringToPossibleLong().map("1234"), is(option(1234L)));
+    }
+
+    @Test
+    public void returnsNoneWhenMapperFromStringToPossibleLongPassedNull() {
+        assertThat(fromStringToPossibleLong().map(null), is(none(Long.class)));
+    }
+
+    @Test
+    public void returnsNoneWhenMapperFromStringToPossibleLongPassedNonNumericString() {
+        assertThat(fromStringToPossibleLong().map("abcd"), is(none(Long.class)));
+    }
+
+    @Test
+    public void returnsLongIfStringCanBeConvertedUsingToLongOrNull() {
+        assertThat(toLongOrNull("1234"), is(1234L));
+    }
+
+    @Test
+    public void returnsNoneIfStringCannotBeConvertedUsingToLongOrNull() {
+        assertThat(toLongOrNull((String) null), is(nullValue()));
+    }
+
+    @Test
+    public void returnsLongIfIntegerCanBeConvertedUsingToLongOrNull() {
+        assertThat(toLongOrNull(1234), is(1234L));
+    }
+
+    @Test
+    public void returnsNoneIfIntegerCannotBeConvertedUsingToLongOrNull() {
+        assertThat(toLongOrNull((Integer) null), is(nullValue()));
+    }
+
+    @Test
+    public void returnsLongIfBigIntegerCanBeConvertedUsingToLongOrNull() {
+        assertThat(toLongOrNull(new BigInteger("1234")), is(1234L));
+    }
+
+    @Test
+    public void returnsNoneIfBigIntegerCannotBeConvertedUsingToLongOrNull() {
+        assertThat(toLongOrNull((BigInteger) null), is(nullValue()));
+    }
+
+    @Test
+    public void returnsLongIfFloatCanBeConvertedUsingToLongOrNull() {
+        assertThat(toLongOrNull(1234.56F), is(1234L));
+    }
+
+    @Test
+    public void returnsNoneIfFloatCannotBeConvertedUsingToLongOrNull() {
+        assertThat(toLongOrNull((Float) null), is(nullValue()));
+    }
+
+    @Test
+    public void returnsLongIfDoubleCanBeConvertedUsingToLongOrNull() {
+        assertThat(toLongOrNull(1234.56D), is(1234L));
+    }
+
+    @Test
+    public void returnsNoneIfDoubleCannotBeConvertedUsingToLongOrNull() {
+        assertThat(toLongOrNull((Double) null), is(nullValue()));
+    }
+
+    @Test
+    public void returnsLongIfBigDecimalCanBeConvertedUsingToLongOrNull() {
+        assertThat(toLongOrNull(new BigDecimal("1234.56")), is(1234L));
+    }
+
+    @Test
+    public void returnsNoneIfBigDecimalCannotBeConvertedUsingToLongOrNull() {
+        assertThat(toLongOrNull((BigDecimal) null), is(nullValue()));
+    }
+
+    @Test
+    public void returnsMapperFromLongToStringValue() {
+        assertThat(toStringValue().map(1234L), is("1234"));
     }
 }
