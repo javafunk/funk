@@ -1,5 +1,6 @@
 package org.javafunk.funk;
 
+import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 import org.javafunk.funk.monads.Option;
 
@@ -26,5 +27,30 @@ public class Options {
                 return option.hasNoValue();
             }
         };
+    }
+
+    public static <T> UnaryPredicate<Option<T>> hasValue() {
+        return isSome();
+    }
+
+    public static <T> UnaryPredicate<Option<T>> hasNoValue() {
+        return isNone();
+    }
+
+    public static <T> Mapper<Option<T>, T> toValue() {
+        return new Mapper<Option<T>, T>() {
+            @Override public T map(Option<T> input) {
+                return input.getValue();
+            }
+        };
+    }
+
+    public static <T> Mapper<Option<T>, T> toValue(
+            @SuppressWarnings("unused") Class<T> valueClass) {
+        return toValue();
+    }
+
+    public static <T> Iterable<T> flatten(Iterable<Option<T>> options) {
+        return Lazily.map(somes(options), Options.<T>toValue());
     }
 }
