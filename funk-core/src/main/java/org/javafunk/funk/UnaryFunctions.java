@@ -21,7 +21,7 @@ public class UnaryFunctions {
         };
     }
 
-    public static <Q, R, S> UnaryFunction<Q, S> chain(
+    public static <Q, R, S> UnaryFunction<Q, S> compose(
             final UnaryFunction<Q, R> first,
             final UnaryFunction<R, S> second) {
         return new UnaryFunction<Q, S>() {
@@ -31,7 +31,7 @@ public class UnaryFunctions {
         };
     }
 
-    public static <Q, R, S, T> UnaryFunction<Q, T> chain(
+    public static <Q, R, S, T> UnaryFunction<Q, T> compose(
             final UnaryFunction<Q, R> first,
             final UnaryFunction<R, S> second,
             final UnaryFunction<S, T> third) {
@@ -42,7 +42,7 @@ public class UnaryFunctions {
         };
     }
 
-    public static <Q, R, S, T, U> UnaryFunction<Q, U> chain(
+    public static <Q, R, S, T, U> UnaryFunction<Q, U> compose(
             final UnaryFunction<Q, R> first,
             final UnaryFunction<R, S> second,
             final UnaryFunction<S, T> third,
@@ -54,7 +54,7 @@ public class UnaryFunctions {
         };
     }
 
-    public static <Q, R, S, T, U, V> UnaryFunction<Q, V> chain(
+    public static <Q, R, S, T, U, V> UnaryFunction<Q, V> compose(
             final UnaryFunction<Q, R> first,
             final UnaryFunction<R, S> second,
             final UnaryFunction<S, T> third,
@@ -67,7 +67,7 @@ public class UnaryFunctions {
         };
     }
 
-    public static <Q, R, S, T, U, V, W> UnaryFunction<Q, W> chain(
+    public static <Q, R, S, T, U, V, W> UnaryFunction<Q, W> compose(
             final UnaryFunction<Q, R> first,
             final UnaryFunction<R, S> second,
             final UnaryFunction<S, T> third,
@@ -81,7 +81,7 @@ public class UnaryFunctions {
         };
     }
 
-    public static <Q, R, S, T, U, V, W, X> UnaryFunction<Q, X> chain(
+    public static <Q, R, S, T, U, V, W, X> UnaryFunction<Q, X> compose(
             final UnaryFunction<Q, R> first,
             final UnaryFunction<R, S> second,
             final UnaryFunction<S, T> third,
@@ -96,7 +96,7 @@ public class UnaryFunctions {
         };
     }
 
-    public static <Q, R, S, T, U, V, W, X, Y> UnaryFunction<Q, Y> chain(
+    public static <Q, R, S, T, U, V, W, X, Y> UnaryFunction<Q, Y> compose(
             final UnaryFunction<Q, R> first,
             final UnaryFunction<R, S> second,
             final UnaryFunction<S, T> third,
@@ -112,7 +112,7 @@ public class UnaryFunctions {
         };
     }
 
-    public static <Q, R, S, T, U, V, W, X, Y, Z> UnaryFunction<Q, Z> chain(
+    public static <Q, R, S, T, U, V, W, X, Y, Z> UnaryFunction<Q, Z> compose(
             final UnaryFunction<Q, R> first,
             final UnaryFunction<R, S> second,
             final UnaryFunction<S, T> third,

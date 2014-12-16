@@ -24,17 +24,16 @@ import static org.javafunk.funk.Floats.fromDoubleToFloat;
 import static org.javafunk.funk.Integers.fromLongToInteger;
 import static org.javafunk.funk.Longs.fromBigDecimalToLong;
 import static org.javafunk.funk.Objects.toStringValueFor;
-import static org.javafunk.funk.UnaryFunctions.chain;
 import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 
 public class UnaryFunctionsTest {
     @Test
-    public void threadsTwoUnaryFunctionsTogether() {
+    public void composesTwoUnaryFunctions() {
         // Given
         UnaryFunction<String, BigDecimal> first = mapperUnaryFunction(fromStringToBigDecimal());
         UnaryFunction<BigDecimal, Long> second = mapperUnaryFunction(fromBigDecimalToLong());
 
-        UnaryFunction<String, Long> chained = chain(first, second);
+        UnaryFunction<String, Long> chained = UnaryFunctions.compose(first, second);
 
         // When
         Long result = chained.call("1234");
@@ -44,13 +43,13 @@ public class UnaryFunctionsTest {
     }
 
     @Test
-    public void threadsThreeUnaryFunctionsTogether() {
+    public void composesThreeUnaryFunctions() {
         // Given
         UnaryFunction<String, BigDecimal> first = mapperUnaryFunction(fromStringToBigDecimal());
         UnaryFunction<BigDecimal, Long> second = mapperUnaryFunction(fromBigDecimalToLong());
         UnaryFunction<Long, Integer> third = mapperUnaryFunction(fromLongToInteger());
 
-        UnaryFunction<String, Integer> chained = UnaryFunctions.chain(first, second, third);
+        UnaryFunction<String, Integer> chained = UnaryFunctions.compose(first, second, third);
 
         // When
         Integer result = chained.call("1234");
@@ -60,14 +59,14 @@ public class UnaryFunctionsTest {
     }
 
     @Test
-    public void threadsFourUnaryFunctionsTogether() {
+    public void composesFourUnaryFunctions() {
         // Given
         UnaryFunction<String, BigDecimal> first = mapperUnaryFunction(fromStringToBigDecimal());
         UnaryFunction<BigDecimal, Long> second = mapperUnaryFunction(fromBigDecimalToLong());
         UnaryFunction<Long, Integer> third = mapperUnaryFunction(fromLongToInteger());
         UnaryFunction<Integer, Double> fourth = mapperUnaryFunction(fromIntegerToDouble());
 
-        UnaryFunction<String, Double> chained = UnaryFunctions.chain(first, second, third, fourth);
+        UnaryFunction<String, Double> chained = UnaryFunctions.compose(first, second, third, fourth);
 
         // When
         Double result = chained.call("1234");
@@ -77,7 +76,7 @@ public class UnaryFunctionsTest {
     }
 
     @Test
-    public void threadsFiveUnaryFunctionsTogether() {
+    public void composesFiveUnaryFunctions() {
         // Given
         UnaryFunction<String, BigDecimal> first = mapperUnaryFunction(fromStringToBigDecimal());
         UnaryFunction<BigDecimal, Long> second = mapperUnaryFunction(fromBigDecimalToLong());
@@ -85,7 +84,7 @@ public class UnaryFunctionsTest {
         UnaryFunction<Integer, Double> fourth = mapperUnaryFunction(fromIntegerToDouble());
         UnaryFunction<Double, Float> fifth = mapperUnaryFunction(fromDoubleToFloat());
 
-        UnaryFunction<String, Float> chained = UnaryFunctions.chain(first, second, third, fourth, fifth);
+        UnaryFunction<String, Float> chained = UnaryFunctions.compose(first, second, third, fourth, fifth);
 
         // When
         Float result = chained.call("1234");
@@ -95,7 +94,7 @@ public class UnaryFunctionsTest {
     }
 
     @Test
-    public void threadsSixUnaryFunctionsTogether() {
+    public void composesSixUnaryFunctions() {
         // Given
         UnaryFunction<String, BigDecimal> first = mapperUnaryFunction(fromStringToBigDecimal());
         UnaryFunction<BigDecimal, Long> second = mapperUnaryFunction(fromBigDecimalToLong());
@@ -104,7 +103,7 @@ public class UnaryFunctionsTest {
         UnaryFunction<Double, Float> fifth = mapperUnaryFunction(fromDoubleToFloat());
         UnaryFunction<Float, BigInteger> sixth = mapperUnaryFunction(fromFloatToBigInteger());
 
-        UnaryFunction<String, BigInteger> chained = UnaryFunctions.chain(first, second, third, fourth, fifth, sixth);
+        UnaryFunction<String, BigInteger> chained = UnaryFunctions.compose(first, second, third, fourth, fifth, sixth);
 
         // When
         BigInteger result = chained.call("1234");
@@ -114,7 +113,7 @@ public class UnaryFunctionsTest {
     }
 
     @Test
-    public void threadsSevenUnaryFunctionsTogether() {
+    public void composesSevenUnaryFunctions() {
         // Given
         UnaryFunction<String, BigDecimal> first = mapperUnaryFunction(fromStringToBigDecimal());
         UnaryFunction<BigDecimal, Long> second = mapperUnaryFunction(fromBigDecimalToLong());
@@ -124,7 +123,7 @@ public class UnaryFunctionsTest {
         UnaryFunction<Float, BigInteger> sixth = mapperUnaryFunction(fromFloatToBigInteger());
         UnaryFunction<BigInteger, BigInteger> seventh = mapperUnaryFunction(toDoubledBigInteger());
 
-        UnaryFunction<String, BigInteger> chained = UnaryFunctions.chain(
+        UnaryFunction<String, BigInteger> chained = UnaryFunctions.compose(
                 first, second, third, fourth, fifth, sixth, seventh);
 
         // When
@@ -135,7 +134,7 @@ public class UnaryFunctionsTest {
     }
 
     @Test
-    public void threadsEightUnaryFunctionsTogether() {
+    public void composesEightUnaryFunctions() {
         // Given
         UnaryFunction<String, BigDecimal> first = mapperUnaryFunction(fromStringToBigDecimal());
         UnaryFunction<BigDecimal, Long> second = mapperUnaryFunction(fromBigDecimalToLong());
@@ -146,7 +145,7 @@ public class UnaryFunctionsTest {
         UnaryFunction<BigInteger, BigInteger> seventh = mapperUnaryFunction(toDoubledBigInteger());
         UnaryFunction<BigInteger, String> eighth = mapperUnaryFunction(toStringValueFor(BigInteger.class));
 
-        UnaryFunction<String, String> chained = UnaryFunctions.chain(
+        UnaryFunction<String, String> chained = UnaryFunctions.compose(
                 first, second, third, fourth, fifth, sixth, seventh, eighth);
 
         // When
@@ -157,7 +156,7 @@ public class UnaryFunctionsTest {
     }
 
     @Test
-    public void threadsNinthUnaryFunctionsTogether() {
+    public void composesNinthUnaryFunctions() {
         // Given
         UnaryFunction<String, BigDecimal> first = mapperUnaryFunction(fromStringToBigDecimal());
         UnaryFunction<BigDecimal, Long> second = mapperUnaryFunction(fromBigDecimalToLong());
@@ -169,7 +168,7 @@ public class UnaryFunctionsTest {
         UnaryFunction<BigInteger, String> eighth = mapperUnaryFunction(toStringValueFor(BigInteger.class));
         UnaryFunction<String, Integer> ninth = mapperUnaryFunction(toLength());
 
-        UnaryFunction<String, Integer> chained = UnaryFunctions.chain(
+        UnaryFunction<String, Integer> chained = UnaryFunctions.compose(
                 first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);
 
         // When
