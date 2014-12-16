@@ -8,13 +8,13 @@
  */
 package org.javafunk.funk;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 
 import java.math.BigDecimal;
 
-import static org.apache.commons.lang.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.javafunk.funk.BigDecimals.toPlainString;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.listWith;

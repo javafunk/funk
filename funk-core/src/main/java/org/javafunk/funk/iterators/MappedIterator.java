@@ -8,8 +8,8 @@
  */
 package org.javafunk.funk.iterators;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 
 import java.util.Iterator;
