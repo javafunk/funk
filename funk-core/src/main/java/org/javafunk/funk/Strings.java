@@ -9,9 +9,20 @@
 package org.javafunk.funk;
 
 import org.apache.commons.lang.StringUtils;
+import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.functors.predicates.UnaryPredicate;
 
+import java.math.BigDecimal;
+
+import static org.apache.commons.lang.StringUtils.isBlank;
+import static org.javafunk.funk.BigDecimals.toPlainString;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Literals.listWith;
+import static org.javafunk.funk.Objects.toStringValue;
+import static org.javafunk.funk.Objects.whereNull;
+import static org.javafunk.funk.monads.Option.option;
+import static org.javafunk.funk.monads.Option.some;
+import static org.javafunk.funk.predicates.OrPredicate.or;
 
 public class Strings {
     private Strings() {}
@@ -293,5 +304,49 @@ public class Strings {
      */
     public static <T> String join(T o1, T o2, T o3, T o4, T o5, T o6, T o7, T o8, T o9, T o10, T... o11on) {
         return join(listWith(o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11on));
+    }
+
+    public static String toStringOrNull(Object value) {
+        return toStringOr(null, value);
+    }
+
+    public static String toStringOrNull(BigDecimal value) {
+        return toStringOr(null, value);
+    }
+
+    public static String toStringOrEmpty(Object value) {
+        return toStringOr("", value);
+    }
+
+    public static String toStringOrEmpty(BigDecimal value) {
+        return toStringOr("", value);
+    }
+
+    public static String toStringOr(String alternative, Object value) {
+        return toStringOr(alternative, value, toStringValue());
+    }
+
+    public static String toStringOr(String alternative, BigDecimal value) {
+        return toStringOr(alternative, value, toPlainString());
+    }
+
+    public static boolean isNullOrBlank(String value) {
+        return whereNullOrBlank().evaluate(value);
+    }
+
+    public static UnaryPredicate<String> whereNullOrBlank() {
+        return or(whereNull(), whereBlank());
+    }
+
+    public static UnaryPredicate<String> whereBlank() {
+        return new UnaryPredicate<String>() {
+            @Override public boolean evaluate(String input) {
+                return isBlank(input);
+            }
+        };
+    }
+
+    private static <T> String toStringOr(String alternative, T value, Mapper<T, String> toStringMapper) {
+        return option(value).map(toStringMapper).or(some(alternative)).get();
     }
 }
