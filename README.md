@@ -57,7 +57,7 @@ For more information see the project [wiki](https://github.com/javafunk/funk/wik
 Binary Releases
 ---------------
 
-The latest released version of Funk is [0.1.24](http://search.maven.org/#artifactdetails%7Corg.javafunk.funk%7Cfunk%7C0.1.24%7Cjar)
+The latest released version of Funk is [0.1.25](http://search.maven.org/#artifactdetails%7Corg.javafunk.funk%7Cfunk%7C0.1.25%7Cjar)
 which can be obtained from [Maven Central](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.javafunk.funk%22%20AND%20a%3A%22funk%22).
 
 To release a new artifact execute:
