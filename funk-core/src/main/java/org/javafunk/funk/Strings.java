@@ -10,6 +10,7 @@ package org.javafunk.funk;
 
 import org.apache.commons.lang3.StringUtils;
 import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.functors.Predicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
 
 import java.math.BigDecimal;
@@ -334,12 +335,12 @@ public class Strings {
         return whereNullOrBlank().evaluate(value);
     }
 
-    public static UnaryPredicate<String> whereNullOrBlank() {
+    public static Predicate<String> whereNullOrBlank() {
         return or(whereNull(), whereBlank());
     }
 
-    public static UnaryPredicate<String> whereBlank() {
-        return new UnaryPredicate<String>() {
+    public static Predicate<String> whereBlank() {
+        return new Predicate<String>() {
             @Override public boolean evaluate(String input) {
                 return isBlank(input);
             }

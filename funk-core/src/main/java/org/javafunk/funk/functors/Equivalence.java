@@ -8,6 +8,12 @@
  */
 package org.javafunk.funk.functors;
 
-public interface Equivalence<T> {
-    boolean equal(T first, T second);
+import org.javafunk.funk.functors.predicates.BinaryPredicate;
+
+public abstract class Equivalence<T> implements BinaryPredicate<T, T> {
+    public abstract boolean equal(T first, T second);
+
+    @Override public boolean evaluate(T first, T second) {
+        return equal(first, second);
+    }
 }

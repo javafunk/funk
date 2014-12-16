@@ -24,14 +24,13 @@ import static org.javafunk.funk.Floats.fromDoubleToFloat;
 import static org.javafunk.funk.Integers.fromLongToInteger;
 import static org.javafunk.funk.Longs.fromBigDecimalToLong;
 import static org.javafunk.funk.Objects.toStringValueFor;
-import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 
 public class UnaryFunctionsTest {
     @Test
     public void composesTwoUnaryFunctions() {
         // Given
-        UnaryFunction<String, BigDecimal> first = mapperUnaryFunction(fromStringToBigDecimal());
-        UnaryFunction<BigDecimal, Long> second = mapperUnaryFunction(fromBigDecimalToLong());
+        UnaryFunction<String, BigDecimal> first = fromStringToBigDecimal();
+        UnaryFunction<BigDecimal, Long> second = fromBigDecimalToLong();
 
         UnaryFunction<String, Long> chained = UnaryFunctions.compose(first, second);
 
@@ -45,9 +44,9 @@ public class UnaryFunctionsTest {
     @Test
     public void composesThreeUnaryFunctions() {
         // Given
-        UnaryFunction<String, BigDecimal> first = mapperUnaryFunction(fromStringToBigDecimal());
-        UnaryFunction<BigDecimal, Long> second = mapperUnaryFunction(fromBigDecimalToLong());
-        UnaryFunction<Long, Integer> third = mapperUnaryFunction(fromLongToInteger());
+        UnaryFunction<String, BigDecimal> first = fromStringToBigDecimal();
+        UnaryFunction<BigDecimal, Long> second = fromBigDecimalToLong();
+        UnaryFunction<Long, Integer> third = fromLongToInteger();
 
         UnaryFunction<String, Integer> chained = UnaryFunctions.compose(first, second, third);
 
@@ -61,10 +60,10 @@ public class UnaryFunctionsTest {
     @Test
     public void composesFourUnaryFunctions() {
         // Given
-        UnaryFunction<String, BigDecimal> first = mapperUnaryFunction(fromStringToBigDecimal());
-        UnaryFunction<BigDecimal, Long> second = mapperUnaryFunction(fromBigDecimalToLong());
-        UnaryFunction<Long, Integer> third = mapperUnaryFunction(fromLongToInteger());
-        UnaryFunction<Integer, Double> fourth = mapperUnaryFunction(fromIntegerToDouble());
+        UnaryFunction<String, BigDecimal> first = fromStringToBigDecimal();
+        UnaryFunction<BigDecimal, Long> second = fromBigDecimalToLong();
+        UnaryFunction<Long, Integer> third = fromLongToInteger();
+        UnaryFunction<Integer, Double> fourth = fromIntegerToDouble();
 
         UnaryFunction<String, Double> chained = UnaryFunctions.compose(first, second, third, fourth);
 
@@ -78,11 +77,11 @@ public class UnaryFunctionsTest {
     @Test
     public void composesFiveUnaryFunctions() {
         // Given
-        UnaryFunction<String, BigDecimal> first = mapperUnaryFunction(fromStringToBigDecimal());
-        UnaryFunction<BigDecimal, Long> second = mapperUnaryFunction(fromBigDecimalToLong());
-        UnaryFunction<Long, Integer> third = mapperUnaryFunction(fromLongToInteger());
-        UnaryFunction<Integer, Double> fourth = mapperUnaryFunction(fromIntegerToDouble());
-        UnaryFunction<Double, Float> fifth = mapperUnaryFunction(fromDoubleToFloat());
+        UnaryFunction<String, BigDecimal> first = fromStringToBigDecimal();
+        UnaryFunction<BigDecimal, Long> second = fromBigDecimalToLong();
+        UnaryFunction<Long, Integer> third = fromLongToInteger();
+        UnaryFunction<Integer, Double> fourth = fromIntegerToDouble();
+        UnaryFunction<Double, Float> fifth = fromDoubleToFloat();
 
         UnaryFunction<String, Float> chained = UnaryFunctions.compose(first, second, third, fourth, fifth);
 
@@ -96,12 +95,12 @@ public class UnaryFunctionsTest {
     @Test
     public void composesSixUnaryFunctions() {
         // Given
-        UnaryFunction<String, BigDecimal> first = mapperUnaryFunction(fromStringToBigDecimal());
-        UnaryFunction<BigDecimal, Long> second = mapperUnaryFunction(fromBigDecimalToLong());
-        UnaryFunction<Long, Integer> third = mapperUnaryFunction(fromLongToInteger());
-        UnaryFunction<Integer, Double> fourth = mapperUnaryFunction(fromIntegerToDouble());
-        UnaryFunction<Double, Float> fifth = mapperUnaryFunction(fromDoubleToFloat());
-        UnaryFunction<Float, BigInteger> sixth = mapperUnaryFunction(fromFloatToBigInteger());
+        UnaryFunction<String, BigDecimal> first = fromStringToBigDecimal();
+        UnaryFunction<BigDecimal, Long> second = fromBigDecimalToLong();
+        UnaryFunction<Long, Integer> third = fromLongToInteger();
+        UnaryFunction<Integer, Double> fourth = fromIntegerToDouble();
+        UnaryFunction<Double, Float> fifth = fromDoubleToFloat();
+        UnaryFunction<Float, BigInteger> sixth = fromFloatToBigInteger();
 
         UnaryFunction<String, BigInteger> chained = UnaryFunctions.compose(first, second, third, fourth, fifth, sixth);
 
@@ -115,13 +114,13 @@ public class UnaryFunctionsTest {
     @Test
     public void composesSevenUnaryFunctions() {
         // Given
-        UnaryFunction<String, BigDecimal> first = mapperUnaryFunction(fromStringToBigDecimal());
-        UnaryFunction<BigDecimal, Long> second = mapperUnaryFunction(fromBigDecimalToLong());
-        UnaryFunction<Long, Integer> third = mapperUnaryFunction(fromLongToInteger());
-        UnaryFunction<Integer, Double> fourth = mapperUnaryFunction(fromIntegerToDouble());
-        UnaryFunction<Double, Float> fifth = mapperUnaryFunction(fromDoubleToFloat());
-        UnaryFunction<Float, BigInteger> sixth = mapperUnaryFunction(fromFloatToBigInteger());
-        UnaryFunction<BigInteger, BigInteger> seventh = mapperUnaryFunction(toDoubledBigInteger());
+        UnaryFunction<String, BigDecimal> first = fromStringToBigDecimal();
+        UnaryFunction<BigDecimal, Long> second = fromBigDecimalToLong();
+        UnaryFunction<Long, Integer> third = fromLongToInteger();
+        UnaryFunction<Integer, Double> fourth = fromIntegerToDouble();
+        UnaryFunction<Double, Float> fifth = fromDoubleToFloat();
+        UnaryFunction<Float, BigInteger> sixth = fromFloatToBigInteger();
+        UnaryFunction<BigInteger, BigInteger> seventh = toDoubledBigInteger();
 
         UnaryFunction<String, BigInteger> chained = UnaryFunctions.compose(
                 first, second, third, fourth, fifth, sixth, seventh);
@@ -136,14 +135,14 @@ public class UnaryFunctionsTest {
     @Test
     public void composesEightUnaryFunctions() {
         // Given
-        UnaryFunction<String, BigDecimal> first = mapperUnaryFunction(fromStringToBigDecimal());
-        UnaryFunction<BigDecimal, Long> second = mapperUnaryFunction(fromBigDecimalToLong());
-        UnaryFunction<Long, Integer> third = mapperUnaryFunction(fromLongToInteger());
-        UnaryFunction<Integer, Double> fourth = mapperUnaryFunction(fromIntegerToDouble());
-        UnaryFunction<Double, Float> fifth = mapperUnaryFunction(fromDoubleToFloat());
-        UnaryFunction<Float, BigInteger> sixth = mapperUnaryFunction(fromFloatToBigInteger());
-        UnaryFunction<BigInteger, BigInteger> seventh = mapperUnaryFunction(toDoubledBigInteger());
-        UnaryFunction<BigInteger, String> eighth = mapperUnaryFunction(toStringValueFor(BigInteger.class));
+        UnaryFunction<String, BigDecimal> first = fromStringToBigDecimal();
+        UnaryFunction<BigDecimal, Long> second = fromBigDecimalToLong();
+        UnaryFunction<Long, Integer> third = fromLongToInteger();
+        UnaryFunction<Integer, Double> fourth = fromIntegerToDouble();
+        UnaryFunction<Double, Float> fifth = fromDoubleToFloat();
+        UnaryFunction<Float, BigInteger> sixth = fromFloatToBigInteger();
+        UnaryFunction<BigInteger, BigInteger> seventh = toDoubledBigInteger();
+        UnaryFunction<BigInteger, String> eighth = toStringValueFor(BigInteger.class);
 
         UnaryFunction<String, String> chained = UnaryFunctions.compose(
                 first, second, third, fourth, fifth, sixth, seventh, eighth);
@@ -158,15 +157,15 @@ public class UnaryFunctionsTest {
     @Test
     public void composesNinthUnaryFunctions() {
         // Given
-        UnaryFunction<String, BigDecimal> first = mapperUnaryFunction(fromStringToBigDecimal());
-        UnaryFunction<BigDecimal, Long> second = mapperUnaryFunction(fromBigDecimalToLong());
-        UnaryFunction<Long, Integer> third = mapperUnaryFunction(fromLongToInteger());
-        UnaryFunction<Integer, Double> fourth = mapperUnaryFunction(fromIntegerToDouble());
-        UnaryFunction<Double, Float> fifth = mapperUnaryFunction(fromDoubleToFloat());
-        UnaryFunction<Float, BigInteger> sixth = mapperUnaryFunction(fromFloatToBigInteger());
-        UnaryFunction<BigInteger, BigInteger> seventh = mapperUnaryFunction(toDoubledBigInteger());
-        UnaryFunction<BigInteger, String> eighth = mapperUnaryFunction(toStringValueFor(BigInteger.class));
-        UnaryFunction<String, Integer> ninth = mapperUnaryFunction(toLength());
+        UnaryFunction<String, BigDecimal> first = fromStringToBigDecimal();
+        UnaryFunction<BigDecimal, Long> second = fromBigDecimalToLong();
+        UnaryFunction<Long, Integer> third = fromLongToInteger();
+        UnaryFunction<Integer, Double> fourth = fromIntegerToDouble();
+        UnaryFunction<Double, Float> fifth = fromDoubleToFloat();
+        UnaryFunction<Float, BigInteger> sixth = fromFloatToBigInteger();
+        UnaryFunction<BigInteger, BigInteger> seventh = toDoubledBigInteger();
+        UnaryFunction<BigInteger, String> eighth = toStringValueFor(BigInteger.class);
+        UnaryFunction<String, Integer> ninth = toLength();
 
         UnaryFunction<String, Integer> chained = UnaryFunctions.compose(
                 first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);

@@ -9,7 +9,7 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.tuples.*;
-import org.javafunk.funk.functors.*;
+import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.functors.predicates.BinaryPredicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
@@ -21,17 +21,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.javafunk.funk.Checks.returnOrThrowIfContainsNull;
 import static org.javafunk.funk.Eagerly.first;
 import static org.javafunk.funk.Iterables.concat;
 import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.Mappers.toIterators;
 import static org.javafunk.funk.Sequences.increasing;
 import static org.javafunk.funk.Sequences.integers;
-import static org.javafunk.funk.functors.adapters.ActionUnaryProcedureAdapter.actionUnaryProcedure;
-import static org.javafunk.funk.functors.adapters.EquivalenceBinaryPredicateAdapter.equivalenceBinaryPredicate;
-import static org.javafunk.funk.functors.adapters.IndexerUnaryFunctionAdapter.indexerUnaryFunction;
-import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
-import static org.javafunk.funk.Checks.returnOrThrowIfContainsNull;
 
 /**
  * A suite of lazy functions, often higher order, across {@code Iterable} instances.
@@ -845,39 +841,6 @@ public class Lazily {
     }
 
     /**
-     * Lazily applies the supplied {@code Action} to each element in the
-     * supplied {@code Iterable}. As the returned {@code Iterable} is iterated,
-     * each element is first passed to the {@link Action#on(Object)} method
-     * and then returned.
-     *
-     * <p>Since a lazy {@code Iterable} instance is returned, the application of the
-     * supplied {@code Action} is also lazy, i.e., the action is not
-     * applied to each element in the {@code Iterable} until it is iterated.</p>
-     *
-     * <p>Since the function being applied to each element is an action
-     * it is inherently impure and thus must have side effects for any perceivable
-     * difference to be observed.</p>
-     *
-     * <p>This overload of {@link #each(Iterable, UnaryProcedure)} is provided to allow an
-     * {@code Action} to be used in place of a {@code UnaryProcedure} to enhance readability
-     * and better express intent. The contract of the function is identical to that of the
-     * {@code UnaryProcedure} version of {@code each}.</p>
-     *
-     * <p>For example usage and further documentation, see {@link #each(Iterable, UnaryProcedure)}.</p>
-     *
-     * @param iterable The {@code Iterable} whose elements should each have the supplied
-     *                 {@code Action} applied to them.
-     * @param action   An {@code Action} to lazily apply to each element in the
-     *                 supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the supplied {@code Iterable}.
-     * @return An {@code Iterable} that on iteration will apply the supplied
-     *         {@code Action} to each element before returning it.
-     */
-    public static <T> Iterable<T> each(final Iterable<T> iterable, final Action<? super T> action) {
-        return each(iterable, actionUnaryProcedure(checkNotNull(action)));
-    }
-
-    /**
      * Associates each element in the supplied {@code Iterable} with its related index in
      * that {@code Iterable}. Returns an {@code Iterable} of {@code Pair} instances where
      * the first entry in the {@code Pair} is the index, starting from zero, and the second
@@ -968,39 +931,6 @@ public class Lazily {
                 return function.call(input);
             }
         }), iterable);
-    }
-
-    /**
-     * Lazily indexes the supplied {@code Iterable} using the supplied {@code Indexer}
-     * on iteration of the returned {@code Iterable}. On iteration, the {@code Indexer}
-     * will be provided with each element in the input {@code Iterable}. The value returned
-     * by the {@code Indexer} will occupy the first slot in the returned {@code Pair}
-     * instance and the element itself will occupy the second slot.
-     *
-     * <p>Since a lazy {@code Iterable} instance is returned, the element indexing is performed
-     * lazily, i.e., no attempt is made to retrieve and index elements from the underlying
-     * {@code Iterable} until it is iterated.</p>
-     *
-     * <p>This overload of {@link #index(Iterable, UnaryFunction)} is provided to allow an
-     * {@code Indexer} to be used in place of a {@code UnaryFunction} to enhance readability
-     * and better express intent. The contract of the function is identical to that of the
-     * {@code UnaryFunction} version of {@code index}.</p>
-     *
-     * <p>For example usage and further documentation, see {@link #index(Iterable, UnaryFunction)}.</p>
-     *
-     * @param iterable The {@code Iterable} to be indexed.
-     * @param indexer  The {@code Indexer} to use to index each element.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the index values returned by the supplied
-     *                 indexing function.
-     * @return An {@code Iterable} effectively containing {@code Pair} instances
-     *         representing each element from the supplied {@code Iterable}
-     *         indexed by the value returned by the supplied {@code Indexer}
-     *         when passed that element.
-     */
-    public static <S, T> Iterable<Pair<T, S>> index(Iterable<S> iterable, final Indexer<? super S, T> indexer) {
-        checkNotNull(indexer);
-        return index(iterable, indexerUnaryFunction(indexer));
     }
 
     /**
@@ -1120,40 +1050,6 @@ public class Lazily {
     }
 
     /**
-     * Lazily maps an {@code Iterable} of elements of type {@code S} into a {@code Iterable}
-     * of elements of type {@code T} using the supplied {@code Mapper}.
-     *
-     * <p>As the returned {@code Iterable} is iterated, each element from the input
-     * {@code Iterable} will be passed to the supplied {@code Mapper} and the value
-     * returned by the {@code Mapper} will be returned by the output {@code Iterable}
-     * in the input value's place. Thus, the order in which elements are yielded from
-     * the input {@code Iterable} is maintained in the output {@code Iterable}.
-     * For a more mathematical description of the map higher order function, see the
-     * <a href="http://en.wikipedia.org/wiki/Map_(higher-order_function)">
-     * map article on Wikipedia</a>.
-     *
-     * <p>This overload of {@link #map(Iterable, UnaryFunction)} is provided to allow a
-     * {@code Mapper} to be used in place of a {@code UnaryFunction} to enhance readability
-     * and better express intent. The contract of the function is identical to that of the
-     * {@code UnaryFunction} version of {@code map}.</p>
-     *
-     * <p>For example usage and further documentation, see {@link #map(Iterable, UnaryFunction)}.</p>
-     *
-     * @param iterable The {@code Iterable} of elements to be mapped.
-     * @param mapper   A {@code Mapper} which, given an element from the input iterable,
-     *                 returns that element mapped to a new value potentially of a different type.
-     * @param <S>      The type of the input elements, i.e., the elements to map.
-     * @param <T>      The type of the output elements, i.e., the mapped elements.
-     * @return An {@code Iterable} mapping each instance of {@code S} from the input
-     *         {@code Iterable} to an instance of {@code T} using the supplied {@code Mapper}.
-     * @see #map(Iterable, UnaryFunction)
-     */
-    public static <S, T> Iterable<T> map(final Iterable<S> iterable, final Mapper<? super S, T> mapper) {
-        checkNotNull(mapper);
-        return map(iterable, mapperUnaryFunction(mapper));
-    }
-
-    /**
      * Lazily equates the elements in each of the supplied {@code Iterable} instances
      * using the supplied {@code BinaryPredicate} in the order in which they are yielded.
      * On iteration of the returned {@code Iterable}, an element is yielded from each
@@ -1209,44 +1105,6 @@ public class Lazily {
                 return predicate.evaluate(input.getFirst(), input.getSecond());
             }
         });
-    }
-
-    /**
-     * Lazily equates the elements in each of the supplied {@code Iterable} instances
-     * using the supplied {@code Equivalence} in the order in which they are yielded.
-     * On iteration of the returned {@code Iterable}, an element is yielded from each
-     * of the supplied {@code Iterable} instances and passed to the supplied
-     * {@code Equivalence}. The resulting {@code boolean} returned by the
-     * {@code Equivalence} is used as the return value for that iteration. Iteration
-     * ends when one or both of the supplied {@code Iterable} instances is exhausted.
-     *
-     * <p>Since a lazy {@code Iterable} instance is returned, the equation of the
-     * supplied {@code Iterable} instances is also lazy, i.e., the supplied
-     * {@code Iterable} instances are not iterated and their elements are not equated
-     * until the returned {@code Iterable} is iterated.</p>
-     *
-     * <p>This overload of {@link #equate(Iterable, Iterable, BinaryPredicate)} is provided
-     * to allow an {@code Equivalence} to be used in place of a {@code BinaryPredicate} to
-     * enhance readability and better express intent. The contract of the function is
-     * identical to that of the {@code BinaryPredicate} version of {@code equate}.</p>
-     *
-     * <p>For example usage and further documentation, see
-     * {@link #equate(Iterable, Iterable, BinaryPredicate)}.</p>
-     *
-     * @param first       The first {@code Iterable} of elements to be compared.
-     * @param second      The second {@code Iterable} of elements to be compared.
-     * @param equivalence An {@code Equivalence} to be used to equate elements sequentially
-     *                    from the supplied {@code Iterable} instances.
-     * @param <T>         The type of the elements in the supplied {@code Iterables}.
-     * @return An {@code Iterable} effectively containing the {@code boolean} results of
-     *         equating the elements from the supplied {@code Iterable} instances in the
-     *         order in which they are yielded.
-     */
-    public static <T> Iterable<Boolean> equate(
-            Iterable<? extends T> first,
-            Iterable<? extends T> second,
-            final Equivalence<? super T> equivalence) {
-        return equate(first, second, equivalenceBinaryPredicate(checkNotNull(equivalence)));
     }
 
     /**
@@ -2850,38 +2708,6 @@ public class Lazily {
 
     /**
      * Provides a lazily evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass all of the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a lazy {@code Iterable} instance is returned, the element filtering
-     * and mapping are performed lazily, i.e., no attempt is made to retrieve the
-     * sequence of resulting elements until the result is iterated.</p>
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Iterable} is effectively empty. If the supplied
-     * {@code Iterable} instance is infinite, then the returned
-     * {@code Iterable} will also be infinite.</p>
-     *
-     * @param mapper     A {@code Mapper} output function that produces members
-     *                   of the resultant set from members of the input set that satisfy
-     *                   the predicate functions.
-     * @param iterable   The {@code Iterable} of the input set.
-     * @param predicates An {@code Iterable} containing the {@code UnaryPredicate}
-     *                   functions acting as a filter on members of the input set.
-     * @param <S>        The type of the elements in the supplied {@code Iterable}.
-     * @param <T>        The type of the elements in the returned {@code Iterable}.
-     * @return An {@code Iterable} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Iterable<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final Iterable<? extends UnaryPredicate<? super S>> predicates) {
-        return comprehension(mapperUnaryFunction(mapper), iterable, predicates);
-    }
-
-    /**
-     * Provides a lazily evaluated, set-builder notation style list comprehension.
      * Returns an {@code Iterable} of the elements that pass the supplied
      * {@code UnaryPredicate}, mapped by the supplied {@code UnaryFunction}.
      *
@@ -2917,41 +2743,6 @@ public class Lazily {
 
     /**
      * Provides a lazily evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a lazy {@code Iterable} instance is returned, the element filtering
-     * and mapping are performed lazily, i.e., no attempt is made to retrieve the
-     * sequence of resulting elements until the result is iterated.</p>
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Iterable} is effectively empty. If the supplied
-     * {@code Iterable} instance is infinite, then the returned
-     * {@code Iterable} will also be infinite.</p>
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The {@code UnaryPredicate} function acting as a filter on members
-     *                 of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return An {@code Iterable} of the resultant set from members of the input set
-     *         that satisfy the predicate function, as mapped by the mapper.
-     */
-    public static <S, T> Iterable<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<? super S> p1) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
-                iterable,
-                iterableWith(p1));
-    }
-
-    /**
-     * Provides a lazily evaluated, set-builder notation style list comprehension.
      * Returns an {@code Iterable} of the elements that pass all of the supplied
      * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
      *
@@ -2984,44 +2775,6 @@ public class Lazily {
             final UnaryPredicate<S> p2) {
         return comprehension(
                 function,
-                iterable,
-                iterableWith(p1, p2));
-    }
-
-    /**
-     * Provides a lazily evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a lazy {@code Iterable} instance is returned, the element filtering
-     * and mapping are performed lazily, i.e., no attempt is made to retrieve the
-     * sequence of resulting elements until the result is iterated.</p>
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Iterable} is effectively empty. If the supplied
-     * {@code Iterable} instance is infinite, then the returned
-     * {@code Iterable} will also be infinite.</p>
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return An {@code Iterable} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Iterable<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
                 iterable,
                 iterableWith(p1, p2));
     }
@@ -3063,47 +2816,6 @@ public class Lazily {
             final UnaryPredicate<S> p3) {
         return comprehension(
                 function,
-                iterable,
-                iterableWith(p1, p2, p3));
-    }
-
-    /**
-     * Provides a lazily evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a lazy {@code Iterable} instance is returned, the element filtering
-     * and mapping are performed lazily, i.e., no attempt is made to retrieve the
-     * sequence of resulting elements until the result is iterated.</p>
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Iterable} is effectively empty. If the supplied
-     * {@code Iterable} instance is infinite, then the returned
-     * {@code Iterable} will also be infinite.</p>
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return An {@code Iterable} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Iterable<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
                 iterable,
                 iterableWith(p1, p2, p3));
     }
@@ -3154,50 +2866,6 @@ public class Lazily {
 
     /**
      * Provides a lazily evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a lazy {@code Iterable} instance is returned, the element filtering
-     * and mapping are performed lazily, i.e., no attempt is made to retrieve the
-     * sequence of resulting elements until the result is iterated.</p>
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Iterable} is effectively empty. If the supplied
-     * {@code Iterable} instance is infinite, then the returned
-     * {@code Iterable} will also be infinite.</p>
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return An {@code Iterable} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Iterable<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3,
-            final UnaryPredicate<S> p4) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
-                iterable,
-                iterableWith(p1, p2, p3, p4));
-    }
-
-    /**
-     * Provides a lazily evaluated, set-builder notation style list comprehension.
      * Returns an {@code Iterable} of the elements that pass all of the supplied
      * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
      *
@@ -3239,53 +2907,6 @@ public class Lazily {
             final UnaryPredicate<S> p5) {
         return comprehension(
                 function,
-                iterable,
-                iterableWith(p1, p2, p3, p4, p5));
-    }
-
-    /**
-     * Provides a lazily evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a lazy {@code Iterable} instance is returned, the element filtering
-     * and mapping are performed lazily, i.e., no attempt is made to retrieve the
-     * sequence of resulting elements until the result is iterated.</p>
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Iterable} is effectively empty. If the supplied
-     * {@code Iterable} instance is infinite, then the returned
-     * {@code Iterable} will also be infinite.</p>
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return An {@code Iterable} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Iterable<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3,
-            final UnaryPredicate<S> p4,
-            final UnaryPredicate<S> p5) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
                 iterable,
                 iterableWith(p1, p2, p3, p4, p5));
     }
@@ -3342,56 +2963,6 @@ public class Lazily {
 
     /**
      * Provides a lazily evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a lazy {@code Iterable} instance is returned, the element filtering
-     * and mapping are performed lazily, i.e., no attempt is made to retrieve the
-     * sequence of resulting elements until the result is iterated.</p>
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Iterable} is effectively empty. If the supplied
-     * {@code Iterable} instance is infinite, then the returned
-     * {@code Iterable} will also be infinite.</p>
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return An {@code Iterable} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Iterable<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3,
-            final UnaryPredicate<S> p4,
-            final UnaryPredicate<S> p5,
-            final UnaryPredicate<S> p6) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
-                iterable,
-                iterableWith(p1, p2, p3, p4, p5, p6));
-    }
-
-    /**
-     * Provides a lazily evaluated, set-builder notation style list comprehension.
      * Returns an {@code Iterable} of the elements that pass all of the supplied
      * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
      *
@@ -3439,59 +3010,6 @@ public class Lazily {
             final UnaryPredicate<S> p7) {
         return comprehension(
                 function,
-                iterable,
-                iterableWith(p1, p2, p3, p4, p5, p6, p7));
-    }
-
-    /**
-     * Provides a lazily evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a lazy {@code Iterable} instance is returned, the element filtering
-     * and mapping are performed lazily, i.e., no attempt is made to retrieve the
-     * sequence of resulting elements until the result is iterated.</p>
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Iterable} is effectively empty. If the supplied
-     * {@code Iterable} instance is infinite, then the returned
-     * {@code Iterable} will also be infinite.</p>
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return An {@code Iterable} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Iterable<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3,
-            final UnaryPredicate<S> p4,
-            final UnaryPredicate<S> p5,
-            final UnaryPredicate<S> p6,
-            final UnaryPredicate<S> p7) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
                 iterable,
                 iterableWith(p1, p2, p3, p4, p5, p6, p7));
     }
@@ -3554,62 +3072,6 @@ public class Lazily {
 
     /**
      * Provides a lazily evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a lazy {@code Iterable} instance is returned, the element filtering
-     * and mapping are performed lazily, i.e., no attempt is made to retrieve the
-     * sequence of resulting elements until the result is iterated.</p>
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Iterable} is effectively empty. If the supplied
-     * {@code Iterable} instance is infinite, then the returned
-     * {@code Iterable} will also be infinite.</p>
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return An {@code Iterable} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Iterable<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3,
-            final UnaryPredicate<S> p4,
-            final UnaryPredicate<S> p5,
-            final UnaryPredicate<S> p6,
-            final UnaryPredicate<S> p7,
-            final UnaryPredicate<S> p8) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
-                iterable,
-                iterableWith(p1, p2, p3, p4, p5, p6, p7, p8));
-    }
-
-    /**
-     * Provides a lazily evaluated, set-builder notation style list comprehension.
      * Returns an {@code Iterable} of the elements that pass all of the supplied
      * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
      *
@@ -3663,65 +3125,6 @@ public class Lazily {
             final UnaryPredicate<S> p9) {
         return comprehension(
                 function,
-                iterable,
-                iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9));
-    }
-
-    /**
-     * Provides a lazily evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a lazy {@code Iterable} instance is returned, the element filtering
-     * and mapping are performed lazily, i.e., no attempt is made to retrieve the
-     * sequence of resulting elements until the result is iterated.</p>
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Iterable} is effectively empty. If the supplied
-     * {@code Iterable} instance is infinite, then the returned
-     * {@code Iterable} will also be infinite.</p>
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p9       The ninth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return An {@code Iterable} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Iterable<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3,
-            final UnaryPredicate<S> p4,
-            final UnaryPredicate<S> p5,
-            final UnaryPredicate<S> p6,
-            final UnaryPredicate<S> p7,
-            final UnaryPredicate<S> p8,
-            final UnaryPredicate<S> p9) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
                 iterable,
                 iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9));
     }
@@ -3790,68 +3193,6 @@ public class Lazily {
 
     /**
      * Provides a lazily evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a lazy {@code Iterable} instance is returned, the element filtering
-     * and mapping are performed lazily, i.e., no attempt is made to retrieve the
-     * sequence of resulting elements until the result is iterated.</p>
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Iterable} is effectively empty. If the supplied
-     * {@code Iterable} instance is infinite, then the returned
-     * {@code Iterable} will also be infinite.</p>
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p9       The ninth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p10      The tenth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return An {@code Iterable} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Iterable<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3,
-            final UnaryPredicate<S> p4,
-            final UnaryPredicate<S> p5,
-            final UnaryPredicate<S> p6,
-            final UnaryPredicate<S> p7,
-            final UnaryPredicate<S> p8,
-            final UnaryPredicate<S> p9,
-            final UnaryPredicate<S> p10) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
-                iterable,
-                iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10));
-    }
-
-    /**
-     * Provides a lazily evaluated, set-builder notation style list comprehension.
      * Returns an {@code Iterable} of the elements that pass all of the supplied
      * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
      *
@@ -3911,71 +3252,6 @@ public class Lazily {
             final UnaryPredicate<S>... p11on) {
         return comprehension(
                 function,
-                iterable,
-                iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11on));
-    }
-
-    /**
-     * Provides a lazily evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a lazy {@code Iterable} instance is returned, the element filtering
-     * and mapping are performed lazily, i.e., no attempt is made to retrieve the
-     * sequence of resulting elements until the result is iterated.</p>
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Iterable} is effectively empty. If the supplied
-     * {@code Iterable} instance is infinite, then the returned
-     * {@code Iterable} will also be infinite.</p>
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p9       The ninth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p10      The tenth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p11on    The remaining {@code UnaryPredicate} functions acting as filters
-     *                 on members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return An {@code Iterable} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Iterable<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3,
-            final UnaryPredicate<S> p4,
-            final UnaryPredicate<S> p5,
-            final UnaryPredicate<S> p6,
-            final UnaryPredicate<S> p7,
-            final UnaryPredicate<S> p8,
-            final UnaryPredicate<S> p9,
-            final UnaryPredicate<S> p10,
-            final UnaryPredicate<S>... p11on) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
                 iterable,
                 iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11on));
     }

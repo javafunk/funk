@@ -10,11 +10,9 @@ package org.javafunk.funk.datastructures.tuples;
 
 import org.javafunk.funk.behaviours.ordinals.First;
 import org.javafunk.funk.behaviours.ordinals.mappables.MappableFirst;
-import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 
 import static org.javafunk.funk.Literals.iterableBuilderOf;
-import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 
 public class Single<R>
         extends AbstractTuple
@@ -36,10 +34,6 @@ public class Single<R>
 
     @Override public <A> Single<A> mapFirst(UnaryFunction<R, A> mapper) {
         return single(mapper.call(first));
-    }
-
-    public <A> Single<A> mapFirst(Mapper<R, A> mapper) {
-        return mapFirst(mapperUnaryFunction(mapper));
     }
 
     @Override public Iterable<Object> getValues() {

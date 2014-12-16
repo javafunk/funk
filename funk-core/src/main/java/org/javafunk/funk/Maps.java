@@ -8,7 +8,6 @@
  */
 package org.javafunk.funk;
 
-import org.javafunk.funk.functors.Factory;
 import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.NullaryFunction;
 import org.javafunk.funk.functors.functions.UnaryFunction;
@@ -16,19 +15,8 @@ import org.javafunk.funk.functors.functions.UnaryFunction;
 import java.util.Map;
 import java.util.Set;
 
-import static org.javafunk.funk.functors.adapters.FactoryNullaryFunctionAdapter.factoryNullaryFunction;
-import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
-
 public class Maps {
     private Maps() {}
-
-    public static <U, V> V getOrAdd(Map<U, V> map, U key, Mapper<? super U, ? extends V> mapper) {
-        return getOrAdd(map, key, mapperUnaryFunction(mapper));
-    }
-
-    public static <U, V> V getOrAdd(Map<U, V> map, U key, Factory<? extends V> factory) {
-        return getOrAdd(map, key, factoryNullaryFunction(factory));
-    }
 
     public static <U, V> V getOrAdd(Map<U, V> map, U key, UnaryFunction<? super U, ? extends V> mapper) {
         if (map.containsKey(key)) {

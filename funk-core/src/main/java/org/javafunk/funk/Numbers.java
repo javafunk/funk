@@ -9,6 +9,7 @@
 package org.javafunk.funk;
 
 import org.javafunk.funk.functors.Reducer;
+import org.javafunk.funk.functors.functions.BinaryFunction;
 import org.javafunk.funk.monads.Option;
 
 import java.math.BigDecimal;
@@ -157,8 +158,8 @@ public class Numbers {
         }
     }
 
-    private static final Map<Class<?>, Reducer<?, ?>> sumAccumulatorMap =
-            Literals.<Class<?>, Reducer<?, ?>>mapBuilder()
+    private static final Map<Class<?>, BinaryFunction<?, ?, ?>> sumAccumulatorMap =
+            Literals.<Class<?>, BinaryFunction<?, ?, ?>>mapBuilder()
                     .withKeyValuePair(Integer.class, integerAdditionAccumulator())
                     .withKeyValuePair(Long.class, longAdditionAccumulator())
                     .withKeyValuePair(BigInteger.class, bigIntegerAdditionAccumulator())
@@ -167,8 +168,8 @@ public class Numbers {
                     .withKeyValuePair(BigDecimal.class, bigDecimalAdditionAccumulator())
                     .build();
 
-    private static final Map<Class<?>, Reducer<?, ?>> multiplyAccumulatorMap =
-            Literals.<Class<?>, Reducer<?, ?>>mapBuilder()
+    private static final Map<Class<?>, BinaryFunction<?, ?, ?>> multiplyAccumulatorMap =
+            Literals.<Class<?>, BinaryFunction<?, ?, ?>>mapBuilder()
                     .withKeyValuePair(Integer.class, integerMultiplicationAccumulator())
                     .withKeyValuePair(Long.class, longMultiplicationAccumulator())
                     .withKeyValuePair(BigInteger.class, bigIntegerMultiplicationAccumulator())
@@ -181,7 +182,7 @@ public class Numbers {
     private static <T extends Number> T process(
             Iterable<T> iterable,
             Class<T> numberClass,
-            Map<Class<?>, Reducer<?, ?>> reducerMap,
+            Map<Class<?>, BinaryFunction<?, ?, ?>> reducerMap,
             String operation) {
         Checks.returnOrThrowIfNull(iterable,
                 nullPointerFactory(format("Cannot %s a null collection.", operation)));

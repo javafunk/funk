@@ -8,62 +8,63 @@
  */
 package org.javafunk.funk;
 
+import org.javafunk.funk.functors.Factory;
 import org.javafunk.funk.functors.functions.NullaryFunction;
 
 import java.util.NoSuchElementException;
 
 public class Exceptions {
-    public static NullaryFunction<RuntimeException> runtimeFactory(final String message) {
-        return new NullaryFunction<RuntimeException>() {
-            @Override public RuntimeException call() {
+    public static Factory<RuntimeException> runtimeFactory(final String message) {
+        return new Factory<RuntimeException>() {
+            @Override public RuntimeException create() {
                 return new RuntimeException(message);
             }
         };
     }
 
-    public static NullaryFunction<RuntimeException> runtimeFactory() {
-        return new NullaryFunction<RuntimeException>() {
-            @Override public RuntimeException call() {
+    public static Factory<RuntimeException> runtimeFactory() {
+        return new Factory<RuntimeException>() {
+            @Override public RuntimeException create() {
                 return new RuntimeException();
             }
         };
     }
 
-    public static NullaryFunction<? extends RuntimeException> nullPointerFactory() {
-        return new NullaryFunction<RuntimeException>() {
-            @Override public RuntimeException call() {
+    public static Factory<? extends RuntimeException> nullPointerFactory() {
+        return new Factory<RuntimeException>() {
+            @Override public RuntimeException create() {
                 return new NullPointerException();
             }
         };
     }
 
-    public static NullaryFunction<NullPointerException> nullPointerFactory(final String message) {
-        return new NullaryFunction<NullPointerException>() {
-            @Override public NullPointerException call() {
+    public static Factory<NullPointerException> nullPointerFactory(final String message) {
+        return new Factory<NullPointerException>() {
+            @Override public NullPointerException create() {
                 return new NullPointerException(message);
             }
         };
     }
 
-    public static NullaryFunction<IllegalArgumentException> illegalArgumentFactory(final String message) {
-        return new NullaryFunction<IllegalArgumentException>() {
-            @Override public IllegalArgumentException call() {
+    public static Factory<IllegalArgumentException> illegalArgumentFactory(final String message) {
+        return new Factory<IllegalArgumentException>() {
+            @Override public IllegalArgumentException create() {
                 return new IllegalArgumentException(message);
             }
         };
     }
 
-    public static NullaryFunction<NoSuchElementException> noSuchElementFactory(final String message) {
-        return new NullaryFunction<NoSuchElementException>() {
-            @Override public NoSuchElementException call() {
+    public static Factory<NoSuchElementException> noSuchElementFactory(final String message) {
+        return new Factory<NoSuchElementException>() {
+            @Override public NoSuchElementException create() {
                 return new NoSuchElementException(message);
             }
         };
     }
 
-    public static NullaryFunction<ArithmeticException> arithmeticFactory(final String message) {
-        return new NullaryFunction<ArithmeticException>() {
-            @Override public ArithmeticException call() {
+    public static Factory<ArithmeticException> arithmeticFactory(final String message) {
+        return new Factory<ArithmeticException>() {
+            @Override public ArithmeticException create() {
                 return new ArithmeticException(message);
             }
         };

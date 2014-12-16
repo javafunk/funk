@@ -10,11 +10,9 @@ package org.javafunk.funk.datastructures.tuples;
 
 import org.javafunk.funk.behaviours.ordinals.Third;
 import org.javafunk.funk.behaviours.ordinals.mappables.MappableThird;
-import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 
 import static org.javafunk.funk.Literals.iterableBuilderFrom;
-import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 
 public class Triple<R, S, T>
         extends Pair<R, S>
@@ -39,24 +37,13 @@ public class Triple<R, S, T>
         return triple(function.call(getFirst()), getSecond(), getThird());
     }
 
-    @Override public <A> Triple<A, S, T> mapFirst(Mapper<R, A> mapper) {
-        return mapFirst(mapperUnaryFunction(mapper));
-    }
-
     @Override public <A> Triple<R, A, T> mapSecond(UnaryFunction<S, A> function) {
         return triple(getFirst(), function.call(getSecond()), getThird());
     }
 
-    @Override public <A> Triple<R, A, T> mapSecond(Mapper<S, A> mapper) {
-        return mapSecond(mapperUnaryFunction(mapper));
-    }
 
     @Override public <A> Triple<R, S, A> mapThird(UnaryFunction<T, A> function) {
         return triple(getFirst(), getSecond(), function.call(getThird()));
-    }
-
-    public <A> Triple<R, S, A> mapThird(Mapper<T, A> mapper) {
-        return mapThird(mapperUnaryFunction(mapper));
     }
 
     @Override public Iterable<Object> getValues() {

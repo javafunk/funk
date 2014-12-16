@@ -10,11 +10,9 @@ package org.javafunk.funk.datastructures.tuples;
 
 import org.javafunk.funk.behaviours.ordinals.Second;
 import org.javafunk.funk.behaviours.ordinals.mappables.MappableSecond;
-import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 
 import static org.javafunk.funk.Literals.iterableBuilderFrom;
-import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 
 public class Pair<R, S>
         extends Single<R>
@@ -39,16 +37,8 @@ public class Pair<R, S>
         return pair(function.call(getFirst()), getSecond());
     }
 
-    public <A> Pair<A, S> mapFirst(Mapper<R, A> mapper) {
-        return mapFirst(mapperUnaryFunction(mapper));
-    }
-
     @Override public <A> Pair<R, A> mapSecond(UnaryFunction<S, A> function) {
         return pair(getFirst(), function.call(getSecond()));
-    }
-
-    public <A> Pair<R, A> mapSecond(Mapper<S, A> mapper) {
-        return mapSecond(mapperUnaryFunction(mapper));
     }
 
     @Override public Iterable<Object> getValues() {

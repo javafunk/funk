@@ -12,7 +12,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.javafunk.funk.behaviours.Mappable;
 import org.javafunk.funk.behaviours.Value;
-import org.javafunk.funk.functors.Mapper;
 import org.javafunk.funk.functors.functions.NullaryFunction;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.monads.options.None;
@@ -22,7 +21,6 @@ import java.util.concurrent.Callable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.javafunk.funk.functors.adapters.CallableNullaryFunctionAdapter.callableNullaryFunction;
-import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
 
 /**
  * The {@code Option<T>} class is a base class for implementations of the option monad.
@@ -460,60 +458,6 @@ public abstract class Option<T>
     public abstract <S> Option<S> map(UnaryFunction<? super T, ? extends S> function);
 
     /**
-     * A mapping method to map the value of this {@code Option} into an {@code Option}
-     * over a value of type {@code S} built by calling {@link #some(Object)} on the
-     * value returned after calling the supplied {@link Mapper} with the current
-     * value.
-     *
-     * <p>In the case that this {@code Option} contains no value, an {@code Option} with
-     * no value of type {@code S} is returned and the supplied mapper will not be
-     * called.</p>
-     *
-     * <p>Currently the supplied {@code Mapper} will be called eagerly
-     * in the case that a value is present although this may become lazy in
-     * a future version of Funk.</p>
-     *
-     * <p>If the supplied mapper is {@code null}, a {@code NullPointerException}
-     * will be thrown.</p>
-     *
-     * <h3>Example Usage:</h3>
-     *
-     * <blockquote>
-     * <pre>
-     *   Option&lt;String&gt; some = Option.some("Flip");
-     *   Option&lt;String&gt; firstResult = some.map(new Mapper&lt;String, String&gt;() {
-     *      &#64;Override public String map(String value) {
-     *          return "Flop";
-     *      }
-     *   });
-     *   firstResult.hasValue(); // =&gt; true
-     *   firstResult.get();      // =&gt; "Flop"
-     *
-     *   Option&lt;String&gt; none = Option.none();
-     *   Option&lt;Integer&gt; secondResult = none.map(new Mapper&lt;String, Integer&gt;() {
-     *      &#64;Override public Integer map(String value) {
-     *          throw new ShouldNotGetCalledException();
-     *      }
-     *   });
-     *   secondResult.hasValue();   // =&gt; false
-     *   secondResult.getOrElse(0); // =&gt; 0
-     * </pre>
-     * </blockquote>
-     *
-     * @param mapper A mapper to map from the value of this {@code Option} into
-     *               a value of type {@code S}.
-     * @param <S> The type of the value of the resulting {@code Option}.
-     * @return An {@code Option} built using {@link #some(Object)} containing the
-     *         value returned after calling the supplied {@link Mapper} with
-     *         the current value of this {@code Option} if one is present, otherwise
-     *         an {@code Option} of type {@code S} containing no value.
-     * @throws NullPointerException if the supplied mapper is {@code null}.
-     */
-    public <S> Option<S> map(Mapper<? super T, ? extends S> mapper) {
-        return map(mapperUnaryFunction(checkNotNull(mapper)));
-    }
-
-    /**
      * A mapping method to map the value of this {@code Option} into the {@code Option}
      * returned after calling the supplied {@link UnaryFunction} with the current value.
      *
@@ -560,56 +504,6 @@ public abstract class Option<T>
      * @throws NullPointerException if the supplied function is {@code null}.
      */
     public abstract <S> Option<S> flatMap(UnaryFunction<? super T, ? extends Option<? extends S>> function);
-
-    /**
-     * A mapping method to map the value of this {@code Option} into the {@code Option}
-     * returned after calling the supplied {@link Mapper} with the current value.
-     *
-     * <p>In the case that this {@code Option} contains no value, an {@code Option} with
-     * no value of type {@code S} is returned and the supplied mapper will not be
-     * called.</p>
-     *
-     * <p>Currently the supplied {@code Mapper} will be called eagerly
-     * in the case that a value is present although this may become lazy in
-     * a future version of Funk.</p>
-     *
-     * <p>If the supplied mapper is {@code null}, a {@code NullPointerException}
-     * will be thrown.</p>
-     *
-     * <h3>Example Usage:</h3>
-     *
-     * <blockquote>
-     * <pre>
-     *   Option&lt;String&gt; some = Option.some("Flip");
-     *   Option&lt;Person&gt; firstResult = some.map(new Mapper&lt;String, Option&lt;Person&gt;&gt;() {
-     *      &#64;Override public Option&lt;Person&gt; map(String name) {
-     *          return Option.option(repository.find(name));
-     *      }
-     *   });
-     *   firstResult.hasValue(); // =&gt; dependent on result of repository.find(name)
-     *
-     *   Option&lt;String&gt; none = Option.none();
-     *   Option&lt;Person&gt; secondResult = none.map(new Mapper&lt;String, Option&lt;Person&gt;&gt;() {
-     *      &#64;Override public Option&lt;Person&gt; map(String value) {
-     *          throw new ShouldNotGetCalledException();
-     *      }
-     *   });
-     *   secondResult.hasValue();   // =&gt; false
-     *   secondResult.getOrNull();  // =&gt; null
-     * </pre>
-     * </blockquote>
-     *
-     * @param mapper A mapper to map from the value of this {@code Option} into
-     *               an {@code Option} of type {@code S}.
-     * @param <S> The type of the value of the resulting {@code Option}.
-     * @return The {@code Option} resulting from  calling the supplied {@link Mapper} with
-     *         the current value of this {@code Option} if one is present, otherwise
-     *         an {@code Option} of type {@code S} containing no value.
-     * @throws NullPointerException if the supplied mapper is {@code null}.
-     */
-    public <S> Option<S> flatMap(Mapper<? super T, ? extends Option<? extends S>> mapper) {
-        return flatMap(mapperUnaryFunction(checkNotNull(mapper)));
-    }
 
     /**
      * Implements value equality for {@code Option} instances. Two {@code Option}s are

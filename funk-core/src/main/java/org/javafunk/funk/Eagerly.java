@@ -10,7 +10,8 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.IntegerRange;
 import org.javafunk.funk.datastructures.tuples.*;
-import org.javafunk.funk.functors.*;
+import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.functors.Reducer;
 import org.javafunk.funk.functors.functions.BinaryFunction;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.functors.predicates.BinaryPredicate;
@@ -27,11 +28,6 @@ import static org.javafunk.funk.Exceptions.noSuchElementFactory;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Iterators.asIterable;
 import static org.javafunk.funk.Literals.*;
-import static org.javafunk.funk.functors.adapters.ActionUnaryProcedureAdapter.actionUnaryProcedure;
-import static org.javafunk.funk.functors.adapters.EquivalenceBinaryPredicateAdapter.equivalenceBinaryPredicate;
-import static org.javafunk.funk.functors.adapters.IndexerUnaryFunctionAdapter.indexerUnaryFunction;
-import static org.javafunk.funk.functors.adapters.MapperUnaryFunctionAdapter.mapperUnaryFunction;
-import static org.javafunk.funk.functors.adapters.ReducerBinaryFunctionAdapter.reducerBinaryFunction;
 
 /**
  * @since 1.0
@@ -51,13 +47,6 @@ public class Eagerly {
         return accumulator;
     }
 
-    public static <S, T> T reduce(
-            Iterable<? extends S> iterable,
-            T initialValue,
-            Reducer<? super S, T> reducer) {
-        return reduce(iterable, initialValue, reducerBinaryFunction(reducer));
-    }
-
     public static <T> T reduce(
             Iterable<? extends T> iterable,
             BinaryFunction<T, ? super T, T> function) {
@@ -65,12 +54,6 @@ public class Eagerly {
         T firstElement = iterator.next();
         Iterable<? extends T> restOfElements = asIterable(iterator);
         return reduce(restOfElements, firstElement, function);
-    }
-
-    public static <T> T reduce(
-            Iterable<? extends T> iterable,
-            Reducer<? super T, T> reducer) {
-        return reduce(iterable, reducerBinaryFunction(reducer));
     }
 
     public static <T> Boolean any(
@@ -105,8 +88,8 @@ public class Eagerly {
         return reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMax, T element) {
                 return comparator.compare(element, currentMax) > 0 ?
-                       element :
-                       currentMax;
+                        element :
+                        currentMax;
             }
         });
     }
@@ -115,8 +98,8 @@ public class Eagerly {
         return returnOrThrowIfNull(reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMax, T element) {
                 return (element != null && element.compareTo(currentMax) > 0) ?
-                       element :
-                       currentMax;
+                        element :
+                        currentMax;
             }
         }), noSuchElementFactory("Maximum value is undefined if all values in the supplied Iterable are null."));
     }
@@ -125,8 +108,8 @@ public class Eagerly {
         return reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMin, T element) {
                 return comparator.compare(element, currentMin) < 0 ?
-                       element :
-                       currentMin;
+                        element :
+                        currentMin;
             }
         });
     }
@@ -135,8 +118,8 @@ public class Eagerly {
         return returnOrThrowIfNull(reduce(iterable, new Reducer<T, T>() {
             public T accumulate(T currentMin, T element) {
                 return (element != null && element.compareTo(currentMin) < 0) ?
-                       element :
-                       currentMin;
+                        element :
+                        currentMin;
             }
         }), noSuchElementFactory("Minimum value is undefined if all values in the supplied Iterable are null."));
     }
@@ -250,37 +233,6 @@ public class Eagerly {
             Iterable<S> iterable,
             UnaryFunction<? super S, T> function) {
         return materialize(Lazily.map(iterable, function));
-    }
-
-    /**
-     * Maps an {@code Iterable} of elements of type {@code S} into a {@code Collection}
-     * of elements of type {@code T} using the supplied {@code Mapper}. The
-     * {@code Mapper} will be provided with each element in the input {@code Iterable}
-     * and the value returned from the {@code Mapper} will be used in place of the
-     * input element in the returned {@code Collection}. For a more mathematical
-     * description of the map higher order function, see the
-     * <a href="http://en.wikipedia.org/wiki/Map_(higher-order_function)">
-     * map article on Wikipedia</a>.
-     *
-     * <p>This overload of {@link #map(Iterable, UnaryFunction)} is provided to allow a
-     * {@code Mapper} to be used in place of a {@code UnaryFunction} to enhance
-     * readability and better express intent. The contract of the function
-     * is identical to that of the {@code UnaryFunction} version of {@code map}.</p>
-     *
-     * <p>For example usage and further documentation, see
-     * {@link #map(Iterable, UnaryFunction)}.</p>
-     *
-     * @param iterable The {@code Iterable} of elements to be mapped.
-     * @param mapper   A {@code Mapper} which, given an element from the input iterable,
-     *                 returns that element mapped to a new value potentially of a different type.
-     * @param <S>      The type of the input elements, i.e., the elements to map.
-     * @param <T>      The type of the output elements, i.e., the mapped elements.
-     * @return A {@code Collection} containing each instance of {@code S} from the input
-     *         {@code Iterable} mapped to an instance of {@code T}.
-     * @see #map(Iterable, UnaryFunction)
-     */
-    public static <S, T> Collection<T> map(Iterable<S> iterable, Mapper<? super S, T> mapper) {
-        return map(iterable, mapperUnaryFunction(mapper));
     }
 
     /**
@@ -1338,45 +1290,6 @@ public class Eagerly {
     }
 
     /**
-     * Equates the elements in each of the supplied {@code Iterable} instances
-     * using the supplied {@code BinaryPredicate} in the order in which they are yielded.
-     * An element is yielded from each of the supplied {@code Iterable} instances and
-     * passed to the supplied {@code BinaryPredicate}. The {@code boolean} returned by the
-     * {@code BinaryPredicate} is used in place of the input elements in the returned
-     * {@code Collection}. The Collection is considered fully populated when
-     * one or both of the {@code Iterable} instances are exhausted. The order of the
-     * {@code boolean} elements in the returned {@code Collection} is equal to the
-     * order in which the equated elements are yielded from the supplied {@code Iterable}s.
-     *
-     * <p>Since a {@code Collection} instance is returned, the equation of the
-     * supplied {@code Iterable} instances is eager, i.e., the supplied {@code Iterable}
-     * instances are iterated and their elements are not equated immediately.</p>
-     *
-     * <p>This overload of {@link #equate(Iterable, Iterable, BinaryPredicate)} is provided
-     * to allow an {@code Equivalence} to be used in place of a {@code BinaryPredicate} to
-     * enhance readability and better express intent. The contract of the function is
-     * identical to that of the {@code BinaryPredicate} version of {@code equate}.</p>
-     *
-     * <p>For example usage and further documentation, see
-     * {@link #equate(Iterable, Iterable, BinaryPredicate)}.</p>
-     *
-     * @param first       The first {@code Iterable} of elements to be compared.
-     * @param second      The second {@code Iterable} of elements to be compared.
-     * @param equivalence A {@code Equivalence} to be used to equate elements sequentially
-     *                    from the supplied {@code Iterable} instances.
-     * @param <T>         The type of the elements in the supplied {@code Iterables}.
-     * @return A {@code Collection} containing the {@code boolean} results of equating
-     *         the elements from the supplied {@code Iterable} instances in the
-     *         order in which they are yielded.
-     */
-    public static <T> Collection<Boolean> equate(
-            Iterable<T> first,
-            Iterable<T> second,
-            Equivalence<? super T> equivalence) {
-        return equate(first, second, equivalenceBinaryPredicate(equivalence));
-    }
-
-    /**
      * Indexes the supplied {@code Iterable} using the supplied {@code UnaryFunction}
      * and returns a {@code Collection} of {@code Pair} instances representing the
      * indexed elements. The {@code UnaryFunction} will be provided with each
@@ -1419,42 +1332,6 @@ public class Eagerly {
         return materialize(Lazily.index(iterable, function));
     }
 
-    /**
-     * Indexes the supplied {@code Iterable} using the supplied {@code Indexer}
-     * and returns a {@code Collection} of {@code Pair} instances representing the
-     * indexed elements. The {@code Indexer} will be provided with each element
-     * in the input {@code Iterable}. The value returned by the {@code Indexer}
-     * will occupy the first slot in the {@code Pair} instance for that element
-     * and the element itself will occupy the second slot. The returned
-     * {@code Collection} contains the indexed elements in the order in
-     * which the elements are yielded from the supplied {@code Iterable}.
-     *
-     * <p>Since a {@code Collection} instance is returned, the element indexing is performed
-     * eagerly, i.e., elements are retrieved from the underlying {@code Iterable} and indexed
-     * immediately.</p>
-     *
-     * <p>This overload of {@link #index(Iterable, UnaryFunction)} is provided to allow an
-     * {@code Indexer} to be used in place of a {@code UnaryFunction} to enhance readability
-     * and better express intent. The contract of the function is identical to that of the
-     * {@code UnaryFunction} version of {@code index}.</p>
-     *
-     * <p>For example usage and further documentation, see {@link #index(Iterable, UnaryFunction)}.</p>
-     *
-     * @param iterable The {@code Iterable} to be indexed.
-     * @param indexer  The {@code Indexer} to use to index each element.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the index values returned by the supplied
-     *                 indexing function.
-     * @return A {@code Collection} containing {@code Pair} instances representing
-     *         each element from the supplied {@code Iterable} indexed by the value
-     *         returned by the supplied {@code Indexer} when passed that element.
-     */
-    public static <S, T> Collection<Pair<T, S>> index(
-            Iterable<S> iterable,
-            Indexer<? super S, T> indexer) {
-        return index(iterable, indexerUnaryFunction(indexer));
-    }
-
     public static <S, T> Map<T, Collection<S>> group(
             Iterable<S> iterable,
             UnaryFunction<? super S, T> indexer) {
@@ -1467,12 +1344,6 @@ public class Eagerly {
             groupedElements.get(index).add(element);
         }
         return groupedElements;
-    }
-
-    public static <S, T> Map<T, Collection<S>> group(
-            Iterable<S> iterable,
-            Indexer<? super S, T> indexer) {
-        return group(iterable, indexerUnaryFunction(indexer));
     }
 
     /**
@@ -1529,39 +1400,6 @@ public class Eagerly {
             Iterable<T> targets,
             UnaryProcedure<? super T> procedure) {
         materialize(Lazily.each(targets, procedure));
-    }
-
-    /**
-     * Applies the supplied {@code Action} to each element in the supplied
-     * {@code Iterable}. Each element in the supplied {@code Iterable} is
-     * passed to the {@link Action#on(Object)} method in the order in
-     * which it is yielded.
-     *
-     * <p>The application of the supplied {@code Action} is eager, i.e.,
-     * the action is immediately applied to each element in the
-     * {@code Iterable}.</p>
-     *
-     * <p>Since the function being applied to each element is an action
-     * it is inherently impure and thus must have side effects for any perceivable
-     * outcome to be observed.</p>
-     *
-     * <p>This overload of {@link #each(Iterable, UnaryProcedure)} is provided to allow an
-     * {@code Action} to be used in place of a {@code UnaryProcedure} to enhance readability
-     * and better express intent. The contract of the function is identical to that of the
-     * {@code UnaryProcedure} version of {@code each}.</p>
-     *
-     * <p>For example usage and further documentation, see {@link #each(Iterable, UnaryProcedure)}.</p>
-     *
-     * @param targets The {@code Iterable} whose elements should each have the supplied
-     *                {@code Action} applied to them.
-     * @param action  An {@code Action} to apply to each element in the supplied
-     *                {@code Iterable}.
-     * @param <T>     The type of the elements in the supplied {@code Iterable}.
-     */
-    public static <T> void each(
-            Iterable<T> targets,
-            Action<? super T> action) {
-        each(targets, actionUnaryProcedure(action));
     }
 
     /**
@@ -3544,10 +3382,6 @@ public class Eagerly {
         }
     }
 
-    public static void times(int numberOfTimes, Action<? super Integer> action) {
-        times(numberOfTimes, actionUnaryProcedure(action));
-    }
-
     /**
      * Slices a sub-sequence from the supplied {@code Iterable} according
      * to the supplied start index, stop index and step size. The start and stop
@@ -3850,35 +3684,6 @@ public class Eagerly {
 
     /**
      * Provides a eagerly evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a {@code Collection} instance is returned, the list comprehension
-     * is performed eagerly.
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Collection} is empty.
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The {@code UnaryPredicate} function acting as a filter on members
-     *                 of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return A {@code Collection} of the resultant set from members of the input set
-     *         that satisfy the predicate function, as mapped by the mapper.
-     */
-    public static <S, T> Collection<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<? super S> p1) {
-        return comprehension(mapperUnaryFunction(mapper), iterable, iterableWith(p1));
-    }
-
-    /**
-     * Provides a eagerly evaluated, set-builder notation style list comprehension.
      * Returns an {@code Iterable} of the elements that pass all of the supplied
      * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
      *
@@ -3911,41 +3716,6 @@ public class Eagerly {
 
     /**
      * Provides a eagerly evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a {@code Collection} instance is returned, the list comprehension
-     * is performed eagerly.
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Collection} is empty.
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return A {@code Collection} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Collection<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
-                iterable,
-                iterableWith(p1, p2));
-    }
-
-    /**
-     * Provides a eagerly evaluated, set-builder notation style list comprehension.
      * Returns an {@code Iterable} of the elements that pass all of the supplied
      * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
      *
@@ -3978,44 +3748,6 @@ public class Eagerly {
             final UnaryPredicate<S> p3) {
         return comprehension(
                 function,
-                iterable,
-                iterableWith(p1, p2, p3));
-    }
-
-    /**
-     * Provides a eagerly evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a {@code Collection} instance is returned, the list comprehension
-     * is performed eagerly.
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Collection} is empty.
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return A {@code Collection} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Collection<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
                 iterable,
                 iterableWith(p1, p2, p3));
     }
@@ -4063,47 +3795,6 @@ public class Eagerly {
 
     /**
      * Provides a eagerly evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a {@code Collection} instance is returned, the list comprehension
-     * is performed eagerly.
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Collection} is empty.
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return A {@code Collection} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Collection<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3,
-            final UnaryPredicate<S> p4) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
-                iterable,
-                iterableWith(p1, p2, p3, p4));
-    }
-
-    /**
-     * Provides a eagerly evaluated, set-builder notation style list comprehension.
      * Returns an {@code Iterable} of the elements that pass all of the supplied
      * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
      *
@@ -4142,50 +3833,6 @@ public class Eagerly {
             final UnaryPredicate<S> p5) {
         return comprehension(
                 function,
-                iterable,
-                iterableWith(p1, p2, p3, p4, p5));
-    }
-
-    /**
-     * Provides a eagerly evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a {@code Collection} instance is returned, the list comprehension
-     * is performed eagerly.
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Collection} is empty.
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return A {@code Collection} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Collection<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3,
-            final UnaryPredicate<S> p4,
-            final UnaryPredicate<S> p5) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
                 iterable,
                 iterableWith(p1, p2, p3, p4, p5));
     }
@@ -4239,53 +3886,6 @@ public class Eagerly {
 
     /**
      * Provides a eagerly evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a {@code Collection} instance is returned, the list comprehension
-     * is performed eagerly.
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Collection} is empty.
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return A {@code Collection} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Collection<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3,
-            final UnaryPredicate<S> p4,
-            final UnaryPredicate<S> p5,
-            final UnaryPredicate<S> p6) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
-                iterable,
-                iterableWith(p1, p2, p3, p4, p5, p6));
-    }
-
-    /**
-     * Provides a eagerly evaluated, set-builder notation style list comprehension.
      * Returns an {@code Iterable} of the elements that pass all of the supplied
      * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
      *
@@ -4330,56 +3930,6 @@ public class Eagerly {
             final UnaryPredicate<S> p7) {
         return comprehension(
                 function,
-                iterable,
-                iterableWith(p1, p2, p3, p4, p5, p6, p7));
-    }
-
-    /**
-     * Provides a eagerly evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a {@code Collection} instance is returned, the list comprehension
-     * is performed eagerly.
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Collection} is empty.
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return A {@code Collection} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Collection<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3,
-            final UnaryPredicate<S> p4,
-            final UnaryPredicate<S> p5,
-            final UnaryPredicate<S> p6,
-            final UnaryPredicate<S> p7) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
                 iterable,
                 iterableWith(p1, p2, p3, p4, p5, p6, p7));
     }
@@ -4439,59 +3989,6 @@ public class Eagerly {
 
     /**
      * Provides a eagerly evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a {@code Collection} instance is returned, the list comprehension
-     * is performed eagerly.
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Collection} is empty.
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return A {@code Collection} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Collection<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3,
-            final UnaryPredicate<S> p4,
-            final UnaryPredicate<S> p5,
-            final UnaryPredicate<S> p6,
-            final UnaryPredicate<S> p7,
-            final UnaryPredicate<S> p8) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
-                iterable,
-                iterableWith(p1, p2, p3, p4, p5, p6, p7, p8));
-    }
-
-    /**
-     * Provides a eagerly evaluated, set-builder notation style list comprehension.
      * Returns an {@code Iterable} of the elements that pass all of the supplied
      * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
      *
@@ -4542,62 +4039,6 @@ public class Eagerly {
             final UnaryPredicate<S> p9) {
         return comprehension(
                 function,
-                iterable,
-                iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9));
-    }
-
-    /**
-     * Provides a eagerly evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a {@code Collection} instance is returned, the list comprehension
-     * is performed eagerly.
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Collection} is empty.
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p9       The ninth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return A {@code Collection} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Collection<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3,
-            final UnaryPredicate<S> p4,
-            final UnaryPredicate<S> p5,
-            final UnaryPredicate<S> p6,
-            final UnaryPredicate<S> p7,
-            final UnaryPredicate<S> p8,
-            final UnaryPredicate<S> p9) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
                 iterable,
                 iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9));
     }
@@ -4663,65 +4104,6 @@ public class Eagerly {
 
     /**
      * Provides a eagerly evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a {@code Collection} instance is returned, the list comprehension
-     * is performed eagerly.
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Collection} is empty.
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p9       The ninth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p10      The tenth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return A {@code Collection} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Collection<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3,
-            final UnaryPredicate<S> p4,
-            final UnaryPredicate<S> p5,
-            final UnaryPredicate<S> p6,
-            final UnaryPredicate<S> p7,
-            final UnaryPredicate<S> p8,
-            final UnaryPredicate<S> p9,
-            final UnaryPredicate<S> p10) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
-                iterable,
-                iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10));
-    }
-
-    /**
-     * Provides a eagerly evaluated, set-builder notation style list comprehension.
      * Returns an {@code Iterable} of the elements that pass all of the supplied
      * {@code UnaryPredicate}s, mapped by the supplied {@code UnaryFunction}.
      *
@@ -4778,68 +4160,6 @@ public class Eagerly {
             final UnaryPredicate<S>... p11on) {
         return comprehension(
                 function,
-                iterable,
-                iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11on));
-    }
-
-    /**
-     * Provides a eagerly evaluated, set-builder notation style list comprehension.
-     * Returns an {@code Iterable} of the elements that pass the supplied
-     * {@code UnaryPredicate}s, mapped by the supplied {@code Mapper}.
-     *
-     * <p>Since a {@code Collection} instance is returned, the list comprehension
-     * is performed eagerly.
-     *
-     * <p>If the supplied source {@code Iterable} instance is empty, the
-     * returned {@code Collection} is empty.
-     *
-     * @param mapper   A {@code Mapper} output function that produces members
-     *                 of the resultant set from members of the input set that satisfy
-     *                 the predicate functions.
-     * @param iterable The {@code Iterable} of the input set.
-     * @param p1       The first {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p2       The second {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p3       The third {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p4       The fourth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p5       The fifth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p6       The sixth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p7       The seventh {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p8       The eighth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p9       The ninth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p10      The tenth {@code UnaryPredicate} function acting as a filter on
-     *                 members of the input set.
-     * @param p11on    The remaining {@code UnaryPredicate} functions acting as filters on
-     *                 members of the input set.
-     * @param <S>      The type of the elements in the supplied {@code Iterable}.
-     * @param <T>      The type of the elements in the returned {@code Iterable}.
-     * @return A {@code Collection} of the resultant set from members of the input set
-     *         that satisfy the predicate functions, as mapped by the mapper.
-     */
-    public static <S, T> Collection<T> comprehension(
-            final Mapper<? super S, T> mapper,
-            final Iterable<S> iterable,
-            final UnaryPredicate<S> p1,
-            final UnaryPredicate<S> p2,
-            final UnaryPredicate<S> p3,
-            final UnaryPredicate<S> p4,
-            final UnaryPredicate<S> p5,
-            final UnaryPredicate<S> p6,
-            final UnaryPredicate<S> p7,
-            final UnaryPredicate<S> p8,
-            final UnaryPredicate<S> p9,
-            final UnaryPredicate<S> p10,
-            final UnaryPredicate<S>... p11on) {
-        return comprehension(
-                mapperUnaryFunction(mapper),
                 iterable,
                 iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11on));
     }
