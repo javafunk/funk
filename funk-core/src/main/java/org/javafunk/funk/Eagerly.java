@@ -25,6 +25,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.Collections.emptyList;
 import static org.javafunk.funk.Checks.returnOrThrowIfNull;
 import static org.javafunk.funk.Exceptions.noSuchElementFactory;
+import static org.javafunk.funk.Iterables.concat;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Iterators.asIterable;
 import static org.javafunk.funk.Literals.*;
@@ -4162,6 +4163,20 @@ public class Eagerly {
                 function,
                 iterable,
                 iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11on));
+    }
+
+    /**
+     * Applies map and concat the results
+     * @param input     The {@code Iterable} of the input set.
+     * @param function  A {@code Mapper} which, given an element from the input iterable,
+     *                  returns that element mapped to a new Iterable potentially of a different type.
+     * @param <S>       The type of the input elements, i.e., the elements to map.
+     * @param <T>       The type of the output elements, i.e., the elements mapped and concatenated.
+     * @return          An {@code Iterable} mapping each instance of {@code S} from the input
+     *                  {@code Iterable} to an {@code Iterable} of {@code T} using the supplied {@code Mapper}.
+     */
+    public static <S,T> Collection<T> mapCat(final Iterable<S> input, Mapper<? super S, Iterable<T>> function) {
+        return materialize(concat(map(input, function)));
     }
 
     private static class SliceHelper {
