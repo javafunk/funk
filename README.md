@@ -59,17 +59,6 @@ Binary Releases
 
 The latest released can be obtained from [Maven Central](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.javafunk.funk%22%20AND%20a%3A%22funk%22).
 
-To release a new artifact execute:
-
-```
-./gradlew release \
-    -PsonatypeUsername=<user> \
-    -PsonatypePassword=<pass> \
-    -Psigning.keyId=<keyId> \
-    -Psigning.password=<keyPass> \
-    -Psigning.secretKeyRingFile=<file>
-```
-
 Planned Features
 ----------------
 
