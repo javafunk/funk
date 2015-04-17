@@ -1,35 +1,27 @@
 import org.gradle.api.artifacts.maven.MavenDeployment
-import org.gradle.api.artifacts.maven.MavenPom
-import org.gradle.api.tasks.wrapper.Wrapper
-
-apply from: "https://launchpad.net/gradle-release/trunk/latest/+download/apply.groovy"
-
-release {
-  includeProjectNameInTag = true
-}
-
-def isReleaseVersion() {
-  return !version.endsWith("SNAPSHOT")
-}
 
 allprojects {
-  apply plugin: "maven"
-  apply plugin: "signing"
   apply plugin: "idea"
+  apply plugin: 'maven'
+  apply plugin: 'signing'
+  apply plugin: 'nexus-workflow'
 
-  ext.sonatypeUsername = rootProject.hasProperty("sonatypeUsername") ? rootProject.property("sonatypeUsername") : ""
-  ext.sonatypePassword = rootProject.hasProperty("sonatypePassword") ? rootProject.property("sonatypePassword") : ""
-  ext.authenticationDetails = { authentication(userName: sonatypeUsername, password: sonatypePassword) }
-  ext.releaseRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-  ext.snapshotRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+  ext.sha = 'git rev-parse --short HEAD'.execute().in.text.trim()
 
+  version = '0.2.0.' + (System.getenv("SNAP_PIPELINE_COUNTER") ?: sha)
   group = "org.javafunk.funk"
+
+  buildscript {
+    repositories {
+      mavenCentral()
+    }
+    dependencies {
+      classpath 'com.adaptc.gradle:nexus-workflow:0.6'
+    }
+  }
 
   repositories {
     mavenCentral()
-    maven {
-      url 'https://oss.sonatype.org/content/repositories/releases/'
-    }
   }
 }
 
@@ -51,19 +43,18 @@ subprojects {
   compileJava(compilerOptions)
   compileTestJava(compilerOptions)
 
-  task javadocJar(type: Jar, dependsOn: javadoc) {
+  signing {
+    sign configurations.archives
+  }
+
+  task javadocJar(type: Jar) {
     classifier = 'javadoc'
-    from 'build/docs/javadoc'
+    from javadoc
   }
 
   task sourcesJar(type: Jar) {
     classifier = 'sources'
     from sourceSets.main.allSource
-  }
-
-  signing {
-    required { isReleaseVersion() && gradle.taskGraph.hasTask("uploadArchives") }
-    sign configurations.archives
   }
 
   artifacts {
@@ -85,7 +76,7 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.1'
+  gradleVersion = '2.3'
 }
 
 task emptyPom {
@@ -108,12 +99,26 @@ createReleaseTag.dependsOn([":uploadArchives", subprojects.collect { it.name + "
 
 uploadArchives {
   configuration = configurations.archives
+
   repositories {
+    flatDir {
+      dirs 'repos'
+    }
+
     mavenDeployer {
       beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-      repository(url: releaseRepositoryUrl, authenticationDetails)
-      snapshotRepository(url: snapshotRepositoryUrl, authenticationDetails)
+      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+        authentication(
+                userName: project.property("oss-releases.username"),
+                password: project.property("oss-releases.password"))
+      }
+
+      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+        authentication(
+                userName: project.property("oss-releases.username"),
+                password: project.property("oss-releases.password"))
+      }
 
       pom {
         project {
@@ -173,6 +178,28 @@ uploadArchives {
                 scope 'compile'
               }
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+idea {
+  project {
+    ipr {
+      withXml {
+        def ideaProject = it.asNode()
+
+        // Automatically set up Git support
+        ideaProject.append(node().component(name: 'VcsDirectoryMappings') {
+          mapping(directory: '$PROJECT_DIR$', vcs: 'Git')
+        })
+
+        // Turn on annotation processing
+        ideaProject.component.find { it.@name == 'CompilerConfiguration' }['annotationProcessing'][0].replaceNode {
+          annotationProcessing {
+            profile(default: true, name: 'Default', useClasspath: 'true', enabled: true)
           }
         }
       }
