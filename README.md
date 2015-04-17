@@ -1,4 +1,4 @@
-Funk [![Build Status](https://snap-ci.com/javafunk/funk/branch/master/build_image)](https://snap-ci.com/javafunk/funk/branch/master)
+Funk [![Build Status](https://snap-ci.com/javafunk/funk/branch/master/build_image)](https://snap-ci.com/javafunk/funk/branch/master) [![Version](https://img.shields.io/maven-central/v/org.javafunk.funk/funk.svg)](https://img.shields.io/maven-central/v/org.javafunk.funk/funk.svg)
 ====
 
 Simplifying functional programming in Java.
