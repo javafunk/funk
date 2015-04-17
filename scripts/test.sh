@@ -7,4 +7,4 @@ fi
 set -e
 set -o pipefail
 
-./gradlew test
+./gradlew --info test
