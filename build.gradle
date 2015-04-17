@@ -97,8 +97,6 @@ artifacts {
   }
 }
 
-createReleaseTag.dependsOn([":uploadArchives", subprojects.collect { it.name + ":uploadArchives"}].flatten().toSet())
-
 uploadArchives {
   configuration = configurations.archives
 
