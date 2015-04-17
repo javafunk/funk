@@ -1,5 +1,7 @@
 import org.gradle.api.artifacts.maven.MavenDeployment
 
+defaultTasks('clean', 'test')
+
 buildscript {
   repositories {
     mavenCentral()
