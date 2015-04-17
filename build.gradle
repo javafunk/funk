@@ -2,6 +2,8 @@ import org.gradle.api.artifacts.maven.MavenDeployment
 
 defaultTasks('clean', 'test')
 
+apply plugin: 'nexus-workflow'
+
 buildscript {
   repositories {
     mavenCentral()
@@ -15,7 +17,6 @@ allprojects {
   apply plugin: "idea"
   apply plugin: 'maven'
   apply plugin: 'signing'
-  apply plugin: 'nexus-workflow'
 
   ext.sha = 'git rev-parse --short HEAD'.execute().in.text.trim()
 
