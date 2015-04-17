@@ -1,5 +1,14 @@
 import org.gradle.api.artifacts.maven.MavenDeployment
 
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'com.adaptc.gradle:nexus-workflow:0.6'
+  }
+}
+
 allprojects {
   apply plugin: "idea"
   apply plugin: 'maven'
@@ -10,15 +19,6 @@ allprojects {
 
   version = '0.2.0.' + (System.getenv("SNAP_PIPELINE_COUNTER") ?: sha)
   group = "org.javafunk.funk"
-
-  buildscript {
-    repositories {
-      mavenCentral()
-    }
-    dependencies {
-      classpath 'com.adaptc.gradle:nexus-workflow:0.6'
-    }
-  }
 
   repositories {
     mavenCentral()
