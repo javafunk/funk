@@ -781,4 +781,52 @@ public class EitherTest {
         assertThat(iterableWith(firstEqualsSecond, secondEqualsFirst),
                 hasAllElementsEqualTo(false));
     }
+
+    @Test
+    public void shouldReturnRightIfRightForGetRightOrElse() throws Exception {
+        // Given
+        Either<Integer, String> either = Either.right("Hello");
+
+        // When
+        String right = either.getRightOrElse("Goodbye");
+
+        // Then
+        assertThat(right, is("Hello"));
+    }
+
+    @Test
+    public void shouldReturnDefaultValueIfLeftForGetRightOrElse() throws Exception {
+        // Given
+        Either<Integer, String> either = Either.left(10);
+
+        // When
+        String right = either.getRightOrElse("Goodbye");
+
+        // Then
+        assertThat(right, is("Goodbye"));
+    }
+
+    @Test
+    public void shouldReturnLeftIfLeftForGetLeftOrElse() throws Exception {
+        // Given
+        Either<Integer, String> either = Either.left(20);
+
+        // When
+        Integer left = either.getLeftOrElse(30);
+
+        // Then
+        assertThat(left, is(20));
+    }
+
+    @Test
+    public void shouldReturnDefaultValueIfRightForGetLeftOrElse() throws Exception {
+        // Given
+        Either<Integer, String> either = Either.right("Hello");
+
+        // When
+        Integer left = either.getLeftOrElse(30);
+
+        // Then
+        assertThat(left, is(30));
+    }
 }

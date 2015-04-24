@@ -96,6 +96,34 @@ public class Right<L, R> extends Either<L, R> {
     }
 
     /**
+     * A value access method to obtain the value in the right slot of this
+     * {@code Right}. Since by definition, a {@code Right} always has a
+     * value in the right slot, the supplied default value will never be used
+     * for this {@code Either} implementation.
+     *
+     * @param defaultValue The default value that would be returned if this
+     *                     {@code Either} was not a Right
+     * @return The value contained in the right slot of this {@code Right}.
+     */
+    @Override public R getRightOrElse(R defaultValue) {
+        return value;
+    }
+
+    /**
+     * A value access method to obtain the value in the left slot of this
+     * {@code Right}. Since by definition, a {@code Right} never has a
+     * value in the left slot, the supplied default value will always be used
+     * for this {@code Either} implementation.
+     *
+     * @param defaultValue The default value that will be returned as the left value
+     *                     for this {@code Right}.
+     * @return The default value passed to this method.
+     */
+    @Override public L getLeftOrElse(L defaultValue) {
+        return defaultValue;
+    }
+
+    /**
      * A mapping method to map this {@code Either} into an {@code Either} over
      * a right value of type {@code S} obtained by calling the supplied
      * {@code UnaryFunction} with the current right value of this

@@ -196,6 +196,32 @@ public abstract class Either<L, R> implements Mappable<R, Either<L, ?>> {
     }
 
     /**
+     * A value access method to obtain the value in the right slot of this
+     * {@code Either}. If this {@code Either} represents a right, the
+     * contained value will be returned, otherwise the supplied default value
+     * will be returned.
+     *
+     * @param defaultValue The default value to use in the case that this
+     *                     {@code Either} is not a {@code Right}.
+     * @return The value contained in the right slot of this {@code Either}
+     *         if one is present, otherwise the supplied default value.
+     */
+    public abstract R getRightOrElse(R defaultValue);
+
+    /**
+     * A value access method to obtain the value in the left slot of this
+     * {@code Either}. If this {@code Either} represents a left, the
+     * contained value will be returned, otherwise the supplied default value
+     * will be returned.
+     *
+     * @param defaultValue The default value to use in the case that this
+     *                     {@code Either} is not a {@code Left}.
+     * @return The value contained in the left slot of this {@code Either}
+     *         if one is present, otherwise the supplied default value.
+     */
+    public abstract L getLeftOrElse(L defaultValue);
+
+    /**
      * A mapping method to map this {@code Either} into an {@code Either}
      * over a right value of type {@code S} obtained by calling the
      * supplied {@code UnaryFunction} with the current right value of this
