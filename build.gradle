@@ -208,6 +208,10 @@ idea {
   }
 }
 
+def node() {
+  new NodeBuilder()
+}
+
 def addAsParentFor(MavenPom pom) {
   pom.project {
     parent {
