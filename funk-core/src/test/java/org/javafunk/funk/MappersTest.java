@@ -2,8 +2,10 @@ package org.javafunk.funk;
 
 import org.junit.Test;
 
+import java.util.Iterator;
 import java.util.List;
 
+import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.javafunk.funk.Literals.listFrom;
 import static org.javafunk.funk.Literals.listWith;

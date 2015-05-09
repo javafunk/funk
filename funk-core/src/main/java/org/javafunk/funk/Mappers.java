@@ -17,11 +17,13 @@ import org.javafunk.funk.datastructures.tuples.Septuple;
 import org.javafunk.funk.datastructures.tuples.Sextuple;
 import org.javafunk.funk.datastructures.tuples.Triple;
 import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.functors.functions.UnaryFunction;
 
 import java.util.Iterator;
 
 import static org.javafunk.funk.Eagerly.first;
 import static org.javafunk.funk.Lazily.rest;
+import static org.javafunk.funk.Literals.iteratorWith;
 import static org.javafunk.funk.Literals.tuple;
 
 public class Mappers {
@@ -149,6 +151,25 @@ public class Mappers {
                 return iterable.iterator();
             }
         };
+    }
+
+    public static <T> Mapper<? super Iterable<? extends T>, Iterator<? extends T>> toIterators(Class<T> ofKlass) {
+        return toIterators();
+    }
+
+    public static <T> UnaryFunction<Iterable<? extends T>, Iterator<? extends T>> toIteratorsKeepingNulls() {
+        return new UnaryFunction<Iterable<? extends T>, Iterator<? extends T>>() {
+            @Override public Iterator<? extends T> call(Iterable<? extends T> iterable) {
+                if (iterable == null) {
+                    return iteratorWith(null);
+                }
+                return iterable.iterator();
+            }
+        };
+    }
+
+    public static <T> UnaryFunction<Iterable<? extends T>, Iterator<? extends T>> toIteratorsKeepingNulls(Class<T> ofKlass) {
+        return toIteratorsKeepingNulls();
     }
 
     public static <T> Mapper<T, T> identity() {

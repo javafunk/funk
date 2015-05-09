@@ -237,6 +237,36 @@ public class Eagerly {
     }
 
     /**
+     * Maps an {@code Iterable} of elements of type {@code S} into a {@code Collection}
+     * of elements of type {@code T} using the supplied {@code UnaryFunction}. The
+     * {@code UnaryFunction} will be provided with each element in the input
+     * {@code Iterable} and is expected to return some {@code Iterable} containing the
+     * results of the mapping. All {@code Iterable}s returned by the {@code UnaryFunction}
+     * will be concatenated together to form the returned {@code Collection}.
+     *
+     * <p>Since a {@code Collection} instance is returned, the mapping is performed
+     * eagerly, i.e., the {@code UnaryFunction} is applied to each element in the input
+     * {@code Iterable} immediately.</p>
+     *
+     * <p>{@code map} does not discriminate against {@code null} values in the input
+     * {@code Iterable}, they are passed to the function in the same way as any other
+     * value. Similarly, any {@code null} values returned are retained in the output
+     * {@code Collection}.</p>
+     *
+     * @param iterable The {@code Iterable} of elements to be mapped.
+     * @param function A {@code UnaryFunction} which, given an element from the input iterable,
+     *                 returns that element mapped to a new {@code Iterable} potentially of a different type.
+     * @param <S>      The type of the input elements, i.e., the elements to map.
+     * @param <T>      The type of the output elements, i.e., the elements mapped and concatenated.
+     * @return A {@code Collection} containing each instance of {@code S} from the input
+     *         {@code Iterable} mapped to an {@code Iterable} of instances of {@code T} concatenated together to
+     *         form a single {@code Collection}.
+     */
+    public static <S, T> Collection<T> mapCat(final Iterable<S> iterable, UnaryFunction<? super S, ? extends Iterable<? extends T>> function) {
+        return materialize(Lazily.mapCat(iterable, function));
+    }
+
+    /**
      * Zips the elements from the two supplied {@code Iterable} instances
      * into a tuple of size two. The returned {@code Iterable} contains
      * a {@code Pair} instance for each element in the shortest supplied
@@ -3585,9 +3615,11 @@ public class Eagerly {
                     public boolean hasNext() {
                         return listIterator.hasPrevious();
                     }
+
                     public T next() {
                         return listIterator.previous();
                     }
+
                     public void remove() {
                         listIterator.remove();
                     }
@@ -4163,20 +4195,6 @@ public class Eagerly {
                 function,
                 iterable,
                 iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11on));
-    }
-
-    /**
-     * Applies map and concat the results
-     * @param input     The {@code Iterable} of the input set.
-     * @param function  A {@code Mapper} which, given an element from the input iterable,
-     *                  returns that element mapped to a new Iterable potentially of a different type.
-     * @param <S>       The type of the input elements, i.e., the elements to map.
-     * @param <T>       The type of the output elements, i.e., the elements mapped and concatenated.
-     * @return          An {@code Iterable} mapping each instance of {@code S} from the input
-     *                  {@code Iterable} to an {@code Iterable} of {@code T} using the supplied {@code Mapper}.
-     */
-    public static <S,T> Collection<T> mapCat(final Iterable<S> input, Mapper<? super S, Iterable<T>> function) {
-        return materialize(concat(map(input, function)));
     }
 
     private static class SliceHelper {

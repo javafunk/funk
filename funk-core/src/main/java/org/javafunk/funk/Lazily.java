@@ -28,6 +28,7 @@ import static org.javafunk.funk.Literals.*;
 import static org.javafunk.funk.Mappers.toIterators;
 import static org.javafunk.funk.Sequences.increasing;
 import static org.javafunk.funk.Sequences.integers;
+import static org.javafunk.funk.UnaryFunctions.compose;
 
 /**
  * A suite of lazy functions, often higher order, across {@code Iterable} instances.
@@ -1045,6 +1046,42 @@ public class Lazily {
         return new Iterable<T>() {
             public Iterator<T> iterator() {
                 return new MappedIterator<S, T>(iterable.iterator(), function);
+            }
+        };
+    }
+
+     /**
+     * Lazily maps an {@code Iterable} of elements of type {@code S} into an
+     * {@code Iterable} of elements of type {@code T} using the supplied
+     * {@code UnaryFunction}.
+     *
+     * <p>As the returned {@code Iterable} is iterated, each element from the
+     * input {@code Iterable} will be passed to the supplied {@code UnaryFunction} which
+     * is expected to return some {@code Iterable} containing the results of the mapping.
+     * The elements from the resulting {@code Iterable} will be iterated until none remains
+     * at which point the next result {#code Iterable} will be generated from the next element
+     * in the input {@code Iterable} until no input elements remain.</p>
+     *
+     * <p>{@code map} does not discriminate against {@code null} values in the input
+     * {@code Iterable}, they are passed to the function in the same way as any other
+     * value. Similarly, any {@code null} values returned are retained in the output
+     * {@code Collection}.</p>
+     *
+     * @param iterable The {@code Iterable} of elements to be mapped.
+     * @param function A {@code UnaryFunction} which, given an element from the input iterable,
+     *                 returns that element mapped to a new {@code Iterable} potentially of a different type.
+     * @param <S>      The type of the input elements, i.e., the elements to map.
+     * @param <T>      The type of the output elements, i.e., the elements mapped and concatenated.
+     * @return An {@code Iterable} containing each instance of {@code S} from the input
+     *         {@code Iterable} mapped to an {@code Iterable} of instances of {@code T} lazily concatenated
+     *         together to form a single {@code Iterable}.
+     */
+    public static <S, T> Iterable<T> mapCat(final Iterable<S> iterable, final UnaryFunction<? super S, ? extends Iterable<? extends T>> function) {
+        checkNotNull(function);
+        checkNotNull(iterable);
+        return new Iterable<T>() {
+            @Override public Iterator<T> iterator() {
+                return new ChainedIterator<T>(map(iterable, compose(function, Mappers.<T>toIteratorsKeepingNulls())).iterator());
             }
         };
     }
