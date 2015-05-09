@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import java.util.Iterator;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.javafunk.funk.Literals.iterableWith;
 import static org.junit.Assert.assertThat;
 
@@ -62,6 +62,56 @@ public class LazilyCycleRepeatTest {
         Lazily.cycle(input);
 
         // Then a NullPointerException is thrown
+    }
+
+    @Test
+    public void shouldCycleTheSuppliedObjectInfinitely() {
+        // Given
+        String input = "Red";
+
+        // When
+        Iterable<String> output = Lazily.cycle(input);
+        Iterator<String> cyclicIterator = output.iterator();
+
+        // Then
+        for(int i = 0; i < 20; i++) {
+            assertThat(cyclicIterator.next(), is("Red"));
+        }
+    }
+
+    @Test
+    public void shouldAllowIteratorToBeCalledMultipleTimesOnCycleElementReturningDifferentIterators() throws Exception {
+        // Given
+        String input = "Red";
+
+        // When
+        Iterable<String> iterable = Lazily.cycle(input);
+        Iterator<String> iterator1 = iterable.iterator();
+        Iterator<String> iterator2 = iterable.iterator();
+
+        // Then
+        assertThat(iterator1.next(), is("Red"));
+        assertThat(iterator1.next(), is("Red"));
+        assertThat(iterator2.next(), is("Red"));
+        assertThat(iterator1.next(), is("Red"));
+        assertThat(iterator2.next(), is("Red"));
+        assertThat(iterator1.next(), is("Red"));
+        assertThat(iterator1, is(not(sameInstance(iterator2))));
+    }
+
+    @Test
+    public void shouldCycleNullValue() throws Exception {
+        // Given
+        String input = null;
+
+        // When
+        Iterable<String> output = Lazily.cycle(input);
+        Iterator<String> cyclicIterator = output.iterator();
+
+        // Then
+        for(int i = 0; i < 20; i++) {
+            assertThat(cyclicIterator.next(), is(nullValue()));
+        }
     }
 
     @Test

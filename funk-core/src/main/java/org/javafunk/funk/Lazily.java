@@ -167,6 +167,26 @@ public class Lazily {
     }
 
     /**
+     * Returns an infinite lazy {@code Iterable} which repeatedly returns the
+     * supplied element.
+     *
+     * <p>Note, if the supplied element is {@code null}, the returned {@code Iterable}
+     * will always return {@code null}.</p>
+     *
+     * @param element The element to be infinitely cycled.
+     * @param <T>     The type of the supplied element.
+     * @return An {@code Iterable} instance containing an infinite number of
+     *         the supplied element.
+     */
+    public static <T> Iterable<T> cycle(final T element) {
+        return new Iterable<T>() {
+            public Iterator<T> iterator() {
+                return new CyclicIterator<T>(iterableWith(element).iterator());
+            }
+        };
+    }
+
+    /**
      * Returns a lazy {@code Iterable} which represents a repetition of the elements
      * in the supplied {@code Iterable} in the order in which they are yielded.
      *
