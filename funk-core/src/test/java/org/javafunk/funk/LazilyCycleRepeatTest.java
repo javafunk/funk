@@ -65,27 +65,78 @@ public class LazilyCycleRepeatTest {
     }
 
     @Test
-    public void shouldCycleTheSuppliedObjectInfinitely() {
+    public void shouldCycleTheSuppliedIterableTheSpecifiedNumberOfTimes() throws Exception {
+        // Given
+        Iterable<String> input = iterableWith("Black", "White");
+
+        // When
+        Iterable<String> output = Lazily.cycle(input, 2);
+        Iterator<String> cyclingIterator = output.iterator();
+
+        // Then
+        assertThat(cyclingIterator.hasNext(), is(true));
+        assertThat(cyclingIterator.next(), is("Black"));
+        assertThat(cyclingIterator.hasNext(), is(true));
+        assertThat(cyclingIterator.next(), is("White"));
+        assertThat(cyclingIterator.hasNext(), is(true));
+        assertThat(cyclingIterator.next(), is("Black"));
+        assertThat(cyclingIterator.hasNext(), is(true));
+        assertThat(cyclingIterator.next(), is("White"));
+        assertThat(cyclingIterator.hasNext(), is(false));
+    }
+
+    @Test
+    public void shouldAllowIteratorToBeCalledMultipleTimesOnCycleIterableWithCountReturningDifferentIterators() throws Exception {
+        // Given
+        Iterable<String> input = iterableWith("Black", "White");
+
+        // When
+        Iterable<String> iterable = Lazily.cycle(input, 2);
+        Iterator<String> iterator1 = iterable.iterator();
+        Iterator<String> iterator2 = iterable.iterator();
+
+        // Then
+        assertThat(iterator1.next(), is("Black"));
+        assertThat(iterator1.next(), is("White"));
+        assertThat(iterator2.next(), is("Black"));
+        assertThat(iterator1.next(), is("Black"));
+        assertThat(iterator2.next(), is("White"));
+        assertThat(iterator2.next(), is("Black"));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfNullIterablePassedToCycleWithCount() throws Exception {
+        // Given
+        Iterable<String> input = null;
+
+        // When
+        Lazily.cycle(input, 3);
+
+        // Then a NullPointerException is thrown
+    }
+
+    @Test
+    public void shouldRepeatTheSuppliedObjectInfinitely() {
         // Given
         String input = "Red";
 
         // When
-        Iterable<String> output = Lazily.cycle(input);
-        Iterator<String> cyclicIterator = output.iterator();
+        Iterable<String> output = Lazily.repeat(input);
+        Iterator<String> repeatingIterator = output.iterator();
 
         // Then
         for(int i = 0; i < 20; i++) {
-            assertThat(cyclicIterator.next(), is("Red"));
+            assertThat(repeatingIterator.next(), is("Red"));
         }
     }
 
     @Test
-    public void shouldAllowIteratorToBeCalledMultipleTimesOnCycleElementReturningDifferentIterators() throws Exception {
+    public void shouldAllowIteratorToBeCalledMultipleTimesOnRepeatElementReturningDifferentIterators() throws Exception {
         // Given
         String input = "Red";
 
         // When
-        Iterable<String> iterable = Lazily.cycle(input);
+        Iterable<String> iterable = Lazily.repeat(input);
         Iterator<String> iterator1 = iterable.iterator();
         Iterator<String> iterator2 = iterable.iterator();
 
@@ -100,68 +151,74 @@ public class LazilyCycleRepeatTest {
     }
 
     @Test
-    public void shouldCycleNullValue() throws Exception {
+    public void shouldRepeatNullValue() throws Exception {
         // Given
         String input = null;
 
         // When
-        Iterable<String> output = Lazily.cycle(input);
-        Iterator<String> cyclicIterator = output.iterator();
+        Iterable<String> output = Lazily.repeat(input);
+        Iterator<String> repeatingIterator = output.iterator();
 
         // Then
         for(int i = 0; i < 20; i++) {
-            assertThat(cyclicIterator.next(), is(nullValue()));
+            assertThat(repeatingIterator.next(), is(nullValue()));
         }
     }
 
     @Test
-    public void shouldRepeatTheSuppliedIterableTheSpecifiedNumberOfTimes() throws Exception {
+    public void shouldRepeatTheSuppliedObjectTheSpecifiedNumberOfTimes() throws Exception {
         // Given
-        Iterable<String> input = iterableWith("Black", "White");
+        String input = "Black";
 
         // When
-        Iterable<String> output = Lazily.repeat(input, 2);
-        Iterator<String> repeatedIterator = output.iterator();
+        Iterable<String> output = Lazily.repeat(input, 3);
+        Iterator<String> repeatingIterator = output.iterator();
 
         // Then
-        assertThat(repeatedIterator.hasNext(), is(true));
-        assertThat(repeatedIterator.next(), is("Black"));
-        assertThat(repeatedIterator.hasNext(), is(true));
-        assertThat(repeatedIterator.next(), is("White"));
-        assertThat(repeatedIterator.hasNext(), is(true));
-        assertThat(repeatedIterator.next(), is("Black"));
-        assertThat(repeatedIterator.hasNext(), is(true));
-        assertThat(repeatedIterator.next(), is("White"));
-        assertThat(repeatedIterator.hasNext(), is(false));
+        assertThat(repeatingIterator.hasNext(), is(true));
+        assertThat(repeatingIterator.next(), is("Black"));
+        assertThat(repeatingIterator.hasNext(), is(true));
+        assertThat(repeatingIterator.next(), is("Black"));
+        assertThat(repeatingIterator.hasNext(), is(true));
+        assertThat(repeatingIterator.next(), is("Black"));
+        assertThat(repeatingIterator.hasNext(), is(false));
     }
 
     @Test
-    public void shouldAllowIteratorToBeCalledMultipleTimesOnRepeatIterableReturningDifferentIterators() throws Exception {
+    public void shouldAllowIteratorToBeCalledMultipleTimesOnRepeatWithCountReturningDifferentIterators() throws Exception {
         // Given
-        Iterable<String> input = iterableWith("Black", "White");
+        Integer input = 5;
 
         // When
-        Iterable<String> iterable = Lazily.repeat(input, 2);
-        Iterator<String> iterator1 = iterable.iterator();
-        Iterator<String> iterator2 = iterable.iterator();
+        Iterable<Integer> iterable = Lazily.repeat(input, 3);
+        Iterator<Integer> iterator1 = iterable.iterator();
+        Iterator<Integer> iterator2 = iterable.iterator();
 
         // Then
-        assertThat(iterator1.next(), is("Black"));
-        assertThat(iterator1.next(), is("White"));
-        assertThat(iterator2.next(), is("Black"));
-        assertThat(iterator1.next(), is("Black"));
-        assertThat(iterator2.next(), is("White"));
-        assertThat(iterator2.next(), is("Black"));
+        assertThat(iterator1.next(), is(5));
+        assertThat(iterator1.next(), is(5));
+        assertThat(iterator2.next(), is(5));
+        assertThat(iterator1.next(), is(5));
+        assertThat(iterator2.next(), is(5));
+        assertThat(iterator2.next(), is(5));
     }
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIfNullIterablePassedToRepeat() throws Exception {
+    @Test
+    public void shouldRepeatNullValueTheSpecificNumberOfTimes() throws Exception {
         // Given
-        Iterable<String> input = null;
+        Integer input = null;
 
         // When
-        Lazily.repeat(input, 3);
+        Iterable<Integer> output = Lazily.repeat(input, 3);
+        Iterator<Integer> repeatingIterator = output.iterator();
 
-        // Then a NullPointerException is thrown
+        // Then
+        assertThat(repeatingIterator.hasNext(), is(true));
+        assertThat(repeatingIterator.next(), is(nullValue()));
+        assertThat(repeatingIterator.hasNext(), is(true));
+        assertThat(repeatingIterator.next(), is(nullValue()));
+        assertThat(repeatingIterator.hasNext(), is(true));
+        assertThat(repeatingIterator.next(), is(nullValue()));
+        assertThat(repeatingIterator.hasNext(), is(false));
     }
 }

@@ -112,8 +112,14 @@ public class Lazily {
     }
 
     /**
-     * Returns a lazy {@code Iterable} instance containing all elements from the
-     * supplied {@code Iterable} followed by the supplied element.
+     * Returns a lazy {@code Iterable} instance containing the supplied element and all elements from the
+     * supplied {@code Iterable}.
+     *
+     * <p>Conjoin is defined such that an element is added to a collection in constant time.
+     * In the case of a lazy {@code Iterable} we can choose whether this is the start or
+     * the end of the {@code Iterable}. Since {@link Lazily#construct(Object, Iterable)}
+     * is available for adding an element at the start of the {@code Iterable}, we define
+     * conjoin to add the element at the end of the {@code Iterable}.</p>
      *
      * @param iterable The {@code Iterable} with which the element will be conjoined.
      * @param element  The element to be conjoined with the {@code Iterable}
@@ -206,28 +212,9 @@ public class Lazily {
     }
 
     /**
-     * Returns an infinite lazy {@code Iterable} which repeatedly returns the
-     * supplied element.
-     *
-     * <p>Note, if the supplied element is {@code null}, the returned {@code Iterable}
-     * will always return {@code null}.</p>
-     *
-     * @param element The element to be infinitely cycled.
-     * @param <T>     The type of the supplied element.
-     * @return An {@code Iterable} instance containing an infinite number of
-     *         the supplied element.
-     */
-    public static <T> Iterable<T> cycle(final T element) {
-        return new Iterable<T>() {
-            public Iterator<T> iterator() {
-                return new CyclicIterator<T>(iterableWith(element).iterator());
-            }
-        };
-    }
-
-    /**
-     * Returns a lazy {@code Iterable} which represents a repetition of the elements
-     * in the supplied {@code Iterable} in the order in which they are yielded.
+     * Returns a lazy {@code Iterable} which cycles through the elements
+     * in the supplied {@code Iterable} in the order in which they are yielded
+     * for the specified number of times.
      *
      * <p>For example, given an {@code Iterable} of {@code Group} instances and
      * a randomly ordered {@code Iterable} of many {@code Candidate} instances, we
@@ -237,30 +224,71 @@ public class Lazily {
      * <pre>
      *     Iterable&lt;Candidate&gt; candidates = candidateRepository.getAll();
      *     Iterable&lt;Group&gt; groups = iterableWith(group(1), group(2), group(3));
-     *     Iterable&lt;Group&gt; groupPositions = repeat(groups, 5);
+     *     Iterable&lt;Group&gt; groupPositions = cycle(groups, 5);
      *     Iterable&lt;Pair&lt;Candidate, Group&gt;&gt; groupAssignments = zip(candidates, groupPositions);
      * </pre>
      * </blockquote>
      *
-     * <p>Note, if zero is specified as the number of times to repeat, an empty
+     * <p>Note, if zero is specified as the number of times to cycle, an empty
      * {@code Iterable} will be returned. Similarly, if the supplied {@code Iterable}
-     * is empty, regardless of the number of repeats specified, the returned
+     * is empty, regardless of the number of cycles specified, the returned
      * {@code Iterable} will be empty.</p>
      *
-     * @param iterable              The {@code Iterable} whose contents should be repeated the
-     *                              specified number of times.
-     * @param numberOfTimesToRepeat The number of repetitions of the supplied {@code Iterable}
-     *                              required.
-     * @param <T>                   The type of the elements in the supplied {@code Iterable}.
+     * @param iterable             The {@code Iterable} whose contents should be cycled the
+     *                             specified number of times.
+     * @param numberOfTimesToCycle The number of cycles of the supplied {@code Iterable}
+     *                             required.
+     * @param <T>                  The type of the elements in the supplied {@code Iterable}.
      * @return An {@code Iterable} instance containing the required number of
-     *         repetitions of the supplied {@code Iterable}.
-     * @throws IllegalArgumentException if the specified number of times to repeat is negative.
+     *         cycles of the supplied {@code Iterable}.
+     * @throws IllegalArgumentException if the specified number of times to cycle is negative.
      */
-    public static <T> Iterable<T> repeat(final Iterable<T> iterable, final int numberOfTimesToRepeat) {
+    public static <T> Iterable<T> cycle(final Iterable<T> iterable, final int numberOfTimesToCycle) {
         checkNotNull(iterable);
         return new Iterable<T>() {
             public Iterator<T> iterator() {
-                return new CyclicIterator<T>(iterable.iterator(), numberOfTimesToRepeat);
+                return new CyclicIterator<T>(iterable.iterator(), numberOfTimesToCycle);
+            }
+        };
+    }
+
+    /**
+     * Returns a lazy {@code Iterable} containing the supplied element
+     * repeated an infinitely.
+     *
+     * <p>Note, if the supplied element is {@code null}, the returned {@code Iterable}
+     * will always return {@code null}.</p>
+     *
+     * @param element The element to be infinitely repeated.
+     * @param <T>     The type of the supplied element.
+     * @return An {@code Iterable} instance containing an infinite number of
+     *         the supplied element.
+     */
+    public static <T> Iterable<T> repeat(final T element) {
+        return new Iterable<T>() {
+            public Iterator<T> iterator() {
+                return new CyclicIterator<T>(iterableWith(element).iterator());
+            }
+        };
+    }
+
+    /**
+     * Returns a lazy {@code Iterable} containing the supplied element
+     * repeated the specified number of times.
+     *
+     * <p>Note, if the supplied element is {@code null}, the returned {@code Iterable}
+     * will return {@code null} the specified number of times.</p>
+     *
+     * @param element               The element to be repeated.
+     * @param numberOfTimesToRepeat The number of times to repeat the supplied element.
+     * @param <T>                   The type of the supplied element.
+     * @return An {@code Iterable} instance containing the supplied element
+     *         the specified number of times.
+     */
+    public static <T> Iterable<T> repeat(final T element, final int numberOfTimesToRepeat) {
+        return new Iterable<T>() {
+            public Iterator<T> iterator() {
+                return new CyclicIterator<T>(iterableWith(element).iterator(), numberOfTimesToRepeat);
             }
         };
     }

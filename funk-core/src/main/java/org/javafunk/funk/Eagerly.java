@@ -25,7 +25,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.Collections.emptyList;
 import static org.javafunk.funk.Checks.returnOrThrowIfNull;
 import static org.javafunk.funk.Exceptions.noSuchElementFactory;
-import static org.javafunk.funk.Iterables.concat;
 import static org.javafunk.funk.Iterables.materialize;
 import static org.javafunk.funk.Iterators.asIterable;
 import static org.javafunk.funk.Literals.*;
@@ -3583,7 +3582,7 @@ public class Eagerly {
     public static <T> Collection<T> repeat(
             Iterable<T> iterable,
             int numberOfTimesToRepeat) {
-        return materialize(Lazily.repeat(iterable, numberOfTimesToRepeat));
+        return materialize(Lazily.cycle(iterable, numberOfTimesToRepeat));
     }
 
     /**
