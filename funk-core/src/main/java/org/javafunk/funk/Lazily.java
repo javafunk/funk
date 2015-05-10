@@ -93,6 +93,46 @@ public class Lazily {
     }
 
     /**
+     * Returns a lazy {@code Iterable} instance constructed from the supplied element
+     * followed by the elements in the supplied {@code Iterable}.
+     *
+     * @param iterable The {@code Iterable} with which the element will be constructed.
+     * @param element  The element to be used as the first element in the resulting {@code Iterable}
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Iterable} instance containing the supplied element followed by
+     *         all elements from the supplied {@code Iterable}.
+     */
+    public static <T> Iterable<T> construct(final T element, final Iterable<? extends T> iterable) {
+        checkNotNull(iterable);
+        checkNotNull(element);
+        return new Iterable<T>() {
+            @Override public Iterator<T> iterator() {
+                return new ChainedIterator<T>(iteratorWith(element), iterable.iterator());
+            }
+        };
+    }
+
+    /**
+     * Returns a lazy {@code Iterable} instance containing all elements from the
+     * supplied {@code Iterable} followed by the supplied element.
+     *
+     * @param iterable The {@code Iterable} with which the element will be conjoined.
+     * @param element  The element to be conjoined with the {@code Iterable}
+     * @param <T>      The type of the elements in the supplied {@code Iterable}.
+     * @return An {@code Iterable} instance containing all elements from the
+     *         supplied {@code Iterable} followed by the supplied element.
+     */
+    public static <T> Iterable<T> conjoin(final Iterable<? extends T> iterable, final T element) {
+        checkNotNull(iterable);
+        checkNotNull(element);
+        return new Iterable<T>() {
+            @Override public Iterator<T> iterator() {
+                return new ChainedIterator<T>(iterable.iterator(), iteratorWith(element));
+            }
+        };
+    }
+
+    /**
      * Returns a lazy {@code Iterable} instance containing batches of elements
      * of the specified size from the supplied {@code Iterable}.
      *
