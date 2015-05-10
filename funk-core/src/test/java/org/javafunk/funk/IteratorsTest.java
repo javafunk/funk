@@ -17,11 +17,8 @@ import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Iterators.asIterable;
-import static org.javafunk.funk.Iterators.asList;
-import static org.javafunk.funk.Iterators.asMultiset;
-import static org.javafunk.funk.Iterators.asSet;
-import static org.javafunk.funk.Iterators.emptyIterator;
+import static org.hamcrest.Matchers.nullValue;
+import static org.javafunk.funk.Iterators.*;
 import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.funk.Literals.listWith;
 import static org.javafunk.funk.Literals.multisetWith;
@@ -118,5 +115,57 @@ public class IteratorsTest {
         asMultiset(null);
 
         // Then a NullPointerException is thrown
+    }
+
+    @Test
+    public void shouldReturnAFunctionFromIterableToIterator() {
+        // Given
+        Iterable<String> iterable = iterableWith("1", "2", "3");
+
+        // When
+        Iterator<? extends String> firstIterator = fromIterableToIterator(String.class).call(iterable);
+        Iterator<? extends String> secondIterator = fromIterableToIterator(String.class).call(iterable);
+
+        // Then
+        assertThat(firstIterator.next(), is("1"));
+        assertThat(secondIterator.next(), is("1"));
+        assertThat(secondIterator.next(), is("2"));
+        assertThat(firstIterator.next(), is("2"));
+        assertThat(firstIterator.next(), is("3"));
+        assertThat(secondIterator.next(), is("3"));
+    }
+
+    @Test
+    public void shouldReturnAFunctionFromIterableToIteratorKeepingNull() {
+        // Given
+        Iterable<String> iterable = iterableWith("1", "2", "3");
+
+        // When
+        Iterator<? extends String> firstIterator = fromIterableToIteratorKeepingNull(String.class).call(iterable);
+        Iterator<? extends String> secondIterator = fromIterableToIteratorKeepingNull(String.class).call(iterable);
+
+        // Then
+        assertThat(firstIterator.next(), is("1"));
+        assertThat(secondIterator.next(), is("1"));
+        assertThat(secondIterator.next(), is("2"));
+        assertThat(firstIterator.next(), is("2"));
+        assertThat(firstIterator.next(), is("3"));
+        assertThat(secondIterator.next(), is("3"));
+    }
+
+    @Test
+    public void shouldReturnIteratorContainingNullForFromIterableToIteratorKeepingNull() {
+        // Given
+        Iterable<String> iterable = null;
+
+        // When
+        Iterator<? extends String> firstIterator = fromIterableToIteratorKeepingNull(String.class).call(iterable);
+        Iterator<? extends String> secondIterator = fromIterableToIteratorKeepingNull(String.class).call(iterable);
+
+        // Then
+        assertThat(firstIterator.next(), is(nullValue()));
+        assertThat(secondIterator.next(), is(nullValue()));
+        assertThat(secondIterator.hasNext(), is(false));
+        assertThat(firstIterator.hasNext(), is(false));
     }
 }

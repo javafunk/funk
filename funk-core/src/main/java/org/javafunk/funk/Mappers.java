@@ -145,33 +145,6 @@ public class Mappers {
         };
     }
 
-    public static <T> Mapper<? super Iterable<? extends T>, Iterator<? extends T>> toIterators() {
-        return new Mapper<Iterable<? extends T>, Iterator<? extends T>>() {
-            public Iterator<? extends T> map(Iterable<? extends T> iterable) {
-                return iterable.iterator();
-            }
-        };
-    }
-
-    public static <T> Mapper<? super Iterable<? extends T>, Iterator<? extends T>> toIterators(Class<T> ofKlass) {
-        return toIterators();
-    }
-
-    public static <T> UnaryFunction<Iterable<? extends T>, Iterator<? extends T>> toIteratorsKeepingNulls() {
-        return new UnaryFunction<Iterable<? extends T>, Iterator<? extends T>>() {
-            @Override public Iterator<? extends T> call(Iterable<? extends T> iterable) {
-                if (iterable == null) {
-                    return iteratorWith(null);
-                }
-                return iterable.iterator();
-            }
-        };
-    }
-
-    public static <T> UnaryFunction<Iterable<? extends T>, Iterator<? extends T>> toIteratorsKeepingNulls(Class<T> ofKlass) {
-        return toIteratorsKeepingNulls();
-    }
-
     public static <T> Mapper<T, T> identity() {
         return new Mapper<T, T>() {
             @Override public T map(T input) {

@@ -25,7 +25,6 @@ import static org.javafunk.funk.Checks.returnOrThrowIfContainsNull;
 import static org.javafunk.funk.Eagerly.first;
 import static org.javafunk.funk.Iterables.concat;
 import static org.javafunk.funk.Literals.*;
-import static org.javafunk.funk.Mappers.toIterators;
 import static org.javafunk.funk.Sequences.increasing;
 import static org.javafunk.funk.Sequences.integers;
 import static org.javafunk.funk.UnaryFunctions.compose;
@@ -1141,7 +1140,7 @@ public class Lazily {
         checkNotNull(iterable);
         return new Iterable<T>() {
             @Override public Iterator<T> iterator() {
-                return new ChainedIterator<T>(map(iterable, compose(function, Mappers.<T>toIteratorsKeepingNulls())).iterator());
+                return new ChainedIterator<T>(map(iterable, compose(function, Iterators.<T>fromIterableToIteratorKeepingNull())).iterator());
             }
         };
     }
@@ -2757,7 +2756,7 @@ public class Lazily {
         if (Eagerly.any(iterables, Predicates.equalTo(null))) throw new NullPointerException();
         return new Iterable<Iterable<?>>() {
             public Iterator<Iterable<?>> iterator() {
-                final Iterable<? extends Iterator<?>> iterators = Eagerly.map(iterables, toIterators());
+                final Iterable<? extends Iterator<?>> iterators = Eagerly.map(iterables, Iterators.fromIterableToIterator());
                 return new ZippedIterator(iterators);
             }
         };
