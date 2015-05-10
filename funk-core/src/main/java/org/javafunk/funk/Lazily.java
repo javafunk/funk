@@ -10,6 +10,7 @@ package org.javafunk.funk;
 
 import org.javafunk.funk.datastructures.tuples.*;
 import org.javafunk.funk.functors.Mapper;
+import org.javafunk.funk.functors.functions.NullaryFunction;
 import org.javafunk.funk.functors.functions.UnaryFunction;
 import org.javafunk.funk.functors.predicates.BinaryPredicate;
 import org.javafunk.funk.functors.predicates.UnaryPredicate;
@@ -3379,4 +3380,14 @@ public class Lazily {
                 iterable,
                 iterableWith(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11on));
     }
+
+    public static <T> Iterable<T> repeatedly(final NullaryFunction<T> function) {
+        checkNotNull(function);
+        return new Iterable<T>() {
+            @Override public Iterator<T> iterator() {
+                return new FunctionBackedIterator<T>(function);
+            }
+        };
+    }
+
 }
