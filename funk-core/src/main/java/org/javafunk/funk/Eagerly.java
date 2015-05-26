@@ -2792,6 +2792,24 @@ public class Eagerly {
     }
 
     /**
+     * Lazily removes the first <em>n</em> elements from the supplied {@code Iterable} and
+     * returns all remaining elements in the {@code Iterable}.
+     *
+     * <p>If <em>n</em> is zero the {@code Collection} will returned. If the supplied
+     * {@code Iterable} is empty, the returned {@code Collection} will
+     * be empty.</p>
+     *
+     * @param iterable The {@code Iterable} from which to remove the first <em>n</em> elements.
+     * @param <T>      The type of the elements in the supplied {@code Iterable};
+     * @return An {@code Collection} effectively containing all elements from the supplied
+     *         {@code Iterable} but the first <em>n</em> elements in the same order as in the supplied
+     *         {@code Iterable}.
+     */
+    public static <T> Collection<T> nthRest(final Iterable<T> iterable, final Integer start) {
+        return materialize(Lazily.nthRest(iterable, start));
+    }
+
+    /**
      * Takes the first <em>n</em> elements from the supplied {@code Iterable} where <em>n</em>
      * is given by the supplied integer value and returns them in a {@code Collection}. If the
      * {@code Iterable} is empty, an empty {@code Collection} is returned, otherwise,
