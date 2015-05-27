@@ -1608,6 +1608,28 @@ public class Lazily {
     }
 
     /**
+     * Lazily removes the first n elements from the supplied {@code Iterable} and
+     * returns all remaining elements in an {@code Iterable}.
+     *
+     * <p>Since a lazy {@code Iterable} instance is returned, the removal of the first
+     * n elements is performed lazily, i.e., the input {@code Iterable} is not
+     * iterated until the returned {@code Iterable} instance is iterated.</p>
+     *
+     * <p>If n is zero the {@code Iterable} will returned. If the supplied
+     * {@code Iterable} is empty, the returned {@code Iterable} will
+     * be empty.</p>
+     *
+     * @param iterable The {@code Iterable} from which to remove the first n elements.
+     * @param <T>      The type of the elements in the supplied {@code Iterable};
+     * @return An {@code Iterable} effectively containing all elements from the supplied
+     *         {@code Iterable} but the first n elements in the same order as in the supplied
+     *         {@code Iterable}.
+     */
+    public static <T> Iterable<T> nthRest(final Iterable<T> iterable, final Integer start) {
+        return slice(iterable, start, null, 1);
+    }
+
+    /**
      * Lazily slices a sub-sequence from the supplied {@code Iterable} according
      * to the supplied start index, stop index and step size. The start and stop
      * indices are both zero based and the step size is one based. The element
@@ -3389,5 +3411,4 @@ public class Lazily {
             }
         };
     }
-
 }
