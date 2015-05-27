@@ -2792,7 +2792,7 @@ public class Eagerly {
     }
 
     /**
-     * Lazily removes the first <em>n</em> elements from the supplied {@code Iterable} and
+     * Eagerly removes the first <em>n</em> elements from the supplied {@code Iterable} and
      * returns all remaining elements in the {@code Iterable}.
      *
      * <p>If <em>n</em> is zero the {@code Collection} will returned. If the supplied
